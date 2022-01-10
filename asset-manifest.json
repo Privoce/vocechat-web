@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/rustchat-web/static/css/main.dd526cdd.css",
-    "main.js": "/rustchat-web/static/js/main.8fd5ae9d.js",
-    "index.html": "/rustchat-web/index.html",
-    "main.dd526cdd.css.map": "/rustchat-web/static/css/main.dd526cdd.css.map",
-    "main.8fd5ae9d.js.map": "/rustchat-web/static/js/main.8fd5ae9d.js.map"
+    "main.css": "/static/css/main.5e094525.css",
+    "main.js": "/static/js/main.64136b2f.js",
+    "index.html": "/index.html",
+    "main.5e094525.css.map": "/static/css/main.5e094525.css.map",
+    "main.64136b2f.js.map": "/static/js/main.64136b2f.js.map"
   },
   "entrypoints": [
-    "static/css/main.dd526cdd.css",
-    "static/js/main.8fd5ae9d.js"
+    "static/css/main.5e094525.css",
+    "static/js/main.64136b2f.js"
   ]
 }
