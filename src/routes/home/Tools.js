@@ -60,7 +60,7 @@ const StyledWrapper = styled.div`
     }
   }
 `;
-export default function Tools({ collaspe = false }) {
+export default function Tools({ expand = true }) {
   return (
     <StyledWrapper>
       <hr />
@@ -73,19 +73,19 @@ export default function Tools({ collaspe = false }) {
               alt="logo"
             />
           </div>
-          {!collaspe && <h2 className="title">Webrowse</h2>}
+          {expand && <h2 className="title">Webrowse</h2>}
         </li>
         <li className="tool">
           <div className="logo">
             <IoLogoGithub size={40} className="icon" />
           </div>
-          {!collaspe && <h2 className="title">Github</h2>}
+          {expand && <h2 className="title">Github</h2>}
         </li>
         <li className="tool add">
           <div className="logo">
             <RiAddFill className="icon" size={40} color="#4B5563" />
           </div>
-          {!collaspe && <h2 className="title">Add new app</h2>}
+          {expand && <h2 className="title">Add new app</h2>}
         </li>
       </ul>
     </StyledWrapper>

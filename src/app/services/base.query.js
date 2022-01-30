@@ -1,20 +1,12 @@
 import { fetchBaseQuery } from "@reduxjs/toolkit/query";
 import BASE_URL, { tokenHeader } from "../config";
-// const whiteList = [
-//   "/resource/avatar",
-//   "/resource/company/logo",
-//   "/resource/thumbnail",
-//   "/resource/image",
-//   "/token/login",
-//   "/token/renew",
-//   "/user",
-//   "/admin/system/company",
-// ];
+const whiteList = ["login"];
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
-  prepareHeaders: (headers, { getState }) => {
+  prepareHeaders: (headers, { getState, endpoint }) => {
+    console.log("req", endpoint);
     const { token } = getState().authData;
-    if (token) {
+    if (token && !whiteList.includes(endpoint)) {
       headers.set(tokenHeader, token);
     }
     return headers;

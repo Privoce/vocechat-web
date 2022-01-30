@@ -3,10 +3,9 @@ import { useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import dayjs from "dayjs";
-
 import { MdAdd } from "react-icons/md";
 import { AiOutlineCaretDown } from "react-icons/ai";
-import { useGetChannelsQuery } from "../../app/services/channel";
+
 import { useGetContactsQuery } from "../../app/services/contact";
 import StyledWrapper from "./styled";
 import Search from "../../common/component/Search";
@@ -18,13 +17,16 @@ import ContactsModal from "../../common/component/ContactsModal";
 import ChannelModal from "../../common/component/ChannelModal";
 
 export default function ChatPage() {
-  const UserMsgData = useSelector((store) => {
-    return store.userMsg;
+  const { channels, UserMsgData, ChannelMsgData } = useSelector((store) => {
+    return {
+      channels: store.channels,
+      UserMsgData: store.userMsg,
+      ChannelMsgData: store.channelMsg,
+    };
   });
   const [channelModalVisible, setChannelModalVisible] = useState(false);
   const [contactsModalVisible, setContactsModalVisible] = useState(false);
   const { channel_id, user_id } = useParams();
-  const { data: channels } = useGetChannelsQuery();
   const { data: contacts } = useGetContactsQuery();
   const toggleContactsModalVisible = () => {
     setContactsModalVisible((prev) => !prev);
@@ -32,10 +34,16 @@ export default function ChatPage() {
   const toggleChannelModalVisible = () => {
     setChannelModalVisible((prev) => !prev);
   };
-  console.log("channels", channels);
-  if (!channels || !contacts) return null;
+  const getUnreadCount = (gid) => {
+    return Object.values(ChannelMsgData[gid] || {}).filter((m) => m.unread)
+      .length;
+  };
+  if (!contacts) return null;
   const Sessions = Object.keys(UserMsgData);
   const tmpSessionUser = contacts.find((c) => c.uid == user_id);
+  const transformedChannels = Object.entries(channels).map(([key, obj]) => {
+    return { id: key, ...obj };
+  });
   return (
     <>
       {channelModalVisible && (
@@ -60,22 +68,25 @@ export default function ChatPage() {
               />
             </h3>
             <nav className="nav">
-              {channels.map(({ gid, is_public, name, description }) => {
-                return (
-                  <NavLink
-                    title={description}
-                    key={gid}
-                    className="link"
-                    to={`/chat/channel/${gid}`}
-                  >
-                    <span className="txt">
-                      <ChannelIcon personal={!is_public} />
-                      {name}
-                    </span>
-                    <i className="badge">12</i>
-                  </NavLink>
-                );
-              })}
+              {transformedChannels.map(
+                ({ id, is_public, name, description }) => {
+                  let unreads = getUnreadCount(id);
+                  return (
+                    <NavLink
+                      title={description}
+                      key={id}
+                      className="link"
+                      to={`/chat/channel/${id}`}
+                    >
+                      <span className="txt">
+                        <ChannelIcon personal={!is_public} />
+                        {name}
+                      </span>
+                      {unreads > 0 && <i className="badge">{unreads}</i>}
+                    </NavLink>
+                  );
+                }
+              )}
             </nav>
           </div>
           <div className="list dms">
@@ -94,6 +105,9 @@ export default function ChatPage() {
               {Sessions.map((uid) => {
                 let currUser = contacts.find((c) => c.uid == uid);
                 let latestMid = Object.keys(UserMsgData[uid]).sort().pop();
+                let unreads = Object.values(UserMsgData[uid] || {}).filter(
+                  (m) => m.unread
+                ).length;
                 let latestMsg = UserMsgData[uid][latestMid];
                 return (
                   <NavLink key={uid} className="session" to={`/chat/dm/${uid}`}>
@@ -108,7 +122,7 @@ export default function ChatPage() {
 
                       <div className="down">
                         <div className="msg">{latestMsg.content}</div>
-                        <i className="badge">3</i>
+                        {unreads > 0 && <i className="badge">{unreads}</i>}
                       </div>
                     </div>
                   </NavLink>
@@ -129,7 +143,7 @@ export default function ChatPage() {
 
                     <div className="down">
                       <div className="msg"></div>
-                      <i className="badge">3</i>
+                      {/* <i className="badge">3</i> */}
                     </div>
                   </div>
                 </NavLink>
@@ -140,8 +154,9 @@ export default function ChatPage() {
         <div className="right">
           {channel_id && (
             <ChannelChat
+              unreads={getUnreadCount(channel_id)}
               cid={channel_id}
-              data={channels.find(({ gid }) => gid == channel_id)}
+              data={channels[channel_id]}
             />
           )}
           {user_id && <DMChat uid={user_id} />}

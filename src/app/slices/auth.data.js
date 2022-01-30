@@ -15,7 +15,13 @@ const authDataSlice = createSlice({
       state.token = token;
       state.refreshToken = refresh_token;
     },
+    clearAuthData(state) {
+      console.log("clear auth data");
+      state.user = null;
+      state.token = null;
+      state.refreshToken = null;
+    },
   },
 });
-export const { setAuthData } = authDataSlice.actions;
+export const { setAuthData, clearAuthData } = authDataSlice.actions;
 export default authDataSlice.reducer;

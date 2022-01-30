@@ -8,6 +8,8 @@ import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
 
 import store from "./app/store";
+import RequireAuth from "./common/component/RequireAuth";
+
 // import Welcome from './routes/Welcome'
 import NotFoundPage from "./routes/404";
 import LoginPage from "./routes/login";
@@ -24,7 +26,14 @@ ReactDOM.render(
         <HashRouter>
           <Routes>
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/" element={<HomePage />}>
+            <Route
+              path="/"
+              element={
+                <RequireAuth>
+                  <HomePage />
+                </RequireAuth>
+              }
+            >
               <Route index element={<ChatPage />} />
               <Route path="chat">
                 <Route index element={<ChatPage />} />

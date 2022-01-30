@@ -3,7 +3,7 @@ import baseQuery from "./base.query";
 import BASE_URL from "../config";
 import { REHYDRATE } from "redux-persist";
 export const contactApi = createApi({
-  reducerPath: "contacts",
+  reducerPath: "contact",
   baseQuery,
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === REHYDRATE) {

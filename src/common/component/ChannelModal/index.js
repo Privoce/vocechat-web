@@ -7,7 +7,6 @@ import ChannelIcon from "../ChannelIcon";
 import Contact from "../Contact";
 import StyledWrapper from "./styled";
 import useFilteredUsers from "../../hook/useFilteredUsers";
-import { useGetChannelsQuery } from "../../../app/services/channel";
 import { useCreateChannelMutation } from "../../../app/services/channel";
 
 export default function ChannelModal({ personal = false, closeModal }) {
@@ -19,7 +18,6 @@ export default function ChannelModal({ personal = false, closeModal }) {
     is_public: !personal,
   });
   const { contacts, input, updateInput } = useFilteredUsers();
-  const { refetch: refetchChannels } = useGetChannelsQuery();
   const [
     createChannel,
     { isSuccess, isError, isLoading, data: newChannel },
@@ -49,7 +47,6 @@ export default function ChannelModal({ personal = false, closeModal }) {
     if (isSuccess) {
       toast.success("create new channel success");
       closeModal();
-      refetchChannels();
       navigateTo(`/chat/channel/${newChannel.gid}`);
     }
   }, [isSuccess, newChannel]);

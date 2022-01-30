@@ -11,11 +11,11 @@ const StyledWrapper = styled.div`
     &.left {
       position: relative;
       /* background: #0891B2; */
-      width: 180px;
+      width: 64px;
       box-shadow: inset -1px 0px 0px rgba(0, 0, 0, 0.1);
       transition: all 0.5s ease-in;
-      &.collaspe {
-        width: 64px;
+      &.expand {
+        width: 180px;
       }
     }
     &.right {

@@ -1,6 +1,6 @@
 // import React from 'react';
 import { useGetContactsQuery } from "../../app/services/contact";
-import { useGetChannelsQuery } from "../../app/services/channel";
+// import { useGetChannelsQuery } from "../../app/services/channel";
 import { useGetServerQuery } from "../../app/services/server";
 // pollingInterval: 0,
 const querySetting = {
@@ -19,21 +19,20 @@ export default function usePreload() {
     isError: serverError,
     data: server,
   } = useGetServerQuery(undefined, querySetting);
-  const {
-    isLoading: groupsLoading,
-    isSuccess: groupsSuccess,
-    isError: groupsError,
-    data: groups,
-  } = useGetChannelsQuery(undefined, querySetting);
+  // const {
+  //   isLoading: groupsLoading,
+  //   isSuccess: groupsSuccess,
+  //   isError: groupsError,
+  //   data: groups,
+  // } = useGetChannelsQuery(undefined, querySetting);
 
   return {
-    loading: contactsLoading && groupsLoading && serverLoading,
-    error: contactsError && groupsError && serverError,
-    success: contactsSuccess && groupsSuccess && serverSuccess,
+    loading: contactsLoading && serverLoading,
+    error: contactsError && serverError,
+    success: contactsSuccess && serverSuccess,
     data: {
       contacts,
       server,
-      groups,
     },
   };
 }

@@ -11,6 +11,8 @@ import {
   REGISTER,
 } from "redux-persist";
 import authDataReducer from "./slices/auth.data";
+import uiReducer from "./slices/ui";
+import channelsReducer from "./slices/channels";
 import channelMsgReducer from "./slices/message.channel";
 import userMsgReducer from "./slices/message.user";
 import { authApi } from "./services/auth";
@@ -25,6 +27,8 @@ const persistConfig = {
 const persistedReducer = persistReducer(
   persistConfig,
   combineReducers({
+    ui: uiReducer,
+    channels: channelsReducer,
     userMsg: userMsgReducer,
     channelMsg: channelMsgReducer,
     authData: authDataReducer,

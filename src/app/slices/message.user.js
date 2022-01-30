@@ -7,15 +7,22 @@ const userMsgSlice = createSlice({
   initialState,
   reducers: {
     addUserMsg(state, action) {
-      const { id, content, created_at, mid, from_uid } = action.payload;
-      const newMsg = { content, created_at, from_uid };
+      const {
+        id,
+        content,
+        created_at,
+        mid,
+        from_uid,
+        unread = true,
+      } = action.payload;
+      const newMsg = { content, created_at, from_uid, unread };
       if (state[id]) {
         let replaceMsg = state[id][mid];
         // 如果存在，并且新消息和缓存消息不一样，则替换掉
         if (replaceMsg) {
           const copyMsg = { ...replaceMsg };
           if (!isObjectEqual(copyMsg, newMsg)) {
-            state[id][mid] = newMsg;
+            state[id][mid] = { ...newMsg, unread: false };
           }
         } else {
           state[id][mid] = newMsg;
@@ -34,7 +41,12 @@ const userMsgSlice = createSlice({
         state[id] = { [mid]: newMsg };
       }
     },
+    setUserMsgRead(state, action) {
+      const { id, mid } = action.payload;
+      console.log("set unread", id, mid);
+      state[id][mid].unread = false;
+    },
   },
 });
-export const { addUserMsg } = userMsgSlice.actions;
+export const { addUserMsg, setUserMsgRead } = userMsgSlice.actions;
 export default userMsgSlice.reducer;

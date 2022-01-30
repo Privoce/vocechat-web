@@ -21,6 +21,7 @@ const StyledWrapper = styled.div`
     align-items: center;
     gap: 5px;
     .input {
+      width: 100%;
       border: none;
       outline: none;
       background: none;

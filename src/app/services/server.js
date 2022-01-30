@@ -14,9 +14,9 @@ export const serverApi = createApi({
   // },
   endpoints: (builder) => ({
     getServer: builder.query({
-      query: () => ({ url: `admin/system/company` }),
+      query: () => ({ url: `admin/system/organization` }),
       transformResponse: (data) => {
-        data.logo = `${BASE_URL}/resource/company/logo`;
+        data.logo = `${BASE_URL}/resource/organization/logo`;
         return data;
       },
     }),

@@ -22,6 +22,7 @@
   "dayjs": "^1.10.7",
   "dotenv": "^14.2.0",
   "dotenv-expand": "^6.0.1",
+  "emoji-mart": "^3.0.1",
   "eslint": "^8.7.0",
   "event-source-polyfill": "^1.0.25",
   "file-loader": "^6.2.0",

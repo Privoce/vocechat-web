@@ -2,7 +2,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import baseQuery from "./base.query";
 import { REHYDRATE } from "redux-persist";
 export const channelApi = createApi({
-  reducerPath: "groups",
+  reducerPath: "channel",
   baseQuery,
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === REHYDRATE) {

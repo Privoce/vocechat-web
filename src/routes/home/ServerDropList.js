@@ -5,12 +5,13 @@ import { HiChevronDoubleLeft } from "react-icons/hi";
 const StyledWrapper = styled.div`
   height: 56px;
   padding: 0 16px;
+  padding-right: 5px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.1);
-  &.collaspe {
-    padding-right: 5px;
+  &.expand {
+    padding-right: 16px;
   }
   .server {
     display: flex;
@@ -44,26 +45,27 @@ const StyledWrapper = styled.div`
     display: flex;
     width: 15px;
     height: 15px;
+    transform: rotate(180deg);
     .icon {
       width: 100%;
       height: 100%;
     }
-    &.collaspe {
-      transform: rotate(180deg);
+    &.expand {
+      transform: rotate(0deg);
     }
   }
 `;
-export default function ServerDropList({ data, toggle, collaspe = false }) {
+export default function ServerDropList({ data, toggle, expand = true }) {
   if (!data) return null;
   return (
-    <StyledWrapper className={collaspe ? "collaspe" : ""}>
+    <StyledWrapper className={expand ? "expand" : ""}>
       <div className="server">
         <div className="logo">
           <img src={data.logo} alt="logo" />
         </div>
-        {!collaspe && <h2 className="title">{data.name}</h2>}
+        {expand && <h2 className="title">{data.name}</h2>}
       </div>
-      <div onClick={toggle} className={`arrow ${collaspe ? "collaspe" : ""}`}>
+      <div onClick={toggle} className={`arrow ${expand ? "expand" : ""}`}>
         <HiChevronDoubleLeft className="icon" color="#BFBFBF" />
       </div>
     </StyledWrapper>
