@@ -16,8 +16,12 @@ import NotificationHub from "../../common/component/NotificationHub";
 
 export default function HomePage() {
   const dispatch = useDispatch();
-  const { menuExpand, token } = useSelector((store) => {
-    return { token: store.authData.token, menuExpand: store.ui.menuExpand };
+  const { menuExpand, token, usersVersion } = useSelector((store) => {
+    return {
+      token: store.authData.token,
+      usersVersion: store.authData.usersVersion,
+      menuExpand: store.ui.menuExpand,
+    };
   });
   const { data, error, success } = usePreload();
   const toggleExpand = () => {
@@ -26,7 +30,7 @@ export default function HomePage() {
   console.log({ data, error, success });
   return (
     <>
-      <NotificationHub token={token} />
+      <NotificationHub token={token} usersVersion={usersVersion} />
       <StyledWrapper>
         <div className={`col left ${menuExpand ? "expand" : ""}`}>
           <ServerDropList

@@ -55,12 +55,21 @@ export default function LoginPage() {
   return (
     <StyledWrapper>
       <div className="form">
+        <div className="tips">
+          <img
+            src="https://static.nicegoodthings.com/project/ext/webrowse.logo.png"
+            alt="logo"
+            className="logo"
+          />
+          <h2 className="title">Login to Rustchat</h2>
+          <span className="desc">Please enter your details.</span>
+        </div>
         <form onSubmit={handleLogin}>
           <input
             name="email"
             value={email}
             required
-            placeholder="email"
+            placeholder="Enter your email"
             data-type="email"
             onChange={handleInput}
           />
@@ -71,10 +80,16 @@ export default function LoginPage() {
             required
             data-type="password"
             onChange={handleInput}
-            placeholder="password"
+            placeholder="Enter your password"
           />
-          <button type="submit">login</button>
+          <button className="btn" type="submit">
+            Sign in
+          </button>
         </form>
+        <hr className="or" />
+        <a href="#" className="btn google">
+          Sign in with Google
+        </a>
       </div>
     </StyledWrapper>
   );

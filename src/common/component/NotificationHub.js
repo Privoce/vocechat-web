@@ -10,18 +10,20 @@ import {
   addChannel,
   deleteChannel,
 } from "../../app/slices/channels";
-import { clearAuthData } from "../../app/slices/auth.data";
+import { clearAuthData, setUsersVersion } from "../../app/slices/auth.data";
 
 import { addChannelMsg } from "../../app/slices/message.channel";
 import { addUserMsg } from "../../app/slices/message.user";
 
-const NotificationHub = ({ token }) => {
+const NotificationHub = ({ token, usersVersion = 0 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
     let sse = null;
     if (token) {
-      sse = new EventSource(`${BASE_URL}/user/events?api-key=${token}`);
+      sse = new EventSource(
+        `${BASE_URL}/user/events?api-key=${token}&users_version=${usersVersion}`
+      );
       sse.onopen = () => {
         console.info("sse opened");
       };
@@ -33,7 +35,7 @@ const NotificationHub = ({ token }) => {
       };
     }
     return () => {
-      console.log("re-run see init");
+      console.log("re-run sse init");
       if (sse) {
         sse.close();
       }
@@ -45,6 +47,13 @@ const NotificationHub = ({ token }) => {
     switch (type) {
       case "heartbeat":
         console.log("heartbeat");
+        break;
+      case "users_snapshot":
+        {
+          console.log("users snapshot");
+          const { version } = data;
+          dispatch(setUsersVersion({ version }));
+        }
         break;
       case "kick":
         {
@@ -66,7 +75,7 @@ const NotificationHub = ({ token }) => {
         }
         break;
       case "related_groups":
-        console.log("joined group list", data);
+        console.log("related group list", data);
         dispatch(setChannels(data.groups));
         break;
       case "joined_group":
@@ -74,7 +83,7 @@ const NotificationHub = ({ token }) => {
         dispatch(addChannel(data.group));
         break;
       case "kick_from_group":
-        console.log("joined group list", data.gid);
+        console.log("kicked from group", data.gid);
         dispatch(deleteChannel(data.gid));
         break;
       case "chat":

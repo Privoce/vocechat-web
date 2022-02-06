@@ -10,13 +10,17 @@ const StyledWrapper = styled.div`
   transition: all 0.5s ease;
   .left {
     width: 260px;
-    height: 100%;
+    /* height: 100%; */
     box-shadow: inset -1px 0px 0px rgba(0, 0, 0, 0.1);
     overflow-y: scroll;
     .search {
+      position: sticky;
+      top: 0;
+      z-index: 99;
+      background: #fff;
       box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.1);
       padding: 8px;
-      width: -webkit-fill-available;
+      width: calc(100% - 1px);
       input {
         outline: none;
         width: -webkit-fill-available;
@@ -29,9 +33,9 @@ const StyledWrapper = styled.div`
     .users {
       display: flex;
       flex-direction: column;
-      height: 260px;
+      /* height: 260px; */
       padding-bottom: 20px;
-      overflow-y: scroll;
+      /* overflow-y: scroll; */
       .user {
         cursor: pointer;
         display: flex;
