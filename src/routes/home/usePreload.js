@@ -1,5 +1,9 @@
-// import React from 'react';
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { useGetContactsQuery } from "../../app/services/contact";
+import { clearAuthData } from "../../app/slices/auth.data";
+
 // import { useGetChannelsQuery } from "../../app/services/channel";
 import { useGetServerQuery } from "../../app/services/server";
 // pollingInterval: 0,
@@ -7,6 +11,12 @@ const querySetting = {
   refetchOnMountOrArgChange: true,
 };
 export default function usePreload() {
+  const [checked, setChecked] = useState(false);
+  const loginedUser = useSelector((store) => {
+    return store.authData.user;
+  });
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const {
     isLoading: contactsLoading,
     isSuccess: contactsSuccess,
@@ -25,9 +35,19 @@ export default function usePreload() {
   //   isError: groupsError,
   //   data: groups,
   // } = useGetChannelsQuery(undefined, querySetting);
+  useEffect(() => {
+    if (contacts) {
+      const matchedUser = contacts.find((c) => c.uid == loginedUser.uid);
+      if (!matchedUser) {
+        dispatch(clearAuthData());
+        navigate("/login");
+      }
+      setChecked(true);
+    }
+  }, [contacts]);
 
   return {
-    loading: contactsLoading && serverLoading,
+    loading: contactsLoading || serverLoading || !checked,
     error: contactsError && serverError,
     success: contactsSuccess && serverSuccess,
     data: {

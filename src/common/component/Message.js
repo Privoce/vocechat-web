@@ -1,9 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import styled from "styled-components";
 import dayjs from "dayjs";
 import { useDispatch } from "react-redux";
 import { useInViewRef } from "rooks";
 import Avatar from "./Avatar";
+import BASE_URL from "../../app/config";
 import { useGetContactsQuery } from "../../app/services/contact";
 import { setChannelMsgRead } from "../../app/slices/message.channel";
 import { setUserMsgRead } from "../../app/slices/message.user";
@@ -50,9 +51,32 @@ const StyledMsg = styled.div`
       &.pending {
         opacity: 0.5;
       }
+      .img {
+        max-width: 400px;
+      }
     }
   }
 `;
+const renderContent = (type, content) => {
+  let ctn = null;
+  switch (type) {
+    case "text/plain":
+      ctn = content;
+      break;
+    case "image/jpeg":
+      ctn = (
+        <img
+          className="img"
+          src={`${BASE_URL}/resource/image?id=${encodeURIComponent(content)}`}
+        />
+      );
+      break;
+
+    default:
+      break;
+  }
+  return ctn;
+};
 export default function Message({
   gid = "",
   mid = "",
@@ -60,28 +84,34 @@ export default function Message({
   fromUid,
   time,
   content,
+  content_type = "text/plain",
   unread = false,
   pending,
 }) {
   const [myRef, inView] = useInViewRef();
   const disptach = useDispatch();
-  // const wrapperRef = useRef(null);
+  const avatarRef = useRef(null);
   const { data: contacts } = useGetContactsQuery();
   useEffect(() => {
-    // if (wrapperRef) {
-    //   wrapperRef.current.scrollIntoView();
-    if (inView && unread) {
-      const setMsgRead = gid ? setChannelMsgRead : setUserMsgRead;
-      disptach(setMsgRead({ id: gid || uid, mid }));
+    if (!unread) {
+      avatarRef.current?.scrollIntoView(false);
     }
-    // }
+  }, [unread]);
+
+  useEffect(() => {
+    if (inView) {
+      if (unread) {
+        const setMsgRead = gid ? setChannelMsgRead : setUserMsgRead;
+        disptach(setMsgRead({ id: gid || uid, mid }));
+      }
+    }
   }, [gid, mid, uid, unread, inView]);
 
   if (!contacts) return null;
   const currUser = contacts.find((c) => c.uid == fromUid) || {};
   return (
     <StyledMsg ref={myRef}>
-      <div className="avatar" data-uid={uid}>
+      <div className="avatar" data-uid={uid} ref={avatarRef}>
         <Avatar url={currUser.avatar} id={fromUid} name={currUser.name} />
       </div>
       <div className="details">
@@ -89,7 +119,9 @@ export default function Message({
           <span className="name">{currUser.name}</span>
           <i className="time">{dayjs(time).format("YYYY-MM-DD h:mm:ss A")}</i>
         </div>
-        <div className={`down ${pending ? "pending" : ""}`}>{content}</div>
+        <div className={`down ${pending ? "pending" : ""}`}>
+          {renderContent(content_type, content)}
+        </div>
       </div>
     </StyledMsg>
   );

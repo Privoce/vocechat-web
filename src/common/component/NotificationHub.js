@@ -10,19 +10,35 @@ import {
   addChannel,
   deleteChannel,
 } from "../../app/slices/channels";
-import { clearAuthData, setUsersVersion } from "../../app/slices/auth.data";
+import {
+  clearAuthData,
+  setUsersVersion,
+  setAfterMid,
+} from "../../app/slices/auth.data";
 
 import { addChannelMsg } from "../../app/slices/message.channel";
 import { addUserMsg } from "../../app/slices/message.user";
-
-const NotificationHub = ({ token, usersVersion = 0 }) => {
+const getQueryString = (params = {}) => {
+  const sp = new URLSearchParams();
+  Object.entries(params).forEach(([key, val]) => {
+    if (val) {
+      sp.append(key, val);
+    }
+  });
+  return sp.toString();
+};
+const NotificationHub = ({ token, usersVersion = 0, afterMid = 0 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
     let sse = null;
     if (token) {
       sse = new EventSource(
-        `${BASE_URL}/user/events?api-key=${token}&users_version=${usersVersion}`
+        `${BASE_URL}/user/events?${getQueryString({
+          "api-key": token,
+          users_version: usersVersion,
+          after_mid: afterMid,
+        })}`
       );
       sse.onopen = () => {
         console.info("sse opened");
@@ -40,7 +56,7 @@ const NotificationHub = ({ token, usersVersion = 0 }) => {
         sse.close();
       }
     };
-  }, [token]);
+  }, [token, usersVersion, afterMid]);
   const handleSSEMessage = (data) => {
     const { type } = data;
 
@@ -89,11 +105,15 @@ const NotificationHub = ({ token, usersVersion = 0 }) => {
       case "chat":
         // console.log("chat data", data);
         if (data.gid) {
+          // channel msg
           const { gid, ...rest } = data;
           dispatch(addChannelMsg({ id: gid, ...rest }));
         } else {
+          // user msg
           dispatch(addUserMsg({ id: data.from_uid, ...data }));
         }
+        // 更新after_mid
+        dispatch(setAfterMid({ mid: data.mid }));
         break;
 
       default:

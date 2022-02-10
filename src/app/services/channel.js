@@ -1,6 +1,8 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import baseQuery from "./base.query";
 import { REHYDRATE } from "redux-persist";
+import { ContentTypes } from "../config";
+
 export const channelApi = createApi({
   reducerPath: "channel",
   baseQuery,
@@ -22,10 +24,13 @@ export const channelApi = createApi({
       }),
     }),
     sendChannelMsg: builder.mutation({
-      query: ({ gid, message }) => ({
-        url: `group/${gid}/send`,
+      query: ({ id, content, type = "text" }) => ({
+        headers: {
+          "content-type": ContentTypes[type],
+        },
+        url: `group/${id}/send`,
         method: "POST",
-        body: message,
+        body: content,
       }),
     }),
   }),

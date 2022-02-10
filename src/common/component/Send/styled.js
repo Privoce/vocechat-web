@@ -16,6 +16,16 @@ const StyledSend = styled.div`
   /* margin: 0 16px; */
   .addon {
     cursor: pointer;
+    position: relative;
+    input {
+      opacity: 0;
+      cursor: pointer;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+    }
   }
   .input {
     width: 100%;

@@ -1,7 +1,8 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import baseQuery from "./base.query";
-import BASE_URL from "../config";
+import BASE_URL, { ContentTypes } from "../config";
 import { REHYDRATE } from "redux-persist";
+
 export const contactApi = createApi({
   reducerPath: "contact",
   baseQuery,
@@ -22,10 +23,13 @@ export const contactApi = createApi({
       },
     }),
     sendMsg: builder.mutation({
-      query: ({ uid, message }) => ({
-        url: `user/${uid}/send`,
+      query: ({ id, content, type = "text" }) => ({
+        headers: {
+          "content-type": ContentTypes[type],
+        },
+        url: `user/${id}/send`,
         method: "POST",
-        body: message,
+        body: content,
       }),
     }),
   }),

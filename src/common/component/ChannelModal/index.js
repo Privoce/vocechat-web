@@ -1,16 +1,19 @@
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Modal from "../Modal";
 import ChannelIcon from "../ChannelIcon";
 import Contact from "../Contact";
 import StyledWrapper from "./styled";
 import useFilteredUsers from "../../hook/useFilteredUsers";
+import { addChannel } from "../../../app/slices/channels";
+
 import { useCreateChannelMutation } from "../../../app/services/channel";
 
 export default function ChannelModal({ personal = false, closeModal }) {
   const navigateTo = useNavigate();
+  const dispatch = useDispatch();
   const [data, setData] = useState({
     name: "",
     dsecription: "",
@@ -47,6 +50,7 @@ export default function ChannelModal({ personal = false, closeModal }) {
     if (isSuccess) {
       toast.success("create new channel success");
       closeModal();
+      dispatch(addChannel(newChannel));
       navigateTo(`/chat/channel/${newChannel.gid}`);
     }
   }, [isSuccess, newChannel]);

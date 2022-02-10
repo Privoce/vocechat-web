@@ -1,18 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
-
 const initialState = {};
 const channelsSlice = createSlice({
-  name: "channels",
+  name: `channels`,
   initialState,
   reducers: {
     setChannels(state, action) {
-      // console.log("set channels store", action);
-      const chs = action.payload;
-      chs.forEach((c) => {
-        const { gid, ...rest } = c;
-        console.log("wtf", gid, rest);
-        state[gid] = rest;
-      });
+      console.log("set channels store", state);
+      const chs = action.payload || [];
+      return Object.fromEntries(
+        chs.map((c) => {
+          const { gid, ...rest } = c;
+          return [gid, rest];
+        })
+      );
     },
     addChannel(state, action) {
       // console.log("set channels store", action);

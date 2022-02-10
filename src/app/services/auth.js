@@ -8,7 +8,7 @@ export const authApi = createApi({
       query: (credentials) => ({
         url: "token/login",
         method: "POST",
-        body: credentials,
+        body: { credential: credentials, device: "web", device_token: "test" },
       }),
       // transformResponse: (resp) => {
       //   console.log("resp", resp);

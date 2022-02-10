@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import dayjs from "dayjs";
+
 import { MdAdd } from "react-icons/md";
 import { AiOutlineCaretDown } from "react-icons/ai";
 
@@ -10,13 +10,16 @@ import { useGetContactsQuery } from "../../app/services/contact";
 import StyledWrapper from "./styled";
 import Search from "../../common/component/Search";
 import Avatar from "../../common/component/Avatar";
-import ChannelIcon from "../../common/component/ChannelIcon";
 import ChannelChat from "./ChannelChat";
 import DMChat from "./DMChat";
+import ChannelList from "./ChannelList";
 import ContactsModal from "../../common/component/ContactsModal";
 import ChannelModal from "../../common/component/ChannelModal";
+import DMList from "./DMList";
 
 export default function ChatPage() {
+  const [channelDropFiles, setChannelDropFiles] = useState([]);
+  const [userDropFiles, setUserDropFiles] = useState([]);
   const { channels, UserMsgData, ChannelMsgData } = useSelector((store) => {
     return {
       channels: store.channels,
@@ -38,11 +41,23 @@ export default function ChatPage() {
     return Object.values(ChannelMsgData[gid] || {}).filter((m) => m.unread)
       .length;
   };
+
   if (!contacts) return null;
-  const Sessions = Object.keys(UserMsgData);
   const tmpSessionUser = contacts.find((c) => c.uid == user_id);
   const transformedChannels = Object.entries(channels).map(([key, obj]) => {
-    return { id: key, ...obj };
+    const unreads = Object.values(ChannelMsgData[key] || {}).filter(
+      (m) => m.unread
+    ).length;
+    return { id: key, ...obj, unreads };
+  });
+  const sessions = Object.keys(UserMsgData).map((uid) => {
+    let currUser = contacts.find((c) => c.uid == uid);
+    if (!currUser) return undefined;
+    let lastMid = Object.keys(UserMsgData[uid]).sort().pop();
+    let unreads = Object.values(UserMsgData[uid] || {}).filter((m) => m.unread)
+      .length;
+    let lastMsg = UserMsgData[uid][lastMid];
+    return { user: currUser, unreads, uid, lastMsg };
   });
   return (
     <>
@@ -68,25 +83,10 @@ export default function ChatPage() {
               />
             </h3>
             <nav className="nav">
-              {transformedChannels.map(
-                ({ id, is_public, name, description }) => {
-                  let unreads = getUnreadCount(id);
-                  return (
-                    <NavLink
-                      title={description}
-                      key={id}
-                      className="link"
-                      to={`/chat/channel/${id}`}
-                    >
-                      <span className="txt">
-                        <ChannelIcon personal={!is_public} />
-                        {name}
-                      </span>
-                      {unreads > 0 && <i className="badge">{unreads}</i>}
-                    </NavLink>
-                  );
-                }
-              )}
+              <ChannelList
+                channels={transformedChannels}
+                setDropFiles={setChannelDropFiles}
+              />
             </nav>
           </div>
           <div className="list dms">
@@ -102,33 +102,8 @@ export default function ChatPage() {
               />
             </h3>
             <nav className="nav">
-              {Sessions.map((uid) => {
-                let currUser = contacts.find((c) => c.uid == uid);
-                let latestMid = Object.keys(UserMsgData[uid]).sort().pop();
-                let unreads = Object.values(UserMsgData[uid] || {}).filter(
-                  (m) => m.unread
-                ).length;
-                let latestMsg = UserMsgData[uid][latestMid];
-                return (
-                  <NavLink key={uid} className="session" to={`/chat/dm/${uid}`}>
-                    <Avatar className="avatar" url={currUser.avatar} id={uid} />
-                    <div className="details">
-                      <div className="up">
-                        <span className="name">{currUser.name}</span>
-                        <time>
-                          {dayjs(latestMsg.created_at).format("YYYY-MM-DD")}
-                        </time>
-                      </div>
-
-                      <div className="down">
-                        <div className="msg">{latestMsg.content}</div>
-                        {unreads > 0 && <i className="badge">{unreads}</i>}
-                      </div>
-                    </div>
-                  </NavLink>
-                );
-              })}
-              {user_id && !Sessions.includes(user_id) && (
+              <DMList sessions={sessions} setDropFiles={setUserDropFiles} />
+              {user_id && !Object.keys(UserMsgData).includes(user_id) && (
                 <NavLink className="session" to={`/chat/dm/${user_id}`}>
                   <Avatar
                     className="avatar"
@@ -157,9 +132,10 @@ export default function ChatPage() {
               unreads={getUnreadCount(channel_id)}
               cid={channel_id}
               data={channels[channel_id]}
+              dropFiles={channelDropFiles}
             />
           )}
-          {user_id && <DMChat uid={user_id} />}
+          {user_id && <DMChat uid={user_id} dropFiles={userDropFiles} />}
         </div>
       </StyledWrapper>
     </>

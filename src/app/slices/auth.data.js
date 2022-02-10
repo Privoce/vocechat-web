@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   user: null,
-  usersVersion: 0,
+  usersVersion: null,
+  afterMid: null,
   token: null,
   refreshToken: null,
 };
@@ -21,10 +22,18 @@ const authDataSlice = createSlice({
       state.user = null;
       state.token = null;
       state.refreshToken = null;
+      // 清掉本地缓存auth data
+      // localStorage.removeItem("AUTH_DATA");
+      // state.afterMid = null;
+      // state.usersVersion = null;
     },
     setUsersVersion(state, action) {
       const { version } = action.payload;
       state.usersVersion = version;
+    },
+    setAfterMid(state, action) {
+      const { mid } = action.payload;
+      state.afterMid = mid;
     },
   },
 });
@@ -32,5 +41,6 @@ export const {
   setAuthData,
   clearAuthData,
   setUsersVersion,
+  setAfterMid,
 } = authDataSlice.actions;
 export default authDataSlice.reducer;

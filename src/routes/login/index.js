@@ -8,6 +8,7 @@ import { useLoginMutation } from "../../app/services/auth";
 import { setAuthData } from "../../app/slices/auth.data";
 
 export default function LoginPage() {
+  // const { token } = useSelector((store) => store.authData);
   const navigateTo = useNavigate();
   const dispatch = useDispatch();
   const [login] = useLoginMutation();
@@ -21,8 +22,7 @@ export default function LoginPage() {
     console.log("wtf", input);
     const { data, error } = await login({
       ...input,
-      device: "web",
-      device_token: "test",
+      type: "password",
     });
     if (error) {
       console.log(error);
@@ -37,9 +37,11 @@ export default function LoginPage() {
       return;
     }
     if (data) {
-      dispatch(setAuthData(data));
+      // 更新本地认证信息
       toast.success("login success");
+      dispatch(setAuthData(data));
       navigateTo("/");
+      // location.reload(true);
     }
   };
   const handleInput = (evt) => {

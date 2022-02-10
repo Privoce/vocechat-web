@@ -6,7 +6,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { clearAuthData } from "../../app/slices/auth.data";
-
 import { useLazyLogoutQuery } from "../../app/services/auth";
 
 const StyledWrapper = styled.div`

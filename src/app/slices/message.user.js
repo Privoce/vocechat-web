@@ -10,12 +10,13 @@ const userMsgSlice = createSlice({
       const {
         id,
         content,
+        content_type,
         created_at,
         mid,
         from_uid,
         unread = true,
       } = action.payload;
-      const newMsg = { content, created_at, from_uid, unread };
+      const newMsg = { content, content_type, created_at, from_uid, unread };
       if (state[id]) {
         let replaceMsg = state[id][mid];
         // 如果存在，并且新消息和缓存消息不一样，则替换掉

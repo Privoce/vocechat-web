@@ -1,8 +1,9 @@
 // import React from 'react';
-// import { useState } from "react";
+// import { useEffect } from "react";
 import { Outlet, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleMenuExpand } from "../../app/slices/ui";
+// import { setAuthData } from "../../app/slices/auth.data";
 import StyledWrapper from "./styled";
 import ServerDropList from "./ServerDropList";
 import Tools from "./Tools";
@@ -16,21 +17,37 @@ import NotificationHub from "../../common/component/NotificationHub";
 
 export default function HomePage() {
   const dispatch = useDispatch();
-  const { menuExpand, token, usersVersion } = useSelector((store) => {
+  const {
+    menuExpand,
+    authData: { token, usersVersion, afterMid },
+  } = useSelector((store) => {
     return {
-      token: store.authData.token,
-      usersVersion: store.authData.usersVersion,
+      authData: store.authData,
       menuExpand: store.ui.menuExpand,
     };
   });
-  const { data, error, success } = usePreload();
+  const { data, loading, error, success } = usePreload();
+
+  // useEffect(() => {
+  //   if (authData) {
+  //     dispatch(setAuthData(data));
+  //   }
+  // }, [authData]);
+
   const toggleExpand = () => {
     dispatch(toggleMenuExpand());
   };
   console.log({ data, error, success });
+  if (loading) {
+    return "loading";
+  }
   return (
     <>
-      <NotificationHub token={token} usersVersion={usersVersion} />
+      <NotificationHub
+        token={token}
+        usersVersion={usersVersion}
+        afterMid={afterMid}
+      />
       <StyledWrapper>
         <div className={`col left ${menuExpand ? "expand" : ""}`}>
           <ServerDropList

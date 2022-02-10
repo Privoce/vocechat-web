@@ -83,6 +83,7 @@ const StyledWrapper = styled.div`
           &.active {
             background: rgba(116, 127, 141, 0.1);
           }
+
           .avatar {
             width: 32px;
             height: 32px;
@@ -144,6 +145,10 @@ const StyledWrapper = styled.div`
               }
             }
           }
+        }
+        /* drop files effect */
+        .drop_over {
+          outline: 2px solid #52edff;
         }
       }
     }

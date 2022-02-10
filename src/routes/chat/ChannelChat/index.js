@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 import dayjs from "dayjs";
@@ -20,7 +20,14 @@ import {
   StyledHeader,
 } from "./styled";
 
-export default function ChannelChat({ cid = "", unreads = 0, data = {} }) {
+export default function ChannelChat({
+  cid = "",
+  unreads = 0,
+  data = {},
+  dropFiles = [],
+}) {
+  // const containerRef = useRef(null);
+  const [dragFiles, setDragFiles] = useState([]);
   const dispatch = useDispatch();
   const msgs = useSelector((store) => {
     return store.channelMsg[cid] || {};
@@ -29,6 +36,11 @@ export default function ChannelChat({ cid = "", unreads = 0, data = {} }) {
   const handleClearUnreads = () => {
     dispatch(clearChannelMsgUnread(cid));
   };
+  useEffect(() => {
+    if (dropFiles.length) {
+      setDragFiles(dropFiles);
+    }
+  }, [dropFiles]);
   useEffect(() => {
     console.log({ cid });
     return () => {
@@ -45,6 +57,8 @@ export default function ChannelChat({ cid = "", unreads = 0, data = {} }) {
   console.log("channel message list", msgs);
   return (
     <Layout
+      setDragFiles={setDragFiles}
+      // ref={containerRef}
       header={
         <StyledHeader>
           <div className="txt">
@@ -73,9 +87,16 @@ export default function ChannelChat({ cid = "", unreads = 0, data = {} }) {
           <div className="chat">
             {Object.entries(msgs).map(([mid, msg]) => {
               if (!msg) return null;
-              const { from_uid, content, created_at, unread } = msg;
+              const {
+                from_uid,
+                content,
+                content_type,
+                created_at,
+                unread,
+              } = msg;
               return (
                 <Message
+                  content_type={content_type}
                   unread={unread}
                   gid={cid}
                   mid={mid}
@@ -89,7 +110,7 @@ export default function ChannelChat({ cid = "", unreads = 0, data = {} }) {
           </div>
         </div>
 
-        <Send id={cid} type="channel" name={name} />
+        <Send dragFiles={dragFiles} id={cid} type="channel" name={name} />
         <div className="placeholder"></div>
       </StyledChannelChat>
       {unreads != 0 && (

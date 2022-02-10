@@ -10,18 +10,32 @@ import { useSendMsgMutation } from "../../../app/services/contact";
 import { addChannelMsg } from "../../../app/slices/message.channel";
 import { addUserMsg } from "../../../app/slices/message.user";
 import StyledSend from "./styled";
+import UploadModal from "./UploadModal";
 
 const Types = {
   channel: "#",
   user: "@",
 };
-export default function Send({ name, type = "channel", id = "" }) {
+export default function Send({
+  name,
+  type = "channel",
+  id = "",
+  dragFiles = [],
+}) {
+  const [files, setFiles] = useState([]);
   const inputRef = useRef();
   const [emojiPicker, setEmojiPicker] = useState(false);
   const [shift, setShift] = useState(false);
   const [enter, setEnter] = useState(false);
   const [msg, setMsg] = useState("");
   const dispatch = useDispatch();
+  console.log("send drag files", dragFiles);
+  useEffect(() => {
+    if (dragFiles.length) {
+      setFiles((prev) => [...prev, ...dragFiles]);
+    }
+  }, [dragFiles]);
+
   const toggleEmojiPicker = () => {
     setEmojiPicker((prev) => !prev);
   };
@@ -79,15 +93,20 @@ export default function Send({ name, type = "channel", id = "" }) {
   useEffect(() => {
     inputRef.current.focus();
   }, [msg]);
-
+  const handleUpload = (evt) => {
+    setFiles([...evt.target.files]);
+  };
+  const resetFiles = () => {
+    setFiles([]);
+  };
   const handleSendMessage = () => {
     if (!msg || !type || !id) return;
     switch (type) {
       case "channel":
-        sendChannelMsg({ gid: id, message: msg });
+        sendChannelMsg({ id, content: msg });
         break;
       case "user":
-        sendMsg({ uid: id, message: msg });
+        sendMsg({ id, content: msg });
         break;
 
       default:
@@ -95,35 +114,54 @@ export default function Send({ name, type = "channel", id = "" }) {
     }
   };
   return (
-    <StyledSend className="send">
-      <MdAdd className="addon" size={20} color="#78787C" />
-      <div className="input">
-        <TextareaAutosize
-          // autoFocus
-          ref={inputRef}
-          className="content"
-          maxRows={8}
-          minRows={1}
-          onKeyDown={handleInputKeydown}
-          onChange={handleMsgChange}
-          value={msg}
-          placeholder={`给 ${Types[type]}${name} 发消息`}
+    <>
+      <StyledSend className="send">
+        <div className="addon">
+          <MdAdd size={20} color="#78787C" />
+          <input
+            multiple={true}
+            onChange={handleUpload}
+            type="file"
+            name="file"
+            id="file"
+          />
+        </div>
+        <div className="input">
+          <TextareaAutosize
+            // autoFocus
+            ref={inputRef}
+            className="content"
+            maxRows={8}
+            minRows={1}
+            onKeyDown={handleInputKeydown}
+            onChange={handleMsgChange}
+            value={msg}
+            placeholder={`给 ${Types[type]}${name} 发消息`}
+          />
+        </div>
+        <div className="emoji">
+          <button className="toggle" onClick={toggleEmojiPicker}>
+            😄
+          </button>
+          {emojiPicker && (
+            <div className="picker">
+              <Picker
+                onSelect={handleEmojiSelect}
+                showPreview={false}
+                showSkinTones={false}
+              />
+            </div>
+          )}
+        </div>
+      </StyledSend>
+      {files.length !== 0 && (
+        <UploadModal
+          type={type}
+          files={files}
+          sendTo={id}
+          closeModal={resetFiles}
         />
-      </div>
-      <div className="emoji">
-        <button className="toggle" onClick={toggleEmojiPicker}>
-          😄
-        </button>
-        {emojiPicker && (
-          <div className="picker">
-            <Picker
-              onSelect={handleEmojiSelect}
-              showPreview={false}
-              showSkinTones={false}
-            />
-          </div>
-        )}
-      </div>
-    </StyledSend>
+      )}
+    </>
   );
 }
