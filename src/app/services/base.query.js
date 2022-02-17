@@ -1,5 +1,6 @@
 import { fetchBaseQuery } from '@reduxjs/toolkit/query';
 import toast from 'react-hot-toast';
+import { updateToken, clearAuthData } from '../slices/auth.data';
 import BASE_URL, { tokenHeader } from '../config';
 const whiteList = ['login', 'checkInviteTokenValid'];
 const baseQuery = fetchBaseQuery({
@@ -34,17 +35,30 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
     break;
    case 401:
     {
-     toast.error('token expired, please login again');
      // try to get a new token with refreshToken
-     // const refreshResult = await baseQuery('/refreshToken', api, extraOptions);
-     // if (refreshResult.data) {
-     //     // store the new token
-     //     api.dispatch(tokenReceived(refreshResult.data));
-     //     // retry the initial query
-     //     result = await baseQuery(args, api, extraOptions);
-     // } else {
-     //     api.dispatch(loggedOut());
-     // }
+     const { token, refreshToken } = api.getState().authData;
+     const refreshResult = await baseQuery(
+      {
+       url: '/token/renew',
+       method: 'POST',
+       body: {
+        token,
+        refresh_token: refreshToken
+       }
+      },
+      api,
+      extraOptions
+     );
+     console.log({ refreshResult });
+     if (refreshResult.data) {
+      // store the new token
+      api.dispatch(updateToken(refreshResult.data));
+      // retry the initial query
+      result = await baseQuery(args, api, extraOptions);
+     } else {
+      toast.error('token expired, please login again');
+      api.dispatch(clearAuthData());
+     }
     }
 
     break;
