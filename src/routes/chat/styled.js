@@ -104,13 +104,18 @@ const StyledWrapper = styled.div`
             .up {
               display: flex;
               justify-content: space-between;
+              align-items: center;
               .name {
                 font-weight: 600;
                 font-size: 14px;
                 line-height: 20px;
                 color: #52525b;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
               }
               time {
+                white-space: nowrap;
                 font-weight: 500;
                 font-size: 12px;
                 line-height: 18px;

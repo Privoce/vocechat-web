@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-
-export default function Avatar({ url, id = 0, ...rest }) {
+export default function Avatar({ url = "", id = 0, ...rest }) {
   const [src, setSrc] = useState(url);
   const [loaded, setLoaded] = useState(false);
 
@@ -22,7 +21,7 @@ export default function Avatar({ url, id = 0, ...rest }) {
       if (!loaded) {
         handleError();
       }
-    }, 500);
+    }, 2000);
 
     return () => {
       clearTimeout(inter);

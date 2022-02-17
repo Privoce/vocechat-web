@@ -1,6 +1,8 @@
 // import React from 'react';
 import styled from "styled-components";
 import Avatar from "./Avatar";
+import Tippy from "@tippyjs/react";
+import Profile from "./Profile";
 import { useGetContactsQuery } from "../../app/services/contact";
 
 const StyledWrapper = styled.div`
@@ -18,6 +20,7 @@ const StyledWrapper = styled.div`
     }
   }
   .avatar {
+    cursor: pointer;
     width: 32px;
     height: 32px;
     position: relative;
@@ -50,16 +53,30 @@ const StyledWrapper = styled.div`
     color: #52525b;
   }
 `;
-export default function Contact({ interactive = true, status = "", uid = "" }) {
+export default function Contact({
+  interactive = true,
+  status = "",
+  uid = "",
+  popover = false,
+}) {
   const { data: contacts } = useGetContactsQuery();
   if (!contacts) return null;
   const currUser = contacts.find((c) => c.uid == uid);
   return (
     <StyledWrapper className={`${interactive ? "interactive" : ""}`}>
-      <div className="avatar">
-        <Avatar url={currUser?.avatar} id={uid} alt="avatar" />
-        <div className={`status ${status}`}></div>
-      </div>
+      <Tippy
+        animation="perspective"
+        interactive
+        disabled={!popover}
+        placement="left"
+        trigger="click"
+        content={<Profile data={currUser} type="card" />}
+      >
+        <div className="avatar">
+          <Avatar url={currUser?.avatar} id={uid} alt="avatar" />
+          <div className={`status ${status}`}></div>
+        </div>
+      </Tippy>
       <span className="name">{currUser?.name}</span>
     </StyledWrapper>
   );

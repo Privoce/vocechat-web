@@ -4,7 +4,7 @@ import { useGetContactsQuery } from "../../app/services/contact";
 import Search from "../../common/component/Search";
 import Contact from "../../common/component/Contact";
 import CurrentUser from "../../common/component/CurrentUser";
-import Profile from "./Profile";
+import Profile from "../../common/component/Profile";
 
 import StyledWrapper from "./styled";
 
@@ -33,7 +33,7 @@ export default function ContactsPage() {
       </div>
       {user_id && (
         <div className="right">
-          <Profile uid={user_id} />
+          <Profile data={contacts.find((c) => c.uid == user_id)} />
         </div>
       )}
     </StyledWrapper>

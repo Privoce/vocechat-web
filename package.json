@@ -10,6 +10,7 @@
   "@reduxjs/toolkit": "^1.7.2",
   "@rtk-query/codegen-openapi": "^1.0.0-alpha.1",
   "@svgr/webpack": "^6.2.1",
+  "@tippyjs/react": "^4.2.6",
   "animate.css": "^4.1.1",
   "axios": "^0.25.0",
   "babel-loader": "^8.2.3",

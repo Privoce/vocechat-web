@@ -51,6 +51,7 @@ export const StyledDMChat = styled.article`
     display: flex;
     flex-direction: column;
     padding: 0 16px;
+    padding-top: 10px;
     height: calc(100vh - 56px - 80px);
     overflow-y: scroll;
     overflow-x: visible;

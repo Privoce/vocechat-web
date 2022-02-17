@@ -91,7 +91,7 @@ export default function ChannelChat({
       contacts={
         <StyledContacts>
           {filteredUsers.map(({ name, status, uid }) => {
-            return <Contact key={name} uid={uid} status={status} />;
+            return <Contact key={name} uid={uid} status={status} popover />;
           })}
         </StyledContacts>
       }
