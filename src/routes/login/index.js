@@ -108,7 +108,7 @@ export default function LoginPage() {
     </form>
     <hr className="or" />
     <GoogleLoginButton login={login} />
-    <MetamaskLoginButton />
+    <MetamaskLoginButton login={login} />
    </div>
   </StyledWrapper>
  );

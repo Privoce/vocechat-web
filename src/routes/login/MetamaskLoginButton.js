@@ -1,62 +1,54 @@
+/* eslint-disable no-undef */
 import { useState, useEffect, useRef } from 'react';
 import MetaMaskOnboarding from '@metamask/onboarding';
-const ONBOARD_TEXT = 'Click here to install MetaMask!';
-const CONNECT_TEXT = 'Sign in with MetaMask';
-const CONNECTED_TEXT = 'Connected';
-export default function MetamaskLoginButton() {
- const [btnTxt, setBtnTxt] = useState(ONBOARD_TEXT);
- const [isDisabled, setIsDisabled] = useState(false);
- const [accounts, setAccounts] = useState([]);
+import { useLazyGetMetamaskNonceQuery } from '../../app/services/auth';
+export default function MetamaskLoginButton({ login }) {
+ const [requesting, setRequesting] = useState(false);
+ const [getNonce] = useLazyGetMetamaskNonceQuery();
  const onboarding = useRef();
+
  useEffect(() => {
   if (!onboarding.current) {
    onboarding.current = new MetaMaskOnboarding();
   }
  }, []);
- useEffect(() => {
+ const getSignature = async (address, nonce) => {
+  console.log('get sn');
+  const signature = await ethereum.request({
+   method: 'personal_sign',
+   params: [nonce, address, 'hello from rustchat']
+  });
+  return signature;
+ };
+ const handleMetamaskLogin = async () => {
   if (MetaMaskOnboarding.isMetaMaskInstalled()) {
-   console.log(accounts);
-   if (accounts.length > 0) {
-    setBtnTxt(CONNECTED_TEXT);
-    setIsDisabled(true);
-    onboarding.current.stopOnboarding();
-   } else {
-    setBtnTxt(CONNECT_TEXT);
-    setIsDisabled(false);
+   setRequesting(true);
+   const [address] = await ethereum.request({
+    method: 'eth_requestAccounts'
+   });
+   const { data: nonce, isSuccess } = await getNonce(address);
+   if (isSuccess) {
+    const signature = await getSignature(address, nonce);
+    login({
+     public_address: address,
+     nonce,
+     signature,
+     type: 'metamask'
+    });
+    setRequesting(false);
    }
-  }
- }, [accounts]);
-
- useEffect(() => {
-  function handleNewAccounts(newAccounts) {
-   setAccounts(newAccounts);
-  }
-  if (MetaMaskOnboarding.isMetaMaskInstalled()) {
-   window.ethereum.request({ method: 'eth_requestAccounts' }).then(handleNewAccounts);
-   window.ethereum.on('accountsChanged', handleNewAccounts);
-   return () => {
-    window.ethereum.off('accountsChanged', handleNewAccounts);
-   };
-  }
- }, []);
-
- const handleMetamaskLogin = () => {
-  if (MetaMaskOnboarding.isMetaMaskInstalled()) {
-   window.ethereum
-    .request({ method: 'eth_requestAccounts' })
-    .then((newAccounts) => setAccounts(newAccounts));
   } else {
    onboarding.current.startOnboarding();
   }
  };
  return (
-  <button disabled={isDisabled} onClick={handleMetamaskLogin} href="#" className="btn social">
+  <button disabled={requesting} onClick={handleMetamaskLogin} href="#" className="btn social">
    <img
     className="icon"
     src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg"
     alt="meta mask icon"
    />
-   {btnTxt}
+   Sign in with MetaMask
   </button>
  );
 }

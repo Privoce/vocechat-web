@@ -25,10 +25,20 @@ export const authApi = createApi({
     body: { magic_token: token }
    })
   }),
+  getMetamaskNonce: builder.query({
+   query: (address) => ({
+    url: `/token/metamask/nonce?public_address=${address}`
+   })
+  }),
   logout: builder.query({
    query: () => ({ url: `token/logout` })
   })
  })
 });
 
-export const { useLoginMutation, useLazyLogoutQuery, useCheckInviteTokenValidMutation } = authApi;
+export const {
+ useLazyGetMetamaskNonceQuery,
+ useLoginMutation,
+ useLazyLogoutQuery,
+ useCheckInviteTokenValidMutation
+} = authApi;
