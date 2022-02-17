@@ -66,7 +66,26 @@ export default function ChannelChat({
             <span className="title">{name}</span>
             <span className="desc">{description}</span>
           </div>
-          <ul className="members">members</ul>
+          <ul className="opts">
+            <li className="opt">
+              <img
+                src="https://static.nicegoodthings.com/project/rustchat/icon.alert.svg"
+                alt="opt icon"
+              />
+            </li>
+            <li className="opt">
+              <img
+                src="https://static.nicegoodthings.com/project/rustchat/icon.pin.svg"
+                alt="opt icon"
+              />
+            </li>
+            <li className="opt">
+              <img
+                src="https://static.nicegoodthings.com/project/rustchat/icon.people.svg"
+                alt="opt icon"
+              />
+            </li>
+          </ul>
         </StyledHeader>
       }
       contacts={

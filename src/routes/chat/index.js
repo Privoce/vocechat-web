@@ -10,6 +10,7 @@ import { useGetContactsQuery } from "../../app/services/contact";
 import StyledWrapper from "./styled";
 import Search from "../../common/component/Search";
 import Avatar from "../../common/component/Avatar";
+import CurrentUser from "../../common/component/CurrentUser";
 import ChannelChat from "./ChannelChat";
 import DMChat from "./DMChat";
 import ChannelList from "./ChannelList";
@@ -41,7 +42,11 @@ export default function ChatPage() {
     return Object.values(ChannelMsgData[gid] || {}).filter((m) => m.unread)
       .length;
   };
-
+  const handleToggleExpand = (evt) => {
+    const { currentTarget } = evt;
+    const listEle = currentTarget.parentElement.parentElement;
+    listEle.classList.toggle("collapse");
+  };
   if (!contacts) return null;
   const tmpSessionUser = contacts.find((c) => c.uid == user_id);
   const transformedChannels = Object.entries(channels).map(([key, obj]) => {
@@ -72,8 +77,12 @@ export default function ChatPage() {
           <Search />
           <div className="list channels">
             <h3 className="title">
-              <span className="txt">
-                <AiOutlineCaretDown size={18} color="#78787C" />
+              <span className="txt" onClick={handleToggleExpand}>
+                <AiOutlineCaretDown
+                  className="icon"
+                  size={18}
+                  color="#78787C"
+                />
                 CHANNELS
               </span>
               <MdAdd
@@ -91,8 +100,12 @@ export default function ChatPage() {
           </div>
           <div className="list dms">
             <h3 className="title">
-              <span className="txt">
-                <AiOutlineCaretDown size={18} color="#78787C" />
+              <span className="txt" onClick={handleToggleExpand}>
+                <AiOutlineCaretDown
+                  className="icon"
+                  size={18}
+                  color="#78787C"
+                />
                 DIRECT MESSAGE
               </span>
               <MdAdd
@@ -125,6 +138,7 @@ export default function ChatPage() {
               )}
             </nav>
           </div>
+          <CurrentUser />
         </div>
         <div className="right">
           {channel_id && (

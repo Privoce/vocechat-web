@@ -27,6 +27,20 @@ export const StyledHeader = styled.header`
       color: #616161;
     }
   }
+  .opts {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    .opt {
+      cursor: pointer;
+      width: 24px;
+      height: 24px;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
 `;
 export const StyledDMChat = styled.article`
   position: relative;

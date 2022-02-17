@@ -3,6 +3,7 @@ const StyledWrapper = styled.div`
   display: flex;
   height: 100%;
   > .left {
+    position: relative;
     display: flex;
     flex-direction: column;
     width: 260px;

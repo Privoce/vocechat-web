@@ -6,9 +6,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { clearAuthData } from "../../app/slices/auth.data";
+import BASE_URL from "../../app/config";
 import { useLazyLogoutQuery } from "../../app/services/auth";
-
+import Avatar from "./Avatar";
 const StyledWrapper = styled.div`
+  background-color: #e5e5e5;
   position: absolute;
   bottom: 0;
   left: 0;
@@ -57,14 +59,15 @@ export default function CurrentUser({ expand = true }) {
   }, [isSuccess]);
 
   if (!user) return null;
-  const { name } = user;
+  const { name, uid } = user;
   return (
     <StyledWrapper>
       <div className="profile" title={name}>
-        <img
+        <Avatar
           onDoubleClick={handleLogout}
           title={name}
-          src={`https://avatars.dicebear.com/api/adventurer-neutral/${name}.svg`}
+          url={`${BASE_URL}/resource/avatar?uid=${uid}`}
+          id={uid}
           alt="user avatar"
           className="avatar"
         />

@@ -3,6 +3,7 @@ const StyledWrapper = styled.div`
   display: flex;
   height: 100%;
   > .left {
+    position: relative;
     display: flex;
     flex-direction: column;
     width: 260px;
@@ -25,6 +26,10 @@ const StyledWrapper = styled.div`
           font-size: 12px;
           line-height: 20px;
           color: #78787c;
+        }
+        .icon {
+          transition: transform 0.5s ease;
+          transform-origin: center;
         }
       }
       > .nav {
@@ -149,6 +154,14 @@ const StyledWrapper = styled.div`
         /* drop files effect */
         .drop_over {
           outline: 2px solid #52edff;
+        }
+      }
+      &.collapse {
+        .title .icon {
+          transform: rotate(-90deg);
+        }
+        > .nav {
+          display: none;
         }
       }
     }

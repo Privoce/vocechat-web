@@ -20,7 +20,9 @@ const StyledWrapper = styled.article`
     justify-content: space-between;
     position: relative;
     .members {
-      border-top: 1px solid transparent;
+      box-shadow: inset 0px 10px 2px -10px rgba(0, 0, 0, 0.1);
+      /* margin-top: 1px; */
+      /* border-top: 1px solid transparent; */
     }
   }
   .drag_tip {

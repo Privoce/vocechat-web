@@ -7,9 +7,10 @@ import { toggleMenuExpand } from "../../app/slices/ui";
 import StyledWrapper from "./styled";
 import ServerDropList from "./ServerDropList";
 import Tools from "./Tools";
+import Menu from "./Menu";
 import usePreload from "./usePreload";
 
-import CurrentUser from "./CurrentUser";
+// import CurrentUser from "./CurrentUser";
 
 import ChatIcon from "../../assets/icons/chat.svg";
 import ContactIcon from "../../assets/icons/contact.svg";
@@ -50,11 +51,7 @@ export default function HomePage() {
       />
       <StyledWrapper>
         <div className={`col left ${menuExpand ? "expand" : ""}`}>
-          <ServerDropList
-            data={data?.server}
-            expand={menuExpand}
-            toggle={toggleExpand}
-          />
+          <ServerDropList data={data?.server} expand={menuExpand} />
           <nav className="nav">
             <NavLink className="link" to={"/chat"}>
               <img src={ChatIcon} alt="chat icon" /> {menuExpand && `Chat`}
@@ -64,8 +61,10 @@ export default function HomePage() {
               {menuExpand && `Contacts`}
             </NavLink>
           </nav>
+          <div className="divider"></div>
           <Tools expand={menuExpand} />
-          <CurrentUser expand={menuExpand} />
+          <Menu toggle={toggleExpand} expand={menuExpand} />
+          {/* <CurrentUser expand={menuExpand} /> */}
         </div>
         <div className="col right">
           <Outlet />

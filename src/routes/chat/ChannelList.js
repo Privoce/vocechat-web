@@ -22,11 +22,10 @@ const NavItem = ({ data, setFiles }) => {
       isActive: monitor.canDrop() && monitor.isOver(),
     }),
   }));
-  const { id, is_public, name, description, unreads } = data;
+  const { id, is_public, name, unreads } = data;
   return (
     <NavLink
       ref={drop}
-      title={description}
       key={id}
       className={`link ${isActive ? "drop_over" : ""}`}
       to={`/chat/channel/${id}`}

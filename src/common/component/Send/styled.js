@@ -31,6 +31,7 @@ const StyledSend = styled.div`
     width: 100%;
     position: relative;
     .content {
+      resize: unset;
       outline: none;
       padding: 4px;
       font-weight: 500;

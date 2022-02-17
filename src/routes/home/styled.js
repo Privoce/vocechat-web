@@ -14,6 +14,12 @@ const StyledWrapper = styled.div`
       width: 64px;
       box-shadow: inset -1px 0px 0px rgba(0, 0, 0, 0.1);
       transition: all 0.5s ease-in;
+      > .divider {
+        width: -webkit-fill-available;
+        height: 1px;
+        background-color: #d4d4d4;
+        margin: 8px 16px;
+      }
       &.expand {
         width: 180px;
       }
@@ -31,7 +37,7 @@ const StyledWrapper = styled.div`
         align-items: center;
         gap: 10px;
         text-decoration: none;
-        padding: 10px 8px;
+        padding: 8px;
         font-weight: 600;
         font-size: 14px;
         line-height: 20px;

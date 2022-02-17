@@ -45,7 +45,9 @@ const StyledWrapper = styled.div`
     right: 8px;
     display: flex;
     flex-direction: column;
+    padding: 4px;
     .item {
+      border-radius: 3px;
       display: flex;
       align-items: center;
       gap: 4px;
@@ -53,7 +55,10 @@ const StyledWrapper = styled.div`
       font-size: 14px;
       line-height: 20px;
       cursor: pointer;
-      padding: 12px;
+      padding: 10px 8px;
+      &:hover {
+        background: rgba(116, 127, 141, 0.2);
+      }
     }
   }
 `;

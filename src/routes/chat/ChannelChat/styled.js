@@ -22,6 +22,20 @@ export const StyledHeader = styled.header`
       color: #616161;
     }
   }
+  .opts {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    .opt {
+      cursor: pointer;
+      width: 24px;
+      height: 24px;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
 `;
 export const StyledNotification = styled.div`
   padding: 3px 8px;
@@ -57,7 +71,7 @@ export const StyledContacts = styled.div`
   height: calc(100vh - 56px);
   overflow-y: scroll;
   background: #f5f6f7;
-  padding: 16px;
+  padding: 8px;
 `;
 export const StyledChannelChat = styled.article`
   position: relative;

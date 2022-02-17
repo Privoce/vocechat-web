@@ -6,6 +6,7 @@ import Modal from "../Modal";
 import ChannelIcon from "../ChannelIcon";
 import Contact from "../Contact";
 import StyledWrapper from "./styled";
+import StyledCheckbox from "../../component/StyledCheckbox";
 import useFilteredUsers from "../../hook/useFilteredUsers";
 import { addChannel } from "../../../app/slices/channels";
 
@@ -103,10 +104,9 @@ export default function ChannelModal({ personal = false, closeModal }) {
                       className="user"
                       onClick={toggleCheckMember}
                     >
-                      <input
+                      <StyledCheckbox
                         readOnly
                         checked={checked}
-                        type="checkbox"
                         name="cb"
                         id="cb"
                       />

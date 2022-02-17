@@ -3,6 +3,7 @@ import { NavLink, useParams } from "react-router-dom";
 import { useGetContactsQuery } from "../../app/services/contact";
 import Search from "../../common/component/Search";
 import Contact from "../../common/component/Contact";
+import CurrentUser from "../../common/component/CurrentUser";
 import Profile from "./Profile";
 
 import StyledWrapper from "./styled";
@@ -28,6 +29,7 @@ export default function ContactsPage() {
             })}
           </nav>
         </div>
+        <CurrentUser />
       </div>
       {user_id && (
         <div className="right">

@@ -42,6 +42,7 @@ const StyledMsg = styled.div`
       }
     }
     .down {
+      user-select: text;
       color: #374151;
       font-weight: normal;
       font-size: 14px;
@@ -94,7 +95,7 @@ export default function Message({
   const { data: contacts } = useGetContactsQuery();
   useEffect(() => {
     if (!unread) {
-      avatarRef.current?.scrollIntoView(false);
+      avatarRef.current?.scrollIntoView();
     }
   }, [unread]);
 

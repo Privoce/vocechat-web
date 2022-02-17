@@ -41,7 +41,12 @@ const StyledWrapper = styled.div`
         display: flex;
         align-items: center;
         padding: 0 16px;
+        /* margin: 0 4px; */
         width: -webkit-fill-available;
+        border-radius: 4px;
+        &:hover {
+          background: rgba(116, 127, 141, 0.1);
+        }
         > div {
           width: 100%;
         }

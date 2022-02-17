@@ -34,17 +34,17 @@ const StyledWrapper = styled.div`
       color: #4b5563;
     }
     .tool {
+      padding: 5px 4px;
       .logo {
         border-radius: 5.5px;
-        background: #fff;
-        width: 32px;
-        height: 32px;
+        width: 24px;
+        height: 24px;
         display: flex;
         align-items: center;
         justify-content: center;
         .icon {
-          width: 21px;
-          height: 21px;
+          width: 100%;
+          height: 100%;
         }
       }
       .title {
@@ -53,8 +53,8 @@ const StyledWrapper = styled.div`
       &.add .logo {
         background: none;
         .icon {
-          width: 40px;
-          height: 40px;
+          width: 30px;
+          height: 30px;
         }
       }
     }

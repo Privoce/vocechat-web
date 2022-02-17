@@ -55,10 +55,7 @@ export default function Contact({ interactive = true, status = "", uid = "" }) {
   if (!contacts) return null;
   const currUser = contacts.find((c) => c.uid == uid);
   return (
-    <StyledWrapper
-      className={`${interactive ? "interactive" : ""}`}
-      title={currUser?.email}
-    >
+    <StyledWrapper className={`${interactive ? "interactive" : ""}`}>
       <div className="avatar">
         <Avatar url={currUser?.avatar} id={uid} alt="avatar" />
         <div className={`status ${status}`}></div>

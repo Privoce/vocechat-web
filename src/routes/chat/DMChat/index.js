@@ -36,6 +36,32 @@ export default function DMChat({ uid = "", dropFiles = [] }) {
       header={
         <StyledHeader>
           <Contact interactive={false} uid={currUser.uid} />
+          <ul className="opts">
+            <li className="opt">
+              <img
+                src="https://static.nicegoodthings.com/project/rustchat/icon.call.svg"
+                alt="opt icon"
+              />
+            </li>
+            <li className="opt">
+              <img
+                src="https://static.nicegoodthings.com/project/rustchat/icon.video.svg"
+                alt="opt icon"
+              />
+            </li>
+            <li className="opt">
+              <img
+                src="https://static.nicegoodthings.com/project/rustchat/icon.people.add.svg"
+                alt="opt icon"
+              />
+            </li>
+            <li className="opt">
+              <img
+                src="https://static.nicegoodthings.com/project/rustchat/icon.mark.read.svg"
+                alt="opt icon"
+              />
+            </li>
+          </ul>
         </StyledHeader>
       }
     >

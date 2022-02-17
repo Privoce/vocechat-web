@@ -4,7 +4,7 @@ import { HiChevronDoubleLeft } from "react-icons/hi";
 
 const StyledWrapper = styled.div`
   height: 56px;
-  padding: 0 16px;
+  padding: 0 20px;
   padding-right: 5px;
   display: flex;
   justify-content: space-between;
@@ -20,53 +20,25 @@ const StyledWrapper = styled.div`
     .logo {
       width: 24px;
       height: 24px;
-      background-color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 4px;
-      img {
-        width: 16px;
-        height: 16px;
-      }
     }
     .title {
       white-space: nowrap;
       font-weight: normal;
-      font-size: 14px;
-      line-height: 20px;
-      color: #4b5563;
-    }
-  }
-  .arrow {
-    cursor: pointer;
-    transform-origin: center;
-    transition: transform 0.5s ease-in-out;
-    display: flex;
-    width: 15px;
-    height: 15px;
-    transform: rotate(180deg);
-    .icon {
-      width: 100%;
-      height: 100%;
-    }
-    &.expand {
-      transform: rotate(0deg);
+      font-style: normal;
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 18px;
+      color: #1c1c1e;
     }
   }
 `;
-export default function ServerDropList({ data, toggle, expand = true }) {
+export default function ServerDropList({ data, expand = true }) {
   if (!data) return null;
   return (
     <StyledWrapper className={expand ? "expand" : ""}>
       <div className="server">
-        <div className="logo">
-          <img src={data.logo} alt="logo" />
-        </div>
+        <img className="logo" src={data.logo} alt="logo" />
         {expand && <h2 className="title">{data.name}</h2>}
-      </div>
-      <div onClick={toggle} className={`arrow ${expand ? "expand" : ""}`}>
-        <HiChevronDoubleLeft className="icon" color="#BFBFBF" />
       </div>
     </StyledWrapper>
   );
