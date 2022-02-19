@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import Message from "../../../common/component/Message";
 import Send from "../../../common/component/Send";
 import Contact from "../../../common/component/Contact";
-import { useGetContactsQuery } from "../../../app/services/contact";
 import Layout from "../Layout";
 
 import { StyledHeader, StyledDMChat } from "./styled";
@@ -11,10 +10,10 @@ import { StyledHeader, StyledDMChat } from "./styled";
 export default function DMChat({ uid = "", dropFiles = [] }) {
   console.log("dm files", dropFiles);
   const [dragFiles, setDragFiles] = useState([]);
+  const contacts = useSelector((store) => store.contacts);
   const msgs = useSelector((store) => {
     return store.userMsg[uid] || {};
   });
-  const { data: contacts } = useGetContactsQuery();
   const [currUser, setCurrUser] = useState(null);
   useEffect(() => {
     console.log({ uid });

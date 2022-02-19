@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 import { MdAdd } from "react-icons/md";
 import { AiOutlineCaretDown } from "react-icons/ai";
 
-import { useGetContactsQuery } from "../../app/services/contact";
 import StyledWrapper from "./styled";
 import Search from "../../common/component/Search";
 import Avatar from "../../common/component/Avatar";
@@ -31,7 +30,7 @@ export default function ChatPage() {
   const [channelModalVisible, setChannelModalVisible] = useState(false);
   const [contactsModalVisible, setContactsModalVisible] = useState(false);
   const { channel_id, user_id } = useParams();
-  const { data: contacts } = useGetContactsQuery();
+  const contacts = useSelector((store) => store.contacts);
   const toggleContactsModalVisible = () => {
     setContactsModalVisible((prev) => !prev);
   };
@@ -121,7 +120,7 @@ export default function ChatPage() {
                   <Avatar
                     className="avatar"
                     url={tmpSessionUser.avatar}
-                    id={user_id}
+                    name={tmpSessionUser.name}
                   />
                   <div className="details">
                     <div className="up">

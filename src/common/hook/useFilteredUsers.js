@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
-import { useGetContactsQuery } from "../../app/services/contact";
-
+import { useSelector } from "react-redux";
 export default function useFilteredUsers() {
   const [input, setInput] = useState("");
-  const { data: contacts } = useGetContactsQuery();
+  const contacts = useSelector((store) => store.contacts);
   const [filteredUsers, setFilteredUsers] = useState(contacts);
   useEffect(() => {
     if (!input) {

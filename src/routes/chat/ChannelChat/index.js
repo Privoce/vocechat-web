@@ -10,7 +10,6 @@ import {
   clearChannelMsgUnread,
   setLastAccessTime,
 } from "../../../app/slices/message.channel";
-import { useGetContactsQuery } from "../../../app/services/contact";
 import Contact from "../../../common/component/Contact";
 import Layout from "../Layout";
 import {
@@ -29,10 +28,9 @@ export default function ChannelChat({
   // const containerRef = useRef(null);
   const [dragFiles, setDragFiles] = useState([]);
   const dispatch = useDispatch();
-  const msgs = useSelector((store) => {
-    return store.channelMsg[cid] || {};
+  const { msgs, users } = useSelector((store) => {
+    return { msgs: store.channelMsg[cid] || {}, users: store.contacts };
   });
-  const { data: users } = useGetContactsQuery();
   const handleClearUnreads = () => {
     dispatch(clearChannelMsgUnread(cid));
   };

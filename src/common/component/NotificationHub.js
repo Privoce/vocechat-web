@@ -10,6 +10,7 @@ import {
   addChannel,
   deleteChannel,
 } from "../../app/slices/channels";
+import { updateUsersStatus } from "../../app/slices/contacts";
 import {
   clearAuthData,
   setUsersVersion,
@@ -69,6 +70,14 @@ const NotificationHub = ({ token, usersVersion = 0, afterMid = 0 }) => {
           console.log("users snapshot");
           const { version } = data;
           dispatch(setUsersVersion({ version }));
+        }
+        break;
+      case "users_state":
+      case "users_state_changed":
+        {
+          let { type, ...rest } = data;
+          const onlines = type == "users_state_changed" ? [rest] : rest.users;
+          dispatch(updateUsersStatus(onlines));
         }
         break;
       case "kick":

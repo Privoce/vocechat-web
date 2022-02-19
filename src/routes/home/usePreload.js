@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useGetContactsQuery } from "../../app/services/contact";
 import { clearAuthData } from "../../app/slices/auth.data";
+import { setContacts } from "../../app/slices/contacts";
 
 // import { useGetChannelsQuery } from "../../app/services/channel";
 import { useGetServerQuery } from "../../app/services/server";
@@ -41,8 +42,13 @@ export default function usePreload() {
       if (!matchedUser) {
         dispatch(clearAuthData());
         navigate("/login");
+      } else {
+        const markedContacts = contacts.map((u) => {
+          return u.uid == matchedUser.uid ? { ...u, online: true } : u;
+        });
+        dispatch(setContacts(markedContacts));
+        setChecked(true);
       }
-      setChecked(true);
     }
   }, [contacts]);
 

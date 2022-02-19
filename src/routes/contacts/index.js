@@ -1,6 +1,6 @@
 // import { useState, useEffect } from "react";
 import { NavLink, useParams } from "react-router-dom";
-import { useGetContactsQuery } from "../../app/services/contact";
+import { useSelector } from "react-redux";
 import Search from "../../common/component/Search";
 import Contact from "../../common/component/Contact";
 import CurrentUser from "../../common/component/CurrentUser";
@@ -10,7 +10,7 @@ import StyledWrapper from "./styled";
 
 export default function ContactsPage() {
   const { user_id } = useParams();
-  const { data: contacts } = useGetContactsQuery();
+  const contacts = useSelector((store) => store.contacts);
 
   console.log({ contacts, user_id });
   if (!contacts) return null;

@@ -13,6 +13,7 @@ import {
 import authDataReducer from "./slices/auth.data";
 import uiReducer from "./slices/ui";
 import channelsReducer from "./slices/channels";
+import contactsReducer from "./slices/contacts";
 import channelMsgReducer from "./slices/message.channel";
 import userMsgReducer from "./slices/message.user";
 import { authApi } from "./services/auth";
@@ -28,6 +29,7 @@ const persistedReducer = persistReducer(
   persistConfig,
   combineReducers({
     ui: uiReducer,
+    contacts: contactsReducer,
     channels: channelsReducer,
     userMsg: userMsgReducer,
     channelMsg: channelMsgReducer,
@@ -53,4 +55,27 @@ const store = configureStore({
     ),
 });
 setupListeners(store.dispatch);
+// export function swapToUserStore(userId) {
+//   console.log({ userId });
+//   const newConfig = {
+//     ...persistConfig,
+//     keyPrefix: userId,
+//   };
+//   store.replaceReducer(
+//     persistReducer(
+//       newConfig,
+//       combineReducers({
+//         ui: uiReducer,
+//         channels: channelsReducer,
+//         userMsg: userMsgReducer,
+//         channelMsg: channelMsgReducer,
+//         authData: authDataReducer,
+//         [authApi.reducerPath]: authApi.reducer,
+//         [contactApi.reducerPath]: contactApi.reducer,
+//         [channelApi.reducerPath]: channelApi.reducer,
+//         [serverApi.reducerPath]: serverApi.reducer,
+//       })
+//     )
+//   );
+// }
 export default store;

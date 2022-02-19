@@ -1,13 +1,12 @@
 // import React from "react";
 // import toast from "react-hot-toast";
 import { useState, useEffect } from "react";
-
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { BsChatText } from "react-icons/bs";
 import { RiUserAddLine } from "react-icons/ri";
 import { IoShareOutline } from "react-icons/io5";
 import styled from "styled-components";
-import { useGetContactsQuery } from "../../app/services/contact";
 
 import Avatar from "../../common/component/Avatar";
 
@@ -52,7 +51,7 @@ const StyledWrapper = styled.div`
   }
 `;
 export default function Profile({ uid = null }) {
-  const { data: contacts } = useGetContactsQuery();
+  const contacts = useSelector((store) => store.contacts);
   const [profile, setProfile] = useState(null);
   useEffect(() => {
     if (contacts && contacts) {
@@ -66,7 +65,7 @@ export default function Profile({ uid = null }) {
   const { name, email, avatar } = profile;
   return (
     <StyledWrapper>
-      <Avatar className="avatar" url={avatar} id={uid} name={name} />
+      <Avatar className="avatar" url={avatar} name={name} />
       <h2 className="name">{name}</h2>
       <span className="email">{email}</span>
       <ul className="icons">
