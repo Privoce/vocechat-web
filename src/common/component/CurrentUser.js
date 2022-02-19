@@ -59,15 +59,15 @@ export default function CurrentUser({ expand = true }) {
   }, [isSuccess]);
 
   if (!user) return null;
-  const { name, uid } = user;
+  const { name, avatar } = user;
   return (
     <StyledWrapper>
       <div className="profile" title={name}>
         <Avatar
           onDoubleClick={handleLogout}
           title={name}
-          url={`${BASE_URL}/resource/avatar?uid=${uid}`}
-          id={uid}
+          url={avatar}
+          name={name}
           alt="user avatar"
           className="avatar"
         />

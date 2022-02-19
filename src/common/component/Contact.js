@@ -1,9 +1,10 @@
 // import React from 'react';
 import styled from "styled-components";
-import Avatar from "./Avatar";
+import { useSelector } from "react-redux";
 import Tippy from "@tippyjs/react";
+import "tippy.js/animations/scale-subtle.css";
+import Avatar from "./Avatar";
 import Profile from "./Profile";
-import { useGetContactsQuery } from "../../app/services/contact";
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -37,7 +38,9 @@ const StyledWrapper = styled.div`
       height: 10px;
       border-radius: 50%;
       outline: 2px solid #fff;
-      background-color: #22c55e;
+      &.online {
+        background-color: #22c55e;
+      }
       &.offline {
         background-color: #a1a1aa;
       }
@@ -55,17 +58,17 @@ const StyledWrapper = styled.div`
 `;
 export default function Contact({
   interactive = true,
-  status = "",
   uid = "",
   popover = false,
 }) {
-  const { data: contacts } = useGetContactsQuery();
+  const contacts = useSelector((store) => store.contacts);
   if (!contacts) return null;
   const currUser = contacts.find((c) => c.uid == uid);
   return (
     <StyledWrapper className={`${interactive ? "interactive" : ""}`}>
       <Tippy
-        animation="perspective"
+        inertia={true}
+        animation="scale"
         interactive
         disabled={!popover}
         placement="left"
@@ -73,8 +76,10 @@ export default function Contact({
         content={<Profile data={currUser} type="card" />}
       >
         <div className="avatar">
-          <Avatar url={currUser?.avatar} id={uid} alt="avatar" />
-          <div className={`status ${status}`}></div>
+          <Avatar url={currUser?.avatar} name={currUser?.name} alt="avatar" />
+          <div
+            className={`status ${currUser?.online ? "online" : "offline"}`}
+          ></div>
         </div>
       </Tippy>
       <span className="name">{currUser?.name}</span>

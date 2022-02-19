@@ -67,7 +67,7 @@ export default function Profile({ data = null, type = "embed" }) {
   const { uid, name, email, avatar } = data;
   return (
     <StyledWrapper className={type}>
-      <Avatar className="avatar" url={avatar} id={uid} name={name} />
+      <Avatar className="avatar" url={avatar} name={name} />
       <h2 className="name">{name}</h2>
       <span className="email">{email}</span>
       <ul className="icons">

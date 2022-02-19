@@ -31,7 +31,7 @@ const NavItem = ({ data, setFiles }) => {
       className={`session ${isActive ? "drop_over" : ""}`}
       to={`/chat/dm/${uid}`}
     >
-      <Avatar className="avatar" url={user.avatar} id={uid} />
+      <Avatar className="avatar" url={user.avatar} name={user.name} />
       <div className="details">
         <div className="up">
           <span className="name">{user.name}</span>
