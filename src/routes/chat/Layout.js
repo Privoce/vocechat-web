@@ -87,7 +87,7 @@ export default function Layout({
     }),
   }));
   return (
-    <StyledWrapper className="animate__animated animate__fadeIn" ref={drop}>
+    <StyledWrapper ref={drop}>
       <header className="head">{header}</header>
       <main className="main">
         {children}

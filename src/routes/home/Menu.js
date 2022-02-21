@@ -37,7 +37,11 @@ export default function Menu({ toggle, expand = true }) {
           alt="setting icon"
           className="icon"
         />
-        {expand && <span className="txt">Settings</span>}
+        {expand && (
+          <span className="txt animate__animated animate__fadeIn">
+            Settings
+          </span>
+        )}
       </li>
       <li className="menu" onClick={toggle}>
         <img
@@ -49,7 +53,9 @@ export default function Menu({ toggle, expand = true }) {
           alt="expand icon"
           className="icon"
         />
-        {expand && <span className="txt">Expand</span>}
+        {expand && (
+          <span className="txt animate__animated animate__fadeIn">Expand</span>
+        )}
       </li>
     </StyledMenus>
   );

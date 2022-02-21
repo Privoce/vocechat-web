@@ -1,12 +1,12 @@
 import { useEffect, useRef } from "react";
 import dayjs from "dayjs";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useInViewRef } from "rooks";
 import Tippy from "@tippyjs/react";
+import Linkify from "react-linkify";
 import Profile from "../Profile";
 import Avatar from "../Avatar";
 import BASE_URL from "../../../app/config";
-import { useGetContactsQuery } from "../../../app/services/contact";
 import { setChannelMsgRead } from "../../../app/slices/message.channel";
 import { setUserMsgRead } from "../../../app/slices/message.user";
 import StyledWrapper from "./styled";
@@ -15,7 +15,17 @@ const renderContent = (type, content) => {
   let ctn = null;
   switch (type) {
     case "text/plain":
-      ctn = content;
+      ctn = (
+        <Linkify
+          componentDecorator={(decoratedHref, decoratedText, key) => (
+            <a target="blank" href={decoratedHref} key={key}>
+              {decoratedText}
+            </a>
+          )}
+        >
+          {content}
+        </Linkify>
+      );
       break;
     case "image/jpeg":
       ctn = (
@@ -45,7 +55,7 @@ export default function Message({
   const [myRef, inView] = useInViewRef();
   const disptach = useDispatch();
   const avatarRef = useRef(null);
-  const { data: contacts } = useGetContactsQuery();
+  const contacts = useSelector((store) => store.contacts);
   useEffect(() => {
     if (!unread) {
       avatarRef.current?.scrollIntoView();
@@ -72,7 +82,7 @@ export default function Message({
         content={<Profile data={currUser} type="card" />}
       >
         <div className="avatar" data-uid={uid} ref={avatarRef}>
-          <Avatar url={currUser.avatar} id={fromUid} name={currUser.name} />
+          <Avatar url={currUser.avatar} name={currUser.name} />
         </div>
       </Tippy>
       <div className="details">

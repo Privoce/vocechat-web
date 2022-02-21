@@ -1,6 +1,6 @@
 // import React from 'react';
 import styled from "styled-components";
-import { HiChevronDoubleLeft } from "react-icons/hi";
+// import { HiChevronDoubleLeft } from "react-icons/hi";
 
 const StyledWrapper = styled.div`
   height: 56px;
@@ -38,7 +38,11 @@ export default function ServerDropList({ data, expand = true }) {
     <StyledWrapper className={expand ? "expand" : ""}>
       <div className="server">
         <img className="logo" src={data.logo} alt="logo" />
-        {expand && <h2 className="title">{data.name}</h2>}
+        {expand && (
+          <h2 className="title animate__animated animate__fadeIn">
+            {data.name}
+          </h2>
+        )}
       </div>
     </StyledWrapper>
   );

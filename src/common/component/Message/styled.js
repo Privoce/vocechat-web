@@ -56,6 +56,12 @@ const StyledMsg = styled.div`
       .img {
         max-width: 400px;
       }
+      a {
+        border-radius: 2px;
+        background-color: #f5feff;
+        padding: 2px;
+        color: #1fe1f9;
+      }
     }
   }
 `;

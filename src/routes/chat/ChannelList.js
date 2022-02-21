@@ -34,7 +34,14 @@ const NavItem = ({ data, setFiles }) => {
         <ChannelIcon personal={!is_public} />
         {name}
       </span>
-      {unreads > 0 && <i className="badge">{unreads}</i>}
+      <div className="icons">
+        <i className="setting"></i>
+        {unreads > 0 && (
+          <i className={`badge ${unreads > 99 ? "dot" : ""}`}>
+            {unreads > 99 ? null : unreads}
+          </i>
+        )}
+      </div>
     </NavLink>
   );
 };

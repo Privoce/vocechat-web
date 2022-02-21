@@ -58,23 +58,39 @@ const StyledWrapper = styled.div`
             font-size: 14px;
             line-height: 20px;
           }
-          > .badge {
-            color: #fff;
+          > .icons {
             display: flex;
             align-items: center;
-            justify-content: center;
-            height: 20px;
-            min-width: 20px;
-            border-radius: 50%;
-            background: #bfbfbf;
-            font-weight: 900;
-            font-size: 10px;
-            line-height: 10px;
-            &.dot {
-              width: 6px;
-              height: 6px;
-              padding: 0;
+            gap: 4px;
+            > .setting {
+              visibility: hidden;
+              display: flex;
+              width: 16px;
+              height: 16px;
+              background-image: url("https://static.nicegoodthings.com/project/rustchat/icon.setting.svg");
             }
+            > .badge {
+              color: #fff;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              height: 20px;
+              min-width: 20px;
+              border-radius: 50%;
+              background: #bfbfbf;
+              font-weight: 900;
+              font-size: 10px;
+              line-height: 10px;
+              &.dot {
+                min-width: unset;
+                width: 6px;
+                height: 6px;
+                padding: 0;
+              }
+            }
+          }
+          &:hover > .icons > .setting {
+            visibility: visible;
           }
         }
         .session {
