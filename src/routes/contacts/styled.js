@@ -6,7 +6,7 @@ const StyledWrapper = styled.div`
     position: relative;
     display: flex;
     flex-direction: column;
-    width: 260px;
+    min-width: 260px;
     box-shadow: inset -1px 0px 0px rgba(0, 0, 0, 0.1);
     .list {
       margin: 12px 8px;

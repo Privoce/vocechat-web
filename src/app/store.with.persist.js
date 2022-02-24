@@ -14,6 +14,7 @@ import authDataReducer from "./slices/auth.data";
 import uiReducer from "./slices/ui";
 import channelsReducer from "./slices/channels";
 import contactsReducer from "./slices/contacts";
+import pendingMsgReducer from "./slices/message.pending";
 import channelMsgReducer from "./slices/message.channel";
 import userMsgReducer from "./slices/message.user";
 import { authApi } from "./services/auth";
@@ -31,6 +32,7 @@ const persistedReducer = persistReducer(
     ui: uiReducer,
     contacts: contactsReducer,
     channels: channelsReducer,
+    pendingMsg: pendingMsgReducer,
     userMsg: userMsgReducer,
     channelMsg: channelMsgReducer,
     authData: authDataReducer,

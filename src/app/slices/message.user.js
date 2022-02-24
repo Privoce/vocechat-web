@@ -28,16 +28,6 @@ const userMsgSlice = createSlice({
         } else {
           state[id][mid] = newMsg;
         }
-        // let replaceIdx = state[id].findIndex((m) => m.mid == mid);
-        // if (replaceIdx > -1) {
-        //   const copyMsg = { ...state[id][replaceIdx] };
-        //   console.log("current user msg", copyMsg, newMsg);
-        //   if (!isObjectEqual(copyMsg, newMsg)) {
-        //     state[id][replaceIdx] = newMsg;
-        //   }
-        // } else {
-        //   state[id] = [...state[id], newMsg];
-        // }
       } else {
         state[id] = { [mid]: newMsg };
       }
@@ -47,7 +37,12 @@ const userMsgSlice = createSlice({
       console.log("set unread", id, mid);
       state[id][mid].unread = false;
     },
+    removeMsg(state, action) {
+      const { id, mid } = action.payload;
+      console.log("remove user msg", id, mid);
+      delete state[id][mid];
+    },
   },
 });
-export const { addUserMsg, setUserMsgRead } = userMsgSlice.actions;
+export const { addUserMsg, setUserMsgRead, removeMsg } = userMsgSlice.actions;
 export default userMsgSlice.reducer;

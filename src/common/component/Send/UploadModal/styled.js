@@ -77,20 +77,6 @@ const StyledWrapper = styled.div`
     justify-content: flex-end;
     gap: 16px;
     width: 100%;
-    .btn {
-      color: #fff;
-      padding: 8px 16px;
-      background: #1fe1f9;
-      /* shadow-base */
-
-      box-shadow: 0px 1px 2px rgba(31, 41, 55, 0.08);
-      border-radius: 4px;
-      &.cancel {
-        color: #333;
-        border: 1px solid #e5e7eb;
-        background-color: #fff;
-      }
-    }
   }
 `;
 export default StyledWrapper;

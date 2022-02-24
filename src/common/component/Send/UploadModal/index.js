@@ -8,6 +8,7 @@ import { useSendMsgMutation } from "../../../../app/services/contact";
 import { addChannelMsg } from "../../../../app/slices/message.channel";
 import { addUserMsg } from "../../../../app/slices/message.user";
 import Modal from "../../Modal";
+import Button from "../../StyledButton";
 import StyledWrapper from "./styled";
 
 export default function UploadModal({
@@ -102,16 +103,16 @@ export default function UploadModal({
           })}
         </ul>
         <div className="btns">
-          <button className="btn cancel" onClick={closeModal}>
+          <Button className="cancel" onClick={closeModal}>
             Cancel
-          </button>
-          <button
-            className="btn upload"
+          </Button>
+          <Button
+            className="upload main"
             disabled={channelSending || userSending}
             onClick={handleUpload}
           >
             {channelSending || userSending ? "Uploading" : `Upload`}
-          </button>
+          </Button>
         </div>
       </StyledWrapper>
     </Modal>

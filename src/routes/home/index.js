@@ -3,14 +3,13 @@
 import { Outlet, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleMenuExpand } from "../../app/slices/ui";
-// import { setAuthData } from "../../app/slices/auth.data";
 import StyledWrapper from "./styled";
 import ServerDropList from "./ServerDropList";
 import Tools from "./Tools";
 import Menu from "./Menu";
 import usePreload from "./usePreload";
-
-// import CurrentUser from "./CurrentUser";
+import SettingModal from "../../common/component/Setting";
+import ChannelSettingModal from "../../common/component/ChannelSetting";
 
 import ChatIcon from "../../assets/icons/chat.svg";
 import ContactIcon from "../../assets/icons/contact.svg";
@@ -19,12 +18,12 @@ import NotificationHub from "../../common/component/NotificationHub";
 export default function HomePage() {
   const dispatch = useDispatch();
   const {
-    menuExpand,
-    authData: { token, usersVersion, afterMid },
+    ui: { menuExpand, setting, channelSetting },
+    authData: { usersVersion, afterMid },
   } = useSelector((store) => {
     return {
       authData: store.authData,
-      menuExpand: store.ui.menuExpand,
+      ui: store.ui,
     };
   });
   const { data, loading, error, success } = usePreload();
@@ -44,21 +43,24 @@ export default function HomePage() {
   }
   return (
     <>
-      <NotificationHub
-        token={token}
-        usersVersion={usersVersion}
-        afterMid={afterMid}
-      />
+      <NotificationHub usersVersion={usersVersion} afterMid={afterMid} />
       <StyledWrapper>
         <div className={`col left ${menuExpand ? "expand" : ""}`}>
           <ServerDropList data={data?.server} expand={menuExpand} />
           <nav className="nav">
             <NavLink className="link" to={"/chat"}>
-              <img src={ChatIcon} alt="chat icon" /> {menuExpand && `Chat`}
+              <img src={ChatIcon} alt="chat icon" />{" "}
+              {menuExpand && (
+                <span className="animate__animated animate__fadeIn">Chat</span>
+              )}
             </NavLink>
             <NavLink className="link" to={"/contacts"}>
               <img src={ContactIcon} alt="contact icon" />{" "}
-              {menuExpand && `Contacts`}
+              {menuExpand && (
+                <span className="animate__animated animate__fadeIn">
+                  Contacts
+                </span>
+              )}
             </NavLink>
           </nav>
           <div className="divider"></div>
@@ -70,6 +72,8 @@ export default function HomePage() {
           <Outlet />
         </div>
       </StyledWrapper>
+      {setting && <SettingModal />}
+      {channelSetting && <ChannelSettingModal id={channelSetting} />}
     </>
   );
 }

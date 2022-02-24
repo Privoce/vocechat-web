@@ -30,16 +30,11 @@ export default function usePreload() {
     isError: serverError,
     data: server,
   } = useGetServerQuery(undefined, querySetting);
-  // const {
-  //   isLoading: groupsLoading,
-  //   isSuccess: groupsSuccess,
-  //   isError: groupsError,
-  //   data: groups,
-  // } = useGetChannelsQuery(undefined, querySetting);
   useEffect(() => {
     if (contacts) {
       const matchedUser = contacts.find((c) => c.uid == loginedUser.uid);
       if (!matchedUser) {
+        console.log("no matched user, redirect to login");
         dispatch(clearAuthData());
         navigate("/login");
       } else {
@@ -51,7 +46,6 @@ export default function usePreload() {
       }
     }
   }, [contacts]);
-
   return {
     loading: contactsLoading || serverLoading || !checked,
     error: contactsError && serverError,

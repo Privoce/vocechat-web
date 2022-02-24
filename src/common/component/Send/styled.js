@@ -5,7 +5,7 @@ const StyledSend = styled.div`
   bottom: 15px;
   left: 50%;
   transform: translateX(-50%);
-  background: #f5f6f7;
+  background: #e5e7eb;
   border-radius: 8px;
   width: calc(100% - 32px);
   min-height: 54px;

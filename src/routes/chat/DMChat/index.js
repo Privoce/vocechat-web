@@ -11,8 +11,11 @@ export default function DMChat({ uid = "", dropFiles = [] }) {
   console.log("dm files", dropFiles);
   const [dragFiles, setDragFiles] = useState([]);
   const contacts = useSelector((store) => store.contacts);
-  const msgs = useSelector((store) => {
-    return store.userMsg[uid] || {};
+  const { msgs, pendingMsgs } = useSelector((store) => {
+    return {
+      msgs: store.userMsg[uid] || {},
+      pendingMsgs: store.pendingMsg.user[uid] || {},
+    };
   });
   const [currUser, setCurrUser] = useState(null);
   useEffect(() => {
@@ -66,23 +69,35 @@ export default function DMChat({ uid = "", dropFiles = [] }) {
     >
       <StyledDMChat>
         <div className="chat">
-          {Object.entries(msgs).map(([mid, msg]) => {
-            if (!msg) return null;
-            console.log("user msg", msg);
-            const { from_uid, content, content_type, created_at, unread } = msg;
-            return (
-              <Message
-                content_type={content_type}
-                unread={unread}
-                fromUid={from_uid}
-                mid={mid}
-                key={mid}
-                time={created_at}
-                uid={uid}
-                content={content}
-              />
-            );
-          })}
+          {[...Object.entries(msgs), ...Object.entries(pendingMsgs)]
+            .sort(([, msg1], [, msg2]) => {
+              return msg1.created_at - msg2.created_at;
+            })
+            .map(([mid, msg]) => {
+              if (!msg) return null;
+              console.log("user msg", msg);
+              const {
+                from_uid,
+                content,
+                content_type,
+                created_at,
+                unread,
+                pending = false,
+              } = msg;
+              return (
+                <Message
+                  pending={pending}
+                  content_type={content_type}
+                  unread={unread}
+                  fromUid={from_uid}
+                  mid={mid}
+                  key={mid}
+                  time={created_at}
+                  uid={uid}
+                  content={content}
+                />
+              );
+            })}
         </div>
       </StyledDMChat>
       <div className="placeholder"></div>

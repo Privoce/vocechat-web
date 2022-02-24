@@ -128,21 +128,6 @@ const StyledWrapper = styled.div`
       align-items: center;
       justify-content: flex-end;
       gap: 16px;
-      .btn {
-        cursor: pointer;
-        padding: 8px 16px;
-        background: none;
-        border: 1px solid #e5e7eb;
-        box-shadow: 0px 1px 2px rgba(31, 41, 55, 0.08);
-        border-radius: 4px;
-        font-weight: 500;
-        color: #374151;
-        &.create {
-          border: none;
-          background: #1fe1f9;
-          color: #fff;
-        }
-      }
     }
     .normal {
       font-size: 14px;

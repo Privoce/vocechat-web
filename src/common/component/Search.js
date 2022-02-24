@@ -9,7 +9,7 @@ import ContactsModal from "./ContactsModal";
 
 const StyledWrapper = styled.div`
   position: relative;
-  height: 56px;
+  min-height: 56px;
   padding: 0 10px 0 16px;
   display: flex;
   align-items: center;

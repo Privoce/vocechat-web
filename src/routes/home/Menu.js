@@ -1,4 +1,6 @@
 // import React from 'react'
+import { useDispatch } from "react-redux";
+import { toggleSetting } from "../../app/slices/ui";
 import styled from "styled-components";
 const StyledMenus = styled.ul`
   display: flex;
@@ -29,9 +31,13 @@ const StyledMenus = styled.ul`
   }
 `;
 export default function Menu({ toggle, expand = true }) {
+  const dispatch = useDispatch();
+  const handleSetting = () => {
+    dispatch(toggleSetting());
+  };
   return (
     <StyledMenus>
-      <li className="menu">
+      <li className="menu" onClick={handleSetting}>
         <img
           src="https://static.nicegoodthings.com/project/rustchat/menu.setting.png"
           alt="setting icon"

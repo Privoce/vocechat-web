@@ -14,6 +14,9 @@ const StyledWrapper = styled.div`
   padding: 8px;
   border-radius: 4px;
   user-select: none;
+  &.compact {
+    padding: 0;
+  }
   &.interactive {
     &:hover,
     &.active {
@@ -60,12 +63,17 @@ export default function Contact({
   interactive = true,
   uid = "",
   popover = false,
+  compact = false,
 }) {
   const contacts = useSelector((store) => store.contacts);
   if (!contacts) return null;
   const currUser = contacts.find((c) => c.uid == uid);
   return (
-    <StyledWrapper className={`${interactive ? "interactive" : ""}`}>
+    <StyledWrapper
+      className={`${interactive ? "interactive" : ""} ${
+        compact ? "compact" : ""
+      }`}
+    >
       <Tippy
         inertia={true}
         animation="scale"
@@ -82,7 +90,7 @@ export default function Contact({
           ></div>
         </div>
       </Tippy>
-      <span className="name">{currUser?.name}</span>
+      {!compact && <span className="name">{currUser?.name}</span>}
     </StyledWrapper>
   );
 }

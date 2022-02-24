@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import { useDrop } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
-import Avatar from "../../common/component/Avatar";
+import Contact from "../../common/component/Contact";
 const NavItem = ({ data, setFiles }) => {
   const navigate = useNavigate();
   const [{ isActive }, drop] = useDrop(() => ({
@@ -31,7 +31,7 @@ const NavItem = ({ data, setFiles }) => {
       className={`session ${isActive ? "drop_over" : ""}`}
       to={`/chat/dm/${uid}`}
     >
-      <Avatar className="avatar" url={user.avatar} name={user.name} />
+      <Contact compact interactive={false} className="avatar" uid={user.uid} />
       <div className="details">
         <div className="up">
           <span className="name">{user.name}</span>

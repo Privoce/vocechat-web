@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Modal from "../Modal";
+import Button from "../StyledButton";
 import ChannelIcon from "../ChannelIcon";
 import Contact from "../Contact";
 import StyledWrapper from "./styled";
@@ -151,16 +152,16 @@ export default function ChannelModal({ personal = false, closeModal }) {
             </div>
           }
           <div className="btns">
-            <button onClick={closeModal} className="btn normal cancel">
+            <Button onClick={closeModal} className="normal cancel">
               Cancel
-            </button>
-            <button
+            </Button>
+            <Button
               disabled={isLoading}
               onClick={handleCreate}
-              className="btn normal create"
+              className="normal main"
             >
               Create
-            </button>
+            </Button>
           </div>
         </div>
       </StyledWrapper>

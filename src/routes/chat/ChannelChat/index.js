@@ -6,10 +6,7 @@ import dayjs from "dayjs";
 import Message from "../../../common/component/Message";
 import ChannelIcon from "../../../common/component/ChannelIcon";
 import Send from "../../../common/component/Send";
-import {
-  clearChannelMsgUnread,
-  setLastAccessTime,
-} from "../../../app/slices/message.channel";
+import { clearChannelMsgUnread } from "../../../app/slices/message.channel";
 import Contact from "../../../common/component/Contact";
 import Layout from "../Layout";
 import {
@@ -28,8 +25,12 @@ export default function ChannelChat({
   // const containerRef = useRef(null);
   const [dragFiles, setDragFiles] = useState([]);
   const dispatch = useDispatch();
-  const { msgs, users } = useSelector((store) => {
-    return { msgs: store.channelMsg[cid] || {}, users: store.contacts };
+  const { msgs, users, pendingMsgs } = useSelector((store) => {
+    return {
+      msgs: store.channelMsg[cid] || {},
+      users: store.contacts,
+      pendingMsgs: store.pendingMsg.channel[cid] || {},
+    };
   });
   const handleClearUnreads = () => {
     dispatch(clearChannelMsgUnread(cid));
@@ -39,12 +40,6 @@ export default function ChannelChat({
       setDragFiles(dropFiles);
     }
   }, [dropFiles]);
-  useEffect(() => {
-    console.log({ cid });
-    return () => {
-      dispatch(setLastAccessTime(cid));
-    };
-  }, [cid]);
   const { name, description, is_public, members = [] } = data;
   const filteredUsers =
     members.length == 0
@@ -88,8 +83,8 @@ export default function ChannelChat({
       }
       contacts={
         <StyledContacts>
-          {filteredUsers.map(({ name, status, uid }) => {
-            return <Contact key={name} uid={uid} status={status} popover />;
+          {filteredUsers.map(({ name, uid }) => {
+            return <Contact key={name} uid={uid} popover />;
           })}
         </StyledContacts>
       }
@@ -102,28 +97,34 @@ export default function ChannelChat({
             {/* <button className="edit">Edit Channel</button> */}
           </div>
           <div className="chat">
-            {Object.entries(msgs).map(([mid, msg]) => {
-              if (!msg) return null;
-              const {
-                from_uid,
-                content,
-                content_type,
-                created_at,
-                unread,
-              } = msg;
-              return (
-                <Message
-                  content_type={content_type}
-                  unread={unread}
-                  gid={cid}
-                  mid={mid}
-                  key={mid}
-                  time={created_at}
-                  fromUid={from_uid}
-                  content={content}
-                />
-              );
-            })}
+            {[...Object.entries(msgs), ...Object.entries(pendingMsgs)]
+              .sort(([, msg1], [, msg2]) => {
+                return msg1.created_at - msg2.created_at;
+              })
+              .map(([mid, msg]) => {
+                if (!msg) return null;
+                const {
+                  pending = false,
+                  from_uid,
+                  content,
+                  content_type,
+                  created_at,
+                  unread,
+                } = msg;
+                return (
+                  <Message
+                    pending={pending}
+                    content_type={content_type}
+                    unread={unread}
+                    gid={cid}
+                    mid={mid}
+                    key={mid}
+                    time={created_at}
+                    fromUid={from_uid}
+                    content={content}
+                  />
+                );
+              })}
           </div>
         </div>
 

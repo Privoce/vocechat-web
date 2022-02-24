@@ -8,7 +8,7 @@ import { AiOutlineCaretDown } from "react-icons/ai";
 
 import StyledWrapper from "./styled";
 import Search from "../../common/component/Search";
-import Avatar from "../../common/component/Avatar";
+import Contact from "../../common/component/Contact";
 import CurrentUser from "../../common/component/CurrentUser";
 import ChannelChat from "./ChannelChat";
 import DMChat from "./DMChat";
@@ -117,10 +117,11 @@ export default function ChatPage() {
               <DMList sessions={sessions} setDropFiles={setUserDropFiles} />
               {user_id && !Object.keys(UserMsgData).includes(user_id) && (
                 <NavLink className="session" to={`/chat/dm/${user_id}`}>
-                  <Avatar
+                  <Contact
+                    compact
+                    interactive={false}
                     className="avatar"
-                    url={tmpSessionUser.avatar}
-                    name={tmpSessionUser.name}
+                    uid={user_id}
                   />
                   <div className="details">
                     <div className="up">

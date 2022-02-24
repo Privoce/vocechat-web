@@ -2,9 +2,10 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import BASE_URL from "../../app/config";
+import { useRenewMutation } from "../../app/services/auth";
 import {
   setChannels,
   addChannel,
@@ -12,6 +13,7 @@ import {
 } from "../../app/slices/channels";
 import { updateUsersStatus } from "../../app/slices/contacts";
 import {
+  updateToken,
   clearAuthData,
   setUsersVersion,
   setAfterMid,
@@ -28,9 +30,16 @@ const getQueryString = (params = {}) => {
   });
   return sp.toString();
 };
-const NotificationHub = ({ token, usersVersion = 0, afterMid = 0 }) => {
+const NotificationHub = ({ usersVersion = 0, afterMid = 0 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { token, refreshToken, user: currUser } = useSelector(
+    (store) => store.authData
+  );
+  const [
+    renewToken,
+    { data, isSuccess: refreshTokenSuccess },
+  ] = useRenewMutation();
   useEffect(() => {
     let sse = null;
     if (token) {
@@ -45,7 +54,18 @@ const NotificationHub = ({ token, usersVersion = 0, afterMid = 0 }) => {
         console.info("sse opened");
       };
       sse.onerror = (err) => {
-        console.error("sse error", err);
+        switch (err.eventPhase) {
+          case EventSource.CLOSED:
+          case EventSource.CONNECTING:
+            console.log("sse error renew");
+            renewToken({ token, refreshToken });
+            break;
+
+          default:
+            console.error("sse error", err);
+            // renewToken({ token, refreshToken });
+            break;
+        }
       };
       sse.onmessage = (evt) => {
         handleSSEMessage(JSON.parse(evt.data));
@@ -57,7 +77,14 @@ const NotificationHub = ({ token, usersVersion = 0, afterMid = 0 }) => {
         sse.close();
       }
     };
-  }, [token, usersVersion, afterMid]);
+  }, [token, refreshToken, usersVersion, afterMid]);
+  useEffect(() => {
+    if (refreshTokenSuccess) {
+      const { token, refresh_token } = data;
+      dispatch(updateToken({ token, refresh_token }));
+    }
+  }, [refreshTokenSuccess, data]);
+
   const handleSSEMessage = (data) => {
     const { type } = data;
 
@@ -116,10 +143,24 @@ const NotificationHub = ({ token, usersVersion = 0, afterMid = 0 }) => {
         if (data.gid) {
           // channel msg
           const { gid, ...rest } = data;
-          dispatch(addChannelMsg({ id: gid, ...rest }));
+          console.log("compare", rest, currUser, rest.from_uid != currUser.uid);
+          dispatch(
+            addChannelMsg({
+              id: gid,
+              // 自己发的 就不用标记未读
+              unread: rest.from_uid != currUser.uid,
+              ...rest,
+            })
+          );
         } else {
           // user msg
-          dispatch(addUserMsg({ id: data.from_uid, ...data }));
+          dispatch(
+            addUserMsg({
+              id: data.from_uid,
+              unread: data.from_uid != currUser.uid,
+              ...data,
+            })
+          );
         }
         // 更新after_mid
         dispatch(setAfterMid({ mid: data.mid }));
@@ -132,7 +173,7 @@ const NotificationHub = ({ token, usersVersion = 0, afterMid = 0 }) => {
   };
   return null;
 };
-function compareToken(prevHub, nextHub) {
-  return prevHub.token === nextHub.token;
-}
-export default React.memo(NotificationHub, compareToken);
+// function compareToken(prevHub, nextHub) {
+//   return prevHub.token === nextHub.token;
+// }
+export default React.memo(NotificationHub);

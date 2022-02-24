@@ -44,15 +44,9 @@ const channelMsgSlice = createSlice({
     clearChannelMsgUnread(state, action) {
       const gid = action.payload;
       console.log("set channel all unread", gid);
-      Object.entries(state[gid]).forEach(([key, obj]) => {
+      Object.entries(state[gid]).forEach(([, obj]) => {
         obj.unread = false;
       });
-    },
-    setLastAccessTime(state, action) {
-      // let gid = action.payload;
-      // delete state[gid].lastAccess;
-      // const gid = action.payload;
-      // state.accessLogs[gid] = new Date().getTime();
     },
     addPendingMsg(state, action) {
       state.pendingMsgs.push(action.payload);
@@ -66,7 +60,6 @@ const channelMsgSlice = createSlice({
   },
 });
 export const {
-  setLastAccessTime,
   clearChannelMsgUnread,
   setChannelMsgRead,
   addChannelMsg,

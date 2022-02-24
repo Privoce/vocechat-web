@@ -10,7 +10,7 @@ const StyledWrapper = styled.div`
     flex-direction: column;
     &.left {
       position: relative;
-      /* background: #0891B2; */
+      background: #e5e7eb;
       width: 64px;
       box-shadow: inset -1px 0px 0px rgba(0, 0, 0, 0.1);
       transition: all 0.5s ease-in;

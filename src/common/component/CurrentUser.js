@@ -1,11 +1,6 @@
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import styled from "styled-components";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-
-import { clearAuthData } from "../../app/slices/auth.data";
-// import BASE_URL from "../../app/config";
-import { useLazyLogoutQuery } from "../../app/services/auth";
+import { useSelector } from "react-redux";
 import Avatar from "./Avatar";
 const StyledWrapper = styled.div`
   background-color: #e5e5e5;
@@ -62,32 +57,14 @@ const StyledWrapper = styled.div`
   }
 `;
 export default function CurrentUser({ expand = true }) {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const [logout, { isSuccess }] = useLazyLogoutQuery();
   const { user } = useSelector((store) => store.authData);
-  const handleLogout = () => {
-    logout();
-  };
-  useEffect(() => {
-    if (isSuccess) {
-      dispatch(clearAuthData());
-      navigate("/login");
-    }
-  }, [isSuccess]);
 
   if (!user) return null;
   const { uid, name, avatar } = user;
   return (
     <StyledWrapper>
       <div className="profile">
-        <Avatar
-          onDoubleClick={handleLogout}
-          url={avatar}
-          name={name}
-          alt="user avatar"
-          className="avatar"
-        />
+        <Avatar url={avatar} name={name} alt="user avatar" className="avatar" />
         <div className="info">
           <span className="name">{name}</span>
           <span className="id">#{uid}</span>

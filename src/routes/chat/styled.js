@@ -6,7 +6,7 @@ const StyledWrapper = styled.div`
     position: relative;
     display: flex;
     flex-direction: column;
-    width: 260px;
+    min-width: 260px;
     box-shadow: inset -1px 0px 0px rgba(0, 0, 0, 0.1);
     .list {
       margin: 12px 8px;
@@ -40,6 +40,7 @@ const StyledWrapper = styled.div`
           text-decoration: none;
         }
         .link {
+          position: relative;
           display: flex;
           align-items: center;
           justify-content: space-between;
@@ -52,7 +53,7 @@ const StyledWrapper = styled.div`
           > .txt {
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
             color: #1c1c1e;
             font-weight: 600;
             font-size: 14px;
@@ -106,12 +107,7 @@ const StyledWrapper = styled.div`
           }
 
           .avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            /* img{
-              width: 100%;
-            } */
+            /* todo */
           }
           .details {
             display: flex;

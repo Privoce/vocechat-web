@@ -1,16 +1,15 @@
 import { useState, useEffect, useRef } from "react";
 import { MdAdd } from "react-icons/md";
 import TextareaAutosize from "react-textarea-autosize";
-import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useKey } from "rooks";
-import "emoji-mart/css/emoji-mart.css";
-import { Picker } from "emoji-mart";
+
 import { useSendChannelMsgMutation } from "../../../app/services/channel";
 import { useSendMsgMutation } from "../../../app/services/contact";
-import { addChannelMsg } from "../../../app/slices/message.channel";
-import { addUserMsg } from "../../../app/slices/message.user";
 import StyledSend from "./styled";
+import useFiles from "./useFiles";
 import UploadModal from "./UploadModal";
+import EmojiPicker from "./EmojiPicker";
 
 const Types = {
   channel: "#",
@@ -19,38 +18,31 @@ const Types = {
 export default function Send({
   name,
   type = "channel",
+  // 发给谁，或者是channel，或者是user
   id = "",
   dragFiles = [],
 }) {
-  const [files, setFiles] = useState([]);
+  const { files, setFiles, resetFiles } = useFiles([]);
   const inputRef = useRef();
-  const [emojiPicker, setEmojiPicker] = useState(false);
   const [shift, setShift] = useState(false);
   const [enter, setEnter] = useState(false);
   const [msg, setMsg] = useState("");
-  const dispatch = useDispatch();
-  console.log("send drag files", dragFiles);
+  // const dispatch = useDispatch();
+  // 谁发的
+  const from_uid = useSelector((store) => store.authData.user.uid);
   useEffect(() => {
     if (dragFiles.length) {
       setFiles((prev) => [...prev, ...dragFiles]);
     }
   }, [dragFiles]);
 
-  const toggleEmojiPicker = () => {
-    setEmojiPicker((prev) => !prev);
-  };
-  const [
-    sendMsg,
-    { isLoading: sending, isSuccess: sendSuccess, data: sendData },
-  ] = useSendMsgMutation();
+  const [sendMsg, { isLoading: userSending }] = useSendMsgMutation();
   const [
     sendChannelMsg,
-    {
-      isLoading: channelSending,
-      isSuccess: sendChannelSuccess,
-      data: sendChannelData,
-    },
+    { isLoading: channelSending },
   ] = useSendChannelMsgMutation();
+  const sendMessage = type == "channel" ? sendChannelMsg : sendMsg;
+  const sendingMessage = userSending || channelSending;
   useKey(
     "Shift",
     (e) => {
@@ -64,54 +56,25 @@ export default function Send({
       handleSendMessage();
     } else {
       setMsg(evt.target.value);
-      // inputRef.current.focus();
     }
   };
   const handleInputKeydown = (e) => {
+    console.log("keydown event", e);
     setEnter(e.key === "Enter");
   };
-  const handleEmojiSelect = (emoji) => {
-    console.log(emoji);
-    setMsg((prev) => `${prev}${emoji.native}`);
-    // inputRef.current.focus();
-    toggleEmojiPicker();
+  const selectEmoji = (emoji) => {
+    setMsg((prev) => `${prev}${emoji}`);
   };
-  useEffect(() => {
-    if (sendSuccess) {
-      dispatch(addUserMsg({ id, ...sendData, unread: false }));
-      setMsg("");
-    }
-  }, [sendSuccess, sendData]);
-
-  useEffect(() => {
-    if (sendChannelSuccess) {
-      const { gid, ...rest } = sendChannelData;
-      dispatch(addChannelMsg({ id: gid, ...rest, unread: false }));
-      setMsg("");
-    }
-  }, [sendChannelSuccess, sendChannelData]);
   useEffect(() => {
     inputRef.current.focus();
   }, [msg]);
   const handleUpload = (evt) => {
     setFiles([...evt.target.files]);
   };
-  const resetFiles = () => {
-    setFiles([]);
-  };
   const handleSendMessage = () => {
-    if (!msg || !type || !id) return;
-    switch (type) {
-      case "channel":
-        sendChannelMsg({ id, content: msg });
-        break;
-      case "user":
-        sendMsg({ id, content: msg });
-        break;
-
-      default:
-        break;
-    }
+    if (!msg || !id || sendingMessage) return;
+    sendMessage({ id, content: msg, from_uid });
+    setMsg("");
   };
   return (
     <>
@@ -140,18 +103,7 @@ export default function Send({
           />
         </div>
         <div className="emoji">
-          <button className="toggle" onClick={toggleEmojiPicker}>
-            😄
-          </button>
-          {emojiPicker && (
-            <div className="picker">
-              <Picker
-                onSelect={handleEmojiSelect}
-                showPreview={false}
-                showSkinTones={false}
-              />
-            </div>
-          )}
+          <EmojiPicker selectEmoji={selectEmoji} />
         </div>
       </StyledSend>
       {files.length !== 0 && (

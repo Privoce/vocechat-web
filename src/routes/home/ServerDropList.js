@@ -3,7 +3,7 @@ import styled from "styled-components";
 // import { HiChevronDoubleLeft } from "react-icons/hi";
 
 const StyledWrapper = styled.div`
-  height: 56px;
+  min-height: 56px;
   padding: 0 20px;
   padding-right: 5px;
   display: flex;
