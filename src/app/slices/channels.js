@@ -14,6 +14,14 @@ const channelsSlice = createSlice({
         })
       );
     },
+
+    updateChannel(state, action) {
+      // console.log("set channels store", action);
+      const { id, name, description } = action.payload;
+      const oObj = state[id];
+      const newObj = { ...oObj, name, description };
+      state[id] = newObj;
+    },
     addChannel(state, action) {
       // console.log("set channels store", action);
       const ch = action.payload;
@@ -32,5 +40,10 @@ const channelsSlice = createSlice({
     // },
   },
 });
-export const { setChannels, addChannel, deleteChannel } = channelsSlice.actions;
+export const {
+  setChannels,
+  addChannel,
+  deleteChannel,
+  updateChannel,
+} = channelsSlice.actions;
 export default channelsSlice.reducer;

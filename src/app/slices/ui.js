@@ -3,7 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   menuExpand: true,
   setting: false,
-  profileSetting: false,
   channelSetting: null,
 };
 const uiSlice = createSlice({
@@ -16,9 +15,6 @@ const uiSlice = createSlice({
     toggleSetting(state) {
       state.setting = !state.setting;
     },
-    toggleProfileSetting(state) {
-      state.profileSetting = !state.profileSetting;
-    },
     toggleChannelSetting(state, action) {
       console.log("toggle channel setting payload", action);
       const id = action.payload;
@@ -29,7 +25,6 @@ const uiSlice = createSlice({
 export const {
   toggleSetting,
   toggleMenuExpand,
-  toggleProfileSetting,
   toggleChannelSetting,
 } = uiSlice.actions;
 export default uiSlice.reducer;

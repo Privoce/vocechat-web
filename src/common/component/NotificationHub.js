@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-
 import { useDispatch, useSelector } from "react-redux";
-
 import BASE_URL from "../../app/config";
 import { useRenewMutation } from "../../app/services/auth";
 import {
@@ -11,12 +9,16 @@ import {
   addChannel,
   deleteChannel,
 } from "../../app/slices/channels";
-import { updateUsersStatus } from "../../app/slices/contacts";
+import {
+  updateUsersByLogs,
+  updateUsersStatus,
+} from "../../app/slices/contacts";
 import {
   updateToken,
   clearAuthData,
   setUsersVersion,
   setAfterMid,
+  updateLoginedUserByLogs,
 } from "../../app/slices/auth.data";
 
 import { addChannelMsg } from "../../app/slices/message.channel";
@@ -97,6 +99,20 @@ const NotificationHub = ({ usersVersion = 0, afterMid = 0 }) => {
           console.log("users snapshot");
           const { version } = data;
           dispatch(setUsersVersion({ version }));
+        }
+        break;
+      case "users_log":
+        {
+          console.log("users change logs");
+          const { logs } = data;
+          const loginedUserLogs = logs.filter((l) => {
+            return l.uid == currUser.uid;
+          });
+          if (loginedUserLogs.length) {
+            // 当前登录用户的变动，及时同步到auth data里
+            dispatch(updateLoginedUserByLogs(logs));
+          }
+          dispatch(updateUsersByLogs(logs));
         }
         break;
       case "users_state":

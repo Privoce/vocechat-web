@@ -20,7 +20,28 @@ export const serverApi = createApi({
         return data;
       },
     }),
+    updateLogo: builder.mutation({
+      query: (data) => ({
+        headers: {
+          "content-type": "image/png",
+        },
+        url: `admin/system/organization/logo`,
+        method: "POST",
+        body: data,
+      }),
+    }),
+    updateServer: builder.mutation({
+      query: (data) => ({
+        url: `admin/system/organization`,
+        method: "PUT",
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useGetServerQuery } = serverApi;
+export const {
+  useGetServerQuery,
+  useUpdateServerMutation,
+  useUpdateLogoMutation,
+} = serverApi;

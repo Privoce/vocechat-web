@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+  <link rel="icon" href="/api/resource/organization/logo" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#000000" />
   <meta name="description" content="add up everything you input" />
@@ -30,7 +30,8 @@
   </style>
 </head>
 <style>
-  #root-modal {
+  #root-modal,
+  #modal-modal {
     pointer-events: none;
     position: fixed;
     z-index: 999;
@@ -40,7 +41,8 @@
     height: 100%;
   }
 
-  #root-modal>.wrapper {
+  #root-modal>.wrapper,
+  #modal-modal>.wrapper {
     pointer-events: all;
     width: 100vw;
     height: 100vh;
@@ -75,11 +77,18 @@
     cursor: pointer;
   }
 </style>
+<style>
+  /* animate.css */
+  :root {
+    --animate-delay: 0.1s;
+  }
+</style>
 
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
   <div id="root-modal"></div>
+  <div id="modal-modal"></div>
   <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.

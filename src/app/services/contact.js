@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import baseQuery from "./base.query";
 import BASE_URL, { ContentTypes } from "../config";
 import { addUserMsg } from "../slices/message.user";
+import { removeContact } from "../slices/contacts";
 import {
   addPendingMessage,
   removePendingMessage,
@@ -26,11 +27,41 @@ export const contactApi = createApi({
           const avatar =
             user.avatar_updated_at == 0
               ? ""
-              : `${BASE_URL}/resource/avatar?uid=${user.uid}`;
+              : `${BASE_URL}/resource/avatar?uid=${user.uid}&t=${user.avatar_updated_at}`;
           user.avatar = avatar;
           return user;
         });
       },
+    }),
+    deleteContact: builder.query({
+      query: (uid) => ({ url: `/admin/user/${uid}`, method: "DELETE" }),
+      async onQueryStarted(uid, { dispatch, queryFulfilled }) {
+        // id: who send to ,from_uid: who sent
+        const patchResult = dispatch(removeContact(uid));
+        try {
+          await queryFulfilled;
+        } catch {
+          console.log("channel update failed");
+          patchResult.undo();
+        }
+      },
+    }),
+    updateAvatar: builder.mutation({
+      query: (data) => ({
+        headers: {
+          "content-type": "image/png",
+        },
+        url: `user/avatar`,
+        method: "POST",
+        body: data,
+      }),
+    }),
+    updateInfo: builder.mutation({
+      query: (data) => ({
+        url: `user`,
+        method: "PUT",
+        body: data,
+      }),
     }),
     register: builder.mutation({
       query: (data) => ({
@@ -80,6 +111,9 @@ export const contactApi = createApi({
 });
 
 export const {
+  useLazyDeleteContactQuery,
+  useUpdateInfoMutation,
+  useUpdateAvatarMutation,
   useGetContactsQuery,
   useSendMsgMutation,
   useRegisterMutation,

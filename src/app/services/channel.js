@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import baseQuery from "./base.query";
 import { ContentTypes } from "../config";
 import { addChannelMsg } from "../slices/message.channel";
+import { updateChannel } from "../slices/channels";
 import {
   addPendingMessage,
   removePendingMessage,
@@ -21,12 +22,35 @@ export const channelApi = createApi({
     getChannels: builder.query({
       query: () => ({ url: `group` }),
     }),
+    getChannel: builder.query({
+      query: (id) => ({ url: `group/${id}` }),
+    }),
     createChannel: builder.mutation({
       query: (data) => ({
         url: "group",
         method: "POST",
         body: data,
       }),
+    }),
+    updateChannel: builder.mutation({
+      query: ({ id, ...data }) => ({
+        url: `group/${id}`,
+        method: "PUT",
+        body: data,
+      }),
+      async onQueryStarted(
+        { id, name, description },
+        { dispatch, queryFulfilled }
+      ) {
+        // id: who send to ,from_uid: who sent
+        const patchResult = dispatch(updateChannel({ id, name, description }));
+        try {
+          await queryFulfilled;
+        } catch {
+          console.log("channel update failed");
+          patchResult.undo();
+        }
+      },
     }),
     removeChannel: builder.query({
       query: (id) => ({
@@ -78,6 +102,8 @@ export const channelApi = createApi({
 });
 
 export const {
+  useGetChannelQuery,
+  useUpdateChannelMutation,
   useLazyRemoveChannelQuery,
   useGetChannelsQuery,
   useCreateChannelMutation,

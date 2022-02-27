@@ -20,6 +20,7 @@ const StyledWrapper = styled.div`
     .logo {
       width: 24px;
       height: 24px;
+      border-radius: 50%;
     }
     .title {
       white-space: nowrap;

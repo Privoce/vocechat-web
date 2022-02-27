@@ -6,7 +6,7 @@ const StyledWrapper = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  .left {
+  > .left {
     padding: 32px 16px;
     min-width: 212px;
     background-color: #f5f6f7;
@@ -58,7 +58,7 @@ const StyledWrapper = styled.div`
       }
     }
   }
-  .right {
+  > .right {
     background-color: #fff;
     width: 100%;
     padding: 32px;

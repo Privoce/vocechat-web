@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 
 // import web3 from "web3";
 import MetamaskLoginButton from "./MetamaskLoginButton";
+import SolidLoginButton from "./SolidLoginButton";
 
 import GoogleLoginButton from "./GoogleLoginButton";
 import { useLoginMutation } from "../../app/services/auth";
@@ -109,6 +110,7 @@ export default function LoginPage() {
         <hr className="or" />
         <GoogleLoginButton login={login} />
         <MetamaskLoginButton login={login} />
+        <SolidLoginButton login={login} />
       </div>
     </StyledWrapper>
   );

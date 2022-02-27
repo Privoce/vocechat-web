@@ -20,10 +20,12 @@ export default function HomePage() {
   const {
     ui: { menuExpand, setting, channelSetting },
     authData: { usersVersion, afterMid },
+    contacts,
   } = useSelector((store) => {
     return {
       authData: store.authData,
       ui: store.ui,
+      contacts: store.contacts,
     };
   });
   const { data, loading, error, success } = usePreload();
@@ -72,7 +74,7 @@ export default function HomePage() {
           <Outlet />
         </div>
       </StyledWrapper>
-      {setting && <SettingModal />}
+      {setting && <SettingModal contacts={contacts} />}
       {channelSetting && <ChannelSettingModal id={channelSetting} />}
     </>
   );
