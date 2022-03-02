@@ -20,7 +20,6 @@ export default function HomePage() {
   const {
     ui: { menuExpand, setting, channelSetting },
     authData: { usersVersion, afterMid },
-    contacts,
   } = useSelector((store) => {
     return {
       authData: store.authData,
@@ -74,7 +73,7 @@ export default function HomePage() {
           <Outlet />
         </div>
       </StyledWrapper>
-      {setting && <SettingModal contacts={contacts} />}
+      {setting && <SettingModal />}
       {channelSetting && <ChannelSettingModal id={channelSetting} />}
     </>
   );

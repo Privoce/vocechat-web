@@ -1,5 +1,6 @@
 import styled from "styled-components";
-const StyledInput = styled.input`
+const StyledTextarea = styled.textarea`
+  font-family: inherit;
   width: 100%;
   background: #ffffff;
   border: 1px solid #e5e7eb;
@@ -8,8 +9,16 @@ const StyledInput = styled.input`
   font-weight: normal;
   font-size: 14px;
   line-height: 20px;
-  color: #78787c;
   padding: 8px;
+  color: #333;
+  resize: unset;
+  &:disabled {
+    color: #78787c;
+    background-color: #f9fafb;
+  }
+  &::placeholder {
+    color: #78787c;
+  }
 `;
 
-export default StyledInput;
+export default StyledTextarea;

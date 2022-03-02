@@ -15,14 +15,24 @@ import { setAuthData } from "../../app/slices/auth.data";
 
 export default function LoginPage() {
   const [login, { data, isSuccess, isLoading, error }] = useLoginMutation();
-
-  // const { token } = useSelector((store) => store.authData);
   const navigateTo = useNavigate();
   const dispatch = useDispatch();
   const [input, setInput] = useState({
     email: "",
     password: "",
   });
+  useEffect(() => {
+    const query = new URLSearchParams(location.search);
+    const code = query.get("code");
+    const state = query.get("state");
+    if (code && state) {
+      login({
+        code,
+        state,
+        type: "oidc",
+      });
+    }
+  }, []);
 
   useEffect(() => {
     if (error) {
@@ -37,7 +47,6 @@ export default function LoginPage() {
         case 404:
           toast.error("account not exsit");
           break;
-
         default:
           toast.error("something error");
           break;
@@ -110,7 +119,7 @@ export default function LoginPage() {
         <hr className="or" />
         <GoogleLoginButton login={login} />
         <MetamaskLoginButton login={login} />
-        <SolidLoginButton login={login} />
+        <SolidLoginButton />
       </div>
     </StyledWrapper>
   );

@@ -1,7 +1,19 @@
 import MyAccount from "./MyAccount";
 import Overview from "./Overview";
+import ConfigFirebase from "./config/Firebase";
+import ConfigSMTP from "./config/SMTP";
+import Notifications from "./Notifications";
 import ManageMembers from "../ManageMembers";
-const getNavs = (members = []) => {
+import { useSelector } from "react-redux";
+import ConfigAgora from "./config/Agora";
+const useNavs = () => {
+  const { contacts } = useSelector((store) => {
+    return {
+      currUser: store.authData.user,
+      channels: store.channels,
+      contacts: store.contacts,
+    };
+  });
   const navs = [
     {
       title: "General",
@@ -16,8 +28,9 @@ const getNavs = (members = []) => {
           title: "Roles",
         },
         {
-          name: "security",
-          title: "Security",
+          name: "notification",
+          title: "Notification",
+          component: <Notifications />,
         },
       ],
     },
@@ -41,7 +54,27 @@ const getNavs = (members = []) => {
         {
           name: "members",
           title: "Members",
-          component: <ManageMembers members={members} />,
+          component: <ManageMembers members={contacts} />,
+        },
+      ],
+    },
+    {
+      title: "Configuration",
+      items: [
+        {
+          name: "firebase",
+          title: "Firebase",
+          component: <ConfigFirebase />,
+        },
+        {
+          name: "agora",
+          title: "Agora",
+          component: <ConfigAgora />,
+        },
+        {
+          name: "smtp",
+          title: "SMTP",
+          component: <ConfigSMTP />,
         },
       ],
     },
@@ -49,4 +82,4 @@ const getNavs = (members = []) => {
   return navs;
 };
 
-export default getNavs;
+export default useNavs;

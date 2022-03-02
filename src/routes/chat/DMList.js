@@ -1,9 +1,11 @@
 // import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 import { useDrop } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
 import Contact from "../../common/component/Contact";
+dayjs.extend(relativeTime);
 const NavItem = ({ data, setFiles }) => {
   const navigate = useNavigate();
   const [{ isActive }, drop] = useDrop(() => ({
@@ -35,7 +37,7 @@ const NavItem = ({ data, setFiles }) => {
       <div className="details">
         <div className="up">
           <span className="name">{user.name}</span>
-          <time>{dayjs(lastMsg.created_at).format("YYYY-MM-DD")}</time>
+          <time>{dayjs(lastMsg.created_at).fromNow()}</time>
         </div>
 
         <div className="down">

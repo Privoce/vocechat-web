@@ -2,10 +2,10 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 // import { useDispatch } from "react-redux";
-import Input from "../StyledInput";
+import Input from "../styled/Input";
 // import BASE_URL from "../../app/config";
 import { useUpdateInfoMutation } from "../../../app/services/contact";
-import Button from "../StyledButton";
+import Button from "../styled/Button";
 const StyledEdit = styled.div`
   width: 440px;
   padding: 32px;

@@ -8,7 +8,7 @@ import { clearAuthData } from "../../../app/slices/auth.data";
 import { toggleSetting } from "../../../app/slices/ui";
 // import BASE_URL from "../../app/config";
 import { useLazyLogoutQuery } from "../../../app/services/auth";
-import Button from "../StyledButton";
+import Button from "../styled/Button";
 const StyledConfirm = styled.div`
   padding: 32px;
   filter: drop-shadow(0px 25px 50px rgba(31, 41, 55, 0.25));
@@ -58,7 +58,7 @@ export default function LogoutConfirmModal({ closeModal }) {
         <div className="btns">
           <Button onClick={closeModal}>Cancel</Button>
           <Button onClick={handleLogout} className="danger">
-            {isLoading ? "Logouting" : `Log Out`}
+            {isLoading ? "Logging out" : `Log Out`}
           </Button>
         </div>
       </StyledConfirm>

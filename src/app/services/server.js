@@ -20,6 +20,36 @@ export const serverApi = createApi({
         return data;
       },
     }),
+    getFirebaseConfig: builder.query({
+      query: () => ({ url: `admin/fcm/config` }),
+    }),
+    updateFirebaseConfig: builder.mutation({
+      query: (data) => ({
+        url: `admin/fcm/config`,
+        method: "POST",
+        body: data,
+      }),
+    }),
+    getAgoraConfig: builder.query({
+      query: () => ({ url: `admin/agora/config` }),
+    }),
+    updateAgoraConfig: builder.mutation({
+      query: (data) => ({
+        url: `admin/agora/config`,
+        method: "POST",
+        body: data,
+      }),
+    }),
+    getSMTPConfig: builder.query({
+      query: () => ({ url: `admin/smtp/config` }),
+    }),
+    updateSMTPConfig: builder.mutation({
+      query: (data) => ({
+        url: `admin/smtp/config`,
+        method: "POST",
+        body: data,
+      }),
+    }),
     updateLogo: builder.mutation({
       query: (data) => ({
         headers: {
@@ -33,7 +63,7 @@ export const serverApi = createApi({
     updateServer: builder.mutation({
       query: (data) => ({
         url: `admin/system/organization`,
-        method: "PUT",
+        method: "POST",
         body: data,
       }),
     }),
@@ -41,6 +71,12 @@ export const serverApi = createApi({
 });
 
 export const {
+  useUpdateFirebaseConfigMutation,
+  useGetFirebaseConfigQuery,
+  useGetSMTPConfigQuery,
+  useUpdateSMTPConfigMutation,
+  useGetAgoraConfigQuery,
+  useUpdateAgoraConfigMutation,
   useGetServerQuery,
   useUpdateServerMutation,
   useUpdateLogoMutation,

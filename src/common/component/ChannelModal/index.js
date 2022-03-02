@@ -3,11 +3,12 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Modal from "../Modal";
-import Button from "../StyledButton";
+import Button from "../styled/Button";
 import ChannelIcon from "../ChannelIcon";
 import Contact from "../Contact";
 import StyledWrapper from "./styled";
-import StyledCheckbox from "../../component/StyledCheckbox";
+import StyledToggle from "../../component/styled/Toggle";
+import StyledCheckbox from "../../component/styled/Checkbox";
 import useFilteredUsers from "../../hook/useFilteredUsers";
 import { addChannel } from "../../../app/slices/channels";
 
@@ -141,13 +142,10 @@ export default function ChannelModal({ personal = false, closeModal }) {
           {
             <div className="private">
               <span className="txt normal">Private Channel</span>
-              <input
-                disabled={!currentUser?.is_admin}
-                onChange={handleToggle}
-                checked={!is_public}
-                type="checkbox"
-                name="private"
-                id="private"
+              <StyledToggle
+                data-checked={!is_public}
+                data-disabled={!currentUser?.is_admin}
+                onClick={handleToggle}
               />
             </div>
           }

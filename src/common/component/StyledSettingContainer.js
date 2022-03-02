@@ -35,7 +35,7 @@ const StyledWrapper = styled.div`
         font-size: 12px;
         line-height: 18px;
         color: #6b7280;
-        margin-bottom: -2px;
+        margin-bottom: 2px;
       }
       .item {
         cursor: pointer;
@@ -73,7 +73,7 @@ const StyledWrapper = styled.div`
 `;
 export default function StyledSettingContainer({
   closeModal,
-  title = "Setting",
+  title = "Settings",
   navs = [],
   dangers = [],
   nav,

@@ -33,11 +33,12 @@ export const authApi = createApi({
     }),
     //   获取openid
     getOpenid: builder.mutation({
-      query: ({ issuer_url }) => ({
+      query: ({ issuer_url, redirect_uri }) => ({
         url: "/token/openid/authorize",
         method: "POST",
         body: {
           issuer_url,
+          redirect_uri,
         },
       }),
     }),

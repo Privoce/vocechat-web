@@ -10,6 +10,7 @@ const StyledWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   color: #333;
+  background: #fff;
   /* gap: 20px; */
   border: 1px solid #e5e7eb;
   box-shadow: 0px 4px 8px -2px rgba(16, 24, 40, 0.1),

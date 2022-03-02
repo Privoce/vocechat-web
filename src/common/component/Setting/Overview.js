@@ -7,8 +7,9 @@ import {
   useUpdateLogoMutation,
 } from "../../../app/services/server";
 import LogoUploader from "../AvatarUploader";
-import Input from "../StyledInput";
-import Textarea from "../StyledTextarea";
+import Input from "../styled/Input";
+import Label from "../styled/Label";
+import Textarea from "../styled/Textarea";
 import SaveTip from "../SaveTip";
 import toast from "react-hot-toast";
 const StyledWrapper = styled.div`
@@ -61,12 +62,6 @@ const StyledWrapper = styled.div`
       flex-direction: column;
       align-items: flex-start;
       gap: 8px;
-      label {
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 20px;
-        color: #6b7280;
-      }
     }
   }
 `;
@@ -143,7 +138,7 @@ export default function Overview() {
       </div>
       <div className="inputs">
         <div className="input">
-          <label htmlFor="name">Server Name</label>
+          <Label htmlFor="name">Server Name</Label>
           <Input
             data-type="name"
             onChange={handleChange}
@@ -154,11 +149,11 @@ export default function Overview() {
           />
         </div>
         <div className="input">
-          <label htmlFor="desc">Server Description</label>
+          <Label htmlFor="desc">Server Description</Label>
           <Textarea
             data-type="description"
             onChange={handleChange}
-            value={description}
+            value={description ?? ""}
             rows={4}
             name="name"
             id="name"

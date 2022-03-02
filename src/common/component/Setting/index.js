@@ -2,11 +2,11 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { toggleSetting } from "../../../app/slices/ui";
 import StyledSettingContainer from "../StyledSettingContainer";
-import getNavs from "./navs";
+import useNavs from "./navs";
 import LogoutConfirmModal from "./LogoutConfirmModal";
 
-export default function Setting({ contacts = [] }) {
-  const navs = getNavs(contacts);
+export default function Setting() {
+  const navs = useNavs();
   const flatenNavs = navs
     .map(({ items }) => {
       return items;
@@ -33,7 +33,7 @@ export default function Setting({ contacts = [] }) {
         updateNav={updateNav}
         nav={currNav}
         closeModal={close}
-        title="Setting"
+        title="Settings"
         navs={navs}
         dangers={[{ title: "Log Out", handler: toggleLogoutConfrim }]}
       >

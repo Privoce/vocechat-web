@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { useOutsideClick } from "rooks";
+import toast from "react-hot-toast";
+import useCopy from "../hook/useCopy";
 import { useLazyDeleteContactQuery } from "../../app/services/contact";
 import Contact from "./Contact";
 import StyledMenu from "./StyledMenu";
-import toast from "react-hot-toast";
 const StyledWrapper = styled.section`
   display: flex;
   flex-direction: column;
@@ -84,6 +85,7 @@ const StyledWrapper = styled.section`
   }
 `;
 export default function ManageMembers({ members = [] }) {
+  const [copied, copy] = useCopy();
   const [remove, { isSuccess: removeSuccess }] = useLazyDeleteContactQuery();
   const wrapperRef = useRef(null);
   const [menuVisible, setMenuVisible] = useState(null);
@@ -106,7 +108,9 @@ export default function ManageMembers({ members = [] }) {
       toast.success("delete successfully");
     }
   }, [removeSuccess]);
-
+  const handleCopy = (str) => {
+    copy(str);
+  };
   return (
     <StyledWrapper>
       <div className="intro">
@@ -139,11 +143,13 @@ export default function ManageMembers({ members = [] }) {
                     alt="dots icon"
                   />
                   {menuVisible == uid && (
-                    <StyledMenu
-                      ref={wrapperRef}
-                      className="menu animate__animated animate__flipInY animate__faster"
-                    >
-                      <li className="item">Copy Email</li>
+                    <StyledMenu ref={wrapperRef} className="menu">
+                      <li
+                        className="item"
+                        onClick={handleCopy.bind(null, email)}
+                      >
+                        {copied ? "Copied" : `Copy Email`}
+                      </li>
                       <li className="item">Mute</li>
                       <li className="item underline">Change Nickname</li>
                       <li className="item danger">Ban</li>

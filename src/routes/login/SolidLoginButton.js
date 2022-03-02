@@ -1,22 +1,20 @@
 /* eslint-disable no-undef */
 import { useEffect } from "react";
 import { useGetOpenidMutation } from "../../app/services/auth";
-export default function SolidLoginButton({ login }) {
+export default function SolidLoginButton() {
   const [getOpenId, { data, isLoading, isSuccess }] = useGetOpenidMutation();
 
-  const handleSolidLogin = async () => {
-    getOpenId({ issuer_url: "https://solidweb.org" });
+  const handleSolidLogin = () => {
+    getOpenId({
+      issuer_url: "https://solidweb.org",
+      redirect_uri: `${location.origin}/#/login`,
+    });
   };
   useEffect(() => {
     if (isSuccess) {
       console.log("wtf", data);
-      const { id, url } = data;
-      window.open(url);
-      login({
-        id,
-        type: "oidc",
-      });
-      // location.href = url;
+      const { url } = data;
+      location.href = url;
     }
   }, [data, isSuccess]);
 
@@ -32,7 +30,7 @@ export default function SolidLoginButton({ login }) {
         src="https://solidproject.org/assets/img/solid-emblem.svg"
         alt="solid logo icon"
       />
-      Sign in with Solid
+      {isLoading ? `Redirecting...` : `Sign in with Solid`}
     </button>
   );
 }

@@ -2,27 +2,28 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import BASE_URL from "../../app/config";
-import { useRenewMutation } from "../../app/services/auth";
+import useNotification from "./useNotification";
+import BASE_URL from "../../../app/config";
+import { useRenewMutation } from "../../../app/services/auth";
 import {
   setChannels,
   addChannel,
   deleteChannel,
-} from "../../app/slices/channels";
+} from "../../../app/slices/channels";
 import {
   updateUsersByLogs,
   updateUsersStatus,
-} from "../../app/slices/contacts";
+} from "../../../app/slices/contacts";
 import {
   updateToken,
   clearAuthData,
   setUsersVersion,
   setAfterMid,
   updateLoginedUserByLogs,
-} from "../../app/slices/auth.data";
+} from "../../../app/slices/auth.data";
 
-import { addChannelMsg } from "../../app/slices/message.channel";
-import { addUserMsg } from "../../app/slices/message.user";
+import { addChannelMsg } from "../../../app/slices/message.channel";
+import { addUserMsg } from "../../../app/slices/message.user";
 const getQueryString = (params = {}) => {
   const sp = new URLSearchParams();
   Object.entries(params).forEach(([key, val]) => {
@@ -33,6 +34,7 @@ const getQueryString = (params = {}) => {
   return sp.toString();
 };
 const NotificationHub = ({ usersVersion = 0, afterMid = 0 }) => {
+  const { enableNotification, showNotification } = useNotification();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { token, refreshToken, user: currUser } = useSelector(
@@ -42,6 +44,10 @@ const NotificationHub = ({ usersVersion = 0, afterMid = 0 }) => {
     renewToken,
     { data, isSuccess: refreshTokenSuccess },
   ] = useRenewMutation();
+  useEffect(() => {
+    enableNotification();
+  }, []);
+
   useEffect(() => {
     let sse = null;
     if (token) {
@@ -160,23 +166,42 @@ const NotificationHub = ({ usersVersion = 0, afterMid = 0 }) => {
           // channel msg
           const { gid, ...rest } = data;
           console.log("compare", rest, currUser, rest.from_uid != currUser.uid);
+          const isSelf = rest.from_uid == currUser.uid;
           dispatch(
             addChannelMsg({
               id: gid,
               // 自己发的 就不用标记未读
-              unread: rest.from_uid != currUser.uid,
+              unread: !isSelf,
               ...rest,
             })
           );
+          // group message notification
+          if (!isSelf) {
+            showNotification({
+              body: rest.content,
+              data: {
+                path: `/chat/channel/${gid}`,
+              },
+            });
+          }
         } else {
           // user msg
+          const isSelf = data.from_uid == currUser.uid;
           dispatch(
             addUserMsg({
               id: data.from_uid,
-              unread: data.from_uid != currUser.uid,
+              unread: !isSelf,
               ...data,
             })
           );
+          if (!isSelf) {
+            showNotification({
+              body: data.content,
+              data: {
+                path: `/chat/dm/${data.from_uid}`,
+              },
+            });
+          }
         }
         // 更新after_mid
         dispatch(setAfterMid({ mid: data.mid }));

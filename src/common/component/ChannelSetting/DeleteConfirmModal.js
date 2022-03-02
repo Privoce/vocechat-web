@@ -9,7 +9,7 @@ import { deleteChannel } from "../../../app/slices/channels";
 import Modal from "../Modal";
 // import BASE_URL from "../../app/config";
 import { useLazyRemoveChannelQuery } from "../../../app/services/channel";
-import Button from "../StyledButton";
+import Button from "../styled/Button";
 const StyledConfirm = styled.div`
   padding: 32px;
   filter: drop-shadow(0px 25px 50px rgba(31, 41, 55, 0.25));

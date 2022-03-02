@@ -6,8 +6,9 @@ import {
   useGetChannelQuery,
   useUpdateChannelMutation,
 } from "../../../app/services/channel";
-import Input from "../StyledInput";
-import Textarea from "../StyledTextarea";
+import Input from "../styled/Input";
+import Label from "../styled/Label";
+import Textarea from "../styled/Textarea";
 import SaveTip from "../SaveTip";
 const StyledWrapper = styled.div`
   position: relative;
@@ -27,12 +28,6 @@ const StyledWrapper = styled.div`
       flex-direction: column;
       align-items: flex-start;
       gap: 8px;
-      label {
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 20px;
-        color: #6b7280;
-      }
       .name {
         padding-left: 36px;
         background: url(https://static.nicegoodthings.com/project/rustchat/icon.hash.svg);
@@ -94,7 +89,7 @@ export default function Overview({ id = 0 }) {
     <StyledWrapper>
       <div className="inputs">
         <div className="input">
-          <label htmlFor="name">Channel Name</label>
+          <Label htmlFor="name">Channel Name</Label>
           <Input
             className="name"
             data-type="name"
@@ -106,11 +101,11 @@ export default function Overview({ id = 0 }) {
           />
         </div>
         <div className="input">
-          <label htmlFor="desc">Channel Topic</label>
+          <Label htmlFor="desc">Channel Topic</Label>
           <Textarea
             data-type="description"
             onChange={handleChange}
-            value={description}
+            value={description ?? ""}
             rows={4}
             name="name"
             id="name"

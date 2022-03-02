@@ -8,7 +8,7 @@ import { useSendMsgMutation } from "../../../../app/services/contact";
 import { addChannelMsg } from "../../../../app/slices/message.channel";
 import { addUserMsg } from "../../../../app/slices/message.user";
 import Modal from "../../Modal";
-import Button from "../../StyledButton";
+import Button from "../../styled/Button";
 import StyledWrapper from "./styled";
 
 export default function UploadModal({
