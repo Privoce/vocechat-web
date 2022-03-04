@@ -1,15 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { isObjectEqual } from "../../common/utils";
 
-const initialState = {
-  // accessLogs: {},
-  pendingMsgs: [],
-};
+const initialState = {};
 
 const channelMsgSlice = createSlice({
   name: "channelMessage",
   initialState,
   reducers: {
+    clearChannelMsg() {
+      return initialState;
+    },
+    initChannelMsg(state, action) {
+      return action.payload;
+    },
     addChannelMsg(state, action) {
       const {
         id,
@@ -48,22 +51,13 @@ const channelMsgSlice = createSlice({
         obj.unread = false;
       });
     },
-    addPendingMsg(state, action) {
-      state.pendingMsgs.push(action.payload);
-    },
-    removePendingMsg(state, action) {
-      const timestamp = action.payload;
-      state.pendingMsgs = state.pendingMsgs.filter(
-        (m) => m.timestamp != timestamp
-      );
-    },
   },
 });
 export const {
+  clearChannelMsg,
+  initChannelMsg,
   clearChannelMsgUnread,
   setChannelMsgRead,
   addChannelMsg,
-  addPendingMsg,
-  removePendingMsg,
 } = channelMsgSlice.actions;
 export default channelMsgSlice.reducer;

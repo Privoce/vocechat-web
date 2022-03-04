@@ -4,15 +4,20 @@ const channelsSlice = createSlice({
   name: `channels`,
   initialState,
   reducers: {
+    clearChannels() {
+      return initialState;
+    },
     setChannels(state, action) {
       console.log("set channels store", state);
       const chs = action.payload || [];
-      return Object.fromEntries(
-        chs.map((c) => {
-          const { gid, ...rest } = c;
-          return [gid, rest];
-        })
-      );
+      return Array.isArray(chs)
+        ? Object.fromEntries(
+            chs.map((c) => {
+              const { gid, ...rest } = c;
+              return [gid, rest];
+            })
+          )
+        : chs;
     },
 
     updateChannel(state, action) {
@@ -41,6 +46,7 @@ const channelsSlice = createSlice({
   },
 });
 export const {
+  clearChannels,
   setChannels,
   addChannel,
   deleteChannel,

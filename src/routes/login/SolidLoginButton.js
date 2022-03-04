@@ -6,7 +6,8 @@ export default function SolidLoginButton() {
 
   const handleSolidLogin = () => {
     getOpenId({
-      issuer_url: "https://solidweb.org",
+      // issuer: "solidweb.org",
+      issuer: "broker.pod.inrupt.com",
       redirect_uri: `${location.origin}/#/login`,
     });
   };

@@ -19,22 +19,14 @@ export default function HomePage() {
   const dispatch = useDispatch();
   const {
     ui: { menuExpand, setting, channelSetting },
-    authData: { usersVersion, afterMid },
+    visitMark: { usersVersion, afterMid },
   } = useSelector((store) => {
     return {
-      authData: store.authData,
+      visitMark: store.visitMark,
       ui: store.ui,
-      contacts: store.contacts,
     };
   });
   const { data, loading, error, success } = usePreload();
-
-  // useEffect(() => {
-  //   if (authData) {
-  //     dispatch(setAuthData(data));
-  //   }
-  // }, [authData]);
-
   const toggleExpand = () => {
     dispatch(toggleMenuExpand());
   };

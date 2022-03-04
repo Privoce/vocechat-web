@@ -8,6 +8,9 @@ const pendingMessageSlice = createSlice({
   name: "pendingMessage",
   initialState,
   reducers: {
+    clearPendingMsg() {
+      return initialState;
+    },
     addPendingMessage(state, action) {
       const { type = "user", msg } = action.payload;
       const { id, mid } = msg;
@@ -23,6 +26,7 @@ const pendingMessageSlice = createSlice({
   },
 });
 export const {
+  clearPendingMsg,
   addPendingMessage,
   removePendingMessage,
 } = pendingMessageSlice.actions;

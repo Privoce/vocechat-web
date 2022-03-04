@@ -13,8 +13,8 @@ export default function DMChat({ uid = "", dropFiles = [] }) {
   const contacts = useSelector((store) => store.contacts);
   const { msgs, pendingMsgs } = useSelector((store) => {
     return {
-      msgs: store.userMsg[uid] || {},
-      pendingMsgs: store.pendingMsg.user[uid] || {},
+      msgs: store.userMessage[uid] || {},
+      pendingMsgs: store.pendingMessage.user[uid] || {},
     };
   });
   const [currUser, setCurrUser] = useState(null);
@@ -31,7 +31,7 @@ export default function DMChat({ uid = "", dropFiles = [] }) {
   }, [dropFiles]);
 
   if (!currUser) return null;
-  console.log("user msgs", msgs);
+  // console.log("user msgs", msgs);
   return (
     <Layout
       setDragFiles={setDragFiles}
@@ -75,7 +75,7 @@ export default function DMChat({ uid = "", dropFiles = [] }) {
             })
             .map(([mid, msg]) => {
               if (!msg) return null;
-              console.log("user msg", msg);
+              // console.log("user msg", msg);
               const {
                 from_uid,
                 content,

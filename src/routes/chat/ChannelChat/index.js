@@ -27,9 +27,9 @@ export default function ChannelChat({
   const dispatch = useDispatch();
   const { msgs, users, pendingMsgs } = useSelector((store) => {
     return {
-      msgs: store.channelMsg[cid] || {},
+      msgs: store.channelMessage[cid] || {},
       users: store.contacts,
-      pendingMsgs: store.pendingMsg.channel[cid] || {},
+      pendingMsgs: store.pendingMessage.channel[cid] || {},
     };
   });
   const handleClearUnreads = () => {

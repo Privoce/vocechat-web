@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   useGetServerQuery,
   useUpdateServerMutation,
@@ -66,6 +66,7 @@ const StyledWrapper = styled.div`
   }
 `;
 export default function Overview() {
+  const currUser = useSelector((store) => store.authData.user);
   const [changed, setChanged] = useState(false);
   const [values, setValues] = useState(null);
   const { data, refetch } = useGetServerQuery();
@@ -118,28 +119,33 @@ export default function Overview() {
 
   if (!values) return null;
   const { name, description, logo } = values;
+  const isAdmin = currUser?.is_admin;
   return (
     <StyledWrapper>
       <div className="logo">
         <div className="preview">
           <LogoUploader
+            disabled={!isAdmin}
             url={uploadSuccess ? `${logo}?t=${new Date().getTime()}` : logo}
             name={name}
             uploadImage={uploadLogo}
           />
         </div>
-        <div className="upload">
-          <div className="tip">
-            Minimum size is 128x128, We recommend at least 512x512 for the
-            server. Max size limited to 5M.
+        {isAdmin && (
+          <div className="upload">
+            <div className="tip">
+              Minimum size is 128x128, We recommend at least 512x512 for the
+              server. Max size limited to 5M.
+            </div>
+            <button className="btn">Upload Image</button>
           </div>
-          <button className="btn">Upload Image</button>
-        </div>
+        )}
       </div>
       <div className="inputs">
         <div className="input">
           <Label htmlFor="name">Server Name</Label>
           <Input
+            disabled={!isAdmin}
             data-type="name"
             onChange={handleChange}
             value={name}
@@ -151,6 +157,7 @@ export default function Overview() {
         <div className="input">
           <Label htmlFor="desc">Server Description</Label>
           <Textarea
+            disabled={!isAdmin}
             data-type="description"
             onChange={handleChange}
             value={description ?? ""}

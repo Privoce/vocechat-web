@@ -5,6 +5,9 @@ const contactsSlice = createSlice({
   name: `contacts`,
   initialState,
   reducers: {
+    clearContacts() {
+      return initialState;
+    },
     setContacts(state, action) {
       console.log("set Contacts store", state);
       const contacts = action.payload || [];
@@ -21,8 +24,8 @@ const contactsSlice = createSlice({
           case "update":
             {
               const vals = getNonNullValues(rest);
-              console.log("update vals", vals);
               const curr = state.find(({ uid: id }) => id == uid);
+              console.log("update vals", vals, curr);
               if (curr) {
                 Object.keys(vals).forEach((k) => {
                   curr[k] = vals[k];
@@ -32,7 +35,14 @@ const contactsSlice = createSlice({
             break;
           case "create":
             {
-              state.push({ uid, ...rest });
+              const idx = state.findIndex((o) => {
+                return o.uid == uid;
+              });
+              if (idx > -1) {
+                state.splice(idx, 1, { uid, ...rest });
+              } else {
+                state.push({ uid, ...rest });
+              }
             }
             break;
           case "delete":
@@ -56,7 +66,7 @@ const contactsSlice = createSlice({
       onlines.forEach((item) => {
         const { uid, online = false } = item;
         const curr = state.find(({ uid: id }) => id == uid);
-        console.log("update user status", curr, online);
+        // console.log("update user status", curr, online);
         if (curr) {
           curr.online = online;
         }
@@ -65,6 +75,7 @@ const contactsSlice = createSlice({
   },
 });
 export const {
+  clearContacts,
   setContacts,
   removeContact,
   updateUsersByLogs,

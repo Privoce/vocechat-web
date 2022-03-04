@@ -20,17 +20,19 @@ import DMList from "./DMList";
 export default function ChatPage() {
   const [channelDropFiles, setChannelDropFiles] = useState([]);
   const [userDropFiles, setUserDropFiles] = useState([]);
-  const { channels, UserMsgData, ChannelMsgData } = useSelector((store) => {
-    return {
-      channels: store.channels,
-      UserMsgData: store.userMsg,
-      ChannelMsgData: store.channelMsg,
-    };
-  });
+  const { contacts, channels, UserMsgData, ChannelMsgData } = useSelector(
+    (store) => {
+      return {
+        contacts: store.contacts,
+        channels: store.channels,
+        UserMsgData: store.userMessage,
+        ChannelMsgData: store.channelMessage,
+      };
+    }
+  );
   const [channelModalVisible, setChannelModalVisible] = useState(false);
   const [contactsModalVisible, setContactsModalVisible] = useState(false);
   const { channel_id, user_id } = useParams();
-  const contacts = useSelector((store) => store.contacts);
   const toggleContactsModalVisible = () => {
     setContactsModalVisible((prev) => !prev);
   };

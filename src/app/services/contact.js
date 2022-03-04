@@ -1,5 +1,4 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { REHYDRATE } from "redux-persist";
 import toast from "react-hot-toast";
 
 import baseQuery from "./base.query";
@@ -14,11 +13,6 @@ import {
 export const contactApi = createApi({
   reducerPath: "contact",
   baseQuery,
-  extractRehydrationInfo(action, { reducerPath }) {
-    if (action.type === REHYDRATE) {
-      return action.payload ? action.payload[reducerPath] : undefined;
-    }
-  },
   endpoints: (builder) => ({
     getContacts: builder.query({
       query: () => ({ url: `user` }),
@@ -96,9 +90,13 @@ export const contactApi = createApi({
         };
         dispatch(addPendingMessage({ type: "user", msg: tmpMsg }));
         try {
-          const { data } = await queryFulfilled;
+          // 走sse推送
+          const { data: server_mid } = await queryFulfilled;
+          // console.log("wtf", wtf);
           // 此处的id，是指给谁发的
-          dispatch(addUserMsg({ id, ...data, unread: false }));
+          dispatch(
+            addUserMsg({ id, ...tmpMsg, mid: server_mid, unread: false })
+          );
           dispatch(removePendingMessage({ id, mid, type: "user" }));
         } catch {
           toast.error("Send Message Failed");
@@ -115,6 +113,7 @@ export const {
   useUpdateInfoMutation,
   useUpdateAvatarMutation,
   useGetContactsQuery,
+  useLazyGetContactsQuery,
   useSendMsgMutation,
   useRegisterMutation,
 } = contactApi;

@@ -57,7 +57,12 @@ const StyledWrapper = styled.div`
     right: 0;
   }
 `;
-export default function AvatarUploader({ url = "", name = "", uploadImage }) {
+export default function AvatarUploader({
+  url = "",
+  name = "",
+  uploadImage,
+  disabled = false,
+}) {
   const [uploading, setUploading] = useState(false);
   const [currSrc, setCurrSrc] = useState("");
   useEffect(() => {
@@ -80,21 +85,29 @@ export default function AvatarUploader({ url = "", name = "", uploadImage }) {
     <StyledWrapper>
       <div className="avatar">
         <img src={currSrc} alt="avatar" />
-        <div className="tip">{uploading ? `Uploading` : `Change Avatar`}</div>
-        <input
-          multiple={false}
-          onChange={handleUpload}
-          type="file"
-          accept="image/*"
-          name="avatar"
-          id="avatar"
-        />
+        {!disabled && (
+          <>
+            <div className="tip">
+              {uploading ? `Uploading` : `Change Avatar`}
+            </div>
+            <input
+              multiple={false}
+              onChange={handleUpload}
+              type="file"
+              accept="image/*"
+              name="avatar"
+              id="avatar"
+            />
+          </>
+        )}
       </div>
-      <img
-        src="https://static.nicegoodthings.com/project/rustchat/icon.avatar.uploader.svg"
-        alt="icon"
-        className="icon"
-      />
+      {!disabled && (
+        <img
+          src="https://static.nicegoodthings.com/project/rustchat/icon.avatar.uploader.svg"
+          alt="icon"
+          className="icon"
+        />
+      )}
     </StyledWrapper>
   );
 }

@@ -1,38 +1,54 @@
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useGetContactsQuery } from "../../app/services/contact";
-import { clearAuthData } from "../../app/slices/auth.data";
+import initCache, { useRehydrate } from "../../app/cache";
+import { useLazyGetContactsQuery } from "../../app/services/contact";
+import { clearAuthData, setUserData } from "../../app/slices/auth.data";
 import { setContacts } from "../../app/slices/contacts";
 
 // import { useGetChannelsQuery } from "../../app/services/channel";
-import { useGetServerQuery } from "../../app/services/server";
+import { useLazyGetServerQuery } from "../../app/services/server";
+import { KEY_UID } from "../../app/config";
 // pollingInterval: 0,
-const querySetting = {
-  refetchOnMountOrArgChange: true,
-};
+// const querySetting = {
+//   refetchOnMountOrArgChange: true,
+// };
 export default function usePreload() {
+  const { rehydrate, cacheFirst } = useRehydrate();
   const [checked, setChecked] = useState(false);
-  const loginedUser = useSelector((store) => {
-    return store.authData.user;
-  });
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {
-    isLoading: contactsLoading,
-    isSuccess: contactsSuccess,
-    isError: contactsError,
-    data: contacts,
-  } = useGetContactsQuery(undefined, querySetting);
-  const {
-    isLoading: serverLoading,
-    isSuccess: serverSuccess,
-    isError: serverError,
-    data: server,
-  } = useGetServerQuery(undefined, querySetting);
+  const [
+    getContacts,
+    {
+      isLoading: contactsLoading,
+      isSuccess: contactsSuccess,
+      isError: contactsError,
+      data: contacts,
+    },
+  ] = useLazyGetContactsQuery();
+  const [
+    getServer,
+    {
+      isLoading: serverLoading,
+      isSuccess: serverSuccess,
+      isError: serverError,
+      data: server,
+    },
+  ] = useLazyGetServerQuery();
   useEffect(() => {
+    initCache();
+    rehydrate();
+  }, []);
+  useEffect(() => {
+    getContacts();
+    getServer();
+  }, []);
+
+  useEffect(() => {
+    const local_uid = localStorage.getItem(KEY_UID);
     if (contacts) {
-      const matchedUser = contacts.find((c) => c.uid == loginedUser.uid);
+      const matchedUser = contacts.find((c) => c.uid == local_uid);
       if (!matchedUser) {
         console.log("no matched user, redirect to login");
         dispatch(clearAuthData());
@@ -41,13 +57,14 @@ export default function usePreload() {
         const markedContacts = contacts.map((u) => {
           return u.uid == matchedUser.uid ? { ...u, online: true } : u;
         });
+        dispatch(setUserData(matchedUser));
         dispatch(setContacts(markedContacts));
         setChecked(true);
       }
     }
   }, [contacts]);
   return {
-    loading: contactsLoading || serverLoading || !checked,
+    loading: contactsLoading || serverLoading || !checked || !cacheFirst,
     error: contactsError && serverError,
     success: contactsSuccess && serverSuccess,
     data: {

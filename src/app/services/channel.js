@@ -1,5 +1,4 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { REHYDRATE } from "redux-persist";
 import toast from "react-hot-toast";
 import baseQuery from "./base.query";
 import { ContentTypes } from "../config";
@@ -12,11 +11,6 @@ import {
 export const channelApi = createApi({
   reducerPath: "channel",
   baseQuery,
-  extractRehydrationInfo(action, { reducerPath }) {
-    if (action.type === REHYDRATE) {
-      return action.payload ? action.payload[reducerPath] : undefined;
-    }
-  },
   refetchOnFocus: true,
   endpoints: (builder) => ({
     getChannels: builder.query({
@@ -84,11 +78,12 @@ export const channelApi = createApi({
         };
         dispatch(addPendingMessage({ type: "channel", msg: tmpMsg }));
         try {
-          const {
-            data: { gid, ...rest },
-          } = await queryFulfilled;
+          const { data: server_mid } = await queryFulfilled;
+          console.log("channel server mid", server_mid);
           // 此处的id，是指给谁发的
-          dispatch(addChannelMsg({ id: gid, ...rest, unread: false }));
+          dispatch(
+            addChannelMsg({ ...tmpMsg, mid: server_mid, unread: false })
+          );
           dispatch(removePendingMessage({ id, mid, type: "channel" }));
         } catch {
           console.log("channel message send failed");

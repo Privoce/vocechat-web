@@ -17,10 +17,9 @@ import {
 import {
   updateToken,
   clearAuthData,
-  setUsersVersion,
-  setAfterMid,
   updateLoginedUserByLogs,
 } from "../../../app/slices/auth.data";
+import { setUsersVersion, setAfterMid } from "../../../app/slices/visit.mark";
 
 import { addChannelMsg } from "../../../app/slices/message.channel";
 import { addUserMsg } from "../../../app/slices/message.user";
@@ -161,50 +160,74 @@ const NotificationHub = ({ usersVersion = 0, afterMid = 0 }) => {
         dispatch(deleteChannel(data.gid));
         break;
       case "chat":
-        // console.log("chat data", data);
-        if (data.gid) {
-          // channel msg
-          const { gid, ...rest } = data;
-          console.log("compare", rest, currUser, rest.from_uid != currUser.uid);
-          const isSelf = rest.from_uid == currUser.uid;
-          dispatch(
-            addChannelMsg({
-              id: gid,
-              // 自己发的 就不用标记未读
-              unread: !isSelf,
-              ...rest,
-            })
-          );
-          // group message notification
-          if (!isSelf) {
-            showNotification({
-              body: rest.content,
-              data: {
-                path: `/chat/channel/${gid}`,
-              },
-            });
+        {
+          // console.log("chat data", data);
+          const {
+            detail: { target },
+          } = data;
+          const {
+            created_at,
+            mid,
+            from_uid,
+            detail: { content, content_type, expires_in, type },
+          } = data;
+          if (typeof target.gid !== "undefined") {
+            // channel msg
+            const gid = target.gid;
+            const isSelf = from_uid == currUser.uid;
+            dispatch(
+              addChannelMsg({
+                id: gid,
+                from_uid,
+                // 自己发的 就不用标记未读
+                unread: !isSelf,
+                created_at,
+                mid,
+                content,
+                content_type,
+                expires_in,
+                type,
+              })
+            );
+            // group message notification
+            if (!isSelf) {
+              showNotification({
+                body: content,
+                data: {
+                  path: `/chat/channel/${gid}`,
+                },
+              });
+            }
+          } else {
+            // user msg
+            const isSelf = data.from_uid == currUser.uid;
+
+            dispatch(
+              addUserMsg({
+                // 此处需要特别注意
+                id: isSelf ? target.uid : from_uid,
+                from_uid: from_uid,
+                unread: !isSelf,
+                created_at,
+                mid,
+                content,
+                content_type,
+                expires_in,
+                type,
+              })
+            );
+            if (!isSelf) {
+              showNotification({
+                body: data.content,
+                data: {
+                  path: `/chat/dm/${data.from_uid}`,
+                },
+              });
+            }
           }
-        } else {
-          // user msg
-          const isSelf = data.from_uid == currUser.uid;
-          dispatch(
-            addUserMsg({
-              id: data.from_uid,
-              unread: !isSelf,
-              ...data,
-            })
-          );
-          if (!isSelf) {
-            showNotification({
-              body: data.content,
-              data: {
-                path: `/chat/dm/${data.from_uid}`,
-              },
-            });
-          }
+          // 更新after_mid
+          dispatch(setAfterMid({ mid: data.mid }));
         }
-        // 更新after_mid
-        dispatch(setAfterMid({ mid: data.mid }));
         break;
 
       default:
@@ -214,7 +237,7 @@ const NotificationHub = ({ usersVersion = 0, afterMid = 0 }) => {
   };
   return null;
 };
-// function compareToken(prevHub, nextHub) {
-//   return prevHub.token === nextHub.token;
-// }
-export default React.memo(NotificationHub);
+function compareToken(prevHub, nextHub) {
+  return prevHub.token === nextHub.token;
+}
+export default React.memo(NotificationHub, compareToken);

@@ -6,6 +6,12 @@ const userMsgSlice = createSlice({
   name: "userMessage",
   initialState,
   reducers: {
+    clearUserMsg() {
+      return initialState;
+    },
+    initUserMsg(state, action) {
+      return action.payload;
+    },
     addUserMsg(state, action) {
       const {
         id,
@@ -44,5 +50,11 @@ const userMsgSlice = createSlice({
     },
   },
 });
-export const { addUserMsg, setUserMsgRead, removeMsg } = userMsgSlice.actions;
+export const {
+  clearUserMsg,
+  initUserMsg,
+  addUserMsg,
+  setUserMsgRead,
+  removeMsg,
+} = userMsgSlice.actions;
 export default userMsgSlice.reducer;
