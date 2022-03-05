@@ -21,8 +21,10 @@ import {
 } from "../../../app/slices/auth.data";
 import { setUsersVersion, setAfterMid } from "../../../app/slices/visit.mark";
 
-import { addChannelMsg } from "../../../app/slices/message.channel";
-import { addUserMsg } from "../../../app/slices/message.user";
+// import { addChannelMsg } from "../../../app/slices/message.channel";
+// import { addUserMsg } from "../../../app/slices/message.user";
+import { setReady } from "../../../app/slices/ui";
+import useMessageHandler from "./useMessageHandler";
 const getQueryString = (params = {}) => {
   const sp = new URLSearchParams();
   Object.entries(params).forEach(([key, val]) => {
@@ -33,12 +35,13 @@ const getQueryString = (params = {}) => {
   return sp.toString();
 };
 const NotificationHub = ({ usersVersion = 0, afterMid = 0 }) => {
-  const { enableNotification, showNotification } = useNotification();
+  const { enableNotification } = useNotification();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { token, refreshToken, user: currUser } = useSelector(
     (store) => store.authData
   );
+  const handleMessage = useMessageHandler(currUser);
   const [
     renewToken,
     { data, isSuccess: refreshTokenSuccess },
@@ -98,6 +101,10 @@ const NotificationHub = ({ usersVersion = 0, afterMid = 0 }) => {
     switch (type) {
       case "heartbeat":
         console.log("heartbeat");
+        break;
+      case "ready":
+        console.log("sse ready");
+        dispatch(setReady());
         break;
       case "users_snapshot":
         {
@@ -161,72 +168,12 @@ const NotificationHub = ({ usersVersion = 0, afterMid = 0 }) => {
         break;
       case "chat":
         {
-          // console.log("chat data", data);
-          const {
-            detail: { target },
-          } = data;
-          const {
-            created_at,
-            mid,
-            from_uid,
-            detail: { content, content_type, expires_in, type },
-          } = data;
-          if (typeof target.gid !== "undefined") {
-            // channel msg
-            const gid = target.gid;
-            const isSelf = from_uid == currUser.uid;
-            dispatch(
-              addChannelMsg({
-                id: gid,
-                from_uid,
-                // 自己发的 就不用标记未读
-                unread: !isSelf,
-                created_at,
-                mid,
-                content,
-                content_type,
-                expires_in,
-                type,
-              })
-            );
-            // group message notification
-            if (!isSelf) {
-              showNotification({
-                body: content,
-                data: {
-                  path: `/chat/channel/${gid}`,
-                },
-              });
-            }
-          } else {
-            // user msg
-            const isSelf = data.from_uid == currUser.uid;
+          handleMessage(data);
 
-            dispatch(
-              addUserMsg({
-                // 此处需要特别注意
-                id: isSelf ? target.uid : from_uid,
-                from_uid: from_uid,
-                unread: !isSelf,
-                created_at,
-                mid,
-                content,
-                content_type,
-                expires_in,
-                type,
-              })
-            );
-            if (!isSelf) {
-              showNotification({
-                body: data.content,
-                data: {
-                  path: `/chat/dm/${data.from_uid}`,
-                },
-              });
-            }
-          }
           // 更新after_mid
-          dispatch(setAfterMid({ mid: data.mid }));
+          if (data.detail.type == "normal") {
+            dispatch(setAfterMid({ mid: data.mid }));
+          }
         }
         break;
 

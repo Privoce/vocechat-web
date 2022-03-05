@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  ready: false,
   menuExpand: true,
   setting: false,
   channelSetting: null,
@@ -9,6 +10,9 @@ const uiSlice = createSlice({
   name: "ui",
   initialState,
   reducers: {
+    setReady(state) {
+      state.ready = true;
+    },
     toggleMenuExpand(state) {
       state.menuExpand = !state.menuExpand;
     },
@@ -23,6 +27,7 @@ const uiSlice = createSlice({
   },
 });
 export const {
+  setReady,
   toggleSetting,
   toggleMenuExpand,
   toggleChannelSetting,

@@ -38,6 +38,23 @@ const userMsgSlice = createSlice({
         state[id] = { [mid]: newMsg };
       }
     },
+    likeUserMsg(state, action) {
+      const { id, mid, action: emoji } = action.payload;
+      console.log("add user likes", id, mid, state[id][mid]);
+      if (state[id][mid]) {
+        const currLikes = state[id][mid].likes;
+        state[id][mid].likes = currLikes ? [...currLikes, emoji] : [emoji];
+      }
+    },
+    deleteUserMsg(state, action) {
+      const { id, mid } = action.payload;
+      console.log("delete user message", id, mid);
+      if (state[id][mid]) {
+        // 添加removed标识
+        // state[id][mid].removed = true;
+        delete state[id][mid];
+      }
+    },
     setUserMsgRead(state, action) {
       const { id, mid } = action.payload;
       console.log("set unread", id, mid);
@@ -51,6 +68,8 @@ const userMsgSlice = createSlice({
   },
 });
 export const {
+  likeUserMsg,
+  deleteUserMsg,
   clearUserMsg,
   initUserMsg,
   addUserMsg,

@@ -9,6 +9,7 @@ import { addChannelMsg } from "../../../../app/slices/message.channel";
 import { addUserMsg } from "../../../../app/slices/message.user";
 import Modal from "../../Modal";
 import Button from "../../styled/Button";
+
 import StyledWrapper from "./styled";
 
 export default function UploadModal({
@@ -75,9 +76,25 @@ export default function UploadModal({
   if (!sendTo) return null;
   return (
     <Modal>
-      <StyledWrapper className="animate__animated animate__fadeInDown animate__faster">
-        <h3 className="head">Upload a file</h3>
-        <p className="intro">Photos accept jpg, png, max size limit to 10M.</p>
+      <StyledWrapper
+        title={"Upload a file"}
+        description="Photos accept jpg, png, max size limit to 10M."
+        buttons={
+          <>
+            <Button className="cancel" onClick={closeModal}>
+              Cancel
+            </Button>
+            <Button
+              className="upload main"
+              disabled={channelSending || userSending}
+              onClick={handleUpload}
+            >
+              {channelSending || userSending ? "Uploading" : `Upload`}
+            </Button>
+          </>
+        }
+        className="animate__animated animate__fadeInDown animate__faster"
+      >
         <ul className="list">
           {blobs.map((b, idx) => {
             console.log({ b });
@@ -102,18 +119,6 @@ export default function UploadModal({
             );
           })}
         </ul>
-        <div className="btns">
-          <Button className="cancel" onClick={closeModal}>
-            Cancel
-          </Button>
-          <Button
-            className="upload main"
-            disabled={channelSending || userSending}
-            onClick={handleUpload}
-          >
-            {channelSending || userSending ? "Uploading" : `Upload`}
-          </Button>
-        </div>
       </StyledWrapper>
     </Modal>
   );

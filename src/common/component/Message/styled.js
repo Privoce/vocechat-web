@@ -7,11 +7,15 @@ const StyledMsg = styled.div`
   padding: 4px;
   margin: 8px 0;
   border-radius: 8px;
-  &:hover {
+  &:hover,
+  &.preview {
     background: #f5f6f7;
     .cmds {
       visibility: visible;
     }
+  }
+  &.menu {
+    z-index: 9;
   }
   .avatar {
     cursor: pointer;
@@ -40,6 +44,30 @@ const StyledMsg = styled.div`
         color: #bfbfbf;
         font-size: 12px;
         line-height: 18px;
+      }
+      .likes {
+        display: flex;
+        gap: 8px;
+        font-size: 16px;
+        /* align-items: center; */
+        .like {
+          position: relative;
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          em {
+            font-size: 12px;
+            color: #999;
+          }
+          /* &:after {
+            content: attr(data-count);
+            position: absolute;
+            top: -4px;
+            right: -8px;
+            font-size: 12px;
+            color: #999;
+          } */
+        }
       }
     }
     .down {

@@ -66,8 +66,8 @@ const StyledSend = styled.div`
     }
     .picker {
       position: absolute;
-      top: -15px;
-      right: 0;
+      top: -20px;
+      right: -15px;
       transform: translateY(-100%);
     }
   }

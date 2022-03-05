@@ -104,15 +104,19 @@ export default function ChannelChat({
               .map(([mid, msg]) => {
                 if (!msg) return null;
                 const {
+                  likes = null,
                   pending = false,
                   from_uid,
                   content,
                   content_type,
                   created_at,
                   unread,
+                  removed = false,
                 } = msg;
                 return (
                   <Message
+                    likes={likes}
+                    removed={removed}
                     pending={pending}
                     content_type={content_type}
                     unread={unread}

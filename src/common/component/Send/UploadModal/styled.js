@@ -1,27 +1,6 @@
 import styled from "styled-components";
-
-const StyledWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 16px;
-  background-color: #fff;
-  filter: drop-shadow(0px 25px 50px rgba(31, 41, 55, 0.25));
-  border-radius: 8px;
-  .head {
-    font-style: normal;
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 30px;
-    margin-bottom: 8px;
-  }
-  .intro {
-    font-style: normal;
-    font-weight: normal;
-    font-size: 14px;
-    line-height: 20px;
-    color: #6b7280;
-  }
+import StyledModal from "../../styled/Modal";
+const StyledWrapper = styled(StyledModal)`
   .list {
     padding-top: 32px;
     display: flex;
@@ -68,15 +47,6 @@ const StyledWrapper = styled.div`
         }
       }
     }
-  }
-  .btns {
-    padding-top: 32px;
-    padding-bottom: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 16px;
-    width: 100%;
   }
 `;
 export default StyledWrapper;

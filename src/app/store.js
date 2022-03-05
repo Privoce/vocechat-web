@@ -15,6 +15,7 @@ import userMsgReducer from "./slices/message.user";
 import { authApi } from "./services/auth";
 import { contactApi } from "./services/contact";
 import { channelApi } from "./services/channel";
+import { messageApi } from "./services/message";
 import { serverApi } from "./services/server";
 const getCacheKey = (action = "") => {
   const [type] = action.split("/");
@@ -39,6 +40,7 @@ const reducer = combineReducers({
   channelMessage: channelMsgReducer,
   authData: authDataReducer,
   [authApi.reducerPath]: authApi.reducer,
+  [messageApi.reducerPath]: messageApi.reducer,
   [contactApi.reducerPath]: contactApi.reducer,
   [channelApi.reducerPath]: channelApi.reducer,
   [serverApi.reducerPath]: serverApi.reducer,
@@ -73,7 +75,8 @@ const store = configureStore({
         authApi.middleware,
         contactApi.middleware,
         channelApi.middleware,
-        serverApi.middleware
+        serverApi.middleware,
+        messageApi.middleware
       )
       .prepend(listenerMiddleware.middleware),
 });

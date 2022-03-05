@@ -83,9 +83,11 @@ export default function DMChat({ uid = "", dropFiles = [] }) {
                 created_at,
                 unread,
                 pending = false,
+                removed = false,
               } = msg;
               return (
                 <Message
+                  removed={removed}
                   pending={pending}
                   content_type={content_type}
                   unread={unread}

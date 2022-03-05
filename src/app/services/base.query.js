@@ -36,7 +36,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
       case 401:
         {
           if (api.endpoint === "renew") {
-            toast.error("token expired, please login again");
+            // toast.error("token expired, please login again");
             api.dispatch(clearAuthData());
             location.href = "/#/login";
             return;
