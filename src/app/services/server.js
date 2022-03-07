@@ -14,6 +14,9 @@ export const serverApi = createApi({
         return data;
       },
     }),
+    getMetrics: builder.query({
+      query: () => ({ url: `/admin/system/metrics` }),
+    }),
     getFirebaseConfig: builder.query({
       query: () => ({ url: `admin/fcm/config` }),
     }),
@@ -72,6 +75,7 @@ export const {
   useGetAgoraConfigQuery,
   useUpdateAgoraConfigMutation,
   useGetServerQuery,
+  useLazyGetMetricsQuery,
   useLazyGetServerQuery,
   useUpdateServerMutation,
   useUpdateLogoMutation,

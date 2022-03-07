@@ -41,7 +41,11 @@ export default function HomePage() {
       {ready ? (
         <StyledWrapper>
           <div className={`col left ${menuExpand ? "expand" : ""}`}>
-            <ServerDropList data={data?.server} expand={menuExpand} />
+            <ServerDropList
+              data={data?.server}
+              memberCount={data?.metrics?.user_count}
+              expand={menuExpand}
+            />
             <nav className="nav">
               <NavLink className="link" to={"/chat"}>
                 <img src={ChatIcon} alt="chat icon" />{" "}
