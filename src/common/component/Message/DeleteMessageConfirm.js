@@ -1,5 +1,5 @@
 // import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 // import { useDispatch } from "react-redux";
 // import BASE_URL from "../../app/config";
 import { useLazyDeleteMessageQuery } from "../../../app/services/message";

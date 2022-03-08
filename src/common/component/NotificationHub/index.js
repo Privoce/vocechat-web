@@ -66,13 +66,15 @@ const NotificationHub = ({ usersVersion = 0, afterMid = 0 }) => {
       sse.onerror = (err) => {
         switch (err.eventPhase) {
           case EventSource.CLOSED:
+            console.log("sse error closed error");
+            break;
           case EventSource.CONNECTING:
-            console.log("sse error renew");
+            console.log("sse error connecting error");
             renewToken({ token, refreshToken });
             break;
 
           default:
-            console.error("sse error", err);
+            console.error("sse error error", err);
             // renewToken({ token, refreshToken });
             break;
         }

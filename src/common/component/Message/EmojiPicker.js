@@ -16,6 +16,9 @@ const StyledPicker = styled.div`
   .emojis {
     display: flex;
     gap: 4px;
+    &.reacting {
+      opacity: 0.6;
+    }
     .emoji {
       cursor: pointer;
       border-radius: 4px;
@@ -43,7 +46,7 @@ export default function EmojiPicker({ mid, reactions = [], hidePicker }) {
   };
   return (
     <StyledPicker ref={wrapperRef}>
-      <ul className="emojis">
+      <ul className={`emojis ${isLoading ? "reacting" : ""}`}>
         {Object.entries(emojis).map(([key, emoji]) => {
           return (
             <li

@@ -86,9 +86,11 @@ export default function DMChat({ uid = "", dropFiles = [] }) {
                 pending = false,
                 removed = false,
                 edited,
+                reply,
               } = msg;
               return (
                 <Message
+                  reply={reply}
                   likes={likes}
                   edited={edited}
                   removed={removed}

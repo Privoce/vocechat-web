@@ -1,9 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
-import BASE_URL, { KEY_REFRESH_TOKEN, KEY_TOKEN, KEY_UID } from "../config";
+import BASE_URL, {
+  KEY_REFRESH_TOKEN,
+  KEY_TOKEN,
+  KEY_UID,
+  KEY_EXPIRE,
+} from "../config";
 import { getNonNullValues } from "../../common/utils";
 const initialState = {
   user: null,
   token: localStorage.getItem(KEY_TOKEN),
+  expireTime: localStorage.getItem(KEY_EXPIRE) || new Date().getTime(),
   refreshToken: localStorage.getItem(KEY_REFRESH_TOKEN),
 };
 const authDataSlice = createSlice({
@@ -11,11 +17,16 @@ const authDataSlice = createSlice({
   initialState,
   reducers: {
     setAuthData(state, action) {
-      const { user, token, refresh_token } = action.payload;
+      const { user, token, refresh_token, expired_in = 0 } = action.payload;
       state.user = user;
       state.token = token;
       state.refreshToken = refresh_token;
+      // 当前时间往后推expire时长
+      console.log("expire", expired_in);
+      const expireTime = new Date().getTime() + Number(expired_in) * 1000;
+      state.expireTime = expireTime;
       // set local data
+      localStorage.setItem(KEY_EXPIRE, expireTime);
       localStorage.setItem(KEY_TOKEN, token);
       localStorage.setItem(KEY_REFRESH_TOKEN, refresh_token);
       localStorage.setItem(KEY_UID, user.uid);
@@ -51,15 +62,19 @@ const authDataSlice = createSlice({
       state.token = null;
       state.refreshToken = null;
       // remove local data
+      localStorage.removeItem(KEY_EXPIRE);
       localStorage.removeItem(KEY_TOKEN);
       localStorage.removeItem(KEY_REFRESH_TOKEN);
       localStorage.removeItem(KEY_UID);
     },
     updateToken(state, action) {
-      const { token, refresh_token } = action.payload;
+      const { token, refresh_token, expired_in } = action.payload;
       console.log("refresh token");
       state.token = token;
+      const et = new Date().getTime() + Number(expired_in) * 1000;
+      state.expireTime = et;
       state.refreshToken = refresh_token;
+      localStorage.setItem(KEY_EXPIRE, et);
       localStorage.setItem(KEY_TOKEN, token);
       localStorage.setItem(KEY_REFRESH_TOKEN, refresh_token);
     },

@@ -1,5 +1,6 @@
 import { fetchBaseQuery } from "@reduxjs/toolkit/query";
 import toast from "react-hot-toast";
+import dayjs from "dayjs";
 import { updateToken, clearAuthData } from "../slices/auth.data";
 import BASE_URL, { tokenHeader } from "../config";
 const whiteList = ["login", "checkInviteTokenValid", "getServer", "getOpenid"];
@@ -8,18 +9,54 @@ const baseQuery = fetchBaseQuery({
   prepareHeaders: (headers, { getState, endpoint }) => {
     console.log("req", endpoint);
     const { token } = getState().authData;
-    if (token && !whiteList.includes(endpoint)) {
+    const noHeaderList = [...whiteList, "renew"];
+    if (token && !noHeaderList.includes(endpoint)) {
       headers.set(tokenHeader, token);
     }
-    // 发送channel msg (临时举措)
-    // if (endpoint == "sendChannelMsg") {
-    //   headers.set("Content-Type", "text/plain");
-    // }
     return headers;
   },
 });
-const baseQueryWithReauth = async (args, api, extraOptions) => {
-  let result = await baseQuery(args, api, extraOptions);
+let waitingForRenew = null;
+const baseQueryWithTokenCheck = async (args, api, extraOptions) => {
+  if (waitingForRenew) {
+    await waitingForRenew;
+  }
+  // 先检查token是否过期，过期则renew
+  const {
+    token,
+    refreshToken,
+    expireTime = new Date().getTime(),
+  } = api.getState().authData;
+  let result = null;
+  if (
+    !whiteList.includes(api.endpoint) &&
+    dayjs().isAfter(new Date(expireTime - 20 * 1000))
+  ) {
+    // 快过期了，renew
+    waitingForRenew = baseQuery(
+      {
+        url: "/token/renew",
+        method: "POST",
+        body: {
+          token,
+          refresh_token: refreshToken,
+        },
+      },
+      api,
+      extraOptions
+    );
+    result = await waitingForRenew;
+    waitingForRenew = null;
+    // console.log({ refreshResult });
+    if (result.data) {
+      // store the new token
+      api.dispatch(updateToken(result.data));
+      // retry the initial query
+      result = await baseQuery(args, api, extraOptions);
+    }
+  } else {
+    result = await baseQuery(args, api, extraOptions);
+  }
   if (result?.error) {
     console.log("api error", result.error.originalStatus, api.endpoint);
     switch (result.error.originalStatus || result.error.status) {
@@ -40,35 +77,14 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
             api.dispatch(clearAuthData());
             location.href = "/#/login";
             return;
-          }
-          // try to get a new token with refreshToken
-          const { token, refreshToken } = api.getState().authData;
-          const refreshResult = await baseQuery(
-            {
-              url: "/token/renew",
-              method: "POST",
-              body: {
-                token,
-                refresh_token: refreshToken,
-              },
-            },
-            api,
-            extraOptions
-          );
-          console.log({ refreshResult });
-          if (refreshResult.data) {
-            // store the new token
-            api.dispatch(updateToken(refreshResult.data));
-            // retry the initial query
-            result = await baseQuery(args, api, extraOptions);
           } else {
-            toast.error("token expired, please login again");
-            api.dispatch(clearAuthData());
+            toast.error("Not Authenticated");
           }
         }
-
         break;
-
+      case 403:
+        toast.error("Request Not Allowed");
+        break;
       default:
         break;
     }
@@ -76,4 +92,4 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
   return result;
 };
 
-export default baseQueryWithReauth;
+export default baseQueryWithTokenCheck;

@@ -43,7 +43,7 @@ export default function HomePage() {
           <div className={`col left ${menuExpand ? "expand" : ""}`}>
             <ServerDropList
               data={data?.server}
-              memberCount={data?.metrics?.user_count}
+              memberCount={data.contacts?.length}
               expand={menuExpand}
             />
             <nav className="nav">

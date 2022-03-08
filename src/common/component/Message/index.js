@@ -13,6 +13,7 @@ import { emojis } from "./EmojiPicker";
 import EditMessage from "./EditMessage";
 import renderContent from "./renderContent";
 export default function Message({
+  reply = null,
   gid = "",
   mid = "",
   uid,
@@ -32,7 +33,12 @@ export default function Message({
   const [menuVisible, setMenuVisible] = useState(false);
   const disptach = useDispatch();
   const avatarRef = useRef(null);
-  const contacts = useSelector((store) => store.contacts);
+  const { contacts, loginedUser } = useSelector((store) => {
+    return {
+      contacts: store.contacts,
+      loginedUser: store.authData.user,
+    };
+  });
   const toggleMenu = () => {
     setMenuVisible((prev) => !prev);
   };
@@ -74,6 +80,7 @@ export default function Message({
         </div>
       </Tippy>
       <div className="details">
+        {reply && <div className="reply">{reply.content}</div>}
         <div className="up">
           <span className="name">{currUser.name}</span>
           <i className="time">{dayjs(time).format("YYYY-MM-DD h:mm:ss A")}</i>
@@ -109,14 +116,18 @@ export default function Message({
       </div>
       {!edit && (
         <Commands
+          contextId={gid || uid}
           message={{
+            mid,
+            from_uid: fromUid,
             name: currUser.name,
             avatar: currUser.avatar,
             time,
-            content: renderContent(content_type, content),
+            content,
+            content_type,
           }}
           reactions={Object.entries(likes ?? {})
-            .filter(([reaction, uids = []]) => uids.includes(currUser.uid))
+            .filter(([, uids = []]) => uids.includes(loginedUser.uid))
             .map(([reaction]) => {
               return reaction;
             })}

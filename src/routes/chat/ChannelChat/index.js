@@ -113,9 +113,11 @@ export default function ChannelChat({
                   unread,
                   removed = false,
                   edited,
+                  reply,
                 } = msg;
                 return (
                   <Message
+                    reply={reply}
                     edited={edited}
                     likes={likes}
                     removed={removed}

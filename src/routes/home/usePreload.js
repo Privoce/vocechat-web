@@ -7,10 +7,7 @@ import { clearAuthData, setUserData } from "../../app/slices/auth.data";
 import { setContacts } from "../../app/slices/contacts";
 
 // import { useGetChannelsQuery } from "../../app/services/channel";
-import {
-  useLazyGetServerQuery,
-  useLazyGetMetricsQuery,
-} from "../../app/services/server";
+import { useLazyGetServerQuery } from "../../app/services/server";
 import { KEY_UID } from "../../app/config";
 // pollingInterval: 0,
 // const querySetting = {
@@ -39,15 +36,6 @@ export default function usePreload() {
       data: server,
     },
   ] = useLazyGetServerQuery();
-  const [
-    getMetrics,
-    {
-      isLoading: metricsLoading,
-      isSuccess: metricsSuccess,
-      isError: metricsError,
-      data: metrics,
-    },
-  ] = useLazyGetMetricsQuery();
   useEffect(() => {
     initCache();
     rehydrate();
@@ -55,7 +43,6 @@ export default function usePreload() {
   useEffect(() => {
     getContacts();
     getServer();
-    getMetrics();
   }, []);
 
   useEffect(() => {
@@ -77,18 +64,12 @@ export default function usePreload() {
     }
   }, [contacts]);
   return {
-    loading:
-      contactsLoading ||
-      serverLoading ||
-      metricsLoading ||
-      !checked ||
-      !cacheFirst,
-    error: contactsError && serverError && metricsError,
-    success: contactsSuccess && serverSuccess && metricsSuccess,
+    loading: contactsLoading || serverLoading || !checked || !cacheFirst,
+    error: contactsError && serverError,
+    success: contactsSuccess && serverSuccess,
     data: {
       contacts,
       server,
-      metrics,
     },
   };
 }

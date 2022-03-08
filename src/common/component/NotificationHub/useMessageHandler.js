@@ -100,6 +100,24 @@ export default function useMessageHandler(currUser) {
           });
         }
         break;
+      case "reply":
+        {
+          dispatchAddMessage({
+            to,
+            id,
+            self,
+            common: {
+              mid,
+              reply_mid: detailMid,
+              content,
+              content_type,
+              from_uid,
+              created_at,
+              expires_in,
+            },
+          });
+        }
+        break;
       case "reaction": {
         dispatchReaction({
           to,

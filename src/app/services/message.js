@@ -31,10 +31,13 @@ export const messageApi = createApi({
       }),
     }),
     replyMessage: builder.mutation({
-      query: (mid, data) => ({
+      query: ({ mid, content, type = "text" }) => ({
+        headers: {
+          "content-type": ContentTypes[type],
+        },
         url: `/message/${mid}/reply`,
         method: "POST",
-        body: data,
+        body: content,
       }),
     }),
   }),

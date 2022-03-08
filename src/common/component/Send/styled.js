@@ -14,6 +14,10 @@ const StyledSend = styled.div`
   gap: 18px;
   padding: 4px 18px;
   /* margin: 0 16px; */
+  &.reply {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
   .addon {
     cursor: pointer;
     position: relative;
@@ -69,6 +73,29 @@ const StyledSend = styled.div`
       top: -20px;
       right: -15px;
       transform: translateY(-100%);
+    }
+  }
+  .reply {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    background-color: #f2f2f5;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: translateY(-100%);
+    width: 100%;
+    padding: 6px 18px;
+    .txt {
+      color: #aaa;
+      font-size: 12px;
+      em {
+        font-weight: bold;
+        color: #333;
+        padding: 0 5px;
+      }
     }
   }
 `;

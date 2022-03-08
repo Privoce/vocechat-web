@@ -33,11 +33,16 @@ export const msgAdd = (state, payload) => {
     content,
     created_at,
     mid,
+    reply_mid = null,
     from_uid,
     content_type,
     unread = true,
   } = payload;
   const newMsg = { content, content_type, created_at, from_uid, unread };
+
+  if (reply_mid && state[id][reply_mid]) {
+    newMsg.reply = { mid: reply_mid, ...state[id][reply_mid] };
+  }
   if (state[id]) {
     let replaceMsg = state[id][mid];
     // 如果存在，并且新消息和缓存消息不一样，则替换掉，并且改为已读（可能有问题）

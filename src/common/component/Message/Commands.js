@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import toast from "react-hot-toast";
 import { useOutsideClick } from "rooks";
+import { setReplyMessage } from "../../../app/slices/message.pending";
 import StyledMenu from "../StyledMenu";
 import DeleteMessageConfirm from "./DeleteMessageConfirm";
 import EmojiPicker from "./EmojiPicker";
@@ -39,6 +40,7 @@ const StyledCmds = styled.ul`
   }
 `;
 export default function Commands({
+  contextId = 0,
   message = null,
   mid = 0,
   uid = 0,
@@ -49,13 +51,17 @@ export default function Commands({
   toggleEmojiPopover,
   toggleEditMessage,
 }) {
+  const dispatch = useDispatch();
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
 
   const currUid = useSelector((store) => store.authData.user.uid);
   const menuRef = useRef(null);
 
-  const handleClick = () => {
-    toast.success("cooming soon");
+  const handleReply = () => {
+    if (contextId) {
+      dispatch(setReplyMessage({ id: contextId, msg: message }));
+    }
+    // toast.success("cooming soon");
   };
 
   useOutsideClick(menuRef, toggleMenu);
@@ -86,7 +92,7 @@ export default function Commands({
           />
         </li>
       ) : (
-        <li className="cmd" onClick={handleClick}>
+        <li className="cmd" onClick={handleReply}>
           <img
             src="https://static.nicegoodthings.com/project/rustchat/icon.forward.svg"
             alt="icon reply"

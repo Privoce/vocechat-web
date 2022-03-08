@@ -30,6 +30,12 @@ const StyledMsg = styled.div`
     display: flex;
     flex-direction: column;
     gap: 8px;
+    .reply {
+      color: #aaa;
+      font-size: 12px;
+      margin-bottom: -10px;
+      /* padding-left: 10px; */
+    }
     .up {
       display: flex;
       align-items: center;
