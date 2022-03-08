@@ -42,6 +42,10 @@ export default function ChannelModal({ personal = false, closeModal }) {
       toast("please input channel name");
       return;
     }
+    if (data.is_public) {
+      // 公共频道 不必有members
+      delete data.members;
+    }
     createChannel(data);
   };
   useEffect(() => {

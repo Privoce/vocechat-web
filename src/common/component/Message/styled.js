@@ -26,6 +26,7 @@ const StyledMsg = styled.div`
     }
   }
   .details {
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -78,6 +79,11 @@ const StyledMsg = styled.div`
       line-height: 20px;
       word-break: break-all;
       white-space: break-spaces;
+      .edited {
+        margin-left: 5px;
+        color: #999;
+        font-size: 10px;
+      }
       &.pending {
         opacity: 0.5;
       }

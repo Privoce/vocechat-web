@@ -48,12 +48,38 @@ const channelMsgSlice = createSlice({
         delete state[id][mid];
       }
     },
-    likeChannelMsg(state, action) {
-      const { id, mid, action: emoji } = action.payload;
-      console.log("add user likes message", id, mid, state[id][mid]);
+    updateChannelMsg(state, action) {
+      const { id, mid, content, time } = action.payload;
+      console.log("update channel message", id, mid);
       if (state[id][mid]) {
+        state[id][mid].content = content;
+        state[id][mid].edited = time;
+      }
+    },
+    likeChannelMsg(state, action) {
+      const { id, from_uid, mid, action: reaction } = action.payload;
+      console.log("channel likes: likes", id, mid, from_uid, reaction);
+      if (state[id] && state[id][mid]) {
+        if (!state[id][mid].likes) {
+          console.log("channel likes: initial ");
+          state[id][mid].likes = {};
+        }
         const currLikes = state[id][mid].likes;
-        state[id][mid].likes = currLikes ? [...currLikes, emoji] : [emoji];
+        // state[id][mid].likes = currLikes ? [...currLikes, reaction] : [reaction];
+        if (currLikes[reaction]) {
+          if (currLikes[reaction].includes(from_uid)) {
+            const idx = currLikes[reaction].findIndex((id) => {
+              return id == from_uid;
+            });
+            console.log("remove reaction", currLikes[reaction], idx, from_uid);
+            currLikes[reaction].splice(idx, 1);
+          } else {
+            currLikes[reaction].push(from_uid);
+          }
+        } else {
+          currLikes[reaction] = [from_uid];
+        }
+        // state[id][mid].likes = currLikes;
       }
     },
     setChannelMsgRead(state, action) {
@@ -71,6 +97,7 @@ const channelMsgSlice = createSlice({
   },
 });
 export const {
+  updateChannelMsg,
   deleteChannelMsg,
   likeChannelMsg,
   clearChannelMsg,

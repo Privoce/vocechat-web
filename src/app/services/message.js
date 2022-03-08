@@ -1,5 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-// import BASE_URL from "../config";
+import { ContentTypes } from "../config";
 
 import baseQuery from "./base.query";
 
@@ -8,10 +8,13 @@ export const messageApi = createApi({
   baseQuery,
   endpoints: (builder) => ({
     editMessage: builder.mutation({
-      query: ({ mid, data }) => ({
+      query: ({ mid, content, type = "text" }) => ({
+        headers: {
+          "content-type": ContentTypes[type],
+        },
         url: `/message/${mid}/edit`,
         method: "PUT",
-        body: data,
+        body: content,
       }),
     }),
     likeMessage: builder.mutation({

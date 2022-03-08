@@ -8,6 +8,7 @@ const StyledWrapper = styled.div`
   bottom: 0;
   left: 0;
   margin: 8px;
+  width: 94%;
   width: -webkit-fill-available;
   border-radius: 25px;
   padding: 7px 8px 7px 4px;

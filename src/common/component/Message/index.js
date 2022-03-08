@@ -10,6 +10,7 @@ import { setUserMsgRead } from "../../../app/slices/message.user";
 import StyledWrapper from "./styled";
 import Commands from "./Commands";
 import { emojis } from "./EmojiPicker";
+import EditMessage from "./EditMessage";
 import renderContent from "./renderContent";
 export default function Message({
   gid = "",
@@ -22,9 +23,11 @@ export default function Message({
   unread = false,
   pending,
   removed = false,
-  likes,
+  edited = false,
+  likes = {},
 }) {
   const [myRef, inView] = useInViewRef();
+  const [edit, setEdit] = useState(false);
   const [emojiPopVisible, setEmojiPopVisible] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
   const disptach = useDispatch();
@@ -32,6 +35,9 @@ export default function Message({
   const contacts = useSelector((store) => store.contacts);
   const toggleMenu = () => {
     setMenuVisible((prev) => !prev);
+  };
+  const toggleEditMessage = () => {
+    setEdit((prev) => !prev);
   };
   const toggleEmojiPopover = () => {
     setEmojiPopVisible((prev) => !prev);
@@ -73,44 +79,56 @@ export default function Message({
           <i className="time">{dayjs(time).format("YYYY-MM-DD h:mm:ss A")}</i>
           {likes && (
             <span className="likes">
-              {Object.entries(
-                likes.reduce((acc, val) => {
-                  return { ...acc, [val]: (acc[val] || 0) + 1 };
-                }, {})
-              ).map(([l, count]) => {
-                return (
+              {Object.entries(likes).map(([reaction, uids]) => {
+                return uids.length > 0 ? (
                   <i
                     className="like"
                     // data-count={count > 1 ? count : ""}
-                    key={l}
+                    key={reaction}
                   >
-                    {emojis[l]}
+                    {emojis[reaction]}
 
-                    {count > 1 ? <em>{`+${count}`} </em> : null}
+                    {uids.length > 1 ? <em>{`+${uids.length}`} </em> : null}
                   </i>
-                );
+                ) : null;
               })}
             </span>
           )}
         </div>
         <div className={`down ${pending ? "pending" : ""}`}>
-          {renderContent(content_type, content)}
+          {edit ? (
+            <EditMessage
+              content={content}
+              mid={mid}
+              cancelEdit={toggleEditMessage}
+            />
+          ) : (
+            renderContent(content_type, content, edited)
+          )}
         </div>
       </div>
-      <Commands
-        message={{
-          name: currUser.name,
-          avatar: currUser.avatar,
-          time,
-          content: renderContent(content_type, content),
-        }}
-        mid={mid}
-        uid={fromUid}
-        toggleMenu={toggleMenu}
-        menuVisible={menuVisible}
-        emojiPopVisible={emojiPopVisible}
-        toggleEmojiPopover={toggleEmojiPopover}
-      />
+      {!edit && (
+        <Commands
+          message={{
+            name: currUser.name,
+            avatar: currUser.avatar,
+            time,
+            content: renderContent(content_type, content),
+          }}
+          reactions={Object.entries(likes ?? {})
+            .filter(([reaction, uids = []]) => uids.includes(currUser.uid))
+            .map(([reaction]) => {
+              return reaction;
+            })}
+          mid={mid}
+          uid={fromUid}
+          toggleMenu={toggleMenu}
+          menuVisible={menuVisible}
+          emojiPopVisible={emojiPopVisible}
+          toggleEmojiPopover={toggleEmojiPopover}
+          toggleEditMessage={toggleEditMessage}
+        />
+      )}
     </StyledWrapper>
   );
 }

@@ -21,7 +21,8 @@ const StyledPicker = styled.div`
       border-radius: 4px;
       padding: 4px;
       font-size: 30px;
-      &:hover {
+      &:hover,
+      &.reacted {
         background-color: #f3f4f6;
       }
     }
@@ -32,7 +33,7 @@ const emojis = {
   ok: "👌",
   like: "❤️",
 };
-export default function EmojiPicker({ mid, hidePicker }) {
+export default function EmojiPicker({ mid, reactions = [], hidePicker }) {
   const wrapperRef = useRef(null);
   const [reactMessage, { isLoading }] = useLikeMessageMutation();
   useOutsideClick(wrapperRef, hidePicker);
@@ -46,7 +47,7 @@ export default function EmojiPicker({ mid, hidePicker }) {
         {Object.entries(emojis).map(([key, emoji]) => {
           return (
             <li
-              className="emoji"
+              className={`emoji ${reactions.includes(key) ? "reacted" : ""}`}
               key={key}
               onClick={handleReact.bind(null, key)}
             >

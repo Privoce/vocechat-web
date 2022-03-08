@@ -46,8 +46,12 @@ export const getInitialsAvatar = ({
   context.rect(0, 0, canvas.width, canvas.height);
   context.fillStyle = background;
   context.fill();
-  context.font = `${weight} ${initial_size || height / 2}px ${fontFamily}`;
+  // 两个字符，自动缩放40
+  context.font = `${weight} ${
+    ((initial_size || height) - (initials.length == 2 ? 40 : 0)) / 2
+  }px ${fontFamily}`;
   context.textAlign = "center";
+
   context.textBaseline = "middle";
   context.fillStyle = foreground;
   context.fillText(initials, width / 2, height / 2);

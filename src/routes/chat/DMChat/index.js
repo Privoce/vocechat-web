@@ -77,6 +77,7 @@ export default function DMChat({ uid = "", dropFiles = [] }) {
               if (!msg) return null;
               // console.log("user msg", msg);
               const {
+                likes = {},
                 from_uid,
                 content,
                 content_type,
@@ -84,9 +85,12 @@ export default function DMChat({ uid = "", dropFiles = [] }) {
                 unread,
                 pending = false,
                 removed = false,
+                edited,
               } = msg;
               return (
                 <Message
+                  likes={likes}
+                  edited={edited}
                   removed={removed}
                   pending={pending}
                   content_type={content_type}

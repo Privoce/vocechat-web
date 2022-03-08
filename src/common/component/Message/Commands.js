@@ -42,10 +42,12 @@ export default function Commands({
   message = null,
   mid = 0,
   uid = 0,
+  reactions = [],
   menuVisible,
   toggleMenu,
   emojiPopVisible,
   toggleEmojiPopover,
+  toggleEditMessage,
 }) {
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
 
@@ -70,10 +72,14 @@ export default function Commands({
         />
       </li>
       {emojiPopVisible && (
-        <EmojiPicker mid={mid} hidePicker={toggleEmojiPopover} />
+        <EmojiPicker
+          reactions={reactions}
+          mid={mid}
+          hidePicker={toggleEmojiPopover}
+        />
       )}
       {currUid == uid ? (
-        <li className="cmd" onClick={handleClick}>
+        <li className="cmd" onClick={toggleEditMessage}>
           <img
             src="https://static.nicegoodthings.com/project/rustchat/icon.edit.svg"
             alt="icon edit"
@@ -95,7 +101,7 @@ export default function Commands({
       </li>
       {menuVisible && (
         <StyledMenu className="menu" ref={menuRef}>
-          <li className="item">Edit Message</li>
+          {/* <li className="item">Edit Message</li> */}
           <li className="item underline">Pin Message</li>
           <li className="item">Reply</li>
           {currUid == uid && (

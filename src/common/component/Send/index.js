@@ -92,6 +92,12 @@ export default function Send({
         <div className="input">
           <TextareaAutosize
             // autoFocus
+            onFocus={(e) =>
+              e.currentTarget.setSelectionRange(
+                e.currentTarget.value.length,
+                e.currentTarget.value.length
+              )
+            }
             ref={inputRef}
             className="content"
             maxRows={8}
