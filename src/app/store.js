@@ -61,7 +61,7 @@ listenerMiddleware.startListening({
   effect: async (action, listenerApi) => {
     const { type = "" } = action;
     const key = getCacheKey(type);
-    console.log("listener effect", key, listenerApi.getState(), window.CACHE);
+    // console.log("listener effect", key, listenerApi.getState(), window.CACHE);
     if (key && window.CACHE) {
       await window.CACHE.setItem(key, listenerApi.getState()[key]);
     }

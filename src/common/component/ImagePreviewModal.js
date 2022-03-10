@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import styled, { keyframes } from "styled-components";
-import { useOutsideClick } from "rooks";
+import { useOutsideClick, useKey } from "rooks";
 import Modal from "./Modal";
 const AniFadeIn = keyframes`
 from{
@@ -43,7 +43,14 @@ const StyledWrapper = styled.div`
 export default function ImagePreviewModal({ image = null, closeModal }) {
   const wrapperRef = useRef();
   useOutsideClick(wrapperRef, closeModal);
-
+  useKey(
+    "Escape",
+    () => {
+      console.log("close preview modal");
+      closeModal();
+    },
+    { eventTypes: ["keyup"] }
+  );
   if (!image) return null;
   return (
     <Modal>

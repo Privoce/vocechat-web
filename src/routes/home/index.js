@@ -20,10 +20,8 @@ export default function HomePage() {
   const dispatch = useDispatch();
   const {
     ui: { ready, menuExpand, setting, channelSetting },
-    visitMark: { usersVersion, afterMid },
   } = useSelector((store) => {
     return {
-      visitMark: store.visitMark,
       ui: store.ui,
     };
   });
@@ -37,7 +35,7 @@ export default function HomePage() {
   }
   return (
     <>
-      <NotificationHub usersVersion={usersVersion} afterMid={afterMid} />
+      <NotificationHub />
       {ready ? (
         <StyledWrapper>
           <div className={`col left ${menuExpand ? "expand" : ""}`}>
