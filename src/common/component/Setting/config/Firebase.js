@@ -2,6 +2,7 @@
 import StyledContainer from "./StyledContainer";
 // import { useSelector } from "react-redux";
 import Input from "../../styled/Input";
+import Textarea from "../../styled/Textarea";
 import Toggle from "../../styled/Toggle";
 import Label from "../../styled/Label";
 import SaveTip from "../../SaveTip";
@@ -62,7 +63,8 @@ export default function ConfigFirebase() {
         </div>
         <div className="input">
           <Label htmlFor="desc">Private Key</Label>
-          <Input
+          <Textarea
+            rows={15}
             disabled={!enabled}
             data-type="private_key"
             onChange={handleChange}

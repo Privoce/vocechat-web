@@ -25,11 +25,10 @@ export default function ChannelChat({
   // const containerRef = useRef(null);
   const [dragFiles, setDragFiles] = useState([]);
   const dispatch = useDispatch();
-  const { msgs, users, pendingMsgs } = useSelector((store) => {
+  const { msgs, users } = useSelector((store) => {
     return {
       msgs: store.channelMessage[cid] || {},
       users: store.contacts,
-      pendingMsgs: store.pendingMessage.channel[cid] || {},
     };
   });
   const handleClearUnreads = () => {
@@ -97,11 +96,11 @@ export default function ChannelChat({
             {/* <button className="edit">Edit Channel</button> */}
           </div>
           <div className="chat">
-            {[...Object.entries(msgs), ...Object.entries(pendingMsgs)]
+            {Object.entries(msgs)
               .sort(([, msg1], [, msg2]) => {
                 return msg1.created_at - msg2.created_at;
               })
-              .map(([mid, msg]) => {
+              .map(([mid, msg], idx) => {
                 if (!msg) return null;
                 const {
                   likes = {},
@@ -126,7 +125,7 @@ export default function ChannelChat({
                     unread={unread}
                     gid={cid}
                     mid={mid}
-                    key={mid}
+                    key={idx}
                     time={created_at}
                     fromUid={from_uid}
                     content={content}

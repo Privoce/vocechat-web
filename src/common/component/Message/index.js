@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import dayjs from "dayjs";
 import { useDispatch, useSelector } from "react-redux";
 import { useInViewRef } from "rooks";
 import Tippy from "@tippyjs/react";
+
 import Profile from "../Profile";
 import Avatar from "../Avatar";
 import { setChannelMsgRead } from "../../../app/slices/message.channel";
@@ -12,7 +13,7 @@ import Commands from "./Commands";
 import { emojis } from "./EmojiPicker";
 import EditMessage from "./EditMessage";
 import renderContent from "./renderContent";
-export default function Message({
+function Message({
   reply = null,
   gid = "",
   mid = "",
@@ -68,7 +69,10 @@ export default function Message({
   return removed ? (
     "removed"
   ) : (
-    <StyledWrapper ref={myRef} className={`${menuVisible ? "menu" : ""}`}>
+    <StyledWrapper
+      ref={myRef}
+      className={`${menuVisible ? "menu" : ""} ${inView ? "in_view" : ""}`}
+    >
       <Tippy
         interactive
         placement="left"
@@ -143,3 +147,6 @@ export default function Message({
     </StyledWrapper>
   );
 }
+export default React.memo(Message, (prevs, nexts) => {
+  return prevs.mid == nexts.mid;
+});

@@ -11,10 +11,9 @@ export default function DMChat({ uid = "", dropFiles = [] }) {
   console.log("dm files", dropFiles);
   const [dragFiles, setDragFiles] = useState([]);
   const contacts = useSelector((store) => store.contacts);
-  const { msgs, pendingMsgs } = useSelector((store) => {
+  const { msgs } = useSelector((store) => {
     return {
       msgs: store.userMessage[uid] || {},
-      pendingMsgs: store.pendingMessage.user[uid] || {},
     };
   });
   const [currUser, setCurrUser] = useState(null);
@@ -69,11 +68,11 @@ export default function DMChat({ uid = "", dropFiles = [] }) {
     >
       <StyledDMChat>
         <div className="chat">
-          {[...Object.entries(msgs), ...Object.entries(pendingMsgs)]
+          {Object.entries(msgs)
             .sort(([, msg1], [, msg2]) => {
               return msg1.created_at - msg2.created_at;
             })
-            .map(([mid, msg]) => {
+            .map(([mid, msg], idx) => {
               if (!msg) return null;
               // console.log("user msg", msg);
               const {
@@ -99,7 +98,7 @@ export default function DMChat({ uid = "", dropFiles = [] }) {
                   unread={unread}
                   fromUid={from_uid}
                   mid={mid}
-                  key={mid}
+                  key={idx}
                   time={created_at}
                   uid={uid}
                   content={content}

@@ -1,15 +1,9 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import toast from "react-hot-toast";
-
+// import toast from "react-hot-toast";
 import baseQuery from "./base.query";
 import BASE_URL, { ContentTypes } from "../config";
-import { addUserMsg } from "../slices/message.user";
 import { removeContact } from "../slices/contacts";
-import {
-  addPendingMessage,
-  removePendingMessage,
-} from "../slices/message.pending";
-
+import { onMessageSendStarted } from "./handlers";
 export const contactApi = createApi({
   reducerPath: "contact",
   baseQuery,
@@ -73,36 +67,8 @@ export const contactApi = createApi({
         method: "POST",
         body: content,
       }),
-      async onQueryStarted(
-        { id, content, type, from_uid },
-        { dispatch, queryFulfilled }
-      ) {
-        // id: who send to ,from_uid: who sent
-        const mid = new Date().getTime();
-        const tmpMsg = {
-          id,
-          content,
-          content_type: ContentTypes[type],
-          created_at: new Date().getTime(),
-          mid,
-          from_uid,
-          unread: false,
-        };
-        dispatch(addPendingMessage({ type: "user", msg: tmpMsg }));
-        try {
-          // 走sse推送
-          const { data: server_mid } = await queryFulfilled;
-          // console.log("wtf", wtf);
-          // 此处的id，是指给谁发的
-          dispatch(
-            addUserMsg({ id, ...tmpMsg, mid: server_mid, unread: false })
-          );
-          dispatch(removePendingMessage({ id, mid, type: "user" }));
-        } catch {
-          toast.error("Send Message Failed");
-          dispatch(removePendingMessage({ id, mid, type: "user" }));
-          // patchResult.undo();
-        }
+      async onQueryStarted(param1, param2) {
+        await onMessageSendStarted.call(this, param1, param2, "user");
       },
     }),
   }),

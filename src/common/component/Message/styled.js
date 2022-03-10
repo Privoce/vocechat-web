@@ -7,6 +7,11 @@ const StyledMsg = styled.div`
   padding: 4px;
   margin: 8px 0;
   border-radius: 8px;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 150px;
+  &.in_view {
+    content-visibility: visible;
+  }
   &:hover,
   &.preview {
     background: #f5f6f7;
@@ -95,6 +100,7 @@ const StyledMsg = styled.div`
       }
       .img {
         max-width: 400px;
+        cursor: pointer;
       }
       a {
         border-radius: 2px;

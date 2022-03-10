@@ -58,10 +58,53 @@ export const msgAdd = (state, payload) => {
     state[id] = { [mid]: newMsg };
   }
 };
+export const msgAddPending = (state, payload) => {
+  const {
+    id,
+    content,
+    created_at,
+    local_mid,
+    reply_mid = null,
+    from_uid,
+    content_type,
+    unread = false,
+  } = payload;
+  const newMsg = { content, content_type, created_at, from_uid, unread };
+
+  if (reply_mid && state[id][reply_mid]) {
+    newMsg.reply = { mid: reply_mid, ...state[id][reply_mid] };
+  }
+  if (state[id]) {
+    state[id][local_mid] = newMsg;
+  } else {
+    state[id] = { [local_mid]: newMsg };
+  }
+};
+export const msgReplacePending = (state, payload) => {
+  const { id, local_mid, server_mid } = payload;
+  if (state[id] && state[id][local_mid]) {
+    // 先赋值，再去delete
+    state[id] = Object.fromEntries(
+      Object.entries(state[id]).map(([key, obj]) => {
+        return key == local_mid ? [server_mid, obj] : [key, obj];
+      })
+    );
+    // state[id][server_mid] = { ...state[id][local_mid] };
+    // delete state[id][local_mid];
+  }
+};
+export const msgRemovePending = (state, payload) => {
+  const { id, local_mid } = payload;
+  if (state[id] && state[id][local_mid]) {
+    delete state[id][local_mid];
+  }
+};
 export const msgSetRead = (state, payload) => {
   const { id, mid } = payload;
   console.log("set read", id, mid);
-  state[id][mid].unread = false;
+  if (state[id] && state[id][mid]) {
+    state[id][mid].unread = false;
+  }
 };
 export const msgDelete = (state, payload) => {
   const { id, mid } = payload;

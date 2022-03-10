@@ -27,11 +27,16 @@ const renderContent = (type, content, edited = false) => {
         </>
       );
       break;
+    case "image/png":
     case "image/jpeg":
       ctn = (
         <img
-          className="img"
-          src={`${BASE_URL}/resource/image?id=${encodeURIComponent(content)}`}
+          className="img preview"
+          src={
+            content.startsWith("blob")
+              ? content
+              : `${BASE_URL}/resource/image?id=${encodeURIComponent(content)}`
+          }
         />
       );
       break;

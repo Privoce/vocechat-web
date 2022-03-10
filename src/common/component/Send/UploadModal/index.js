@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 // import toast from "react-hot-toast";
 // import { useNavigate } from "react-router-dom";
 // import { useSelector, useDispatch } from "react-redux";
 import { useSendChannelMsgMutation } from "../../../../app/services/channel";
 import { useSendMsgMutation } from "../../../../app/services/contact";
-import { addChannelMsg } from "../../../../app/slices/message.channel";
-import { addUserMsg } from "../../../../app/slices/message.user";
+// import { addChannelMsg } from "../../../../app/slices/message.channel";
+// import { addUserMsg } from "../../../../app/slices/message.user";
 import Modal from "../../Modal";
 import Button from "../../styled/Button";
 
@@ -18,25 +18,13 @@ export default function UploadModal({
   files = [],
   closeModal,
 }) {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
+  const from_uid = useSelector((store) => store.authData.user.uid);
   const [
     sendChannelMsg,
-    {
-      error: sendChannelError,
-      isLoading: channelSending,
-      isSuccess: sendChannelSuccess,
-      data: sendChannelData,
-    },
+    { isLoading: channelSending },
   ] = useSendChannelMsgMutation();
-  const [
-    sendUserMsg,
-    {
-      error: sendUserError,
-      isLoading: userSending,
-      isSuccess: sendUserSuccess,
-      data: sendUserData,
-    },
-  ] = useSendMsgMutation();
+  const [sendUserMsg, { isLoading: userSending }] = useSendMsgMutation();
   const [blobs, setBlobs] = useState([]);
   useEffect(() => {
     files.forEach((file) => {
@@ -57,22 +45,9 @@ export default function UploadModal({
   }, [files]);
   const handleUpload = () => {
     const uploadFn = type == "user" ? sendUserMsg : sendChannelMsg;
-    uploadFn({ id: sendTo, content: files[0], type: "image" });
+    uploadFn({ id: sendTo, content: files[0], type: "image", from_uid });
+    closeModal();
   };
-  useEffect(() => {
-    if (sendUserSuccess) {
-      dispatch(addUserMsg({ id: sendTo, ...sendUserData, unread: false }));
-      closeModal();
-    }
-  }, [sendUserSuccess, sendUserData]);
-
-  useEffect(() => {
-    if (sendChannelSuccess) {
-      const { gid, ...rest } = sendChannelData;
-      dispatch(addChannelMsg({ id: gid, ...rest, unread: false }));
-      closeModal();
-    }
-  }, [sendChannelSuccess, sendChannelData]);
   if (!sendTo) return null;
   return (
     <Modal>
@@ -108,9 +83,7 @@ export default function UploadModal({
                 />
                 <div className="right">
                   <div className="name">
-                    <span contentEditable className="input">
-                      {b.name}
-                    </span>
+                    <span className="input">{b.name}</span>
                     <i className="tip">(click title to change name)</i>
                   </div>
                   <i className="size">{`${Math.floor(b.size / 1000)}KB`}</i>

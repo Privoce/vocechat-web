@@ -6,6 +6,9 @@ import {
   msgClearUnread,
   msgUpdate,
   msgDelete,
+  msgAddPending,
+  msgRemovePending,
+  msgReplacePending,
 } from "./message.handler";
 const initialState = {};
 
@@ -37,6 +40,15 @@ const channelMsgSlice = createSlice({
     clearChannelMsgUnread(state, action) {
       msgClearUnread(state, action.payload);
     },
+    addChannelPendingMsg(state, action) {
+      msgAddPending(state, action.payload);
+    },
+    replaceChannelPendingMsg(state, action) {
+      msgReplacePending(state, action.payload);
+    },
+    removeChannelPendingMsg(state, action) {
+      msgRemovePending(state, action.payload);
+    },
   },
 });
 export const {
@@ -48,5 +60,8 @@ export const {
   clearChannelMsgUnread,
   setChannelMsgRead,
   addChannelMsg,
+  addChannelPendingMsg,
+  replaceChannelPendingMsg,
+  removeChannelPendingMsg,
 } = channelMsgSlice.actions;
 export default channelMsgSlice.reducer;

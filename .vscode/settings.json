@@ -21,5 +21,6 @@
   },
   "[javascriptreact]": {
     "editor.defaultFormatter": "svipas.prettier-plus"
-  }
+  },
+  "emmet.triggerExpansionOnTab": true
 }

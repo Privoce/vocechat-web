@@ -5,6 +5,9 @@ import {
   msgSetRead,
   msgUpdate,
   msgDelete,
+  msgAddPending,
+  msgRemovePending,
+  msgReplacePending,
 } from "./message.handler";
 const initialState = {};
 const userMsgSlice = createSlice({
@@ -32,6 +35,15 @@ const userMsgSlice = createSlice({
     setUserMsgRead(state, action) {
       msgSetRead(state, action.payload);
     },
+    addUserPendingMsg(state, action) {
+      msgAddPending(state, action.payload);
+    },
+    replaceUserPendingMsg(state, action) {
+      msgReplacePending(state, action.payload);
+    },
+    removeUserPendingMsg(state, action) {
+      msgRemovePending(state, action.payload);
+    },
   },
 });
 export const {
@@ -42,5 +54,8 @@ export const {
   initUserMsg,
   addUserMsg,
   setUserMsgRead,
+  addUserPendingMsg,
+  replaceUserPendingMsg,
+  removeUserPendingMsg,
 } = userMsgSlice.actions;
 export default userMsgSlice.reducer;

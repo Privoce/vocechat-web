@@ -1,7 +1,9 @@
-// import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useDrop } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
 import styled from "styled-components";
+import ImagePreviewModal from "../../common/component/ImagePreviewModal";
+
 const StyledWrapper = styled.article`
   position: relative;
   width: 100%;
@@ -75,6 +77,8 @@ export default function Layout({
   contacts = null,
   setDragFiles,
 }) {
+  const messagesContainer = useRef(null);
+  const [previewImage, setPreviewImage] = useState(null);
   const [{ isActive }, drop] = useDrop(() => ({
     accept: [NativeTypes.FILE],
     drop({ files }) {
@@ -86,31 +90,59 @@ export default function Layout({
       isActive: monitor.canDrop() && monitor.isOver(),
     }),
   }));
+  const closePreviewModal = () => {
+    setPreviewImage(null);
+  };
+  useEffect(() => {
+    if (messagesContainer) {
+      const container = messagesContainer.current;
+      container.addEventListener(
+        "click",
+        (evt) => {
+          console.log(evt);
+          const { target } = evt;
+          if (target.nodeType == 1 && target.classList.contains("preview")) {
+            setPreviewImage(target.src);
+          }
+        },
+        true
+      );
+    }
+  }, []);
+
   return (
-    <StyledWrapper ref={drop}>
-      <header className="head">{header}</header>
-      <main className="main">
-        {children}
-        {contacts && <div className="members">{contacts}</div>}
-      </main>
-      <div
-        className={`drag_tip ${
-          isActive ? "visible animate__animated animate__fadeIn" : ""
-        }`}
-      >
+    <>
+      {previewImage && (
+        <ImagePreviewModal
+          image={previewImage}
+          closeModal={closePreviewModal}
+        />
+      )}
+      <StyledWrapper ref={drop}>
+        <header className="head">{header}</header>
+        <main className="main" ref={messagesContainer}>
+          {children}
+          {contacts && <div className="members">{contacts}</div>}
+        </main>
         <div
-          className={`box ${
-            isActive ? "animate__animated animate__bounceIn" : ""
+          className={`drag_tip ${
+            isActive ? "visible animate__animated animate__fadeIn" : ""
           }`}
         >
-          <div className="inner">
-            <h4 className="head">Upload to #Channel</h4>
-            <span className="intro">
-              Photos accept jpg, png, max size limit to 10M.
-            </span>
+          <div
+            className={`box ${
+              isActive ? "animate__animated animate__bounceIn" : ""
+            }`}
+          >
+            <div className="inner">
+              <h4 className="head">Upload to #Channel</h4>
+              <span className="intro">
+                Photos accept jpg, png, max size limit to 10M.
+              </span>
+            </div>
           </div>
         </div>
-      </div>
-    </StyledWrapper>
+      </StyledWrapper>
+    </>
   );
 }

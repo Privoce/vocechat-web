@@ -2,20 +2,13 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+
 import { toggleSetting } from "../../../app/slices/ui";
-import { clearAuthData } from "../../../app/slices/auth.data";
-import { clearMark } from "../../../app/slices/visit.mark";
-import { clearChannels } from "../../../app/slices/channels";
-import { clearContacts } from "../../../app/slices/contacts";
-import { clearChannelMsg } from "../../../app/slices/message.channel";
-import { clearUserMsg } from "../../../app/slices/message.user";
-import { clearPendingMsg } from "../../../app/slices/message.pending";
 // import BASE_URL from "../../app/config";
-import { useLazyLogoutQuery } from "../../../app/services/auth";
 import StyledModal from "../styled/Modal";
 import Button from "../styled/Button";
 import Checkbox from "../styled/Checkbox";
+import useLogout from "../../hook/useLogout";
 const StyledConfirm = styled(StyledModal)`
   .clear {
     font-weight: normal;
@@ -37,10 +30,9 @@ const StyledConfirm = styled(StyledModal)`
 `;
 import Modal from "../Modal";
 export default function LogoutConfirmModal({ closeModal }) {
-  const [clearLocal, setClearLocal] = useState(false);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const [logout, { isLoading, isSuccess }] = useLazyLogoutQuery();
+  const [clearLocal, setClearLocal] = useState(false);
+  const { logout, exited, exiting, clearLocalData } = useLogout();
   const handleLogout = () => {
     logout();
   };
@@ -48,22 +40,15 @@ export default function LogoutConfirmModal({ closeModal }) {
     setClearLocal(evt.target.checked);
   };
   useEffect(() => {
-    if (isSuccess) {
+    if (exited) {
       if (clearLocal) {
         console.log("clear all store");
-        dispatch(clearMark());
-        dispatch(clearChannelMsg());
-        dispatch(clearUserMsg());
-        dispatch(clearChannels());
-        dispatch(clearContacts());
-        dispatch(clearPendingMsg());
+        clearLocalData();
       }
-      dispatch(clearAuthData());
       // closeModal();
       dispatch(toggleSetting());
-      navigate("/login");
     }
-  }, [isSuccess, clearLocal]);
+  }, [exited, clearLocal]);
   return (
     <Modal id="modal-modal">
       <StyledConfirm
@@ -74,7 +59,7 @@ export default function LogoutConfirmModal({ closeModal }) {
             {" "}
             <Button onClick={closeModal}>Cancel</Button>
             <Button onClick={handleLogout} className="danger">
-              {isLoading ? "Logging out" : `Log Out`}
+              {exiting ? "Logging out" : `Log Out`}
             </Button>
           </>
         }
