@@ -24,7 +24,6 @@ function Message({
   content_type = "text/plain",
   unread = false,
   pending,
-  removed = false,
   edited = false,
   likes = {},
 }) {
@@ -49,29 +48,27 @@ function Message({
   const toggleEmojiPopover = () => {
     setEmojiPopVisible((prev) => !prev);
   };
-  useEffect(() => {
-    if (!unread) {
-      avatarRef.current?.scrollIntoView();
-    }
-  }, [unread]);
+  // useEffect(() => {
+  //   if (!unread) {
+  //     avatarRef.current?.scrollIntoView();
+  //   }
+  // }, [unread]);
 
   useEffect(() => {
-    if (inView) {
-      if (unread) {
-        const setMsgRead = gid ? setChannelMsgRead : setUserMsgRead;
-        disptach(setMsgRead({ id: gid || uid, mid }));
-      }
+    if (inView && unread) {
+      const setMsgRead = gid ? setChannelMsgRead : setUserMsgRead;
+      disptach(setMsgRead({ id: gid || uid, mid }));
     }
   }, [gid, mid, uid, unread, inView]);
 
   if (!contacts) return null;
   const currUser = contacts.find((c) => c.uid == fromUid) || {};
-  return removed ? (
-    "removed"
-  ) : (
+  return (
     <StyledWrapper
       ref={myRef}
-      className={`${menuVisible ? "menu" : ""} ${inView ? "in_view" : ""}`}
+      className={`message ${menuVisible ? "menu" : ""} ${
+        inView ? "in_view" : ""
+      }`}
     >
       <Tippy
         interactive

@@ -110,7 +110,6 @@ export default function ChannelChat({
                   content_type,
                   created_at,
                   unread,
-                  removed = false,
                   edited,
                   reply,
                 } = msg;
@@ -119,7 +118,6 @@ export default function ChannelChat({
                     reply={reply}
                     edited={edited}
                     likes={likes}
-                    removed={removed}
                     pending={pending}
                     content_type={content_type}
                     unread={unread}

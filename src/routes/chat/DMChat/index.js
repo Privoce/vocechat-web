@@ -83,7 +83,6 @@ export default function DMChat({ uid = "", dropFiles = [] }) {
                 created_at,
                 unread,
                 pending = false,
-                removed = false,
                 edited,
                 reply,
               } = msg;
@@ -92,7 +91,6 @@ export default function DMChat({ uid = "", dropFiles = [] }) {
                   reply={reply}
                   likes={likes}
                   edited={edited}
-                  removed={removed}
                   pending={pending}
                   content_type={content_type}
                   unread={unread}
