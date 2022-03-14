@@ -4,16 +4,8 @@ import ConfigFirebase from "./config/Firebase";
 import ConfigSMTP from "./config/SMTP";
 import Notifications from "./Notifications";
 import ManageMembers from "../ManageMembers";
-import { useSelector } from "react-redux";
 import ConfigAgora from "./config/Agora";
 const useNavs = () => {
-  const { contacts } = useSelector((store) => {
-    return {
-      currUser: store.authData.user,
-      channels: store.channels,
-      contacts: store.contacts,
-    };
-  });
   const navs = [
     {
       title: "General",
@@ -54,7 +46,7 @@ const useNavs = () => {
         {
           name: "members",
           title: "Members",
-          component: <ManageMembers members={contacts} />,
+          component: <ManageMembers />,
         },
       ],
     },

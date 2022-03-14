@@ -22,7 +22,10 @@ import {
   clearAuthData,
   updateLoginedUserByLogs,
 } from "../../../app/slices/auth.data";
-import { setUsersVersion, setAfterMid } from "../../../app/slices/visit.mark";
+import {
+  updateUsersVersion,
+  updateAfterMid,
+} from "../../../app/slices/visit.mark";
 
 import { setReady } from "../../../app/slices/ui";
 import useMessageHandler from "./useMessageHandler";
@@ -117,7 +120,7 @@ const NotificationHub = () => {
         {
           console.log("users snapshot");
           const { version } = data;
-          dispatch(setUsersVersion({ version }));
+          dispatch(updateUsersVersion({ version }));
         }
         break;
       case "users_log":
@@ -179,7 +182,7 @@ const NotificationHub = () => {
 
           // 更新after_mid
           if (data.detail.type == "normal") {
-            dispatch(setAfterMid({ mid: data.mid }));
+            dispatch(updateAfterMid({ mid: data.mid }));
           }
         }
         break;

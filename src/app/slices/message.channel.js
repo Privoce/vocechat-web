@@ -1,67 +1,38 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  msgReaction,
-  msgAdd,
-  msgSetRead,
-  msgClearUnread,
-  msgUpdate,
-  msgDelete,
-  msgAddPending,
-  msgRemovePending,
-  msgReplacePending,
-} from "./message.handler";
 const initialState = {};
 
 const channelMsgSlice = createSlice({
   name: "channelMessage",
   initialState,
   reducers: {
-    clearChannelMsg() {
+    resetChannelMsg() {
       return initialState;
     },
-    initChannelMsg(state, action) {
+    fullfillChannelMsg(state, action) {
       return action.payload;
     },
     addChannelMsg(state, action) {
-      msgAdd(state, action.payload);
+      const { id, mid } = action.payload;
+      if (state[id]) {
+        if (state[id].findIndex((id) => id == mid) > -1) return;
+        state[id].push(mid);
+      } else {
+        state[id] = [mid];
+      }
     },
-    deleteChannelMsg(state, action) {
-      msgDelete(state, action.payload);
-    },
-    updateChannelMsg(state, action) {
-      msgUpdate(state, action.payload);
-    },
-    likeChannelMsg(state, action) {
-      msgReaction(state, action.payload);
-    },
-    setChannelMsgRead(state, action) {
-      msgSetRead(state, action.payload);
-    },
-    clearChannelMsgUnread(state, action) {
-      msgClearUnread(state, action.payload);
-    },
-    addChannelPendingMsg(state, action) {
-      msgAddPending(state, action.payload);
-    },
-    replaceChannelPendingMsg(state, action) {
-      msgReplacePending(state, action.payload);
-    },
-    removeChannelPendingMsg(state, action) {
-      msgRemovePending(state, action.payload);
+    removeChannelMsg(state, action) {
+      const { id, mid } = action.payload;
+      if (state[id]) {
+        const idx = state[id].findIndex((i) => i == mid);
+        state[id].splice(idx, 1);
+      }
     },
   },
 });
 export const {
-  updateChannelMsg,
-  deleteChannelMsg,
-  likeChannelMsg,
-  clearChannelMsg,
-  initChannelMsg,
-  clearChannelMsgUnread,
-  setChannelMsgRead,
+  resetChannelMsg,
+  fullfillChannelMsg,
   addChannelMsg,
-  addChannelPendingMsg,
-  replaceChannelPendingMsg,
-  removeChannelPendingMsg,
+  removeChannelMsg,
 } = channelMsgSlice.actions;
 export default channelMsgSlice.reducer;

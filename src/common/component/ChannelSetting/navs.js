@@ -2,13 +2,14 @@ import Overview from "./Overview";
 import ManageMembers from "../ManageMembers";
 import { useSelector } from "react-redux";
 const useNavs = (channelId) => {
-  const { channels, contacts } = useSelector((store) => {
+  const { channels, contactIds } = useSelector((store) => {
     return {
-      channels: store.channels,
-      contacts: store.contacts,
+      channels: store.channels.byId,
+      contactIds: store.contacts.ids,
     };
   });
-  const ids = channels[channelId]?.members || [];
+  let ids = channels[channelId]?.members ?? [];
+  ids = ids.length == 0 ? contactIds : ids;
   const navs = [
     {
       title: "General",
@@ -38,15 +39,7 @@ const useNavs = (channelId) => {
         {
           name: "members",
           title: "Members",
-          component: (
-            <ManageMembers
-              members={
-                ids.length == 0
-                  ? contacts
-                  : contacts.filter((c) => ids.includes(c.uid))
-              }
-            />
-          ),
+          component: <ManageMembers members={ids} />,
         },
       ],
     },

@@ -15,6 +15,9 @@ import { addChannel } from "../../../app/slices/channels";
 import { useCreateChannelMutation } from "../../../app/services/channel";
 
 export default function ChannelModal({ personal = false, closeModal }) {
+  const { conactsData, loginUid } = useSelector((store) => {
+    return { conactsData: store.contacts.byId, loginUid: store.authData.uid };
+  });
   const navigateTo = useNavigate();
   const dispatch = useDispatch();
   const [data, setData] = useState({
@@ -28,9 +31,7 @@ export default function ChannelModal({ personal = false, closeModal }) {
     createChannel,
     { isSuccess, isError, isLoading, data: newChannel },
   ] = useCreateChannelMutation();
-  const currentUser = useSelector((state) => {
-    return state.authData.user;
-  });
+
   const handleToggle = () => {
     const { is_public } = data;
     setData((prev) => {
@@ -48,6 +49,7 @@ export default function ChannelModal({ personal = false, closeModal }) {
     }
     createChannel(data);
   };
+
   useEffect(() => {
     if (isError) {
       toast.error("create new channel failed");
@@ -83,7 +85,8 @@ export default function ChannelModal({ personal = false, closeModal }) {
     console.log({ data });
   };
   console.log("contacts", contacts);
-  if (!currentUser) return null;
+  const loginUser = conactsData[loginUid];
+  if (!loginUser) return null;
   const { name, members, is_public } = data;
   return (
     <Modal>
@@ -142,17 +145,14 @@ export default function ChannelModal({ personal = false, closeModal }) {
               <ChannelIcon personal={!is_public} className="icon" />
             </div>
           </div>
-          {/* admin or  */}
-          {
-            <div className="private">
-              <span className="txt normal">Private Channel</span>
-              <StyledToggle
-                data-checked={!is_public}
-                data-disabled={!currentUser?.is_admin}
-                onClick={handleToggle}
-              />
-            </div>
-          }
+          <div className="private">
+            <span className="txt normal">Private Channel</span>
+            <StyledToggle
+              data-checked={!is_public}
+              data-disabled={!loginUser?.is_admin}
+              onClick={handleToggle}
+            />
+          </div>
           <div className="btns">
             <Button onClick={closeModal} className="normal cancel">
               Cancel

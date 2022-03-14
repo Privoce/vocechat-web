@@ -34,6 +34,7 @@ const StyledWrapper = styled.div`
     cursor: pointer;
   }
   .popup {
+    z-index: 999;
     user-select: none;
     box-shadow: 0px 20px 25px rgba(31, 41, 55, 0.1),
       0px 10px 10px rgba(31, 41, 55, 0.04);
@@ -63,7 +64,9 @@ const StyledWrapper = styled.div`
   }
 `;
 export default function Search() {
-  const currentUser = useSelector((store) => store.authData.user);
+  const currentUser = useSelector(
+    (store) => store.contacts.byId[store.authData.uid]
+  );
   const [popupVisible, setPopupVisible] = useState(false);
   const [channelModalVisible, setChannelModalVisible] = useState(false);
   const [contactsModalVisible, setContactsModalVisible] = useState(false);
@@ -85,6 +88,7 @@ export default function Search() {
   const handleCloseModal = () => {
     setChannelModalVisible(false);
   };
+  console.log("searching");
   return (
     <StyledWrapper>
       {channelModalVisible && (

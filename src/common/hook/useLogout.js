@@ -1,30 +1,34 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, batch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { clearAuthData } from "../../app/slices/auth.data";
-import { clearMark } from "../../app/slices/visit.mark";
-import { clearChannels } from "../../app/slices/channels";
-import { clearContacts } from "../../app/slices/contacts";
-import { clearChannelMsg } from "../../app/slices/message.channel";
-import { clearUserMsg } from "../../app/slices/message.user";
-import { clearPendingMsg } from "../../app/slices/message.pending";
+import { resetAuthData } from "../../app/slices/auth.data";
+import { resetFootprint } from "../../app/slices/footprint";
+import { resetChannels } from "../../app/slices/channels";
+import { resetContacts } from "../../app/slices/contacts";
+import { resetChannelMsg } from "../../app/slices/message.channel";
+import { resetUserMsg } from "../../app/slices/message.user";
+import { resetReactionMessage } from "../../app/slices/message.reaction";
+import { resetMessage } from "../../app/slices/message";
 import { useLazyLogoutQuery } from "../../app/services/auth";
 export default function useLogout() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [logout, { isLoading, isSuccess }] = useLazyLogoutQuery();
   const clearLocalData = () => {
-    dispatch(clearMark());
-    dispatch(clearChannelMsg());
-    dispatch(clearUserMsg());
-    dispatch(clearChannels());
-    dispatch(clearContacts());
-    dispatch(clearPendingMsg());
+    batch(() => {
+      dispatch(resetFootprint());
+      dispatch(resetChannelMsg());
+      dispatch(resetUserMsg());
+      dispatch(resetChannels());
+      dispatch(resetContacts());
+      dispatch(resetMessage());
+      dispatch(resetReactionMessage());
+    });
   };
 
   useEffect(() => {
     if (isSuccess) {
-      dispatch(clearAuthData());
+      dispatch(resetAuthData());
       navigate("/login");
     }
   }, [isSuccess]);

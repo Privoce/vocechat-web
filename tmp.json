@@ -1,0 +1,21 @@
+{
+  "groups": [
+    {
+      "description": null,
+      "gid": 1,
+      "is_public": true,
+      "members": [],
+      "name": "hello",
+      "owner": null
+    },
+    {
+      "description": null,
+      "gid": 11,
+      "is_public": false,
+      "members": [1, 2, 8],
+      "name": "23ssss",
+      "owner": 2
+    }
+  ],
+  "type": "related_groups"
+}

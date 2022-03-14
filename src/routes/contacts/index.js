@@ -10,20 +10,20 @@ import StyledWrapper from "./styled";
 
 export default function ContactsPage() {
   const { user_id } = useParams();
-  const contacts = useSelector((store) => store.contacts);
+  const contactIds = useSelector((store) => store.contacts.ids);
 
-  console.log({ contacts, user_id });
-  if (!contacts) return null;
+  console.log({ contactIds, user_id });
+  if (!contactIds) return null;
   return (
     <StyledWrapper>
       <div className="left">
         <Search />
         <div className="list">
           <nav className="nav">
-            {contacts.map(({ uid, status }) => {
+            {contactIds.map((uid) => {
               return (
                 <NavLink key={uid} className="session" to={`/contacts/${uid}`}>
-                  <Contact uid={uid} status={status} />
+                  <Contact uid={uid} />
                 </NavLink>
               );
             })}
@@ -33,7 +33,7 @@ export default function ContactsPage() {
       </div>
       {user_id && (
         <div className="right">
-          <Profile data={contacts.find((c) => c.uid == user_id)} />
+          <Profile uid={user_id} />
         </div>
       )}
     </StyledWrapper>

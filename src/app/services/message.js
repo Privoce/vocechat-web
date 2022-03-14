@@ -1,10 +1,12 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { ContentTypes } from "../config";
+import { onMessageSendStarted } from "./handlers";
 
+// import { updateMessage } from "../slices/message";
 import baseQuery from "./base.query";
 
 export const messageApi = createApi({
-  reducerPath: "message",
+  reducerPath: "messageApi",
   baseQuery,
   endpoints: (builder) => ({
     editMessage: builder.mutation({
@@ -16,8 +18,11 @@ export const messageApi = createApi({
         method: "PUT",
         body: content,
       }),
+      // async onQueryStarted({mid,content},{dispatch}){
+      //   dispatch()
+      // }
     }),
-    likeMessage: builder.mutation({
+    reactMessage: builder.mutation({
       query: ({ mid, action }) => ({
         url: `/message/${mid}/like`,
         method: "PUT",
@@ -31,21 +36,24 @@ export const messageApi = createApi({
       }),
     }),
     replyMessage: builder.mutation({
-      query: ({ mid, content, type = "text" }) => ({
+      query: ({ reply_mid, content, type = "text" }) => ({
         headers: {
           "content-type": ContentTypes[type],
         },
-        url: `/message/${mid}/reply`,
+        url: `/message/${reply_mid}/reply`,
         method: "POST",
         body: content,
       }),
+      async onQueryStarted(param1, param2) {
+        await onMessageSendStarted.call(this, param1, param2, param1.context);
+      },
     }),
   }),
 });
 
 export const {
   useEditMessageMutation,
-  useLikeMessageMutation,
+  useReactMessageMutation,
   useReplyMessageMutation,
   useLazyDeleteMessageQuery,
 } = messageApi;

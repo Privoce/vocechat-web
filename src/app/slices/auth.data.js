@@ -1,13 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import BASE_URL, {
-  KEY_REFRESH_TOKEN,
-  KEY_TOKEN,
-  KEY_UID,
-  KEY_EXPIRE,
-} from "../config";
-import { getNonNullValues } from "../../common/utils";
+import { KEY_REFRESH_TOKEN, KEY_TOKEN, KEY_UID, KEY_EXPIRE } from "../config";
 const initialState = {
-  user: null,
+  uid: null,
   token: localStorage.getItem(KEY_TOKEN),
   expireTime: localStorage.getItem(KEY_EXPIRE) || new Date().getTime(),
   refreshToken: localStorage.getItem(KEY_REFRESH_TOKEN),
@@ -17,8 +11,13 @@ const authDataSlice = createSlice({
   initialState,
   reducers: {
     setAuthData(state, action) {
-      const { user, token, refresh_token, expired_in = 0 } = action.payload;
-      state.user = user;
+      const {
+        user: { uid },
+        token,
+        refresh_token,
+        expired_in = 0,
+      } = action.payload;
+      state.uid = uid;
       state.token = token;
       state.refreshToken = refresh_token;
       // 当前时间往后推expire时长
@@ -29,43 +28,20 @@ const authDataSlice = createSlice({
       localStorage.setItem(KEY_EXPIRE, expireTime);
       localStorage.setItem(KEY_TOKEN, token);
       localStorage.setItem(KEY_REFRESH_TOKEN, refresh_token);
-      localStorage.setItem(KEY_UID, user.uid);
+      localStorage.setItem(KEY_UID, uid);
     },
-    setUserData(state, action) {
-      const user = action.payload;
-      state.user = user;
-    },
-    updateLoginedUserByLogs(state, action) {
-      const logs = action.payload;
-      logs.forEach(({ action, uid, ...rest }) => {
-        switch (action) {
-          case "update":
-            {
-              const vals = getNonNullValues(rest);
-              console.log("update vals", vals);
-              if (Object.keys(vals).includes("avatar_updated_at")) {
-                vals.avatar = `${BASE_URL}/resource/avatar?uid=${uid}&t=${vals.avatar_updated_at}`;
-              }
-              state.user = { ...state.user, ...vals };
-            }
-
-            break;
-
-          default:
-            break;
-        }
-      });
-    },
-    clearAuthData(state) {
+    resetAuthData() {
       console.log("clear auth data");
-      state.user = null;
-      state.token = null;
-      state.refreshToken = null;
       // remove local data
       localStorage.removeItem(KEY_EXPIRE);
       localStorage.removeItem(KEY_TOKEN);
       localStorage.removeItem(KEY_REFRESH_TOKEN);
       localStorage.removeItem(KEY_UID);
+      return initialState;
+    },
+    setUid(state, action) {
+      const uid = action.payload;
+      state.uid = uid;
     },
     updateToken(state, action) {
       const { token, refresh_token, expired_in } = action.payload;
@@ -81,10 +57,9 @@ const authDataSlice = createSlice({
   },
 });
 export const {
-  updateToken,
   setAuthData,
-  setUserData,
-  clearAuthData,
-  updateLoginedUserByLogs,
+  resetAuthData,
+  setUid,
+  updateToken,
 } = authDataSlice.actions;
 export default authDataSlice.reducer;

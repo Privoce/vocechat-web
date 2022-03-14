@@ -7,7 +7,7 @@ import StyledModal from "../styled/Modal";
 import Button from "../styled/Button";
 import Modal from "../Modal";
 import PreviewMessage from "./PreviewMessage";
-export default function LogoutConfirmModal({ closeModal, message = null }) {
+export default function DeleteMessageConfirmModal({ closeModal, mid = 0 }) {
   // const dispatch = useDispatch();
   const [deleteMessage, { isLoading, isSuccess }] = useLazyDeleteMessageQuery();
   const handleDelete = (evt) => {
@@ -21,8 +21,7 @@ export default function LogoutConfirmModal({ closeModal, message = null }) {
     }
   }, [isSuccess]);
 
-  if (!message) return;
-  const { mid, ...previewContent } = message;
+  if (!mid) return null;
   return (
     <Modal>
       <StyledModal
@@ -38,7 +37,7 @@ export default function LogoutConfirmModal({ closeModal, message = null }) {
         title="Delete Message"
         description="Are you sure want to delete this message?"
       >
-        <PreviewMessage data={previewContent} />
+        <PreviewMessage mid={mid} />
       </StyledModal>
     </Modal>
   );

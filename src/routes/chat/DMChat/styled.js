@@ -45,13 +45,12 @@ export const StyledHeader = styled.header`
 export const StyledDMChat = styled.article`
   position: relative;
   width: 100%;
-  padding-top: 25px;
-  /* margin-bottom: 120px; */
+  padding-top: 20px;
   > .chat {
     display: flex;
     flex-direction: column;
     padding: 0 16px;
-    padding-top: 10px;
+    padding-top: 15px;
     padding-bottom: 25px;
     height: calc(100vh - 56px - 80px);
     overflow-y: scroll;

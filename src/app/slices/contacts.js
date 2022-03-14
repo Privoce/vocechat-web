@@ -1,21 +1,31 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getNonNullValues } from "../../common/utils";
-const initialState = [];
+const initialState = {
+  ids: [],
+  byId: {},
+};
 const contactsSlice = createSlice({
   name: `contacts`,
   initialState,
   reducers: {
-    clearContacts() {
+    resetContacts() {
       return initialState;
     },
-    setContacts(state, action) {
-      console.log("set Contacts store", state);
+    fullfillContacts(state, action) {
+      console.log("set Contacts store", action);
       const contacts = action.payload || [];
-      return contacts;
+      state.ids = contacts.map(({ uid }) => uid);
+      state.byId = Object.fromEntries(
+        contacts.map((c) => {
+          const { uid } = c;
+          return [uid, c];
+        })
+      );
     },
     removeContact(state, action) {
       const uid = action.payload;
-      return state.filter((c) => c.uid != uid);
+      state.ids = state.ids.filter((i) => i != uid);
+      delete state.byId[uid];
     },
     updateUsersByLogs(state, action) {
       const changeLogs = action.payload;
@@ -24,34 +34,25 @@ const contactsSlice = createSlice({
           case "update":
             {
               const vals = getNonNullValues(rest);
-              const curr = state.find(({ uid: id }) => id == uid);
-              console.log("update vals", vals, curr);
-              if (curr) {
+              if (state.byId[uid]) {
                 Object.keys(vals).forEach((k) => {
-                  curr[k] = vals[k];
+                  state.byId[uid][k] = vals[k];
                 });
               }
             }
             break;
           case "create":
             {
-              const idx = state.findIndex((o) => {
-                return o.uid == uid;
-              });
-              if (idx > -1) {
-                state.splice(idx, 1, { uid, ...rest });
-              } else {
-                state.push({ uid, ...rest });
-              }
+              state.byId[uid] = { uid, ...rest };
+              state.ids.push(uid);
             }
             break;
           case "delete":
             {
-              const idx = state.findIndex((o) => {
-                return o.uid == uid;
-              });
+              const idx = state.ids.findIndex((i) => i == uid);
               if (idx > -1) {
-                state.splice(idx, 1);
+                state.ids.splice(idx, 1);
+                delete state.byId[uid];
               }
             }
             break;
@@ -63,21 +64,19 @@ const contactsSlice = createSlice({
     },
     updateUsersStatus(state, action) {
       const onlines = action.payload;
-      onlines.forEach((item) => {
-        const { uid, online = false } = item;
-        const curr = state.find(({ uid: id }) => id == uid);
+      onlines.forEach((data) => {
+        const { uid, online = false } = data;
         // console.log("update user status", curr, online);
-        if (curr) {
-          curr.online = online;
+        if (state.byId[uid]) {
+          state.byId[uid].online = online;
         }
       });
     },
   },
 });
 export const {
-  clearContacts,
-  setContacts,
-  removeContact,
+  resetContacts,
+  fullfillContacts,
   updateUsersByLogs,
   updateUsersStatus,
 } = contactsSlice.actions;

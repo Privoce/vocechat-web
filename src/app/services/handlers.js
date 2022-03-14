@@ -1,56 +1,49 @@
 import toast from "react-hot-toast";
+import { batch } from "react-redux";
 import { ContentTypes } from "../config";
-import {
-  // addChannelMsg,
-  addChannelPendingMsg,
-  removeChannelPendingMsg,
-  replaceChannelPendingMsg,
-} from "../slices/message.channel";
-import {
-  addUserPendingMsg,
-  removeUserPendingMsg,
-  replaceUserPendingMsg,
-} from "../slices/message.user";
-
-// import {
-//   addPendingMessage,
-//   removePendingMessage,
-// } from "../slices/message.pending";
+import { addChannelMsg, removeChannelMsg } from "../slices/message.channel";
+import { addUserMsg, removeUserMsg } from "../slices/message.user";
+import { addMessage, removeMessage } from "../slices/message";
 export const onMessageSendStarted = async (
-  { id, content, type, from_uid },
+  { id, content, type = "text", from_uid, reply_mid = null },
   { dispatch, queryFulfilled },
   from = "channel"
 ) => {
   // id: who send to ,from_uid: who sent
   const ts = new Date().getTime();
   const tmpMsg = {
-    id,
     content: type == "image" ? URL.createObjectURL(content) : content,
     content_type: ContentTypes[type],
     created_at: ts,
-    local_mid: ts,
     from_uid,
-    // unread: false,
+    reply_mid,
+    // 已读
+    read: true,
+    sending: true,
   };
-  const addPendingMessage =
-    from == "channel" ? addChannelPendingMsg : addUserPendingMsg;
-  const replacePendingMessage =
-    from == "channel" ? replaceChannelPendingMsg : replaceUserPendingMsg;
-  const removePendingMessage =
-    from == "channel" ? removeChannelPendingMsg : removeUserPendingMsg;
-  // dispatch(addPendingMessage({ type: from, msg: tmpMsg }));
-  dispatch(addPendingMessage({ ...tmpMsg }));
+  const addContextMessage = from == "channel" ? addChannelMsg : addUserMsg;
+  const removeContextMessage =
+    from == "channel" ? removeChannelMsg : removeUserMsg;
+  batch(() => {
+    dispatch(addMessage({ mid: ts, ...tmpMsg }));
+    dispatch(addContextMessage({ id, mid: ts }));
+  });
+
   try {
     const { data: server_mid } = await queryFulfilled;
     console.log("message server mid", server_mid);
-    // 此处的id，是指给谁发的
-    // const addMessage = from == "channel" ? addChannelMsg : addUserMsg;
-    dispatch(replacePendingMessage({ id, local_mid: ts, server_mid }));
+    batch(() => {
+      dispatch(removeContextMessage({ id, mid: ts }));
+      dispatch(removeMessage(ts));
+      dispatch(addMessage({ mid: server_mid, ...tmpMsg }));
+      dispatch(addContextMessage({ id, mid: server_mid }));
+    });
     // dispatch(removePendingMessage({ id, mid:ts, type: from }));
   } catch {
     console.log("message send failed");
     toast.error("Send Message Failed");
-    dispatch(removePendingMessage({ id, mid: ts, type: from }));
+    dispatch(removeContextMessage({ id, mid: ts }));
+    dispatch(removeMessage(ts));
     // patchResult.undo();
   }
 };

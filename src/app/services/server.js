@@ -4,7 +4,7 @@ import BASE_URL from "../config";
 import baseQuery from "./base.query";
 
 export const serverApi = createApi({
-  reducerPath: "server",
+  reducerPath: "serverApi",
   baseQuery,
   endpoints: (builder) => ({
     getServer: builder.query({

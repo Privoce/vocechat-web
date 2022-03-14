@@ -1,61 +1,42 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  msgReaction,
-  msgAdd,
-  msgSetRead,
-  msgUpdate,
-  msgDelete,
-  msgAddPending,
-  msgRemovePending,
-  msgReplacePending,
-} from "./message.handler";
-const initialState = {};
+const initialState = {
+  ids: [],
+  byId: {},
+};
 const userMsgSlice = createSlice({
   name: "userMessage",
   initialState,
   reducers: {
-    clearUserMsg() {
+    resetUserMsg() {
       return initialState;
     },
-    initUserMsg(state, action) {
-      return action.payload;
+    fullfillUserMsg(state, action) {
+      state.ids = Object.keys(action.payload);
+      state.byId = action.payload;
     },
     addUserMsg(state, action) {
-      msgAdd(state, action.payload);
+      const { id, mid } = action.payload;
+      if (state.byId[id]) {
+        if (state.byId[id].findIndex((id) => id == mid) > -1) return;
+        state.byId[id].push(mid);
+      } else {
+        state.byId[id] = [mid];
+        state.ids.push(id);
+      }
     },
-    likeUserMsg(state, action) {
-      msgReaction(state, action.payload);
-    },
-    updateUserMsg(state, action) {
-      msgUpdate(state, action.payload);
-    },
-    deleteUserMsg(state, action) {
-      msgDelete(state, action.payload);
-    },
-    setUserMsgRead(state, action) {
-      msgSetRead(state, action.payload);
-    },
-    addUserPendingMsg(state, action) {
-      msgAddPending(state, action.payload);
-    },
-    replaceUserPendingMsg(state, action) {
-      msgReplacePending(state, action.payload);
-    },
-    removeUserPendingMsg(state, action) {
-      msgRemovePending(state, action.payload);
+    removeUserMsg(state, action) {
+      const { id, mid } = action.payload;
+      if (state.byId[id]) {
+        const idx = state.byId[id].findIndex((i) => i == mid);
+        state.byId[id].splice(idx, 1);
+      }
     },
   },
 });
 export const {
-  updateUserMsg,
-  likeUserMsg,
-  deleteUserMsg,
-  clearUserMsg,
-  initUserMsg,
+  resetUserMsg,
+  fullfillUserMsg,
   addUserMsg,
-  setUserMsgRead,
-  addUserPendingMsg,
-  replaceUserPendingMsg,
-  removeUserPendingMsg,
+  removeUserMsg,
 } = userMsgSlice.actions;
 export default userMsgSlice.reducer;

@@ -66,7 +66,9 @@ const StyledWrapper = styled.div`
   }
 `;
 export default function Overview() {
-  const currUser = useSelector((store) => store.authData.user);
+  const loginUser = useSelector((store) => {
+    return store.contacts.byId[store.authData.uid];
+  });
   const [changed, setChanged] = useState(false);
   const [values, setValues] = useState(null);
   const { data, refetch } = useGetServerQuery();
@@ -119,7 +121,7 @@ export default function Overview() {
 
   if (!values) return null;
   const { name, description, logo } = values;
-  const isAdmin = currUser?.is_admin;
+  const isAdmin = loginUser?.is_admin;
   return (
     <StyledWrapper>
       <div className="logo">

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import useChatScroll from "../../../common/hook/useChatScroll";
 import Message from "../../../common/component/Message";
 import Send from "../../../common/component/Send";
 import Contact from "../../../common/component/Contact";
@@ -10,19 +11,17 @@ import { StyledHeader, StyledDMChat } from "./styled";
 export default function DMChat({ uid = "", dropFiles = [] }) {
   console.log("dm files", dropFiles);
   const [dragFiles, setDragFiles] = useState([]);
-  const contacts = useSelector((store) => store.contacts);
-  const { msgs } = useSelector((store) => {
+  // const [mids, setMids] = useState([]);
+  const { msgIds, currUser } = useSelector((store) => {
     return {
-      msgs: store.userMessage[uid] || {},
+      currUser: store.contacts.byId[uid],
+      msgIds: store.userMessage.byId[uid] || [],
     };
   });
-  const [currUser, setCurrUser] = useState(null);
-  useEffect(() => {
-    console.log({ uid });
-    if (uid && contacts) {
-      setCurrUser(contacts.find((c) => c.uid == uid));
-    }
-  }, [uid, contacts]);
+  const ref = useChatScroll(msgIds);
+  // useEffect(() => {
+  //   setMids(msgIds);
+  // }, [msgIds]);
   useEffect(() => {
     if (dropFiles.length) {
       setDragFiles(dropFiles);
@@ -67,42 +66,12 @@ export default function DMChat({ uid = "", dropFiles = [] }) {
       }
     >
       <StyledDMChat>
-        <div className="chat">
-          {Object.entries(msgs)
-            .sort(([, msg1], [, msg2]) => {
-              return msg1.created_at - msg2.created_at;
-            })
-            .map(([mid, msg], idx) => {
-              if (!msg) return null;
-              // console.log("user msg", msg);
-              const {
-                likes = {},
-                from_uid,
-                content,
-                content_type,
-                created_at,
-                unread,
-                pending = false,
-                edited,
-                reply,
-              } = msg;
-              return (
-                <Message
-                  reply={reply}
-                  likes={likes}
-                  edited={edited}
-                  pending={pending}
-                  content_type={content_type}
-                  unread={unread}
-                  fromUid={from_uid}
-                  mid={mid}
-                  key={idx}
-                  time={created_at}
-                  uid={uid}
-                  content={content}
-                />
-              );
-            })}
+        <div className="chat" ref={ref}>
+          {msgIds.map((mid) => {
+            // if (!msg) return null;
+            // console.log("user msg", msg);
+            return <Message mid={mid} key={mid} contextId={uid} />;
+          })}
         </div>
       </StyledDMChat>
       <div className="placeholder"></div>

@@ -16,20 +16,18 @@ import ChannelList from "./ChannelList";
 import ContactsModal from "../../common/component/ContactsModal";
 import ChannelModal from "../../common/component/ChannelModal";
 import DMList from "./DMList";
+import getUnreadCount from "./getUnreadCount";
 
 export default function ChatPage() {
   const [channelDropFiles, setChannelDropFiles] = useState([]);
   const [userDropFiles, setUserDropFiles] = useState([]);
-  const { contacts, channels, UserMsgData, ChannelMsgData } = useSelector(
-    (store) => {
-      return {
-        contacts: store.contacts,
-        channels: store.channels,
-        UserMsgData: store.userMessage,
-        ChannelMsgData: store.channelMessage,
-      };
-    }
-  );
+  const { contactsData, UserMsgData, messageData } = useSelector((store) => {
+    return {
+      contactsData: store.contacts.byId,
+      UserMsgData: store.userMessage,
+      messageData: store.message,
+    };
+  });
   const [channelModalVisible, setChannelModalVisible] = useState(false);
   const [contactsModalVisible, setContactsModalVisible] = useState(false);
   const { channel_id, user_id } = useParams();
@@ -39,31 +37,19 @@ export default function ChatPage() {
   const toggleChannelModalVisible = () => {
     setChannelModalVisible((prev) => !prev);
   };
-  const getUnreadCount = (gid) => {
-    return Object.values(ChannelMsgData[gid] || {}).filter((m) => m.unread)
-      .length;
-  };
+  // const getUnreadCount = (gid) => {
+  //   return Object.values(ChannelMsgData[gid] || {}).filter((m) => m.read)
+  //     .length;
+  // };
   const handleToggleExpand = (evt) => {
     const { currentTarget } = evt;
     const listEle = currentTarget.parentElement.parentElement;
     listEle.classList.toggle("collapse");
   };
-  if (!contacts) return null;
-  const tmpSessionUser = contacts.find((c) => c.uid == user_id);
-  const transformedChannels = Object.entries(channels).map(([key, obj]) => {
-    const unreads = Object.values(ChannelMsgData[key] || {}).filter(
-      (m) => m.unread
-    ).length;
-    return { id: key, ...obj, unreads };
-  });
-  const sessions = Object.keys(UserMsgData).map((uid) => {
-    let currUser = contacts.find((c) => c.uid == uid);
-    if (!currUser) return undefined;
-    let lastMid = Object.keys(UserMsgData[uid]).sort().pop();
-    let unreads = Object.values(UserMsgData[uid] || {}).filter((m) => m.unread)
-      .length;
-    let lastMsg = UserMsgData[uid][lastMid];
-    return { user: currUser, unreads, uid, lastMsg };
+  const tmpSessionUser = contactsData[user_id];
+  const sessions = UserMsgData.ids.map((uid) => {
+    const unreads = getUnreadCount(UserMsgData.byId[uid], messageData);
+    return { uid, unreads, lastMid: [...UserMsgData.byId[uid]].pop() };
   });
   return (
     <>
@@ -93,10 +79,7 @@ export default function ChatPage() {
               />
             </h3>
             <nav className="nav">
-              <ChannelList
-                channels={transformedChannels}
-                setDropFiles={setChannelDropFiles}
-              />
+              <ChannelList setDropFiles={setChannelDropFiles} />
             </nav>
           </div>
           <div className="list dms">
@@ -117,7 +100,7 @@ export default function ChatPage() {
             </h3>
             <nav className="nav">
               <DMList sessions={sessions} setDropFiles={setUserDropFiles} />
-              {user_id && !Object.keys(UserMsgData).includes(user_id) && (
+              {user_id && UserMsgData.ids.findIndex((i) => i == user_id) == -1 && (
                 <NavLink className="session" to={`/chat/dm/${user_id}`}>
                   <Contact
                     compact
@@ -147,7 +130,6 @@ export default function ChatPage() {
             <ChannelChat
               unreads={getUnreadCount(channel_id)}
               cid={channel_id}
-              data={channels[channel_id]}
               dropFiles={channelDropFiles}
             />
           )}

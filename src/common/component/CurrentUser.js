@@ -57,11 +57,13 @@ const StyledWrapper = styled.div`
     }
   }
 `;
-export default function CurrentUser({ expand = true }) {
-  const { user } = useSelector((store) => store.authData);
+export default function CurrentUser() {
+  const currUser = useSelector((store) => {
+    return store.contacts.byId[store.authData.uid];
+  });
 
-  if (!user) return null;
-  const { uid, name, avatar } = user;
+  if (!currUser) return null;
+  const { uid, name, avatar } = currUser;
   return (
     <StyledWrapper>
       <div className="profile">
@@ -71,20 +73,20 @@ export default function CurrentUser({ expand = true }) {
           <span className="id">#{uid}</span>
         </div>
       </div>
-      {expand && (
-        <div className="settings">
-          <img
-            src="https://static.nicegoodthings.com/project/rustchat/icon.speaker.svg"
-            className="icon"
-            alt="mic icon"
-          />
-          <img
-            src="https://static.nicegoodthings.com/project/rustchat/icon.mic.svg"
-            className="icon"
-            alt="sound icon"
-          />
-        </div>
-      )}
+      {/* {expand && ( */}
+      <div className="settings">
+        <img
+          src="https://static.nicegoodthings.com/project/rustchat/icon.speaker.svg"
+          className="icon"
+          alt="mic icon"
+        />
+        <img
+          src="https://static.nicegoodthings.com/project/rustchat/icon.mic.svg"
+          className="icon"
+          alt="sound icon"
+        />
+      </div>
+      {/* )} */}
     </StyledWrapper>
   );
 }

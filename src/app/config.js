@@ -3,6 +3,7 @@ const BASE_URL = `https://dev.rustchat.com/api`;
 // const BASE_URL = `https://rustchat.net/api`;
 export const ContentTypes = {
   text: "text/plain",
+  markdown: "text/markdown",
   image: "image/png",
   json: "application/json",
 };

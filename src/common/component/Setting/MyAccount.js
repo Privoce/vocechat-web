@@ -114,7 +114,9 @@ export default function MyAccount() {
     uploadAvatar,
     { isSuccess: uploadSuccess },
   ] = useUpdateAvatarMutation();
-  const { user } = useSelector((store) => store.authData);
+  const loginUser = useSelector((store) => {
+    return store.contacts.byId[store.authData.uid];
+  });
   useEffect(() => {
     if (uploadSuccess) {
       toast.success("update avatar successfully!");
@@ -127,8 +129,8 @@ export default function MyAccount() {
   const closeBasicEditModal = () => {
     setEditModal(null);
   };
-  if (!user) return null;
-  const { uid, avatar, name, email } = user;
+  if (!loginUser) return null;
+  const { uid, avatar, name, email } = loginUser;
   return (
     <>
       <StyledWrapper>

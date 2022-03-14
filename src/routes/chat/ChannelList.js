@@ -2,19 +2,26 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDrop } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useContextMenu from "../../common/hook/useContextMenu";
 import ContextMenu from "../../common/component/ContextMenu";
 import { toggleChannelSetting } from "../../app/slices/ui";
 import ChannelIcon from "../../common/component/ChannelIcon";
-const NavItem = ({ data, setFiles, contextMenuEventHandler }) => {
+import getUnreadCount from "./getUnreadCount";
+const NavItem = ({ id, setFiles, contextMenuEventHandler }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const { channel, mids, messageData } = useSelector((store) => {
+    return {
+      channel: store.channels.byId[id],
+      mids: store.channelMessage[id],
+      messageData: store.message,
+    };
+  });
   const handleChannelSetting = (evt) => {
     evt.preventDefault();
     evt.stopPropagation();
-    dispatch(toggleChannelSetting(data.id));
+    dispatch(toggleChannelSetting(id));
   };
   const [{ isActive }, drop] = useDrop(() => ({
     accept: [NativeTypes.FILE],
@@ -22,7 +29,7 @@ const NavItem = ({ data, setFiles, contextMenuEventHandler }) => {
       if (dataTransfer.files.length) {
         // console.log(files, rest);
         setFiles([...dataTransfer.files]);
-        navigate(`/chat/channel/${data.id}`);
+        navigate(`/chat/channel/${id}`);
         // 重置
         setTimeout(() => {
           setFiles([]);
@@ -33,7 +40,8 @@ const NavItem = ({ data, setFiles, contextMenuEventHandler }) => {
       isActive: monitor.canDrop() && monitor.isOver(),
     }),
   }));
-  const { id, is_public, name, unreads } = data;
+  const { is_public, name } = channel;
+  const unreads = getUnreadCount(mids, messageData);
   return (
     <NavLink
       onContextMenu={contextMenuEventHandler}
@@ -57,7 +65,8 @@ const NavItem = ({ data, setFiles, contextMenuEventHandler }) => {
     </NavLink>
   );
 };
-export default function ChannelList({ channels, setDropFiles }) {
+export default function ChannelList({ setDropFiles }) {
+  const channelIds = useSelector((store) => store.channels.ids);
   const {
     visible: contextMenuVisible,
     posX,
@@ -67,12 +76,12 @@ export default function ChannelList({ channels, setDropFiles }) {
   } = useContextMenu();
   return (
     <>
-      {channels.map(({ id, is_public, name, description, unreads }) => {
+      {channelIds.map((cid) => {
         return (
           <NavItem
             contextMenuEventHandler={handleContextMenuEvent}
-            key={id}
-            data={{ id, is_public, name, description, unreads }}
+            key={cid}
+            id={cid}
             setFiles={setDropFiles}
           />
         );

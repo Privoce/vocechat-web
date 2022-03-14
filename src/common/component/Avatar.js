@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { getInitials, getInitialsAvatar } from "../utils";
 export default function Avatar({ url, name = "unkonw name", ...rest }) {
-  const [src, setSrc] = useState(url);
+  // console.log("avatar url", url);
+  const [src, setSrc] = useState("");
   const handleError = () => {
     const tmp = getInitialsAvatar({
       initials: getInitials(name),
@@ -14,6 +15,8 @@ export default function Avatar({ url, name = "unkonw name", ...rest }) {
         initials: getInitials(name),
       });
       setSrc(tmp);
+    } else {
+      setSrc(url);
     }
   }, [url, name]);
 

@@ -1,7 +1,7 @@
 // import React from "react";
 // import toast from "react-hot-toast";
 // import { useState, useEffect } from "react";
-
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { BsChatText } from "react-icons/bs";
 import { RiUserAddLine } from "react-icons/ri";
@@ -62,9 +62,11 @@ const StyledWrapper = styled.div`
     }
   }
 `;
-export default function Profile({ data = null, type = "embed" }) {
+export default function Profile({ uid = null, type = "embed" }) {
+  const data = useSelector((store) => store.contacts.byId[uid]);
   if (!data) return null;
-  const { uid, name, email, avatar } = data;
+  // console.log("profile", data);
+  const { name, email, avatar } = data;
   return (
     <StyledWrapper className={type}>
       <Avatar className="avatar" url={avatar} name={name} />

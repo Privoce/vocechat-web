@@ -14,7 +14,7 @@ import ChannelSettingModal from "../../common/component/ChannelSetting";
 
 import ChatIcon from "../../assets/icons/chat.svg";
 import ContactIcon from "../../assets/icons/contact.svg";
-import NotificationHub from "../../common/component/NotificationHub";
+// import NotificationHub from "../../common/component/NotificationHub";
 
 export default function HomePage() {
   const dispatch = useDispatch();
@@ -29,51 +29,45 @@ export default function HomePage() {
   const toggleExpand = () => {
     dispatch(toggleMenuExpand());
   };
-  console.log({ data, error, success });
-  if (loading) {
+  console.log("index loading", loading, ready);
+  if (loading || !ready) {
     return <Loading />;
   }
   return (
     <>
-      <NotificationHub />
-      {ready ? (
-        <StyledWrapper>
-          <div className={`col left ${menuExpand ? "expand" : ""}`}>
-            <ServerDropList
-              data={data?.server}
-              memberCount={data.contacts?.length}
-              expand={menuExpand}
-            />
-            <nav className="nav">
-              <NavLink className="link" to={"/chat"}>
-                <img src={ChatIcon} alt="chat icon" />{" "}
-                {menuExpand && (
-                  <span className="animate__animated animate__fadeIn">
-                    Chat
-                  </span>
-                )}
-              </NavLink>
-              <NavLink className="link" to={"/contacts"}>
-                <img src={ContactIcon} alt="contact icon" />{" "}
-                {menuExpand && (
-                  <span className="animate__animated animate__fadeIn">
-                    Contacts
-                  </span>
-                )}
-              </NavLink>
-            </nav>
-            <div className="divider"></div>
-            <Tools expand={menuExpand} />
-            <Menu toggle={toggleExpand} expand={menuExpand} />
-            {/* <CurrentUser expand={menuExpand} /> */}
-          </div>
-          <div className="col right">
-            <Outlet />
-          </div>
-        </StyledWrapper>
-      ) : (
-        <Loading />
-      )}
+      {/* <NotificationHub /> */}
+      <StyledWrapper>
+        <div className={`col left ${menuExpand ? "expand" : ""}`}>
+          <ServerDropList
+            data={data?.server}
+            memberCount={data.contacts?.length}
+            expand={menuExpand}
+          />
+          <nav className="nav">
+            <NavLink className="link" to={"/chat"}>
+              <img src={ChatIcon} alt="chat icon" />{" "}
+              {menuExpand && (
+                <span className="animate__animated animate__fadeIn">Chat</span>
+              )}
+            </NavLink>
+            <NavLink className="link" to={"/contacts"}>
+              <img src={ContactIcon} alt="contact icon" />{" "}
+              {menuExpand && (
+                <span className="animate__animated animate__fadeIn">
+                  Contacts
+                </span>
+              )}
+            </NavLink>
+          </nav>
+          <div className="divider"></div>
+          <Tools expand={menuExpand} />
+          <Menu toggle={toggleExpand} expand={menuExpand} />
+          {/* <CurrentUser expand={menuExpand} /> */}
+        </div>
+        <div className="col right">
+          <Outlet />
+        </div>
+      </StyledWrapper>
       {setting && <SettingModal />}
       {channelSetting && <ChannelSettingModal id={channelSetting} />}
     </>

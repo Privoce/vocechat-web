@@ -2,11 +2,8 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 // import toast from "react-hot-toast";
 // import { useNavigate } from "react-router-dom";
-// import { useSelector, useDispatch } from "react-redux";
 import { useSendChannelMsgMutation } from "../../../../app/services/channel";
 import { useSendMsgMutation } from "../../../../app/services/contact";
-// import { addChannelMsg } from "../../../../app/slices/message.channel";
-// import { addUserMsg } from "../../../../app/slices/message.user";
 import Modal from "../../Modal";
 import Button from "../../styled/Button";
 
@@ -19,7 +16,7 @@ export default function UploadModal({
   closeModal,
 }) {
   // const dispatch = useDispatch();
-  const from_uid = useSelector((store) => store.authData.user.uid);
+  const from_uid = useSelector((store) => store.authData.uid);
   const [
     sendChannelMsg,
     { isLoading: channelSending },

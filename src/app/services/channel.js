@@ -5,7 +5,7 @@ import { ContentTypes } from "../config";
 import { updateChannel } from "../slices/channels";
 import { onMessageSendStarted } from "./handlers";
 export const channelApi = createApi({
-  reducerPath: "channel",
+  reducerPath: "channelApi",
   baseQuery,
   refetchOnFocus: true,
   endpoints: (builder) => ({

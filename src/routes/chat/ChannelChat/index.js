@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
-import dayjs from "dayjs";
+// import dayjs from "dayjs";
+import useChatScroll from "../../../common/hook/useChatScroll";
 
 import Message from "../../../common/component/Message";
 import ChannelIcon from "../../../common/component/ChannelIcon";
 import Send from "../../../common/component/Send";
-import { clearChannelMsgUnread } from "../../../app/slices/message.channel";
+// import { readMessage } from "../../../app/slices/message";
 import Contact from "../../../common/component/Contact";
 import Layout from "../Layout";
 import {
@@ -16,37 +17,29 @@ import {
   StyledHeader,
 } from "./styled";
 
-export default function ChannelChat({
-  cid = "",
-  unreads = 0,
-  data = {},
-  dropFiles = [],
-}) {
+export default function ChannelChat({ cid = "", dropFiles = [] }) {
   // const containerRef = useRef(null);
   const [dragFiles, setDragFiles] = useState([]);
-  const dispatch = useDispatch();
-  const { msgs, users } = useSelector((store) => {
+  // const dispatch = useDispatch();
+  const { msgIds, userIds, data } = useSelector((store) => {
     return {
-      msgs: store.channelMessage[cid] || {},
-      users: store.contacts,
+      msgIds: store.channelMessage[cid] || [],
+      userIds: store.contacts.ids,
+      data: store.channels.byId[cid],
     };
   });
-  const handleClearUnreads = () => {
-    dispatch(clearChannelMsgUnread(cid));
-  };
+  const ref = useChatScroll(msgIds);
+  // const handleClearUnreads = () => {
+  //   dispatch(readMessage(msgIds));
+  // };
   useEffect(() => {
     if (dropFiles.length) {
       setDragFiles(dropFiles);
     }
   }, [dropFiles]);
   const { name, description, is_public, members = [] } = data;
-  const filteredUsers =
-    members.length == 0
-      ? users
-      : users.filter((u) => {
-          return members.includes(u.uid);
-        });
-  console.log("channel message list", msgs);
+  const memberIds = members.length == 0 ? userIds : members;
+  console.log("channel message list", msgIds);
   return (
     <Layout
       setDragFiles={setDragFiles}
@@ -82,61 +75,31 @@ export default function ChannelChat({
       }
       contacts={
         <StyledContacts>
-          {filteredUsers.map(({ name, uid }) => {
-            return <Contact key={name} uid={uid} popover />;
+          {memberIds.map((uid) => {
+            return <Contact key={uid} uid={uid} popover />;
           })}
         </StyledContacts>
       }
     >
       <StyledChannelChat>
-        <div className="wrapper">
+        <div className="wrapper" ref={ref}>
           <div className="info">
             <h2 className="title">Welcome to #{name} !</h2>
             <p className="desc">This is the start of the #{name} channel. </p>
             {/* <button className="edit">Edit Channel</button> */}
           </div>
           <div className="chat">
-            {Object.entries(msgs)
-              .sort(([, msg1], [, msg2]) => {
-                return msg1.created_at - msg2.created_at;
-              })
-              .map(([mid, msg], idx) => {
-                if (!msg) return null;
-                const {
-                  likes = {},
-                  pending = false,
-                  from_uid,
-                  content,
-                  content_type,
-                  created_at,
-                  unread,
-                  edited,
-                  reply,
-                } = msg;
-                return (
-                  <Message
-                    reply={reply}
-                    edited={edited}
-                    likes={likes}
-                    pending={pending}
-                    content_type={content_type}
-                    unread={unread}
-                    gid={cid}
-                    mid={mid}
-                    key={idx}
-                    time={created_at}
-                    fromUid={from_uid}
-                    content={content}
-                  />
-                );
-              })}
+            {msgIds.map((mid, idx) => {
+              // if (!msg) return null;
+              return <Message contextId={cid} mid={mid} key={idx} />;
+            })}
           </div>
         </div>
 
         <Send dragFiles={dragFiles} id={cid} type="channel" name={name} />
         <div className="placeholder"></div>
       </StyledChannelChat>
-      {unreads != 0 && (
+      {/* {unreads != 0 && (
         <StyledNotification>
           <div className="content">
             {unreads} new messages
@@ -148,7 +111,7 @@ export default function ChannelChat({
             Mark As Read
           </button>
         </StyledNotification>
-      )}
+      )} */}
     </Layout>
   );
 }

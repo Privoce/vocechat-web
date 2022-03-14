@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { useOutsideClick } from "rooks";
+import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import useCopy from "../hook/useCopy";
 import { useLazyDeleteContactQuery } from "../../app/services/contact";
@@ -85,6 +86,7 @@ const StyledWrapper = styled.section`
   }
 `;
 export default function ManageMembers({ members = [] }) {
+  const contacts = useSelector((store) => store.contacts);
   const [copied, copy] = useCopy();
   const [remove, { isSuccess: removeSuccess }] = useLazyDeleteContactQuery();
   const wrapperRef = useRef(null);
@@ -111,6 +113,7 @@ export default function ManageMembers({ members = [] }) {
   const handleCopy = (str) => {
     copy(str);
   };
+  const uids = !members || members.length == 0 ? contacts.ids : members;
   return (
     <StyledWrapper>
       <div className="intro">
@@ -121,12 +124,12 @@ export default function ManageMembers({ members = [] }) {
         </p>
       </div>
       <ul className="members">
-        {members.map((m) => {
-          const { name, email, uid, is_admin } = m;
+        {uids.map((uid) => {
+          const { name, email, is_admin } = contacts.byId[uid];
           return (
             <li key={uid} className="member">
               <div className="left">
-                <Contact compact uid={uid} name={name} interactive={false} />
+                <Contact compact uid={uid} interactive={false} />
                 <div className="info">
                   <span className="name">{name}</span>
                   <span className="email">{email}</span>

@@ -51,7 +51,7 @@ export default function useMessageHandler(currUser) {
     dispatch(
       addMessage({
         id, // 自己发的 就不用标记未读
-        unread: !self,
+        read: !self,
         ...common,
       })
     );

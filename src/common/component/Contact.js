@@ -65,9 +65,8 @@ export default function Contact({
   popover = false,
   compact = false,
 }) {
-  const contacts = useSelector((store) => store.contacts);
-  if (!contacts) return null;
-  const currUser = contacts.find((c) => c.uid == uid);
+  const curr = useSelector((store) => store.contacts.byId[uid]);
+  if (!curr) return null;
   return (
     <StyledWrapper
       className={`${interactive ? "interactive" : ""} ${
@@ -81,16 +80,16 @@ export default function Contact({
         disabled={!popover}
         placement="left"
         trigger="click"
-        content={<Profile data={currUser} type="card" />}
+        content={<Profile uid={uid} type="card" />}
       >
         <div className="avatar">
-          <Avatar url={currUser?.avatar} name={currUser?.name} alt="avatar" />
+          <Avatar url={curr?.avatar} name={curr?.name} alt="avatar" />
           <div
-            className={`status ${currUser?.online ? "online" : "offline"}`}
+            className={`status ${curr?.online ? "online" : "offline"}`}
           ></div>
         </div>
       </Tippy>
-      {!compact && <span className="name">{currUser?.name}</span>}
+      {!compact && <span className="name">{curr?.name}</span>}
     </StyledWrapper>
   );
 }

@@ -57,6 +57,7 @@ export default function LoginPage() {
   useEffect(() => {
     if (isSuccess && data) {
       // 更新本地认证信息
+      console.log("login data", data);
       toast.success("login success");
       dispatch(setAuthData(data));
       navigateTo("/");

@@ -1,55 +1,53 @@
 import { createSlice } from "@reduxjs/toolkit";
-const initialState = {};
+const initialState = {
+  ids: [],
+  byId: {},
+};
 const channelsSlice = createSlice({
   name: `channels`,
   initialState,
   reducers: {
-    clearChannels() {
+    resetChannels() {
       return initialState;
     },
-    setChannels(state, action) {
+    fullfillChannels(state, action) {
       console.log("set channels store", state);
       const chs = action.payload || [];
-      return Array.isArray(chs)
-        ? Object.fromEntries(
-            chs.map((c) => {
-              const { gid, ...rest } = c;
-              return [gid, rest];
-            })
-          )
-        : chs;
-    },
-
-    updateChannel(state, action) {
-      // console.log("set channels store", action);
-      const { id, name, description } = action.payload;
-      const oObj = state[id];
-      const newObj = { ...oObj, name, description };
-      state[id] = newObj;
+      state.ids = chs.map(({ gid }) => gid);
+      state.byId = Object.fromEntries(
+        chs.map((c) => {
+          const { gid } = c;
+          return [gid, c];
+        })
+      );
     },
     addChannel(state, action) {
       // console.log("set channels store", action);
       const ch = action.payload;
       const { gid, ...rest } = ch;
-      state[gid] = rest;
+      state.ids.push(gid);
+      state.byId[gid] = rest;
     },
-    deleteChannel(state, action) {
+    updateChannel(state, action) {
+      // console.log("set channels store", action);
+      const { id, ...rest } = action.payload;
+      state.byId[id] = { ...state.byId[id], ...rest };
+    },
+    removeChannel(state, action) {
       const gid = action.payload;
-      delete state[gid];
+      const idx = state.ids.findIndex((i) => i == gid);
+      if (idx > -1) {
+        state.ids.splice(idx, 1);
+        delete state.byId[gid];
+      }
     },
-    // clearAuthData(state) {
-    //   console.log("clear auth data");
-    //   state.user = null;
-    //   state.token = null;
-    //   state.refreshToken = null;
-    // },
   },
 });
 export const {
-  clearChannels,
-  setChannels,
+  resetChannels,
+  fullfillChannels,
   addChannel,
-  deleteChannel,
   updateChannel,
+  removeChannel,
 } = channelsSlice.actions;
 export default channelsSlice.reducer;

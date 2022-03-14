@@ -40,7 +40,7 @@ export default function Loading() {
   useEffect(() => {
     const inter = setTimeout(() => {
       setReloadVisible(true);
-    }, 10000);
+    }, 15000);
 
     return () => {
       clearTimeout(inter);

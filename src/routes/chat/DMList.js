@@ -4,9 +4,16 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useDrop } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
+import { useSelector } from "react-redux";
 import Contact from "../../common/component/Contact";
 dayjs.extend(relativeTime);
-const NavItem = ({ data, setFiles }) => {
+const NavItem = ({ uid, mid, unreads, setFiles }) => {
+  const { currMsg, currUser } = useSelector((store) => {
+    return {
+      currUser: store.contacts.byId[uid],
+      currMsg: store.message[mid],
+    };
+  });
   const navigate = useNavigate();
   const [{ isActive }, drop] = useDrop(() => ({
     accept: [NativeTypes.FILE],
@@ -14,7 +21,7 @@ const NavItem = ({ data, setFiles }) => {
       if (dataTransfer.files.length) {
         // console.log(files, rest);
         setFiles([...dataTransfer.files]);
-        navigate(`/chat/dm/${data.uid}`);
+        navigate(`/chat/dm/${uid}`);
         // 重置
         setTimeout(() => {
           setFiles([]);
@@ -25,7 +32,7 @@ const NavItem = ({ data, setFiles }) => {
       isActive: monitor.canDrop() && monitor.isOver(),
     }),
   }));
-  const { uid, user, lastMsg, unreads } = data;
+  if (!currUser || !currMsg) return null;
   return (
     <NavLink
       ref={drop}
@@ -33,15 +40,15 @@ const NavItem = ({ data, setFiles }) => {
       className={`session ${isActive ? "drop_over" : ""}`}
       to={`/chat/dm/${uid}`}
     >
-      <Contact compact interactive={false} className="avatar" uid={user.uid} />
+      <Contact compact interactive={false} className="avatar" uid={uid} />
       <div className="details">
         <div className="up">
-          <span className="name">{user.name}</span>
-          <time>{dayjs(lastMsg.created_at).fromNow()}</time>
+          <span className="name">{currUser.name}</span>
+          {currMsg && <time>{dayjs(currMsg.created_at).fromNow()}</time>}
         </div>
 
         <div className="down">
-          <div className="msg">{lastMsg.content}</div>
+          {currMsg && <div className="msg">{currMsg.content}</div>}
           {unreads > 0 && <i className="badge">{unreads}</i>}
         </div>
       </div>
@@ -49,12 +56,14 @@ const NavItem = ({ data, setFiles }) => {
   );
 };
 export default function DMList({ sessions, setDropFiles }) {
-  return sessions.map(({ uid, user, lastMsg, unreads } = {}) => {
-    if (!user) return null;
+  return sessions.map(({ uid, lastMid, unreads } = {}) => {
+    if (!uid) return null;
     return (
       <NavItem
         key={uid}
-        data={{ uid, user, lastMsg, unreads }}
+        uid={uid}
+        mid={lastMid}
+        unreads={unreads}
         setFiles={setDropFiles}
       />
     );

@@ -1,9 +1,9 @@
 import { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import toast from "react-hot-toast";
+// import toast from "react-hot-toast";
 import { useOutsideClick } from "rooks";
-import { setReplyMessage } from "../../../app/slices/message.pending";
+import { addReplyingMessage } from "../../../app/slices/message";
 import StyledMenu from "../StyledMenu";
 import DeleteMessageConfirm from "./DeleteMessageConfirm";
 import EmojiPicker from "./EmojiPicker";
@@ -41,10 +41,8 @@ const StyledCmds = styled.ul`
 `;
 export default function Commands({
   contextId = 0,
-  message = null,
   mid = 0,
-  uid = 0,
-  reactions = [],
+  from_uid = 0,
   menuVisible,
   toggleMenu,
   emojiPopVisible,
@@ -54,12 +52,12 @@ export default function Commands({
   const dispatch = useDispatch();
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
 
-  const currUid = useSelector((store) => store.authData.user.uid);
+  const currUid = useSelector((store) => store.authData.uid);
   const menuRef = useRef(null);
 
   const handleReply = () => {
     if (contextId) {
-      dispatch(setReplyMessage({ id: contextId, msg: message }));
+      dispatch(addReplyingMessage({ id: contextId, mid }));
     }
     // toast.success("cooming soon");
   };
@@ -78,13 +76,9 @@ export default function Commands({
         />
       </li>
       {emojiPopVisible && (
-        <EmojiPicker
-          reactions={reactions}
-          mid={mid}
-          hidePicker={toggleEmojiPopover}
-        />
+        <EmojiPicker mid={mid} hidePicker={toggleEmojiPopover} />
       )}
-      {currUid == uid ? (
+      {currUid == from_uid ? (
         <li className="cmd" onClick={toggleEditMessage}>
           <img
             src="https://static.nicegoodthings.com/project/rustchat/icon.edit.svg"
@@ -110,7 +104,7 @@ export default function Commands({
           {/* <li className="item">Edit Message</li> */}
           <li className="item underline">Pin Message</li>
           <li className="item">Reply</li>
-          {currUid == uid && (
+          {currUid == from_uid && (
             <li className="item danger" onClick={toggleDeleteModal}>
               Delete Message
             </li>
@@ -118,10 +112,7 @@ export default function Commands({
         </StyledMenu>
       )}
       {deleteModalVisible && (
-        <DeleteMessageConfirm
-          closeModal={toggleDeleteModal}
-          message={{ mid, ...message }}
-        />
+        <DeleteMessageConfirm closeModal={toggleDeleteModal} mid={mid} />
       )}
     </StyledCmds>
   );

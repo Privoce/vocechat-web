@@ -1,9 +1,15 @@
 import { fetchBaseQuery } from "@reduxjs/toolkit/query";
 import toast from "react-hot-toast";
 import dayjs from "dayjs";
-import { updateToken, clearAuthData } from "../slices/auth.data";
+import { updateToken, resetAuthData } from "../slices/auth.data";
 import BASE_URL, { tokenHeader } from "../config";
-const whiteList = ["login", "checkInviteTokenValid", "getServer", "getOpenid"];
+const whiteList = [
+  "login",
+  "checkInviteTokenValid",
+  "getServer",
+  "getOpenid",
+  "getMetamaskNonce",
+];
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
   prepareHeaders: (headers, { getState, endpoint }) => {
@@ -72,14 +78,14 @@ const baseQueryWithTokenCheck = async (args, api, extraOptions) => {
         break;
       case 401:
         {
-          if (api.endpoint === "renew") {
-            // toast.error("token expired, please login again");
-            api.dispatch(clearAuthData());
-            location.href = "/#/login";
-            return;
-          } else {
-            toast.error("Not Authenticated");
-          }
+          // if (api.endpoint === "renew") {
+          // toast.error("token expired, please login again");
+          api.dispatch(resetAuthData());
+          location.href = "/#/login";
+          // } else {
+          toast.error("API Not Authenticated");
+          return;
+          // }
         }
         break;
       case 403:

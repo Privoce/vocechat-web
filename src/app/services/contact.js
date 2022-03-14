@@ -2,10 +2,9 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 // import toast from "react-hot-toast";
 import baseQuery from "./base.query";
 import BASE_URL, { ContentTypes } from "../config";
-import { removeContact } from "../slices/contacts";
 import { onMessageSendStarted } from "./handlers";
 export const contactApi = createApi({
-  reducerPath: "contact",
+  reducerPath: "contactApi",
   baseQuery,
   endpoints: (builder) => ({
     getContacts: builder.query({
@@ -23,16 +22,6 @@ export const contactApi = createApi({
     }),
     deleteContact: builder.query({
       query: (uid) => ({ url: `/admin/user/${uid}`, method: "DELETE" }),
-      async onQueryStarted(uid, { dispatch, queryFulfilled }) {
-        // id: who send to ,from_uid: who sent
-        const patchResult = dispatch(removeContact(uid));
-        try {
-          await queryFulfilled;
-        } catch {
-          console.log("channel update failed");
-          patchResult.undo();
-        }
-      },
     }),
     updateAvatar: builder.mutation({
       query: (data) => ({

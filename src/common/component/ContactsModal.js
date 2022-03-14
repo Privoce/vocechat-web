@@ -1,6 +1,5 @@
 import { useRef } from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { useOutsideClick } from "rooks";
 import useFilteredUsers from "../hook/useFilteredUsers";
@@ -55,15 +54,12 @@ const StyledWrapper = styled.div`
 export default function ContactsModal({ closeModal }) {
   const wrapperRef = useRef();
   const { contacts, updateInput, input } = useFilteredUsers();
-  const currentUser = useSelector((state) => {
-    return state.authData.user;
-  });
   useOutsideClick(wrapperRef, closeModal);
   const handleSearch = (evt) => {
-    updateInput(evt.target.value);
+    console.log("www");
+    // updateInput(evt.target.value);
   };
 
-  if (!currentUser) return null;
   return (
     <Modal>
       <StyledWrapper ref={wrapperRef}>

@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 export default function useFilteredUsers() {
   const [input, setInput] = useState("");
-  const contacts = useSelector((store) => store.contacts);
-  const [filteredUsers, setFilteredUsers] = useState(contacts);
+  const contacts = useSelector((store) => Object.values(store.contacts.byId));
+  const [filteredUsers, setFilteredUsers] = useState([]);
   useEffect(() => {
     if (!input) {
       setFilteredUsers(contacts);
@@ -16,7 +16,7 @@ export default function useFilteredUsers() {
         })
       );
     }
-  }, [input, contacts]);
+  }, [input]);
   const updateInput = (val) => {
     setInput(val);
   };

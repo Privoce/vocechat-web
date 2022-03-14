@@ -35,12 +35,7 @@ const StyledMsg = styled.div`
     display: flex;
     flex-direction: column;
     gap: 8px;
-    .reply {
-      color: #aaa;
-      font-size: 12px;
-      margin-bottom: -10px;
-      /* padding-left: 10px; */
-    }
+
     .up {
       display: flex;
       align-items: center;
@@ -57,30 +52,6 @@ const StyledMsg = styled.div`
         font-size: 12px;
         line-height: 18px;
       }
-      .likes {
-        display: flex;
-        gap: 8px;
-        font-size: 16px;
-        /* align-items: center; */
-        .like {
-          position: relative;
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          em {
-            font-size: 12px;
-            color: #999;
-          }
-          /* &:after {
-            content: attr(data-count);
-            position: absolute;
-            top: -4px;
-            right: -8px;
-            font-size: 12px;
-            color: #999;
-          } */
-        }
-      }
     }
     .down {
       user-select: text;
@@ -95,7 +66,7 @@ const StyledMsg = styled.div`
         color: #999;
         font-size: 10px;
       }
-      &.pending {
+      &.sending {
         opacity: 0.5;
       }
       .img {
