@@ -30,10 +30,7 @@ const Styled = styled.input`
     }
   }
   &:disabled {
-    border-color: #ccc;
-    &::before {
-      box-shadow: inset 10px 10px #ccc;
-    }
+    opacity: 0.4;
   }
 `;
 export default function StyledCheckbox(props) {

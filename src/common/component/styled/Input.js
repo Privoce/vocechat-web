@@ -10,6 +10,11 @@ const StyledInput = styled.input`
   line-height: 20px;
   color: #333;
   padding: 8px;
+  &.none {
+    border: none;
+    background: none;
+    box-shadow: none;
+  }
   &:disabled {
     color: #78787c;
     background-color: #f9fafb;
