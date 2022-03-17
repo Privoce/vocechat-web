@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import BASE_URL from "../config";
-
+import { updateInviteLink } from "../slices/server";
 import baseQuery from "./base.query";
 
 export const serverApi = createApi({
@@ -57,6 +57,29 @@ export const serverApi = createApi({
         body: data,
       }),
     }),
+    createInviteLink: builder.query({
+      query: (expired_in = 7 * 24 * 60 * 60) => ({
+        headers: {
+          "content-type": "text/plain",
+          accept: "text/plain",
+        },
+        url: `/admin/user/create_invite_link?expired_in=${expired_in}`,
+        responseHandler: (response) => response.text(),
+      }),
+      async onQueryStarted(expire, { dispatch, queryFulfilled, getState }) {
+        const {
+          expire: prevExp,
+          link: prevLink,
+        } = getState().server.inviteLink;
+        try {
+          const { data: link } = await queryFulfilled;
+          console.log("link", link);
+          dispatch(updateInviteLink({ expire, link }));
+        } catch {
+          dispatch(updateInviteLink({ expire: prevExp, link: prevLink }));
+        }
+      },
+    }),
     updateServer: builder.mutation({
       query: (data) => ({
         url: `admin/system/organization`,
@@ -79,4 +102,5 @@ export const {
   useLazyGetServerQuery,
   useUpdateServerMutation,
   useUpdateLogoMutation,
+  useLazyCreateInviteLinkQuery,
 } = serverApi;

@@ -6,6 +6,12 @@ const initialState = {
   expireTime: localStorage.getItem(KEY_EXPIRE) || new Date().getTime(),
   refreshToken: localStorage.getItem(KEY_REFRESH_TOKEN),
 };
+const emptyState = {
+  uid: null,
+  token: null,
+  expireTime: new Date().getTime(),
+  refreshToken: null,
+};
 const authDataSlice = createSlice({
   name: "authData",
   initialState,
@@ -37,7 +43,7 @@ const authDataSlice = createSlice({
       localStorage.removeItem(KEY_TOKEN);
       localStorage.removeItem(KEY_REFRESH_TOKEN);
       localStorage.removeItem(KEY_UID);
-      return initialState;
+      return emptyState;
     },
     setUid(state, action) {
       const uid = action.payload;

@@ -57,7 +57,7 @@ export default function ContactsModal({ closeModal }) {
   useOutsideClick(wrapperRef, closeModal);
   const handleSearch = (evt) => {
     console.log("www");
-    // updateInput(evt.target.value);
+    updateInput(evt.target.value);
   };
 
   return (

@@ -27,6 +27,16 @@ export default async function handler({ operation, data = {}, payload }) {
         await table.setItem("afterMid", afterMid);
       }
       break;
+    case "updateReadChannels":
+      {
+        await table.setItem("readChannels", data.readChannels);
+      }
+      break;
+    case "updateReadUsers":
+      {
+        await table.setItem("readUsers", data.readUsers);
+      }
+      break;
     default:
       break;
   }

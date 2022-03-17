@@ -7,7 +7,7 @@ import useContextMenu from "../../common/hook/useContextMenu";
 import ContextMenu from "../../common/component/ContextMenu";
 import { toggleChannelSetting } from "../../app/slices/ui";
 import ChannelIcon from "../../common/component/ChannelIcon";
-import getUnreadCount from "./getUnreadCount";
+import { getUnreadCount } from "./utils";
 const NavItem = ({ id, setFiles, contextMenuEventHandler }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();

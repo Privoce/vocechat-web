@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Picker } from "emoji-mart";
-import "emoji-mart/css/emoji-mart.css";
+import Picker from "../EmojiPicker";
 
 export default function EmojiPicker({ selectEmoji }) {
   const [emojiPickerVisible, setEmojiPickerVisible] = useState(false);
@@ -18,11 +17,7 @@ export default function EmojiPicker({ selectEmoji }) {
       </button>
       {emojiPickerVisible && (
         <div className="picker">
-          <Picker
-            onSelect={handleSelect}
-            showPreview={false}
-            showSkinTones={false}
-          />
+          <Picker onSelect={handleSelect} />
         </div>
       )}
     </>

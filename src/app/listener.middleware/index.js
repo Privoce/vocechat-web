@@ -1,12 +1,15 @@
 import { createListenerMiddleware } from "@reduxjs/toolkit";
+import rtkqHandler from "./handler.rtkq";
 import channelsHandler from "./handler.channels";
 import contactsHandler from "./handler.contacts";
 import channelMsgHandler from "./handler.channel.msg";
 import dmMsgHandler from "./handler.dm.msg";
+import serverHandler from "./handler.server";
 import messageHandler from "./handler.message";
 import reactionHandler from "./handler.reaction";
 import footprintHandler from "./handler.footprint";
 const operations = [
+  "__rtkq",
   "channels",
   "channelMessage",
   "contacts",
@@ -24,23 +27,29 @@ const listenerMiddleware = createListenerMiddleware();
 listenerMiddleware.startListening({
   predicate: (action, currentState, previousState) => {
     const { type = "" } = action;
-    console.log("operation", type);
     const [prefix] = type.split("/");
+    console.log("operation", type, operations.includes(prefix));
     return operations.includes(prefix);
     // console.log("listener predicate", action, currentState, previousState);
     // return true;
   },
   effect: async (action, listenerApi) => {
-    if (!window.CACHE) return;
     const { type = "", payload } = action;
-    // const key = getCacheKey(type);
-    // // console.log("listener effect", key, listenerApi.getState(), window.CACHE);
-    // if (key && window.CACHE) {
-    //   await window.CACHE.setItem(key, listenerApi.getState()[key]);
-    // }
     const [prefix, operation] = type.split("/");
+    console.log("effect opt", action);
+    if (!window.CACHE && prefix !== "__rtkq") return;
+
     const state = listenerApi.getState()[prefix];
     switch (prefix) {
+      case "__rtkq":
+        {
+          rtkqHandler({
+            operation,
+            payload,
+            dispatch: listenerApi.dispatch,
+          });
+        }
+        break;
       case "channels":
         {
           await channelsHandler({
@@ -98,6 +107,15 @@ listenerMiddleware.startListening({
       case "footprint":
         {
           await footprintHandler({
+            operation,
+            payload,
+            data: state,
+          });
+        }
+        break;
+      case "server":
+        {
+          await serverHandler({
             operation,
             payload,
             data: state,

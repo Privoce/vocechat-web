@@ -1,6 +1,7 @@
 import Linkify from "react-linkify";
 import dayjs from "dayjs";
 import BASE_URL from "../../../app/config";
+import MrakdownRender from "../MrakdownRender";
 const renderContent = (type, content, edited = false) => {
   let ctn = null;
   switch (type) {
@@ -9,7 +10,12 @@ const renderContent = (type, content, edited = false) => {
         <>
           <Linkify
             componentDecorator={(decoratedHref, decoratedText, key) => (
-              <a target="blank" href={decoratedHref} key={key}>
+              <a
+                target="_blank"
+                href={decoratedHref}
+                key={key}
+                rel="noreferrer"
+              >
                 {decoratedText}
               </a>
             )}
@@ -26,6 +32,11 @@ const renderContent = (type, content, edited = false) => {
           )}
         </>
       );
+      break;
+    case "text/markdown":
+      {
+        ctn = <MrakdownRender content={content} />;
+      }
       break;
     case "image/png":
     case "image/jpeg":

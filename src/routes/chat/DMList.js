@@ -5,6 +5,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import { useDrop } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
 import { useSelector } from "react-redux";
+import { renderPreviewMessage } from "./utils";
 import Contact from "../../common/component/Contact";
 dayjs.extend(relativeTime);
 const NavItem = ({ uid, mid, unreads, setFiles }) => {
@@ -48,8 +49,12 @@ const NavItem = ({ uid, mid, unreads, setFiles }) => {
         </div>
 
         <div className="down">
-          {currMsg && <div className="msg">{currMsg.content}</div>}
-          {unreads > 0 && <i className="badge">{unreads}</i>}
+          {renderPreviewMessage(currMsg)}
+          {unreads > 0 && (
+            <i className={`badge ${unreads > 99 ? "dot" : ""}`}>
+              {unreads > 99 ? null : unreads}
+            </i>
+          )}
         </div>
       </div>
     </NavLink>

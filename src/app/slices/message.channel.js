@@ -15,9 +15,9 @@ const channelMsgSlice = createSlice({
       const { id, mid } = action.payload;
       if (state[id]) {
         if (state[id].findIndex((id) => id == mid) > -1) return;
-        state[id].push(mid);
+        state[id].push(+mid);
       } else {
-        state[id] = [mid];
+        state[id] = [+mid];
       }
     },
     removeChannelMsg(state, action) {

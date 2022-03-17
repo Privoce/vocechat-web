@@ -22,6 +22,10 @@ const reactionMessageSlice = createSlice({
         const idx = reactionUids.findIndex((id) => id == from_uid);
         if (idx > -1) {
           reactionUids.splice(idx, 1);
+          if (reactionUids.length == 0) {
+            // 没有表情了
+            delete state[mid][reaction];
+          }
         } else {
           reactionUids.push(from_uid);
         }

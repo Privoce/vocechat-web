@@ -72,6 +72,29 @@ export const StyledContacts = styled.div`
   overflow-y: scroll;
   background: #f5f6f7;
   padding: 8px;
+  > .add {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 4px;
+    padding: 10px;
+    border-radius: 8px;
+    user-select: none;
+    &:hover {
+      background: rgba(116, 127, 141, 0.1);
+    }
+    .icon {
+      width: 24px;
+      height: 24px;
+    }
+    .txt {
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 20px;
+      color: #52525b;
+    }
+  }
 `;
 export const StyledChannelChat = styled.article`
   position: relative;

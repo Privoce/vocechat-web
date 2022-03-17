@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  online: true,
   ready: false,
   menuExpand: true,
   setting: false,
@@ -12,6 +13,9 @@ const uiSlice = createSlice({
   reducers: {
     setReady(state) {
       state.ready = true;
+    },
+    updateOnline(state, action) {
+      state.online = action.payload;
     },
     toggleMenuExpand(state) {
       state.menuExpand = !state.menuExpand;
@@ -28,6 +32,7 @@ const uiSlice = createSlice({
 });
 export const {
   setReady,
+  updateOnline,
   toggleSetting,
   toggleMenuExpand,
   toggleChannelSetting,

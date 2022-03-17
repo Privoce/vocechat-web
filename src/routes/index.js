@@ -1,9 +1,6 @@
-// import { useState } from "react";
+import { useEffect } from "react";
 import { Route, Routes, HashRouter } from "react-router-dom";
-import { Provider } from "react-redux";
-
-// import { persistStore } from 'redux-persist';
-// import { PersistGate } from 'redux-persist/integration/react';
+import { Provider, useSelector } from "react-redux";
 // import Welcome from './Welcome'
 import NotFoundPage from "./404";
 import LoginPage from "./login";
@@ -14,8 +11,20 @@ import RequireAuth from "../common/component/RequireAuth";
 
 import store from "../app/store";
 import InvitePage from "./invite";
+import toast from "react-hot-toast";
 
 const PageRoutes = () => {
+  const { online } = useSelector((store) => store.ui);
+  // 掉线检测
+  useEffect(() => {
+    let toastId = 0;
+    if (!online) {
+      toast.error("Network Offline!", { duration: Infinity });
+    } else {
+      toast.dismiss(toastId);
+    }
+  }, [online]);
+
   return (
     <HashRouter>
       <Routes>

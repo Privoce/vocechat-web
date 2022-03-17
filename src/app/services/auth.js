@@ -1,6 +1,15 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
+import { nanoid } from "@reduxjs/toolkit";
 import baseQuery from "./base.query";
-import BASE_URL from "../config";
+import BASE_URL, { KEY_DEVICE_KEY } from "../config";
+const getDeviceId = () => {
+  let d = localStorage.getItem(KEY_DEVICE_KEY);
+  if (!d) {
+    d = `web:${nanoid()}`;
+    localStorage.setItem(KEY_DEVICE_KEY, d);
+  }
+  return d;
+};
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery,
@@ -9,7 +18,11 @@ export const authApi = createApi({
       query: (credentials) => ({
         url: "token/login",
         method: "POST",
-        body: { credential: credentials, device: "web", device_token: "test" },
+        body: {
+          credential: credentials,
+          device: getDeviceId(),
+          device_token: "test",
+        },
       }),
       transformResponse: (data) => {
         const { avatar_updated_at } = data.user;

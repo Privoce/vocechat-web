@@ -14,7 +14,7 @@ const StyledWrapper = styled.article`
     padding: 0 20px;
     box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.1);
   }
-  .main {
+  > .main {
     height: calc(100vh - 56px);
     width: 100%;
     display: flex;

@@ -18,10 +18,10 @@ const userMsgSlice = createSlice({
       const { id, mid } = action.payload;
       if (state.byId[id]) {
         if (state.byId[id].findIndex((id) => id == mid) > -1) return;
-        state.byId[id].push(mid);
+        state.byId[id].push(+mid);
       } else {
-        state.byId[id] = [mid];
-        state.ids.push(id);
+        state.byId[id] = [+mid];
+        state.ids.push(+id);
       }
     },
     removeUserMsg(state, action) {

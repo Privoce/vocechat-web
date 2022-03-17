@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { MdAdd } from "react-icons/md";
 import TextareaAutosize from "react-textarea-autosize";
 import { useDispatch, useSelector } from "react-redux";
 import { useKey } from "rooks";
@@ -11,9 +10,9 @@ import { useReplyMessageMutation } from "../../../app/services/message";
 import StyledSend from "./styled";
 import useFiles from "./useFiles";
 import UploadModal from "./UploadModal";
-import EmojiPicker from "./EmojiPicker";
 import Replying from "./Replying";
-
+import Toolbar from "./Toolbar";
+import MarkdownEditor from "../MarkdownEditer";
 const Types = {
   channel: "#",
   user: "@",
@@ -25,11 +24,13 @@ export default function Send({
   id = "",
   dragFiles = [],
 }) {
+  const [contentType, setContentType] = useState("text");
   const [replyMessage] = useReplyMessageMutation();
   const { files, setFiles, resetFiles } = useFiles([]);
   const inputRef = useRef();
   const [shift, setShift] = useState(false);
   const [enter, setEnter] = useState(false);
+  const [markdown, setMarkdown] = useState("");
   const [msg, setMsg] = useState("");
   const dispatch = useDispatch();
   // 谁发的
@@ -75,7 +76,9 @@ export default function Send({
     setMsg((prev) => `${prev}${emoji}`);
   };
   useEffect(() => {
-    inputRef.current.focus();
+    if (inputRef) {
+      inputRef.current.focus();
+    }
   }, [msg, replying_mid]);
   const handleUpload = (evt) => {
     setFiles([...evt.target.files]);
@@ -97,43 +100,52 @@ export default function Send({
     }
     setMsg("");
   };
+  const sendMarkdown = () => {
+    console.log("markdown", markdown, markdown.endsWith("\\"));
+    sendMessage({
+      id,
+      content: markdown,
+      from_uid,
+      type: "markdown",
+    });
+    setMarkdown("");
+  };
 
   return (
     <>
       <StyledSend className={`send ${replying_mid ? "reply" : ""}`}>
         {replying_mid && <Replying mid={replying_mid} id={id} />}
-        <div className="addon">
-          <MdAdd size={20} color="#78787C" />
-          <input
-            multiple={true}
-            onChange={handleUpload}
-            type="file"
-            name="file"
-            id="file"
-          />
-        </div>
+
         <div className="input">
-          <TextareaAutosize
-            autoFocus
-            onFocus={(e) =>
-              e.currentTarget.setSelectionRange(
-                e.currentTarget.value.length,
-                e.currentTarget.value.length
-              )
-            }
-            ref={inputRef}
-            className="content"
-            maxRows={8}
-            minRows={1}
-            onKeyDown={handleInputKeydown}
-            onChange={handleMsgChange}
-            value={msg}
-            placeholder={`给 ${Types[type]}${name} 发消息`}
-          />
+          {contentType == "markdown" ? (
+            <MarkdownEditor value={markdown} updateValue={setMarkdown} />
+          ) : (
+            <TextareaAutosize
+              autoFocus
+              onFocus={(e) =>
+                e.currentTarget.setSelectionRange(
+                  e.currentTarget.value.length,
+                  e.currentTarget.value.length
+                )
+              }
+              ref={inputRef}
+              className="content"
+              maxRows={8}
+              minRows={1}
+              onKeyDown={handleInputKeydown}
+              onChange={handleMsgChange}
+              value={msg}
+              placeholder={`Send to ${Types[type]}${name}`}
+            />
+          )}
         </div>
-        <div className="emoji">
-          <EmojiPicker selectEmoji={selectEmoji} />
-        </div>
+        <Toolbar
+          handleSend={sendMarkdown}
+          contentType={contentType}
+          updateContentType={setContentType}
+          selectEmoji={selectEmoji}
+          handleUpload={handleUpload}
+        />
       </StyledSend>
       {files.length !== 0 && (
         <UploadModal

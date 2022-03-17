@@ -9,7 +9,11 @@ import {
   addChannel,
   removeChannel,
 } from "../../slices/channels";
-import { updateUsersVersion } from "../../slices/footprint";
+import {
+  updateUsersVersion,
+  updateReadChannels,
+  updateReadUsers,
+} from "../../slices/footprint";
 import { updateUsersByLogs, updateUsersStatus } from "../../slices/contacts";
 import { resetAuthData } from "../../slices/auth.data";
 import baseQuery from "../base.query";
@@ -58,6 +62,7 @@ export const streamingApi = createApi({
             const {
               ui: { ready },
               authData: { uid: loginUid },
+              footprint: { readUsers, readChannels },
             } = getState();
             const data = JSON.parse(evt.data);
             const { type } = data;
@@ -81,6 +86,18 @@ export const streamingApi = createApi({
                   console.log("users change logs");
                   const { logs } = data;
                   dispatch(updateUsersByLogs(logs));
+                }
+                break;
+              case "user_settings":
+              case "user_settings_changed":
+                {
+                  console.log("users settings");
+                  const {
+                    read_index_users = [],
+                    read_index_groups = [],
+                  } = data;
+                  dispatch(updateReadChannels(read_index_groups));
+                  dispatch(updateReadUsers(read_index_users));
                 }
                 break;
               case "users_state":
@@ -123,7 +140,12 @@ export const streamingApi = createApi({
                 break;
               case "chat":
                 {
-                  chatMessageHandler(data, dispatch, { ready, loginUid });
+                  chatMessageHandler(data, dispatch, {
+                    ready,
+                    loginUid,
+                    readUsers,
+                    readChannels,
+                  });
                 }
                 break;
 
@@ -132,8 +154,8 @@ export const streamingApi = createApi({
                 break;
             }
           };
-          streaming.onopen = () => {
-            console.info("sse opened");
+          streaming.onopen = (wtf) => {
+            console.info("sse opened", wtf);
           };
           streaming.onerror = (err) => {
             switch (err.eventPhase) {
@@ -148,6 +170,7 @@ export const streamingApi = createApi({
                 break;
 
               default:
+                streaming.close();
                 console.error("sse error error", err);
                 // renewToken({ token, refreshToken });
                 break;

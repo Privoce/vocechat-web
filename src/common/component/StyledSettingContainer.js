@@ -1,7 +1,7 @@
 // import React from 'react'
 import styled from "styled-components";
 import Modal from "./Modal";
-
+import backIcon from "../../assets/icons/arrow.left.svg?url";
 const StyledWrapper = styled.div`
   width: 100%;
   height: 100%;
@@ -18,7 +18,7 @@ const StyledWrapper = styled.div`
       color: #1c1c1e;
       margin-bottom: 32px;
       padding-left: 24px;
-      background: url(https://static.nicegoodthings.com/project/rustchat/icon.arrow.left.svg);
+      background: url(${backIcon});
       background-size: 16px;
       background-repeat: no-repeat;
       background-position: left;

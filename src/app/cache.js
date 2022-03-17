@@ -2,6 +2,7 @@ import { useState } from "react";
 import localforage from "localforage";
 import { useDispatch, batch } from "react-redux";
 import { fullfillReactionMessage } from "./slices/message.reaction";
+import { fullfillServer } from "./slices/server";
 import { fullfillMessage } from "./slices/message";
 import { fullfillChannelMsg } from "./slices/message.channel";
 import { fullfillUserMsg } from "./slices/message.user";
@@ -38,6 +39,10 @@ const tables = [
     storeName: "footprint",
     description: "store user visit data",
   },
+  {
+    storeName: "server",
+    description: "store server data",
+  },
   // {
   //   storeName: "message",
   //   description: "store message with key-val full data",
@@ -67,6 +72,7 @@ export const useRehydrate = () => {
       reactionMessage: {},
       message: { replying: {} },
       footprint: {},
+      server: {},
     };
     const tables = Object.keys(window.CACHE);
     const results = await Promise.all(
@@ -95,6 +101,9 @@ export const useRehydrate = () => {
             case "message":
               rehydrateData.message[key] = data;
               break;
+            case "server":
+              rehydrateData.server[key] = data;
+              break;
 
             default:
               break;
@@ -104,6 +113,7 @@ export const useRehydrate = () => {
     );
     batch(() => {
       dispatch(fullfillContacts(rehydrateData.contacts));
+      dispatch(fullfillServer(rehydrateData.server));
       console.log("fullfill channels from indexedDB");
       dispatch(fullfillChannels(rehydrateData.channels));
       dispatch(fullfillChannelMsg(rehydrateData.channelMessage));
@@ -114,7 +124,7 @@ export const useRehydrate = () => {
     });
 
     setIterated(true);
-    // console.log("iterate results", rehydrateData, results);
+    console.log("iterate results", rehydrateData, results);
   };
   return { rehydrate, rehydrated: iterated };
 };

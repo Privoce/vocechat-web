@@ -5,6 +5,7 @@ import { updateToken, resetAuthData } from "../slices/auth.data";
 import BASE_URL, { tokenHeader } from "../config";
 const whiteList = [
   "login",
+  "register",
   "checkInviteTokenValid",
   "getServer",
   "getOpenid",
@@ -64,8 +65,13 @@ const baseQueryWithTokenCheck = async (args, api, extraOptions) => {
     result = await baseQuery(args, api, extraOptions);
   }
   if (result?.error) {
-    console.log("api error", result.error.originalStatus, api.endpoint);
+    console.log("api error", result.error, api.endpoint);
     switch (result.error.originalStatus || result.error.status) {
+      case "FETCH_ERROR":
+        {
+          toast.error(`${api.endpoint}: Failed to fetch`);
+        }
+        break;
       case 404:
         {
           toast.error("Request Not Found");
@@ -84,7 +90,7 @@ const baseQueryWithTokenCheck = async (args, api, extraOptions) => {
           location.href = "/#/login";
           // } else {
           toast.error("API Not Authenticated");
-          return;
+          // return;
           // }
         }
         break;

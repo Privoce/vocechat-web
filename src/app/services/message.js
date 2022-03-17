@@ -1,5 +1,8 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
+import { batch } from "react-redux";
+
 import { ContentTypes } from "../config";
+import { updateReadChannels, updateReadUsers } from "../slices/footprint";
 import { onMessageSendStarted } from "./handlers";
 
 // import { updateMessage } from "../slices/message";
@@ -48,6 +51,36 @@ export const messageApi = createApi({
         await onMessageSendStarted.call(this, param1, param2, param1.context);
       },
     }),
+    readMessage: builder.mutation({
+      query: (data) => ({
+        url: `/user/read-index`,
+        method: "POST",
+        body: data,
+      }),
+      async onQueryStarted(data, { dispatch, getState, queryFulfilled }) {
+        const { users = [], groups = [] } = data;
+        const { readUsers, readChannels } = getState().footprint.readUsers;
+        const prevUsers = users.map(({ uid }) => {
+          return { uid, mid: readUsers[uid] };
+        });
+        const prevChannels = users.map(({ gid }) => {
+          return { gid, mid: readChannels[gid] };
+        });
+        batch(() => {
+          dispatch(updateReadChannels(groups));
+          dispatch(updateReadUsers(users));
+        });
+        try {
+          await queryFulfilled;
+        } catch {
+          // todo
+          batch(() => {
+            dispatch(updateReadChannels(prevChannels));
+            dispatch(updateReadUsers(prevUsers));
+          });
+        }
+      },
+    }),
   }),
 });
 
@@ -56,4 +89,5 @@ export const {
   useReactMessageMutation,
   useReplyMessageMutation,
   useLazyDeleteMessageQuery,
+  useReadMessageMutation,
 } = messageApi;

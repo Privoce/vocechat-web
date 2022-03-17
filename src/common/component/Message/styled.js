@@ -4,7 +4,7 @@ const StyledMsg = styled.div`
   display: flex;
   align-items: flex-start;
   gap: 16px;
-  padding: 4px;
+  padding: 4px 8px;
   margin: 8px 0;
   border-radius: 8px;
   content-visibility: auto;

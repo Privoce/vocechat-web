@@ -35,13 +35,14 @@ const handler = (data, dispatch, currState) => {
       dispatch(updateAfterMid(mid));
       break;
   }
-  const { ready, loginUid } = currState;
+  const { ready, loginUid, readUsers = {}, readChannels = {} } = currState;
   const to = typeof target.gid !== "undefined" ? "channel" : "user";
   const appendMessage = to == "user" ? addUserMsg : addChannelMsg;
   const self = from_uid == loginUid;
   // 此处有点绕
   const id = to == "user" ? (self ? target.uid : from_uid) : target.gid;
-
+  const readIndex = (to == "user" ? readUsers[id] : readChannels[id]) || 0;
+  const read = self ? true : mid < readIndex ? true : false;
   switch (type) {
     case "normal":
       {
@@ -50,7 +51,7 @@ const handler = (data, dispatch, currState) => {
             addMessage({
               mid,
               // 如果是自己发的消息，就是已读
-              read: self,
+              read,
               ...common,
             })
           );
@@ -70,7 +71,7 @@ const handler = (data, dispatch, currState) => {
               mid,
               reply_mid: detailMid,
               // 如果是自己发的消息，就是已读
-              read: self,
+              read,
               ...common,
             })
           );

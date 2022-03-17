@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getNonNullValues } from "../../common/utils";
+import BASE_URL from "../config";
 const initialState = {
   ids: [],
   byId: {},
@@ -37,6 +38,11 @@ const contactsSlice = createSlice({
               if (state.byId[uid]) {
                 Object.keys(vals).forEach((k) => {
                   state.byId[uid][k] = vals[k];
+                  if (k == "avatar_updated_at") {
+                    state.byId[
+                      uid
+                    ].avatar = `${BASE_URL}/resource/avatar?uid=${uid}&t=${vals[k]}`;
+                  }
                 });
               }
             }

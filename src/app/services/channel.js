@@ -61,6 +61,13 @@ export const channelApi = createApi({
         await onMessageSendStarted.call(this, param1, param2, "channel");
       },
     }),
+    addMembers: builder.mutation({
+      query: ({ id, members }) => ({
+        url: `group/${id}/members/add`,
+        method: "POST",
+        body: members,
+      }),
+    }),
   }),
 });
 
@@ -71,4 +78,5 @@ export const {
   useGetChannelsQuery,
   useCreateChannelMutation,
   useSendChannelMsgMutation,
+  useAddMembersMutation,
 } = channelApi;

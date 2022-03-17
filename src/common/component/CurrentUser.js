@@ -1,6 +1,8 @@
 // import { useEffect } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
+import soundIcon from "../../assets/icons/sound.on.svg?url";
+import micIcon from "../../assets/icons/mic.on.svg?url";
 import Avatar from "./Avatar";
 const StyledWrapper = styled.div`
   background-color: #e5e5e5;
@@ -75,16 +77,8 @@ export default function CurrentUser() {
       </div>
       {/* {expand && ( */}
       <div className="settings">
-        <img
-          src="https://static.nicegoodthings.com/project/rustchat/icon.speaker.svg"
-          className="icon"
-          alt="mic icon"
-        />
-        <img
-          src="https://static.nicegoodthings.com/project/rustchat/icon.mic.svg"
-          className="icon"
-          alt="sound icon"
-        />
+        <img src={soundIcon} className="icon" alt="mic icon" />
+        <img src={micIcon} className="icon" alt="sound icon" />
       </div>
       {/* )} */}
     </StyledWrapper>

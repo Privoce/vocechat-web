@@ -23,7 +23,7 @@ export default function ChannelModal({ personal = false, closeModal }) {
   const [data, setData] = useState({
     name: "",
     dsecription: "",
-    members: [],
+    members: [loginUid],
     is_public: !personal,
   });
   const { contacts, input, updateInput } = useFilteredUsers();
@@ -111,9 +111,10 @@ export default function ChannelModal({ personal = false, closeModal }) {
                       key={uid}
                       data-uid={uid}
                       className="user"
-                      onClick={toggleCheckMember}
+                      onClick={loginUid == uid ? null : toggleCheckMember}
                     >
                       <StyledCheckbox
+                        disabled={loginUid == uid}
                         readOnly
                         checked={checked}
                         name="cb"

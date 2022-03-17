@@ -6,7 +6,6 @@ const Styled = styled.input`
   appearance: none;
   /* Not removed via appearance */
   margin: 0;
-  /* color: #1fe1f9; */
   width: 20px;
   height: 20px;
   border: 1px solid #d0d5dd;
@@ -28,6 +27,12 @@ const Styled = styled.input`
     border-color: #1fe1f9;
     &:before {
       transform: scale(1);
+    }
+  }
+  &:disabled {
+    border-color: #ccc;
+    &::before {
+      box-shadow: inset 10px 10px #ccc;
     }
   }
 `;

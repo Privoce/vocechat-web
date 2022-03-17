@@ -1,72 +1,73 @@
-// import { Picker } from "emoji-mart";
-// import "emoji-mart/css/emoji-mart.css";
+// import Picker from "../EmojiPicker";
 import { useRef } from "react";
 import styled from "styled-components";
 import { useOutsideClick } from "rooks";
 import { useSelector } from "react-redux";
 import { useReactMessageMutation } from "../../../app/services/message";
+import { Emojis } from "../../../app/config";
+import Emoji from "../Emoji";
 const StyledPicker = styled.div`
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 6px;
-  position: absolute;
-  left: -10px;
-  top: 0;
-  transform: translateX(-100%);
   background-color: #fff;
-  padding: 5px;
   .emojis {
-    display: flex;
-    gap: 4px;
+    padding: 4px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    background: #ffffff;
+    filter: drop-shadow(0px 25px 50px rgba(31, 41, 55, 0.25));
+    border-radius: 12px;
     &.reacting {
       opacity: 0.6;
     }
     .emoji {
       cursor: pointer;
-      border-radius: 4px;
+      border-radius: 8px;
       padding: 4px;
-      font-size: 30px;
       &:hover,
       &.reacted {
-        background-color: #f3f4f6;
+        background-color: #f5f6f7;
+      }
+      > * {
+        display: flex;
       }
     }
   }
 `;
-const emojis = {
-  ["U+1F44D"]: "👍",
-  ["U+1F44C"]: "👌",
-  ["U+2764"]: "❤️",
-};
+
 export default function EmojiPicker({ mid, hidePicker }) {
   const wrapperRef = useRef(null);
   const [reactMessage, { isLoading }] = useReactMessageMutation();
   const { reactionData, currUid } = useSelector((store) => {
     return {
-      reactionData: store.reactionMessage[mid],
+      reactionData: store.reactionMessage[mid] || {},
       currUid: store.authData.uid,
     };
   });
   useOutsideClick(wrapperRef, hidePicker);
-  const handleReact = (action) => {
-    console.log("react", action);
-    reactMessage({ mid, action });
+  const handleReact = (emoji) => {
+    console.log("react", emoji);
+    reactMessage({ mid, action: emoji });
+    hidePicker();
   };
   return (
     <StyledPicker ref={wrapperRef}>
+      {/* <Picker
+        onSelect={handleReact}
+        className={`picker ${isLoading ? "reacting" : ""}`}
+      /> */}
       <ul className={`emojis ${isLoading ? "reacting" : ""}`}>
-        {Object.entries(emojis).map(([key, emoji]) => {
+        {Emojis.map((emoji) => {
           let reacted =
-            reactionData &&
-            reactionData[key] &&
-            reactionData[key].includes(currUid);
+            reactionData[emoji] &&
+            reactionData[emoji].findIndex((id) => id == currUid) > -1;
 
           return (
             <li
               className={`emoji ${reacted ? "reacted" : ""}`}
-              key={key}
-              onClick={handleReact.bind(null, key)}
+              key={emoji}
+              onClick={handleReact.bind(null, emoji)}
             >
-              {emoji}
+              <Emoji native={emoji} size={24} />
             </li>
           );
         })}
@@ -74,4 +75,3 @@ export default function EmojiPicker({ mid, hidePicker }) {
     </StyledPicker>
   );
 }
-export { emojis };

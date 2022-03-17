@@ -3,6 +3,7 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 import listenerMiddleware from "./listener.middleware";
 import authDataReducer from "./slices/auth.data";
 import footprintReducer from "./slices/footprint";
+import serverReducer from "./slices/server";
 import uiReducer from "./slices/ui";
 import channelsReducer from "./slices/channels";
 import contactsReducer from "./slices/contacts";
@@ -21,6 +22,7 @@ const reducer = combineReducers({
   authData: authDataReducer,
   ui: uiReducer,
   footprint: footprintReducer,
+  server: serverReducer,
   contacts: contactsReducer,
   channels: channelsReducer,
   reactionMessage: reactionMsgReducer,
@@ -49,5 +51,46 @@ const store = configureStore({
       )
       .prepend(listenerMiddleware.middleware),
 });
-setupListeners(store.dispatch);
+let initialized = false;
+setupListeners(
+  store.dispatch,
+  (dispatch, { onOnline, onOffline, onFocus, onFocusLost }) => {
+    const handleFocus = () => dispatch(onFocus());
+    const handleFocusLost = () => dispatch(onFocusLost());
+    const handleOnline = () => dispatch(onOnline());
+    const handleOffline = () => dispatch(onOffline());
+    const handleVisibilityChange = () => {
+      if (window.document.visibilityState === "visible") {
+        handleFocus();
+      } else {
+        handleFocusLost();
+      }
+    };
+
+    if (!initialized) {
+      if (typeof window !== "undefined" && window.addEventListener) {
+        // Handle focus events
+        window.addEventListener(
+          "visibilitychange",
+          handleVisibilityChange,
+          false
+        );
+        window.addEventListener("focus", handleFocus, false);
+
+        // Handle connection events
+        window.addEventListener("online", handleOnline, false);
+        window.addEventListener("offline", handleOffline, false);
+        initialized = true;
+      }
+    }
+    const unsubscribe = () => {
+      window.removeEventListener("focus", handleFocus);
+      window.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
+      initialized = false;
+    };
+    return unsubscribe;
+  }
+);
 export default store;

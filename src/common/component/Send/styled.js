@@ -10,26 +10,14 @@ const StyledSend = styled.div`
   width: calc(100% - 32px);
   min-height: 54px;
   display: flex;
-  align-items: center;
-  gap: 18px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
   padding: 4px 18px;
   /* margin: 0 16px; */
   &.reply {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-  }
-  .addon {
-    cursor: pointer;
-    position: relative;
-    input {
-      opacity: 0;
-      cursor: pointer;
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-    }
   }
   .input {
     width: 100%;
@@ -61,20 +49,7 @@ const StyledSend = styled.div`
       transform: translateY(-50%);
     }
   }
-  .emoji {
-    position: relative;
-    .toggle {
-      font-size: 22px;
-      border: none;
-      background: none;
-    }
-    .picker {
-      position: absolute;
-      top: -20px;
-      right: -15px;
-      transform: translateY(-100%);
-    }
-  }
+
   .reply {
     display: flex;
     justify-content: space-between;

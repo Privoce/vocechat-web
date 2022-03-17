@@ -16,7 +16,7 @@ import ChannelList from "./ChannelList";
 import ContactsModal from "../../common/component/ContactsModal";
 import ChannelModal from "../../common/component/ChannelModal";
 import DMList from "./DMList";
-import getUnreadCount from "./getUnreadCount";
+import { getUnreadCount } from "./utils";
 
 export default function ChatPage() {
   const [channelDropFiles, setChannelDropFiles] = useState([]);
@@ -37,10 +37,6 @@ export default function ChatPage() {
   const toggleChannelModalVisible = () => {
     setChannelModalVisible((prev) => !prev);
   };
-  // const getUnreadCount = (gid) => {
-  //   return Object.values(ChannelMsgData[gid] || {}).filter((m) => m.read)
-  //     .length;
-  // };
   const handleToggleExpand = (evt) => {
     const { currentTarget } = evt;
     const listEle = currentTarget.parentElement.parentElement;

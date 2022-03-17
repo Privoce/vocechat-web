@@ -12,7 +12,7 @@ const StyledWrapper = styled.div`
   justify-content: flex-start;
   gap: 8px;
   padding: 8px;
-  border-radius: 4px;
+  border-radius: 8px;
   user-select: none;
   &.compact {
     padding: 0;

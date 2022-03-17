@@ -1,8 +1,9 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { MdSearch, MdAdd, MdMail } from "react-icons/md";
 import { useSelector } from "react-redux";
-
+import searchIcon from "../../assets/icons/search.svg?url";
+import addIcon from "../../assets/icons/add.svg?url";
+import mailIcon from "../../assets/icons/mail.svg?url";
 import ChannelIcon from "./ChannelIcon";
 import ChannelModal from "./ChannelModal";
 import ContactsModal from "./ContactsModal";
@@ -98,14 +99,14 @@ export default function Search() {
         <ContactsModal closeModal={toggleContactsModalVisible} />
       )}
       <div className="search">
-        <MdSearch size={20} color="#A1A1AA" />
+        <img src={searchIcon} />
         <input placeholder="Search..." className="input" />
       </div>
-      <MdAdd
+      <img
+        src={addIcon}
+        alt="add icon"
         className="add"
         onClick={togglePopupVisible}
-        size={24}
-        color="#A1A1AA"
       />
       {popupVisible && (
         <ul className="popup">
@@ -126,7 +127,7 @@ export default function Search() {
             New Private Channel
           </li>
           <li className="item" onClick={toggleContactsModalVisible}>
-            <MdMail size={20} color="#616161" />
+            <img src={mailIcon} alt="icon mail" />
             New Message
           </li>
         </ul>
