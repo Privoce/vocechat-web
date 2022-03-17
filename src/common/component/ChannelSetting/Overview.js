@@ -9,6 +9,7 @@ import Input from "../styled/Input";
 import Label from "../styled/Label";
 import Textarea from "../styled/Textarea";
 import SaveTip from "../SaveTip";
+import channelIcon from "../../../assets/icons/channel.svg?url";
 const StyledWrapper = styled.div`
   position: relative;
   width: 512px;
@@ -29,7 +30,7 @@ const StyledWrapper = styled.div`
       gap: 8px;
       .name {
         padding-left: 36px;
-        background: url(https://static.nicegoodthings.com/project/rustchat/icon.hash.svg);
+        background: url(${channelIcon});
         background-size: 20px;
         background-position-x: 8px;
         background-position-y: 8px;

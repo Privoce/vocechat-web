@@ -7,6 +7,8 @@ import useCopy from "../hook/useCopy";
 import { useLazyDeleteContactQuery } from "../../app/services/contact";
 import Contact from "./Contact";
 import StyledMenu from "./StyledMenu";
+import InviteLink from "./InviteLink";
+import moreIcon from "../../assets/icons/more.svg?url";
 const StyledWrapper = styled.section`
   display: flex;
   flex-direction: column;
@@ -116,6 +118,7 @@ export default function ManageMembers({ members = [] }) {
   const uids = !members || members.length == 0 ? contacts.ids : members;
   return (
     <StyledWrapper>
+      <InviteLink />
       <div className="intro">
         <h4 className="title">Manage Members</h4>
         <p className="desc">
@@ -142,7 +145,7 @@ export default function ManageMembers({ members = [] }) {
                     data-uid={uid}
                     onClick={toggleMenu}
                     className="dots"
-                    src="https://static.nicegoodthings.com/project/rustchat/icon.dots.svg"
+                    src={moreIcon}
                     alt="dots icon"
                   />
                   {menuVisible == uid && (

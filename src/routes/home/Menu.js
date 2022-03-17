@@ -1,6 +1,9 @@
 // import React from 'react'
 import { useDispatch } from "react-redux";
 import { toggleSetting } from "../../app/slices/ui";
+import settingIcon from "../../assets/icons/setting.svg?url";
+import foldIcon from "../../assets/icons/fold.svg?url";
+import unfoldIcon from "../../assets/icons/unfold.svg?url";
 import styled from "styled-components";
 const StyledMenus = styled.ul`
   display: flex;
@@ -38,11 +41,7 @@ export default function Menu({ toggle, expand = true }) {
   return (
     <StyledMenus>
       <li className="menu" onClick={handleSetting}>
-        <img
-          src="https://static.nicegoodthings.com/project/rustchat/menu.setting.png"
-          alt="setting icon"
-          className="icon"
-        />
+        <img src={settingIcon} alt="setting icon" className="icon" />
         {expand && (
           <span className="txt animate__animated animate__fadeIn">
             Settings
@@ -51,11 +50,7 @@ export default function Menu({ toggle, expand = true }) {
       </li>
       <li className="menu" onClick={toggle}>
         <img
-          src={
-            expand
-              ? "https://static.nicegoodthings.com/project/rustchat/menu.toggle.collapse.png"
-              : "https://static.nicegoodthings.com/project/rustchat/menu.toggle.expand.png"
-          }
+          src={expand ? foldIcon : unfoldIcon}
           alt="expand icon"
           className="icon"
         />

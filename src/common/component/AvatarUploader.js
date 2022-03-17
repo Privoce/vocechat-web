@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
+import uploadIcon from "../../assets/icons/upload.image.svg?url";
 import { getInitials, getInitialsAvatar } from "../utils";
 const StyledWrapper = styled.div`
   width: 96px;
@@ -101,13 +102,7 @@ export default function AvatarUploader({
           </>
         )}
       </div>
-      {!disabled && (
-        <img
-          src="https://static.nicegoodthings.com/project/rustchat/icon.avatar.uploader.svg"
-          alt="icon"
-          className="icon"
-        />
-      )}
+      {!disabled && <img src={uploadIcon} alt="icon" className="icon" />}
     </StyledWrapper>
   );
 }

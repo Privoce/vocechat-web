@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import settingIcon from "../../assets/icons/setting.svg?url";
 const StyledWrapper = styled.div`
   display: flex;
   height: 100%;
@@ -68,7 +69,8 @@ const StyledWrapper = styled.div`
               display: flex;
               width: 16px;
               height: 16px;
-              background-image: url("https://static.nicegoodthings.com/project/rustchat/icon.setting.svg");
+              background-image: url(${settingIcon});
+              background-size: 16px;
             }
             > .badge {
               color: #fff;
@@ -161,6 +163,12 @@ const StyledWrapper = styled.div`
                 font-weight: 900;
                 font-size: 10px;
                 line-height: 10px;
+                &.dot {
+                  min-width: unset;
+                  width: 6px;
+                  height: 6px;
+                  padding: 0;
+                }
                 &.mute {
                   background: #bfbfbf;
                 }

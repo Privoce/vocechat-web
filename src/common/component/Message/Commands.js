@@ -7,7 +7,12 @@ import { addReplyingMessage } from "../../../app/slices/message";
 import StyledMenu from "../StyledMenu";
 import DeleteMessageConfirm from "./DeleteMessageConfirm";
 import EmojiPicker from "./EmojiPicker";
+import replyIcon from "../../../assets/icons/reply.svg?url";
+import reactIcon from "../../../assets/icons/reaction.svg?url";
+import editIcon from "../../../assets/icons/edit.svg?url";
+import moreIcon from "../../../assets/icons/more.svg?url";
 const StyledCmds = styled.ul`
+  z-index: 9999;
   position: absolute;
   right: 10px;
   top: 0;
@@ -32,6 +37,12 @@ const StyledCmds = styled.ul`
       width: 24px;
       height: 24px;
     }
+  }
+  > .picker {
+    position: absolute;
+    left: -10px;
+    top: 0;
+    transform: translateX(-100%);
   }
   .menu {
     position: absolute;
@@ -70,34 +81,24 @@ export default function Commands({
   return (
     <StyledCmds className={`cmds ${alwaysVisible ? "visible" : ""}`}>
       <li className="cmd" onClick={toggleEmojiPopover}>
-        <img
-          src="https://static.nicegoodthings.com/project/rustchat/icon.reply.svg"
-          alt="icon emoji"
-        />
+        <img src={reactIcon} alt="icon emoji" />
       </li>
       {emojiPopVisible && (
-        <EmojiPicker mid={mid} hidePicker={toggleEmojiPopover} />
+        <div className="picker">
+          <EmojiPicker mid={mid} hidePicker={toggleEmojiPopover} />
+        </div>
       )}
       {currUid == from_uid ? (
         <li className="cmd" onClick={toggleEditMessage}>
-          <img
-            src="https://static.nicegoodthings.com/project/rustchat/icon.edit.svg"
-            alt="icon edit"
-          />
+          <img src={editIcon} alt="icon edit" />
         </li>
       ) : (
         <li className="cmd" onClick={handleReply}>
-          <img
-            src="https://static.nicegoodthings.com/project/rustchat/icon.forward.svg"
-            alt="icon reply"
-          />
+          <img src={replyIcon} alt="icon reply" />
         </li>
       )}
       <li className="cmd" onClick={toggleMenu}>
-        <img
-          src="https://static.nicegoodthings.com/project/rustchat/icon.dots.svg"
-          alt="icon emoji"
-        />
+        <img src={moreIcon} alt="icon emoji" />
       </li>
       {menuVisible && (
         <StyledMenu className="menu" ref={menuRef}>

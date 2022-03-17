@@ -1,11 +1,11 @@
 /* eslint-disable no-undef */
 import { useState, useEffect } from "react";
-import StyledWrapper from "./styled";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-
+import BASE_URL from "../../app/config";
 // import web3 from "web3";
+import StyledWrapper from "./styled";
 import MetamaskLoginButton from "./MetamaskLoginButton";
 import SolidLoginButton from "./SolidLoginButton";
 
@@ -88,7 +88,7 @@ export default function LoginPage() {
       <div className="form">
         <div className="tips">
           <img
-            src="https://static.nicegoodthings.com/project/ext/webrowse.logo.png"
+            src={`${BASE_URL}/resource/organization/logo`}
             alt="logo"
             className="logo"
           />

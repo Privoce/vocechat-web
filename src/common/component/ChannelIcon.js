@@ -1,49 +1,12 @@
 // import React from 'react';
-const HashIcon = ({ size = 20, color = "#616161", ...rest }) => {
+import hashIcon from "../../assets/icons/channel.svg?url";
+import lockHashIcon from "../../assets/icons/channel.private.svg?url";
+export default function ChannelIcon({ personal = false, ...rest }) {
   return (
-    <svg
-      width={size}
-      height={size}
-      viewBox={`0 0 ${size} ${size}`}
-      fill="none"
+    <img
+      src={personal ? lockHashIcon : hashIcon}
+      alt="channel icon"
       {...rest}
-    >
-      <path
-        d="M6.48667 11.6667L6.83667 8.33333H3.325V6.66667H7L7.43333 2.5H9.10833L8.66667 6.66667H11.9833L12.4167 2.5H14.0917L13.65 6.66667H16.625V8.33333H13.4667L13.1167 11.6667H16.6167V13.3333H12.9333L12.4917 17.5H10.8083L11.2417 13.3333H7.91667L7.475 17.5H5.8L6.23333 13.3333H3.25V11.6667H6.4H6.48667ZM8.1625 11.6667H11.4875L11.8375 8.33333H8.5125L8.1625 11.6667Z"
-        fill={color}
-      />
-    </svg>
-  );
-};
-const PrivateHashIcon = ({ size = 20, color = "#616161", ...rest }) => {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox={`0 0 ${size} ${size}`}
-      fill="none"
-      {...rest}
-    >
-      <path
-        d="M6.83667 8.33333L6.48667 11.6667H6.4H3.25V13.3333H6.23333L5.8 17.5H7.475L7.91667 13.3333H11.2417L10.8083 17.5H12.4917L12.9333 13.3333H16.6167V11.6667H13.1167L13.2917 10H11.6625L11.4875 11.6667H8.1625L8.5125 8.33333H10.8334V6.66667H8.66667L9.10833 2.5H7.43333L7 6.66667H3.325V8.33333H6.83667Z"
-        fill={color}
-      />
-      <path
-        d="M16.6875 4.16663V3.33329C16.6875 2.39996 15.875 1.66663 15 1.66663C14.125 1.66663 13.3333 2.39996 13.3333 3.33329V4.16663C12.8731 4.16663 12.5 4.53973 12.5 4.99996V7.49996C12.5 7.96019 12.8731 8.33329 13.3333 8.33329H15H16.6667C17.1269 8.33329 17.5 7.96019 17.5 7.49996V4.97913C17.5 4.53039 17.1362 4.16663 16.6875 4.16663ZM15.8333 4.16663H14.1667V3.33329C14.1667 2.8571 14.5556 2.49996 15 2.49996C15.4444 2.49996 15.8333 2.8571 15.8333 3.33329V4.16663Z"
-        fill={color}
-      />
-    </svg>
-  );
-};
-export default function ChannelIcon({
-  personal = false,
-  size = 20,
-  color = "#616161",
-  ...rest
-}) {
-  return personal ? (
-    <PrivateHashIcon size={size} color={color} {...rest} />
-  ) : (
-    <HashIcon size={size} color={color} {...rest} />
+    />
   );
 }

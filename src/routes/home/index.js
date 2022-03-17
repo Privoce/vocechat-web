@@ -12,8 +12,8 @@ import usePreload from "./usePreload";
 import SettingModal from "../../common/component/Setting";
 import ChannelSettingModal from "../../common/component/ChannelSetting";
 
-import ChatIcon from "../../assets/icons/chat.svg";
-import ContactIcon from "../../assets/icons/contact.svg";
+import ChatIcon from "../../assets/icons/chat.svg?url";
+import ContactIcon from "../../assets/icons/contact.svg?url";
 // import NotificationHub from "../../common/component/NotificationHub";
 
 export default function HomePage() {
@@ -29,7 +29,7 @@ export default function HomePage() {
   const toggleExpand = () => {
     dispatch(toggleMenuExpand());
   };
-  console.log("index loading", loading, ready);
+  // console.log("index loading", loading, ready);
   if (loading || !ready) {
     return <Loading />;
   }
