@@ -16,6 +16,24 @@ export const getNonNullValues = (obj, whiteList = ["log_id"]) => {
   });
   return tmp;
 };
+export function getDefaultSize(size = null, width = 240) {
+  if (!size) return { width: 0, height: 0 };
+  const { width: oWidth, height: oHeight } = size;
+  const dWidth = oWidth >= width ? width : oWidth;
+  const dHeight = (oHeight / oWidth) * dWidth;
+  return { width: dWidth, height: dHeight };
+}
+export function formatBytes(bytes, decimals = 2) {
+  if (bytes === 0) return "0 Bytes";
+
+  const k = 1000;
+  const dm = decimals < 0 ? 0 : decimals;
+  const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
+}
 export const getInitials = (name) => {
   const arr = name.split(" ").filter((n) => !!n);
   return arr

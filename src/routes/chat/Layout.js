@@ -96,13 +96,14 @@ export default function Layout({
   useEffect(() => {
     if (messagesContainer) {
       const container = messagesContainer.current;
+      // 点击查看大图
       container.addEventListener(
         "click",
         (evt) => {
           console.log(evt);
           const { target } = evt;
           if (target.nodeType == 1 && target.classList.contains("preview")) {
-            setPreviewImage(target.src);
+            setPreviewImage(target.dataset.origin || target.src);
           }
         },
         true

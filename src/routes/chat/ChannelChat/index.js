@@ -127,7 +127,6 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
           </div>
 
           <Send dragFiles={dragFiles} id={cid} type="channel" name={name} />
-          <div className="placeholder"></div>
         </StyledChannelChat>
         {/* {unreads != 0 && (
         <StyledNotification>

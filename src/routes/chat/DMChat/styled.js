@@ -56,8 +56,4 @@ export const StyledDMChat = styled.article`
     overflow-y: scroll;
     overflow-x: visible;
   }
-  .placeholder {
-    width: 100%;
-    height: 80px;
-  }
 `;

@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const StyledSend = styled.div`
   position: absolute;
-  bottom: 15px;
+  bottom: -70px;
   left: 50%;
   transform: translateX(-50%);
   background: #e5e7eb;
@@ -15,6 +15,9 @@ const StyledSend = styled.div`
   gap: 5px;
   padding: 4px 18px;
   /* margin: 0 16px; */
+  &.user {
+    bottom: 10px;
+  }
   &.reply {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -47,30 +50,6 @@ const StyledSend = styled.div`
       right: 10px;
       top: 50%;
       transform: translateY(-50%);
-    }
-  }
-
-  .reply {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    background-color: #f2f2f5;
-    position: absolute;
-    left: 0;
-    top: 0;
-    transform: translateY(-100%);
-    width: 100%;
-    padding: 6px 18px;
-    .txt {
-      color: #aaa;
-      font-size: 12px;
-      em {
-        font-weight: bold;
-        color: #333;
-        padding: 0 5px;
-      }
     }
   }
 `;

@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+// import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 // import toast from "react-hot-toast";
 // import { useNavigate } from "react-router-dom";
 import { useSendChannelMsgMutation } from "../../../../app/services/channel";
 import { useSendMsgMutation } from "../../../../app/services/contact";
 import Modal from "../../Modal";
+import { formatBytes } from "../../../utils";
 import Button from "../../styled/Button";
 
 import StyledWrapper from "./styled";
@@ -22,27 +23,40 @@ export default function UploadModal({
     { isLoading: channelSending },
   ] = useSendChannelMsgMutation();
   const [sendUserMsg, { isLoading: userSending }] = useSendMsgMutation();
-  const [blobs, setBlobs] = useState([]);
-  useEffect(() => {
-    files.forEach((file) => {
-      var fileReader = new FileReader();
-      fileReader.onloadend = (e) => {
-        const { name, size, type } = file;
-        const obj = { name, size, type };
-        let dataUrl = e.target.result;
-        console.log({ dataUrl }, e.target);
-        // let blob = new Blob([arrayBuffer]);
-        obj.data = dataUrl;
-        setBlobs((prevs) => {
-          return [...prevs, obj];
-        });
-      };
-      fileReader.readAsDataURL(file);
-    });
-  }, [files]);
+  // const [properties, setProperties] = useState([]);
+  // useEffect(() => {
+  //   files.forEach((file, idx) => {
+  //     const { name, size, type } = file;
+  //     setProperties((prevs) => {
+  //       prevs[idx] = { name, size, type };
+  //       return prevs;
+  //     });
+  //     var fileReader = new FileReader();
+  //     fileReader.onloadend = (e) => {
+  //       let dataUrl = e.target.result;
+  //       let tmp = new Image();
+  //       tmp.src = dataUrl;
+  //       tmp.onload = function () {
+  //         console.log("image load", this.width, this.height);
+  //         setProperties((prevs) => {
+  //           prevs[idx].width = this.width;
+  //           prevs[idx].height = this.height;
+  //           return prevs;
+  //         });
+  //       };
+  //     };
+  //     fileReader.readAsDataURL(file);
+  //   });
+  // }, [files]);
   const handleUpload = () => {
     const uploadFn = type == "user" ? sendUserMsg : sendChannelMsg;
-    uploadFn({ id: sendTo, content: files[0], type: "image", from_uid });
+    uploadFn({
+      id: sendTo,
+      content: files[0],
+      // properties: properties[0],
+      type: "image",
+      from_uid,
+    });
     closeModal();
   };
   if (!sendTo) return null;
@@ -68,22 +82,21 @@ export default function UploadModal({
         className="animate__animated animate__fadeInDown animate__faster"
       >
         <ul className="list">
-          {blobs.map((b, idx) => {
-            console.log({ b });
+          {files.map((f, idx) => {
+            console.log({ f });
             return (
               <li key={idx} className="item">
                 <img
-                  src={b.data}
-                  // src={URL.createObjectURL(b.data)}
+                  src={URL.createObjectURL(f)}
                   alt="thumb"
                   className="thumb"
                 />
                 <div className="right">
                   <div className="name">
-                    <span className="input">{b.name}</span>
-                    <i className="tip">(click title to change name)</i>
+                    <span className="input">{f.name}</span>
+                    {/* <i className="tip">(click title to change name)</i> */}
                   </div>
-                  <i className="size">{`${Math.floor(b.size / 1000)}KB`}</i>
+                  <i className="size">{formatBytes(f.size)}</i>
                 </div>
               </li>
             );

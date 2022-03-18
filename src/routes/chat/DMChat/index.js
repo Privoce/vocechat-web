@@ -75,7 +75,6 @@ export default function DMChat({ uid = "", dropFiles = [] }) {
             })}
         </div>
       </StyledDMChat>
-      <div className="placeholder"></div>
       <Send
         dragFiles={dragFiles}
         type="user"

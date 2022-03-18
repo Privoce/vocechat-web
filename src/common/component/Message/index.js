@@ -65,8 +65,10 @@ function Message({ contextId = 0, mid = "", read = true, context = "user" }) {
     created_at: time,
     sending,
     content,
+    thumbnail,
     content_type = "text/plain",
     edited,
+    properties,
   } = message;
   const reactions = reactionMessageData[mid];
   const currUser = contactsData[fromUid] || {};
@@ -89,12 +91,12 @@ function Message({ contextId = 0, mid = "", read = true, context = "user" }) {
         </div>
       </Tippy>
       <div className="details">
-        {reply_mid && <Reply mid={reply_mid} />}
         <div className="up">
           <span className="name">{currUser.name}</span>
           <i className="time">{dayjs(time).format("YYYY-MM-DD h:mm:ss A")}</i>
         </div>
         <div className={`down ${sending ? "sending" : ""}`}>
+          {reply_mid && <Reply mid={reply_mid} />}
           {edit ? (
             <EditMessage
               content={content}
@@ -102,7 +104,13 @@ function Message({ contextId = 0, mid = "", read = true, context = "user" }) {
               cancelEdit={toggleEditMessage}
             />
           ) : (
-            renderContent(content_type, content, edited)
+            renderContent({
+              content_type,
+              properties,
+              content,
+              thumbnail,
+              edited,
+            })
           )}
           {reactions && <Reaction mid={mid} reactions={reactions} />}
         </div>

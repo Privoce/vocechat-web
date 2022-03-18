@@ -1,13 +1,11 @@
-// import React from 'react'
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDrop } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
 import { useDispatch, useSelector } from "react-redux";
-import useContextMenu from "../../common/hook/useContextMenu";
-import ContextMenu from "../../common/component/ContextMenu";
-import { toggleChannelSetting } from "../../app/slices/ui";
-import ChannelIcon from "../../common/component/ChannelIcon";
-import { getUnreadCount } from "./utils";
+import { toggleChannelSetting } from "../../../app/slices/ui";
+import ChannelIcon from "../../../common/component/ChannelIcon";
+import { getUnreadCount } from "../utils";
+
 const NavItem = ({ id, setFiles, contextMenuEventHandler }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -44,7 +42,10 @@ const NavItem = ({ id, setFiles, contextMenuEventHandler }) => {
   const unreads = getUnreadCount(mids, messageData);
   return (
     <NavLink
-      onContextMenu={contextMenuEventHandler}
+      data-cid={id}
+      onContextMenu={(evt) => {
+        contextMenuEventHandler(evt, id);
+      }}
       ref={drop}
       key={id}
       className={`link ${isActive ? "drop_over" : ""}`}
@@ -65,58 +66,5 @@ const NavItem = ({ id, setFiles, contextMenuEventHandler }) => {
     </NavLink>
   );
 };
-export default function ChannelList({ setDropFiles }) {
-  const channelIds = useSelector((store) => store.channels.ids);
-  const {
-    visible: contextMenuVisible,
-    posX,
-    posY,
-    hideContextMenu,
-    handleContextMenuEvent,
-  } = useContextMenu();
-  return (
-    <>
-      {channelIds.map((cid) => {
-        return (
-          <NavItem
-            contextMenuEventHandler={handleContextMenuEvent}
-            key={cid}
-            id={cid}
-            setFiles={setDropFiles}
-          />
-        );
-      })}
-      {contextMenuVisible ? (
-        <ContextMenu
-          hideMenu={hideContextMenu}
-          posX={posX}
-          posY={posY}
-          items={[
-            {
-              title: "Mark As Read",
-              underline: true,
-            },
-            {
-              title: "Mute",
-            },
-            {
-              title: "Notification Settings",
-              underline: true,
-            },
-            {
-              title: "Edit Channel",
-              underline: true,
-            },
-            {
-              title: "Invite People",
-            },
-            {
-              title: "Delete Channel",
-              danger: true,
-            },
-          ]}
-        />
-      ) : null}
-    </>
-  );
-}
+
+export default NavItem;

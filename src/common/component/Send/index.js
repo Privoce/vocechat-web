@@ -113,7 +113,7 @@ export default function Send({
 
   return (
     <>
-      <StyledSend className={`send ${replying_mid ? "reply" : ""}`}>
+      <StyledSend className={`send ${replying_mid ? "reply" : ""} ${type}`}>
         {replying_mid && <Replying mid={replying_mid} id={id} />}
 
         <div className="input">

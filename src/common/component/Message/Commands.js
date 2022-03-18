@@ -66,9 +66,12 @@ export default function Commands({
   const currUid = useSelector((store) => store.authData.uid);
   const menuRef = useRef(null);
 
-  const handleReply = () => {
+  const handleReply = (fromMenu = false) => {
     if (contextId) {
       dispatch(addReplyingMessage({ id: contextId, mid }));
+    }
+    if (fromMenu) {
+      toggleMenu();
     }
     // toast.success("cooming soon");
   };
@@ -93,7 +96,7 @@ export default function Commands({
           <img src={editIcon} alt="icon edit" />
         </li>
       ) : (
-        <li className="cmd" onClick={handleReply}>
+        <li className="cmd" onClick={handleReply.bind(null, false)}>
           <img src={replyIcon} alt="icon reply" />
         </li>
       )}
@@ -104,7 +107,9 @@ export default function Commands({
         <StyledMenu className="menu" ref={menuRef}>
           {/* <li className="item">Edit Message</li> */}
           <li className="item underline">Pin Message</li>
-          <li className="item">Reply</li>
+          <li className="item" onClick={handleReply.bind(null, true)}>
+            Reply
+          </li>
           {currUid == from_uid && (
             <li className="item danger" onClick={toggleDeleteModal}>
               Delete Message

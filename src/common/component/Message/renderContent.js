@@ -1,10 +1,16 @@
 import Linkify from "react-linkify";
 import dayjs from "dayjs";
-import BASE_URL from "../../../app/config";
 import MrakdownRender from "../MrakdownRender";
-const renderContent = (type, content, edited = false) => {
+import { getDefaultSize } from "../../utils";
+const renderContent = ({
+  properties,
+  content_type,
+  content,
+  thumbnail,
+  edited = false,
+}) => {
   let ctn = null;
-  switch (type) {
+  switch (content_type) {
     case "text/plain":
       ctn = (
         <>
@@ -40,16 +46,17 @@ const renderContent = (type, content, edited = false) => {
       break;
     case "image/png":
     case "image/jpeg":
-      ctn = (
-        <img
-          className="img preview"
-          src={
-            content.startsWith("blob")
-              ? content
-              : `${BASE_URL}/resource/image?id=${encodeURIComponent(content)}`
-          }
-        />
-      );
+      {
+        const { width, height } = getDefaultSize(properties);
+        ctn = (
+          <img
+            className="img preview"
+            style={{ width: `${width}px`, height: `${height}px` }}
+            data-origin={content}
+            src={thumbnail}
+          />
+        );
+      }
       break;
 
     default:

@@ -7,7 +7,7 @@ import { useReactMessageMutation } from "../../../app/services/message";
 // import { Emojis } from "../../../app/config";
 import addEmojiIcon from "../../../assets/icons/add.emoji.svg?url";
 const StyledWrapper = styled.span`
-  z-index: 99;
+  /* z-index: 99; */
   position: relative;
   margin-top: 8px;
   margin-bottom: 4px;
