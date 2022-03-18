@@ -22,7 +22,9 @@ function useChatScroll(dep) {
     console.log("chat scroll", ref);
     if (ref.current) {
       setTimeout(() => {
-        ref.current.scrollTop = ref.current.scrollHeight;
+        if (ref.current) {
+          ref.current.scrollTop = ref.current.scrollHeight;
+        }
       }, 20);
     }
   }, [dep]);

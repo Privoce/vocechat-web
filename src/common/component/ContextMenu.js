@@ -18,8 +18,9 @@ export default function ContextMenu({
   useOutsideClick(wrapperRef, hideMenu);
   return (
     <StyledWrapper ref={wrapperRef} x={posX} y={posY}>
-      {items.map(
-        ({
+      {items.map((item) => {
+        if (!item) return null;
+        const {
           title,
           handler = (evt) => {
             evt.preventDefault();
@@ -27,20 +28,22 @@ export default function ContextMenu({
           },
           underline = false,
           danger = false,
-        }) => {
-          return (
-            <li
-              className={`item ${underline ? "underline" : ""} ${
-                danger ? "danger" : ""
-              }`}
-              key={title}
-              onClick={handler}
-            >
-              {title}
-            </li>
-          );
-        }
-      )}
+        } = item;
+        return (
+          <li
+            className={`item ${underline ? "underline" : ""} ${
+              danger ? "danger" : ""
+            }`}
+            key={title}
+            onClick={(evt) => {
+              handler(evt);
+              hideMenu();
+            }}
+          >
+            {title}
+          </li>
+        );
+      })}
     </StyledWrapper>
   );
 }
