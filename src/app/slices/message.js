@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import BASE_URL from "../config";
 const initialState = {
   replying: {},
 };
@@ -28,14 +28,29 @@ const messageSlice = createSlice({
       });
     },
     addMessage(state, action) {
-      const { mid, sending } = action.payload;
+      const data = action.payload;
+      const { mid, sending, content_type, content } = data;
       // 如果是正发送，并且已存在，则不覆盖
       if (sending && state[mid]) return;
-      state[mid] = action.payload;
+      const isImage = content_type.startsWith("image");
+      if (!sending && isImage) {
+        data.image_id = content;
+        data.content = `${BASE_URL}/resource/image?id=${encodeURIComponent(
+          data.image_id
+        )}`;
+        data.thumbnail = `${BASE_URL}/resource/thumbnail?id=${encodeURIComponent(
+          data.image_id
+        )}`;
+      }
+      state[mid] = data;
     },
     removeMessage(state, action) {
-      const mid = action.payload;
-      delete state[mid];
+      const mids = Array.isArray(action.payload)
+        ? action.payload
+        : [action.payload];
+      mids.forEach((id) => {
+        delete state[id];
+      });
     },
     addReplyingMessage(state, action) {
       const { id, mid } = action.payload;

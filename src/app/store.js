@@ -16,7 +16,6 @@ import { contactApi } from "./services/contact";
 import { channelApi } from "./services/channel";
 import { messageApi } from "./services/message";
 import { serverApi } from "./services/server";
-import { streamingApi } from "./services/streaming";
 
 const reducer = combineReducers({
   authData: authDataReducer,
@@ -34,7 +33,6 @@ const reducer = combineReducers({
   [contactApi.reducerPath]: contactApi.reducer,
   [channelApi.reducerPath]: channelApi.reducer,
   [serverApi.reducerPath]: serverApi.reducer,
-  [streamingApi.reducerPath]: streamingApi.reducer,
 });
 
 const store = configureStore({
@@ -46,8 +44,7 @@ const store = configureStore({
         contactApi.middleware,
         channelApi.middleware,
         serverApi.middleware,
-        messageApi.middleware,
-        streamingApi.middleware
+        messageApi.middleware
       )
       .prepend(listenerMiddleware.middleware),
 });

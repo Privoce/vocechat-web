@@ -6,15 +6,6 @@ export default async function handler({ operation, data = {}, payload }) {
     return;
   }
   switch (operation) {
-    // case "fullfillFootprint":
-    //   {
-    //     await Promise.all(
-    //       Object.entries(data).map(async ([key, value]) => {
-    //         await table.setItem(key, value);
-    //       })
-    //     );
-    //   }
-    //   break;
     case "updateUsersVersion":
       {
         const usersVersion = payload;

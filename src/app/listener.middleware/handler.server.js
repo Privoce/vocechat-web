@@ -12,6 +12,16 @@ export default async function handler({ operation, payload }) {
         await table.setItem("inviteLink", data);
       }
       break;
+    case "updateInfo":
+      {
+        const data = payload;
+        await Promise.all(
+          Object.entries(data).map(([_key, _val]) => {
+            return table.setItem(_key, _val);
+          })
+        );
+      }
+      break;
     default:
       break;
   }

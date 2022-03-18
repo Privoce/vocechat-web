@@ -1,8 +1,8 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import BASE_URL from "../config";
-import { updateInviteLink } from "../slices/server";
+import { updateInviteLink, updateInfo } from "../slices/server";
 import baseQuery from "./base.query";
-
+const defaultExpireDuration = 7 * 24 * 60 * 60;
 export const serverApi = createApi({
   reducerPath: "serverApi",
   baseQuery,
@@ -10,8 +10,16 @@ export const serverApi = createApi({
     getServer: builder.query({
       query: () => ({ url: `admin/system/organization` }),
       transformResponse: (data) => {
-        data.logo = `${BASE_URL}/resource/organization/logo`;
+        data.logo = `${BASE_URL}/resource/organization/logo?t=${new Date().getTime()}`;
         return data;
+      },
+      async onQueryStarted(data, { dispatch, queryFulfilled }) {
+        try {
+          const { data: server } = await queryFulfilled;
+          dispatch(updateInfo(server));
+        } catch {
+          console.log("get server info error");
+        }
       },
     }),
     getMetrics: builder.query({
@@ -56,9 +64,21 @@ export const serverApi = createApi({
         method: "POST",
         body: data,
       }),
+      async onQueryStarted(data, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          dispatch(
+            updateInfo({
+              logo: `${BASE_URL}/resource/organization/logo?t=${new Date().getTime()}`,
+            })
+          );
+        } catch {
+          console.log("update server logo error");
+        }
+      },
     }),
     createInviteLink: builder.query({
-      query: (expired_in = 7 * 24 * 60 * 60) => ({
+      query: (expired_in = defaultExpireDuration) => ({
         headers: {
           "content-type": "text/plain",
           accept: "text/plain",
@@ -66,17 +86,21 @@ export const serverApi = createApi({
         url: `/admin/user/create_invite_link?expired_in=${expired_in}`,
         responseHandler: (response) => response.text(),
       }),
-      async onQueryStarted(expire, { dispatch, queryFulfilled, getState }) {
-        const {
-          expire: prevExp,
-          link: prevLink,
-        } = getState().server.inviteLink;
+      transformResponse: (link) => {
+        // 替换掉域名
+        const invite = new URL(link);
+        return `${location.origin}${invite.pathname}${invite.search}${invite.hash}`;
+      },
+      async onQueryStarted(
+        expire = defaultExpireDuration,
+        { dispatch, queryFulfilled }
+      ) {
         try {
           const { data: link } = await queryFulfilled;
           console.log("link", link);
           dispatch(updateInviteLink({ expire, link }));
         } catch {
-          dispatch(updateInviteLink({ expire: prevExp, link: prevLink }));
+          console.log("invite link error");
         }
       },
     }),
@@ -86,6 +110,15 @@ export const serverApi = createApi({
         method: "POST",
         body: data,
       }),
+      async onQueryStarted(data, { dispatch, queryFulfilled, getState }) {
+        const { name: prevName, description: prevDesc } = getState().server;
+        dispatch(updateInfo(data));
+        try {
+          await queryFulfilled;
+        } catch {
+          dispatch(updateInfo({ name: prevName, description: prevDesc }));
+        }
+      },
     }),
   }),
 });

@@ -1,6 +1,9 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 // import toast from "react-hot-toast";
+import { KEY_UID } from "../config";
 import baseQuery from "./base.query";
+import { resetAuthData, setUid } from "../slices/auth.data";
+import { fullfillContacts } from "../slices/contacts";
 import BASE_URL, { ContentTypes } from "../config";
 import { onMessageSendStarted } from "./handlers";
 export const contactApi = createApi({
@@ -18,6 +21,28 @@ export const contactApi = createApi({
           user.avatar = avatar;
           return user;
         });
+      },
+      async onQueryStarted(data, { dispatch, queryFulfilled }) {
+        const local_uid = localStorage.getItem(KEY_UID);
+        try {
+          const { data: contacts } = await queryFulfilled;
+          const matchedUser = contacts.find((c) => c.uid == local_uid);
+          console.log("wtf", contacts, matchedUser);
+          if (!matchedUser) {
+            // 用户已注销或被禁用
+            console.log("no matched user, redirect to login");
+            dispatch(resetAuthData());
+            // navigate("/login");
+          } else {
+            const markedContacts = contacts.map((u) => {
+              return u.uid == matchedUser.uid ? { ...u, online: true } : u;
+            });
+            dispatch(setUid(matchedUser.uid));
+            dispatch(fullfillContacts(markedContacts));
+          }
+        } catch {
+          console.log("get contact list error");
+        }
       },
     }),
     deleteContact: builder.query({

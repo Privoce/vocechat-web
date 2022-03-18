@@ -17,6 +17,7 @@ const operations = [
   "reactionMessage",
   "message",
   "footprint",
+  "server",
 ];
 
 // Create the middleware instance and methods

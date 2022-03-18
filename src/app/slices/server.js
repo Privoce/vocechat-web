@@ -1,5 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
+  name: "",
+  description: "",
+  logo: "",
   inviteLink: {
     link: "",
     expire: 0,
@@ -18,8 +21,16 @@ const serverSlice = createSlice({
           link: "",
           expire: 0,
         },
-      } = action.payload;
-      return { inviteLink };
+        name = "",
+        description = "",
+      } = action.payload || {};
+      return { name, description, inviteLink };
+    },
+    updateInfo(state, action) {
+      const values = action.payload || {};
+      Object.keys(values).forEach((_key) => {
+        state[_key] = values[_key];
+      });
     },
     updateInviteLink(state, action) {
       const { link, expire = 7 * 24 * 60 * 60 } = action.payload;
@@ -28,6 +39,7 @@ const serverSlice = createSlice({
   },
 });
 export const {
+  updateInfo,
   resetServer,
   fullfillServer,
   updateInviteLink,

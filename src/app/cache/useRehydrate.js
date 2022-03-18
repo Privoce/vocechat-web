@@ -1,66 +1,15 @@
 import { useState } from "react";
-import localforage from "localforage";
+
 import { useDispatch, batch } from "react-redux";
-import { fullfillReactionMessage } from "./slices/message.reaction";
-import { fullfillServer } from "./slices/server";
-import { fullfillMessage } from "./slices/message";
-import { fullfillChannelMsg } from "./slices/message.channel";
-import { fullfillUserMsg } from "./slices/message.user";
-import { fullfillChannels } from "./slices/channels";
-import { fullfillContacts } from "./slices/contacts";
-import { fullfillFootprint } from "./slices/footprint";
-import { KEY_UID } from "./config";
-const tables = [
-  {
-    storeName: "channels",
-    description: "store channel list",
-  },
-  {
-    storeName: "contacts",
-    description: "store contact list",
-  },
-  {
-    storeName: "messageDM",
-    description: "store DM message with IDs",
-  },
-  {
-    storeName: "messageChannel",
-    description: "store channel message with IDs",
-  },
-  {
-    storeName: "message",
-    description: "store message with key-val full data",
-  },
-  {
-    storeName: "messageReaction",
-    description: "store message reaction with key-val full data",
-  },
-  {
-    storeName: "footprint",
-    description: "store user visit data",
-  },
-  {
-    storeName: "server",
-    description: "store server data",
-  },
-  // {
-  //   storeName: "message",
-  //   description: "store message with key-val full data",
-  // },
-];
-const initCache = () => {
-  const uid = localStorage.getItem(KEY_UID) || "";
-  const name = `local_db_${uid}`;
-  window.CACHE = {};
-  tables.forEach(({ storeName, description }) => {
-    window.CACHE[storeName] = localforage.createInstance({
-      name,
-      storeName,
-      description,
-    });
-  });
-};
-export const useRehydrate = () => {
+import { fullfillReactionMessage } from "../slices/message.reaction";
+import { fullfillServer } from "../slices/server";
+import { fullfillMessage } from "../slices/message";
+import { fullfillChannelMsg } from "../slices/message.channel";
+import { fullfillUserMsg } from "../slices/message.user";
+import { fullfillChannels } from "../slices/channels";
+import { fullfillContacts } from "../slices/contacts";
+import { fullfillFootprint } from "../slices/footprint";
+const useRehydrate = () => {
   const [iterated, setIterated] = useState(false);
   const dispatch = useDispatch();
   const rehydrate = async () => {
@@ -128,5 +77,4 @@ export const useRehydrate = () => {
   };
   return { rehydrate, rehydrated: iterated };
 };
-
-export default initCache;
+export default useRehydrate;

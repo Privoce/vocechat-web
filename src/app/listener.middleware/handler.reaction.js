@@ -6,19 +6,20 @@ export default async function handler({ operation, data = {}, payload }) {
     return;
   }
   switch (operation) {
-    // case "fullfillReactionMessage":
-    //   {
-    //     await Promise.all(
-    //       Object.entries(data).map(async ([mid, data]) => {
-    //         await table.setItem(mid + "", data);
-    //       })
-    //     );
-    //   }
-    //   break;
     case "toggleReactionMessage":
       {
         const { mid } = payload;
         await table.setItem(mid + "", data[mid]);
+      }
+      break;
+    case "removeReactionMessage":
+      {
+        const mids = Array.isArray(payload) ? payload : [payload];
+        await Promise.all(
+          mids.map(async (mid) => {
+            await table.removeItem(mid + "");
+          })
+        );
       }
       break;
     default:

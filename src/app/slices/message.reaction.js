@@ -11,6 +11,14 @@ const reactionMessageSlice = createSlice({
     fullfillReactionMessage(state, action) {
       return action.payload;
     },
+    removeReactionMessage(state, action) {
+      const mids = Array.isArray(action.payload)
+        ? action.payload
+        : [action.payload];
+      mids.forEach((id) => {
+        delete state[id];
+      });
+    },
     toggleReactionMessage(state, action) {
       const { from_uid, mid, action: reaction } = action.payload;
       console.log("msg reaction", mid, from_uid, reaction);
@@ -36,6 +44,7 @@ const reactionMessageSlice = createSlice({
   },
 });
 export const {
+  removeReactionMessage,
   resetReactionMessage,
   fullfillReactionMessage,
   toggleReactionMessage,

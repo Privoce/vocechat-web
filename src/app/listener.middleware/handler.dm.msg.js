@@ -6,15 +6,6 @@ export default async function handler({ operation, data = {}, payload }) {
     return;
   }
   switch (operation) {
-    // case "fullfillUserMsgs":
-    //   {
-    //     await Promise.all(
-    //       Object.entries(data).map(async ([uid, arr]) => {
-    //         await table.setItem(uid + "", arr);
-    //       })
-    //     );
-    //   }
-    //   break;
     case "addUserMsg":
     case "removeUserMsg":
       {

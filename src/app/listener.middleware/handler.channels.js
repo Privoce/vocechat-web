@@ -6,15 +6,16 @@ export default async function handler({ operation, data, payload }) {
     return;
   }
   switch (operation) {
-    // case "fullfillChannels":
-    //   {
-    //     await Promise.all(
-    //       data.ids.map(async (cid) => {
-    //         await table.setItem(cid + "", data.byId[cid]);
-    //       })
-    //     );
-    //   }
-    //   break;
+    case "fullfillChannels":
+      {
+        const chs = payload;
+        await Promise.all(
+          chs.map(({ gid, ...rest }) => {
+            return table.setItem(gid, { gid, ...rest });
+          })
+        );
+      }
+      break;
     case "addChannel":
       {
         const { gid } = payload;

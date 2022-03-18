@@ -6,15 +6,16 @@ export default async function handler({ operation, data, payload }) {
     return;
   }
   switch (operation) {
-    // case "fullfillContacts":
-    //   {
-    //     await Promise.all(
-    //       data.ids.map(async (uid) => {
-    //         await table.setItem(uid + "", data.byId[uid]);
-    //       })
-    //     );
-    //   }
-    //   break;
+    case "fullfillContacts":
+      {
+        const contacts = payload;
+        await Promise.all(
+          contacts.map(({ uid, ...rest }) => {
+            return table.setItem(uid, { uid, ...rest });
+          })
+        );
+      }
+      break;
     case "updateUsersByLogs":
       {
         const changeLogs = payload;

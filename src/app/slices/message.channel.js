@@ -27,9 +27,18 @@ const channelMsgSlice = createSlice({
         state[id].splice(idx, 1);
       }
     },
+    removeChannelSession(state, action) {
+      const ids = Array.isArray(action.payload)
+        ? action.payload
+        : [action.payload];
+      ids.forEach((id) => {
+        delete state[id];
+      });
+    },
   },
 });
 export const {
+  removeChannelSession,
   resetChannelMsg,
   fullfillChannelMsg,
   addChannelMsg,
