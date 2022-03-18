@@ -50,7 +50,8 @@ export default function useStreaming() {
     const controller = new AbortController();
     setStatus(StreamStatus.initializing);
     const {
-      authData: { token, afterMid, usersVersion },
+      authData: { token },
+      footprint: { afterMid, usersVersion },
     } = store;
     fetchEventSource(
       `${BASE_URL}/user/events?${getQueryString({
