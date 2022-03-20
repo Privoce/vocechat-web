@@ -4,6 +4,7 @@ import ConfigFirebase from "./config/Firebase";
 import ConfigSMTP from "./config/SMTP";
 import Notifications from "./Notifications";
 import ManageMembers from "../ManageMembers";
+import FAQ from "../FAQ";
 import ConfigAgora from "./config/Agora";
 const useNavs = () => {
   const navs = [
@@ -67,6 +68,26 @@ const useNavs = () => {
           name: "smtp",
           title: "SMTP",
           component: <ConfigSMTP />,
+        },
+      ],
+    },
+    {
+      title: "About",
+      items: [
+        {
+          name: "faq",
+          title: "FAQ",
+          component: <FAQ />,
+        },
+        {
+          name: "terms",
+          title: "Terms & Privacy",
+          component: "Terms & Privacy",
+        },
+        {
+          name: "feedback",
+          title: "Feedback",
+          component: "feedback",
         },
       ],
     },
