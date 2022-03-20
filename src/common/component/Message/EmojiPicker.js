@@ -19,7 +19,7 @@ const StyledPicker = styled.div`
     &.reacting {
       opacity: 0.6;
     }
-    .emoji {
+    .wrapper {
       cursor: pointer;
       border-radius: 8px;
       padding: 4px;
@@ -27,8 +27,9 @@ const StyledPicker = styled.div`
       &.reacted {
         background-color: #f5f6f7;
       }
-      > * {
-        display: flex;
+      > .emoji {
+        width: 16px;
+        height: 16px;
       }
     }
   }
@@ -63,11 +64,11 @@ export default function EmojiPicker({ mid, hidePicker }) {
 
           return (
             <li
-              className={`emoji ${reacted ? "reacted" : ""}`}
+              className={`wrapper ${reacted ? "reacted" : ""}`}
               key={emoji}
               onClick={handleReact.bind(null, emoji)}
             >
-              <Emoji native={emoji} size={24} />
+              <Emoji native={emoji} />
             </li>
           );
         })}

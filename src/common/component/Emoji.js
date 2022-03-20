@@ -1,11 +1,25 @@
-import { getEmojiDataFromNative, Emoji } from "emoji-mart";
-import data from "emoji-mart/data/all.json";
+import EmojiThumbUp from "../../assets/icons/emoji.thumb.up.svg";
+import EmojiThumbDown from "../../assets/icons/emoji.thumb.down.svg";
+import EmojiSmile from "../../assets/icons/emoji.smile.svg";
+import EmojiCelebrate from "../../assets/icons/emoji.celebrate.svg";
+import EmojiUnhappy from "../../assets/icons/emoji.unhappy.svg";
+import EmojiHeart from "../../assets/icons/emoji.heart.svg";
+import EmojiRocket from "../../assets/icons/emoji.rocket.svg";
+import EmojiLook from "../../assets/icons/emoji.look.svg";
 
-export default function EmojiItem({ native = "", set = "twitter", size = 16 }) {
-  if (!native) return null;
+const Emojis = {
+  "👍": <EmojiThumbUp className="emoji" />,
+  "👎": <EmojiThumbDown className="emoji" />,
+  "😄": <EmojiSmile className="emoji" />,
+  "👀": <EmojiLook className="emoji" />,
+  "🚀": <EmojiRocket className="emoji" />,
+  "❤️": <EmojiHeart className="emoji" />,
+  "🙁": <EmojiUnhappy className="emoji" />,
+  "🎉": <EmojiCelebrate className="emoji" />,
+};
 
-  const emojiData = getEmojiDataFromNative(native, "apple", data);
-  return (
-    <Emoji emoji={emojiData} set={set} skin={emojiData.skin || 1} size={size} />
-  );
+export default function EmojiItem({ native = "" }) {
+  if (!native || !Emojis[native]) return null;
+
+  return Emojis[native];
 }
