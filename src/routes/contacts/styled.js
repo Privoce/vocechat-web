@@ -10,6 +10,8 @@ const StyledWrapper = styled.div`
     box-shadow: inset -1px 0px 0px rgba(0, 0, 0, 0.1);
     .list {
       margin: 12px 8px;
+      overflow: scroll;
+      padding-bottom: 50px;
       > .nav {
         display: flex;
         flex-direction: column;

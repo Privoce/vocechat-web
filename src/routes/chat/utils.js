@@ -3,16 +3,38 @@ import dayjs from "dayjs";
 import { ContentTypes } from "../../app/config";
 import Divider from "../../common/component/Divider";
 import Message from "../../common/component/Message";
-export const getUnreadCount = (mids, messageData) => {
-  if (!mids || !messageData) return 0;
-  let unreads = 0;
-  mids.forEach((id) => {
-    if (messageData[id] && !messageData[id].read) {
-      unreads++;
+function debounce(callback, wait = 2000, immediate = false) {
+  let timeout = null;
+  return function () {
+    const callNow = immediate && !timeout;
+    const next = () => callback.apply(this, arguments);
+    clearTimeout(timeout);
+    timeout = setTimeout(next, wait);
+    if (callNow) {
+      next();
     }
+  };
+}
+export function getUnreadCount({
+  mids = [],
+  messageData = {},
+  loginUid = 0,
+  readIndex = 0,
+}) {
+  console.log({ mids, loginUid, readIndex });
+  // 先过滤掉from自己的
+  const others = mids.filter((mid) => {
+    const { from_uid } = messageData[mid];
+    return from_uid != loginUid;
   });
-  return unreads;
-};
+  if (others.length == 0) return 0;
+  if (readIndex == 0) return others.length;
+  // 再过滤掉大于read-index，
+  const final = others.filter((mid) => {
+    return mid > readIndex;
+  });
+  return final.length;
+}
 export const renderPreviewMessage = (message = null) => {
   if (!message) return null;
   const { content_type, content } = message;
@@ -52,7 +74,6 @@ export const renderMessageFragment = ({
   prev = null,
   curr = null,
   contextId = 0,
-  read = true,
   context = "user",
 }) => {
   if (!curr) return null;
@@ -71,13 +92,7 @@ export const renderMessageFragment = ({
   return (
     <React.Fragment key={mid}>
       {divider && <Divider content={divider}></Divider>}
-      <Message
-        read={read}
-        context={context}
-        mid={mid}
-        key={mid}
-        contextId={contextId}
-      />
+      <Message context={context} mid={mid} key={mid} contextId={contextId} />
     </React.Fragment>
   );
 };

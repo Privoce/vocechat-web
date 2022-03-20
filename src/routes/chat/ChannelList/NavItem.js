@@ -2,6 +2,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useDrop } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
 import { useDispatch, useSelector } from "react-redux";
+// import { useDebounce} from "rooks";
 import { toggleChannelSetting } from "../../../app/slices/ui";
 import ChannelIcon from "../../../common/component/ChannelIcon";
 import { getUnreadCount } from "../utils";
@@ -9,13 +10,18 @@ import { getUnreadCount } from "../utils";
 const NavItem = ({ id, setFiles, contextMenuEventHandler }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { channel, mids, messageData } = useSelector((store) => {
-    return {
-      channel: store.channels.byId[id],
-      mids: store.channelMessage[id],
-      messageData: store.message,
-    };
-  });
+  // const getUnreadCountDebounced=useDebounce(getUnreadCount,300)
+  const { channel, mids, messageData, readIndex, loginUid } = useSelector(
+    (store) => {
+      return {
+        channel: store.channels.byId[id],
+        mids: store.channelMessage[id],
+        messageData: store.message,
+        loginUid: store.authData.uid,
+        readIndex: store.footprint.readChannels[id],
+      };
+    }
+  );
   const handleChannelSetting = (evt) => {
     evt.preventDefault();
     evt.stopPropagation();
@@ -39,7 +45,7 @@ const NavItem = ({ id, setFiles, contextMenuEventHandler }) => {
     }),
   }));
   const { is_public, name } = channel;
-  const unreads = getUnreadCount(mids, messageData);
+  const unreads = getUnreadCount({ mids, messageData, readIndex, loginUid });
   return (
     <NavLink
       data-cid={id}

@@ -83,10 +83,8 @@ export default function Contact({
         content={<Profile uid={uid} type="card" />}
       >
         <div className="avatar">
-          <Avatar url={curr?.avatar} name={curr?.name} alt="avatar" />
-          <div
-            className={`status ${curr?.online ? "online" : "offline"}`}
-          ></div>
+          <Avatar url={curr.avatar} name={curr.name} alt="avatar" />
+          <div className={`status ${curr.online ? "online" : "offline"}`}></div>
         </div>
       </Tippy>
       {!compact && <span className="name">{curr?.name}</span>}

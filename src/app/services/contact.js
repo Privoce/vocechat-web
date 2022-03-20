@@ -73,9 +73,10 @@ export const contactApi = createApi({
       }),
     }),
     sendMsg: builder.mutation({
-      query: ({ id, content, type = "text" }) => ({
+      query: ({ id, content, type = "text", properties = "" }) => ({
         headers: {
           "content-type": ContentTypes[type],
+          "X-Properties": properties,
         },
         url: `user/${id}/send`,
         method: "POST",

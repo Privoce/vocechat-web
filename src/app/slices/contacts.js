@@ -50,7 +50,10 @@ const contactsSlice = createSlice({
           case "create":
             {
               state.byId[uid] = { uid, ...rest };
-              state.ids.push(uid);
+              const idx = state.ids.findIndex((i) => i == uid);
+              if (idx == -1) {
+                state.ids.push(uid);
+              }
             }
             break;
           case "delete":

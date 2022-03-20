@@ -11,7 +11,7 @@ export default async function handler({ operation, data, payload }) {
         const contacts = payload;
         await Promise.all(
           contacts.map(({ uid, ...rest }) => {
-            return table.setItem(uid, { uid, ...rest });
+            return table.setItem(uid + "", { uid, ...rest });
           })
         );
       }

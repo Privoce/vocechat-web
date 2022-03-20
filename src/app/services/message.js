@@ -1,5 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { batch } from "react-redux";
+// import { batch } from "react-redux";
 
 import { ContentTypes } from "../config";
 import { updateReadChannels, updateReadUsers } from "../slices/footprint";
@@ -57,27 +57,31 @@ export const messageApi = createApi({
         method: "POST",
         body: data,
       }),
-      async onQueryStarted(data, { dispatch, getState, queryFulfilled }) {
-        const { users = [], groups = [] } = data;
-        const { readUsers, readChannels } = getState().footprint.readUsers;
-        const prevUsers = users.map(({ uid }) => {
-          return { uid, mid: readUsers[uid] };
-        });
-        const prevChannels = users.map(({ gid }) => {
-          return { gid, mid: readChannels[gid] };
-        });
-        batch(() => {
-          dispatch(updateReadChannels(groups));
+      async onQueryStarted(data, { dispatch, queryFulfilled }) {
+        const { users = null, groups = null } = data;
+        // const { readUsers, readChannels } = getState().footprint;
+        // const prevUsers = users.map(({ uid }) => {
+        //   return { uid, mid: readUsers[uid] };
+        // });
+        // const prevChannels = users.map(({ gid }) => {
+        //   return { gid, mid: readChannels[gid] };
+        // });
+        // batch(() => {
+        if (users) {
           dispatch(updateReadUsers(users));
-        });
+        }
+        if (groups) {
+          dispatch(updateReadChannels(groups));
+        }
+        // });
         try {
           await queryFulfilled;
         } catch {
           // todo
-          batch(() => {
-            dispatch(updateReadChannels(prevChannels));
-            dispatch(updateReadUsers(prevUsers));
-          });
+          // batch(() => {
+          //   dispatch(updateReadChannels(prevChannels));
+          //   dispatch(updateReadUsers(prevUsers));
+          // });
         }
       },
     }),

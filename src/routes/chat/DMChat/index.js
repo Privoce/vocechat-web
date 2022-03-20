@@ -13,12 +13,11 @@ export default function DMChat({ uid = "", dropFiles = [] }) {
   console.log("dm files", dropFiles);
   const [dragFiles, setDragFiles] = useState([]);
   // const [mids, setMids] = useState([]);
-  const { msgIds, currUser, messageData, readUsers } = useSelector((store) => {
+  const { msgIds, currUser, messageData } = useSelector((store) => {
     return {
       currUser: store.contacts.byId[uid],
       msgIds: store.userMessage.byId[uid] || [],
       messageData: store.message,
-      readUsers: store.footprint.readUser || {},
     };
   });
   const ref = useChatScroll(msgIds);
@@ -33,7 +32,6 @@ export default function DMChat({ uid = "", dropFiles = [] }) {
 
   if (!currUser) return null;
   // console.log("user msgs", msgs);
-  const readIndex = readUsers[uid] || 0;
   return (
     <Layout
       setDragFiles={setDragFiles}
@@ -62,14 +60,11 @@ export default function DMChat({ uid = "", dropFiles = [] }) {
             })
             .map((mid, idx) => {
               const curr = messageData[mid];
-              const self = curr.from_uid == currUser.uid;
-              const read = self ? true : mid <= readIndex ? true : false;
               const prev = idx == 0 ? null : messageData[msgIds[idx - 1]];
               return renderMessageFragment({
                 prev,
                 curr,
                 contextId: uid,
-                read,
                 context: "user",
               });
             })}

@@ -16,16 +16,14 @@ import ChannelList from "./ChannelList";
 import ContactsModal from "../../common/component/ContactsModal";
 import ChannelModal from "../../common/component/ChannelModal";
 import DMList from "./DMList";
-import { getUnreadCount } from "./utils";
 
 export default function ChatPage() {
   const [channelDropFiles, setChannelDropFiles] = useState([]);
   const [userDropFiles, setUserDropFiles] = useState([]);
-  const { contactsData, UserMsgData, messageData } = useSelector((store) => {
+  const { contactsData, sessionUids } = useSelector((store) => {
     return {
       contactsData: store.contacts.byId,
-      UserMsgData: store.userMessage,
-      messageData: store.message,
+      sessionUids: store.userMessage.ids,
     };
   });
   const [channelModalVisible, setChannelModalVisible] = useState(false);
@@ -43,10 +41,6 @@ export default function ChatPage() {
     listEle.classList.toggle("collapse");
   };
   const tmpSessionUser = contactsData[user_id];
-  const sessions = UserMsgData.ids.map((uid) => {
-    const unreads = getUnreadCount(UserMsgData.byId[uid], messageData);
-    return { uid, unreads, lastMid: [...UserMsgData.byId[uid]].pop() };
-  });
   return (
     <>
       {channelModalVisible && (
@@ -95,8 +89,8 @@ export default function ChatPage() {
               />
             </h3>
             <nav className="nav">
-              <DMList sessions={sessions} setDropFiles={setUserDropFiles} />
-              {user_id && UserMsgData.ids.findIndex((i) => i == user_id) == -1 && (
+              <DMList uids={sessionUids} setDropFiles={setUserDropFiles} />
+              {user_id && sessionUids.findIndex((i) => i == user_id) == -1 && (
                 <NavLink className="session" to={`/chat/dm/${user_id}`}>
                   <Contact
                     compact
@@ -112,7 +106,6 @@ export default function ChatPage() {
 
                     <div className="down">
                       <div className="msg"></div>
-                      {/* <i className="badge">3</i> */}
                     </div>
                   </div>
                 </NavLink>
@@ -123,11 +116,7 @@ export default function ChatPage() {
         </div>
         <div className="right">
           {channel_id && (
-            <ChannelChat
-              unreads={getUnreadCount(channel_id)}
-              cid={channel_id}
-              dropFiles={channelDropFiles}
-            />
+            <ChannelChat cid={channel_id} dropFiles={channelDropFiles} />
           )}
           {user_id && <DMChat uid={user_id} dropFiles={userDropFiles} />}
         </div>

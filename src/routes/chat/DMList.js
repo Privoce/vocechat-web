@@ -5,7 +5,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import { useDrop } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
 import { useSelector } from "react-redux";
-import { renderPreviewMessage } from "./utils";
+import { renderPreviewMessage, getUnreadCount } from "./utils";
 import Contact from "../../common/component/Contact";
 dayjs.extend(relativeTime);
 const NavItem = ({ uid, mid, unreads, setFiles }) => {
@@ -60,9 +60,32 @@ const NavItem = ({ uid, mid, unreads, setFiles }) => {
     </NavLink>
   );
 };
-export default function DMList({ sessions, setDropFiles }) {
-  return sessions.map(({ uid, lastMid, unreads } = {}) => {
-    if (!uid) return null;
+// mids: ChannelMsgData[channel_id],
+// messageData,
+// readIndex: readChannels[channel_id],
+// loginUid,
+export default function DMList({ uids, setDropFiles }) {
+  const { userMessage, messageData, readUsers, loginUid } = useSelector(
+    (store) => {
+      return {
+        loginUid: store.authData.uid,
+        readUsers: store.footprint.readUsers,
+        contactData: store.contacts.byId,
+        userMessage: store.userMessage.byId,
+        messageData: store.message,
+      };
+    }
+  );
+  const sessions = uids.map((uid) => {
+    const mids = userMessage[uid];
+    const lastMid = [...mids].pop();
+    const readIndex = readUsers[uid];
+    const unreads = getUnreadCount({ mids, readIndex, messageData, loginUid });
+
+    return { lastMid, unreads, uid };
+  });
+
+  return sessions.map(({ lastMid, uid, unreads }) => {
     return (
       <NavItem
         key={uid}

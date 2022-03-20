@@ -54,11 +54,13 @@ export default function usePreload() {
       getServer();
     }
   }, [rehydrated]);
+  const canStreaming =
+    contactsSuccess && rehydrated && !initializing && !streaming;
   useEffect(() => {
-    if (rehydrated && !initializing && !streaming) {
+    if (canStreaming) {
       request = startStreaming(store);
     }
-  }, [rehydrated, store, streaming, initializing]);
+  }, [canStreaming]);
 
   // console.log("loading", contactsLoading, serverLoading, !checked);
   return {

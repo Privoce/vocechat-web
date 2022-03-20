@@ -1,4 +1,4 @@
-// import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 // import toast from "react-hot-toast";
 // import { useNavigate } from "react-router-dom";
@@ -23,37 +23,37 @@ export default function UploadModal({
     { isLoading: channelSending },
   ] = useSendChannelMsgMutation();
   const [sendUserMsg, { isLoading: userSending }] = useSendMsgMutation();
-  // const [properties, setProperties] = useState([]);
-  // useEffect(() => {
-  //   files.forEach((file, idx) => {
-  //     const { name, size, type } = file;
-  //     setProperties((prevs) => {
-  //       prevs[idx] = { name, size, type };
-  //       return prevs;
-  //     });
-  //     var fileReader = new FileReader();
-  //     fileReader.onloadend = (e) => {
-  //       let dataUrl = e.target.result;
-  //       let tmp = new Image();
-  //       tmp.src = dataUrl;
-  //       tmp.onload = function () {
-  //         console.log("image load", this.width, this.height);
-  //         setProperties((prevs) => {
-  //           prevs[idx].width = this.width;
-  //           prevs[idx].height = this.height;
-  //           return prevs;
-  //         });
-  //       };
-  //     };
-  //     fileReader.readAsDataURL(file);
-  //   });
-  // }, [files]);
+  const [properties, setProperties] = useState([]);
+  useEffect(() => {
+    files.forEach((file, idx) => {
+      const { name, size, type } = file;
+      setProperties((prevs) => {
+        prevs[idx] = { name, size, type };
+        return prevs;
+      });
+      // var fileReader = new FileReader();
+      // fileReader.onloadend = (e) => {
+      //   let dataUrl = e.target.result;
+      //   let tmp = new Image();
+      //   tmp.src = dataUrl;
+      //   tmp.onload = function () {
+      //     console.log("image load", this.width, this.height);
+      //     setProperties((prevs) => {
+      //       prevs[idx].width = this.width;
+      //       prevs[idx].height = this.height;
+      //       return prevs;
+      //     });
+      //   };
+      // };
+      // fileReader.readAsDataURL(file);
+    });
+  }, [files]);
   const handleUpload = () => {
     const uploadFn = type == "user" ? sendUserMsg : sendChannelMsg;
     uploadFn({
       id: sendTo,
       content: files[0],
-      // properties: properties[0],
+      properties: btoa(JSON.stringify(properties[0])),
       type: "image",
       from_uid,
     });

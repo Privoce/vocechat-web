@@ -1,36 +1,41 @@
 import React, { useRef, useState, useEffect } from "react";
 import dayjs from "dayjs";
-import { useSelector, useDispatch } from "react-redux";
-import { useInViewRef } from "rooks";
+import { useSelector } from "react-redux";
+import { useInViewRef, useDebounce } from "rooks";
 import Tippy from "@tippyjs/react";
 import Reaction from "./Reaction";
 import Reply from "./Reply";
 import Profile from "../Profile";
 import Avatar from "../Avatar";
-import { readMessage } from "../../../app/slices/message";
 import { useReadMessageMutation } from "../../../app/services/message";
 import StyledWrapper from "./styled";
 import Commands from "./Commands";
 
 import EditMessage from "./EditMessage";
 import renderContent from "./renderContent";
-function Message({ contextId = 0, mid = "", read = true, context = "user" }) {
+function Message({ contextId = 0, mid = "", context = "user" }) {
   const [updateReadIndex] = useReadMessageMutation();
+  const updateReadDebounced = useDebounce(updateReadIndex, 300);
   const [myRef, inView] = useInViewRef();
   const [edit, setEdit] = useState(false);
   const [emojiPopVisible, setEmojiPopVisible] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
-  const disptach = useDispatch();
   const avatarRef = useRef(null);
-  const { message = {}, reactionMessageData, contactsData } = useSelector(
-    (store) => {
-      return {
-        reactionMessageData: store.reactionMessage,
-        message: store.message[mid],
-        contactsData: store.contacts.byId,
-      };
-    }
-  );
+  const {
+    footprint,
+    message = {},
+    reactionMessageData,
+    contactsData,
+    loginUid,
+  } = useSelector((store) => {
+    return {
+      footprint: store.footprint,
+      loginUid: store.authData.uid,
+      reactionMessageData: store.reactionMessage,
+      message: store.message[mid] || {},
+      contactsData: store.contacts.byId,
+    };
+  });
   const toggleMenu = () => {
     setMenuVisible((prev) => !prev);
   };
@@ -40,38 +45,35 @@ function Message({ contextId = 0, mid = "", read = true, context = "user" }) {
   const toggleEmojiPopover = () => {
     setEmojiPopVisible((prev) => !prev);
   };
-  // useEffect(() => {
-  //   if (!read) {
-  //     avatarRef.current?.scrollIntoView();
-  //   }
-  // }, [read]);
 
-  // console.log("message", mid, messageData[mid]);
-
-  useEffect(() => {
-    if (inView && !read) {
-      disptach(readMessage(mid));
-      const data =
-        context == "user"
-          ? { users: [{ uid: +contextId, mid }] }
-          : { groups: [{ gid: +contextId, mid }] };
-      updateReadIndex(data);
-    }
-  }, [mid, read, inView]);
-  if (!message) return null;
   const {
     reply_mid,
     from_uid: fromUid,
     created_at: time,
-    sending,
+    sending = false,
     content,
     thumbnail,
     content_type = "text/plain",
     edited,
     properties,
   } = message;
+  const readIndex =
+    context == "user"
+      ? footprint.readUsers[contextId]
+      : footprint.readChannels[contextId];
+  useEffect(() => {
+    const read = fromUid == loginUid || mid <= readIndex;
+    if (inView && !read) {
+      const data =
+        context == "user"
+          ? { users: [{ uid: +contextId, mid }] }
+          : { groups: [{ gid: +contextId, mid }] };
+      updateReadDebounced(data);
+    }
+  }, [mid, readIndex, inView, fromUid, loginUid]);
   const reactions = reactionMessageData[mid];
   const currUser = contactsData[fromUid] || {};
+  // if (!message) return null;
   return (
     <StyledWrapper
       data-mid={mid}

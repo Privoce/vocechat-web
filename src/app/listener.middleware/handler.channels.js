@@ -11,7 +11,7 @@ export default async function handler({ operation, data, payload }) {
         const chs = payload;
         await Promise.all(
           chs.map(({ gid, ...rest }) => {
-            return table.setItem(gid, { gid, ...rest });
+            return table.setItem(gid + "", { gid, ...rest });
           })
         );
       }
