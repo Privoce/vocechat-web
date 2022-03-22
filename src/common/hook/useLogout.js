@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useDispatch, batch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { resetAuthData } from "../../app/slices/auth.data";
 import { resetFootprint } from "../../app/slices/footprint";
 import { resetChannels } from "../../app/slices/channels";
@@ -12,7 +11,6 @@ import { resetMessage } from "../../app/slices/message";
 import { useLazyLogoutQuery } from "../../app/services/auth";
 export default function useLogout() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [logout, { isLoading, isSuccess }] = useLazyLogoutQuery();
   const clearLocalData = () => {
     batch(() => {
@@ -29,7 +27,6 @@ export default function useLogout() {
   useEffect(() => {
     if (isSuccess) {
       dispatch(resetAuthData());
-      navigate("/login");
     }
   }, [isSuccess]);
 

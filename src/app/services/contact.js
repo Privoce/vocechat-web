@@ -32,7 +32,6 @@ export const contactApi = createApi({
             // 用户已注销或被禁用
             console.log("no matched user, redirect to login");
             dispatch(resetAuthData());
-            // navigate("/login");
           } else {
             const markedContacts = contacts.map((u) => {
               return u.uid == matchedUser.uid ? { ...u, online: true } : u;
@@ -76,7 +75,7 @@ export const contactApi = createApi({
       query: ({ id, content, type = "text", properties = "" }) => ({
         headers: {
           "content-type": ContentTypes[type],
-          "X-Properties": properties,
+          "X-Properties": properties ? btoa(JSON.stringify(properties)) : "",
         },
         url: `user/${id}/send`,
         method: "POST",

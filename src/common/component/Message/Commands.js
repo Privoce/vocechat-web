@@ -1,8 +1,9 @@
 import { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import Tippy from "@tippyjs/react";
+import { hideAll } from "tippy.js";
 // import toast from "react-hot-toast";
-import { useOutsideClick } from "rooks";
 import { addReplyingMessage } from "../../../app/slices/message";
 import StyledMenu from "../StyledMenu";
 import DeleteMessageConfirm from "./DeleteMessageConfirm";
@@ -54,69 +55,81 @@ export default function Commands({
   contextId = 0,
   mid = 0,
   from_uid = 0,
-  menuVisible,
-  toggleMenu,
-  emojiPopVisible,
-  toggleEmojiPopover,
   toggleEditMessage,
 }) {
   const dispatch = useDispatch();
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
-
+  const [tippyVisible, setTippyVisible] = useState(false);
   const currUid = useSelector((store) => store.authData.uid);
-  const menuRef = useRef(null);
-
-  const handleReply = (fromMenu = false) => {
+  const cmdsRef = useRef(null);
+  const handleReply = (fromMenu) => {
     if (contextId) {
       dispatch(addReplyingMessage({ id: contextId, mid }));
     }
     if (fromMenu) {
-      toggleMenu();
+      hideAll();
     }
-    // toast.success("cooming soon");
   };
 
-  useOutsideClick(menuRef, toggleMenu);
   const toggleDeleteModal = () => {
+    hideAll();
     setDeleteModalVisible((prev) => !prev);
   };
-  const alwaysVisible = menuVisible || emojiPopVisible;
+  const handleTippyVisible = (visible = true) => {
+    setTippyVisible(visible);
+  };
   return (
-    <StyledCmds className={`cmds ${alwaysVisible ? "visible" : ""}`}>
-      <li className="cmd" onClick={toggleEmojiPopover}>
-        <img src={reactIcon} alt="icon emoji" />
-      </li>
-      {emojiPopVisible && (
-        <div className="picker">
-          <EmojiPicker mid={mid} hidePicker={toggleEmojiPopover} />
-        </div>
-      )}
+    <StyledCmds
+      ref={cmdsRef}
+      className={`cmds ${tippyVisible ? "visible" : ""}`}
+    >
+      <Tippy
+        onShow={handleTippyVisible.bind(null, true)}
+        onHide={handleTippyVisible.bind(null, false)}
+        interactive
+        placement="left-start"
+        trigger="click"
+        content={<EmojiPicker mid={mid} hidePicker={hideAll} />}
+      >
+        <li className="cmd">
+          <img src={reactIcon} className="toggler" alt="icon emoji" />
+        </li>
+      </Tippy>
       {currUid == from_uid ? (
         <li className="cmd" onClick={toggleEditMessage}>
           <img src={editIcon} alt="icon edit" />
         </li>
       ) : (
-        <li className="cmd" onClick={handleReply.bind(null, false)}>
+        <li className="cmd" onClick={handleReply}>
           <img src={replyIcon} alt="icon reply" />
         </li>
       )}
-      <li className="cmd" onClick={toggleMenu}>
-        <img src={moreIcon} alt="icon emoji" />
-      </li>
-      {menuVisible && (
-        <StyledMenu className="menu" ref={menuRef}>
-          {/* <li className="item">Edit Message</li> */}
-          <li className="item underline">Pin Message</li>
-          <li className="item" onClick={handleReply.bind(null, true)}>
-            Reply
-          </li>
-          {currUid == from_uid && (
-            <li className="item danger" onClick={toggleDeleteModal}>
-              Delete Message
+      <Tippy
+        onShow={handleTippyVisible.bind(null, true)}
+        onHide={handleTippyVisible.bind(null, false)}
+        interactive
+        placement="right-start"
+        trigger="click"
+        content={
+          <StyledMenu className="menu">
+            {/* <li className="item">Edit Message</li> */}
+            <li className="item underline">Pin Message</li>
+            <li className="item" onClick={handleReply.bind(null, true)}>
+              Reply
             </li>
-          )}
-        </StyledMenu>
-      )}
+            {currUid == from_uid && (
+              <li className="item danger" onClick={toggleDeleteModal}>
+                Delete Message
+              </li>
+            )}
+          </StyledMenu>
+        }
+      >
+        <li className="cmd">
+          <img src={moreIcon} alt="icon more" />
+        </li>
+      </Tippy>
+
       {deleteModalVisible && (
         <DeleteMessageConfirm closeModal={toggleDeleteModal} mid={mid} />
       )}

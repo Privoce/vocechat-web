@@ -26,9 +26,9 @@ const StyledWrapper = styled.div`
       display: flex;
       flex-direction: column;
       gap: 4px;
+      white-space: nowrap;
       .title {
         font-weight: bold;
-        white-space: nowrap;
         font-size: 14px;
         line-height: 100%;
         color: #374151;

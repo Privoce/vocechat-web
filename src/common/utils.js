@@ -16,11 +16,20 @@ export const getNonNullValues = (obj, whiteList = ["log_id"]) => {
   });
   return tmp;
 };
-export function getDefaultSize(size = null, width = 240) {
+export function getDefaultSize(size = null, min = 240) {
   if (!size) return { width: 0, height: 0 };
   const { width: oWidth, height: oHeight } = size;
-  const dWidth = oWidth >= width ? width : oWidth;
-  const dHeight = (oHeight / oWidth) * dWidth;
+  const isVertical = oWidth > oHeight ? false : true;
+  let dWidth = 0;
+  let dHeight = 0;
+  if (isVertical) {
+    dHeight = oHeight >= min ? min : oHeight;
+    dWidth = (oWidth / oHeight) * dHeight;
+  } else {
+    dWidth = oWidth >= min ? min : oWidth;
+    //  dHeight = oHeight >= min ? min : oHeight;
+    dHeight = (oHeight / oWidth) * dWidth;
+  }
   return { width: dWidth, height: dHeight };
 }
 export function formatBytes(bytes, decimals = 2) {

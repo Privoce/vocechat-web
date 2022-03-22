@@ -1,8 +1,9 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDrop } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
 import { useDispatch, useSelector } from "react-redux";
 // import { useDebounce} from "rooks";
+import StyledLink from "./styled";
 import { toggleChannelSetting } from "../../../app/slices/ui";
 import ChannelIcon from "../../../common/component/ChannelIcon";
 import { getUnreadCount } from "../utils";
@@ -47,7 +48,7 @@ const NavItem = ({ id, setFiles, contextMenuEventHandler }) => {
   const { is_public, name } = channel;
   const unreads = getUnreadCount({ mids, messageData, readIndex, loginUid });
   return (
-    <NavLink
+    <StyledLink
       data-cid={id}
       onContextMenu={(evt) => {
         contextMenuEventHandler(evt, id);
@@ -57,10 +58,10 @@ const NavItem = ({ id, setFiles, contextMenuEventHandler }) => {
       className={`link ${isActive ? "drop_over" : ""}`}
       to={`/chat/channel/${id}`}
     >
-      <span className="txt">
+      <div className="name" title={name}>
         <ChannelIcon personal={!is_public} />
-        {name}
-      </span>
+        <span className={`txt ${unreads == 0 ? "read" : ""}`}>{name}</span>
+      </div>
       <div className="icons">
         <i className="setting" onClick={handleChannelSetting}></i>
         {unreads > 0 && (
@@ -69,7 +70,7 @@ const NavItem = ({ id, setFiles, contextMenuEventHandler }) => {
           </i>
         )}
       </div>
-    </NavLink>
+    </StyledLink>
   );
 };
 

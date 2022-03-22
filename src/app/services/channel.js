@@ -78,7 +78,7 @@ export const channelApi = createApi({
       query: ({ id, content, type = "text", properties = "" }) => ({
         headers: {
           "content-type": ContentTypes[type],
-          "X-Properties": properties,
+          "X-Properties": properties ? btoa(JSON.stringify(properties)) : "",
         },
         url: `group/${id}/send`,
         method: "POST",
@@ -95,6 +95,13 @@ export const channelApi = createApi({
         body: members,
       }),
     }),
+    removeMembers: builder.mutation({
+      query: ({ id, members }) => ({
+        url: `group/${id}/members/remove`,
+        method: "POST",
+        body: members,
+      }),
+    }),
   }),
 });
 
@@ -106,4 +113,5 @@ export const {
   useCreateChannelMutation,
   useSendChannelMsgMutation,
   useAddMembersMutation,
+  useRemoveMembersMutation,
 } = channelApi;

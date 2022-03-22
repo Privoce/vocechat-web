@@ -11,6 +11,7 @@ const StyledInput = styled.input`
   color: #333;
   padding: 8px;
   &.none {
+    outline: none;
     border: none;
     background: none;
     box-shadow: none;

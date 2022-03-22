@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { toggleMenuExpand } from "../../app/slices/ui";
 import StyledWrapper from "./styled";
 import ServerDropList from "./ServerDropList";
-import Tools from "./Tools";
+// import Tools from "./Tools";
 import Loading from "./Loading";
 import Menu from "./Menu";
 import usePreload from "./usePreload";
@@ -60,7 +60,7 @@ export default function HomePage() {
             </NavLink>
           </nav>
           <div className="divider"></div>
-          <Tools expand={menuExpand} />
+          {/* <Tools expand={menuExpand} /> */}
           <Menu toggle={toggleExpand} expand={menuExpand} />
           {/* <CurrentUser expand={menuExpand} /> */}
         </div>

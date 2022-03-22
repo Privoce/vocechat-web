@@ -1,6 +1,8 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import Tippy from "@tippyjs/react";
+import { hideAll } from "tippy.js";
 import Emoji from "../Emoji";
 import EmojiPicker from "./EmojiPicker";
 import { useReactMessageMutation } from "../../../app/services/message";
@@ -60,18 +62,11 @@ const StyledWrapper = styled.span`
       background-color: #cff9fe;
     }
   }
-  .picker {
-    position: absolute;
-    right: 0;
-    top: 0;
-    transform: translateX(105%);
-  }
   &:hover > .add {
     visibility: visible;
   }
 `;
 export default function Reaction({ mid, reactions = null }) {
-  const [pickerVisible, setPickerVisible] = useState(false);
   const [reactWithEmoji] = useReactMessageMutation();
   const { currUid } = useSelector((store) => {
     return {
@@ -80,10 +75,6 @@ export default function Reaction({ mid, reactions = null }) {
   });
   const handleReact = (emoji) => {
     reactWithEmoji({ mid, action: emoji });
-  };
-  const togglePickerVisible = (wtf) => {
-    console.log("clicked", wtf);
-    setPickerVisible((prev) => !prev);
   };
   console.log("curr reactions", reactions);
   if (!reactions || Object.entries(reactions).length == 0) return null;
@@ -108,12 +99,14 @@ export default function Reaction({ mid, reactions = null }) {
           </span>
         ) : null;
       })}
-      <button onClick={togglePickerVisible} className="add"></button>
-      {pickerVisible && (
-        <div className="picker">
-          <EmojiPicker mid={mid} hidePicker={togglePickerVisible} />
-        </div>
-      )}
+      <Tippy
+        interactive
+        placement="right-start"
+        trigger="click"
+        content={<EmojiPicker mid={mid} hidePicker={hideAll} />}
+      >
+        <button className="add"></button>
+      </Tippy>
     </StyledWrapper>
   );
 }

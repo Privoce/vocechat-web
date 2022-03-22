@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import {
   fetchEventSource,
   EventStreamContentType,
@@ -6,6 +6,7 @@ import {
 import toast from "react-hot-toast";
 import BASE_URL from "../../../app/config";
 import { setReady } from "../../../app/slices/ui";
+import { useRenewMutation } from "../../../app/services/auth";
 import {
   fullfillChannels,
   addChannel,
@@ -24,7 +25,7 @@ import {
 import { resetAuthData } from "../../../app/slices/auth.data";
 import chatMessageHandler from "./chat.handler";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 class RetriableError extends Error {}
 class FatalError extends Error {}
 const getQueryString = (params = {}) => {
@@ -42,17 +43,20 @@ const StreamStatus = {
   streaming: "streaming",
 };
 export default function useStreaming() {
-  // const store = useSelector((store) => store);
+  const store = useSelector((store) => store);
+  const [renewToken] = useRenewMutation();
   const dispatch = useDispatch();
   const [status, setStatus] = useState(StreamStatus.waiting);
-  const startStreaming = (store) => {
+  const startStreaming = useCallback(() => {
     if (status !== StreamStatus.waiting) return;
     const controller = new AbortController();
     setStatus(StreamStatus.initializing);
     const {
-      authData: { token },
+      authData: { token, uid: loginUid },
       footprint: { afterMid, usersVersion },
     } = store;
+    console.log("set uid use");
+
     fetchEventSource(
       `${BASE_URL}/user/events?${getQueryString({
         "api-key": token,
@@ -77,8 +81,9 @@ export default function useStreaming() {
           ) {
             // 重新登录
             if (response.status == 401) {
-              dispatch(resetAuthData());
-              return;
+              renewToken();
+              // dispatch(resetAuthData());
+              // return;
             }
             // client-side errors are usually non-retriable:
             throw new FatalError();
@@ -95,7 +100,6 @@ export default function useStreaming() {
           }
           const {
             ui: { ready },
-            authData: { uid: loginUid },
             footprint: { readUsers, readChannels },
             channels: { byId: channelData },
           } = store;
@@ -103,7 +107,7 @@ export default function useStreaming() {
           const { type } = data;
           switch (type) {
             case "heartbeat":
-              console.log("heartbeat");
+              console.log("heartbeat", store, loginUid);
               break;
             case "ready":
               console.log("streaming ready");
@@ -168,12 +172,30 @@ export default function useStreaming() {
               break;
             case "user_joined_group":
               console.log("new user joined group", data.gid);
+              // 去重
               dispatch(
                 updateChannel({
                   id: data.gid,
-                  members: [...channelData[data.gid].members, ...data.uid],
+                  members: [
+                    ...channelData[data.gid].members,
+                    ...data.uid,
+                  ].filter((v, i, a) => a.indexOf(v) === i),
                 })
               );
+              break;
+            case "user_leaved_group":
+              {
+                const { gid, uid: uids } = data;
+                const leftMembers = channelData[gid].members.filter(
+                  (id) => uids.findIndex((uid) => id == uid) == -1
+                );
+                dispatch(
+                  updateChannel({
+                    id: data.gid,
+                    members: [...leftMembers],
+                  })
+                );
+              }
               break;
             case "kick_from_group":
               console.log("kicked from group", data.gid);
@@ -203,7 +225,7 @@ export default function useStreaming() {
           if (err instanceof FatalError) {
             // 重连
             setTimeout(() => {
-              startStreaming(store);
+              startStreaming();
             }, 500);
             throw err; // rethrow to stop the operation
           } else {
@@ -215,7 +237,7 @@ export default function useStreaming() {
     );
     // for controlling
     return controller;
-  };
+  }, [store, status]);
   return {
     initializing: status == StreamStatus.initializing,
     streaming: status == StreamStatus.streaming,

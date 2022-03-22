@@ -53,7 +53,7 @@ export default function UploadModal({
     uploadFn({
       id: sendTo,
       content: files[0],
-      properties: btoa(JSON.stringify(properties[0])),
+      properties: { ...properties[0], local_id: new Date().getTime() },
       type: "image",
       from_uid,
     });

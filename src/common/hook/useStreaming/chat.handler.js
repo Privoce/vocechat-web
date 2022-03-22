@@ -64,9 +64,15 @@ const handler = (data, dispatch, currState) => {
           );
           // 未推送完  or  不是自己发的消息
           console.log("curr state", ready, loginUid, common.from_uid);
-          if (!ready || loginUid != common.from_uid) {
-            dispatch(appendMessage({ id, mid }));
-          }
+          // if (!ready || loginUid != common.from_uid) {
+          dispatch(
+            appendMessage({
+              id,
+              mid,
+              local_id: properties ? properties.local_id : null,
+            })
+          );
+          // }
         });
       }
       break;
@@ -83,9 +89,15 @@ const handler = (data, dispatch, currState) => {
             })
           );
           // 未推送完  or  不是自己发的消息
-          if (!ready || loginUid != common.from_uid) {
-            dispatch(appendMessage({ id, mid }));
-          }
+          // if (!ready || loginUid != common.from_uid) {
+          dispatch(
+            appendMessage({
+              id,
+              mid,
+              local_id: properties ? properties.local_id : null,
+            })
+          );
+          // }
         });
       }
       break;

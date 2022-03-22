@@ -1,10 +1,13 @@
-import { useState, useRef, useEffect } from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
-import { useOutsideClick } from "rooks";
+// import { useOutsideClick } from "rooks";
+import Tippy from "@tippyjs/react";
+import { hideAll } from "tippy.js";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import useCopy from "../hook/useCopy";
 import { useLazyDeleteContactQuery } from "../../app/services/contact";
+import { useRemoveMembersMutation } from "../../app/services/channel";
 import Contact from "./Contact";
 import StyledMenu from "./StyledMenu";
 import InviteLink from "./InviteLink";
@@ -12,7 +15,9 @@ import moreIcon from "../../assets/icons/more.svg?url";
 const StyledWrapper = styled.section`
   display: flex;
   flex-direction: column;
-  width: 512px;
+  width: 100%;
+  height: calc(100vh - 94px);
+  overflow-y: scroll;
   .intro {
     display: flex;
     flex-direction: column;
@@ -34,6 +39,8 @@ const StyledWrapper = styled.section`
     display: flex;
     flex-direction: column;
     gap: 24px;
+    width: 512px;
+    margin-bottom: 176px;
     .member {
       width: 100%;
       display: flex;
@@ -87,38 +94,55 @@ const StyledWrapper = styled.section`
     }
   }
 `;
-export default function ManageMembers({ members = [] }) {
-  const contacts = useSelector((store) => store.contacts);
-  const [copied, copy] = useCopy();
-  const [remove, { isSuccess: removeSuccess }] = useLazyDeleteContactQuery();
-  const wrapperRef = useRef(null);
-  const [menuVisible, setMenuVisible] = useState(null);
-  useOutsideClick(wrapperRef, () => {
-    setMenuVisible(null);
+export default function ManageMembers({ cid = null }) {
+  const { contacts, channels, loginUser } = useSelector((store) => {
+    return {
+      contacts: store.contacts,
+      channels: store.channels,
+      loginUser: store.contacts.byId[store.authData.uid],
+    };
   });
-  const toggleMenu = (evt) => {
-    const { uid } = evt.target.dataset;
-    if (menuVisible == uid) {
-      setMenuVisible(null);
-    } else {
-      setMenuVisible(uid);
-    }
-  };
+  const [copied, copy] = useCopy();
+  const [
+    removeUser,
+    { isSuccess: removeSuccess },
+  ] = useLazyDeleteContactQuery();
+  const [
+    removeMemberFromChannel,
+    { isSuccess: removeMemberSuccess },
+  ] = useRemoveMembersMutation();
+  const remove = cid ? removeMemberFromChannel : removeUser;
   const handleRemoveUser = (uid) => {
-    remove(uid);
+    remove(cid ? { id: cid, members: [+uid] } : uid);
   };
   useEffect(() => {
     if (removeSuccess) {
       toast.success("delete successfully");
     }
   }, [removeSuccess]);
+  useEffect(() => {
+    if (removeMemberSuccess) {
+      toast.success("remove member successfully");
+    }
+  }, [removeMemberSuccess]);
   const handleCopy = (str) => {
     copy(str);
+    // const tippyInstance = tippyRef.current._tippy;
+    setTimeout(() => {
+      console.log("tippy close");
+      hideAll();
+    }, 800);
   };
-  const uids = !members || members.length == 0 ? contacts.ids : members;
+  const channel = channels.byId[cid] ?? null;
+  const uids = channel
+    ? channel.is_public
+      ? contacts.ids
+      : channel.members
+    : contacts.ids;
+
   return (
     <StyledWrapper>
-      <InviteLink />
+      {loginUser?.is_admin && <InviteLink />}
       <div className="intro">
         <h4 className="title">Manage Members</h4>
         <p className="desc">
@@ -140,35 +164,36 @@ export default function ManageMembers({ members = [] }) {
               </div>
               <div className="right">
                 <span className="role">{is_admin ? "Admin" : "User"}</span>
-                <div className="opts">
-                  <img
-                    data-uid={uid}
-                    onClick={toggleMenu}
-                    className="dots"
-                    src={moreIcon}
-                    alt="dots icon"
-                  />
-                  {menuVisible == uid && (
-                    <StyledMenu ref={wrapperRef} className="menu">
+                <Tippy
+                  interactive
+                  placement="right-start"
+                  trigger="click"
+                  content={
+                    <StyledMenu className="menu">
                       <li
                         className="item"
                         onClick={handleCopy.bind(null, email)}
                       >
                         {copied ? "Copied" : `Copy Email`}
                       </li>
-                      <li className="item">Mute</li>
-                      <li className="item underline">Change Nickname</li>
-                      <li className="item danger">Ban</li>
-                      <li
-                        className="item danger"
-                        onClick={handleRemoveUser.bind(null, uid)}
-                        data-uid={uid}
-                      >
-                        Remove
-                      </li>
+                      {/* <li className="item underline">Mute</li> */}
+                      {/* <li className="item underline">Change Nickname</li> */}
+                      {/* <li className="item danger">Ban</li> */}
+                      {loginUser?.is_admin && (
+                        <li
+                          className="item danger"
+                          onClick={handleRemoveUser.bind(null, uid)}
+                        >
+                          Remove
+                        </li>
+                      )}
                     </StyledMenu>
-                  )}
-                </div>
+                  }
+                >
+                  <div className="opts">
+                    <img className="dots" src={moreIcon} alt="dots icon" />
+                  </div>
+                </Tippy>
               </div>
             </li>
           );

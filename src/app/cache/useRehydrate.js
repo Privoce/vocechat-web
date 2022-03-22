@@ -30,10 +30,14 @@ const useRehydrate = () => {
           // console.log("iterated", key);
           switch (_key) {
             case "channels":
-              rehydrateData.channels.push(data);
+              if (data) {
+                rehydrateData.channels.push(data);
+              }
               break;
             case "contacts":
-              rehydrateData.contacts.push(data);
+              if (data) {
+                rehydrateData.contacts.push(data);
+              }
               break;
             case "footprint":
               rehydrateData.footprint[key] = data;

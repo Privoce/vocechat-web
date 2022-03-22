@@ -12,9 +12,12 @@ const channelMsgSlice = createSlice({
       return action.payload;
     },
     addChannelMsg(state, action) {
-      const { id, mid } = action.payload;
+      const { id, mid, local_id = null } = action.payload;
       if (state[id]) {
-        if (state[id].findIndex((id) => id == mid) > -1) return;
+        const midExsited = state[id].findIndex((id) => id == mid) > -1;
+        const localMsgExsited =
+          state[id].findIndex((id) => id == local_id) > -1;
+        if (midExsited || localMsgExsited) return;
         state[id].push(+mid);
       } else {
         state[id] = [+mid];
@@ -24,7 +27,10 @@ const channelMsgSlice = createSlice({
       const { id, mid } = action.payload;
       if (state[id]) {
         const idx = state[id].findIndex((i) => i == mid);
-        state[id].splice(idx, 1);
+        if (idx > -1) {
+          // 存在 则再删除
+          state[id].splice(idx, 1);
+        }
       }
     },
     removeChannelSession(state, action) {

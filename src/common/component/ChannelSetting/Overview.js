@@ -10,6 +10,7 @@ import Label from "../styled/Label";
 import Textarea from "../styled/Textarea";
 import SaveTip from "../SaveTip";
 import channelIcon from "../../../assets/icons/channel.svg?url";
+import { useSelector } from "react-redux";
 const StyledWrapper = styled.div`
   position: relative;
   width: 512px;
@@ -30,7 +31,7 @@ const StyledWrapper = styled.div`
       gap: 8px;
       .name {
         padding-left: 36px;
-        background: url(${channelIcon});
+        background-image: url(${channelIcon});
         background-size: 20px;
         background-position-x: 8px;
         background-position-y: 8px;
@@ -40,6 +41,9 @@ const StyledWrapper = styled.div`
   }
 `;
 export default function Overview({ id = 0 }) {
+  const loginUser = useSelector(
+    (store) => store.contacts.byId[store.authData.uid]
+  );
   const { data, refetch } = useGetChannelQuery(id);
   const [changed, setChanged] = useState(false);
   const [values, setValues] = useState(null);
@@ -85,12 +89,14 @@ export default function Overview({ id = 0 }) {
 
   if (!values || !id) return null;
   const { name, description } = values;
+  const isAdmin = loginUser.is_admin;
   return (
     <StyledWrapper>
       <div className="inputs">
         <div className="input">
           <Label htmlFor="name">Channel Name</Label>
           <Input
+            disabled={!isAdmin}
             className="name"
             data-type="name"
             onChange={handleChange}
@@ -103,6 +109,7 @@ export default function Overview({ id = 0 }) {
         <div className="input">
           <Label htmlFor="desc">Channel Topic</Label>
           <Textarea
+            disabled={!isAdmin}
             data-type="description"
             onChange={handleChange}
             value={description ?? ""}

@@ -85,7 +85,7 @@ export default function StyledSettingContainer({
   };
   return (
     <Modal>
-      <StyledWrapper className="animate__animated animate__fadeInUp animate__faster">
+      <StyledWrapper>
         <div className="left">
           <h2 onClick={closeModal} className="title">
             {title}

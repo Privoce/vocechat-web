@@ -96,7 +96,12 @@ export default function Send({
       });
       dispatch(removeReplyingMessage(id));
     } else {
-      sendMessage({ id, content: msg, from_uid });
+      sendMessage({
+        id,
+        content: msg,
+        from_uid,
+        properties: { local_id: new Date().getTime() },
+      });
     }
     setMsg("");
   };
@@ -106,6 +111,7 @@ export default function Send({
       id,
       content: markdown,
       from_uid,
+      properties: { local_id: new Date().getTime() },
       type: "markdown",
     });
     setMarkdown("");

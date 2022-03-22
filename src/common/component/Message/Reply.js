@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { ContentTypes } from "../../../app/config";
 import Avatar from "../Avatar";
 const Styled = styled.div`
+  cursor: pointer;
   display: flex;
   align-items: center;
   padding: 16px;
@@ -68,7 +69,7 @@ export default function Reply({ mid }) {
   const currUser = users[data.from_uid];
   if (!currUser) return null;
   return (
-    <Styled className="reply">
+    <Styled data-mid={mid} className="reply">
       <div className="user">
         <Avatar className="avatar" url={currUser.avatar} name={currUser.name} />
         <span className="name">{currUser.name}</span>

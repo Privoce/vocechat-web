@@ -19,9 +19,6 @@ const StyledMsg = styled.div`
       visibility: visible;
     }
   }
-  &.menu {
-    z-index: 9;
-  }
   .avatar {
     cursor: pointer;
     img {

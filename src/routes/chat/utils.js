@@ -24,7 +24,7 @@ export function getUnreadCount({
   console.log({ mids, loginUid, readIndex });
   // 先过滤掉from自己的
   const others = mids.filter((mid) => {
-    const { from_uid } = messageData[mid];
+    const { from_uid = 0 } = messageData[mid] || {};
     return from_uid != loginUid;
   });
   if (others.length == 0) return 0;

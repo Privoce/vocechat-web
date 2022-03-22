@@ -48,6 +48,7 @@ const authDataSlice = createSlice({
     setUid(state, action) {
       const uid = action.payload;
       state.uid = uid;
+      console.log("set uid orginal");
     },
     updateToken(state, action) {
       const { token, refresh_token, expired_in } = action.payload;

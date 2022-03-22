@@ -1,25 +1,25 @@
-// import Picker from "../EmojiPicker";
-import { useRef } from "react";
 import styled from "styled-components";
-import { useOutsideClick } from "rooks";
 import { useSelector } from "react-redux";
+
 import { useReactMessageMutation } from "../../../app/services/message";
 import { Emojis } from "../../../app/config";
 import Emoji from "../Emoji";
 const StyledPicker = styled.div`
-  background-color: #fff;
+  background: none;
+  z-index: 999;
   .emojis {
     padding: 4px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 8px;
-    background: #ffffff;
+    background: #fff;
     filter: drop-shadow(0px 25px 50px rgba(31, 41, 55, 0.25));
     border-radius: 12px;
     &.reacting {
       opacity: 0.6;
     }
     .wrapper {
+      display: flex;
       cursor: pointer;
       border-radius: 8px;
       padding: 4px;
@@ -36,7 +36,7 @@ const StyledPicker = styled.div`
 `;
 
 export default function EmojiPicker({ mid, hidePicker }) {
-  const wrapperRef = useRef(null);
+  // const wrapperRef = useRef(null);
   const [reactMessage, { isLoading }] = useReactMessageMutation();
   const { reactionData, currUid } = useSelector((store) => {
     return {
@@ -44,18 +44,14 @@ export default function EmojiPicker({ mid, hidePicker }) {
       currUid: store.authData.uid,
     };
   });
-  useOutsideClick(wrapperRef, hidePicker);
+  // useOutsideClick(wrapperRef, hidePicker);
   const handleReact = (emoji) => {
     console.log("react", emoji);
     reactMessage({ mid, action: emoji });
     hidePicker();
   };
   return (
-    <StyledPicker ref={wrapperRef}>
-      {/* <Picker
-        onSelect={handleReact}
-        className={`picker ${isLoading ? "reacting" : ""}`}
-      /> */}
+    <StyledPicker>
       <ul className={`emojis ${isLoading ? "reacting" : ""}`}>
         {Emojis.map((emoji) => {
           let reacted =

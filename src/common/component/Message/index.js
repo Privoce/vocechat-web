@@ -18,8 +18,7 @@ function Message({ contextId = 0, mid = "", context = "user" }) {
   const updateReadDebounced = useDebounce(updateReadIndex, 300);
   const [myRef, inView] = useInViewRef();
   const [edit, setEdit] = useState(false);
-  const [emojiPopVisible, setEmojiPopVisible] = useState(false);
-  const [menuVisible, setMenuVisible] = useState(false);
+
   const avatarRef = useRef(null);
   const {
     footprint,
@@ -36,14 +35,9 @@ function Message({ contextId = 0, mid = "", context = "user" }) {
       contactsData: store.contacts.byId,
     };
   });
-  const toggleMenu = () => {
-    setMenuVisible((prev) => !prev);
-  };
+
   const toggleEditMessage = () => {
     setEdit((prev) => !prev);
-  };
-  const toggleEmojiPopover = () => {
-    setEmojiPopVisible((prev) => !prev);
   };
 
   const {
@@ -78,9 +72,7 @@ function Message({ contextId = 0, mid = "", context = "user" }) {
     <StyledWrapper
       data-mid={mid}
       ref={myRef}
-      className={`message ${menuVisible ? "menu" : ""} ${
-        inView ? "in_view" : ""
-      }`}
+      className={`message ${inView ? "in_view" : ""}`}
     >
       <Tippy
         interactive
@@ -122,10 +114,6 @@ function Message({ contextId = 0, mid = "", context = "user" }) {
           contextId={contextId}
           mid={mid}
           from_uid={fromUid}
-          toggleMenu={toggleMenu}
-          menuVisible={menuVisible}
-          emojiPopVisible={emojiPopVisible}
-          toggleEmojiPopover={toggleEmojiPopover}
           toggleEditMessage={toggleEditMessage}
         />
       )}

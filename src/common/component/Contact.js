@@ -2,7 +2,6 @@
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import Tippy from "@tippyjs/react";
-import "tippy.js/animations/scale-subtle.css";
 import Avatar from "./Avatar";
 import Profile from "./Profile";
 
@@ -75,7 +74,6 @@ export default function Contact({
     >
       <Tippy
         inertia={true}
-        animation="scale"
         interactive
         disabled={!popover}
         placement="left"

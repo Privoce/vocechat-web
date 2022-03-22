@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import settingIcon from "../../assets/icons/setting.svg?url";
 const StyledWrapper = styled.div`
   display: flex;
   height: 100%;
@@ -39,62 +38,6 @@ const StyledWrapper = styled.div`
         gap: 4px;
         a {
           text-decoration: none;
-        }
-        .link {
-          position: relative;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 8px;
-          border-radius: 4px;
-          &:hover,
-          &.active {
-            background: rgba(116, 127, 141, 0.1);
-          }
-          > .txt {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #1c1c1e;
-            font-weight: 600;
-            font-size: 14px;
-            line-height: 20px;
-          }
-          > .icons {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            > .setting {
-              visibility: hidden;
-              display: flex;
-              width: 16px;
-              height: 16px;
-              background-image: url(${settingIcon});
-              background-size: 16px;
-            }
-            > .badge {
-              color: #fff;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              height: 20px;
-              min-width: 20px;
-              border-radius: 50%;
-              background: #bfbfbf;
-              font-weight: 900;
-              font-size: 10px;
-              line-height: 10px;
-              &.dot {
-                min-width: unset;
-                width: 6px;
-                height: 6px;
-                padding: 0;
-              }
-            }
-          }
-          &:hover > .icons > .setting {
-            visibility: visible;
-          }
         }
         .session {
           display: flex;

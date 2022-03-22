@@ -5,16 +5,24 @@ import { addChannelMsg, removeChannelMsg } from "../slices/message.channel";
 import { addUserMsg, removeUserMsg } from "../slices/message.user";
 import { addMessage, removeMessage } from "../slices/message";
 export const onMessageSendStarted = async (
-  { id, content, type = "text", from_uid, reply_mid = null },
+  {
+    id,
+    content,
+    type = "text",
+    from_uid,
+    reply_mid = null,
+    properties = { local_id: new Date().getTime() },
+  },
   { dispatch, queryFulfilled },
   from = "channel"
 ) => {
   // id: who send to ,from_uid: who sent
-  const ts = new Date().getTime();
+  const ts = properties.local_id || new Date().getTime();
   const tmpMsg = {
     content: type == "image" ? URL.createObjectURL(content) : content,
     content_type: ContentTypes[type],
     created_at: ts,
+    properties,
     from_uid,
     reply_mid,
     // 已读

@@ -1,6 +1,9 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
+import Tippy from "@tippyjs/react";
+import { hideAll } from "tippy.js";
+
 import searchIcon from "../../assets/icons/search.svg?url";
 import addIcon from "../../assets/icons/add.svg?url";
 import mailIcon from "../../assets/icons/mail.svg?url";
@@ -42,9 +45,6 @@ const StyledWrapper = styled.div`
     border-radius: 8px;
     color: #616161;
     background: #fff;
-    position: absolute;
-    top: 50px;
-    right: 8px;
     display: flex;
     flex-direction: column;
     padding: 4px;
@@ -68,23 +68,21 @@ export default function Search() {
   const currentUser = useSelector(
     (store) => store.contacts.byId[store.authData.uid]
   );
-  const [popupVisible, setPopupVisible] = useState(false);
   const [channelModalVisible, setChannelModalVisible] = useState(false);
   const [contactsModalVisible, setContactsModalVisible] = useState(false);
   const [isPrivate, setIsPrivate] = useState(false);
   const toggleContactsModalVisible = () => {
-    if (!contactsModalVisible) {
-      togglePopupVisible();
-    }
-    setContactsModalVisible((prev) => !prev);
-  };
-  const togglePopupVisible = () => {
-    setPopupVisible((prev) => !prev);
+    setContactsModalVisible((prevVisible) => {
+      if (!prevVisible) {
+        hideAll();
+      }
+      return !prevVisible;
+    });
   };
   const handleOpenChannelModal = (isPrivate) => {
     setIsPrivate(isPrivate);
     setChannelModalVisible(true);
-    togglePopupVisible();
+    hideAll();
   };
   const handleCloseModal = () => {
     setChannelModalVisible(false);
@@ -102,36 +100,37 @@ export default function Search() {
         <img src={searchIcon} />
         <input placeholder="Search..." className="input" />
       </div>
-      <img
-        src={addIcon}
-        alt="add icon"
-        className="add"
-        onClick={togglePopupVisible}
-      />
-      {popupVisible && (
-        <ul className="popup">
-          {currentUser?.is_admin && (
+      <Tippy
+        interactive
+        placement="bottom-end"
+        trigger="click"
+        content={
+          <ul className="popup">
+            {currentUser?.is_admin && (
+              <li
+                className="item"
+                onClick={handleOpenChannelModal.bind(null, false)}
+              >
+                <ChannelIcon />
+                New Channel
+              </li>
+            )}
             <li
               className="item"
-              onClick={handleOpenChannelModal.bind(null, false)}
+              onClick={handleOpenChannelModal.bind(null, true)}
             >
-              <ChannelIcon />
-              New Channel
+              <ChannelIcon personal={true} />
+              New Private Channel
             </li>
-          )}
-          <li
-            className="item"
-            onClick={handleOpenChannelModal.bind(null, true)}
-          >
-            <ChannelIcon personal={true} />
-            New Private Channel
-          </li>
-          <li className="item" onClick={toggleContactsModalVisible}>
-            <img src={mailIcon} alt="icon mail" />
-            New Message
-          </li>
-        </ul>
-      )}
+            <li className="item" onClick={toggleContactsModalVisible}>
+              <img src={mailIcon} alt="icon mail" />
+              New Message
+            </li>
+          </ul>
+        }
+      >
+        <img src={addIcon} alt="add icon" className="add" />
+      </Tippy>
     </StyledWrapper>
   );
 }

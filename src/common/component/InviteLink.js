@@ -16,6 +16,7 @@ const StyledWrapper = styled.div`
     margin-bottom: 8px;
   }
   .link {
+    width: 512px;
     margin-bottom: 12px;
     display: flex;
     justify-content: space-between;

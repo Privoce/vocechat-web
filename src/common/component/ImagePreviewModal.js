@@ -27,7 +27,7 @@ const StyledWrapper = styled.div`
     gap: 10px;
     img {
       max-width: 70vw;
-      max-height: 70vw;
+      max-height: 80vh;
     }
     .origin {
       font-weight: bold;
