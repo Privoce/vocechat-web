@@ -52,7 +52,7 @@ export default function useStreaming() {
     const controller = new AbortController();
     setStatus(StreamStatus.initializing);
     const {
-      authData: { token, uid: loginUid },
+      authData: { token, refreshToken, uid: loginUid },
       footprint: { afterMid, usersVersion },
     } = store;
     console.log("set uid use");
@@ -81,9 +81,7 @@ export default function useStreaming() {
           ) {
             // 重新登录
             if (response.status == 401) {
-              renewToken();
-              // dispatch(resetAuthData());
-              // return;
+              renewToken({ token, refreshToken });
             }
             // client-side errors are usually non-retriable:
             throw new FatalError();

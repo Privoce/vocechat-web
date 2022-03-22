@@ -25,7 +25,7 @@ export default function DeleteMessageConfirmModal({ closeModal, mid = 0 }) {
   return (
     <Modal>
       <StyledModal
-        className="animate__animated animate__fadeInDown animate__faster"
+        // className="animate__animated animate__fadeInDown animate__faster"
         buttons={
           <>
             <Button onClick={closeModal}>Cancel</Button>

@@ -15,9 +15,13 @@ const userMsgSlice = createSlice({
       state.byId = action.payload;
     },
     addUserMsg(state, action) {
-      const { id, mid } = action.payload;
+      const { id, mid, local_id } = action.payload;
       if (state.byId[id]) {
-        if (state.byId[id].findIndex((id) => id == mid) > -1) return;
+        const midExsited = state.byId[id].findIndex((id) => id == mid) > -1;
+        const localMsgExsited =
+          state.byId[id].findIndex((id) => id == local_id) > -1;
+        if (midExsited || localMsgExsited) return;
+
         state.byId[id].push(+mid);
       } else {
         state.byId[id] = [+mid];
@@ -28,7 +32,10 @@ const userMsgSlice = createSlice({
       const { id, mid } = action.payload;
       if (state.byId[id]) {
         const idx = state.byId[id].findIndex((i) => i == mid);
-        state.byId[id].splice(idx, 1);
+        if (idx > -1) {
+          // 存在 则再删除
+          state.byId[id].splice(idx, 1);
+        }
       }
     },
   },

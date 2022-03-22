@@ -54,7 +54,6 @@ const baseQueryWithTokenCheck = async (args, api, extraOptions) => {
     );
     result = await waitingForRenew;
     waitingForRenew = null;
-    // console.log({ refreshResult });
     if (result.data) {
       // store the new token
       api.dispatch(updateToken(result.data));
