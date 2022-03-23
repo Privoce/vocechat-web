@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import {
   fetchEventSource,
   EventStreamContentType,
@@ -42,24 +42,34 @@ const StreamStatus = {
   initializing: "initializing",
   streaming: "streaming",
 };
+let inter = null;
 export default function useStreaming() {
   const store = useSelector((store) => store);
-  const [renewToken] = useRenewMutation();
+  const [
+    renewToken,
+    { data: tokenData, isSuccess: tokenRefreshSuccess },
+  ] = useRenewMutation();
   const dispatch = useDispatch();
   const [status, setStatus] = useState(StreamStatus.waiting);
-  const startStreaming = useCallback(() => {
+  const startStreaming = (token = "", refreshToken = "") => {
     if (status !== StreamStatus.waiting) return;
     const controller = new AbortController();
     setStatus(StreamStatus.initializing);
     const {
-      authData: { token, refreshToken, uid: loginUid },
+      authData: {
+        token: reduxToken,
+        refreshToken: reduxRefreshToken,
+        uid: loginUid,
+      },
       footprint: { afterMid, usersVersion },
     } = store;
     console.log("set uid use");
-
+    // 优先使用参数内的token
+    const finalToken = token || reduxToken;
+    const finalRefreshToken = refreshToken || reduxRefreshToken;
     fetchEventSource(
       `${BASE_URL}/user/events?${getQueryString({
-        "api-key": token,
+        "api-key": finalToken,
         users_version: usersVersion,
         after_mid: afterMid,
       })}`,
@@ -81,7 +91,11 @@ export default function useStreaming() {
           ) {
             // 重新登录
             if (response.status == 401) {
-              renewToken({ token, refreshToken });
+              await renewToken({
+                token: finalToken,
+                refreshToken: finalRefreshToken,
+              });
+              return;
             }
             // client-side errors are usually non-retriable:
             throw new FatalError();
@@ -221,8 +235,11 @@ export default function useStreaming() {
         },
         onerror(err) {
           if (err instanceof FatalError) {
+            if (inter) {
+              clearTimeout(inter);
+            }
             // 重连
-            setTimeout(() => {
+            inter = setTimeout(() => {
               startStreaming();
             }, 500);
             throw err; // rethrow to stop the operation
@@ -235,7 +252,14 @@ export default function useStreaming() {
     );
     // for controlling
     return controller;
-  }, [store, status]);
+  };
+  useEffect(() => {
+    if (tokenRefreshSuccess) {
+      const { token, refresh_token } = tokenData;
+      startStreaming(token, refresh_token);
+    }
+  }, [tokenData, tokenRefreshSuccess]);
+
   return {
     initializing: status == StreamStatus.initializing,
     streaming: status == StreamStatus.streaming,

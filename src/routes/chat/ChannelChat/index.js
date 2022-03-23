@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import { useSelector } from "react-redux";
 import useChatScroll from "../../../common/hook/useChatScroll";
@@ -102,31 +102,34 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
         }
       >
         <StyledChannelChat>
-          <div className="wrapper" ref={ref}>
-            <div className="info">
-              <h2 className="title">Welcome to #{name} !</h2>
-              <p className="desc">This is the start of the #{name} channel. </p>
-              {/* <button className="edit">Edit Channel</button> */}
+          <div className="wrapper">
+            <div className="chat" ref={ref}>
+              <div className="info">
+                <h2 className="title">Welcome to #{name} !</h2>
+                <p className="desc">
+                  This is the start of the #{name} channel.{" "}
+                </p>
+                {/* <button className="edit">Edit Channel</button> */}
+              </div>
+              <div className="feed">
+                {[...msgIds]
+                  .sort((a, b) => {
+                    return Number(a) - Number(b);
+                  })
+                  .map((mid, idx) => {
+                    const prev = idx == 0 ? null : messageData[msgIds[idx - 1]];
+                    const curr = messageData[mid];
+                    return renderMessageFragment({
+                      prev,
+                      curr,
+                      contextId: cid,
+                      context: "channel",
+                    });
+                  })}
+              </div>
             </div>
-            <div className="chat">
-              {[...msgIds]
-                .sort((a, b) => {
-                  return Number(a) - Number(b);
-                })
-                .map((mid, idx) => {
-                  const prev = idx == 0 ? null : messageData[msgIds[idx - 1]];
-                  const curr = messageData[mid];
-                  return renderMessageFragment({
-                    prev,
-                    curr,
-                    contextId: cid,
-                    context: "channel",
-                  });
-                })}
-            </div>
+            <Send dragFiles={dragFiles} id={cid} type="channel" name={name} />
           </div>
-
-          <Send dragFiles={dragFiles} id={cid} type="channel" name={name} />
         </StyledChannelChat>
         {/* {unreads != 0 && (
         <StyledNotification>

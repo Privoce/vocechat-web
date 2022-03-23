@@ -69,13 +69,13 @@ export default function DMChat({ uid = "", dropFiles = [] }) {
               });
             })}
         </div>
+        <Send
+          dragFiles={dragFiles}
+          type="user"
+          name={currUser?.name}
+          id={currUser?.uid}
+        />
       </StyledDMChat>
-      <Send
-        dragFiles={dragFiles}
-        type="user"
-        name={currUser?.name}
-        id={currUser?.uid}
-      />
     </Layout>
   );
 }

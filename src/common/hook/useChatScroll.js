@@ -28,6 +28,19 @@ function useChatScroll(dep) {
       }, 20);
     }
   }, [dep]);
+  useEffect(() => {
+    console.log("chat scroll", ref);
+    if (ref.current) {
+      const ele = ref.current;
+      const resizeObserver = new ResizeObserver((entries) => {
+        for (let entry of entries) {
+          entry.target.scrollTop = entry.target.scrollHeight;
+        }
+      });
+
+      resizeObserver.observe(ele);
+    }
+  }, []);
   return ref;
 }
 

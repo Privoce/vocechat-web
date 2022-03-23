@@ -44,16 +44,16 @@ export const StyledHeader = styled.header`
 `;
 export const StyledDMChat = styled.article`
   position: relative;
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  padding-top: 20px;
+  padding: 0 16px;
+  padding-bottom: 10px;
+  height: calc(100vh - 56px);
   > .chat {
-    display: flex;
-    flex-direction: column;
-    padding: 0 16px;
-    padding-top: 15px;
-    padding-bottom: 25px;
-    height: calc(100vh - 56px - 80px);
-    overflow-y: scroll;
-    overflow-x: visible;
+    padding: 18px 0;
+    height: 100%;
+    height: -webkit-fill-available;
+    overflow: auto;
   }
 `;

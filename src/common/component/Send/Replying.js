@@ -7,7 +7,6 @@ import { removeReplyingMessage } from "../../../app/slices/message";
 import styled from "styled-components";
 const Styled = styled.div`
   z-index: 999;
-  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;

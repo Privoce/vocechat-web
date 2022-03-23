@@ -12,6 +12,9 @@ const StyledMsg = styled.div`
   &.in_view {
     content-visibility: visible;
   }
+  &[data-highlight="true"] {
+    background: #f5f6f7;
+  }
   &:hover,
   &.preview {
     background: #f5f6f7;

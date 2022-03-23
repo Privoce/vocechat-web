@@ -1,6 +1,5 @@
 // import React from 'react'
 import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 import styled from "styled-components";
 const Styled = styled.div`
   font-family: "Helvetica Neue", sans;
@@ -148,7 +147,7 @@ const Styled = styled.div`
 export default function MrakdownRender({ content }) {
   return (
     <Styled>
-      <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
+      <ReactMarkdown>{content}</ReactMarkdown>
     </Styled>
   );
 }

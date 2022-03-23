@@ -107,7 +107,7 @@ export default function AddMemberModal({ uids = [], cid = null, closeModal }) {
         </ul>
         <Button
           disabled={selects.length == 0 || isAdding}
-          className="btn main"
+          className="btn"
           onClick={handleAddMembers}
         >
           {isAdding ? `Adding` : "Add"} to #{channel.name}

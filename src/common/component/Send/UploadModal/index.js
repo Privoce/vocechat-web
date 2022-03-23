@@ -71,7 +71,7 @@ export default function UploadModal({
               Cancel
             </Button>
             <Button
-              className="upload main"
+              className="upload"
               disabled={channelSending || userSending}
               onClick={handleUpload}
             >

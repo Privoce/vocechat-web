@@ -56,7 +56,7 @@ export default function ProfileBasicEditModal({
         buttons={
           <>
             <Button onClick={closeModal}>Cancel</Button>
-            <Button onClick={handleUpdate} className="main">
+            <Button onClick={handleUpdate}>
               {isLoading ? "Updating" : `Done`}
             </Button>
           </>

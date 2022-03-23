@@ -161,7 +161,7 @@ export default function ChannelModal({ personal = false, closeModal }) {
             <Button
               disabled={isLoading}
               onClick={handleCreate}
-              className="normal main"
+              className="normal"
             >
               Create
             </Button>

@@ -65,11 +65,23 @@ export default function Reply({ mid }) {
   const { data, users } = useSelector((store) => {
     return { data: store.message[mid], users: store.contacts.byId };
   });
+  const handleClick = (evt) => {
+    const { mid } = evt.currentTarget.dataset;
+    const msgEle = document.querySelector(`[data-msg-mid='${mid}']`);
+    if (msgEle) {
+      msgEle.dataset.highlight = true;
+      msgEle.scrollIntoView({ behavior: "smooth", block: "center" });
+      setTimeout(() => {
+        console.log("scroll view", msgEle);
+        msgEle.dataset.highlight = false;
+      }, 3000);
+    }
+  };
   if (!data) return null;
   const currUser = users[data.from_uid];
   if (!currUser) return null;
   return (
-    <Styled data-mid={mid} className="reply">
+    <Styled data-mid={mid} className="reply" onClick={handleClick}>
       <div className="user">
         <Avatar className="avatar" url={currUser.avatar} name={currUser.name} />
         <span className="name">{currUser.name}</span>

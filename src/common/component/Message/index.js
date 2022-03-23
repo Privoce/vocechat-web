@@ -70,7 +70,7 @@ function Message({ contextId = 0, mid = "", context = "user" }) {
   // if (!message) return null;
   return (
     <StyledWrapper
-      data-mid={mid}
+      data-msg-mid={mid}
       ref={myRef}
       className={`message ${inView ? "in_view" : ""}`}
     >
