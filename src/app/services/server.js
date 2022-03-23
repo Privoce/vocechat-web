@@ -28,6 +28,13 @@ export const serverApi = createApi({
     getFirebaseConfig: builder.query({
       query: () => ({ url: `admin/fcm/config` }),
     }),
+    sendTestEmail: builder.mutation({
+      query: (data) => ({
+        url: `/admin/system/send_mail`,
+        method: "POST",
+        body: data,
+      }),
+    }),
     updateFirebaseConfig: builder.mutation({
       query: (data) => ({
         url: `admin/fcm/config`,
@@ -124,6 +131,7 @@ export const serverApi = createApi({
 });
 
 export const {
+  useSendTestEmailMutation,
   useUpdateFirebaseConfigMutation,
   useGetFirebaseConfigQuery,
   useGetSMTPConfigQuery,

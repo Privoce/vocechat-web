@@ -24,6 +24,17 @@ const StyledContainer = styled.div`
       }
     }
   }
+  .tip {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    .link {
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 20px;
+      color: #06b6d4;
+    }
+  }
 `;
 
 export default StyledContainer;

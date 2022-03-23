@@ -1,11 +1,25 @@
-// import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import styled from "styled-components";
+const StyledTest = styled.div`
+  display: flex;
+  gap: 16px;
+  white-space: nowrap;
+  margin-top: 24px;
+`;
+import { useSendTestEmailMutation } from "../../../../app/services/server";
+import iconQuestion from "../../../../assets/icons/question.svg?url";
 import useConfig from "./useConfig";
 import StyledContainer from "./StyledContainer";
 import Input from "../../styled/Input";
+import Button from "../../styled/Button";
 import Toggle from "../../styled/Toggle";
 import Label from "../../styled/Label";
 import SaveTip from "../../SaveTip";
+import toast from "react-hot-toast";
+
 export default function ConfigSMTP() {
+  const [testEmail, setTestEmail] = useState("");
+  const [sendTestEmail, { isSuccess, isError }] = useSendTestEmailMutation();
   const {
     reset,
     updateConfig,
@@ -26,6 +40,26 @@ export default function ConfigSMTP() {
       return { ...prev, [type]: newValue };
     });
   };
+  const handleTestEmailChange = (evt) => {
+    const newValue = evt.target.value;
+    setTestEmail(newValue);
+  };
+  const handleTestClick = () => {
+    console.log("test");
+    sendTestEmail({
+      to: testEmail,
+      subject: "test title",
+      content: "test content",
+    });
+  };
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Send Test Email Successfully");
+    }
+    if (isError) {
+      toast.error("Send Test Email Fail");
+    }
+  }, [isSuccess, isError]);
 
   //   if (!values) return null;
   const { host, port, from, username, password, enabled = false } =
@@ -41,6 +75,7 @@ export default function ConfigSMTP() {
         <div className="input">
           <Label htmlFor="name">Host</Label>
           <Input
+            disabled={!enabled}
             data-type="host"
             onChange={handleChange}
             value={host}
@@ -51,6 +86,7 @@ export default function ConfigSMTP() {
         <div className="input">
           <Label htmlFor="desc">Port</Label>
           <Input
+            disabled={!enabled}
             type={"number"}
             data-type="port"
             onChange={handleChange}
@@ -62,6 +98,7 @@ export default function ConfigSMTP() {
         <div className="input">
           <Label htmlFor="desc">From</Label>
           <Input
+            disabled={!enabled}
             data-type="from"
             onChange={handleChange}
             value={from}
@@ -72,6 +109,7 @@ export default function ConfigSMTP() {
         <div className="input">
           <Label htmlFor="desc">Username</Label>
           <Input
+            disabled={!enabled}
             data-type="username"
             onChange={handleChange}
             value={username}
@@ -82,6 +120,7 @@ export default function ConfigSMTP() {
         <div className="input">
           <Label htmlFor="desc">Password</Label>
           <Input
+            disabled={!enabled}
             data-type="password"
             onChange={handleChange}
             value={password}
@@ -90,6 +129,25 @@ export default function ConfigSMTP() {
           />
         </div>
       </div>
+      <div className="tip">
+        <img src={iconQuestion} alt="question icon" />
+        <a href="#" className="link">
+          How to set up SMTP?
+        </a>
+      </div>
+      <StyledTest>
+        <Input
+          type={"email"}
+          disabled={!enabled}
+          onChange={handleTestEmailChange}
+          value={testEmail}
+          name="email"
+          placeholder="test@email.com"
+        />
+        <Button disabled={!enabled || !testEmail} onClick={handleTestClick}>
+          Send Test Email
+        </Button>
+      </StyledTest>
       {changed && <SaveTip saveHandler={handleUpdate} resetHandler={reset} />}
       {/* <button onClick={handleUpdate} className="btn">update</button> */}
     </StyledContainer>
