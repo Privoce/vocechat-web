@@ -38,9 +38,19 @@ const userMsgSlice = createSlice({
         }
       }
     },
+    removeUserSession(state, action) {
+      const ids = Array.isArray(action.payload)
+        ? action.payload
+        : [action.payload];
+      state.ids = state.ids.filter((id) => ids.findIndex((i) => i == id) == -1);
+      // ids.forEach((id) => {
+      //   delete state.byId[id];
+      // });
+    },
   },
 });
 export const {
+  removeUserSession,
   resetUserMsg,
   fullfillUserMsg,
   addUserMsg,

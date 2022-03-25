@@ -5,7 +5,7 @@ import Tippy from "@tippyjs/react";
 import { hideAll } from "tippy.js";
 // import toast from "react-hot-toast";
 import { addReplyingMessage } from "../../../app/slices/message";
-import StyledMenu from "../StyledMenu";
+import StyledMenu from "../styled/Menu";
 import DeleteMessageConfirm from "./DeleteMessageConfirm";
 import EmojiPicker from "./EmojiPicker";
 import replyIcon from "../../../assets/icons/reply.svg?url";
@@ -108,7 +108,7 @@ export default function Commands({
         onShow={handleTippyVisible.bind(null, true)}
         onHide={handleTippyVisible.bind(null, false)}
         interactive
-        placement="right-start"
+        placement="left-start"
         trigger="click"
         content={
           <StyledMenu className="menu">

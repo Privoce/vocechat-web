@@ -13,6 +13,16 @@ export default async function handler({ operation, data = {}, payload }) {
         await table.setItem(id + "", data.byId[id]);
       }
       break;
+    case "removeUserSession":
+      {
+        const ids = Array.isArray(payload) ? payload : [payload];
+        await Promise.all(
+          ids.map(async (id) => {
+            await table.removeItem(id + "");
+          })
+        );
+      }
+      break;
     default:
       break;
   }

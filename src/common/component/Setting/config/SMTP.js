@@ -131,7 +131,12 @@ export default function ConfigSMTP() {
       </div>
       <div className="tip">
         <img src={iconQuestion} alt="question icon" />
-        <a href="#" className="link">
+        <a
+          href="https://rustchat.com/doc/smtp-setting"
+          target="_blank"
+          className="link"
+          rel="noreferrer"
+        >
           How to set up SMTP?
         </a>
       </div>

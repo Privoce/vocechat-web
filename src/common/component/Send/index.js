@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
-import TextareaAutosize from "react-textarea-autosize";
+// import TextareaAutosize from "react-textarea-autosize";
 import { useDispatch, useSelector } from "react-redux";
-import { useKey } from "rooks";
+// import { useKey } from "rooks";
 
 import { removeReplyingMessage } from "../../../app/slices/message";
 import { useSendChannelMsgMutation } from "../../../app/services/channel";
@@ -13,7 +13,8 @@ import UploadModal from "./UploadModal";
 import Replying from "./Replying";
 import Toolbar from "./Toolbar";
 import EmojiPicker from "./EmojiPicker";
-import RichInput from "../RichInput";
+// import RichInput from "../RichInput";
+import RichInput from "../RichEditor";
 const Types = {
   channel: "#",
   user: "@",
@@ -62,7 +63,7 @@ export default function Send({
     setFiles([...evt.target.files]);
   };
   const handleSendMessage = () => {
-    if (!msg || !id || sendingMessage) return;
+    if (!markdown || !id || sendingMessage) return;
     console.log("send message", msg);
     const content_type = msg ? "text" : "markdown";
     const content = msg ? msg : markdown;

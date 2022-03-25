@@ -1,153 +1,70 @@
-// import React from 'react'
-import ReactMarkdown from "react-markdown";
+import { useEffect, useState } from "react";
+import showdown from "showdown";
 import styled from "styled-components";
 const Styled = styled.div`
-  font-family: "Helvetica Neue", sans;
-  background: transparent;
-  color: #222;
-  line-height: 1.5;
-  font-size: 16px;
-  font-weight: 300;
-  img {
-    margin: 0;
-    border: 0;
-  }
-
   p {
-    margin: 1em 0;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    color: #475467;
   }
-
-  a {
-    color: #00213d;
+  ul {
+    list-style-type: disc;
   }
-
-  a:visited {
-    color: #00213d;
-    background-color: transparent;
-  }
-
-  a:active {
-    color: #318100;
-    background-color: transparent;
-  }
-
-  a:hover {
-    text-decoration: none;
-  }
-
-  p img {
-    border: 0;
-    margin: 0;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    color: #003a6b;
-    background-color: transparent;
-    margin: 1em 0;
-    font-weight: normal;
-  }
-
-  h1 {
-    font-size: 180%;
-    font-weight: bold;
-  }
-
-  h2 {
-    font-size: 160%;
-  }
-
-  h3 {
-    font-size: 140%;
-  }
-
-  h4 {
-    font-size: 110%;
-  }
-
-  h5 {
-    font-size: 105%;
-  }
-
-  h6 {
-    font-size: 100%;
-  }
-
-  dt {
+  i,
+  em {
+    /* padding: 0 2px; */
     font-style: italic;
   }
-
-  dd {
-    margin-bottom: 1.5em;
-  }
-
-  li {
-    line-height: 1.5em;
-  }
-
-  code {
-    padding: 0.1em;
+  ul,
+  ol {
+    font-weight: 400;
     font-size: 14px;
-    font-family: "Menlo", monospace;
-    background-color: #f5f5f5;
-    border: 1px solid #efefef;
+    line-height: 20px;
+    color: #475467;
+    list-style-position: inside;
   }
-
-  pre {
-    font-family: "Menlo", monospace;
-    background-color: #fff;
-    padding: 0.5em;
-    line-height: 1.25em;
-    border: 1px solid #efefef;
-    border-bottom: 1px solid #ddd;
-    -webkit-box-shadow: 0 1px 3px 0 #eee;
-    -moz-box-shadow: 0 1px 3px 0 #eee;
-    -ms-box-shadow: 0 1px 3px 0 #eee;
-    box-shadow: 0 1px 3px 0 #eee;
+  strong {
+    font-weight: 700;
   }
-
-  pre code {
-    background-color: transparent;
-    border-width: 0;
+  h1,
+  h2,
+  h3 {
+    font-weight: 700;
+    color: #475467;
   }
-
+  h1 {
+    font-size: 24px;
+    line-height: 32px;
+  }
+  h2 {
+    font-size: 20px;
+    line-height: 30px;
+  }
+  h3 {
+    font-size: 16px;
+    line-height: 24px;
+  }
   blockquote {
-    border-top: 1px solid #efefef;
-    border-bottom: 1px solid #ddd;
-    -webkit-box-shadow: 0 1px 3px 0 #eee;
-    -moz-box-shadow: 0 1px 3px 0 #eee;
-    -ms-box-shadow: 0 1px 3px 0 #eee;
-    box-shadow: 0 1px 3px 0 #eee;
-  }
-
-  table {
-    border-collapse: collapse;
-    border: 1px solid #efefef;
-    border-bottom: 1px solid #ddd;
-    -webkit-box-shadow: 0 1px 3px 0 #eee;
-    -moz-box-shadow: 0 1px 3px 0 #eee;
-    -ms-box-shadow: 0 1px 3px 0 #eee;
-    box-shadow: 0 1px 3px 0 #eee;
-  }
-
-  td,
-  th {
-    border: 1px solid #ddd;
-    padding: 0.5em;
-  }
-
-  th {
-    background-color: #f5f5f5;
+    display: flex;
+    margin-bottom: 10px;
+    color: #98a2b3;
+    opacity: 0.8;
+    box-shadow: inset 2px 0px 0px #a8b0bd;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    padding: 16px;
   }
 `;
 export default function MrakdownRender({ content }) {
-  return (
-    <Styled>
-      <ReactMarkdown>{content}</ReactMarkdown>
-    </Styled>
-  );
+  const [html, setHtml] = useState("");
+  useEffect(() => {
+    if (content) {
+      const converter = new showdown.Converter();
+      setHtml(converter.makeHtml(content));
+    }
+  }, [content]);
+
+  return <Styled dangerouslySetInnerHTML={{ __html: html }}></Styled>;
 }

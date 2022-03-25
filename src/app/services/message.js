@@ -1,7 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 // import { batch } from "react-redux";
 
-import { ContentTypes } from "../config";
+import BASE_URL, { ContentTypes } from "../config";
 import { updateReadChannels, updateReadUsers } from "../slices/footprint";
 import { onMessageSendStarted } from "./handlers";
 
@@ -37,6 +37,19 @@ export const messageApi = createApi({
         url: `/message/${mid}`,
         method: "DELETE",
       }),
+    }),
+    uploadImage: builder.mutation({
+      query: (image) => ({
+        headers: {
+          "content-type": ContentTypes.image,
+        },
+        url: `/resource/image`,
+        method: "POST",
+        body: image,
+      }),
+      transformResponse: (image_id) => {
+        return `${BASE_URL}/resource/image?id=${encodeURIComponent(image_id)}`;
+      },
     }),
     replyMessage: builder.mutation({
       query: ({ reply_mid, content, type = "text" }) => ({
@@ -89,6 +102,7 @@ export const messageApi = createApi({
 });
 
 export const {
+  useUploadImageMutation,
   useEditMessageMutation,
   useReactMessageMutation,
   useReplyMessageMutation,

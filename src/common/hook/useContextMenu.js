@@ -1,20 +1,32 @@
 import { useState } from "react";
 
-export default function useContextMenu() {
+export default function useContextMenu(placement = "right-start") {
   const [visible, setVisible] = useState(false);
-  const [pos, setPos] = useState({ x: 0, y: 0 });
+  // for tippy.js
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
   const handleContextMenuEvent = (evt) => {
-    console.log("context menu event", evt);
+    console.log("context menu event", evt, evt.currentTarget);
     evt.preventDefault();
+    const { currentTarget, clientX, clientY } = evt;
+    const { left, top, width, height } = currentTarget.getBoundingClientRect();
+    let x, y;
+    if (placement == "right-start") {
+      x = clientX - (left + width);
+      y = top + height - clientY;
+    } else {
+      x = clientX - left;
+      y = top - clientY;
+    }
+    setOffset({ x, y });
+
     setVisible(true);
-    setPos({ x: evt.clientX, y: evt.clientY });
+    console.log("offset", x, y);
   };
   const hideContextMenu = () => {
     setVisible(false);
   };
   return {
-    posX: pos.x,
-    posY: pos.y,
+    offset,
     visible,
     hideContextMenu,
     handleContextMenuEvent,

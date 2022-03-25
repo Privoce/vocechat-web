@@ -10,14 +10,14 @@ const whiteList = [
   "getServer",
   "getOpenid",
   "getMetamaskNonce",
+  "renew",
 ];
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
   prepareHeaders: (headers, { getState, endpoint }) => {
     console.log("req", endpoint);
     const { token } = getState().authData;
-    const noHeaderList = [...whiteList, "renew"];
-    if (token && !noHeaderList.includes(endpoint)) {
+    if (token && !whiteList.includes(endpoint)) {
       headers.set(tokenHeader, token);
     }
     return headers;

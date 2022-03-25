@@ -9,7 +9,7 @@ import useCopy from "../hook/useCopy";
 import { useLazyDeleteContactQuery } from "../../app/services/contact";
 import { useRemoveMembersMutation } from "../../app/services/channel";
 import Contact from "./Contact";
-import StyledMenu from "./StyledMenu";
+import StyledMenu from "./styled/Menu";
 import InviteLink from "./InviteLink";
 import moreIcon from "../../assets/icons/more.svg?url";
 const StyledWrapper = styled.section`

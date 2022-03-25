@@ -5,17 +5,15 @@ const Styled = styled.div`
   p {
     font-weight: 400;
     font-size: 14px;
-    /* line-height: 20px; */
     line-height: 22px;
     color: #475467;
-    /* margin-bottom: 10px; */
   }
-  i {
+  ul {
+    list-style-type: disc;
+  }
+  /* i {
     font-style: italic;
   }
-  /* del{
-    font-style: italic;
-  } */
   ul,
   ol {
     font-weight: 400;
@@ -23,12 +21,6 @@ const Styled = styled.div`
     line-height: 20px;
     color: #475467;
     list-style-position: inside;
-  }
-  ul {
-    list-style-type: disc;
-  }
-  ol {
-    /* list-style-type:; */
   }
   strong {
     font-weight: 700;
@@ -60,7 +52,7 @@ const Styled = styled.div`
     font-size: 14px;
     line-height: 20px;
     padding: 16px;
-  }
+  } */
 `;
 
 export default Styled;

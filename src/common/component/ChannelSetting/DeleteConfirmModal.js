@@ -33,7 +33,7 @@ export default function DeleteConfirmModal({ id, closeModal }) {
         buttons={
           <>
             {" "}
-            <Button onClick={closeModal}>Cancel</Button>
+            <Button onClick={closeModal.bind(null, undefined)}>Cancel</Button>
             <Button onClick={handleDelete} className="danger">
               {isLoading ? "Deleting" : `Delete`}
             </Button>
