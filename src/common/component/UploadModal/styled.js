@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import StyledModal from "../../styled/Modal";
+import StyledModal from "../styled/Modal";
 const StyledWrapper = styled(StyledModal)`
   .list {
     padding-top: 32px;

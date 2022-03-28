@@ -83,6 +83,7 @@ const StyledWrapper = styled.div`
               display: flex;
               justify-content: space-between;
               .msg {
+                min-height: 18px;
                 font-weight: normal;
                 font-size: 12px;
                 line-height: 18px;

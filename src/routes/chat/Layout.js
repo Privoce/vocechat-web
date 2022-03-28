@@ -3,6 +3,7 @@ import { useDrop } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
 import styled from "styled-components";
 import ImagePreviewModal from "../../common/component/ImagePreviewModal";
+import UploadModal from "../../common/component/UploadModal";
 
 const StyledWrapper = styled.article`
   position: relative;
@@ -75,21 +76,35 @@ export default function Layout({
   children,
   header,
   contacts = null,
-  setDragFiles,
+  dropFiles = [],
+  type = "channel",
+  to = null,
 }) {
   const messagesContainer = useRef(null);
+  const [files, setFiles] = useState([]);
   const [previewImage, setPreviewImage] = useState(null);
   const [{ isActive }, drop] = useDrop(() => ({
     accept: [NativeTypes.FILE],
     drop({ files }) {
+      console.log("drop files", files);
       if (files.length) {
-        setDragFiles([...files]);
+        setFiles((prevs) => [...prevs, ...files]);
       }
     },
     collect: (monitor) => ({
       isActive: monitor.canDrop() && monitor.isOver(),
     }),
   }));
+  useEffect(() => {
+    if (dropFiles.length) {
+      setFiles((prevs) => [...prevs, ...dropFiles]);
+    }
+  }, [dropFiles]);
+
+  const resetFiles = () => {
+    setFiles([]);
+  };
+
   const closePreviewModal = () => {
     setPreviewImage(null);
   };
@@ -144,6 +159,14 @@ export default function Layout({
           </div>
         </div>
       </StyledWrapper>
+      {files.length !== 0 && (
+        <UploadModal
+          type={type}
+          files={files}
+          sendTo={to}
+          closeModal={resetFiles}
+        />
+      )}
     </>
   );
 }
