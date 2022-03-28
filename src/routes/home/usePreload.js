@@ -8,11 +8,11 @@ import useStreaming from "../../common/hook/useStreaming";
 // const querySetting = {
 //   refetchOnMountOrArgChange: true,
 // };
-let request = null;
+// let request = null;
 export default function usePreload() {
   const { rehydrate, rehydrated } = useRehydrate();
   const loginUid = useSelector((store) => store.authData.uid);
-  const { startStreaming, streaming, initializing } = useStreaming();
+  const { setStreamingReady } = useStreaming();
   const [
     getContacts,
     {
@@ -35,9 +35,7 @@ export default function usePreload() {
     initCache();
     rehydrate();
     return () => {
-      if (request) {
-        request.abort();
-      }
+      setStreamingReady(false);
     };
   }, []);
 
@@ -47,10 +45,10 @@ export default function usePreload() {
       getServer();
     }
   }, [rehydrated]);
-  const canStreaming = loginUid && rehydrated && !initializing && !streaming;
+  const canStreaming = loginUid && rehydrated;
   useEffect(() => {
     if (canStreaming) {
-      request = startStreaming();
+      setStreamingReady(true);
     }
   }, [canStreaming]);
 

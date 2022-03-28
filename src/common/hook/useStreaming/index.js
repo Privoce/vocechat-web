@@ -1,9 +1,11 @@
-import { useState, useCallback, useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   fetchEventSource,
   EventStreamContentType,
 } from "@microsoft/fetch-event-source";
 import toast from "react-hot-toast";
+import dayjs from "dayjs";
+
 import BASE_URL from "../../../app/config";
 import { setReady } from "../../../app/slices/ui";
 import { useRenewMutation } from "../../../app/services/auth";
@@ -24,7 +26,7 @@ import {
 } from "../../../app/slices/contacts";
 import { resetAuthData } from "../../../app/slices/auth.data";
 import chatMessageHandler from "./chat.handler";
-
+import store from "../../../app/store";
 import { useDispatch, useSelector } from "react-redux";
 class RetriableError extends Error {}
 class FatalError extends Error {}
@@ -37,39 +39,52 @@ const getQueryString = (params = {}) => {
   });
   return sp.toString();
 };
-const StreamStatus = {
-  waiting: "waiting",
-  initializing: "initializing",
-  streaming: "streaming",
-};
+// const StreamStatus = {
+//   waiting: "waiting",
+//   initialized: "initialized",
+//   streaming: "streaming",
+// };
 let inter = null;
 export default function useStreaming() {
-  const store = useSelector((store) => store);
-  const [
-    renewToken,
-    { data: tokenData, isSuccess: tokenRefreshSuccess },
-  ] = useRenewMutation();
+  const [readyPullData, setReadyPullData] = useState(false);
+  const {
+    authData: { uid: loginUid },
+    channels: { byId: channelData },
+    ui: { ready, online },
+    footprint: { afterMid, usersVersion, readUsers, readChannels },
+  } = useSelector((store) => store);
+  const [renewToken] = useRenewMutation();
   const dispatch = useDispatch();
-  const [status, setStatus] = useState(StreamStatus.waiting);
-  const startStreaming = (token = "", refreshToken = "") => {
-    if (status !== StreamStatus.waiting) return;
-    const controller = new AbortController();
-    setStatus(StreamStatus.initializing);
+  let initialized = false;
+  let initializing = false;
+  let controller = new AbortController();
+  const startStreaming = async () => {
+    console.log("start streaming", initialized, initializing);
+    if (initialized || initializing) return;
+    // 如果token快要过期，先renew
     const {
-      authData: {
-        token: reduxToken,
-        refreshToken: reduxRefreshToken,
-        uid: loginUid,
-      },
-      footprint: { afterMid, usersVersion },
-    } = store;
-    console.log("set uid use");
-    // 优先使用参数内的token
-    const finalToken = token || reduxToken;
-    const finalRefreshToken = refreshToken || reduxRefreshToken;
-    fetchEventSource(
+      authData: { token, expireTime = new Date().getTime(), refreshToken },
+    } = store.getState();
+    let api_token = token;
+    const tokenAlmostExpire = dayjs().isAfter(new Date(expireTime - 20 * 1000));
+    console.log("check token expire time", tokenAlmostExpire);
+    if (tokenAlmostExpire) {
+      const {
+        data: { token: newToken },
+        isError,
+      } = await renewToken({
+        token,
+        refreshToken,
+      });
+      if (isError) return;
+      api_token = newToken;
+    }
+
+    // 开始初始化
+    initializing = true;
+    await fetchEventSource(
       `${BASE_URL}/user/events?${getQueryString({
-        "api-key": finalToken,
+        "api-key": api_token,
         users_version: usersVersion,
         after_mid: afterMid,
       })}`,
@@ -77,12 +92,13 @@ export default function useStreaming() {
         openWhenHidden: true,
         signal: controller.signal,
         async onopen(response) {
+          initializing = false;
           if (
             response.ok &&
             response.headers.get("content-type") === EventStreamContentType
           ) {
             console.log("sse everything ok");
-            setStatus(StreamStatus.streaming);
+            initialized = true;
             return; // everything's good
           } else if (
             response.status >= 400 &&
@@ -90,36 +106,29 @@ export default function useStreaming() {
             response.status !== 429
           ) {
             // 重新登录
-            if (response.status == 401) {
-              await renewToken({
-                token: finalToken,
-                refreshToken: finalRefreshToken,
-              });
-              return;
-            }
             // client-side errors are usually non-retriable:
+            console.log("sse debug: open fatal");
             throw new FatalError();
           } else {
+            // server error
+            console.log("sse debug: open retry");
             throw new RetriableError();
           }
         },
         onmessage(evt) {
+          initializing = false;
           console.log("sse message", evt.data);
           // if the server emits an error message, throw an exception
           // so it gets handled by the onerror callback below:
           if (evt.event === "FatalError") {
+            console.log("sse debug: error message fatal");
             throw new FatalError(evt.data);
           }
-          const {
-            ui: { ready },
-            footprint: { readUsers, readChannels },
-            channels: { byId: channelData },
-          } = store;
           const data = JSON.parse(evt.data);
           const { type } = data;
           switch (type) {
             case "heartbeat":
-              console.log("heartbeat", store, loginUid);
+              console.log("heartbeat", loginUid);
               break;
             case "ready":
               console.log("streaming ready");
@@ -231,38 +240,63 @@ export default function useStreaming() {
         },
         onclose() {
           // if the server closes the connection unexpectedly, retry:
+          console.log("sse debug: closed");
+          initializing = false;
           throw new RetriableError();
         },
         onerror(err) {
+          initializing = false;
           if (err instanceof FatalError) {
+            console.log("sse debug: error fatal", err);
+            throw err; // rethrow to stop the operation
+          } else {
+            console.log("sse debug: error other", err);
+            stopStreaming();
             if (inter) {
               clearTimeout(inter);
             }
             // 重连
             inter = setTimeout(() => {
+              initialized = false;
               startStreaming();
-            }, 500);
+            }, 2000);
             throw err; // rethrow to stop the operation
-          } else {
             // do nothing to automatically retry. You can also
             // return a specific retry interval here.
           }
         },
       }
     );
+    initializing = false;
     // for controlling
     return controller;
   };
-  useEffect(() => {
-    if (tokenRefreshSuccess) {
-      const { token, refresh_token } = tokenData;
-      startStreaming(token, refresh_token);
+  const stopStreaming = () => {
+    console.log("stop st");
+    if (controller && controller.abort) {
+      controller.abort();
     }
-  }, [tokenData, tokenRefreshSuccess]);
+  };
+  const setStreamingReady = (ready) => {
+    setReadyPullData(ready);
+  };
+  useEffect(() => {
+    console.log("network changed", online, readyPullData);
+    if (readyPullData) {
+      if (online) {
+        startStreaming();
+      } else {
+        stopStreaming();
+      }
+    }
+    return () => {
+      stopStreaming();
+    };
+  }, [online, readyPullData]);
 
   return {
-    initializing: status == StreamStatus.initializing,
-    streaming: status == StreamStatus.streaming,
+    setStreamingReady,
     startStreaming,
+    stopStreaming,
   };
 }
