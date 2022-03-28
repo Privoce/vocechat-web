@@ -18,6 +18,18 @@ export const onMessageSendStarted = async (
 ) => {
   // id: who send to ,from_uid: who sent
   const ts = properties.local_id || new Date().getTime();
+  // let imageData = null;
+  // if (type == "image") {
+  //   if (typeof content == "string" && content.startsWith("data:image")) {
+  //     // base64
+  //     // const resp = await fetch(content);
+  //     // const blob = await resp.blob();
+  //     // imageData = new File([blob], "tmp.png", { type: "image/png" });
+  //     imageData = content;
+  //   } else {
+  //     imageData = URL.createObjectURL(content);
+  //   }
+  // }
   const tmpMsg = {
     content: type == "image" ? URL.createObjectURL(content) : content,
     content_type: ContentTypes[type],

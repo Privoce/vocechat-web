@@ -38,6 +38,26 @@ export const messageApi = createApi({
         method: "DELETE",
       }),
     }),
+    prepareUploadFile: builder.mutation({
+      query: () => ({
+        url: `/resource/file/prepare`,
+        method: "POST",
+      }),
+    }),
+    uploadFile: builder.mutation({
+      query: (formData) => ({
+        // headers: {
+        //   "content-type": ContentTypes.formData,
+        // },
+        url: `/resource/file/upload`,
+        method: "POST",
+        body: formData,
+      }),
+      transformResponse: (data) => {
+        console.log("upload file response", data);
+        return data ? data : {};
+      },
+    }),
     uploadImage: builder.mutation({
       query: (image) => ({
         headers: {
@@ -102,6 +122,8 @@ export const messageApi = createApi({
 });
 
 export const {
+  usePrepareUploadFileMutation,
+  useUploadFileMutation,
   useUploadImageMutation,
   useEditMessageMutation,
   useReactMessageMutation,

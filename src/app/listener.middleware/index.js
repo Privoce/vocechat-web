@@ -7,6 +7,7 @@ import dmMsgHandler from "./handler.dm.msg";
 import serverHandler from "./handler.server";
 import messageHandler from "./handler.message";
 import reactionHandler from "./handler.reaction";
+import UIHandler from "./handler.ui";
 import footprintHandler from "./handler.footprint";
 const operations = [
   "__rtkq",
@@ -16,6 +17,7 @@ const operations = [
   "userMessage",
   "reactionMessage",
   "message",
+  "ui",
   "footprint",
   "server",
 ];
@@ -108,6 +110,15 @@ listenerMiddleware.startListening({
       case "footprint":
         {
           await footprintHandler({
+            operation,
+            payload,
+            data: state,
+          });
+        }
+        break;
+      case "ui":
+        {
+          await UIHandler({
             operation,
             payload,
             data: state,

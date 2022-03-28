@@ -34,6 +34,10 @@ const tables = [
     storeName: "server",
     description: "store server data",
   },
+  {
+    storeName: "ui",
+    description: "store UI state",
+  },
   // {
   //   storeName: "message",
   //   description: "store message with key-val full data",

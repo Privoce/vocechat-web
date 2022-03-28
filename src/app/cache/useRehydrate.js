@@ -9,6 +9,7 @@ import { fullfillUserMsg } from "../slices/message.user";
 import { fullfillChannels } from "../slices/channels";
 import { fullfillContacts } from "../slices/contacts";
 import { fullfillFootprint } from "../slices/footprint";
+import { fullfillUI } from "../slices/ui";
 const useRehydrate = () => {
   const [iterated, setIterated] = useState(false);
   const dispatch = useDispatch();
@@ -21,6 +22,7 @@ const useRehydrate = () => {
       reactionMessage: {},
       message: { replying: {} },
       footprint: {},
+      ui: {},
       server: {},
     };
     const tables = Object.keys(window.CACHE);
@@ -41,6 +43,9 @@ const useRehydrate = () => {
               break;
             case "footprint":
               rehydrateData.footprint[key] = data;
+              break;
+            case "ui":
+              rehydrateData.ui[key] = data;
               break;
             case "messageChannel":
               rehydrateData.channelMessage[key] = data;
@@ -73,6 +78,7 @@ const useRehydrate = () => {
       dispatch(fullfillUserMsg(rehydrateData.userMessage));
       dispatch(fullfillMessage(rehydrateData.message));
       dispatch(fullfillFootprint(rehydrateData.footprint));
+      dispatch(fullfillUI(rehydrateData.ui));
       dispatch(fullfillReactionMessage(rehydrateData.reactionMessage));
     });
 
