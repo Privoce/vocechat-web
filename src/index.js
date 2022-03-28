@@ -8,6 +8,7 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import "./assets/vars.css";
 import "animate.css";
+import MarkdownStyleOverride from "./common/component/MarkdownStyleOverride";
 import ReduxRoutes from "./routes";
 import BASE_URL from "./app/config";
 
@@ -21,6 +22,7 @@ ReactDOM.render(
     <DndProvider backend={HTML5Backend}>
       <ReduxRoutes />
     </DndProvider>
+    <MarkdownStyleOverride />
   </>,
   document.getElementById("root")
 );

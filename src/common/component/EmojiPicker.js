@@ -1,5 +1,7 @@
 // import React from 'react'
+// import { NimblePicker } from "emoji-mart";
 import { Picker } from "emoji-mart";
+// import data from "emoji-mart/data/";
 import "emoji-mart/css/emoji-mart.css";
 import styled from "styled-components";
 const StyledWrapper = styled.div`
@@ -14,6 +16,8 @@ export default function EmojiPicker({ onSelect, ...rest }) {
   return (
     <StyledWrapper>
       <Picker
+        // set="twitter"
+        // data={data}
         // set="twitter"
         showPreview={false}
         showSkinTones={false}

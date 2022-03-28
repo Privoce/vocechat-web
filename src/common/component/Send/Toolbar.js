@@ -1,6 +1,6 @@
-// import React from 'react'
+import { useState, useRef } from "react";
 import styled from "styled-components";
-
+import UploadModal from "../../component/UploadModal";
 import AddIcon from "../../../assets/icons/add.solid.svg";
 import MarkdownIcon from "../../../assets/icons/markdown.svg";
 const Styled = styled.div`
@@ -8,9 +8,15 @@ const Styled = styled.div`
   align-items: center;
   justify-content: flex-end;
   gap: 10px;
+  /* &.markdown {
+    flex-direction: column;
+  } */
   .md {
     cursor: pointer;
     display: flex;
+    .markdown path {
+      fill: #22ccee;
+    }
   }
   .add {
     cursor: pointer;
@@ -28,30 +34,45 @@ const Styled = styled.div`
     }
   }
 `;
-export default function Toolbar({
-  contentType = "text",
-  updateContentType,
-  handleUpload,
-  handleSend,
-}) {
-  const toggleMarkdown = () => {
-    updateContentType(contentType == "markdown" ? "text" : "markdown");
+export default function Toolbar({ toggleMode, mode, to, type }) {
+  const [files, setFiles] = useState([]);
+  const fileInputRef = useRef(null);
+  const resetFiles = () => {
+    setFiles([]);
+    fileInputRef.current.value = "";
+  };
+
+  const handleUpload = (evt) => {
+    const files = [...evt.target.files];
+    console.log("files", files);
+    setFiles([...evt.target.files]);
   };
   return (
-    <Styled>
-      <div className="md" onClick={toggleMarkdown}>
-        {contentType == "markdown" ? <MarkdownIcon /> : <MarkdownIcon />}
-      </div>
-      <div className="add">
-        <AddIcon />
-        <input
-          multiple={true}
-          onChange={handleUpload}
-          type="file"
-          name="file"
-          id="file"
+    <>
+      {files.length !== 0 && (
+        <UploadModal
+          type={type}
+          files={files}
+          sendTo={to}
+          closeModal={resetFiles}
         />
-      </div>
-    </Styled>
+      )}
+      <Styled className={mode}>
+        <div className="md" onClick={toggleMode}>
+          <MarkdownIcon className={mode} />
+        </div>
+        <div className="add">
+          <AddIcon />
+          <input
+            ref={fileInputRef}
+            multiple={false}
+            onChange={handleUpload}
+            type="file"
+            name="file"
+            id="file"
+          />
+        </div>
+      </Styled>
+    </>
   );
 }

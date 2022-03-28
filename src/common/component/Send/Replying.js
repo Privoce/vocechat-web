@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ContentTypes } from "../../../app/config";
 import closeIcon from "../../../assets/icons/close.circle.svg?url";
 import pictureIcon from "../../../assets/icons/picture.svg?url";
+import { getFileIcon } from "../../utils";
 import { removeReplyingMessage } from "../../../app/slices/message";
 import styled from "styled-components";
 const Styled = styled.div`
@@ -41,6 +42,17 @@ const Styled = styled.div`
     overflow: hidden;
     text-overflow: ellipsis;
     padding-right: 30px;
+    display: flex;
+    align-items: center;
+    .icon {
+      width: 15px;
+      height: 20px;
+    }
+    .name {
+      margin-left: 5px;
+      font-size: 10px;
+      color: #555;
+    }
   }
   .close {
     background: none;
@@ -51,7 +63,7 @@ const Styled = styled.div`
   }
 `;
 const renderContent = (data) => {
-  const { content_type, content } = data;
+  const { content_type, content, properties } = data;
   let res = null;
   switch (content_type) {
     case ContentTypes.text:
@@ -61,7 +73,18 @@ const renderContent = (data) => {
     case ContentTypes.imageJPG:
       res = <img className="pic" src={pictureIcon} />;
       break;
-
+    case ContentTypes.file:
+      {
+        const { file_type, name } = properties;
+        const icon = getFileIcon(file_type, name);
+        res = (
+          <>
+            {icon}
+            <span className="name">{name}</span>
+          </>
+        );
+      }
+      break;
     default:
       break;
   }

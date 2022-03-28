@@ -54,7 +54,7 @@ import Styled from "./styled";
 import { CONFIG } from "./config";
 // import { VALUES } from "./values/values";
 
-const id = "rustchat_richEditor";
+const id = "rustchat_rich_editor";
 
 let components = createPlateUI({
   // customize your components by plugin key
@@ -183,6 +183,7 @@ const Plugins = ({
       updatePureText("");
     }
   };
+
   return (
     <Styled className="input" ref={editableRef}>
       <Plate
