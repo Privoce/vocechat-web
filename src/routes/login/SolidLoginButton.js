@@ -2,6 +2,8 @@
 import { useEffect } from "react";
 import { useGetOpenidMutation } from "../../app/services/auth";
 import solidSvg from "../../assets/icons/solid.svg?url";
+import { StyledSocialButton } from "./styled";
+
 export default function SolidLoginButton() {
   const [getOpenId, { data, isLoading, isSuccess }] = useGetOpenidMutation();
 
@@ -21,14 +23,13 @@ export default function SolidLoginButton() {
   }, [data, isSuccess]);
 
   return (
-    <button
+    <StyledSocialButton
       disabled={isLoading}
       onClick={handleSolidLogin}
       href="#"
-      className="btn social"
     >
       <img src={solidSvg} className="icon" alt="solid icon" />
       {isLoading ? `Redirecting...` : `Sign in with Solid`}
-    </button>
+    </StyledSocialButton>
   );
 }

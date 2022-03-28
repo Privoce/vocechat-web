@@ -120,6 +120,7 @@ export default function ConfigSMTP() {
         <div className="input">
           <Label htmlFor="desc">Password</Label>
           <Input
+            type={"password"}
             disabled={!enabled}
             data-type="password"
             onChange={handleChange}

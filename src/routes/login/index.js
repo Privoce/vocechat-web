@@ -8,7 +8,8 @@ import BASE_URL from "../../app/config";
 import StyledWrapper from "./styled";
 import MetamaskLoginButton from "./MetamaskLoginButton";
 import SolidLoginButton from "./SolidLoginButton";
-
+import Input from "../../common/component/styled/Input";
+import Button from "../../common/component/styled/Button";
 import GoogleLoginButton from "./GoogleLoginButton";
 import { useLoginMutation } from "../../app/services/auth";
 import { setAuthData } from "../../app/slices/auth.data";
@@ -96,7 +97,8 @@ export default function LoginPage() {
           <span className="desc">Please enter your details.</span>
         </div>
         <form onSubmit={handleLogin}>
-          <input
+          <Input
+            className="large"
             name="email"
             value={email}
             required
@@ -104,7 +106,8 @@ export default function LoginPage() {
             data-type="email"
             onChange={handleInput}
           />
-          <input
+          <Input
+            className="large"
             type="password"
             value={password}
             name="password"
@@ -113,9 +116,9 @@ export default function LoginPage() {
             onChange={handleInput}
             placeholder="Enter your password"
           />
-          <button className="btn" type="submit" disabled={isLoading}>
+          <Button type="submit" disabled={isLoading}>
             {isLoading ? "Signing" : `Sign in`}
-          </button>
+          </Button>
         </form>
         <hr className="or" />
         <GoogleLoginButton login={login} />

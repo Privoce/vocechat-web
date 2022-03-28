@@ -3,6 +3,8 @@ import { useState, useEffect, useRef } from "react";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import { useLazyGetMetamaskNonceQuery } from "../../app/services/auth";
 import metamaskSvg from "../../assets/icons/metamask.svg?url";
+import { StyledSocialButton } from "./styled";
+
 export default function MetamaskLoginButton({ login }) {
   const [requesting, setRequesting] = useState(false);
   const [getNonce] = useLazyGetMetamaskNonceQuery();
@@ -43,14 +45,13 @@ export default function MetamaskLoginButton({ login }) {
     }
   };
   return (
-    <button
+    <StyledSocialButton
       disabled={requesting}
       onClick={handleMetamaskLogin}
       href="#"
-      className="btn social"
     >
       <img className="icon" src={metamaskSvg} alt="meta mask icon" />
       Sign in with MetaMask
-    </button>
+    </StyledSocialButton>
   );
 }

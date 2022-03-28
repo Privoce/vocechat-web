@@ -1,4 +1,20 @@
 import styled from "styled-components";
+import Button from "../../common/component/styled/Button";
+export const StyledSocialButton = styled(Button)`
+  width: 100%;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #344054;
+  border: 1px solid #d0d5dd;
+  background: none !important;
+  .icon {
+    width: 24px;
+    height: 24px;
+  }
+`;
 const StyledWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -39,18 +55,7 @@ const StyledWrapper = styled.div`
       display: flex;
       flex-direction: column;
       gap: 20px;
-      input {
-        width: 360px;
-        background: #ffffff;
-        border: 1px solid #d0d5dd;
-        box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
-        border-radius: 8px;
-        padding: 10px 14px;
-        font-weight: normal;
-        font-size: 16px;
-        line-height: 24px;
-        color: #667085;
-      }
+      width: 360px;
     }
     .or {
       border: none;
@@ -69,34 +74,6 @@ const StyledWrapper = styled.div`
         font-size: 14px;
         line-height: 20px;
         color: #667085;
-      }
-    }
-    .btn {
-      display: inline-block;
-      text-align: center;
-      width: 100%;
-      font-weight: 500;
-      font-size: 16px;
-      line-height: 24px;
-      color: #ffffff;
-      padding: 10px;
-      background: #1fe1f9;
-      border: 1px solid #1fe1f9;
-      box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
-      border-radius: 8px;
-      &.social {
-        margin-bottom: 16px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 12px;
-        color: #344054;
-        border-color: #d0d5dd;
-        background: none;
-        .icon {
-          width: 24px;
-          height: 24px;
-        }
       }
     }
   }
