@@ -8,10 +8,12 @@ import HomePage from "./home";
 import ChatPage from "./chat";
 import ContactsPage from "./contacts";
 import RequireAuth from "../common/component/RequireAuth";
+import RequireNoAuth from "../common/component/RequireNoAuth";
 
 import store from "../app/store";
 import InvitePage from "./invite";
 import toast from "react-hot-toast";
+import ResourceManagement from "./resources";
 
 const PageRoutes = () => {
   const { online } = useSelector((store) => store.ui);
@@ -28,7 +30,14 @@ const PageRoutes = () => {
   return (
     <HashRouter>
       <Routes>
-        <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/login"
+          element={
+            <RequireNoAuth>
+              <LoginPage />
+            </RequireNoAuth>
+          }
+        />
         <Route path="/invite" element={<InvitePage />} />
         <Route
           path="/"
@@ -48,6 +57,7 @@ const PageRoutes = () => {
             <Route index element={<ContactsPage />} />
             <Route path=":user_id" element={<ContactsPage />} />
           </Route>
+          <Route path="files" element={<ResourceManagement />}></Route>
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
