@@ -23,6 +23,10 @@ const userMsgSlice = createSlice({
         if (midExsited || localMsgExsited) return;
 
         state.byId[id].push(+mid);
+        // 只要有新消息，就检查下
+        if (state.ids.findIndex((uid) => uid == id) == -1) {
+          state.ids.push(+id);
+        }
       } else {
         state.byId[id] = [+mid];
         state.ids.push(+id);

@@ -99,6 +99,8 @@ function Message({ contextId = 0, mid = "", context = "user" }) {
             />
           ) : (
             renderContent({
+              from_uid: fromUid,
+              created_at: time,
               content_type,
               properties,
               content,

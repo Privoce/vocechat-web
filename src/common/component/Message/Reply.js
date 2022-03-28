@@ -2,6 +2,7 @@
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { ContentTypes } from "../../../app/config";
+import { getFileIcon } from "../../utils";
 import Avatar from "../Avatar";
 const Styled = styled.div`
   cursor: pointer;
@@ -37,15 +38,26 @@ const Styled = styled.div`
     font-size: 14px;
     line-height: 20px;
     color: #616161;
+    display: flex;
+    align-items: center;
     .pic {
       display: inherit;
       max-width: 34px;
+    }
+    .icon {
+      width: 15px;
+      height: 20px;
+    }
+    .name {
+      margin-left: 5px;
+      font-size: 10px;
+      color: #555;
     }
   }
   /* padding-left: 10px; */
 `;
 const renderContent = (data) => {
-  const { content_type, content, thumbnail } = data;
+  const { content_type, content, thumbnail, properties } = data;
   let res = null;
   switch (content_type) {
     case ContentTypes.text:
@@ -54,6 +66,18 @@ const renderContent = (data) => {
     case ContentTypes.image:
     case ContentTypes.imageJPG:
       res = <img className="pic" src={thumbnail} />;
+      break;
+    case ContentTypes.file:
+      {
+        const { file_type, name } = properties;
+        const icon = getFileIcon(file_type, name);
+        res = (
+          <>
+            {icon}
+            <span className="name">{name}</span>
+          </>
+        );
+      }
       break;
 
     default:

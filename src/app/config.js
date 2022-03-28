@@ -8,12 +8,14 @@ export const ContentTypes = {
   image: "image/png",
   imageJPG: "image/jpeg",
   file: "rustchat/file",
+  formData: "multipart/form-data",
   json: "application/json",
 };
 export const googleClientID =
   "418687074928-naojba82n9ktf0rkvnqoor4nhr54ql1b.apps.googleusercontent.com";
 // "840319286941-6ds7lbvk55eq8mjortf68cb2ll65lprt.apps.googleusercontent.com";
 export const tokenHeader = "X-API-Key";
+export const FILE_SLICE_SIZE = 1000 * 200 * 8; //200kb
 export const KEY_TOKEN = "RUSTCHAT_TOKEN";
 export const KEY_EXPIRE = "RUSTCHAT_TOKEN_EXPIRE";
 export const KEY_REFRESH_TOKEN = "RUSTCHAT_REFRESH_TOKEN";

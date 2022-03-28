@@ -2,7 +2,10 @@ import Linkify from "react-linkify";
 import dayjs from "dayjs";
 import MrakdownRender from "../MrakdownRender";
 import { getDefaultSize } from "../../utils";
+import FileBox from "./FileBox";
 const renderContent = ({
+  from_uid,
+  created_at,
   properties,
   content_type,
   content,
@@ -53,7 +56,22 @@ const renderContent = ({
             className="img preview"
             style={{ width: `${width}px`, height: `${height}px` }}
             data-origin={content}
-            src={thumbnail}
+            src={thumbnail || content}
+          />
+        );
+      }
+      break;
+    case "rustchat/file":
+      {
+        const { size, name, file_type } = properties;
+        ctn = (
+          <FileBox
+            from_uid={from_uid}
+            created_at={created_at}
+            content={content}
+            size={size}
+            name={name}
+            file_type={file_type}
           />
         );
       }

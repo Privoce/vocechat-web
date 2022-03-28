@@ -62,7 +62,6 @@ export default function HomePage() {
           <div className="divider"></div>
           {/* <Tools expand={menuExpand} /> */}
           <Menu toggle={toggleExpand} expand={menuExpand} />
-          {/* <CurrentUser expand={menuExpand} /> */}
         </div>
         <div className="col right">
           <Outlet />

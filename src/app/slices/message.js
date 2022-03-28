@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import BASE_URL from "../config";
+import BASE_URL, { ContentTypes } from "../config";
 const initialState = {
   replying: {},
+  fileMessages: [],
 };
 const messageSlice = createSlice({
   name: "message",
@@ -11,7 +12,7 @@ const messageSlice = createSlice({
       return initialState;
     },
     fullfillMessage(state, action) {
-      return action.payload;
+      return Object.assign({ ...initialState }, action.payload);
     },
     updateMessage(state, action) {
       const { mid, ...rest } = action.payload;
@@ -33,6 +34,17 @@ const messageSlice = createSlice({
       // 如果是正发送，并且已存在，则不覆盖
       if (sending && state[mid]) return;
       const isImage = content_type.startsWith("image");
+      const isFile = content_type == ContentTypes.file;
+      // file
+      if (!sending && isFile) {
+        data.file_path = content;
+        data.content = `${BASE_URL}/resource/file?file_path=${encodeURIComponent(
+          data.file_path
+        )}`;
+        // 加入file message 列表
+        state.fileMessages.unshift(mid);
+      }
+      // image
       if (!sending && isImage) {
         data.image_id = content;
         data.content = `${BASE_URL}/resource/image?id=${encodeURIComponent(
@@ -50,6 +62,11 @@ const messageSlice = createSlice({
         : [action.payload];
       mids.forEach((id) => {
         delete state[id];
+        // 从file message 列表删掉
+        const fidIdx = state.fileMessages.findIndex((fid) => fid == id);
+        if (fidIdx > -1) {
+          state.fileMessages.splice(fidIdx, 1);
+        }
       });
     },
     addReplyingMessage(state, action) {

@@ -1,3 +1,10 @@
+import IconPdf from "../assets/icons/file.pdf.svg";
+import IconAudio from "../assets/icons/file.audio.svg";
+import IconVideo from "../assets/icons/file.video.svg";
+import IconUnkown from "../assets/icons/file.unkown.svg";
+import IconDoc from "../assets/icons/file.doc.svg";
+import IconCode from "../assets/icons/file.code.svg";
+import IconImage from "../assets/icons/file.image.svg";
 export const isObjectEqual = (obj1, obj2) => {
   let o1 = Object.entries(obj1 ?? {})
     .sort()
@@ -7,6 +14,17 @@ export const isObjectEqual = (obj1, obj2) => {
     .toString();
   return o1 === o2;
 };
+export const isTreatAsImage = (file) => {
+  let isImage = false;
+  if (!file) return isImage;
+  const { type, size } = file;
+  if (type.startsWith("image")) {
+    // 10MB
+    return size < 1000 * 1000;
+  }
+  return isImage;
+};
+
 export const getNonNullValues = (obj, whiteList = ["log_id"]) => {
   const tmp = {};
   Object.keys(obj).forEach((k) => {
@@ -85,4 +103,64 @@ export const getInitialsAvatar = ({
 
   /* istanbul ignore next */
   return canvas.toDataURL("image/png");
+};
+/**
+ * @param {File|Blob} - file to slice
+ * @param {Number} - chunksAmount
+ * @return {Array} - an array of Blobs
+ **/
+export function sliceFile(file, chunksAmount) {
+  if (!file) return null;
+  let byteIndex = 0;
+  let chunks = [];
+
+  for (let i = 0; i < chunksAmount; i += 1) {
+    let byteEnd = Math.ceil((file.size / chunksAmount) * (i + 1));
+    chunks.push(file.slice(byteIndex, byteEnd));
+    byteIndex += byteEnd - byteIndex;
+  }
+
+  return chunks;
+}
+export const getFileIcon = (type, name = "") => {
+  let icon = null;
+
+  const checks = {
+    image: /^image/gi,
+    audio: /^audio/gi,
+    video: /^video/gi,
+    code: /(json|javascript|java|rb|c|php|xml|css|html)$/gi,
+    doc: /^text/gi,
+    pdf: /\/pdf$/gi,
+  };
+  const _arr = name.split(".");
+  const _type = type || _arr[_arr.length - 1];
+  switch (true) {
+    case checks.image.test(_type):
+      {
+        console.log("image");
+        icon = <IconImage className="icon" />;
+      }
+      break;
+    case checks.pdf.test(_type):
+      icon = <IconPdf className="icon" />;
+      break;
+    case checks.code.test(_type):
+      icon = <IconCode className="icon" />;
+      break;
+    case checks.doc.test(_type):
+      icon = <IconDoc className="icon" />;
+      break;
+    case checks.audio.test(_type):
+      icon = <IconAudio className="icon" />;
+      break;
+    case checks.video.test(_type):
+      icon = <IconVideo className="icon" />;
+      break;
+
+    default:
+      icon = <IconUnkown className="icon" />;
+      break;
+  }
+  return icon;
 };

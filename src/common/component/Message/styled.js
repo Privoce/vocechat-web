@@ -30,7 +30,7 @@ const StyledMsg = styled.div`
       border-radius: 50%;
     }
   }
-  .details {
+  > .details {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -74,8 +74,9 @@ const StyledMsg = styled.div`
         cursor: pointer;
       }
       a {
+        text-decoration: none;
         border-radius: 2px;
-        background-color: #f5feff;
+        /* background-color: #f5feff; */
         padding: 2px;
         color: #1fe1f9;
       }
