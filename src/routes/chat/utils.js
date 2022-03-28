@@ -42,25 +42,25 @@ export const renderPreviewMessage = (message = null) => {
   switch (content_type) {
     case ContentTypes.text:
       {
-        res = <div className="msg">{content}</div>;
+        res = content;
       }
       break;
     case ContentTypes.imageJPG:
     case ContentTypes.image:
       {
-        res = <div className="msg">[image]</div>;
+        res = `[image]`;
       }
 
       break;
     case ContentTypes.markdown:
       {
-        res = <div className="msg">[markdown]</div>;
+        res = `[markdown]`;
       }
 
       break;
     case ContentTypes.file:
       {
-        res = <div className="msg">[file]</div>;
+        res = `[file]`;
       }
 
       break;

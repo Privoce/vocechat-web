@@ -1,8 +1,9 @@
 // import React from 'react'
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useMatch } from "react-router-dom";
 import { useDrop } from "react-dnd";
 import { useSelector, useDispatch } from "react-redux";
 import { NativeTypes } from "react-dnd-html5-backend";
+
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Tippy from "@tippyjs/react";
@@ -16,6 +17,7 @@ import { renderPreviewMessage } from "../utils";
 import Contact from "../../../common/component/Contact";
 const NavItem = ({ uid, mid, unreads, setFiles }) => {
   const dispatch = useDispatch();
+  const pathMatched = useMatch(`/chat/dm/${uid}`);
   const [updateReadIndex] = useReadMessageMutation();
   const { currMsg, currUser } = useSelector((store) => {
     return {
@@ -53,8 +55,11 @@ const NavItem = ({ uid, mid, unreads, setFiles }) => {
   };
   const handleRemoveSession = () => {
     dispatch(removeUserSession(uid));
+    if (pathMatched) {
+      navigate("/chat");
+    }
   };
-  if (!currUser || !currMsg) return null;
+  if (!currUser) return null;
   return (
     <Tippy
       interactive
@@ -95,7 +100,7 @@ const NavItem = ({ uid, mid, unreads, setFiles }) => {
           </div>
 
           <div className="down">
-            {renderPreviewMessage(currMsg)}
+            <div className="msg">{renderPreviewMessage(currMsg)}</div>
             {unreads > 0 && (
               <i className={`badge ${unreads > 99 ? "dot" : ""}`}>
                 {unreads > 99 ? null : unreads}
