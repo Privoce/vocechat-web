@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useState } from "react";
 
 import { useSelector } from "react-redux";
 import useChatScroll from "../../../common/hook/useChatScroll";
@@ -23,7 +23,6 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
   // const containerRef = useRef(null);
   const [membersVisible, setMembersVisible] = useState(true);
   const [addMemberModalVisible, setAddMemberModalVisible] = useState(false);
-  const [dragFiles, setDragFiles] = useState([]);
   // const dispatch = useDispatch();
   const { msgIds, userIds, data, messageData } = useSelector((store) => {
     return {
@@ -43,11 +42,6 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
   const toggleAddVisible = () => {
     setAddMemberModalVisible((prev) => !prev);
   };
-  useEffect(() => {
-    if (dropFiles.length) {
-      setDragFiles(dropFiles);
-    }
-  }, [dropFiles]);
   const { name, description, is_public, members = [] } = data;
   const memberIds = members.length == 0 ? userIds : members;
   console.log("channel message list", msgIds);
@@ -61,7 +55,9 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
         />
       )}
       <Layout
-        setDragFiles={setDragFiles}
+        to={cid}
+        type="channel"
+        dropFiles={dropFiles}
         // ref={containerRef}
         header={
           <StyledHeader>
@@ -128,7 +124,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
                   })}
               </div>
             </div>
-            <Send dragFiles={dragFiles} id={cid} type="channel" name={name} />
+            <Send id={cid} type="channel" name={name} />
           </div>
         </StyledChannelChat>
         {/* {unreads != 0 && (

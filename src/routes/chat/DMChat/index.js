@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+// import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import addIcon from "../../../assets/icons/add.person.svg?url";
 import callIcon from "../../../assets/icons/call.svg?url";
@@ -11,7 +11,6 @@ import { StyledHeader, StyledDMChat } from "./styled";
 import { renderMessageFragment } from "../utils";
 export default function DMChat({ uid = "", dropFiles = [] }) {
   console.log("dm files", dropFiles);
-  const [dragFiles, setDragFiles] = useState([]);
   // const [mids, setMids] = useState([]);
   const { msgIds, currUser, messageData } = useSelector((store) => {
     return {
@@ -21,20 +20,14 @@ export default function DMChat({ uid = "", dropFiles = [] }) {
     };
   });
   const ref = useChatScroll(msgIds);
-  // useEffect(() => {
-  //   setMids(msgIds);
-  // }, [msgIds]);
-  useEffect(() => {
-    if (dropFiles.length) {
-      setDragFiles(dropFiles);
-    }
-  }, [dropFiles]);
 
   if (!currUser) return null;
   // console.log("user msgs", msgs);
   return (
     <Layout
-      setDragFiles={setDragFiles}
+      to={uid}
+      type="user"
+      dropFiles={dropFiles}
       header={
         <StyledHeader>
           <Contact interactive={false} uid={currUser.uid} />
@@ -69,12 +62,7 @@ export default function DMChat({ uid = "", dropFiles = [] }) {
               });
             })}
         </div>
-        <Send
-          dragFiles={dragFiles}
-          type="user"
-          name={currUser?.name}
-          id={currUser?.uid}
-        />
+        <Send type="user" name={currUser?.name} id={currUser?.uid} />
       </StyledDMChat>
     </Layout>
   );
