@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.efc76a5b.css",
-    "main.js": "/static/js/main.306ba85c.js",
+    "main.js": "/static/js/main.f557a6a1.js",
     "static/media/metamask.svg?url": "/static/media/metamask.f04d5fb63394197766d0.svg",
     "static/media/question.svg?url": "/static/media/question.f1e6b7aab95b0ab2de07.svg",
     "static/media/setting.svg?url": "/static/media/setting.90625285b10ea1869685.svg",
@@ -10,9 +10,9 @@
     "static/media/upload.image.svg?url": "/static/media/upload.image.9f8c7fc90042d2ff4eb7.svg",
     "static/media/add.person.svg?url": "/static/media/add.person.a0bfebd68284e36dd02d.svg",
     "index.html": "/index.html",
-    "static/media/chat.svg?url": "/static/media/chat.9e76f28422af6e4718e5.svg",
+    "static/media/chat.svg?url": "/static/media/chat.92444d6705052d65d42c.svg",
+    "static/media/contact.svg?url": "/static/media/contact.74914ea6c4ad74d8d7be.svg",
     "static/media/sound.on.svg?url": "/static/media/sound.on.b52a5b656fded2ead800.svg",
-    "static/media/contact.svg?url": "/static/media/contact.8b7bd7ae2e29e7f99ca9.svg",
     "static/media/add.emoji.svg?url": "/static/media/add.emoji.b1d5ed1b1206ddc32d02.svg",
     "static/media/reaction.svg?url": "/static/media/reaction.0331fff6e65b40b305cc.svg",
     "static/media/google.svg?url": "/static/media/google.db7474a481e12799b961.svg",
@@ -23,6 +23,7 @@
     "static/media/search.svg?url": "/static/media/search.ca71771f048c3d740d92.svg",
     "static/media/mic.on.svg?url": "/static/media/mic.on.ce4d7bc6e790710d7c3b.svg",
     "static/media/call.svg?url": "/static/media/call.bf368e316e813960eb34.svg",
+    "static/media/folder.svg?url": "/static/media/folder.dd39300d05a94c7f4040.svg",
     "static/media/alert.svg?url": "/static/media/alert.d73f776dbb5efa9bd58d.svg",
     "static/media/reply.svg?url": "/static/media/reply.5d4e2e3c5d8cf0c084f0.svg",
     "static/media/pin.svg?url": "/static/media/pin.32e72a65613aa6d8eebf.svg",
@@ -35,10 +36,10 @@
     "static/media/mail.svg?url": "/static/media/mail.406f52a37e66b72d9262.svg",
     "static/media/arrow.left.svg?url": "/static/media/arrow.left.92fbb139607631555459.svg",
     "main.efc76a5b.css.map": "/static/css/main.efc76a5b.css.map",
-    "main.306ba85c.js.map": "/static/js/main.306ba85c.js.map"
+    "main.f557a6a1.js.map": "/static/js/main.f557a6a1.js.map"
   },
   "entrypoints": [
     "static/css/main.efc76a5b.css",
-    "static/js/main.306ba85c.js"
+    "static/js/main.f557a6a1.js"
   ]
 }
