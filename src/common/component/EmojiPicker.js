@@ -11,6 +11,12 @@ const StyledWrapper = styled.div`
     border: none;
     border-radius: 12px;
   }
+  .emoji-mart-emoji {
+    cursor: pointer;
+    span {
+      cursor: inherit;
+    }
+  }
 `;
 export default function EmojiPicker({ onSelect, ...rest }) {
   return (

@@ -32,7 +32,7 @@ const StyledButton = styled.button`
     color: #fff;
   }
   &.ghost {
-    border-color: #1fe1f9;
+    border: 1px solid #1fe1f9;
     background: none;
     color: #1fe1f9;
   }

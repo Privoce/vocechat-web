@@ -56,7 +56,6 @@ export default function LogoutConfirmModal({ closeModal }) {
         description="Are you sure want to log out this account?"
         buttons={
           <>
-            {" "}
             <Button onClick={closeModal}>Cancel</Button>
             <Button onClick={handleLogout} className="danger">
               {exiting ? "Logging out" : `Log Out`}
