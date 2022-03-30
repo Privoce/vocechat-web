@@ -1,7 +1,10 @@
 import { useEffect } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import { useLazyCreateInviteLinkQuery } from "../../app/services/server";
+import {
+  useLazyCreateInviteLinkQuery,
+  useGetSMTPConfigQuery,
+} from "../../app/services/server";
 import Button from "./styled/Button";
 import useCopy from "../hook/useCopy";
 const StyledWrapper = styled.div`
@@ -47,6 +50,10 @@ const StyledWrapper = styled.div`
   }
 `;
 export default function InviteLink() {
+  const {
+    data: config,
+    isSuccess: configQuerySuccess,
+  } = useGetSMTPConfigQuery();
   const [copid, copy] = useCopy();
   const {
     inviteLink: { link },
@@ -66,17 +73,23 @@ export default function InviteLink() {
   const handleNewLink = () => {
     createLink();
   };
-  if (!loginUser || !loginUser.is_admin) return null;
+  if (!loginUser || !loginUser.is_admin || !configQuerySuccess) return null;
+  let finalLink = null;
+  if (link) {
+    const tmpURL = new URL(link);
+    tmpURL.searchParams.set("code", config.enabled);
+    finalLink = tmpURL.href;
+  }
   return (
     <StyledWrapper>
       <span className="tip">
         Share this link to invite people to this server.
       </span>
       <div className="link">
-        <span title={link} className="content">
-          {link}
+        <span title={finalLink} className="content">
+          {finalLink}
         </span>
-        <Button onClick={copy.bind(null, link)} className="main">
+        <Button onClick={copy.bind(null, finalLink)} className="main">
           {copid ? "Copied" : `Copy`}
         </Button>
       </div>
