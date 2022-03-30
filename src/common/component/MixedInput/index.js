@@ -12,16 +12,31 @@ import {
   createSoftBreakPlugin,
   createPlugins,
   ELEMENT_PARAGRAPH,
-  getPlateActions,
+  getPlateEditorRef,
   // usePlateEditorRef,
   ELEMENT_IMAGE,
   // usePlateStore
 } from "@udecode/plate";
+import { ReactEditor } from "slate-react";
 import Styled from "./styled";
 import ImageElement from "./ImageElement";
 import { CONFIG } from "./config";
 
 export const TEXT_EDITOR_PREFIX = "rustchat_text_editor";
+export const setEditorFocus = (edtr) => {
+  console.log("focus", edtr);
+  ReactEditor.focus(edtr);
+};
+export const clearEditorAndFocus = (edtr) => {
+  console.log("focus", edtr);
+
+  Transforms.delete(edtr, {
+    at: {
+      anchor: Editor.start(edtr, []),
+      focus: Editor.end(edtr, []),
+    },
+  });
+};
 
 let components = createPlateUI({
   [ELEMENT_IMAGE]: ImageElement,
@@ -54,13 +69,8 @@ const Plugins = ({
       evt.preventDefault();
       sendMessages(msgs);
       // 清空
-      const plateEditor = getPlateActions(`${TEXT_EDITOR_PREFIX}_${id}`).editor;
-      Transforms.delete(plateEditor, {
-        at: {
-          anchor: Editor.start(plateEditor, []),
-          focus: Editor.end(plateEditor, []),
-        },
-      });
+      const plateEditor = getPlateEditorRef(`${TEXT_EDITOR_PREFIX}_${id}`);
+      clearEditorAndFocus(plateEditor);
     },
     {
       // eventTypes: ["keydown"],
@@ -92,9 +102,10 @@ const Plugins = ({
       components,
     }
   );
+
   const handleChange = useCallback(
     async (val) => {
-      console.log("tmps changed");
+      console.log("tmps changed", val);
       const tmps = [];
       for await (const v of val) {
         if (v.type == "img") {
@@ -130,23 +141,11 @@ const Plugins = ({
     },
     [msgs]
   );
-  // useEffect(() => {
-  //   return () => {
-  //     if (plateEditor) {
-  //       // 清空
-  //       Transforms.delete(plateEditor, {
-  //         at: {
-  //           anchor: Editor.start(plateEditor, []),
-  //           focus: Editor.end(plateEditor, []),
-  //         },
-  //       });
-  //     }
-  //   };
-  // }, [plateEditor]);
 
   return (
     <Styled className="input" ref={editableRef}>
       <Plate
+        edi
         onChange={handleChange}
         id={`${TEXT_EDITOR_PREFIX}_${id}`}
         editableProps={{ ...initialProps, style: { userSelect: "text" } }}
