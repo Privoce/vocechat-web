@@ -1,13 +1,16 @@
 import { useState, useEffect, useRef } from "react";
 import Styled from "./styled";
 import { useSelector } from "react-redux";
+import Masonry from "masonry-layout";
 // import waterfall from "waterfall.js/src/waterfall";
 import View, { Views } from "./View";
 import Search from "./Search";
 import Filter from "./Filter";
 import FileBox from "../../common/component/FileBox";
+let msnry = null;
 export default function ResourceManagement() {
   const listContainerRef = useRef(null);
+  const [filter, setFilter] = useState({});
   const [view, setView] = useState(Views.item);
   const { fileMessages, message } = useSelector((store) => {
     return { message: store.message, fileMessages: store.fileMessage };
@@ -16,13 +19,29 @@ export default function ResourceManagement() {
   const toggleView = () => {
     setView((prev) => (prev == Views.item ? Views.grid : Views.item));
   };
-  // useEffect(() => {
-  //   if (view == Views.grid && listContainerRef) {
-  //     const wtf = waterfall(listContainerRef.current);
-  //     console.log("wtf", wtf);
-  //     waterfall
-  //   }
-  // }, [view]);
+  const updateFilter = (data) => {
+    setFilter((prev) => {
+      return { ...prev, ...data };
+    });
+  };
+  useEffect(() => {
+    if (view == Views.grid && listContainerRef) {
+      msnry = new Masonry(listContainerRef.current, {
+        // options
+        itemSelector: ".file_box",
+        // columnWidth: 200
+      });
+    } else {
+      if (msnry) {
+        msnry.destroy();
+      }
+    }
+    // return ()=>{
+    //   if(msnry){
+    //     msnry.destory()
+    //   }
+    // }
+  }, [view]);
 
   console.log("files", fileMessages);
   return (
@@ -30,7 +49,7 @@ export default function ResourceManagement() {
       <Search />
       <div className="divider"></div>
       <div className="opts">
-        <Filter />
+        <Filter filter={filter} updateFilter={updateFilter} />
         <View view={view} toggleView={toggleView} />
       </div>
       <div className={`list ${view}`} ref={listContainerRef}>

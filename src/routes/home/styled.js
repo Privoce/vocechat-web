@@ -9,6 +9,7 @@ const StyledWrapper = styled.div`
     display: flex;
     flex-direction: column;
     &.left {
+      align-items: center;
       position: relative;
       background: #e5e7eb;
       width: 64px;
@@ -21,7 +22,7 @@ const StyledWrapper = styled.div`
         margin: 8px 16px;
       }
       &.expand {
-        width: 180px;
+        width: 140px;
       }
     }
     &.right {

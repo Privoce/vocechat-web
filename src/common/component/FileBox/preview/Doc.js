@@ -8,10 +8,8 @@ const Styled = styled.div`
   overflow: scroll;
   white-space: pre-wrap;
   word-break: break-all;
-  background-color: #000;
-  color: #eee;
 `;
-export default function Code({ url = "" }) {
+export default function Doc({ url = "" }) {
   const [content, setContent] = useState("");
   useEffect(() => {
     const getContent = async (url) => {

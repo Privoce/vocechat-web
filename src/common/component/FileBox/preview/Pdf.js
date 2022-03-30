@@ -2,7 +2,8 @@ import { useState } from "react";
 import styled from "styled-components";
 import { Document, Page } from "react-pdf";
 const Styled = styled.div`
-  height: 218px;
+  padding: 8px;
+  /* height: 218px; */
   overflow: hidden;
   img {
     width: 100%;

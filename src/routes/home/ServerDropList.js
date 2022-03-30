@@ -4,15 +4,12 @@ import styled from "styled-components";
 
 const StyledWrapper = styled.div`
   min-height: 56px;
-  padding: 0 20px;
-  padding-right: 5px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.1);
-  &.expand {
+  /* &.expand {
     padding-right: 16px;
-  }
+  } */
   .server {
     display: flex;
     align-items: center;

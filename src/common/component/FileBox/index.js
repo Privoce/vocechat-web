@@ -9,6 +9,7 @@ import {
   ImagePreview,
   PdfPreview,
   CodePreview,
+  DocPreview,
 } from "./preview";
 import { getFileIcon, formatBytes } from "../../utils";
 import IconDownload from "../../../assets/icons/download.svg";
@@ -40,9 +41,9 @@ const renderPreview = (data) => {
     case checks.code.test(_type):
       preview = <CodePreview url={content} />;
       break;
-    // case checks.doc.test(_type):
-    //   icon = <IconDoc className="icon" />;
-    //   break;
+    case checks.doc.test(_type):
+      preview = <DocPreview url={content} />;
+      break;
     case checks.audio.test(_type):
       preview = <AudioPreview url={content} />;
       break;
@@ -70,8 +71,14 @@ export default function FileBox({
   const icon = getFileIcon(file_type, name);
   if (!content || !fromUser || !name) return null;
   console.log("file content", content, name, flex);
+  const previewContent = renderPreview({ file_type, content, name });
+  const withPreview = preview && previewContent;
   return (
-    <Styled className={flex ? "flex" : ""}>
+    <Styled
+      className={`file_box ${flex ? "flex" : ""} ${
+        withPreview ? "preview" : ""
+      }`}
+    >
       <div className="basic">
         {icon}
         <div className="info">
@@ -88,11 +95,7 @@ export default function FileBox({
           <IconDownload />
         </a>
       </div>
-      {preview && (
-        <div className="preview">
-          {renderPreview({ file_type, content, name })}
-        </div>
-      )}
+      {withPreview && <div className="preview">{previewContent}</div>}
     </Styled>
   );
 }

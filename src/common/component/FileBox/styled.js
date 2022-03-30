@@ -5,11 +5,18 @@ const Styled = styled.div`
   box-sizing: border-box;
   border-radius: 6px;
   width: 370px;
-  max-height: 281px;
-  height: fit-content;
-  overflow: hidden;
+  height: 66px;
+  /* height: fit-content; */
+  * {
+    user-select: text;
+  }
   &.flex {
     width: 100%;
+  }
+  &.preview {
+    position: relative;
+    overflow: hidden;
+    height: 281px;
   }
   .basic {
     padding: 8px;
@@ -26,11 +33,14 @@ const Styled = styled.div`
       flex-direction: column;
       gap: 4px;
       width: 100%;
+      overflow: hidden;
       .name {
         font-weight: 600;
         font-size: 14px;
         line-height: 20px;
         color: #1c1c1e;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
       .details {
         font-weight: 400;
@@ -49,6 +59,8 @@ const Styled = styled.div`
     }
   }
   .preview {
+    overflow: hidden;
+
     /* todo */
   }
 `;
