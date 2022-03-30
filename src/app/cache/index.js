@@ -23,6 +23,10 @@ const tables = [
     description: "store message with key-val full data",
   },
   {
+    storeName: "messageFile",
+    description: "store file message list refs",
+  },
+  {
     storeName: "messageReaction",
     description: "store message reaction with key-val full data",
   },

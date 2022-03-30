@@ -23,16 +23,16 @@ export default async function handler({ operation, data = {}, payload }) {
         );
       }
       break;
-    case "readMessage":
-      {
-        const mids = Array.isArray(payload) ? payload : [payload];
-        await Promise.all(
-          mids.map(async (mid) => {
-            await table.setItem(mid + "", data[mid]);
-          })
-        );
-      }
-      break;
+    // case "readMessage":
+    //   {
+    //     const mids = Array.isArray(payload) ? payload : [payload];
+    //     await Promise.all(
+    //       mids.map(async (mid) => {
+    //         await table.setItem(mid + "", data[mid]);
+    //       })
+    //     );
+    //   }
+    //   break;
     default:
       break;
   }

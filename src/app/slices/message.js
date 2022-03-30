@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import BASE_URL, { ContentTypes } from "../config";
 const initialState = {
   replying: {},
-  fileMessages: [],
 };
 const messageSlice = createSlice({
   name: "message",
@@ -18,16 +17,6 @@ const messageSlice = createSlice({
       const { mid, ...rest } = action.payload;
       state[mid] = { ...state[mid], ...rest };
     },
-    readMessage(state, action) {
-      const mids = Array.isArray(action.payload)
-        ? action.payload
-        : [action.payload];
-      mids.forEach((id) => {
-        if (state[id]) {
-          state[id].read = true;
-        }
-      });
-    },
     addMessage(state, action) {
       const data = action.payload;
       const { mid, sending, content_type, content } = data;
@@ -41,8 +30,6 @@ const messageSlice = createSlice({
         data.content = `${BASE_URL}/resource/file?file_path=${encodeURIComponent(
           data.file_path
         )}`;
-        // 加入file message 列表
-        state.fileMessages.unshift(mid);
       }
       // image
       if (!sending && isImage) {
@@ -62,11 +49,6 @@ const messageSlice = createSlice({
         : [action.payload];
       mids.forEach((id) => {
         delete state[id];
-        // 从file message 列表删掉
-        const fidIdx = state.fileMessages.findIndex((fid) => fid == id);
-        if (fidIdx > -1) {
-          state.fileMessages.splice(fidIdx, 1);
-        }
       });
     },
     addReplyingMessage(state, action) {
@@ -87,7 +69,6 @@ export const {
   fullfillMessage,
   setMessage,
   updateMessage,
-  readMessage,
   addMessage,
   removeMessage,
   addReplyingMessage,

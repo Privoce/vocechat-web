@@ -9,7 +9,14 @@ export default function PreviewMessage({ mid = 0 }) {
     return { msg: store.message[mid], contactsData: store.contacts.byId };
   });
   if (!msg) return null;
-  const { from_uid, created_at, content_type, content, thumbnail } = msg;
+  const {
+    from_uid,
+    created_at,
+    content_type,
+    content,
+    thumbnail,
+    properties,
+  } = msg;
   const { name, avatar } = contactsData[from_uid];
   return (
     <StyledWrapper className={`preview`}>
@@ -24,7 +31,13 @@ export default function PreviewMessage({ mid = 0 }) {
           </i>
         </div>
         <div className={`down`}>
-          {renderContent({ content_type, content, thumbnail })}
+          {renderContent({
+            content_type,
+            content,
+            thumbnail,
+            from_uid,
+            properties,
+          })}
         </div>
       </div>
     </StyledWrapper>

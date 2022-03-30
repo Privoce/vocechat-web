@@ -2,7 +2,7 @@ import Linkify from "react-linkify";
 import dayjs from "dayjs";
 import MrakdownRender from "../MrakdownRender";
 import { getDefaultSize } from "../../utils";
-import FileBox from "./FileBox";
+import FileBox from "../FileBox";
 const renderContent = ({
   from_uid,
   created_at,

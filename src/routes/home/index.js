@@ -14,6 +14,7 @@ import ChannelSettingModal from "../../common/component/ChannelSetting";
 
 import ChatIcon from "../../assets/icons/chat.svg?url";
 import ContactIcon from "../../assets/icons/contact.svg?url";
+import FolderIcon from "../../assets/icons/folder.svg?url";
 // import NotificationHub from "../../common/component/NotificationHub";
 
 export default function HomePage() {
@@ -25,7 +26,7 @@ export default function HomePage() {
       ui: store.ui,
     };
   });
-  const { data, loading, error, success } = usePreload();
+  const { data, loading } = usePreload();
   const toggleExpand = () => {
     dispatch(toggleMenuExpand());
   };
@@ -56,6 +57,12 @@ export default function HomePage() {
                 <span className="animate__animated animate__fadeIn">
                   Contacts
                 </span>
+              )}
+            </NavLink>
+            <NavLink className="link" to={"/files"}>
+              <img src={FolderIcon} alt="folder icon" />{" "}
+              {menuExpand && (
+                <span className="animate__animated animate__fadeIn">Files</span>
               )}
             </NavLink>
           </nav>

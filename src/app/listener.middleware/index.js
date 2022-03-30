@@ -6,6 +6,7 @@ import channelMsgHandler from "./handler.channel.msg";
 import dmMsgHandler from "./handler.dm.msg";
 import serverHandler from "./handler.server";
 import messageHandler from "./handler.message";
+import fileMessageHandler from "./handler.file.msg";
 import reactionHandler from "./handler.reaction";
 import UIHandler from "./handler.ui";
 import footprintHandler from "./handler.footprint";
@@ -16,6 +17,7 @@ const operations = [
   "contacts",
   "userMessage",
   "reactionMessage",
+  "fileMessage",
   "message",
   "ui",
   "footprint",
@@ -28,7 +30,7 @@ const listenerMiddleware = createListenerMiddleware();
 // Add one or more listener entries that look for specific actions.
 // They may contain any sync or async logic, similar to thunks.
 listenerMiddleware.startListening({
-  predicate: (action, currentState, previousState) => {
+  predicate: (action) => {
     const { type = "" } = action;
     const [prefix] = type.split("/");
     console.log("operation", type, operations.includes(prefix));
@@ -85,6 +87,15 @@ listenerMiddleware.startListening({
           await dmMsgHandler({
             operation,
             payload,
+            data: state,
+          });
+        }
+        break;
+      case "fileMessage":
+        {
+          await fileMessageHandler({
+            operation,
+            // payload,
             data: state,
           });
         }

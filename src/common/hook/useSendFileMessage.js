@@ -86,6 +86,7 @@ export default function useUploadImageMessage({
           }
           sliceUploadedCountRef.current = sliceUploadedCountRef.current + 1;
         } catch (error) {
+          console.log("upload file error", error);
           return;
         }
       }

@@ -9,8 +9,13 @@ import {
   updateMessage,
 } from "../../../app/slices/message";
 import { toggleReactionMessage } from "../../../app/slices/message.reaction";
+import {
+  addFileMessage,
+  removeFileMessage,
+} from "../../../app/slices/message.file";
 import { addUserMsg, removeUserMsg } from "../../../app/slices/message.user";
 import { updateAfterMid } from "../../../app/slices/footprint";
+import { ContentTypes } from "../../../app/config";
 const handler = (data, dispatch, currState) => {
   const {
     mid,
@@ -72,6 +77,10 @@ const handler = (data, dispatch, currState) => {
               local_id: properties ? properties.local_id : null,
             })
           );
+          // 加到file message 列表
+          if (content_type == ContentTypes.file) {
+            dispatch(addFileMessage(mid));
+          }
           // }
         });
       }
@@ -121,6 +130,10 @@ const handler = (data, dispatch, currState) => {
                 dispatch(removeContextMessage({ id, mid: detailMid }));
                 dispatch(removeMessage(detailMid));
               });
+              // 从file message 列表移除
+              if (content_type == ContentTypes.file) {
+                dispatch(removeFileMessage(detailMid));
+              }
             }
             break;
           case "edit":
