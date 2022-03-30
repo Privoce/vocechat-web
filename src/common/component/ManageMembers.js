@@ -170,12 +170,14 @@ export default function ManageMembers({ cid = null }) {
                   trigger="click"
                   content={
                     <StyledMenu className="menu">
-                      <li
-                        className="item"
-                        onClick={handleCopy.bind(null, email)}
-                      >
-                        {copied ? "Copied" : `Copy Email`}
-                      </li>
+                      {email && (
+                        <li
+                          className="item"
+                          onClick={handleCopy.bind(null, email)}
+                        >
+                          {copied ? "Copied" : `Copy Email`}
+                        </li>
+                      )}
                       {/* <li className="item underline">Mute</li> */}
                       {/* <li className="item underline">Change Nickname</li> */}
                       {/* <li className="item danger">Ban</li> */}
