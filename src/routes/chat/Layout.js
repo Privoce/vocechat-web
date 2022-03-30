@@ -77,7 +77,7 @@ export default function Layout({
   header,
   contacts = null,
   dropFiles = [],
-  type = "channel",
+  context = "channel",
   to = null,
 }) {
   const messagesContainer = useRef(null);
@@ -161,7 +161,7 @@ export default function Layout({
       </StyledWrapper>
       {files.length !== 0 && (
         <UploadModal
-          type={type}
+          context={context}
           files={files}
           sendTo={to}
           closeModal={resetFiles}

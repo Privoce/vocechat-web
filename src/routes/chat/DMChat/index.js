@@ -26,7 +26,7 @@ export default function DMChat({ uid = "", dropFiles = [] }) {
   return (
     <Layout
       to={uid}
-      type="user"
+      context="user"
       dropFiles={dropFiles}
       header={
         <StyledHeader>
@@ -62,7 +62,12 @@ export default function DMChat({ uid = "", dropFiles = [] }) {
               });
             })}
         </div>
-        <Send type="user" name={currUser?.name} id={currUser?.uid} />
+        <Send
+          key={currUser?.uid}
+          type="user"
+          name={currUser?.name}
+          id={currUser?.uid}
+        />
       </StyledDMChat>
     </Layout>
   );

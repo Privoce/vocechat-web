@@ -9,7 +9,7 @@ import { isTreatAsImage } from "../../utils";
 import StyledWrapper from "./styled";
 
 export default function UploadModal({
-  type = "user",
+  context = "user",
   sendTo = 0,
   files = [],
   closeModal,
@@ -20,7 +20,7 @@ export default function UploadModal({
     isSending: isSendingImage,
     isSuccess: sendImageSuccess,
   } = useSendImageMessage({
-    context: type,
+    context,
     from: from_uid,
     to: sendTo,
   });
@@ -30,7 +30,7 @@ export default function UploadModal({
     isSending: isSendingFile,
     isSuccess: sendFileSuccess,
   } = useSendFileMessage({
-    context: type,
+    context,
     from: from_uid,
     to: sendTo,
   });

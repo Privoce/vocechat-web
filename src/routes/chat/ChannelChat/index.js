@@ -56,7 +56,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
       )}
       <Layout
         to={cid}
-        type="channel"
+        context="channel"
         dropFiles={dropFiles}
         // ref={containerRef}
         header={
@@ -124,7 +124,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
                   })}
               </div>
             </div>
-            <Send id={cid} type="channel" name={name} />
+            <Send key={cid} id={cid} type="channel" name={name} />
           </div>
         </StyledChannelChat>
         {/* {unreads != 0 && (

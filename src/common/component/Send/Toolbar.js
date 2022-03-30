@@ -34,7 +34,7 @@ const Styled = styled.div`
     }
   }
 `;
-export default function Toolbar({ toggleMode, mode, to, type }) {
+export default function Toolbar({ toggleMode, mode, to, context }) {
   const [files, setFiles] = useState([]);
   const fileInputRef = useRef(null);
   const resetFiles = () => {
@@ -51,7 +51,7 @@ export default function Toolbar({ toggleMode, mode, to, type }) {
     <>
       {files.length !== 0 && (
         <UploadModal
-          type={type}
+          context={context}
           files={files}
           sendTo={to}
           closeModal={resetFiles}
