@@ -64,7 +64,7 @@ export default function DMChat({ uid = "", dropFiles = [] }) {
         </div>
         <Send
           key={currUser?.uid}
-          type="user"
+          context="user"
           name={currUser?.name}
           id={currUser?.uid}
         />
