@@ -17,6 +17,11 @@ export default async function handler({ operation, data = {} }) {
         await table.setItem("inputMode", data.inputMode);
       }
       break;
+    case "updateFileListView":
+      {
+        await table.setItem("fileListView", data.fileListView);
+      }
+      break;
     default:
       break;
   }

@@ -1,5 +1,5 @@
 // import React from 'react'
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Search from "../Search";
 import CheckSign from "../../../assets/icons/check.sign.svg";
@@ -9,7 +9,7 @@ import useFilteredUsers from "../../../common/hook/useFilteredUsers";
 const Styled = styled.div`
   padding: 0 4px 4px 4px;
   background: #ffffff;
-  max-height: 230px;
+  max-height: 300px;
   overflow: auto;
   box-shadow: 0px 24px 48px -12px rgba(16, 24, 40, 0.18);
   border-radius: 8px;

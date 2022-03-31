@@ -29,13 +29,15 @@ export default function Search({
   embed = false,
 }) {
   const handleChange = (evt) => {
-    updateSearchValue(evt.target.value);
+    if (updateSearchValue) {
+      updateSearchValue(evt.target.value);
+    }
   };
   return (
     <Styled className={embed ? "embed" : ""}>
       <input
         value={value}
-        onChange={updateSearchValue ? handleChange : null}
+        onChange={handleChange}
         className="search"
         placeholder="Search..."
       />

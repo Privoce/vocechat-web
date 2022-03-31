@@ -1,13 +1,6 @@
 // import React from 'react'
 // import { useSelector } from "react-redux";
 import styled from "styled-components";
-import IconPdf from "../../../assets/icons/file.pdf.svg";
-import IconAudio from "../../../assets/icons/file.audio.svg";
-import IconVideo from "../../../assets/icons/file.video.svg";
-import IconUnkown from "../../../assets/icons/file.unkown.svg";
-import IconDoc from "../../../assets/icons/file.doc.svg";
-import IconCode from "../../../assets/icons/file.code.svg";
-import IconImage from "../../../assets/icons/file.image.svg";
 import CheckSign from "../../../assets/icons/check.sign.svg";
 
 const Styled = styled.div`
@@ -47,61 +40,49 @@ const Styled = styled.div`
     }
   }
 `;
-export const FileTypes = {
-  doc: {
-    title: "Documents",
-    icon: <IconDoc className="icon" />,
+export const Dates = {
+  today: {
+    title: "Today",
+    duration: 2222,
   },
-  pdf: {
-    title: "PDFs",
-    icon: <IconPdf className="icon" />,
+  in7d: {
+    title: "Last 7 Days",
   },
-  image: {
-    title: "Images",
-    icon: <IconImage className="icon" />,
+  in30d: {
+    title: "Last 30 Days",
   },
-  audio: {
-    title: "Audio",
-    icon: <IconAudio className="icon" />,
+  in3m: {
+    title: "Last 3 months",
   },
-  video: {
-    title: "Videos",
-    icon: <IconVideo className="icon" />,
-  },
-  code: {
-    title: "Code Snippets",
-    icon: <IconCode className="icon" />,
-  },
-  unkown: {
-    title: "Unkown Files",
-    icon: <IconUnkown className="icon" />,
+  in12m: {
+    title: "Last 12 months",
   },
 };
-export default function Type({ select = "", updateFilter }) {
+export default function Date({ select = "", updateFilter }) {
   // const { input, updateInput, contacts } = useFilteredUsers();
   // const contacts=useSelector(store=>store.contacts);
 
   // const uid=contacts.ids;
   // const dataMap=contacts.byId;
-  const handleClick = (type) => {
-    updateFilter({ type });
+  const handleClick = (dur) => {
+    updateFilter({ date: dur });
   };
   return (
     <Styled>
       <ul className="list">
         <li className="type" onClick={handleClick.bind(null, undefined)}>
-          Any Type
+          Any Time
           {!select && <CheckSign className="check" />}
         </li>
-        {Object.entries(FileTypes).map(([type, { title, icon }]) => {
+        {Object.entries(Dates).map(([_key, { title }]) => {
           return (
             <li
               key={title}
               className="type"
-              onClick={handleClick.bind(null, type)}
+              onClick={handleClick.bind(null, _key)}
             >
-              {icon} {title}
-              {select == type && <CheckSign className="check" />}
+              {title}
+              {select == _key && <CheckSign className="check" />}
             </li>
           );
         })}

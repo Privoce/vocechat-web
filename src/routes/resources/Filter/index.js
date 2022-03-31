@@ -1,12 +1,12 @@
-// import React from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import Tippy from "@tippyjs/react";
 import { useSelector } from "react-redux";
-import { FileTypes } from "./Type";
 import Avatar from "../../../common/component/Avatar";
+import FilterDate, { Dates } from "./Date";
 import FilterFrom from "./From";
 import FilterChannel from "./Channel";
-import FilterType from "./Type";
+import FilterType, { FileTypes } from "./Type";
 import ArrowDown from "../../../assets/icons/arrow.down.svg";
 const Styled = styled.div`
   /* padding: 20px 0; */
@@ -43,22 +43,53 @@ const Styled = styled.div`
 `;
 
 export default function Filter({ filter, updateFilter }) {
+  const [filtersVisible, setFiltersVisible] = useState({
+    channel: false,
+    date: false,
+    from: false,
+    type: false,
+  });
+  const toggleFilterVisible = (obj) => {
+    setFiltersVisible((prev) => {
+      return { ...prev, ...obj };
+    });
+  };
+  const handleUpdateFilter = (data) => {
+    updateFilter(data);
+    let _key = Object.keys(data)[0];
+    let tmp = {
+      [_key]: false,
+    };
+    console.log("wtffff", tmp);
+    toggleFilterVisible(tmp);
+  };
   const { contactMap, channelMap } = useSelector((store) => {
     return { contactMap: store.contacts.byId, channelMap: store.channels.byId };
   });
   console.log("maps", contactMap, filter);
-  const { from, channel, type } = filter;
+  const { from, channel, type, date } = filter;
+  const {
+    channel: channelVisible,
+    date: dateVisible,
+    type: typeVisible,
+    from: fromVisible,
+  } = filtersVisible;
   return (
     <Styled>
       <Tippy
         interactive
+        onClickOutside={toggleFilterVisible.bind(null, { from: false })}
+        visible={fromVisible}
         placement="bottom-start"
         trigger="click"
         content={
-          <FilterFrom select={filter.from} updateFilter={updateFilter} />
+          <FilterFrom select={filter.from} updateFilter={handleUpdateFilter} />
         }
       >
-        <div className={`filter ${from && "selected"}`}>
+        <div
+          className={`filter ${from && "selected"}`}
+          onClick={toggleFilterVisible.bind(null, { from: true })}
+        >
           {from && (
             <Avatar
               className="avatar"
@@ -72,13 +103,21 @@ export default function Filter({ filter, updateFilter }) {
       </Tippy>
       <Tippy
         interactive
+        onClickOutside={toggleFilterVisible.bind(null, { channel: false })}
+        visible={channelVisible}
         placement="bottom-start"
         trigger="click"
         content={
-          <FilterChannel select={filter.channel} updateFilter={updateFilter} />
+          <FilterChannel
+            select={filter.channel}
+            updateFilter={handleUpdateFilter}
+          />
         }
       >
-        <div className={`filter ${channel && "selected"}`}>
+        <div
+          className={`filter ${channel && "selected"}`}
+          onClick={toggleFilterVisible.bind(null, { channel: true })}
+        >
           <span className="txt">
             {channel ? `In ${channelMap[channel].name}` : `Channel`}
           </span>
@@ -87,14 +126,37 @@ export default function Filter({ filter, updateFilter }) {
       </Tippy>
       <Tippy
         interactive
+        onClickOutside={toggleFilterVisible.bind(null, { type: false })}
+        visible={typeVisible}
         placement="bottom-start"
         trigger="click"
         content={
-          <FilterType select={filter.type} updateFilter={updateFilter} />
+          <FilterType select={filter.type} updateFilter={handleUpdateFilter} />
         }
       >
-        <div className={`filter ${type && "selected"}`}>
+        <div
+          className={`filter ${type && "selected"}`}
+          onClick={toggleFilterVisible.bind(null, { type: true })}
+        >
           <span className="txt">{type ? FileTypes[type].title : "Type"}</span>
+          <ArrowDown className="arrow" />
+        </div>
+      </Tippy>
+      <Tippy
+        interactive
+        onClickOutside={toggleFilterVisible.bind(null, { date: false })}
+        visible={dateVisible}
+        placement="bottom-start"
+        trigger="click"
+        content={
+          <FilterDate select={filter.date} updateFilter={handleUpdateFilter} />
+        }
+      >
+        <div
+          className={`filter ${date && "selected"}`}
+          onClick={toggleFilterVisible.bind(null, { date: true })}
+        >
+          <span className="txt">{date ? Dates[date].title : "Date"}</span>
           <ArrowDown className="arrow" />
         </div>
       </Tippy>

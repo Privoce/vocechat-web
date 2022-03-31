@@ -3,7 +3,8 @@ import Styled from "./styled";
 import { useSelector } from "react-redux";
 import Masonry from "masonry-layout";
 // import waterfall from "waterfall.js/src/waterfall";
-import View, { Views } from "./View";
+import { Views } from "../../app/config";
+import View from "./View";
 import Search from "./Search";
 import Filter from "./Filter";
 import FileBox from "../../common/component/FileBox";
@@ -11,14 +12,14 @@ let msnry = null;
 export default function ResourceManagement() {
   const listContainerRef = useRef(null);
   const [filter, setFilter] = useState({});
-  const [view, setView] = useState(Views.item);
-  const { fileMessages, message } = useSelector((store) => {
-    return { message: store.message, fileMessages: store.fileMessage };
+  const { fileMessages, message, view } = useSelector((store) => {
+    return {
+      message: store.message,
+      fileMessages: store.fileMessage,
+      view: store.ui.fileListView,
+    };
   });
 
-  const toggleView = () => {
-    setView((prev) => (prev == Views.item ? Views.grid : Views.item));
-  };
   const updateFilter = (data) => {
     setFilter((prev) => {
       return { ...prev, ...data };
@@ -50,7 +51,7 @@ export default function ResourceManagement() {
       <div className="divider"></div>
       <div className="opts">
         <Filter filter={filter} updateFilter={updateFilter} />
-        <View view={view} toggleView={toggleView} />
+        <View view={view} />
       </div>
       <div className={`list ${view}`} ref={listContainerRef}>
         {fileMessages.map((id) => {

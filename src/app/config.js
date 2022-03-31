@@ -1,6 +1,6 @@
 // const BASE_URL = `${location.origin}/api`;
 const BASE_URL = `https://dev.rustchat.com/api`;
-export const CACHE_VERSION = `0.2.1`;
+export const CACHE_VERSION = `0.3`;
 // const BASE_URL = `https://rustchat.net/api`;
 export const ContentTypes = {
   text: "text/plain",
@@ -24,5 +24,8 @@ export const KEY_DEVICE_KEY = "RUSTCHAT_DEVICE_KEY";
 export const KEY_USERS_VERSION = "RUSTCHAT_USERS_VERSION";
 export const KEY_AFTER_MID = "RUSTCHAT_AFTER_MID";
 export const Emojis = ["👍", "❤️", "😄", "👀", "👎", "🎉", "🙁", "🚀"];
-
+export const Views = {
+  item: "item",
+  grid: "grid",
+};
 export default BASE_URL;

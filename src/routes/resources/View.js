@@ -1,5 +1,8 @@
 // import React from 'react'
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { updateFileListView } from "../../app/slices/ui";
+import { Views } from "../../app/config";
 import IconList from "../../assets/icons/file.list.svg";
 import IconGrid from "../../assets/icons/file.grid.svg";
 const Styled = styled.ul`
@@ -27,15 +30,13 @@ const Styled = styled.ul`
     }
   }
 `;
-export const Views = {
-  item: "item",
-  grid: "grid",
-};
-export default function View({ view = Views.item, toggleView }) {
+
+export default function View({ view = Views.item }) {
+  const dispatch = useDispatch();
   const handleChangeView = (evt) => {
     const { view: clickView } = evt.currentTarget.dataset;
     if (clickView == view) return;
-    toggleView();
+    dispatch(updateFileListView(view == Views.item ? Views.grid : Views.item));
   };
   return (
     <Styled className={view}>
