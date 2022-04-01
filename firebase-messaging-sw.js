@@ -32,3 +32,19 @@ messaging.onBackgroundMessage(function (payload) {
 
   self.registration.showNotification(notificationTitle, notificationOptions);
 });
+// 开始监听推送
+// self.addEventListener("push", function (event) {
+//   var data = event.data.json();
+
+//   const title = data.Title;
+//   data.Data.actions = data.Actions;
+//   const options = {
+//     body: data.Message,
+//     data: data.Data,
+//   };
+//   event.waitUntil(self.registration.showNotification(title, options));
+// });
+
+// self.addEventListener("notificationclick", function (event) {});
+
+// self.addEventListener("notificationclose", function (event) {});
