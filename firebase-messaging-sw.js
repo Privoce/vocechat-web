@@ -20,7 +20,7 @@ firebase.initializeApp(firebaseConfig);
 
 // Retrieve firebase messaging
 const messaging = firebase.messaging();
-
+console.log("wwwwwwwwww");
 // Handle incoming messages while the app is not in focus (i.e in the background, hidden behind other tabs, or completely closed).
 messaging.onBackgroundMessage(function (payload) {
   console.log("Received background message ", payload);
