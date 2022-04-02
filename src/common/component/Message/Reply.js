@@ -12,14 +12,13 @@ const Styled = styled.div`
   background: #e5e7eb;
   border-radius: var(--br);
   gap: 8px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+
   margin-bottom: 4px;
   .user {
     display: flex;
     align-items: center;
     gap: 4px;
+    white-space: nowrap;
     .avatar {
       width: 16px;
       height: 16px;
@@ -40,6 +39,16 @@ const Styled = styled.div`
     color: #616161;
     display: flex;
     align-items: center;
+    .txt {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      word-wrap: break-word;
+      word-break: break-all;
+    }
     .pic {
       display: inherit;
       max-width: 34px;
@@ -48,7 +57,7 @@ const Styled = styled.div`
       width: 15px;
       height: 20px;
     }
-    .name {
+    .file_name {
       margin-left: 5px;
       font-size: 10px;
       color: #555;
@@ -61,7 +70,7 @@ const renderContent = (data) => {
   let res = null;
   switch (content_type) {
     case ContentTypes.text:
-      res = content;
+      res = <span className="txt"> {content}</span>;
       break;
     case ContentTypes.image:
     case ContentTypes.imageJPG:
@@ -74,7 +83,7 @@ const renderContent = (data) => {
         res = (
           <>
             {icon}
-            <span className="name">{name}</span>
+            <span className="file_name">{name}</span>
           </>
         );
       }
