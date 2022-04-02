@@ -7,6 +7,8 @@ const StyledWrapper = styled.div`
   height: 100%;
   display: flex;
   > .left {
+    max-height: 100vh;
+    overflow: scroll;
     padding: 32px 16px;
     min-width: 212px;
     background-color: #f5f6f7;
