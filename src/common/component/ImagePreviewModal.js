@@ -40,7 +40,11 @@ const StyledWrapper = styled.div`
     }
   }
 `;
-export default function ImagePreviewModal({ image = null, closeModal }) {
+export default function ImagePreviewModal({
+  download = true,
+  data = null,
+  closeModal,
+}) {
   const wrapperRef = useRef();
   useOutsideClick(wrapperRef, closeModal);
   useKey(
@@ -51,19 +55,42 @@ export default function ImagePreviewModal({ image = null, closeModal }) {
     },
     { eventTypes: ["keyup"] }
   );
-  if (!image) return null;
+  // const handleMetaDataLoaded = (wtf) => {
+  //   console.log("meta data", wtf);
+  // };
+  // const handleDownload = (evt) => {
+  //   evt.preventDefault();
+  //   fetch(evt.target.href)
+  //     .then((response) => response.blob())
+  //     .then((blob) => {
+  //       console.log(blob);
+  //     });
+  // };
+  if (!data) return null;
+  const { originUrl, name, type } = data;
   return (
     <Modal>
       <StyledWrapper>
         <div className="box" ref={wrapperRef}>
           <img
-            src={image}
+            // onLoadedMetadata={handleMetaDataLoaded}
+            src={originUrl}
             alt="preview image"
             className="animate__animated animate__fadeIn animate__faster"
           />
-          <a className="origin" href={image} target="_blank" rel="noreferrer">
-            Download original
-          </a>
+          {download && (
+            <a
+              // onClick={handleDownload}
+              className="origin"
+              download={name}
+              type={type}
+              href={originUrl}
+              // target="_blank"
+              // rel="noreferrer"
+            >
+              Download original
+            </a>
+          )}
         </div>
       </StyledWrapper>
     </Modal>

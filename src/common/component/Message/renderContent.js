@@ -50,11 +50,13 @@ const renderContent = ({
     case "image/png":
     case "image/jpeg":
       {
+        const { name, size, type } = properties;
         const { width, height } = getDefaultSize(properties);
         ctn = (
           <img
             className="img preview"
             style={{ width: `${width}px`, height: `${height}px` }}
+            data-meta={JSON.stringify({ width, height, name, type, size })}
             data-origin={content}
             src={thumbnail || content}
           />

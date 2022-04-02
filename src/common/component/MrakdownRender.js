@@ -33,7 +33,8 @@ export default function MrakdownRender({ content }) {
           const { target } = evt;
           // 图片
           if (target.nodeType == 1) {
-            setPreviewImage(target.dataset.origin || target.src);
+            const data = { originUrl: target.dataset.origin || target.src };
+            setPreviewImage(data);
           }
         },
         true
@@ -47,7 +48,8 @@ export default function MrakdownRender({ content }) {
     <>
       {previewImage && (
         <ImagePreviewModal
-          image={previewImage}
+          download={false}
+          data={previewImage}
           closeModal={closePreviewModal}
         />
       )}

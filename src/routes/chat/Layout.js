@@ -118,7 +118,9 @@ export default function Layout({
           console.log(evt);
           const { target } = evt;
           if (target.nodeType == 1 && target.classList.contains("preview")) {
-            setPreviewImage(target.dataset.origin || target.src);
+            const originUrl = target.dataset.origin || target.src;
+            const meta = JSON.parse(target.dataset.meta || "{}");
+            setPreviewImage({ originUrl, ...meta });
           }
         },
         true
@@ -129,10 +131,7 @@ export default function Layout({
   return (
     <>
       {previewImage && (
-        <ImagePreviewModal
-          image={previewImage}
-          closeModal={closePreviewModal}
-        />
+        <ImagePreviewModal data={previewImage} closeModal={closePreviewModal} />
       )}
       <StyledWrapper ref={drop}>
         <header className="head">{header}</header>
