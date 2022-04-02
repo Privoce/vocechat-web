@@ -1,4 +1,8 @@
 import { useEffect, useState, useRef } from "react";
+import "prismjs/themes/prism.css";
+import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css";
+import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight-all.js";
+
 // import "prismjs/themes/prism.css";
 // import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css";
 // import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight";
@@ -57,7 +61,7 @@ export default function MrakdownRender({ content }) {
         <Viewer
           initialValue={content}
           // eslint-disable-next-line no-undef
-          // plugins={[codeSyntaxHighlight.bind(Prism)]}
+          plugins={[codeSyntaxHighlight]}
         ></Viewer>
       </Styled>
     </>

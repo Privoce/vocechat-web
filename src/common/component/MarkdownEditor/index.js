@@ -1,6 +1,10 @@
-import { useRef, useEffect, useState, memo } from "react";
+import { useRef, useEffect } from "react";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import { Editor } from "@toast-ui/react-editor";
+import "prismjs/themes/prism.css";
+import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css";
+import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight-all.js";
+
 import StyledWrapper from "./styled";
 import { useUploadImageMutation } from "../../../app/services/message";
 
@@ -40,6 +44,7 @@ function MarkdownEditor({ placeholder, sendMarkdown, setEditorInstance }) {
   return (
     <StyledWrapper className="input">
       <Editor
+        plugins={[codeSyntaxHighlight]}
         placeholder={placeholder}
         // onChange={handleChange}
         ref={editorRef}
