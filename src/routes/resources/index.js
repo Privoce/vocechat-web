@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, memo } from "react";
 import Styled from "./styled";
 import { useSelector } from "react-redux";
 import Masonry from "masonry-layout";
@@ -8,14 +8,49 @@ import View from "./View";
 import Search from "./Search";
 import Filter from "./Filter";
 import FileBox from "../../common/component/FileBox";
+const checkFilter = (data, filter, channelMessage) => {
+  console.log("filter data", data);
+  let selected = true;
+  const {
+    mid,
+    file_type,
+    created_at,
+    from_uid,
+    properties: { name },
+  } = data;
+  const {
+    name: nameFilter,
+    type: typeFilter,
+    date: timeFilter,
+    from: fromFilter,
+    channel: channelFilter,
+  } = filter;
+  if (fromFilter && fromFilter != from_uid) {
+    selected = false;
+  }
+  if (
+    channelFilter &&
+    channelMessage[channelFilter].findIndex((id) => id == mid) == -1
+  ) {
+    selected = false;
+  }
+  if (nameFilter) {
+    let str = ["", ...nameFilter.toLowerCase(), ""].join(".*");
+    let reg = new RegExp(str);
+    if (!reg.test(name)) {
+      selected = false;
+    }
+  }
+  return selected;
+};
 let msnry = null;
-export default function ResourceManagement() {
+function ResourceManagement({ fileMessages }) {
   const listContainerRef = useRef(null);
   const [filter, setFilter] = useState({});
-  const { fileMessages, message, view } = useSelector((store) => {
+  const { message, view, channelMessage } = useSelector((store) => {
     return {
       message: store.message,
-      fileMessages: store.fileMessage,
+      channelMessage: store.channelMessage,
       view: store.ui.fileListView,
     };
   });
@@ -23,6 +58,11 @@ export default function ResourceManagement() {
   const updateFilter = (data) => {
     setFilter((prev) => {
       return { ...prev, ...data };
+    });
+  };
+  const handleUpdateSearch = (val) => {
+    setFilter((prev) => {
+      return { ...prev, name: val };
     });
   };
   useEffect(() => {
@@ -47,7 +87,7 @@ export default function ResourceManagement() {
   console.log("files", fileMessages);
   return (
     <Styled>
-      <Search />
+      <Search value={filter.name} updateSearchValue={handleUpdateSearch} />
       <div className="divider"></div>
       <div className="opts">
         <Filter filter={filter} updateFilter={updateFilter} />
@@ -57,6 +97,8 @@ export default function ResourceManagement() {
         {fileMessages.map((id) => {
           const data = message[id];
           if (!data) return null;
+          const isSelected = checkFilter(data, filter, channelMessage);
+          if (!isSelected) return null;
           const {
             mid,
             content,
@@ -82,3 +124,7 @@ export default function ResourceManagement() {
     </Styled>
   );
 }
+const equals = (a, b) => a.length === b.length && a.every((v, i) => v == b[i]);
+export default memo(ResourceManagement, (prevs, nexts) => {
+  return equals(prevs.fileMessages, nexts.fileMessages);
+});

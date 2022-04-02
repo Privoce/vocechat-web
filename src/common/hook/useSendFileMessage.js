@@ -53,7 +53,10 @@ export default function useUploadImageMessage({
     if (!file) return;
     const { name, type: file_type, size: file_size } = file;
     // 拿file id
-    const { data: file_id } = await prepareUploadFile();
+    const { data: file_id } = await prepareUploadFile({
+      content_type: file_type,
+      filename: name,
+    });
     console.log("file id", file_id);
 
     let uploadResult = null;

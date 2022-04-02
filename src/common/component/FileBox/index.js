@@ -77,7 +77,7 @@ export default function FileBox({
     <Styled
       className={`file_box ${flex ? "flex" : ""} ${
         withPreview ? "preview" : ""
-      }`}
+      } ${file_type.startsWith("audio") ? "audio" : ""}`}
     >
       <div className="basic">
         {icon}
@@ -91,7 +91,11 @@ export default function FileBox({
             </i>
           </span>
         </div>
-        <a className="download" download={name} href={content}>
+        <a
+          className="download"
+          download={name}
+          href={`${content}&download=true`}
+        >
           <IconDownload />
         </a>
       </div>

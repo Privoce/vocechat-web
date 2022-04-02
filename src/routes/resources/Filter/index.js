@@ -81,7 +81,6 @@ export default function Filter({ filter, updateFilter }) {
         onClickOutside={toggleFilterVisible.bind(null, { from: false })}
         visible={fromVisible}
         placement="bottom-start"
-        trigger="click"
         content={
           <FilterFrom select={filter.from} updateFilter={handleUpdateFilter} />
         }
@@ -106,7 +105,6 @@ export default function Filter({ filter, updateFilter }) {
         onClickOutside={toggleFilterVisible.bind(null, { channel: false })}
         visible={channelVisible}
         placement="bottom-start"
-        trigger="click"
         content={
           <FilterChannel
             select={filter.channel}
@@ -129,7 +127,6 @@ export default function Filter({ filter, updateFilter }) {
         onClickOutside={toggleFilterVisible.bind(null, { type: false })}
         visible={typeVisible}
         placement="bottom-start"
-        trigger="click"
         content={
           <FilterType select={filter.type} updateFilter={handleUpdateFilter} />
         }
@@ -147,7 +144,6 @@ export default function Filter({ filter, updateFilter }) {
         onClickOutside={toggleFilterVisible.bind(null, { date: false })}
         visible={dateVisible}
         placement="bottom-start"
-        trigger="click"
         content={
           <FilterDate select={filter.date} updateFilter={handleUpdateFilter} />
         }

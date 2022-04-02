@@ -17,6 +17,9 @@ const Styled = styled.div`
     position: relative;
     overflow: hidden;
     height: 281px;
+    &.audio {
+      height: 125px;
+    }
   }
   .basic {
     padding: 8px;
@@ -59,8 +62,8 @@ const Styled = styled.div`
     }
   }
   .preview {
+    height: calc(100% - 64px);
     overflow: hidden;
-
     /* todo */
   }
 `;

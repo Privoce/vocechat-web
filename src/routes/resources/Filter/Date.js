@@ -20,17 +20,16 @@ const Styled = styled.div`
     display: flex;
     flex-direction: column;
     gap: 16px;
-    .type {
+    .date {
       position: relative;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 16px;
       color: #616161;
-      .icon {
-        width: 15px;
-        height: auto;
-      }
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 20px;
       .check {
         position: absolute;
         right: 0;
@@ -70,7 +69,7 @@ export default function Date({ select = "", updateFilter }) {
   return (
     <Styled>
       <ul className="list">
-        <li className="type" onClick={handleClick.bind(null, undefined)}>
+        <li className="date" onClick={handleClick.bind(null, undefined)}>
           Any Time
           {!select && <CheckSign className="check" />}
         </li>
@@ -78,7 +77,7 @@ export default function Date({ select = "", updateFilter }) {
           return (
             <li
               key={title}
-              className="type"
+              className="date"
               onClick={handleClick.bind(null, _key)}
             >
               {title}

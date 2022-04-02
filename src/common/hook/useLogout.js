@@ -7,6 +7,7 @@ import { resetContacts } from "../../app/slices/contacts";
 import { resetChannelMsg } from "../../app/slices/message.channel";
 import { resetUserMsg } from "../../app/slices/message.user";
 import { resetReactionMessage } from "../../app/slices/message.reaction";
+import { resetFileMessage } from "../../app/slices/message.file";
 import { resetMessage } from "../../app/slices/message";
 import { useLazyLogoutQuery } from "../../app/services/auth";
 export default function useLogout() {
@@ -21,6 +22,7 @@ export default function useLogout() {
       dispatch(resetContacts());
       dispatch(resetMessage());
       dispatch(resetReactionMessage());
+      dispatch(resetFileMessage());
     });
   };
 

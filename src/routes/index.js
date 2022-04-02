@@ -16,7 +16,12 @@ import toast from "react-hot-toast";
 import ResourceManagement from "./resources";
 
 const PageRoutes = () => {
-  const { online } = useSelector((store) => store.ui);
+  const {
+    ui: { online },
+    fileMessages,
+  } = useSelector((store) => {
+    return { ui: store.ui, fileMessages: store.fileMessage };
+  });
   // 掉线检测
   useEffect(() => {
     let toastId = 0;
@@ -57,7 +62,10 @@ const PageRoutes = () => {
             <Route index element={<ContactsPage />} />
             <Route path=":user_id" element={<ContactsPage />} />
           </Route>
-          <Route path="files" element={<ResourceManagement />}></Route>
+          <Route
+            path="files"
+            element={<ResourceManagement fileMessages={fileMessages} />}
+          ></Route>
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

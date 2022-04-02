@@ -39,9 +39,10 @@ export const messageApi = createApi({
       }),
     }),
     prepareUploadFile: builder.mutation({
-      query: () => ({
+      query: (meta = {}) => ({
         url: `/resource/file/prepare`,
         method: "POST",
+        body: meta,
       }),
     }),
     uploadFile: builder.mutation({
