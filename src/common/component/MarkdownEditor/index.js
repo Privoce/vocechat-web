@@ -7,12 +7,13 @@ import { useUploadImageMutation } from "../../../app/services/message";
 import Button from "../../component/styled/Button";
 
 function MarkdownEditor({ placeholder, sendMarkdown, setEditorInstance }) {
-  const editorRef = useRef(null);
+  const editorRef = useRef(undefined);
   // const [pHolder, setPHolder] = useState(placeholder);
   const [uploadImage] = useUploadImageMutation();
   useEffect(() => {
-    if (editorRef) {
-      const editorInstance = editorRef.current.getInstance();
+    const editor = editorRef?.current;
+    if (editor) {
+      const editorInstance = editor.getInstance();
       editorInstance.removeHook("addImageBlobHook");
       editorInstance.addHook("addImageBlobHook", async (blob, callback) => {
         const { data: url } = await uploadImage(blob);
@@ -21,8 +22,8 @@ function MarkdownEditor({ placeholder, sendMarkdown, setEditorInstance }) {
       setEditorInstance(editorInstance);
     }
     return () => {
-      if (editorRef) {
-        const editorInstance = editorRef.current.getInstance();
+      if (editor) {
+        const editorInstance = editor.getInstance();
         editorInstance.destroy();
       }
     };
