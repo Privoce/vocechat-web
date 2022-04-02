@@ -32,7 +32,7 @@ export default function MrakdownRender({ content }) {
           console.log(evt);
           const { target } = evt;
           // 图片
-          if (target.nodeType == 1) {
+          if (target.nodeName == "IMG") {
             const data = { originUrl: target.dataset.origin || target.src };
             setPreviewImage(data);
           }

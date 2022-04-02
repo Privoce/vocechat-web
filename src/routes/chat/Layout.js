@@ -117,7 +117,10 @@ export default function Layout({
         (evt) => {
           console.log(evt);
           const { target } = evt;
-          if (target.nodeType == 1 && target.classList.contains("preview")) {
+          if (
+            target.nodeName == "IMG" &&
+            target.classList.contains("preview")
+          ) {
             const originUrl = target.dataset.origin || target.src;
             const meta = JSON.parse(target.dataset.meta || "{}");
             setPreviewImage({ originUrl, ...meta });
