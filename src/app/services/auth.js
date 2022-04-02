@@ -54,6 +54,16 @@ export const authApi = createApi({
         }
       },
     }),
+    // 更新 device token
+    updateDeviceToken: builder.mutation({
+      query: (device_token) => ({
+        url: "/token/device_token",
+        method: "PUT",
+        body: {
+          device_token,
+        },
+      }),
+    }),
     //   获取openid
     getOpenid: builder.mutation({
       query: ({ issuer, redirect_uri }) => ({
@@ -85,6 +95,7 @@ export const authApi = createApi({
 });
 
 export const {
+  useUpdateDeviceTokenMutation,
   useGetOpenidMutation,
   useRenewMutation,
   useLazyGetMetamaskNonceQuery,

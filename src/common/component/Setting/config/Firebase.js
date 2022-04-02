@@ -52,7 +52,6 @@ export default function ConfigFirebase() {
           <Label htmlFor="desc">Project ID</Label>
           <Input
             disabled={!enabled}
-            type={"number"}
             data-type="project_id"
             onChange={handleChange}
             value={project_id}
