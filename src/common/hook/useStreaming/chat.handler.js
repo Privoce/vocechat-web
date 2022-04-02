@@ -131,9 +131,9 @@ const handler = (data, dispatch, currState) => {
                 dispatch(removeMessage(detailMid));
               });
               // 从file message 列表移除
-              if (content_type == ContentTypes.file) {
-                dispatch(removeFileMessage(detailMid));
-              }
+              // if (content_type == ContentTypes.file) {
+              dispatch(removeFileMessage(detailMid));
+              // }
             }
             break;
           case "edit":

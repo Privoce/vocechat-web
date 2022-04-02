@@ -25,7 +25,7 @@ const fileMessageSlice = createSlice({
         : [action.payload];
       mids.forEach((id) => {
         // 从file message 列表删掉
-        const fidIdx = state.fileMessages.findIndex((fid) => fid == id);
+        const fidIdx = state.findIndex((fid) => fid == id);
         if (fidIdx > -1) {
           state.splice(fidIdx, 1);
         }
