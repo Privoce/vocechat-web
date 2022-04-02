@@ -49,7 +49,6 @@ export default function useStreaming() {
   const [readyPullData, setReadyPullData] = useState(false);
   const {
     authData: { uid: loginUid },
-    channels: { byId: channelData },
     ui: { ready, online },
     footprint: { afterMid, usersVersion, readUsers, readChannels },
   } = useSelector((store) => store);
@@ -192,28 +191,27 @@ export default function useStreaming() {
               dispatch(addChannel(data.group));
               break;
             case "user_joined_group":
-              console.log("new user joined group", data.gid);
-              // 去重
-              dispatch(
-                updateChannel({
-                  id: data.gid,
-                  members: [
-                    ...channelData[data.gid].members,
-                    ...data.uid,
-                  ].filter((v, i, a) => a.indexOf(v) === i),
-                })
-              );
+              {
+                console.log("new user joined group", data.gid);
+                const { gid, uid: uids } = data;
+                // 去重
+                dispatch(
+                  updateChannel({
+                    operation: "add_member",
+                    id: gid,
+                    members: uids,
+                  })
+                );
+              }
               break;
             case "user_leaved_group":
               {
                 const { gid, uid: uids } = data;
-                const leftMembers = channelData[gid].members.filter(
-                  (id) => uids.findIndex((uid) => id == uid) == -1
-                );
                 dispatch(
                   updateChannel({
-                    id: data.gid,
-                    members: [...leftMembers],
+                    operation: "remove_member",
+                    id: gid,
+                    members: uids,
                   })
                 );
               }

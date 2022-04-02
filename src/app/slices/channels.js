@@ -30,8 +30,36 @@ const channelsSlice = createSlice({
     },
     updateChannel(state, action) {
       // console.log("set channels store", action);
-      const { id, ...rest } = action.payload;
-      state.byId[id] = { ...state.byId[id], ...rest };
+      const { id, operation, members, ...rest } = action.payload;
+      switch (operation) {
+        case "remove_member":
+          {
+            const filtered = state.byId[id].members.filter(
+              (id) => members.findIndex((uid) => uid == id) == -1
+            );
+            console.log(
+              "remove member from channel",
+              filtered,
+              members,
+              state.byId[id].members
+            );
+            state.byId[id].members = filtered;
+          }
+          break;
+        case "add_member":
+          {
+            const currs = state.byId[id].members;
+            const _set = new Set([...currs, ...members]);
+            console.log("add member to channel", [..._set]);
+            state.byId[id].members = [..._set];
+          }
+
+          break;
+
+        default:
+          state.byId[id] = { ...state.byId[id], members, ...rest };
+          break;
+      }
     },
     removeChannel(state, action) {
       const gid = action.payload;
