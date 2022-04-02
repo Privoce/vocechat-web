@@ -9,13 +9,13 @@ import ServerDropList from "./ServerDropList";
 import Loading from "./Loading";
 import Menu from "./Menu";
 import usePreload from "./usePreload";
+import Notification from "../../common/component/Notification";
 import SettingModal from "../../common/component/Setting";
 import ChannelSettingModal from "../../common/component/ChannelSetting";
 
 import ChatIcon from "../../assets/icons/chat.svg?url";
 import ContactIcon from "../../assets/icons/contact.svg?url";
 import FolderIcon from "../../assets/icons/folder.svg?url";
-// import NotificationHub from "../../common/component/NotificationHub";
 
 export default function HomePage() {
   const dispatch = useDispatch();
@@ -36,7 +36,7 @@ export default function HomePage() {
   }
   return (
     <>
-      {/* <NotificationHub /> */}
+      <Notification />
       <StyledWrapper>
         <div className={`col left ${menuExpand ? "expand" : ""}`}>
           <ServerDropList
