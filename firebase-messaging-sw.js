@@ -74,7 +74,7 @@ self.addEventListener("notificationclick", function (event) {
         chatClient = await clients.openWindow(redirectPath);
       } else {
         const [firstClient] = allClients;
-        firstClient.postMessage("New chat messages!", redirectPath);
+        firstClient.postMessage({ newPath: redirectPath });
         firstClient.focus();
       }
 
