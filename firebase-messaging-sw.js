@@ -28,6 +28,7 @@ messaging.onBackgroundMessage((payload) => {
 
   const notificationTitle = payload.notification.title;
   const notificationOptions = {
+    data: payload.data,
     body: payload.notification.body,
   };
 
@@ -54,15 +55,20 @@ self.addEventListener("notificationclick", function (event) {
   console.log("notification click", event, event.notification);
   event.waitUntil(
     (async function () {
+      const allClients = await clients.matchAll({
+        includeUncontrolled: true,
+      });
+      const [firstClient] = allClients;
+      // 没有数据
+      if (!event.notification.data) {
+        firstClient.focus();
+        return;
+      }
       const {
         rustchat_from_uid,
         rustchat_to_uid,
         rustchat_to_gid,
       } = event.notification.data;
-
-      const allClients = await clients.matchAll({
-        includeUncontrolled: true,
-      });
 
       let chatClient;
       let redirectPath = rustchat_to_uid
@@ -74,7 +80,6 @@ self.addEventListener("notificationclick", function (event) {
       if (allClients.length == 0) {
         chatClient = await clients.openWindow(redirectPath);
       } else {
-        const [firstClient] = allClients;
         firstClient.postMessage({ newPath: redirectPath });
         firstClient.focus();
       }
