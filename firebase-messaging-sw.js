@@ -72,11 +72,14 @@ self.addEventListener("notificationclick", function (event) {
 
       let chatClient;
       let redirectPath = rustchat_to_uid
-        ? `/#/chat/dm/${rustchat_to_uid}`
+        ? `/chat/dm/${rustchat_to_uid}`
         : rustchat_to_gid
-        ? `/#/chat/channel/${rustchat_to_gid}`
+        ? `/chat/channel/${rustchat_to_gid}`
         : "";
-      if (!redirectPath) return;
+      if (!redirectPath) {
+        firstClient.focus();
+        return;
+      }
       if (allClients.length == 0) {
         chatClient = await clients.openWindow(redirectPath);
       } else {
