@@ -72,7 +72,7 @@ self.addEventListener("notificationclick", function (event) {
 
       let chatClient;
       let redirectPath = rustchat_to_uid
-        ? `/chat/dm/${rustchat_to_uid}`
+        ? `/chat/dm/${rustchat_from_uid}`
         : rustchat_to_gid
         ? `/chat/channel/${rustchat_to_gid}`
         : "";
