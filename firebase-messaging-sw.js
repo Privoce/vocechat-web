@@ -22,7 +22,8 @@ firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
 console.log("wwwwwwwwww");
 // Handle incoming messages while the app is not in focus (i.e in the background, hidden behind other tabs, or completely closed).
-messaging.onBackgroundMessage(function (payload) {
+// data:{from_server_id}
+messaging.onBackgroundMessage((payload) => {
   console.log("Received background message ", payload);
 
   const notificationTitle = payload.notification.title;
@@ -32,6 +33,10 @@ messaging.onBackgroundMessage(function (payload) {
 
   self.registration.showNotification(notificationTitle, notificationOptions);
 });
+// setTimeout(() => {
+//   console.log("notification test");
+//   self.registration.showNotification("hello", { body: "test" });
+// }, 5000);
 // 开始监听推送
 // self.addEventListener("push", function (event) {
 //   var data = event.data.json();
@@ -45,6 +50,56 @@ messaging.onBackgroundMessage(function (payload) {
 //   event.waitUntil(self.registration.showNotification(title, options));
 // });
 
-// self.addEventListener("notificationclick", function (event) {});
+self.addEventListener("notificationclick", function (event) {
+  event.waitUntil(
+    (async function () {
+      const {
+        rustchat_from_uid,
+        rustchat_to_uid,
+        rustchat_to_gid,
+      } = event.notification.data;
+
+      const allClients = await clients.matchAll({
+        includeUncontrolled: true,
+      });
+
+      let chatClient;
+      let redirectPath = rustchat_to_uid
+        ? `/#/chat/dm/${rustchat_to_uid}`
+        : rustchat_to_gid
+        ? `/#/chat/channel/${rustchat_to_gid}`
+        : "";
+      if (!redirectPath) return;
+      if (allClients.length == 0) {
+        chatClient = await clients.openWindow(redirectPath);
+      } else {
+        const [firstClient] = allClients;
+        firstClient.postMessage("New chat messages!", redirectPath);
+        firstClient.focus();
+      }
+
+      // // Let's see if we already have a chat window open:
+      // for (const client of allClients) {
+      //   const url = new URL(client.url);
+
+      //   if (url.pathname == '/chat/') {
+      //     // Excellent, let's use it!
+      //     client.focus();
+      //     chatClient = client;
+      //     break;
+      //   }
+      // }
+
+      // // If we didn't find an existing chat window,
+      // // open a new one:
+      // if (!chatClient) {
+      //   chatClient = await clients.openWindow('/chat/');
+      // }
+
+      // // Message the client:
+      // chatClient.postMessage("New chat messages!");
+    })()
+  );
+});
 
 // self.addEventListener("notificationclose", function (event) {});
