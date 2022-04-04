@@ -51,6 +51,7 @@ messaging.onBackgroundMessage((payload) => {
 // });
 
 self.addEventListener("notificationclick", function (event) {
+  console.log("notification click", event, event.notification);
   event.waitUntil(
     (async function () {
       const {
