@@ -1,40 +1,38 @@
 import React, { useRef, useState, useEffect } from "react";
 import dayjs from "dayjs";
 import { useSelector } from "react-redux";
-import { useInViewRef, useDebounce } from "rooks";
+import { useInViewRef } from "rooks";
 import Tippy from "@tippyjs/react";
 import Reaction from "./Reaction";
 import Reply from "./Reply";
 import Profile from "../Profile";
 import Avatar from "../Avatar";
-import { useReadMessageMutation } from "../../../app/services/message";
+
 import StyledWrapper from "./styled";
 import Commands from "./Commands";
 
 import EditMessage from "./EditMessage";
 import renderContent from "./renderContent";
-function Message({ contextId = 0, mid = "", context = "user" }) {
-  const [updateReadIndex] = useReadMessageMutation();
-  const updateReadDebounced = useDebounce(updateReadIndex, 300);
+function Message({
+  contextId = 0,
+  mid = "",
+  context = "user",
+  updateReadIndex,
+  read = true,
+}) {
   const [myRef, inView] = useInViewRef();
   const [edit, setEdit] = useState(false);
 
   const avatarRef = useRef(null);
-  const {
-    footprint,
-    message = {},
-    reactionMessageData,
-    contactsData,
-    loginUid,
-  } = useSelector((store) => {
-    return {
-      footprint: store.footprint,
-      loginUid: store.authData.uid,
-      reactionMessageData: store.reactionMessage,
-      message: store.message[mid] || {},
-      contactsData: store.contacts.byId,
-    };
-  });
+  const { message = {}, reactionMessageData, contactsData } = useSelector(
+    (store) => {
+      return {
+        reactionMessageData: store.reactionMessage,
+        message: store.message[mid] || {},
+        contactsData: store.contacts.byId,
+      };
+    }
+  );
 
   const toggleEditMessage = () => {
     setEdit((prev) => !prev);
@@ -51,20 +49,16 @@ function Message({ contextId = 0, mid = "", context = "user" }) {
     edited,
     properties,
   } = message;
-  const readIndex =
-    context == "user"
-      ? footprint.readUsers[contextId]
-      : footprint.readChannels[contextId];
+
   useEffect(() => {
-    const read = fromUid == loginUid || mid <= readIndex;
-    if (inView && !read) {
+    if (!read) {
       const data =
         context == "user"
           ? { users: [{ uid: +contextId, mid }] }
           : { groups: [{ gid: +contextId, mid }] };
-      updateReadDebounced(data);
+      updateReadIndex(data);
     }
-  }, [mid, readIndex, inView, fromUid, loginUid]);
+  }, [mid, read]);
   const reactions = reactionMessageData[mid];
   const currUser = contactsData[fromUid] || {};
   // if (!message) return null;

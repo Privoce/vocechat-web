@@ -3,18 +3,18 @@ import dayjs from "dayjs";
 import { ContentTypes } from "../../app/config";
 import Divider from "../../common/component/Divider";
 import Message from "../../common/component/Message";
-function debounce(callback, wait = 2000, immediate = false) {
-  let timeout = null;
-  return function () {
-    const callNow = immediate && !timeout;
-    const next = () => callback.apply(this, arguments);
-    clearTimeout(timeout);
-    timeout = setTimeout(next, wait);
-    if (callNow) {
-      next();
-    }
-  };
-}
+// function debounce(callback, wait = 2000, immediate = false) {
+//   let timeout = null;
+//   return function () {
+//     const callNow = immediate && !timeout;
+//     const next = () => callback.apply(this, arguments);
+//     clearTimeout(timeout);
+//     timeout = setTimeout(next, wait);
+//     if (callNow) {
+//       next();
+//     }
+//   };
+// }
 export function getUnreadCount({
   mids = [],
   messageData = {},
@@ -22,10 +22,10 @@ export function getUnreadCount({
   readIndex = 0,
 }) {
   console.log({ mids, loginUid, readIndex });
-  // 先过滤掉from自己的
+  // 先过滤掉空信息和from自己的
   const others = mids.filter((mid) => {
     const { from_uid = 0 } = messageData[mid] || {};
-    return from_uid != loginUid;
+    return messageData[mid] && from_uid != loginUid;
   });
   if (others.length == 0) return 0;
   if (readIndex == 0) return others.length;
@@ -71,6 +71,8 @@ export const renderPreviewMessage = (message = null) => {
   return res;
 };
 export const renderMessageFragment = ({
+  read = true,
+  updateReadIndex,
   prev = null,
   curr = null,
   contextId = 0,
@@ -92,7 +94,14 @@ export const renderMessageFragment = ({
   return (
     <React.Fragment key={mid}>
       {divider && <Divider content={divider}></Divider>}
-      <Message context={context} mid={mid} key={mid} contextId={contextId} />
+      <Message
+        updateReadIndex={updateReadIndex}
+        read={read}
+        context={context}
+        mid={mid}
+        key={mid}
+        contextId={contextId}
+      />
     </React.Fragment>
   );
 };

@@ -1,6 +1,7 @@
 import { useState } from "react";
-
+import { useDebounce } from "rooks";
 import { useSelector } from "react-redux";
+import { useReadMessageMutation } from "../../../app/services/message";
 import useChatScroll from "../../../common/hook/useChatScroll";
 import ChannelIcon from "../../../common/component/ChannelIcon";
 import Send from "../../../common/component/Send";
@@ -21,11 +22,22 @@ import AddMemberModal from "./AddMemberModal";
 
 export default function ChannelChat({ cid = "", dropFiles = [] }) {
   // const containerRef = useRef(null);
+  const [updateReadIndex] = useReadMessageMutation();
+  const updateReadDebounced = useDebounce(updateReadIndex, 300);
   const [membersVisible, setMembersVisible] = useState(true);
   const [addMemberModalVisible, setAddMemberModalVisible] = useState(false);
   // const dispatch = useDispatch();
-  const { msgIds, userIds, data, messageData } = useSelector((store) => {
+  const {
+    msgIds,
+    userIds,
+    data,
+    messageData,
+    loginUid,
+    footprint,
+  } = useSelector((store) => {
     return {
+      footprint: store.footprint,
+      loginUid: store.authData.uid,
       msgIds: store.channelMessage[cid] || [],
       userIds: store.contacts.ids,
       data: store.channels.byId[cid] || {},
@@ -45,6 +57,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
   const { name, description, is_public, members = [] } = data;
   const memberIds = members.length == 0 ? userIds : members;
   console.log("channel message list", msgIds);
+  const readIndex = footprint.readChannels[cid];
   return (
     <>
       {addMemberModalVisible && (
@@ -113,9 +126,13 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
                     return Number(a) - Number(b);
                   })
                   .map((mid, idx) => {
-                    const prev = idx == 0 ? null : messageData[msgIds[idx - 1]];
                     const curr = messageData[mid];
+                    if (!curr) return null;
+                    const prev = idx == 0 ? null : messageData[msgIds[idx - 1]];
+                    const read = curr?.from_uid == loginUid || mid <= readIndex;
                     return renderMessageFragment({
+                      updateReadIndex: updateReadDebounced,
+                      read,
                       prev,
                       curr,
                       contextId: cid,
