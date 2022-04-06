@@ -36,6 +36,8 @@ const StyledWrapper = styled.div`
         display: flex;
         flex-direction: column;
         gap: 4px;
+        max-height: 40vh;
+        overflow: auto;
         a {
           text-decoration: none;
         }
