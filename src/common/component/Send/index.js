@@ -96,14 +96,27 @@ function Send({
       }
     }
   };
-  const sendMarkdown = (content) => {
-    sendMessage({
-      id,
-      type: "markdown",
-      content,
-      from_uid,
-      properties: { local_id: new Date().getTime() },
-    });
+  const sendMarkdown = async (content) => {
+    if (replying_mid) {
+      console.log("replying", replying_mid);
+      await replyMessage({
+        id,
+        reply_mid: replying_mid,
+        type: "markdown",
+        content,
+        context,
+        from_uid,
+      });
+      dispatch(removeReplyingMessage(id));
+    } else {
+      sendMessage({
+        id,
+        type: "markdown",
+        content,
+        from_uid,
+        properties: { local_id: new Date().getTime() },
+      });
+    }
   };
   const toggleMode = () => {
     dispatch(updateInputMode(mode == Modes.text ? Modes.markdown : Modes.text));

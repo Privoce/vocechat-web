@@ -69,6 +69,9 @@ const renderContent = (data) => {
     case ContentTypes.text:
       res = content;
       break;
+    case ContentTypes.markdown:
+      res = `[markdown]`;
+      break;
     case ContentTypes.image:
     case ContentTypes.imageJPG:
       res = <img className="pic" src={pictureIcon} />;
