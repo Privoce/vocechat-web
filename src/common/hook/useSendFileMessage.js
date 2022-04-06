@@ -61,6 +61,7 @@ export default function useUploadImageMessage({
 
     let uploadResult = null;
     totalSliceCountRef.current = 1;
+    sliceUploadedCountRef.current = 0;
     setUploadingFile(true);
     // 2MB
     if (file_size <= 1000 * 1000 * 2) {
@@ -82,12 +83,13 @@ export default function useUploadImageMessage({
             file_type
           );
 
-          if (idx == _arr.length - 1) {
-            uploadResult = await uploadChunk({ file_id, chunk, is_last: true });
-          } else {
-            await uploadChunk({ file_id, chunk, is_last: false });
-          }
-          sliceUploadedCountRef.current = sliceUploadedCountRef.current + 1;
+          uploadResult = await uploadChunk({
+            file_id,
+            chunk,
+            // 如果是最后一个chunk，标记下
+            is_last: idx == _arr.length - 1,
+          });
+          sliceUploadedCountRef.current++;
         } catch (error) {
           console.log("upload file error", error);
           return;
