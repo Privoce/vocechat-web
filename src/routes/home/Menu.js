@@ -1,9 +1,10 @@
 // import React from 'react'
 import { useDispatch } from "react-redux";
 import { toggleSetting } from "../../app/slices/ui";
+import Tooltip from "../../common/component/Tooltip";
 import settingIcon from "../../assets/icons/setting.svg?url";
-import foldIcon from "../../assets/icons/fold.svg?url";
-import unfoldIcon from "../../assets/icons/unfold.svg?url";
+// import foldIcon from "../../assets/icons/fold.svg?url";
+// import unfoldIcon from "../../assets/icons/unfold.svg?url";
 import styled from "styled-components";
 const StyledMenus = styled.ul`
   display: flex;
@@ -33,7 +34,7 @@ const StyledMenus = styled.ul`
     }
   }
 `;
-export default function Menu({ toggle, expand = true }) {
+export default function Menu() {
   const dispatch = useDispatch();
   const handleSetting = () => {
     dispatch(toggleSetting());
@@ -41,14 +42,16 @@ export default function Menu({ toggle, expand = true }) {
   return (
     <StyledMenus>
       <li className="menu" onClick={handleSetting}>
-        <img src={settingIcon} alt="setting icon" className="icon" />
-        {expand && (
+        <Tooltip placement="top" tip="Settings">
+          <img src={settingIcon} alt="setting icon" className="icon" />
+        </Tooltip>
+        {/* {expand && (
           <span className="txt animate__animated animate__fadeIn">
             Settings
           </span>
-        )}
+        )} */}
       </li>
-      <li className="menu" onClick={toggle}>
+      {/* <li className="menu" onClick={toggle}>
         <img
           src={expand ? foldIcon : unfoldIcon}
           alt="expand icon"
@@ -57,7 +60,7 @@ export default function Menu({ toggle, expand = true }) {
         {expand && (
           <span className="txt animate__animated animate__fadeIn">Expand</span>
         )}
-      </li>
+      </li> */}
     </StyledMenus>
   );
 }

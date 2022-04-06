@@ -6,6 +6,7 @@ import { hideAll } from "tippy.js";
 // import toast from "react-hot-toast";
 import { addReplyingMessage } from "../../../app/slices/message";
 import StyledMenu from "../styled/Menu";
+import Tooltip from "../../component/Tooltip";
 import DeleteMessageConfirm from "./DeleteMessageConfirm";
 import EmojiPicker from "./EmojiPicker";
 import replyIcon from "../../../assets/icons/reply.svg?url";
@@ -92,16 +93,22 @@ export default function Commands({
         content={<EmojiPicker mid={mid} hidePicker={hideAll} />}
       >
         <li className="cmd">
-          <img src={reactIcon} className="toggler" alt="icon emoji" />
+          <Tooltip placement="top" tip="Emoji">
+            <img src={reactIcon} className="toggler" alt="icon emoji" />
+          </Tooltip>
         </li>
       </Tippy>
       {currUid == from_uid ? (
         <li className="cmd" onClick={toggleEditMessage}>
-          <img src={editIcon} alt="icon edit" />
+          <Tooltip placement="top" tip="Edit">
+            <img src={editIcon} alt="icon edit" />
+          </Tooltip>
         </li>
       ) : (
         <li className="cmd" onClick={handleReply}>
-          <img src={replyIcon} alt="icon reply" />
+          <Tooltip placement="top" tip="Reply">
+            <img src={replyIcon} alt="icon reply" />
+          </Tooltip>
         </li>
       )}
       <Tippy
@@ -126,7 +133,9 @@ export default function Commands({
         }
       >
         <li className="cmd">
-          <img src={moreIcon} alt="icon more" />
+          <Tooltip placement="top" tip="More">
+            <img src={moreIcon} alt="icon more" />
+          </Tooltip>
         </li>
       </Tippy>
 

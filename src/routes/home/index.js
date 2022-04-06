@@ -9,6 +9,7 @@ import ServerDropList from "./ServerDropList";
 import Loading from "./Loading";
 import Menu from "./Menu";
 import usePreload from "./usePreload";
+import Tooltip from "../../common/component/Tooltip";
 import Notification from "../../common/component/Notification";
 import SettingModal from "../../common/component/Setting";
 import ChannelSettingModal from "../../common/component/ChannelSetting";
@@ -20,7 +21,7 @@ import FolderIcon from "../../assets/icons/folder.svg?url";
 export default function HomePage() {
   const dispatch = useDispatch();
   const {
-    ui: { ready, menuExpand, setting, channelSetting },
+    ui: { ready, setting, channelSetting },
   } = useSelector((store) => {
     return {
       ui: store.ui,
@@ -38,37 +39,43 @@ export default function HomePage() {
     <>
       <Notification />
       <StyledWrapper>
-        <div className={`col left ${menuExpand ? "expand" : ""}`}>
+        <div className={`col left`}>
           <ServerDropList
             data={data?.server}
             memberCount={data.contacts?.length}
-            expand={menuExpand}
+            expand={false}
           />
           <nav className="nav">
             <NavLink className="link" to={"/chat"}>
-              <img src={ChatIcon} alt="chat icon" />{" "}
-              {menuExpand && (
+              <Tooltip tip="Chat">
+                <img src={ChatIcon} alt="chat icon" />
+              </Tooltip>
+              {/* {menuExpand && (
                 <span className="animate__animated animate__fadeIn">Chat</span>
-              )}
+              )} */}
             </NavLink>
             <NavLink className="link" to={"/contacts"}>
-              <img src={ContactIcon} alt="contact icon" />{" "}
-              {menuExpand && (
+              <Tooltip tip="Channel">
+                <img src={ContactIcon} alt="contact icon" />
+              </Tooltip>
+              {/* {menuExpand && (
                 <span className="animate__animated animate__fadeIn">
                   Contacts
                 </span>
-              )}
+              )} */}
             </NavLink>
             <NavLink className="link" to={"/files"}>
-              <img src={FolderIcon} alt="folder icon" />{" "}
-              {menuExpand && (
+              <Tooltip tip="Files">
+                <img src={FolderIcon} alt="folder icon" />
+              </Tooltip>
+              {/* {menuExpand && (
                 <span className="animate__animated animate__fadeIn">Files</span>
-              )}
+              )} */}
             </NavLink>
           </nav>
           <div className="divider"></div>
           {/* <Tools expand={menuExpand} /> */}
-          <Menu toggle={toggleExpand} expand={menuExpand} />
+          <Menu toggle={toggleExpand} />
         </div>
         <div className="col right">
           <Outlet />
