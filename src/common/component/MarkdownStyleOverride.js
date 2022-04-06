@@ -10,7 +10,6 @@ const MarkdownOverrides = createGlobalStyle`
     }
   }
     *{
-        /* white-space: nowrap; */
         margin: 0 ;
         padding: 0;
     }
@@ -27,6 +26,7 @@ const MarkdownOverrides = createGlobalStyle`
   }
   pre{
     width: 100%;
+    width: -webkit-fill-available;
   }
   blockquote {
       border-left:none;

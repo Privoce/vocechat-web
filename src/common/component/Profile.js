@@ -25,12 +25,14 @@ const StyledWrapper = styled.div`
     border-radius: 50%;
   }
   .name {
+    user-select: text;
     font-weight: bold;
     font-size: 18px;
     line-height: 100%;
     color: #1c1c1e;
   }
   .email {
+    user-select: text;
     font-weight: normal;
     font-size: 14px;
     line-height: 20px;

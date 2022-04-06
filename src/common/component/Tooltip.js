@@ -15,7 +15,8 @@ export default function Tooltip({
 }) {
   return (
     <Tippy
-      delay={0}
+      duration={0}
+      delay={[0, 0]}
       placement={placement}
       content={<StyledTip>{tip}</StyledTip>}
     >

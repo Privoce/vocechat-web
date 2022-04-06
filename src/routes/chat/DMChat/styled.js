@@ -47,13 +47,16 @@ export const StyledDMChat = styled.article`
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 0 16px;
+  padding: 0;
   padding-bottom: 10px;
   height: calc(100vh - 56px);
   > .chat {
-    padding: 18px 0;
+    padding: 18px 16px;
     height: 100%;
     height: -webkit-fill-available;
     overflow: auto;
+  }
+  > .send {
+    margin: 0 16px;
   }
 `;
