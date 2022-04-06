@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-
+import { useNavigate } from "react-router-dom";
 // import toast, { Toaster } from 'react-hot-toast';
 import { useDeviceToken, onMessageListener } from "./firebase";
 import { useUpdateDeviceTokenMutation } from "../../../app/services/auth";
 
 const Notification = () => {
+  const navigateTo = useNavigate();
   const token = useDeviceToken(
     `BGXCn-5YRXSFw38Q9lUKJ5bibL212-yIQn1pCvthGhp6_KwA29FO1Ax_d_7if1vfC2a5wTSVO8AcZrc-Hm1aS0Y`
   );
@@ -26,9 +27,20 @@ const Notification = () => {
   }, [token]);
 
   useEffect(() => {
-    if (notification?.title) {
-      console.log("notification", notification);
-    }
+    const handleServiceworkerMessage = (event) => {
+      const { newPath } = event.data;
+      navigateTo(newPath);
+    };
+    navigator.serviceWorker.addEventListener(
+      "message",
+      handleServiceworkerMessage
+    );
+    return () => {
+      navigator.serviceWorker.removeEventListener(
+        "message",
+        handleServiceworkerMessage
+      );
+    };
   }, [notification]);
 
   onMessageListener()
