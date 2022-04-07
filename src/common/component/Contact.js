@@ -1,6 +1,7 @@
 // import React from 'react';
 import styled from "styled-components";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Tippy from "@tippyjs/react";
 import Avatar from "./Avatar";
 import Profile from "./Profile";
@@ -52,7 +53,7 @@ const StyledWrapper = styled.div`
     }
   }
   .name {
-    user-select: text;
+    /* user-select: text; */
     font-weight: 600;
     font-size: 14px;
     line-height: 20px;
@@ -60,20 +61,27 @@ const StyledWrapper = styled.div`
   }
 `;
 export default function Contact({
+  dm = false,
   interactive = true,
   uid = "",
   popover = false,
   compact = false,
 }) {
+  const navigate = useNavigate();
   const curr = useSelector((store) => store.contacts.byId[uid]);
+  const handleDoubleClick = () => {
+    navigate(`/chat/dm/${uid}`);
+  };
   if (!curr) return null;
   return (
     <StyledWrapper
+      onDoubleClick={dm ? handleDoubleClick : null}
       className={`${interactive ? "interactive" : ""} ${
         compact ? "compact" : ""
       }`}
     >
       <Tippy
+        duration={0}
         inertia={true}
         interactive
         disabled={!popover}
