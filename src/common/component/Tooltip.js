@@ -2,23 +2,49 @@
 import Tippy from "@tippyjs/react";
 import styled from "styled-components";
 const StyledTip = styled.div`
-  background-color: #000;
-  border-radius: 5px;
-  padding: 5px;
-  font-size: 10px;
-  color: #fff;
+  position: relative;
+  background: #fff;
+  padding: 8px 12px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 18px;
+  color: #1d2939;
+  border-radius: var(--br);
+  box-shadow: 0px 12px 16px -4px rgba(16, 24, 40, 0.08),
+    0px 4px 6px -2px rgba(16, 24, 40, 0.03);
+  &::after {
+    background-color: inherit;
+    position: absolute;
+    content: "";
+    width: 12px;
+    height: 12px;
+    border-radius: 1px;
+    transform-origin: center;
+  }
+  &.right::after {
+    left: 0;
+    top: 50%;
+    transform: translate3d(-50%, -50%, 0) rotate(45deg);
+  }
+  &.top::after {
+    left: 50%;
+    bottom: 0;
+    transform: translate3d(-50%, 50%, 0) rotate(45deg);
+  }
+  &.bottom::after {
+    top: 0;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0) rotate(45deg);
+  }
 `;
-export default function Tooltip({
-  tip = "",
-  placement = "right-start",
-  children,
-}) {
+export default function Tooltip({ tip = "", placement = "right", children }) {
   return (
     <Tippy
+      offset={[0, 18]}
       duration={0}
       delay={[0, 0]}
       placement={placement}
-      content={<StyledTip>{tip}</StyledTip>}
+      content={<StyledTip className={placement}>{tip}</StyledTip>}
     >
       {children}
     </Tippy>

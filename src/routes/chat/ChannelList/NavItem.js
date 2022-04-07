@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Tippy from "@tippyjs/react";
 import useContextMenu from "../../../common/hook/useContextMenu";
 import ContextMenu from "../../../common/component/ContextMenu";
+import Tooltip from "../../../common/component/Tooltip";
 // import { useDebounce} from "rooks";
 import { useReadMessageMutation } from "../../../app/services/message";
 
@@ -118,7 +119,9 @@ const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
           <span className={`txt ${unreads == 0 ? "read" : ""}`}>{name}</span>
         </div>
         <div className="icons">
-          <i className="setting" onClick={handleChannelSetting}></i>
+          <Tooltip placement="bottom" tip="Channel Setting">
+            <i className="setting" onClick={handleChannelSetting}></i>
+          </Tooltip>
           {unreads > 0 && (
             <i className={`badge ${unreads > 99 ? "dot" : ""}`}>
               {unreads > 99 ? null : unreads}

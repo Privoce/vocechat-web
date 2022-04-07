@@ -3,11 +3,12 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import { MdAdd } from "react-icons/md";
 import { AiOutlineCaretDown } from "react-icons/ai";
 
 import StyledWrapper from "./styled";
+import AddIcon from "../../assets/icons/add.svg";
 import Search from "../../common/component/Search";
+import Tooltip from "../../common/component/Tooltip";
 // import Contact from "../../common/component/Contact";
 import CurrentUser from "../../common/component/CurrentUser";
 import ChannelChat from "./ChannelChat";
@@ -63,11 +64,12 @@ export default function ChatPage() {
                 />
                 CHANNELS
               </span>
-              <MdAdd
-                onClick={toggleChannelModalVisible}
-                size={18}
-                color="#78787C"
-              />
+              <Tooltip tip="New Channel" placement="bottom">
+                <AddIcon
+                  className="add_icon"
+                  onClick={toggleChannelModalVisible}
+                />
+              </Tooltip>
             </h3>
             <nav className="nav">
               <ChannelList setDropFiles={setChannelDropFiles} />
@@ -83,11 +85,12 @@ export default function ChatPage() {
                 />
                 DIRECT MESSAGE
               </span>
-              <MdAdd
-                size={18}
-                color="#78787C"
-                onClick={toggleContactsModalVisible}
-              />
+              <Tooltip tip="New DM" placement="bottom">
+                <AddIcon
+                  className="add_icon"
+                  onClick={toggleContactsModalVisible}
+                />
+              </Tooltip>
             </h3>
             <nav className="nav">
               <DMList

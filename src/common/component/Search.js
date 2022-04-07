@@ -7,6 +7,7 @@ import { hideAll } from "tippy.js";
 import searchIcon from "../../assets/icons/search.svg?url";
 import addIcon from "../../assets/icons/add.svg?url";
 import mailIcon from "../../assets/icons/mail.svg?url";
+import Tooltip from "../component/Tooltip";
 import ChannelIcon from "./ChannelIcon";
 import ChannelModal from "./ChannelModal";
 import ContactsModal from "./ContactsModal";
@@ -100,37 +101,39 @@ export default function Search() {
         <img src={searchIcon} />
         <input placeholder="Search..." className="input" />
       </div>
-      <Tippy
-        interactive
-        placement="bottom-end"
-        trigger="click"
-        content={
-          <ul className="popup">
-            {currentUser?.is_admin && (
+      <Tooltip tip="More" placement="bottom">
+        <Tippy
+          interactive
+          placement="bottom-end"
+          trigger="click"
+          content={
+            <ul className="popup">
+              {currentUser?.is_admin && (
+                <li
+                  className="item"
+                  onClick={handleOpenChannelModal.bind(null, false)}
+                >
+                  <ChannelIcon />
+                  New Channel
+                </li>
+              )}
               <li
                 className="item"
-                onClick={handleOpenChannelModal.bind(null, false)}
+                onClick={handleOpenChannelModal.bind(null, true)}
               >
-                <ChannelIcon />
-                New Channel
+                <ChannelIcon personal={true} />
+                New Private Channel
               </li>
-            )}
-            <li
-              className="item"
-              onClick={handleOpenChannelModal.bind(null, true)}
-            >
-              <ChannelIcon personal={true} />
-              New Private Channel
-            </li>
-            <li className="item" onClick={toggleContactsModalVisible}>
-              <img src={mailIcon} alt="icon mail" />
-              New Message
-            </li>
-          </ul>
-        }
-      >
-        <img src={addIcon} alt="add icon" className="add" />
-      </Tippy>
+              <li className="item" onClick={toggleContactsModalVisible}>
+                <img src={mailIcon} alt="icon mail" />
+                New Message
+              </li>
+            </ul>
+          }
+        >
+          <img src={addIcon} alt="add icon" className="add" />
+        </Tippy>
+      </Tooltip>
     </StyledWrapper>
   );
 }

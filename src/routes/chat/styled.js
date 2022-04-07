@@ -31,6 +31,10 @@ const StyledWrapper = styled.div`
           transition: transform 0.5s ease;
           transform-origin: center;
         }
+        .add_icon {
+          width: 18px;
+          height: 18px;
+        }
       }
       > .nav {
         display: flex;

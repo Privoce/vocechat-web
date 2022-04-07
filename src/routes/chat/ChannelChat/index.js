@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { useReadMessageMutation } from "../../../app/services/message";
 import useChatScroll from "../../../common/hook/useChatScroll";
 import ChannelIcon from "../../../common/component/ChannelIcon";
+import Tooltip from "../../../common/component/Tooltip";
 import Send from "../../../common/component/Send";
 import Contact from "../../../common/component/Contact";
 import Layout from "../Layout";
@@ -21,7 +22,6 @@ import {
 import AddMemberModal from "./AddMemberModal";
 
 export default function ChannelChat({ cid = "", dropFiles = [] }) {
-  // const containerRef = useRef(null);
   const [updateReadIndex] = useReadMessageMutation();
   const updateReadDebounced = useDebounce(updateReadIndex, 300);
   const [membersVisible, setMembersVisible] = useState(true);
@@ -54,6 +54,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
   const toggleAddVisible = () => {
     setAddMemberModalVisible((prev) => !prev);
   };
+
   const { name, description, is_public, members = [] } = data;
   const memberIds = members.length == 0 ? userIds : members;
   console.log("channel message list", msgIds);
@@ -81,13 +82,19 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
             </div>
             <ul className="opts">
               <li className="opt">
-                <img src={alertIcon} alt="opt icon" />
+                <Tooltip tip="Notifications" placement="bottom">
+                  <img src={alertIcon} alt="opt icon" />
+                </Tooltip>
               </li>
               <li className="opt">
-                <img src={pinIcon} alt="opt icon" />
+                <Tooltip tip="Pin" placement="bottom">
+                  <img src={pinIcon} alt="opt icon" />
+                </Tooltip>
               </li>
               <li className="opt" onClick={toggleMembersVisible}>
-                <img src={peopleIcon} alt="opt icon" />
+                <Tooltip tip="Channel Members" placement="bottom">
+                  <img src={peopleIcon} alt="opt icon" />
+                </Tooltip>
               </li>
             </ul>
           </StyledHeader>
@@ -103,7 +110,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
                   </div>
                 )}
                 {memberIds.map((uid) => {
-                  return <Contact key={uid} uid={uid} popover />;
+                  return <Contact key={uid} uid={uid} dm popover />;
                 })}
               </StyledContacts>
             </>
@@ -128,11 +135,13 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
                   .map((mid, idx) => {
                     const curr = messageData[mid];
                     if (!curr) return null;
+                    const isFirst = idx == 0;
                     const prev = idx == 0 ? null : messageData[msgIds[idx - 1]];
                     const read = curr?.from_uid == loginUid || mid <= readIndex;
                     return renderMessageFragment({
                       updateReadIndex: updateReadDebounced,
                       read,
+                      isFirst,
                       prev,
                       curr,
                       contextId: cid,

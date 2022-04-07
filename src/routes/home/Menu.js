@@ -42,7 +42,7 @@ export default function Menu() {
   return (
     <StyledMenus>
       <li className="menu" onClick={handleSetting}>
-        <Tooltip placement="top" tip="Settings">
+        <Tooltip placement="right" tip="Settings">
           <img src={settingIcon} alt="setting icon" className="icon" />
         </Tooltip>
         {/* {expand && (
