@@ -37,7 +37,12 @@ const StyledTip = styled.div`
     transform: translate3d(-50%, -50%, 0) rotate(45deg);
   }
 `;
-export default function Tooltip({ tip = "", placement = "right", children }) {
+export default function Tooltip({
+  tip = "",
+  placement = "right",
+  children,
+  ...rest
+}) {
   return (
     <Tippy
       offset={[0, 18]}
@@ -45,6 +50,7 @@ export default function Tooltip({ tip = "", placement = "right", children }) {
       delay={[0, 0]}
       placement={placement}
       content={<StyledTip className={placement}>{tip}</StyledTip>}
+      {...rest}
     >
       {children}
     </Tippy>

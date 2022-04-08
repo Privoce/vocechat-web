@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Tippy from "@tippyjs/react";
 import styled from "styled-components";
+import Tooltip from "../../component/Tooltip";
 import { useKey } from "rooks";
 const StyledBtn = styled.button`
   outline: none;
@@ -38,18 +39,20 @@ export default function EmojiPicker({ selectEmoji }) {
     selectEmoji(emoji.native);
   };
   return (
-    <Tippy
-      onClickOutside={toggleVisible}
-      visible={visible}
-      offset={[-18, 25]}
-      interactive
-      placement="top-start"
-      // trigger="click"
-      content={<Picker onSelect={handleSelect} />}
-    >
-      <StyledBtn onClick={toggleVisible}>
-        <SmileIcon />
-      </StyledBtn>
-    </Tippy>
+    <Tooltip placement="top" tip="Emojis" disabled={visible}>
+      <Tippy
+        onClickOutside={toggleVisible}
+        visible={visible}
+        offset={[-18, 25]}
+        interactive
+        placement="top-start"
+        // trigger="click"
+        content={<Picker onSelect={handleSelect} />}
+      >
+        <StyledBtn onClick={toggleVisible}>
+          <SmileIcon />
+        </StyledBtn>
+      </Tippy>
+    </Tooltip>
   );
 }

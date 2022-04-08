@@ -1,5 +1,7 @@
 import { useState, useRef } from "react";
 import styled from "styled-components";
+import Tooltip from "../../component/Tooltip";
+
 import UploadModal from "../../component/UploadModal";
 import AddIcon from "../../../assets/icons/add.solid.svg";
 import MarkdownIcon from "../../../assets/icons/markdown.svg";
@@ -23,7 +25,7 @@ const Styled = styled.div`
     position: relative;
     width: 24px;
     height: 24px;
-    input {
+    label {
       opacity: 0;
       cursor: pointer;
       position: absolute;
@@ -31,6 +33,9 @@ const Styled = styled.div`
       top: 0;
       width: 100%;
       height: 100%;
+      input {
+        display: none;
+      }
     }
   }
 `;
@@ -59,19 +64,26 @@ export default function Toolbar({ toggleMode, mode, to, context }) {
       )}
       <Styled className={mode}>
         <div className="md" onClick={toggleMode}>
-          <MarkdownIcon className={mode} />
+          <Tooltip placement="top" tip="Markdown">
+            <MarkdownIcon className={mode} />
+          </Tooltip>
         </div>
-        <div className="add">
-          <AddIcon />
-          <input
-            ref={fileInputRef}
-            multiple={false}
-            onChange={handleUpload}
-            type="file"
-            name="file"
-            id="file"
-          />
-        </div>
+        <Tooltip placement="top" tip="Upload">
+          <div className="add">
+            <AddIcon />
+            <label htmlFor="file">
+              <input
+                size={24}
+                ref={fileInputRef}
+                multiple={false}
+                onChange={handleUpload}
+                type="file"
+                name="file"
+                id="file"
+              />
+            </label>
+          </div>
+        </Tooltip>
       </Styled>
     </>
   );
