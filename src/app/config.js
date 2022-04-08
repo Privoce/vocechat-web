@@ -1,6 +1,6 @@
 // const BASE_URL = `${location.origin}/api`;
 const BASE_URL = `https://dev.rustchat.com/api`;
-export const CACHE_VERSION = `0.3.1`;
+export const CACHE_VERSION = `0.3.2`;
 // const BASE_URL = `https://rustchat.net/api`;
 export const ContentTypes = {
   text: "text/plain",
@@ -11,6 +11,16 @@ export const ContentTypes = {
   formData: "multipart/form-data",
   json: "application/json",
 };
+export const firebaseConfig = {
+  apiKey: "AIzaSyDyJ6B1Ouenoha_gdGkBwIkBNStlwhlbO0",
+  authDomain: "rustchat-develop.firebaseapp.com",
+  projectId: "rustchat-develop",
+  storageBucket: "rustchat-develop.appspot.com",
+  messagingSenderId: "418687074928",
+  appId: "1:418687074928:web:753286adbf239f5af9eab5",
+  measurementId: "G-XV476KEC8P",
+};
+export const vapidKey = `BGXCn-5YRXSFw38Q9lUKJ5bibL212-yIQn1pCvthGhp6_KwA29FO1Ax_d_7if1vfC2a5wTSVO8AcZrc-Hm1aS0Y`;
 export const googleClientID =
   "418687074928-naojba82n9ktf0rkvnqoor4nhr54ql1b.apps.googleusercontent.com";
 // "840319286941-6ds7lbvk55eq8mjortf68cb2ll65lprt.apps.googleusercontent.com";
