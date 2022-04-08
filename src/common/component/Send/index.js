@@ -26,6 +26,7 @@ const Modes = {
 function Send({
   name,
   context = "channel",
+  members = [],
   // 发给谁，或者是channel，或者是user
   id = "",
 }) {
@@ -45,6 +46,7 @@ function Send({
   const [sendChannelMsg] = useSendChannelMsgMutation();
   const sendMessage = context == "channel" ? sendChannelMsg : sendMsg;
   // const sendingMessage = userSending || channelSending;
+
   useEffect(() => {
     if (replying_mid) {
       const editorRef = getPlateEditorRef(
@@ -130,6 +132,7 @@ function Send({
       <EmojiPicker selectEmoji={insertEmoji} />
       {mode == Modes.text && (
         <MixedInput
+          members={members}
           id={`${context}_${id}`}
           placeholder={placeholder}
           sendMessages={handleSendMessage}

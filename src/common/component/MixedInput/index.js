@@ -1,5 +1,6 @@
 import { useRef, useState, useCallback } from "react";
 import { useKey } from "rooks";
+import { useSelector } from "react-redux";
 import { Editor, Transforms } from "slate";
 import {
   createPlateUI,
@@ -10,17 +11,22 @@ import {
   createParagraphPlugin,
   createImagePlugin,
   createSoftBreakPlugin,
+  createComboboxPlugin,
+  createMentionPlugin,
   createPlugins,
   ELEMENT_PARAGRAPH,
   getPlateEditorRef,
   // usePlateEditorRef,
   ELEMENT_IMAGE,
+  MentionCombobox,
   // usePlateStore
 } from "@udecode/plate";
 import { ReactEditor } from "slate-react";
 import Styled from "./styled";
+// import StyledCombobox from "./StyledCombobox";
 import ImageElement from "./ImageElement";
 import { CONFIG } from "./config";
+import Contact from "../Contact";
 
 export const TEXT_EDITOR_PREFIX = "rustchat_text_editor";
 export const setEditorFocus = (edtr) => {
@@ -42,14 +48,15 @@ let components = createPlateUI({
   [ELEMENT_IMAGE]: ImageElement,
   // customize your components by plugin key
 });
-
 const initialValue = [{ type: ELEMENT_PARAGRAPH, children: [{ text: "" }] }];
 const Plugins = ({
   id = "",
   placeholder = "Write some markdown...",
   sendMessages,
+  members = [],
 }) => {
   // const plateEditor = usePlateEditorRef(`${TEXT_EDITOR_PREFIX}_${id}`);
+  const contactData = useSelector((store) => store.contacts.byId);
   const [msgs, setMsgs] = useState([]);
   const [cmdKey, setCmdKey] = useState(false);
   const editableRef = useRef(null);
@@ -97,6 +104,8 @@ const Plugins = ({
       createSoftBreakPlugin(CONFIG.softBreak),
       createTrailingBlockPlugin(CONFIG.trailingBlock),
       createExitBreakPlugin(CONFIG.exitBreak),
+      createComboboxPlugin({ key: "combobox" }),
+      createMentionPlugin(),
     ],
     {
       components,
@@ -151,7 +160,28 @@ const Plugins = ({
         editableProps={{ ...initialProps, style: { userSelect: "text" } }}
         initialValue={initialValue}
         plugins={plugins}
-      ></Plate>
+      >
+        <MentionCombobox
+          // component={StyledCombobox}
+          onRenderItem={({ item }) => {
+            console.log("wtf", item);
+            return <Contact uid={item.data.uid} interactive={false} />;
+          }}
+          items={members.map((id) => {
+            const data = contactData[id];
+            if (!data) return null;
+            const { uid, name, ...rest } = data;
+            return {
+              key: uid,
+              text: name,
+              data: {
+                uid,
+                ...rest,
+              },
+            };
+          })}
+        />
+      </Plate>
     </Styled>
   );
 };

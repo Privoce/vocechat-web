@@ -150,7 +150,13 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
                   })}
               </div>
             </div>
-            <Send key={cid} id={cid} type="channel" name={name} />
+            <Send
+              key={cid}
+              id={cid}
+              context="channel"
+              name={name}
+              members={memberIds}
+            />
           </div>
         </StyledChannelChat>
         {/* {unreads != 0 && (

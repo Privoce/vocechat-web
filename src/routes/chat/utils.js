@@ -71,6 +71,7 @@ export const renderPreviewMessage = (message = null) => {
   return res;
 };
 export const renderMessageFragment = ({
+  isFirst = false,
   read = true,
   updateReadIndex,
   prev = null,
@@ -95,6 +96,7 @@ export const renderMessageFragment = ({
     <React.Fragment key={mid}>
       {divider && <Divider content={divider}></Divider>}
       <Message
+        isFirst={isFirst}
         updateReadIndex={updateReadIndex}
         read={read}
         context={context}
