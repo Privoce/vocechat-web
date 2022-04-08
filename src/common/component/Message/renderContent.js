@@ -1,8 +1,10 @@
+import React from "react";
 import Linkify from "react-linkify";
 import dayjs from "dayjs";
 import MrakdownRender from "../MrakdownRender";
 import { getDefaultSize } from "../../utils";
 import FileBox from "../FileBox";
+import URLPreview from "./URLPreview";
 const renderContent = ({
   from_uid,
   created_at,
@@ -19,14 +21,18 @@ const renderContent = ({
         <>
           <Linkify
             componentDecorator={(decoratedHref, decoratedText, key) => (
-              <a
-                target="_blank"
-                href={decoratedHref}
-                key={key}
-                rel="noreferrer"
-              >
-                {decoratedText}
-              </a>
+              <React.Fragment key={key}>
+                <a
+                  className="link"
+                  target="_blank"
+                  href={decoratedHref}
+                  key={key}
+                  rel="noreferrer"
+                >
+                  {decoratedText}
+                </a>
+                <URLPreview url={decoratedHref} />
+              </React.Fragment>
             )}
           >
             {content}

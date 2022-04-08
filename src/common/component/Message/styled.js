@@ -73,7 +73,7 @@ const StyledMsg = styled.div`
         max-width: 400px;
         cursor: pointer;
       }
-      a {
+      > .link {
         text-decoration: none;
         border-radius: 2px;
         /* background-color: #f5feff; */

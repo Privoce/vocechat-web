@@ -1,18 +1,19 @@
 // import React from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
+import MrakdownRender from "../MrakdownRender";
+
 import { ContentTypes } from "../../../app/config";
 import { getFileIcon } from "../../utils";
 import Avatar from "../Avatar";
 const Styled = styled.div`
   cursor: pointer;
   display: flex;
-  align-items: center;
-  padding: 16px;
+  align-items: flex-start;
+  padding: 8px;
   background: #e5e7eb;
   border-radius: var(--br);
   gap: 8px;
-
   margin-bottom: 4px;
   .user {
     display: flex;
@@ -49,6 +50,24 @@ const Styled = styled.div`
       word-wrap: break-word;
       word-break: break-all;
     }
+    .md {
+      position: relative;
+      max-height: 152px;
+      overflow: hidden;
+      &:after {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        content: "";
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0) 63.54%,
+          #e5e7eb 93.09%
+        );
+      }
+    }
     .pic {
       display: inherit;
       max-width: 34px;
@@ -73,7 +92,11 @@ const renderContent = (data) => {
       res = <span className="txt"> {content}</span>;
       break;
     case ContentTypes.markdown:
-      res = <span className="txt">[markdown]</span>;
+      res = (
+        <div className="md">
+          <MrakdownRender content={content} />
+        </div>
+      );
       break;
     case ContentTypes.image:
     case ContentTypes.imageJPG:

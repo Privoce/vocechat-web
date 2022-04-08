@@ -1,6 +1,7 @@
 // import React from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { ContentTypes } from "../../../app/config";
+import MrakdownRender from "../MrakdownRender";
 import closeIcon from "../../../assets/icons/close.circle.svg?url";
 import pictureIcon from "../../../assets/icons/picture.svg?url";
 import { getFileIcon } from "../../utils";
@@ -10,7 +11,7 @@ const Styled = styled.div`
   z-index: 999;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-start;
   gap: 16px;
   border-top-left-radius: 8px;
@@ -37,13 +38,33 @@ const Styled = styled.div`
     }
   }
   .content {
-    font-weight: 500;
     color: #616161;
     overflow: hidden;
     text-overflow: ellipsis;
     padding-right: 30px;
     display: flex;
     align-items: center;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    .md {
+      position: relative;
+      max-height: 100px;
+      overflow: hidden;
+      &:after {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        content: "";
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0) 63.54%,
+          #f3f4f6 93.09%
+        );
+      }
+    }
     .icon {
       width: 15px;
       height: 20px;
@@ -57,9 +78,9 @@ const Styled = styled.div`
   .close {
     background: none;
     position: absolute;
-    top: 50%;
+    top: 16px;
     right: 16px;
-    transform: translateY(-50%);
+    /* transform: translateY(-50%); */
   }
 `;
 const renderContent = (data) => {
@@ -70,7 +91,11 @@ const renderContent = (data) => {
       res = content;
       break;
     case ContentTypes.markdown:
-      res = `[markdown]`;
+      res = (
+        <div className="md">
+          <MrakdownRender content={content} />
+        </div>
+      );
       break;
     case ContentTypes.image:
     case ContentTypes.imageJPG:
