@@ -37,7 +37,7 @@ const StyledWrapper = styled.span`
       background-color: #cff9fe;
     }
     &.reacted {
-      border: 1px solid #06aed4;
+      box-shadow: inset 0 0 0 1px #06aed4;
       background-color: #a5f0fc;
     }
 

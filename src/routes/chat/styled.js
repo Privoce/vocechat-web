@@ -128,7 +128,7 @@ const StyledWrapper = styled.div`
         }
         /* drop files effect */
         .drop_over {
-          outline: 2px solid #52edff;
+          box-shadow: inset 0 0 0 2px #52edff;
         }
       }
       &.collapse {
