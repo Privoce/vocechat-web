@@ -1,10 +1,15 @@
 import React from "react";
-import Linkify from "react-linkify";
+
+// import * as linkfy from "linkifyjs";
+import Linkit from "react-linkify";
+
 import dayjs from "dayjs";
+import Mention from "./Mention";
 import MrakdownRender from "../MrakdownRender";
 import { getDefaultSize } from "../../utils";
 import FileBox from "../FileBox";
 import URLPreview from "./URLPreview";
+import reactStringReplace from "react-string-replace";
 const renderContent = ({
   from_uid,
   created_at,
@@ -19,7 +24,7 @@ const renderContent = ({
     case "text/plain":
       ctn = (
         <>
-          <Linkify
+          <Linkit
             componentDecorator={(decoratedHref, decoratedText, key) => (
               <React.Fragment key={key}>
                 <a
@@ -35,8 +40,18 @@ const renderContent = ({
               </React.Fragment>
             )}
           >
-            {content}
-          </Linkify>
+            {reactStringReplace(
+              content,
+              /(\s{1}\@[1-9]+\s{1})/g,
+              (match, idx) => {
+                console.log("match", match);
+                const uid = match.trim().slice(1);
+                return <Mention key={idx} uid={uid} />;
+              }
+            )}
+            {/* {content.replace(/\s{1}\@[1-9]+\s{1}/g,)} */}
+            {/* {new RegExp(/\s{1}\@[1-9]+\s{1}/g).exec(content)} */}
+          </Linkit>
           {edited && (
             <span
               className="edited"

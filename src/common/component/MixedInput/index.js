@@ -27,7 +27,7 @@ import Styled from "./styled";
 import ImageElement from "./ImageElement";
 import { CONFIG } from "./config";
 import Contact from "../Contact";
-
+// import Mention from "./Mention";
 export const TEXT_EDITOR_PREFIX = "rustchat_text_editor";
 export const setEditorFocus = (edtr) => {
   console.log("focus", edtr);
@@ -104,8 +104,27 @@ const Plugins = ({
       createSoftBreakPlugin(CONFIG.softBreak),
       createTrailingBlockPlugin(CONFIG.trailingBlock),
       createExitBreakPlugin(CONFIG.exitBreak),
-      createComboboxPlugin({ key: "combobox" }),
-      createMentionPlugin(),
+      createComboboxPlugin(),
+      createMentionPlugin({
+        // component: Mention,
+        // handlers: {
+        //   onKeyDown: ({ query }) => {
+        //     console.log("mention", query);
+        //     return true;
+        //   },
+        // },
+        options: {
+          createMentionNode: (item) => {
+            console.log("mention", item);
+            const {
+              text,
+              data: { uid },
+            } = item;
+            return { value: `@${text}`, uid };
+          },
+          insertSpaceAfterMention: true,
+        },
+      }),
     ],
     {
       components,
@@ -116,6 +135,17 @@ const Plugins = ({
     async (val) => {
       console.log("tmps changed", val);
       const tmps = [];
+      const getMixedText = (children) => {
+        const mentions = [];
+        const arr = children.map(({ type, text, uid }) => {
+          if (type == "mention") {
+            mentions.push(uid);
+            return ` @${uid} `;
+          }
+          return text;
+        });
+        return { value: arr.join(""), mentions };
+      };
       for await (const v of val) {
         if (v.type == "img") {
           // img
@@ -123,30 +153,36 @@ const Plugins = ({
           const value = await resp.blob();
           tmps.push({ type: "image", value });
         } else {
-          // text
+          // p
+          const { value, mentions } = getMixedText(v.children);
           const prev = tmps[tmps.length - 1];
           if (!prev) {
-            tmps.push([{ type: "text", value: v.children[0].text }]);
+            tmps.push([{ type: "text", value, mentions }]);
           } else {
             if (Array.isArray(prev)) {
               tmps[tmps.length - 1].push({
                 type: "text",
-                value: v.children[0].text,
+                value,
+                mentions,
               });
             } else {
-              tmps.push([{ type: "text", value: v.children[0].text }]);
+              tmps.push([{ type: "text", value, mentions }]);
             }
           }
         }
       }
       const arr = tmps.map((tmp) => {
         return Array.isArray(tmp)
-          ? { type: "text", value: tmp.map((t) => t.value).join("\n") }
+          ? {
+              type: "text",
+              value: tmp.map((t) => t.value).join("\n"),
+              mentions: tmp.map((t) => t.mentions).flat(),
+            }
           : tmp;
       });
       const msgs = arr.filter(({ value }) => !!value);
       setMsgs(msgs);
-      console.log("tmps", val, msgs);
+      console.log("tmps", val, tmps, msgs);
     },
     [msgs]
   );
