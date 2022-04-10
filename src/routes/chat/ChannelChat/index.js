@@ -56,7 +56,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
   };
 
   const { name, description, is_public, members = [] } = data;
-  const memberIds = members.length == 0 ? userIds : members;
+  const memberIds = is_public ? userIds : members;
   console.log("channel message list", msgIds);
   const readIndex = footprint.readChannels[cid];
   return (

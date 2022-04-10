@@ -29,8 +29,16 @@ const channelsSlice = createSlice({
       state.byId[gid] = rest;
     },
     updateChannel(state, action) {
+      const ignoreInPublic = ["add_member", "remove_member"];
       // console.log("set channels store", action);
-      const { id, operation, members, ...rest } = action.payload;
+      const { id, operation, members = [], ...rest } = action.payload;
+      const currChannel = state.byId[id];
+      if (
+        !currChannel ||
+        (currChannel.is_public && ignoreInPublic.includes(operation))
+      )
+        return;
+
       switch (operation) {
         case "remove_member":
           {
