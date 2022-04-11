@@ -8,6 +8,7 @@ import ContextMenu from "../../../common/component/ContextMenu";
 import Tooltip from "../../../common/component/Tooltip";
 // import { useDebounce} from "rooks";
 import { useReadMessageMutation } from "../../../app/services/message";
+import { useUpdateMuteSettingMutation } from "../../../app/services/contact";
 
 import StyledLink from "./styled";
 import { toggleChannelSetting } from "../../../app/slices/ui";
@@ -17,6 +18,7 @@ import { getUnreadCount } from "../utils";
 const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [muteChannel] = useUpdateMuteSettingMutation();
   const [updateReadIndex] = useReadMessageMutation();
 
   const {
@@ -25,17 +27,23 @@ const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
     handleContextMenuEvent,
     hideContextMenu,
   } = useContextMenu();
-  const { channel, mids, messageData, readIndex, loginUid } = useSelector(
-    (store) => {
-      return {
-        channel: store.channels.byId[id],
-        mids: store.channelMessage[id],
-        messageData: store.message,
-        loginUid: store.authData.uid,
-        readIndex: store.footprint.readChannels[id],
-      };
-    }
-  );
+  const {
+    channel,
+    mids,
+    messageData,
+    readIndex,
+    muted,
+    loginUid,
+  } = useSelector((store) => {
+    return {
+      channel: store.channels.byId[id],
+      mids: store.channelMessage[id],
+      messageData: store.message,
+      loginUid: store.authData.uid,
+      readIndex: store.footprint.readChannels[id],
+      muted: store.footprint.muteChannels[id],
+    };
+  });
   const handleChannelSetting = (evt) => {
     evt.preventDefault();
     evt.stopPropagation();
@@ -66,8 +74,15 @@ const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
       updateReadIndex(param);
     }
   };
+  const handleMute = () => {
+    const data = muted
+      ? { remove_groups: [id] }
+      : { add_groups: [{ gid: id }] };
+    muteChannel(data);
+  };
   const { is_public, name } = channel;
   const unreads = getUnreadCount({ mids, messageData, readIndex, loginUid });
+  const isDot = muted || unreads > 99;
   return (
     <Tippy
       interactive
@@ -86,7 +101,8 @@ const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
               handler: handleReadAll,
             },
             {
-              title: "Mute",
+              title: muted ? "Unmute" : "Mute",
+              handler: handleMute,
             },
             {
               title: "Notification Settings",
@@ -123,8 +139,8 @@ const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
             <i className="setting" onClick={handleChannelSetting}></i>
           </Tooltip>
           {unreads > 0 && (
-            <i className={`badge ${unreads > 99 ? "dot" : ""}`}>
-              {unreads > 99 ? null : unreads}
+            <i className={`badge ${isDot ? "dot" : ""}`}>
+              {isDot ? null : unreads}
             </i>
           )}
         </div>

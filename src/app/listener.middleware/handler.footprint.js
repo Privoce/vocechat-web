@@ -18,6 +18,12 @@ export default async function handler({ operation, data = {}, payload }) {
         await table.setItem("afterMid", afterMid);
       }
       break;
+    case "updateMute":
+      {
+        await table.setItem("muteUsers", data.muteUsers || {});
+        await table.setItem("muteChannels", data.muteChannels || {});
+      }
+      break;
     case "updateReadChannels":
       {
         await table.setItem("readChannels", data.readChannels);

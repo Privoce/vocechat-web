@@ -19,6 +19,7 @@ import {
   updateUsersVersion,
   updateReadChannels,
   updateReadUsers,
+  updateMute,
 } from "../../../app/slices/footprint";
 import {
   updateUsersByLogs,
@@ -151,9 +152,45 @@ export default function useStreaming() {
             case "user_settings_changed":
               {
                 console.log("users settings");
-                const { read_index_users = [], read_index_groups = [] } = data;
-                dispatch(updateReadChannels(read_index_groups));
-                dispatch(updateReadUsers(read_index_users));
+                Object.keys(data).forEach((key) => {
+                  switch (key) {
+                    case "read_index_groups":
+                      dispatch(updateReadChannels(data[key]));
+                      break;
+                    case "read_index_users":
+                      dispatch(updateReadUsers(data[key]));
+                      break;
+                    case "add_mute_users":
+                    case "mute_users":
+                    case "add_mute_groups":
+                    case "mute_groups":
+                      {
+                        const arr = data[key];
+                        if (arr && arr.length) {
+                          const _key = key.endsWith("users")
+                            ? "add_users"
+                            : "add_groups";
+                          dispatch(updateMute({ [_key]: arr }));
+                        }
+                      }
+                      break;
+                    case "remove_mute_users":
+                    case "remove_mute_groups":
+                      {
+                        const arr = data[key];
+                        if (arr && arr.length) {
+                          const _key = key.endsWith("users")
+                            ? "remove_users"
+                            : "remove_groups";
+                          dispatch(updateMute({ [_key]: arr }));
+                        }
+                      }
+                      break;
+
+                    default:
+                      break;
+                  }
+                });
               }
               break;
             case "users_state":

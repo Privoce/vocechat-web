@@ -3,6 +3,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { KEY_UID } from "../config";
 import baseQuery from "./base.query";
 import { resetAuthData, setUid } from "../slices/auth.data";
+import { updateMute } from "../slices/footprint";
 import { fullfillContacts } from "../slices/contacts";
 import BASE_URL, { ContentTypes } from "../config";
 import { onMessageSendStarted } from "./handlers";
@@ -47,6 +48,21 @@ export const contactApi = createApi({
     deleteContact: builder.query({
       query: (uid) => ({ url: `/admin/user/${uid}`, method: "DELETE" }),
     }),
+    updateMuteSetting: builder.mutation({
+      query: (data) => ({
+        url: `/user/mute`,
+        method: "POST",
+        body: data,
+      }),
+      async onQueryStarted(data, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          dispatch(updateMute(data));
+        } catch (error) {
+          console.log("update mute failed", error);
+        }
+      },
+    }),
     updateAvatar: builder.mutation({
       query: (data) => ({
         headers: {
@@ -89,6 +105,7 @@ export const contactApi = createApi({
 });
 
 export const {
+  useUpdateMuteSettingMutation,
   useLazyDeleteContactQuery,
   useUpdateInfoMutation,
   useUpdateAvatarMutation,
