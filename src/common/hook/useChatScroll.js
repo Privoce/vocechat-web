@@ -21,26 +21,26 @@ function useChatScroll(dep) {
   useEffect(() => {
     console.log("chat scroll", ref);
     if (ref.current) {
-      setTimeout(() => {
-        if (ref.current) {
-          ref.current.scrollTop = ref.current.scrollHeight;
-        }
-      }, 20);
+      // setTimeout(() => {
+      if (ref.current) {
+        ref.current.scrollTop = ref.current.scrollHeight;
+      }
+      // }, 20);
     }
   }, [dep]);
-  useEffect(() => {
-    console.log("chat scroll", ref);
-    if (ref.current) {
-      const ele = ref.current;
-      const resizeObserver = new ResizeObserver((entries) => {
-        for (let entry of entries) {
-          entry.target.scrollTop = entry.target.scrollHeight;
-        }
-      });
+  // useEffect(() => {
+  //   console.log("chat scroll", ref);
+  //   if (ref.current) {
+  //     const ele = ref.current;
+  //     const resizeObserver = new ResizeObserver((entries) => {
+  //       for (let entry of entries) {
+  //         entry.target.scrollTop = entry.target.scrollHeight;
+  //       }
+  //     });
 
-      resizeObserver.observe(ele);
-    }
-  }, []);
+  //     resizeObserver.observe(ele);
+  //   }
+  // }, []);
   return ref;
 }
 
