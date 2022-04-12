@@ -1,12 +1,17 @@
 // import React from 'react';
-import hashIcon from "../../assets/icons/channel.svg?url";
-import lockHashIcon from "../../assets/icons/channel.private.svg?url";
-export default function ChannelIcon({ personal = false, ...rest }) {
+import HashIcon from "../../assets/icons/channel.svg";
+import LockHashIcon from "../../assets/icons/channel.private.svg";
+import styled from "styled-components";
+const Styled = styled.div`
+  display: flex;
+  &.muted path {
+    fill: #d0d5dd;
+  }
+`;
+export default function ChannelIcon({ personal = false, muted = false }) {
   return (
-    <img
-      src={personal ? lockHashIcon : hashIcon}
-      alt="channel icon"
-      {...rest}
-    />
+    <Styled className={muted ? "muted" : ""}>
+      {personal ? <LockHashIcon /> : <HashIcon />}
+    </Styled>
   );
 }

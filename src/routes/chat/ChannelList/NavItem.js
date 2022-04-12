@@ -127,11 +127,13 @@ const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
         onContextMenu={handleContextMenuEvent}
         ref={drop}
         key={id}
-        className={`link ${isActive ? "drop_over" : ""}`}
+        className={`link ${isActive ? "drop_over" : ""} ${
+          muted ? "muted" : ""
+        }`}
         to={`/chat/channel/${id}`}
       >
-        <div className="name" title={name}>
-          <ChannelIcon personal={!is_public} />
+        <div className={`name`} title={name}>
+          <ChannelIcon personal={!is_public} muted={muted} />
           <span className={`txt ${unreads == 0 ? "read" : ""}`}>{name}</span>
         </div>
         <div className="icons">

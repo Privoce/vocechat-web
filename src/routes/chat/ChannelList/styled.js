@@ -50,7 +50,7 @@ const Styled = styled(NavLink)`
       height: 20px;
       min-width: 20px;
       border-radius: 50%;
-      background: #bfbfbf;
+      background: #22ccee;
       font-weight: 900;
       font-size: 10px;
       line-height: 10px;
@@ -62,8 +62,21 @@ const Styled = styled(NavLink)`
       }
     }
   }
-  &:hover > .icons > .setting {
-    visibility: visible;
+  &.muted {
+    .name .txt {
+      color: #d0d5dd;
+    }
+    .icons .badge {
+      background: #bfbfbf;
+    }
+  }
+  &:hover > .icons > {
+    .badge {
+      display: none;
+    }
+    .setting {
+      visibility: visible;
+    }
   }
 `;
 export default Styled;
