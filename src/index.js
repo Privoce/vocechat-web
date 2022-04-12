@@ -18,6 +18,5 @@ root.render(
       <ReduxRoutes />
     </DndProvider>
     <MarkdownStyleOverride />
-  </>,
-  document.getElementById("root")
+  </>
 );
