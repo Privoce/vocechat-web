@@ -93,7 +93,7 @@ export default function Commands({
         content={<EmojiPicker mid={mid} hidePicker={hideAll} />}
       >
         <li className="cmd">
-          <Tooltip placement="top" tip="Emoji">
+          <Tooltip placement="top" tip="Add Reaction">
             <img src={reactIcon} className="toggler" alt="icon emoji" />
           </Tooltip>
         </li>

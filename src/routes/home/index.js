@@ -55,7 +55,7 @@ export default function HomePage() {
               )} */}
             </NavLink>
             <NavLink className="link" to={"/contacts"}>
-              <Tooltip tip="Channel">
+              <Tooltip tip="Members">
                 <img src={ContactIcon} alt="contact icon" />
               </Tooltip>
               {/* {menuExpand && (
