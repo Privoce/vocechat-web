@@ -40,14 +40,16 @@ const StyledTip = styled.div`
 export default function Tooltip({
   tip = "",
   placement = "right",
+  delay = null,
   children,
   ...rest
 }) {
+  const defaultDuration = [300, 250];
   return (
     <Tippy
       offset={[0, 18]}
-      duration={0}
-      delay={[0, 0]}
+      duration={delay ? defaultDuration : 0}
+      delay={delay ?? [150, 0]}
       placement={placement}
       content={<StyledTip className={placement}>{tip}</StyledTip>}
       {...rest}
