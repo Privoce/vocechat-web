@@ -1,8 +1,8 @@
-// import React from 'react'
+import { useState, useEffect } from "react";
 // import { NimblePicker } from "emoji-mart";
+import "emoji-mart/css/emoji-mart.css";
 import { Picker } from "emoji-mart";
 // import data from "emoji-mart/data/";
-import "emoji-mart/css/emoji-mart.css";
 import styled from "styled-components";
 const StyledWrapper = styled.div`
   filter: drop-shadow(0px 25px 50px rgba(31, 41, 55, 0.25));
@@ -19,17 +19,29 @@ const StyledWrapper = styled.div`
   }
 `;
 export default function EmojiPicker({ onSelect, ...rest }) {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const inter = setTimeout(() => {
+      setVisible(true);
+    }, 500);
+    return () => {
+      clearTimeout(inter);
+    };
+  }, []);
+
   return (
     <StyledWrapper>
-      <Picker
-        // set="twitter"
-        // data={data}
-        // set="twitter"
-        showPreview={false}
-        showSkinTones={false}
-        onSelect={onSelect}
-        {...rest}
-      />
+      {visible ? (
+        <Picker
+          // set="twitter"
+          // data={data}
+          // set="twitter"
+          showPreview={false}
+          showSkinTones={false}
+          onSelect={onSelect}
+          {...rest}
+        />
+      ) : null}
     </StyledWrapper>
   );
 }
