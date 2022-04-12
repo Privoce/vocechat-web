@@ -34,10 +34,15 @@ export default function MrakdownRender({ content }) {
         "click",
         (evt) => {
           console.log(evt);
+          evt.stopPropagation();
           const { target } = evt;
           // 图片
           if (target.nodeName == "IMG") {
-            const data = { originUrl: target.dataset.origin || target.src };
+            const urlObj = new URL(target.src);
+            const originUrl = `${urlObj.origin}${
+              urlObj.pathname
+            }?file_path=${urlObj.searchParams.get("file_path")}`;
+            const data = { originUrl };
             setPreviewImage(data);
           }
         },

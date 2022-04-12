@@ -1,12 +1,10 @@
 // const BASE_URL = `${location.origin}/api`;
 const BASE_URL = `https://dev.rustchat.com/api`;
-export const CACHE_VERSION = `0.3.2`;
+export const CACHE_VERSION = `0.3.3`;
 // const BASE_URL = `https://rustchat.net/api`;
 export const ContentTypes = {
   text: "text/plain",
   markdown: "text/markdown",
-  image: "image/png",
-  imageJPG: "image/jpeg",
   file: "rustchat/file",
   formData: "multipart/form-data",
   json: "application/json",
@@ -26,6 +24,7 @@ export const googleClientID =
 // "840319286941-6ds7lbvk55eq8mjortf68cb2ll65lprt.apps.googleusercontent.com";
 export const tokenHeader = "X-API-Key";
 export const FILE_SLICE_SIZE = 1000 * 200 * 8; //200kb
+export const FILE_IMAGE_SIZE = 1000 * 10000 * 8; //10mb
 export const KEY_TOKEN = "RUSTCHAT_TOKEN";
 export const KEY_EXPIRE = "RUSTCHAT_TOKEN_EXPIRE";
 export const KEY_REFRESH_TOKEN = "RUSTCHAT_REFRESH_TOKEN";

@@ -75,7 +75,8 @@ function Send({
   const handleSendMessage = async (msgs = []) => {
     if (!msgs || msgs.length == 0 || !id) return;
     for await (const msg of msgs) {
-      const { type: content_type, value: content, mentions = [] } = msg;
+      console.log("send msg", msg);
+      const { type: content_type, content, properties = {} } = msg;
       if (replying_mid) {
         console.log("replying", replying_mid);
         await replyMessage({
@@ -93,7 +94,7 @@ function Send({
           type: content_type,
           content,
           from_uid,
-          properties: { local_id: new Date().getTime(), mentions },
+          properties,
         });
       }
     }

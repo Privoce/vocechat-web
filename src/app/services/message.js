@@ -1,7 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 // import { batch } from "react-redux";
 
-import BASE_URL, { ContentTypes } from "../config";
+import { ContentTypes } from "../config";
 import { updateReadChannels, updateReadUsers } from "../slices/footprint";
 import { onMessageSendStarted } from "./handlers";
 
@@ -59,19 +59,6 @@ export const messageApi = createApi({
         return data ? data : {};
       },
     }),
-    uploadImage: builder.mutation({
-      query: (image) => ({
-        headers: {
-          "content-type": ContentTypes.image,
-        },
-        url: `/resource/image`,
-        method: "POST",
-        body: image,
-      }),
-      transformResponse: (image_id) => {
-        return `${BASE_URL}/resource/image?id=${encodeURIComponent(image_id)}`;
-      },
-    }),
     replyMessage: builder.mutation({
       query: ({ reply_mid, content, type = "text" }) => ({
         headers: {
@@ -93,29 +80,16 @@ export const messageApi = createApi({
       }),
       async onQueryStarted(data, { dispatch, queryFulfilled }) {
         const { users = null, groups = null } = data;
-        // const { readUsers, readChannels } = getState().footprint;
-        // const prevUsers = users.map(({ uid }) => {
-        //   return { uid, mid: readUsers[uid] };
-        // });
-        // const prevChannels = users.map(({ gid }) => {
-        //   return { gid, mid: readChannels[gid] };
-        // });
-        // batch(() => {
         if (users) {
           dispatch(updateReadUsers(users));
         }
         if (groups) {
           dispatch(updateReadChannels(groups));
         }
-        // });
         try {
           await queryFulfilled;
         } catch {
           // todo
-          // batch(() => {
-          //   dispatch(updateReadChannels(prevChannels));
-          //   dispatch(updateReadUsers(prevUsers));
-          // });
         }
       },
     }),
@@ -125,7 +99,6 @@ export const messageApi = createApi({
 export const {
   usePrepareUploadFileMutation,
   useUploadFileMutation,
-  useUploadImageMutation,
   useEditMessageMutation,
   useReactMessageMutation,
   useReplyMessageMutation,

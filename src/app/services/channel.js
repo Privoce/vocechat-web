@@ -46,6 +46,33 @@ export const channelApi = createApi({
         }
       },
     }),
+    getHistoryMessages: builder.query({
+      query: ({ gid, mid = 0, limit = 50 }) => ({
+        url: `/group/${gid}/history?before=${mid}&limit=${limit}`,
+      }),
+      // async onQueryStarted(id, { dispatch, getState, queryFulfilled }) {
+      //   const {
+      //     ui: { channelSetting },
+      //     channelMessage,
+      //   } = getState();
+      //   try {
+      //     await queryFulfilled;
+      //     dispatch(removeChannel(id));
+      //     if (id == channelSetting) {
+      //       dispatch(toggleChannelSetting());
+      //     }
+      //     // 删掉该channel下的所有消息&reaction
+      //     const mids = channelMessage[id];
+      //     if (mids) {
+      //       dispatch(removeChannelSession(id));
+      //       dispatch(removeMessage(mids));
+      //       dispatch(removeReactionMessage(mids));
+      //     }
+      //   } catch {
+      //     console.log("remove channel error");
+      //   }
+      // },
+    }),
     removeChannel: builder.query({
       query: (id) => ({
         url: `group/${id}`,
@@ -82,7 +109,7 @@ export const channelApi = createApi({
         },
         url: `group/${id}/send`,
         method: "POST",
-        body: content,
+        body: type == "file" ? JSON.stringify(content) : content,
       }),
       async onQueryStarted(param1, param2) {
         await onMessageSendStarted.call(this, param1, param2, "channel");
@@ -106,6 +133,7 @@ export const channelApi = createApi({
 });
 
 export const {
+  useLazyGetHistoryMessagesQuery,
   useGetChannelQuery,
   useUpdateChannelMutation,
   useLazyRemoveChannelQuery,

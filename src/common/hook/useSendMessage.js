@@ -1,7 +1,7 @@
 // import second from 'first'
 import { useSendChannelMsgMutation } from "../../app/services/channel";
 import { useSendMsgMutation } from "../../app/services/contact";
-export default function useSendImageMessage({
+export default function useSendMessage({
   context = "user",
   from = null,
   to = null,
@@ -18,20 +18,18 @@ export default function useSendImageMessage({
     sendUserMsg,
     { isLoading: userSending, isSuccess: userSuccess, isError: userError },
   ] = useSendMsgMutation();
-  const uploadFn = context == "user" ? sendUserMsg : sendChannelMsg;
-  const sendImageMessage = (file) => {
-    if (!file) return;
-    const { name, size, type } = file;
-    uploadFn({
+  const sendFn = context == "user" ? sendUserMsg : sendChannelMsg;
+  const sendMessage = ({ type = "text", content, properties = {} }) => {
+    sendFn({
       id: to,
-      content: file,
-      properties: { name, size, type, local_id: new Date().getTime() },
-      type: "image",
+      content,
+      properties: { ...properties, local_id: new Date().getTime() },
+      type,
       from_uid: from,
     });
   };
   return {
-    sendImageMessage,
+    sendMessage,
     isError: channelError || userError,
     isSending: userSending || channelSending,
     isSuccess: channelSuccess || userSuccess,

@@ -27,6 +27,7 @@ import Styled from "./styled";
 import ImageElement from "./ImageElement";
 import { CONFIG } from "./config";
 import Contact from "../Contact";
+import useUploadFile from "../../hook/useUploadFile";
 // import Mention from "./Mention";
 export const TEXT_EDITOR_PREFIX = "rustchat_text_editor";
 export const setEditorFocus = (edtr) => {
@@ -55,6 +56,9 @@ const Plugins = ({
   sendMessages,
   members = [],
 }) => {
+  const enableMentions = members.length > 0;
+  const { uploadFile } = useUploadFile();
+  const filesRef = useRef([]);
   // const plateEditor = usePlateEditorRef(`${TEXT_EDITOR_PREFIX}_${id}`);
   const contactData = useSelector((store) => store.contacts.byId);
   const [msgs, setMsgs] = useState([]);
@@ -66,6 +70,7 @@ const Plugins = ({
     className: "box",
     placeholder,
   };
+
   useKey(
     "Enter",
     (evt) => {
@@ -96,36 +101,44 @@ const Plugins = ({
       target: editableRef,
     }
   );
-  const plugins = createPlugins(
-    [
-      createParagraphPlugin(),
-      createImagePlugin(),
-      createNodeIdPlugin(),
-      createSoftBreakPlugin(CONFIG.softBreak),
-      createTrailingBlockPlugin(CONFIG.trailingBlock),
-      createExitBreakPlugin(CONFIG.exitBreak),
-      createComboboxPlugin(),
-      createMentionPlugin({
-        // component: Mention,
-        // handlers: {
-        //   onKeyDown: ({ query }) => {
-        //     console.log("mention", query);
-        //     return true;
-        //   },
-        // },
-        options: {
-          createMentionNode: (item) => {
-            console.log("mention", item);
-            const {
-              text,
-              data: { uid },
-            } = item;
-            return { value: `@${text}`, uid };
-          },
-          insertSpaceAfterMention: true,
+  const pluginArr = [
+    createParagraphPlugin(),
+    createImagePlugin({
+      options: {
+        uploadImage: async (dataUrl) => {
+          const resp = await fetch(dataUrl);
+          const blob = await resp.blob();
+          const { thumbnail, ...rest } = await uploadFile(blob);
+          const { name, file_type, size, path, hash } = rest;
+          filesRef.current.push({ name, file_type, size, path, hash });
+          return thumbnail;
         },
-      }),
-    ],
+      },
+    }),
+    createNodeIdPlugin(),
+    createSoftBreakPlugin(CONFIG.softBreak),
+    createTrailingBlockPlugin(CONFIG.trailingBlock),
+    createExitBreakPlugin(CONFIG.exitBreak),
+  ];
+  const plugins = createPlugins(
+    enableMentions
+      ? pluginArr.concat([
+          createComboboxPlugin(),
+          createMentionPlugin({
+            options: {
+              createMentionNode: (item) => {
+                console.log("mention", item);
+                const {
+                  text,
+                  data: { uid },
+                } = item;
+                return { value: `@${text}`, uid };
+              },
+              insertSpaceAfterMention: true,
+            },
+          }),
+        ])
+      : pluginArr,
     {
       components,
     }
@@ -146,27 +159,40 @@ const Plugins = ({
         });
         return { value: arr.join(""), mentions };
       };
-      for await (const v of val) {
+      for (const v of val) {
         if (v.type == "img") {
           // img
-          const resp = await fetch(v.url);
-          const value = await resp.blob();
-          tmps.push({ type: "image", value });
+          const url = v.url;
+          const file_path = decodeURIComponent(
+            new URL(url).searchParams.get("file_path")
+          );
+          console.log("files", filesRef.current, file_path);
+          const json = filesRef.current.find((f) => f.path == file_path) || {};
+          const { name, size, hash, path, ...rest } = json;
+          tmps.push({
+            type: "file",
+            content: { name, size, hash, path },
+            properties: rest,
+          });
         } else {
           // p
           const { value, mentions } = getMixedText(v.children);
           const prev = tmps[tmps.length - 1];
           if (!prev) {
-            tmps.push([{ type: "text", value, mentions }]);
+            tmps.push([
+              { type: "text", content: value, properties: { mentions } },
+            ]);
           } else {
             if (Array.isArray(prev)) {
               tmps[tmps.length - 1].push({
                 type: "text",
-                value,
-                mentions,
+                content: value,
+                properties: { mentions },
               });
             } else {
-              tmps.push([{ type: "text", value, mentions }]);
+              tmps.push([
+                { type: "text", content: value, properties: { mentions } },
+              ]);
             }
           }
         }
@@ -175,14 +201,14 @@ const Plugins = ({
         return Array.isArray(tmp)
           ? {
               type: "text",
-              value: tmp.map((t) => t.value).join("\n"),
-              mentions: tmp.map((t) => t.mentions).flat(),
+              content: tmp.map((t) => t.content).join("\n"),
+              properties: { mentions: tmp.map((t) => t.mentions).flat() },
             }
           : tmp;
       });
-      const msgs = arr.filter(({ value }) => !!value);
+      const msgs = arr.filter(({ content }) => !!content);
       setMsgs(msgs);
-      console.log("tmps", val, tmps, msgs);
+      console.log("tmps", tmps, arr, msgs);
     },
     [msgs]
   );
@@ -197,26 +223,28 @@ const Plugins = ({
         initialValue={initialValue}
         plugins={plugins}
       >
-        <MentionCombobox
-          // component={StyledCombobox}
-          onRenderItem={({ item }) => {
-            console.log("wtf", item);
-            return <Contact uid={item.data.uid} interactive={false} />;
-          }}
-          items={members.map((id) => {
-            const data = contactData[id];
-            if (!data) return null;
-            const { uid, name, ...rest } = data;
-            return {
-              key: uid,
-              text: name,
-              data: {
-                uid,
-                ...rest,
-              },
-            };
-          })}
-        />
+        {enableMentions ? (
+          <MentionCombobox
+            // component={StyledCombobox}
+            onRenderItem={({ item }) => {
+              console.log("wtf", item);
+              return <Contact uid={item.data.uid} interactive={false} />;
+            }}
+            items={members.map((id) => {
+              const data = contactData[id];
+              if (!data) return null;
+              const { uid, name, ...rest } = data;
+              return {
+                key: uid,
+                text: name,
+                data: {
+                  uid,
+                  ...rest,
+                },
+              };
+            })}
+          />
+        ) : null}
       </Plate>
     </Styled>
   );

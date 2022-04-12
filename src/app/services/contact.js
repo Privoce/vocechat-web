@@ -95,7 +95,7 @@ export const contactApi = createApi({
         },
         url: `user/${id}/send`,
         method: "POST",
-        body: content,
+        body: type == "file" ? JSON.stringify(content) : content,
       }),
       async onQueryStarted(param1, param2) {
         await onMessageSendStarted.call(this, param1, param2, "user");

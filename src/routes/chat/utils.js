@@ -1,5 +1,6 @@
 import React from "react";
 import dayjs from "dayjs";
+import { isImage } from "../../common/utils";
 import { ContentTypes } from "../../app/config";
 import Divider from "../../common/component/Divider";
 import Message from "../../common/component/Message";
@@ -37,20 +38,13 @@ export function getUnreadCount({
 }
 export const renderPreviewMessage = (message = null) => {
   if (!message) return null;
-  const { content_type, content } = message;
+  const { content_type, content, properties = {} } = message;
   let res = null;
   switch (content_type) {
     case ContentTypes.text:
       {
         res = content;
       }
-      break;
-    case ContentTypes.imageJPG:
-    case ContentTypes.image:
-      {
-        res = `[image]`;
-      }
-
       break;
     case ContentTypes.markdown:
       {
@@ -60,7 +54,11 @@ export const renderPreviewMessage = (message = null) => {
       break;
     case ContentTypes.file:
       {
-        res = `[file]`;
+        if (isImage(properties.file_type, properties.size)) {
+          res = `[image]`;
+        } else {
+          res = `[file]`;
+        }
       }
 
       break;

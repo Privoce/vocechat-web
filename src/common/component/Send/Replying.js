@@ -4,7 +4,7 @@ import { ContentTypes } from "../../../app/config";
 import MrakdownRender from "../MrakdownRender";
 import closeIcon from "../../../assets/icons/close.circle.svg?url";
 import pictureIcon from "../../../assets/icons/picture.svg?url";
-import { getFileIcon } from "../../utils";
+import { getFileIcon, isImage } from "../../utils";
 import { removeReplyingMessage } from "../../../app/slices/message";
 import styled from "styled-components";
 const Styled = styled.div`
@@ -97,20 +97,20 @@ const renderContent = (data) => {
         </div>
       );
       break;
-    case ContentTypes.image:
-    case ContentTypes.imageJPG:
-      res = <img className="pic" src={pictureIcon} />;
-      break;
     case ContentTypes.file:
       {
-        const { file_type, name } = properties;
-        const icon = getFileIcon(file_type, name);
-        res = (
-          <>
-            {icon}
-            <span className="name">{name}</span>
-          </>
-        );
+        const { file_type, name, size } = properties;
+        if (isImage(file_type, size)) {
+          res = <img className="pic" src={pictureIcon} />;
+        } else {
+          const icon = getFileIcon(file_type, name);
+          res = (
+            <>
+              {icon}
+              <span className="name">{name}</span>
+            </>
+          );
+        }
       }
       break;
     default:

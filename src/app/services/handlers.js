@@ -17,6 +17,8 @@ export const onMessageSendStarted = async (
   from = "channel"
 ) => {
   // id: who send to ,from_uid: who sent
+  console.log("handlers data", content, type, properties);
+  const isImage = properties.file_type?.startsWith("image");
   const ts = properties.local_id || new Date().getTime();
   // let imageData = null;
   // if (type == "image") {
@@ -31,7 +33,7 @@ export const onMessageSendStarted = async (
   //   }
   // }
   const tmpMsg = {
-    content: type == "image" ? URL.createObjectURL(content) : content,
+    content: isImage ? content.path : content,
     content_type: ContentTypes[type],
     created_at: ts,
     properties,

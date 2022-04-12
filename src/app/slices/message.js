@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import BASE_URL, { ContentTypes } from "../config";
+import { isImage } from "../../common/utils";
 const initialState = {
   replying: {},
 };
@@ -19,27 +20,25 @@ const messageSlice = createSlice({
     },
     addMessage(state, action) {
       const data = action.payload;
-      const { mid, sending, content_type, content } = data;
+      const { mid, sending, content_type, content, properties = {} } = data;
       // 如果是正发送，并且已存在，则不覆盖
       if (sending && state[mid]) return;
-      const isImage = content_type.startsWith("image");
       const isFile = content_type == ContentTypes.file;
-      // file
       if (!sending && isFile) {
         data.file_path = content;
         data.content = `${BASE_URL}/resource/file?file_path=${encodeURIComponent(
           data.file_path
         )}`;
-      }
-      // image
-      if (!sending && isImage) {
-        data.image_id = content;
-        data.content = `${BASE_URL}/resource/image?id=${encodeURIComponent(
-          data.image_id
-        )}`;
-        data.thumbnail = `${BASE_URL}/resource/thumbnail?id=${encodeURIComponent(
-          data.image_id
-        )}`;
+        data.download = `${BASE_URL}/resource/file?file_path=${encodeURIComponent(
+          data.file_path
+        )}&download=true`;
+        // image
+        const isPic = isImage(properties.file_type, properties.size);
+        if (isPic) {
+          data.thumbnail = `${BASE_URL}/resource/file?file_path=${encodeURIComponent(
+            data.file_path
+          )}&thumbnail=true`;
+        }
       }
       state[mid] = data;
     },

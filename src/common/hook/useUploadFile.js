@@ -1,57 +1,41 @@
 import { useState, useRef } from "react";
 // import { ContentTypes } from "../../app/config";
-// import { sliceFile } from "../utils";
-import { FILE_SLICE_SIZE } from "../../app/config";
+import BASE_URL, { FILE_SLICE_SIZE } from "../../app/config";
 import {
   usePrepareUploadFileMutation,
   useUploadFileMutation,
 } from "../../app/services/message";
-import { useSendMsgMutation } from "../../app/services/contact";
-import { useSendChannelMsgMutation } from "../../app/services/channel";
 
-export default function useUploadImageMessage({
-  context = "user",
-  from = null,
-  to = null,
-}) {
-  // const slicedRef = useRef(false);
+export default function useUploadFile() {
+  const [data, setData] = useState(null);
   const [uploadingFile, setUploadingFile] = useState(false);
   const sliceUploadedCountRef = useRef(0);
   const totalSliceCountRef = useRef(1);
-  // const [uploadedSliceCount, setUploadedSliceCount] = useState(0)
   const [
     prepareUploadFile,
     { isLoading: isPreparing, isSuccess: isPrepared },
   ] = usePrepareUploadFileMutation();
   const [
-    uploadFile,
+    uploadFileFn,
     { isLoading: isUploading, isSuccess: isUploaded, isError: uploadFileError },
   ] = useUploadFileMutation();
-  const [
-    sendChannelMsg,
-    {
-      isLoading: channelSending,
-      isSuccess: channelSuccess,
-      isError: channelError,
-    },
-  ] = useSendChannelMsgMutation();
 
-  const [
-    sendUserMsg,
-    { isLoading: userSending, isSuccess: userSuccess, isError: userError },
-  ] = useSendMsgMutation();
-  const sendFn = context == "user" ? sendUserMsg : sendChannelMsg;
   const uploadChunk = async (data) => {
     const { file_id, chunk, is_last } = data;
     const formData = new FormData();
     formData.append("file_id", file_id);
     formData.append("chunk_data", chunk);
     formData.append("chunk_is_last", is_last);
-    return uploadFile(formData);
+    return uploadFileFn(formData);
   };
-  const sendFileMessage = async (file) => {
+  const uploadFile = async (file) => {
     if (!file) return;
-    const { name, type: file_type, size: file_size } = file;
+    setData(null);
+    const {
+      name = `rustchat-${new Date().getTime()}.${file.type.split("/")[1]}`,
+      type: file_type,
+      size: file_size,
+    } = file;
     // 拿file id
     const { data: file_id } = await prepareUploadFile({
       content_type: file_type,
@@ -101,30 +85,30 @@ export default function useUploadImageMessage({
     const {
       data: { path, size, hash },
     } = uploadResult;
-    const content = JSON.stringify({
+    const encodedPath = encodeURIComponent(path);
+    const res = {
       name,
+      file_type,
+      path,
       size,
       hash,
-      path,
-    });
-    console.log("upload content", content);
-    await sendFn({
-      id: to,
-      content,
-      type: "file",
-      properties: { file_type },
-      from_uid: from,
-    });
+      url: `${BASE_URL}/resource/file?file_path=${encodedPath}`,
+      thumbnail: file_type.startsWith("image")
+        ? `${BASE_URL}/resource/file?file_path=${encodedPath}&thumbnail=true`
+        : "",
+      download: `${BASE_URL}/resource/file?file_path=${encodedPath}&download=true`,
+    };
+    setData(res);
+    return res;
   };
-  const isSending =
-    userSending || channelSending || isPreparing || uploadingFile;
   return {
-    progress: isSending
-      ? sliceUploadedCountRef.current / totalSliceCountRef.current
-      : 1,
-    sendFileMessage,
-    isError: channelError || userError || uploadFileError,
-    isSending,
-    isSuccess: (channelSuccess || userSuccess) && isPrepared,
+    data,
+    isUploading: uploadingFile,
+    progress: Number(
+      (sliceUploadedCountRef.current / totalSliceCountRef.current) * 100
+    ).toFixed(2),
+    uploadFile,
+    isError: uploadFileError,
+    isSuccess: !!data,
   };
 }

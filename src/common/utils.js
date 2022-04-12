@@ -1,3 +1,4 @@
+import { FILE_IMAGE_SIZE } from "../app/config";
 import IconPdf from "../assets/icons/file.pdf.svg";
 import IconAudio from "../assets/icons/file.audio.svg";
 import IconVideo from "../assets/icons/file.video.svg";
@@ -5,6 +6,9 @@ import IconUnkown from "../assets/icons/file.unkown.svg";
 import IconDoc from "../assets/icons/file.doc.svg";
 import IconCode from "../assets/icons/file.code.svg";
 import IconImage from "../assets/icons/file.image.svg";
+export const isImage = (file_type = "", size = 0) => {
+  return file_type.startsWith("image") && size <= FILE_IMAGE_SIZE;
+};
 export const isObjectEqual = (obj1, obj2) => {
   let o1 = Object.entries(obj1 ?? {})
     .sort()

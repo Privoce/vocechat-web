@@ -6,7 +6,7 @@ import Linkit from "react-linkify";
 import dayjs from "dayjs";
 import Mention from "./Mention";
 import MrakdownRender from "../MrakdownRender";
-import { getDefaultSize } from "../../utils";
+import { getDefaultSize, isImage } from "../../utils";
 import FileBox from "../FileBox";
 import URLPreview from "./URLPreview";
 import reactStringReplace from "react-string-replace";
@@ -68,35 +68,38 @@ const renderContent = ({
         ctn = <MrakdownRender content={content} />;
       }
       break;
-    case "image/png":
-    case "image/jpeg":
-      {
-        const { name, size, type } = properties;
-        const { width, height } = getDefaultSize(properties);
-        ctn = (
-          <img
-            className="img preview"
-            style={{ width: `${width}px`, height: `${height}px` }}
-            data-meta={JSON.stringify({ width, height, name, type, size })}
-            data-origin={content}
-            src={thumbnail || content}
-          />
-        );
-      }
-      break;
     case "rustchat/file":
       {
         const { size, name, file_type } = properties;
-        ctn = (
-          <FileBox
-            from_uid={from_uid}
-            created_at={created_at}
-            content={content}
-            size={size}
-            name={name}
-            file_type={file_type}
-          />
-        );
+        if (isImage(file_type, size)) {
+          const { width, height } = getDefaultSize(properties);
+          ctn = (
+            <img
+              className="img preview"
+              style={{ width: `${width}px`, height: `${height}px` }}
+              data-meta={JSON.stringify({
+                width,
+                height,
+                name,
+                file_type,
+                size,
+              })}
+              data-origin={content}
+              src={thumbnail || content}
+            />
+          );
+        } else {
+          ctn = (
+            <FileBox
+              from_uid={from_uid}
+              created_at={created_at}
+              content={content}
+              size={size}
+              name={name}
+              file_type={file_type}
+            />
+          );
+        }
       }
       break;
 

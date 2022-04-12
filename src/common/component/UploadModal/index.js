@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import FileItem from "./FileItem";
-import useSendImageMessage from "../../hook/useSendImageMessage";
-import useSendFileMessage from "../../hook/useSendFileMessage";
+import useUploadFile from "../../hook/useUploadFile";
 import Modal from "../Modal";
 import Button from "../styled/Button";
-import { isTreatAsImage } from "../../utils";
+// import { isTreatAsImage } from "../../utils";
 import StyledWrapper from "./styled";
+import useSendMessage from "../../hook/useSendMessage";
 
 export default function UploadModal({
   context = "user",
@@ -16,42 +16,45 @@ export default function UploadModal({
 }) {
   const from_uid = useSelector((store) => store.authData.uid);
   const {
-    sendImageMessage,
-    isSending: isSendingImage,
-    isSuccess: sendImageSuccess,
-  } = useSendImageMessage({
+    sendMessage,
+    isSuccess: sendMessageSuccess,
+    isSending,
+  } = useSendMessage({
     context,
     from: from_uid,
     to: sendTo,
   });
   const {
-    sendFileMessage,
+    data,
+    uploadFile,
     progress,
-    isSending: isSendingFile,
-    isSuccess: sendFileSuccess,
-  } = useSendFileMessage({
-    context,
-    from: from_uid,
-    to: sendTo,
-  });
+    isUploading,
+    isSuccess: uploadSuccess,
+  } = useUploadFile();
   const handleUpload = () => {
     const file = files[0];
-    // const { type } = file;
-    if (isTreatAsImage(file)) {
-      sendImageMessage(file);
-    } else {
-      sendFileMessage(file);
-    }
+    uploadFile(file);
   };
   useEffect(() => {
-    if (sendFileSuccess || sendImageSuccess) {
+    if (uploadSuccess) {
+      // 把已经上传的东西当做消息发出去
+      const { size, path, name, hash, ...rest } = data;
+      sendMessage({
+        type: "file",
+        content: { size, name, path, hash },
+        properties: rest,
+      });
+    }
+  }, [uploadSuccess, data]);
+  useEffect(() => {
+    if (sendMessageSuccess) {
       closeModal();
     }
-  }, [sendImageSuccess, sendFileSuccess]);
+  }, [sendMessageSuccess]);
 
   if (!sendTo) return null;
   console.log("upload file modal", files, sendTo);
-  const isSending = isSendingFile || isSendingImage;
+  const sending = isUploading || isSending;
   return (
     <Modal>
       <StyledWrapper
@@ -64,12 +67,10 @@ export default function UploadModal({
             </Button>
             <Button
               className="upload"
-              disabled={isSending}
+              disabled={sending}
               onClick={handleUpload}
             >
-              {isSending
-                ? `Uploading (${Math.floor(progress * 100)}%)`
-                : `Upload`}
+              {sending ? `Uploading (${progress}%)` : `Upload`}
             </Button>
           </>
         }

@@ -6,22 +6,22 @@ import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin
 import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight-all.js";
 
 import StyledWrapper from "./styled";
-import { useUploadImageMutation } from "../../../app/services/message";
+import useUploadFile from "../../hook/useUploadFile";
 
 import Button from "../../component/styled/Button";
 
 function MarkdownEditor({ placeholder, sendMarkdown, setEditorInstance }) {
   const editorRef = useRef(undefined);
+  const { uploadFile } = useUploadFile();
   // const [pHolder, setPHolder] = useState(placeholder);
-  const [uploadImage] = useUploadImageMutation();
   useEffect(() => {
     const editor = editorRef?.current;
     if (editor) {
       const editorInstance = editor.getInstance();
       editorInstance.removeHook("addImageBlobHook");
       editorInstance.addHook("addImageBlobHook", async (blob, callback) => {
-        const { data: url } = await uploadImage(blob);
-        callback(url);
+        const { thumbnail = "" } = await uploadFile(blob);
+        callback(thumbnail);
       });
       setEditorInstance(editorInstance);
     }
