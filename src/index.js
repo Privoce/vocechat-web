@@ -1,5 +1,5 @@
 // import React from 'react';
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import { Toaster } from "react-hot-toast";
 import { Reset } from "styled-reset";
 
@@ -9,8 +9,8 @@ import "./assets/vars.css";
 import "animate.css";
 import MarkdownStyleOverride from "./common/component/MarkdownStyleOverride";
 import ReduxRoutes from "./routes";
-
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
   <>
     <Reset />
     <Toaster />
