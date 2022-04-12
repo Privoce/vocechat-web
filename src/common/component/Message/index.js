@@ -1,19 +1,24 @@
 import React, { useRef, useState, useEffect } from "react";
 import dayjs from "dayjs";
+import isToday from "dayjs/plugin/isToday";
+import isYesterday from "dayjs/plugin/isYesterday";
 import { useSelector } from "react-redux";
 import { useInViewRef } from "rooks";
 import Tippy from "@tippyjs/react";
+import { useLazyGetHistoryMessagesQuery } from "../../../app/services/channel";
 import Reaction from "./Reaction";
 import Reply from "./Reply";
 import Profile from "../Profile";
 import Avatar from "../Avatar";
-
 import StyledWrapper from "./styled";
 import Commands from "./Commands";
-
 import EditMessage from "./EditMessage";
 import renderContent from "./renderContent";
+import Tooltip from "../Tooltip";
+dayjs.extend(isToday);
+dayjs.extend(isYesterday);
 function Message({
+  isFirst = false,
   contextId = 0,
   mid = "",
   context = "user",
@@ -22,7 +27,7 @@ function Message({
 }) {
   const [myRef, inView] = useInViewRef();
   const [edit, setEdit] = useState(false);
-
+  const [fetchMoreChannelMessage] = useLazyGetHistoryMessagesQuery();
   const avatarRef = useRef(null);
   const { message = {}, reactionMessageData, contactsData } = useSelector(
     (store) => {
@@ -59,9 +64,23 @@ function Message({
       updateReadIndex(data);
     }
   }, [mid, read]);
+  useEffect(() => {
+    if (isFirst && inView && context == "channel") {
+      // fetch new message
+      fetchMoreChannelMessage({ gid: contextId, mid });
+    }
+  }, [inView, isFirst, mid, contextId, context]);
+
   const reactions = reactionMessageData[mid];
   const currUser = contactsData[fromUid] || {};
   // if (!message) return null;
+  let timePrefix = null;
+  const dayjsTime = dayjs(time);
+  timePrefix = dayjsTime.isToday()
+    ? "Today"
+    : dayjsTime.isYesterday()
+    ? "Yesterday"
+    : null;
   return (
     <StyledWrapper
       data-msg-mid={mid}
@@ -69,6 +88,7 @@ function Message({
       className={`message ${inView ? "in_view" : ""}`}
     >
       <Tippy
+        duration={0}
         interactive
         placement="left"
         trigger="click"
@@ -81,7 +101,18 @@ function Message({
       <div className="details">
         <div className="up">
           <span className="name">{currUser.name}</span>
-          <i className="time">{dayjs(time).format("YYYY-MM-DD h:mm:ss A")}</i>
+          <Tooltip
+            delay={200}
+            disabled={!timePrefix}
+            placement="top"
+            tip={dayjsTime.format("YYYY-MM-DD h:mm:ss A")}
+          >
+            <i className="time">
+              {timePrefix
+                ? `${timePrefix} ${dayjsTime.format("h:mm A")}`
+                : dayjsTime.format("YYYY-MM-DD h:mm:ss A")}
+            </i>
+          </Tooltip>
         </div>
         <div className={`down ${sending ? "sending" : ""}`}>
           {reply_mid && <Reply mid={reply_mid} />}
