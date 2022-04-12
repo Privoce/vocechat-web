@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { toggleSetting } from "../../../app/slices/ui";
-import StyledSettingContainer from "../StyledSettingContainer";
+// import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import StyledSettingContainer from "../../common/component/StyledSettingContainer";
 import useNavs from "./navs";
 import LogoutConfirmModal from "./LogoutConfirmModal";
 
@@ -14,9 +14,10 @@ export default function Setting() {
     .flat();
   const [currNav, setCurrNav] = useState(flatenNavs[0]);
   const [logoutConfirm, setLogoutConfirm] = useState(false);
-  const dispatch = useDispatch();
+  const navgateTo = useNavigate();
   const close = () => {
-    dispatch(toggleSetting());
+    // dispatch(toggleSetting());
+    navgateTo(-1);
   };
   const toggleLogoutConfrim = () => {
     setLogoutConfirm((prev) => !prev);

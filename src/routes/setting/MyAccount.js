@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
-import { useUpdateAvatarMutation } from "../../../app/services/contact";
-import AvatarUploader from "../AvatarUploader";
+import { useUpdateAvatarMutation } from "../../app/services/contact";
+import AvatarUploader from "../../common/component/AvatarUploader";
 import ProfileBasicEditModal from "./ProfileBasicEditModal";
 const StyledWrapper = styled.div`
   display: flex;

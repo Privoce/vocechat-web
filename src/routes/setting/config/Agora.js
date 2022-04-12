@@ -1,10 +1,10 @@
 // import { useState, useEffect } from "react";
 import StyledContainer from "./StyledContainer";
-import Input from "../../styled/Input";
-import Textarea from "../../styled/Textarea";
-import Label from "../../styled/Label";
-import Toggle from "../../styled/Toggle";
-import SaveTip from "../../SaveTip";
+import Input from "../../../common/component/styled/Input";
+import Textarea from "../../../common/component/styled/Textarea";
+import Label from "../../../common/component/styled/Label";
+import Toggle from "../../../common/component/styled/Toggle";
+import SaveTip from "../../../common/component/SaveTip";
 import useConfig from "./useConfig";
 export default function ConfigAgora() {
   const {

@@ -6,7 +6,6 @@ import { updateChannel, removeChannel } from "../slices/channels";
 import { removeMessage } from "../slices/message";
 import { removeChannelSession } from "../slices/message.channel";
 import { removeReactionMessage } from "../slices/message.reaction";
-import { toggleChannelSetting } from "../slices/ui";
 import { onMessageSendStarted } from "./handlers";
 export const channelApi = createApi({
   reducerPath: "channelApi",
@@ -79,16 +78,10 @@ export const channelApi = createApi({
         method: "DELETE",
       }),
       async onQueryStarted(id, { dispatch, getState, queryFulfilled }) {
-        const {
-          ui: { channelSetting },
-          channelMessage,
-        } = getState();
+        const { channelMessage } = getState();
         try {
           await queryFulfilled;
           dispatch(removeChannel(id));
-          if (id == channelSetting) {
-            dispatch(toggleChannelSetting());
-          }
           // 删掉该channel下的所有消息&reaction
           const mids = channelMessage[id];
           if (mids) {

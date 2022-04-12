@@ -13,6 +13,8 @@ import Meta from "../common/component/Meta";
 
 import store from "../app/store";
 import InvitePage from "./invite";
+import SettingPage from "./setting";
+import SettingChannelPage from "./settingChannel";
 import toast from "react-hot-toast";
 import ResourceManagement from "./resources";
 
@@ -53,6 +55,10 @@ const PageRoutes = () => {
             </RequireAuth>
           }
         >
+          <Route path="setting">
+            <Route index element={<SettingPage />} />
+            <Route path="channel/:cid" element={<SettingChannelPage />} />
+          </Route>
           <Route index element={<ChatPage />} />
           <Route path="chat">
             <Route index element={<ChatPage />} />

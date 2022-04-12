@@ -1,8 +1,7 @@
 // import React from 'react';
 // import { useEffect } from "react";
-import { Outlet, NavLink } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { toggleMenuExpand } from "../../app/slices/ui";
+import { Outlet, NavLink, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 import StyledWrapper from "./styled";
 import ServerDropList from "./ServerDropList";
 // import Tools from "./Tools";
@@ -11,29 +10,33 @@ import Menu from "./Menu";
 import usePreload from "./usePreload";
 import Tooltip from "../../common/component/Tooltip";
 import Notification from "../../common/component/Notification";
-import SettingModal from "../../common/component/Setting";
-import ChannelSettingModal from "../../common/component/ChannelSetting";
 
 import ChatIcon from "../../assets/icons/chat.svg?url";
 import ContactIcon from "../../assets/icons/contact.svg?url";
 import FolderIcon from "../../assets/icons/folder.svg?url";
-
+// const routes = ["/setting", "/setting/channel/:cid"];
 export default function HomePage() {
-  const dispatch = useDispatch();
+  const { pathname } = useLocation();
   const {
-    ui: { ready, setting, channelSetting },
+    ui: { ready },
   } = useSelector((store) => {
     return {
       ui: store.ui,
     };
   });
   const { data, loading } = usePreload();
-  const toggleExpand = () => {
-    dispatch(toggleMenuExpand());
-  };
   // console.log("index loading", loading, ready);
   if (loading || !ready) {
     return <Loading />;
+  }
+  const isSettingPage = pathname.startsWith("/setting");
+  if (isSettingPage) {
+    return (
+      <>
+        <Notification />
+        <Outlet />
+      </>
+    );
   }
   return (
     <>
@@ -75,14 +78,12 @@ export default function HomePage() {
           </nav>
           <div className="divider"></div>
           {/* <Tools expand={menuExpand} /> */}
-          <Menu toggle={toggleExpand} />
+          <Menu />
         </div>
         <div className="col right">
           <Outlet />
         </div>
       </StyledWrapper>
-      {setting && <SettingModal />}
-      {channelSetting && <ChannelSettingModal id={channelSetting} />}
     </>
   );
 }

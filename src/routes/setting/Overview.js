@@ -5,12 +5,12 @@ import {
   useGetServerQuery,
   useUpdateServerMutation,
   useUpdateLogoMutation,
-} from "../../../app/services/server";
-import LogoUploader from "../AvatarUploader";
-import Input from "../styled/Input";
-import Label from "../styled/Label";
-import Textarea from "../styled/Textarea";
-import SaveTip from "../SaveTip";
+} from "../../app/services/server";
+import LogoUploader from "../../common/component/AvatarUploader";
+import Input from "../../common/component/styled/Input";
+import Label from "../../common/component/styled/Label";
+import Textarea from "../../common/component/styled/Textarea";
+import SaveTip from "../../common/component/SaveTip";
 import toast from "react-hot-toast";
 const StyledWrapper = styled.div`
   position: relative;

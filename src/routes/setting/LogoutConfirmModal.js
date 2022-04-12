@@ -1,14 +1,12 @@
 // import React from "react";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-import { toggleSetting } from "../../../app/slices/ui";
-// import BASE_URL from "../../app/config";
-import StyledModal from "../styled/Modal";
-import Button from "../styled/Button";
-import Checkbox from "../styled/Checkbox";
-import useLogout from "../../hook/useLogout";
+import StyledModal from "../../common/component/styled/Modal";
+import Button from "../../common/component/styled/Button";
+import Checkbox from "../../common/component/styled/Checkbox";
+import useLogout from "../../common/hook/useLogout";
 const StyledConfirm = styled(StyledModal)`
   .clear {
     font-weight: normal;
@@ -28,9 +26,9 @@ const StyledConfirm = styled(StyledModal)`
     }
   }
 `;
-import Modal from "../Modal";
+import Modal from "../../common/component/Modal";
 export default function LogoutConfirmModal({ closeModal }) {
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [clearLocal, setClearLocal] = useState(false);
   const { logout, exited, exiting, clearLocalData } = useLogout();
   const handleLogout = () => {
@@ -45,8 +43,7 @@ export default function LogoutConfirmModal({ closeModal }) {
         console.log("clear all store");
         clearLocalData();
       }
-      // closeModal();
-      dispatch(toggleSetting());
+      navigate("/");
     }
   }, [exited, clearLocal]);
   return (

@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { toggleChannelSetting } from "../../../app/slices/ui";
-import StyledSettingContainer from "../StyledSettingContainer";
+import { useParams, useNavigate } from "react-router-dom";
+import StyledSettingContainer from "../../common/component/StyledSettingContainer";
 import DeleteConfirmModal from "./DeleteConfirmModal";
 import useNavs from "./navs";
-export default function ChannelSetting({ id = 0 }) {
-  const navs = useNavs(id);
+export default function ChannelSetting() {
+  const navigate = useNavigate();
+  const { cid } = useParams();
+  const navs = useNavs(cid);
   const flatenNavs = navs
     .map(({ items }) => {
       return items;
@@ -13,9 +14,8 @@ export default function ChannelSetting({ id = 0 }) {
     .flat();
   const [currNav, setCurrNav] = useState(flatenNavs[0]);
   const [deleteConfirm, setDeleteConfirm] = useState(false);
-  const dispatch = useDispatch();
   const close = () => {
-    dispatch(toggleChannelSetting());
+    navigate(-1);
   };
   const toggleDeleteConfrim = () => {
     setDeleteConfirm((prev) => !prev);
@@ -26,7 +26,7 @@ export default function ChannelSetting({ id = 0 }) {
       setCurrNav(tmp);
     }
   };
-  if (!id) return null;
+  if (!cid) return null;
   return (
     <>
       <StyledSettingContainer
@@ -45,7 +45,7 @@ export default function ChannelSetting({ id = 0 }) {
         {currNav.component}
       </StyledSettingContainer>
       {deleteConfirm && (
-        <DeleteConfirmModal closeModal={toggleDeleteConfrim} id={id} />
+        <DeleteConfirmModal closeModal={toggleDeleteConfrim} id={cid} />
       )}
     </>
   );

@@ -1,5 +1,5 @@
 import Overview from "./Overview";
-import ManageMembers from "../ManageMembers";
+import ManageMembers from "../../common/component/ManageMembers";
 const useNavs = (channelId) => {
   const navs = [
     {

@@ -1,12 +1,10 @@
 // import React from "react";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-// import { useDispatch } from "react-redux";
-import Input from "../styled/Input";
-// import BASE_URL from "../../app/config";
-import { useUpdateInfoMutation } from "../../../app/services/contact";
-import StyledModal from "../styled/Modal";
-import Button from "../styled/Button";
+import Input from "../../common/component/styled/Input";
+import { useUpdateInfoMutation } from "../../app/services/contact";
+import StyledModal from "../../common/component/styled/Modal";
+import Button from "../../common/component/styled/Button";
 const StyledEdit = styled(StyledModal)`
   .input {
     margin: 48px 0;
@@ -22,7 +20,7 @@ const StyledEdit = styled(StyledModal)`
     }
   }
 `;
-import Modal from "../Modal";
+import Modal from "../../common/component/Modal";
 import toast from "react-hot-toast";
 export default function ProfileBasicEditModal({
   label = "Username",

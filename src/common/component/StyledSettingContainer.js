@@ -1,10 +1,9 @@
 // import React from 'react'
 import styled from "styled-components";
-import Modal from "./Modal";
 import backIcon from "../../assets/icons/arrow.left.svg?url";
 const StyledWrapper = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   > .left {
     max-height: 100vh;
@@ -89,47 +88,45 @@ export default function StyledSettingContainer({
     updateNav(name);
   };
   return (
-    <Modal>
-      <StyledWrapper>
-        <div className="left">
-          <h2 onClick={closeModal} className="title">
-            {title}
-          </h2>
-          {navs.map(({ title, items }) => {
-            return (
-              <ul key={title} data-title={title} className="items">
-                {items.map(({ name, title }) => {
-                  return (
-                    <li
-                      key={name}
-                      onClick={handleNavClick.bind(null, name)}
-                      className={`item ${name == nav?.name ? "curr" : ""}`}
-                    >
-                      {title}
-                    </li>
-                  );
-                })}
-              </ul>
-            );
-          })}
-          {dangers.length ? (
-            <ul className="items danger">
-              {dangers.map((d) => {
-                const { title, handler } = d;
+    <StyledWrapper>
+      <div className="left">
+        <h2 onClick={closeModal} className="title">
+          {title}
+        </h2>
+        {navs.map(({ title, items }) => {
+          return (
+            <ul key={title} data-title={title} className="items">
+              {items.map(({ name, title }) => {
                 return (
-                  <li key={title} onClick={handler} className="item">
+                  <li
+                    key={name}
+                    onClick={handleNavClick.bind(null, name)}
+                    className={`item ${name == nav?.name ? "curr" : ""}`}
+                  >
                     {title}
                   </li>
                 );
               })}
             </ul>
-          ) : null}
-        </div>
-        <div className="right">
-          {nav && <h4 className="title">{nav.title}</h4>}
-          {children}
-        </div>
-      </StyledWrapper>
-    </Modal>
+          );
+        })}
+        {dangers.length ? (
+          <ul className="items danger">
+            {dangers.map((d) => {
+              const { title, handler } = d;
+              return (
+                <li key={title} onClick={handler} className="item">
+                  {title}
+                </li>
+              );
+            })}
+          </ul>
+        ) : null}
+      </div>
+      <div className="right">
+        {nav && <h4 className="title">{nav.title}</h4>}
+        {children}
+      </div>
+    </StyledWrapper>
   );
 }

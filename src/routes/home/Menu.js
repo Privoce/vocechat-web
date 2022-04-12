@@ -1,10 +1,7 @@
 // import React from 'react'
-import { useDispatch } from "react-redux";
-import { toggleSetting } from "../../app/slices/ui";
+import { NavLink } from "react-router-dom";
 import Tooltip from "../../common/component/Tooltip";
 import settingIcon from "../../assets/icons/setting.svg?url";
-// import foldIcon from "../../assets/icons/fold.svg?url";
-// import unfoldIcon from "../../assets/icons/unfold.svg?url";
 import styled from "styled-components";
 const StyledMenus = styled.ul`
   display: flex;
@@ -35,15 +32,13 @@ const StyledMenus = styled.ul`
   }
 `;
 export default function Menu() {
-  const dispatch = useDispatch();
-  const handleSetting = () => {
-    dispatch(toggleSetting());
-  };
   return (
     <StyledMenus>
-      <li className="menu" onClick={handleSetting}>
+      <li className="menu">
         <Tooltip placement="right" tip="Settings">
-          <img src={settingIcon} alt="setting icon" className="icon" />
+          <NavLink to={"/setting"}>
+            <img src={settingIcon} alt="setting icon" className="icon" />
+          </NavLink>
         </Tooltip>
         {/* {expand && (
           <span className="txt animate__animated animate__fadeIn">

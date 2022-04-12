@@ -5,8 +5,6 @@ const initialState = {
   ready: false,
   inputMode: "text",
   menuExpand: false,
-  setting: false,
-  channelSetting: null,
   fileListView: Views.item,
 };
 const uiSlice = createSlice({
@@ -31,14 +29,6 @@ const uiSlice = createSlice({
     updateFileListView(state, action) {
       state.fileListView = action.payload;
     },
-    toggleSetting(state) {
-      state.setting = !state.setting;
-    },
-    toggleChannelSetting(state, action) {
-      console.log("toggle channel setting payload", action);
-      const id = action.payload;
-      state.channelSetting = state.channelSetting ? null : id;
-    },
   },
 });
 export const {
@@ -46,9 +36,7 @@ export const {
   setReady,
   updateOnline,
   updateInputMode,
-  toggleSetting,
   toggleMenuExpand,
-  toggleChannelSetting,
   updateFileListView,
 } = uiSlice.actions;
 export default uiSlice.reducer;

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
-import DeleteConfirmModal from "../../../common/component/ChannelSetting/DeleteConfirmModal";
+import DeleteConfirmModal from "../../settingChannel/DeleteConfirmModal";
 import NavItem from "./NavItem";
 
 export default function ChannelList({ setDropFiles }) {

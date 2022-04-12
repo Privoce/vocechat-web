@@ -6,15 +6,15 @@ const StyledTest = styled.div`
   white-space: nowrap;
   margin-top: 24px;
 `;
-import { useSendTestEmailMutation } from "../../../../app/services/server";
-import iconQuestion from "../../../../assets/icons/question.svg?url";
+import { useSendTestEmailMutation } from "../../../app/services/server";
+import iconQuestion from "../../../assets/icons/question.svg?url";
 import useConfig from "./useConfig";
 import StyledContainer from "./StyledContainer";
-import Input from "../../styled/Input";
-import Button from "../../styled/Button";
-import Toggle from "../../styled/Toggle";
-import Label from "../../styled/Label";
-import SaveTip from "../../SaveTip";
+import Input from "../../../common/component/styled/Input";
+import Button from "../../../common/component/styled/Button";
+import Toggle from "../../../common/component/styled/Toggle";
+import Label from "../../../common/component/styled/Label";
+import SaveTip from "../../../common/component/SaveTip";
 import toast from "react-hot-toast";
 
 export default function ConfigSMTP() {

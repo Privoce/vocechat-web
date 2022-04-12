@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useDrop } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Tippy from "@tippyjs/react";
 import useContextMenu from "../../../common/hook/useContextMenu";
 import ContextMenu from "../../../common/component/ContextMenu";
@@ -11,12 +11,10 @@ import { useReadMessageMutation } from "../../../app/services/message";
 import { useUpdateMuteSettingMutation } from "../../../app/services/contact";
 
 import StyledLink from "./styled";
-import { toggleChannelSetting } from "../../../app/slices/ui";
 import ChannelIcon from "../../../common/component/ChannelIcon";
 import { getUnreadCount } from "../utils";
 
 const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [muteChannel] = useUpdateMuteSettingMutation();
   const [updateReadIndex] = useReadMessageMutation();
@@ -47,7 +45,10 @@ const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
   const handleChannelSetting = (evt) => {
     evt.preventDefault();
     evt.stopPropagation();
-    dispatch(toggleChannelSetting(id));
+    const { id } = evt.target.dataset;
+    if (id) {
+      navigate(`/setting/channel/${id}`);
+    }
   };
   const [{ isActive }, drop] = useDrop(() => ({
     accept: [NativeTypes.FILE],
@@ -138,7 +139,11 @@ const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
         </div>
         <div className="icons">
           <Tooltip placement="bottom" tip="Channel Setting">
-            <i className="setting" onClick={handleChannelSetting}></i>
+            <i
+              className="setting"
+              data-id={id}
+              onClick={handleChannelSetting}
+            ></i>
           </Tooltip>
           {unreads > 0 && (
             <i className={`badge ${isDot ? "dot" : ""}`}>

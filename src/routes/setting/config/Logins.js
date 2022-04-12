@@ -1,21 +1,15 @@
 // import { useState, useEffect } from "react";
 import StyledContainer from "./StyledContainer";
-import Input from "../../styled/Input";
-import Textarea from "../../styled/Textarea";
-import Toggle from "../../styled/Toggle";
-import Label from "../../styled/Label";
-import SaveTip from "../../SaveTip";
+import Textarea from "../../../common/component/styled/Textarea";
+import Toggle from "../../../common/component/styled/Toggle";
+import Label from "../../../common/component/styled/Label";
+import SaveTip from "../../../common/component/SaveTip";
 import useConfig from "./useConfig";
 
-export default function ConfigFirebase() {
-  const {
-    values,
-    toggleEnable,
-    updateConfig,
-    setValues,
-    reset,
-    changed,
-  } = useConfig("firebase");
+export default function Logins() {
+  const { values, updateConfig, setValues, reset, changed } = useConfig(
+    "login"
+  );
   const handleUpdate = () => {
     // const { token_url, description } = values;
     updateConfig(values);
@@ -23,21 +17,55 @@ export default function ConfigFirebase() {
   const handleChange = (evt) => {
     const newValue = evt.target.value;
     const { type } = evt.target.dataset;
+    const items = newValue ? newValue.split("\n") : [];
     setValues((prev) => {
-      return { ...prev, [type]: newValue };
+      return { ...prev, [type]: items };
     });
   };
-  //   if (!values) return null;
-  const { token_url, project_id, private_key, client_email, enabled = false } =
-    values ?? {};
+  const handleToggle = (val) => {
+    setValues((prev) => {
+      return { ...prev, ...val };
+    });
+  };
+  if (!values) return null;
+  const { google, metamask, password, oidc = [] } = values ?? {};
   return (
     <StyledContainer>
       <div className="inputs">
         <div className="input row">
-          <Label>Enable</Label>
-          <Toggle onClick={toggleEnable} data-checked={enabled}></Toggle>
+          <Label>Password</Label>
+          <Toggle
+            onClick={handleToggle.bind(null, { password: !password })}
+            data-checked={password}
+          ></Toggle>
+        </div>
+        <div className="input row">
+          <Label>Google</Label>
+          <Toggle
+            onClick={handleToggle.bind(null, { google: !google })}
+            data-checked={google}
+          ></Toggle>
+        </div>
+        <div className="input row">
+          <Label>Metamask</Label>
+          <Toggle
+            onClick={handleToggle.bind(null, { metamask: !metamask })}
+            data-checked={metamask}
+          ></Toggle>
         </div>
         <div className="input">
+          <Label htmlFor="desc">OIDC</Label>
+          <Textarea
+            rows={10}
+            data-type="oidc"
+            onChange={handleChange}
+            value={oidc.join("\n")}
+            name="oidc"
+            placeholder="Input issuer list, one line, one issuer"
+          />
+        </div>
+
+        {/* <div className="input">
           <Label htmlFor="name">Token Url</Label>
           <Input
             disabled={!enabled}
@@ -52,6 +80,7 @@ export default function ConfigFirebase() {
           <Label htmlFor="desc">Project ID</Label>
           <Input
             disabled={!enabled}
+            type={"number"}
             data-type="project_id"
             onChange={handleChange}
             value={project_id}
@@ -81,7 +110,7 @@ export default function ConfigFirebase() {
             name="client_email"
             placeholder="Client Email address"
           />
-        </div>
+        </div> */}
       </div>
       {changed && <SaveTip saveHandler={handleUpdate} resetHandler={reset} />}
       {/* <button onClick={handleUpdate} className="btn">update</button> */}

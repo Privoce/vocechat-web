@@ -1,8 +1,8 @@
 // import React from "react";
 import styled from "styled-components";
-import useNotification from "../../hook/useNotification";
-import StyledToggle from "../styled/Toggle";
-import Label from "../styled/Label";
+import useNotification from "../../common/hook/useNotification";
+import StyledToggle from "../../common/component/styled/Toggle";
+import Label from "../../common/component/styled/Label";
 const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;

@@ -4,12 +4,12 @@ import toast from "react-hot-toast";
 import {
   useGetChannelQuery,
   useUpdateChannelMutation,
-} from "../../../app/services/channel";
-import Input from "../styled/Input";
-import Label from "../styled/Label";
-import Textarea from "../styled/Textarea";
-import SaveTip from "../SaveTip";
-import channelIcon from "../../../assets/icons/channel.svg?url";
+} from "../../app/services/channel";
+import Input from "../../common/component/styled/Input";
+import Label from "../../common/component/styled/Label";
+import Textarea from "../../common/component/styled/Textarea";
+import SaveTip from "../../common/component/SaveTip";
+import channelIcon from "../../assets/icons/channel.svg?url";
 import { useSelector } from "react-redux";
 const StyledWrapper = styled.div`
   position: relative;
@@ -89,7 +89,7 @@ export default function Overview({ id = 0 }) {
 
   if (!values || !id) return null;
   const { name, description } = values;
-  const isAdmin = loginUser.is_admin;
+  const isAdmin = loginUser?.is_admin;
   return (
     <StyledWrapper>
       <div className="inputs">
