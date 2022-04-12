@@ -9,6 +9,7 @@ import ChatPage from "./chat";
 import ContactsPage from "./contacts";
 import RequireAuth from "../common/component/RequireAuth";
 import RequireNoAuth from "../common/component/RequireNoAuth";
+import Meta from "../common/component/Meta";
 
 import store from "../app/store";
 import InvitePage from "./invite";
@@ -84,6 +85,7 @@ export default function ReduxRoutes() {
   return (
     <Provider store={store}>
       {/* <PersistGate loading={null} persistor={persistStore(store)}> */}
+      <Meta />
       <PageRoutes />
       {/* </PersistGate> */}
     </Provider>
