@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDrop } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
@@ -5,6 +6,7 @@ import { useSelector } from "react-redux";
 import Tippy from "@tippyjs/react";
 import useContextMenu from "../../../common/hook/useContextMenu";
 import ContextMenu from "../../../common/component/ContextMenu";
+import InviteModal from "../../../common/component/InviteModal";
 import Tooltip from "../../../common/component/Tooltip";
 // import { useDebounce} from "rooks";
 import { useReadMessageMutation } from "../../../app/services/message";
@@ -15,6 +17,7 @@ import ChannelIcon from "../../../common/component/ChannelIcon";
 import { getUnreadCount } from "../utils";
 
 const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
+  const [inviteModalVisible, setInviteModalVisible] = useState(false);
   const navigate = useNavigate();
   const [muteChannel] = useUpdateMuteSettingMutation();
   const [updateReadIndex] = useReadMessageMutation();
@@ -75,6 +78,11 @@ const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
       updateReadIndex(param);
     }
   };
+  const toggleInviteModalVisible = (evt) => {
+    evt.preventDefault();
+    evt.stopPropagation();
+    setInviteModalVisible((prev) => !prev);
+  };
   const handleMute = () => {
     const data = muted
       ? { remove_groups: [id] }
@@ -82,77 +90,97 @@ const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
     muteChannel(data);
   };
   const { is_public, name } = channel;
-  const unreads = getUnreadCount({ mids, messageData, readIndex, loginUid });
-  const isDot = muted || unreads > 99;
+  const { unreads, mentions = [] } = getUnreadCount({
+    mids,
+    messageData,
+    readIndex,
+    loginUid,
+  });
+  const isMentions = mentions.length !== 0;
   return (
-    <Tippy
-      interactive
-      placement="right-start"
-      offset={[offset.y, offset.x]}
-      visible={contextMenuVisible}
-      onClickOutside={hideContextMenu}
-      key={id}
-      content={
-        <ContextMenu
-          hideMenu={hideContextMenu}
-          items={[
-            {
-              title: "Mark As Read",
-              underline: true,
-              handler: handleReadAll,
-            },
-            {
-              title: muted ? "Unmute" : "Mute",
-              handler: handleMute,
-            },
-            {
-              title: "Notification Settings",
-              underline: true,
-            },
-            is_public
-              ? null
-              : {
-                  title: "Invite People",
-                },
-            {
-              title: "Delete Channel",
-              danger: true,
-              handler: toggleRemoveConfirm.bind(null, id),
-            },
-          ]}
-        />
-      }
-    >
-      <StyledLink
-        data-cid={id}
-        onContextMenu={handleContextMenuEvent}
-        ref={drop}
+    <>
+      <Tippy
+        interactive
+        placement="right-start"
+        offset={[offset.y, offset.x]}
+        visible={contextMenuVisible}
+        onClickOutside={hideContextMenu}
         key={id}
-        className={`link ${isActive ? "drop_over" : ""} ${
-          muted ? "muted" : ""
-        }`}
-        to={`/chat/channel/${id}`}
+        content={
+          <ContextMenu
+            hideMenu={hideContextMenu}
+            items={[
+              {
+                title: "Mark As Read",
+                underline: true,
+                handler: handleReadAll,
+              },
+              {
+                title: muted ? "Unmute" : "Mute",
+                handler: handleMute,
+              },
+              {
+                title: "Notification Settings",
+                underline: true,
+              },
+              is_public
+                ? null
+                : {
+                    title: "Invite People",
+                  },
+              {
+                title: "Delete Channel",
+                danger: true,
+                handler: toggleRemoveConfirm.bind(null, id),
+              },
+            ]}
+          />
+        }
       >
-        <div className={`name`} title={name}>
-          <ChannelIcon personal={!is_public} muted={muted} />
-          <span className={`txt ${unreads == 0 ? "read" : ""}`}>{name}</span>
-        </div>
-        <div className="icons">
-          <Tooltip placement="bottom" tip="Channel Setting">
-            <i
-              className="setting"
-              data-id={id}
-              onClick={handleChannelSetting}
-            ></i>
-          </Tooltip>
-          {unreads > 0 && (
-            <i className={`badge ${isDot ? "dot" : ""}`}>
-              {isDot ? null : unreads}
-            </i>
-          )}
-        </div>
-      </StyledLink>
-    </Tippy>
+        <StyledLink
+          data-cid={id}
+          onContextMenu={handleContextMenuEvent}
+          ref={drop}
+          key={id}
+          className={`link ${isActive ? "drop_over" : ""} ${
+            muted ? "muted" : ""
+          }`}
+          to={`/chat/channel/${id}`}
+        >
+          <div className={`name`} title={name}>
+            <ChannelIcon personal={!is_public} muted={muted} />
+            <span className={`txt ${unreads == 0 ? "read" : ""}`}>{name}</span>
+          </div>
+          <div className="icons">
+            <Tooltip placement="bottom" tip="Add Member">
+              <i
+                className="icon invite"
+                data-id={id}
+                onClick={toggleInviteModalVisible}
+              ></i>
+            </Tooltip>
+            <Tooltip placement="bottom" tip="Channel Setting">
+              <i
+                className="icon setting"
+                data-id={id}
+                onClick={handleChannelSetting}
+              ></i>
+            </Tooltip>
+            {unreads > 0 && (
+              <i className={`badge ${isMentions ? "mention" : ""}`}>
+                {isMentions ? mentions.length : unreads}
+              </i>
+            )}
+          </div>
+        </StyledLink>
+      </Tippy>
+      {inviteModalVisible && (
+        <InviteModal
+          title={channel.name}
+          closeModal={toggleInviteModalVisible}
+        />
+      )}
+    </>
   );
 };
 

@@ -1,12 +1,7 @@
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
-import {
-  useLazyCreateInviteLinkQuery,
-  useGetSMTPConfigQuery,
-} from "../../app/services/server";
+import useInviteLink from "../hook/useInviteLink";
 import Button from "./styled/Button";
-import useCopy from "../hook/useCopy";
 const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -51,51 +46,31 @@ const StyledWrapper = styled.div`
 `;
 export default function InviteLink() {
   const {
-    data: config,
-    isSuccess: configQuerySuccess,
-  } = useGetSMTPConfigQuery();
-  const [copid, copy] = useCopy();
-  const {
-    inviteLink: { link },
-    loginUser,
-  } = useSelector((store) => {
-    return {
-      inviteLink: store.server.inviteLink,
-      loginUser: store.contacts.byId[store.authData.uid],
-    };
-  });
-  const [createLink, { isLoading }] = useLazyCreateInviteLinkQuery();
-  useEffect(() => {
-    if (!link && loginUser && loginUser.is_admin) {
-      createLink();
-    }
-  }, [link, loginUser]);
+    generating,
+    link,
+    linkCopied,
+    copyLink,
+    generateNewLink,
+  } = useInviteLink();
   const handleNewLink = () => {
-    createLink();
+    generateNewLink();
   };
-  if (!loginUser || !loginUser.is_admin || !configQuerySuccess) return null;
-  let finalLink = null;
-  if (link) {
-    const tmpURL = new URL(link);
-    tmpURL.searchParams.set("code", config.enabled);
-    finalLink = tmpURL.href;
-  }
   return (
     <StyledWrapper>
       <span className="tip">
         Share this link to invite people to this server.
       </span>
       <div className="link">
-        <span title={finalLink} className="content">
-          {finalLink}
+        <span title={link} className="content">
+          {link}
         </span>
-        <Button onClick={copy.bind(null, finalLink)} className="main">
-          {copid ? "Copied" : `Copy`}
+        <Button onClick={copyLink} className="main">
+          {linkCopied ? "Copied" : `Copy`}
         </Button>
       </div>
       <span className="sub_tip">Invite link expires in 7 days.</span>
-      <Button className="ghost" disabled={isLoading} onClick={handleNewLink}>
-        {isLoading ? `Generating` : `Generate New Link`}
+      <Button className="ghost" disabled={generating} onClick={handleNewLink}>
+        {generating ? `Generating` : `Generate New Link`}
       </Button>
     </StyledWrapper>
   );

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import settingIcon from "../../../assets/icons/setting.svg?url";
+import inviteIcon from "../../../assets/icons/invite.from.channel.svg?url";
 const Styled = styled(NavLink)`
   position: relative;
   display: flex;
@@ -21,7 +22,7 @@ const Styled = styled(NavLink)`
       font-weight: 600;
       font-size: 14px;
       line-height: 20px;
-      width: 160px;
+      width: 140px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -33,14 +34,20 @@ const Styled = styled(NavLink)`
   > .icons {
     display: flex;
     align-items: center;
-    gap: 4px;
-    > .setting {
+    gap: 8px;
+    > .icon {
       visibility: hidden;
       display: flex;
       width: 16px;
       height: 16px;
-      background-image: url(${settingIcon});
-      background-size: 16px;
+      background-size: contain;
+
+      &.setting {
+        background-image: url(${settingIcon});
+      }
+      &.invite {
+        background-image: url(${inviteIcon});
+      }
     }
     > .badge {
       color: #fff;
@@ -54,6 +61,9 @@ const Styled = styled(NavLink)`
       font-weight: 900;
       font-size: 10px;
       line-height: 10px;
+      &.mention {
+        background: #f97066;
+      }
       &.dot {
         min-width: unset;
         width: 6px;
@@ -70,11 +80,11 @@ const Styled = styled(NavLink)`
       background: #bfbfbf;
     }
   }
-  &:hover > .icons > {
-    .badge {
+  &:hover > .icons {
+    > .badge {
       display: none;
     }
-    .setting {
+    > .icon {
       visibility: visible;
     }
   }
