@@ -12,7 +12,9 @@ import EmojiPicker from "./EmojiPicker";
 import replyIcon from "../../../assets/icons/reply.svg?url";
 import reactIcon from "../../../assets/icons/reaction.svg?url";
 import editIcon from "../../../assets/icons/edit.svg?url";
+import bookmarkIcon from "../../../assets/icons/bookmark.svg?url";
 import moreIcon from "../../../assets/icons/more.svg?url";
+import ForwardModal from "../ForwardModal";
 const StyledCmds = styled.ul`
   z-index: 9999;
   position: absolute;
@@ -60,6 +62,7 @@ export default function Commands({
 }) {
   const dispatch = useDispatch();
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+  const [forwardModalVisible, setForwardModalVisible] = useState(false);
   const [tippyVisible, setTippyVisible] = useState(false);
   const currUid = useSelector((store) => store.authData.uid);
   const cmdsRef = useRef(null);
@@ -71,7 +74,10 @@ export default function Commands({
       hideAll();
     }
   };
-
+  const toggleForwardModal = () => {
+    hideAll();
+    setForwardModalVisible((prev) => !prev);
+  };
   const toggleDeleteModal = () => {
     hideAll();
     setDeleteModalVisible((prev) => !prev);
@@ -111,6 +117,11 @@ export default function Commands({
           </Tooltip>
         </li>
       )}
+      <li className="cmd">
+        <Tooltip placement="top" tip="Add to Favorites">
+          <img src={bookmarkIcon} className="toggler" alt="icon bookmark" />
+        </Tooltip>
+      </li>
       <Tippy
         onShow={handleTippyVisible.bind(null, true)}
         onHide={handleTippyVisible.bind(null, false)}
@@ -121,6 +132,9 @@ export default function Commands({
           <StyledMenu className="menu">
             {/* <li className="item">Edit Message</li> */}
             <li className="item underline">Pin Message</li>
+            <li className="item" onClick={toggleForwardModal}>
+              Forward
+            </li>
             <li className="item" onClick={handleReply.bind(null, true)}>
               Reply
             </li>
@@ -141,6 +155,9 @@ export default function Commands({
 
       {deleteModalVisible && (
         <DeleteMessageConfirm closeModal={toggleDeleteModal} mid={mid} />
+      )}
+      {forwardModalVisible && (
+        <ForwardModal mid={mid} closeModal={toggleForwardModal} />
       )}
     </StyledCmds>
   );

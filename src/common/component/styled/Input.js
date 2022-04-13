@@ -17,12 +17,16 @@ const StyledInput = styled.input`
   background: #ffffff;
   border: 1px solid #e5e7eb;
   box-shadow: 0px 1px 2px rgba(31, 41, 55, 0.08);
-  border-radius: 4px;
+  border-radius: var(--br);
   font-weight: normal;
   font-size: 14px;
   line-height: 20px;
   color: #333;
   padding: 8px;
+  outline: none;
+  &.higher {
+    padding: 12px 8px;
+  }
   &.large {
     font-weight: 400;
     font-size: 16px;

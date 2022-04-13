@@ -1,13 +1,14 @@
 // import React from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
+import reactStringReplace from "react-string-replace";
 import MrakdownRender from "../MrakdownRender";
-
+import Mention from "./Mention";
 import { ContentTypes } from "../../../app/config";
 import { getFileIcon, isImage } from "../../utils";
+
 import Avatar from "../Avatar";
 const Styled = styled.div`
-  cursor: pointer;
   display: flex;
   align-items: flex-start;
   padding: 8px;
@@ -15,6 +16,9 @@ const Styled = styled.div`
   border-radius: var(--br);
   gap: 8px;
   margin-bottom: 4px;
+  &.clickable {
+    cursor: pointer;
+  }
   .user {
     display: flex;
     align-items: center;
@@ -89,7 +93,19 @@ const renderContent = (data) => {
   let res = null;
   switch (content_type) {
     case ContentTypes.text:
-      res = <span className="txt"> {content}</span>;
+      res = (
+        <span className="txt">
+          {reactStringReplace(
+            content,
+            /(\s{1}\@[0-9]+\s{1})/g,
+            (match, idx) => {
+              console.log("match", match);
+              const uid = match.trim().slice(1);
+              return <Mention key={idx} uid={uid} popover={false} />;
+            }
+          )}
+        </span>
+      );
       break;
     case ContentTypes.markdown:
       res = (
@@ -120,7 +136,7 @@ const renderContent = (data) => {
   }
   return res;
 };
-export default function Reply({ mid }) {
+export default function Reply({ mid, interactive = true }) {
   const { data, users } = useSelector((store) => {
     return { data: store.message[mid], users: store.contacts.byId };
   });
@@ -140,7 +156,11 @@ export default function Reply({ mid }) {
   const currUser = users[data.from_uid];
   if (!currUser) return null;
   return (
-    <Styled data-mid={mid} className="reply" onClick={handleClick}>
+    <Styled
+      data-mid={mid}
+      className={`reply ${interactive ? "clickable" : ""}`}
+      onClick={interactive ? handleClick : null}
+    >
       <div className="user">
         <Avatar className="avatar" url={currUser.avatar} name={currUser.name} />
         <span className="name">{currUser.name}</span>

@@ -36,6 +36,11 @@ const StyledButton = styled.button`
     background: none;
     color: #1fe1f9;
   }
+  &.cancel {
+    border: 1px solid #e5e7eb;
+    background: none;
+    color: #374151;
+  }
 `;
 
 export default StyledButton;

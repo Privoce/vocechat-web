@@ -25,8 +25,8 @@ const StyledWrapper = styled.div`
   }
   .avatar {
     cursor: pointer;
-    width: 32px;
-    height: 32px;
+    width: ${({ size }) => `${size}px`};
+    height: ${({ size }) => `${size}px`};
     position: relative;
     img {
       border-radius: 50%;
@@ -66,6 +66,7 @@ export default function Contact({
   uid = "",
   popover = false,
   compact = false,
+  avatarSize = 32,
 }) {
   const navigate = useNavigate();
   const curr = useSelector((store) => store.contacts.byId[uid]);
@@ -75,6 +76,7 @@ export default function Contact({
   if (!curr) return null;
   return (
     <StyledWrapper
+      size={avatarSize}
       onDoubleClick={dm ? handleDoubleClick : null}
       className={`${interactive ? "interactive" : ""} ${
         compact ? "compact" : ""
