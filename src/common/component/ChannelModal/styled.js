@@ -6,7 +6,7 @@ const StyledWrapper = styled.div`
   max-height: 402px;
   background: #fff;
   box-shadow: 0px 25px 50px rgba(31, 41, 55, 0.25);
-  border-radius: 8px;
+  border-radius: var(--br);
   transition: all 0.5s ease;
   .left {
     width: 260px;
