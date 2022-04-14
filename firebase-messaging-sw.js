@@ -10,7 +10,8 @@ self.addEventListener("notificationclick", function (event) {
       });
       const [firstClient] = allClients;
       // 没有数据
-      if (!event.notification.data) {
+      const customData = event.notification?.data?.FCM_MSG?.data;
+      if (!customData) {
         firstClient.focus();
         return;
       }
@@ -18,7 +19,7 @@ self.addEventListener("notificationclick", function (event) {
         rustchat_from_uid,
         rustchat_to_uid,
         rustchat_to_gid,
-      } = event.notification.data;
+      } = customData;
 
       let chatClient;
       let redirectPath = rustchat_to_uid
