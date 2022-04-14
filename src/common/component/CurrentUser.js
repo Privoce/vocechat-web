@@ -6,9 +6,8 @@ import micIcon from "../../assets/icons/mic.on.svg?url";
 import Avatar from "./Avatar";
 const StyledWrapper = styled.div`
   background-color: #e5e5e5;
-  position: absolute;
-  bottom: 0;
-  left: 0;
+  position: sticky;
+  bottom: 10px;
   margin: 8px;
   width: 94%;
   width: -webkit-fill-available;

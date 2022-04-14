@@ -8,8 +8,13 @@ const StyledWrapper = styled.div`
     flex-direction: column;
     min-width: 260px;
     box-shadow: inset -1px 0px 0px rgba(0, 0, 0, 0.1);
+    height: 100vh;
+    overflow: auto;
     .list {
       margin: 12px 8px;
+      &.dms {
+        flex: 1;
+      }
       .title {
         padding: 0 8px;
         display: flex;
@@ -40,8 +45,6 @@ const StyledWrapper = styled.div`
         display: flex;
         flex-direction: column;
         gap: 4px;
-        max-height: 40vh;
-        overflow: auto;
         a {
           text-decoration: none;
         }
@@ -73,6 +76,7 @@ const StyledWrapper = styled.div`
                 font-size: 14px;
                 line-height: 20px;
                 color: #52525b;
+                max-width: 112px;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
