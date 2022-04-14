@@ -59,6 +59,11 @@ export const messageApi = createApi({
         return data ? data : {};
       },
     }),
+    getOGInfo: builder.query({
+      query: (url) => ({
+        url: `/resource/open_graphic_parse?url=${encodeURIComponent(url)}`,
+      }),
+    }),
     replyMessage: builder.mutation({
       query: ({ reply_mid, content, type = "text" }) => ({
         headers: {
@@ -97,6 +102,7 @@ export const messageApi = createApi({
 });
 
 export const {
+  useLazyGetOGInfoQuery,
   usePrepareUploadFileMutation,
   useUploadFileMutation,
   useEditMessageMutation,

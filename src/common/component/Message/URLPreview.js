@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
+import { useLazyGetOGInfoQuery } from "../../../app/services/message";
 const StyledCompact = styled.a`
   background: #f3f4f6;
   border: 1px solid #d4d4d4;
@@ -88,18 +89,18 @@ const StyledDetails = styled.a`
   }
 `;
 export default function URLPreview({ url = "" }) {
-  const [data, setData] = useState({
-    favicon:
-      "https://fanyi-cdn.cdn.bcebos.com/static/translation/img/favicon/favicon-32x32_ca689c3.png",
-    title: "Preview Hunt",
-    description:
-      "A tool to preview and prepare your Product Hunt,A tool to preview and prepare your Product Hunt...",
-    ogImage:
-      "https://pbs.twimg.com/media/FProPfYaMAIm6KL?format=png&name=900x900",
-  });
+  const [getInfo] = useLazyGetOGInfoQuery();
+  const [data, setData] = useState(null);
   useEffect(() => {
     const getMetaData = async (url) => {
       // todo
+      const { data } = await getInfo(url);
+      const title = data.site_name || data.title;
+      const description = data.description;
+      const ogImage = data.images.find((i) => !!i.url)?.url || "";
+      const favicon = data.favicon || `${new URL(url).origin}/favicon.ico`;
+      setData({ favicon, title, description, ogImage });
+      // console.log("wtf url", data);
     };
     getMetaData(url);
   }, [url]);
