@@ -36,7 +36,9 @@ const renderContent = ({
                 >
                   {decoratedText}
                 </a>
-                <URLPreview url={decoratedHref} />
+                {!decoratedHref.startsWith("mailto") && (
+                  <URLPreview url={decoratedHref} />
+                )}
               </React.Fragment>
             )}
           >

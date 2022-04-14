@@ -23,6 +23,7 @@ const StyledMsg = styled.div`
     }
   }
   .avatar {
+    flex-shrink: 0;
     cursor: pointer;
     width: 40px;
     height: 40px;
