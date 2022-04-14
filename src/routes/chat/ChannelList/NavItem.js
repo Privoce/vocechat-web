@@ -35,8 +35,10 @@ const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
     readIndex,
     muted,
     loginUid,
+    loginUser,
   } = useSelector((store) => {
     return {
+      loginUser: store.contacts.byId[store.authData.uid],
       channel: store.channels.byId[id],
       mids: store.channelMessage[id],
       messageData: store.message,
@@ -90,7 +92,7 @@ const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
     muteChannel(data);
   };
   const { is_public, name } = channel;
-  const { unreads, mentions = [] } = getUnreadCount({
+  const { unreads = 0, mentions = [] } = getUnreadCount({
     mids,
     messageData,
     readIndex,
@@ -152,13 +154,15 @@ const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
             <span className={`txt ${unreads == 0 ? "read" : ""}`}>{name}</span>
           </div>
           <div className="icons">
-            <Tooltip placement="bottom" tip="Add Member">
-              <i
-                className="icon invite"
-                data-id={id}
-                onClick={toggleInviteModalVisible}
-              ></i>
-            </Tooltip>
+            {loginUser?.is_admin && (
+              <Tooltip placement="bottom" tip="Add Member">
+                <i
+                  className="icon invite"
+                  data-id={id}
+                  onClick={toggleInviteModalVisible}
+                ></i>
+              </Tooltip>
+            )}
             <Tooltip placement="bottom" tip="Channel Setting">
               <i
                 className="icon setting"
