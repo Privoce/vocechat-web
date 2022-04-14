@@ -23,7 +23,12 @@ export default function DMList({ uids, setDropFiles }) {
     }
     const lastMid = [...mids].pop();
     const readIndex = readUsers[uid];
-    const unreads = getUnreadCount({ mids, readIndex, messageData, loginUid });
+    const { unreads = 0 } = getUnreadCount({
+      mids,
+      readIndex,
+      messageData,
+      loginUid,
+    });
 
     return { lastMid, unreads, uid };
   });

@@ -28,13 +28,25 @@ export function getUnreadCount({
     const { from_uid = 0 } = messageData[mid] || {};
     return messageData[mid] && from_uid != loginUid;
   });
-  if (others.length == 0) return 0;
-  if (readIndex == 0) return others.length;
-  // 再过滤掉大于read-index，
+  if (others.length == 0) return { unreads: 0 };
+  if (readIndex == 0) return { unreads: others.length };
+  // 再过滤掉小于read-index，
   const final = others.filter((mid) => {
     return mid > readIndex;
   });
-  return final.length;
+  // 拿at数量
+  const tmps = [];
+  final.forEach((mid) => {
+    const msg = messageData[mid];
+    const { mentions = [] } = msg.properties || {};
+    mentions.forEach((id) => {
+      if (id == loginUid) {
+        tmps.push(mid);
+      }
+    });
+  });
+  console.log("unreads", final.length, tmps);
+  return { unreads: final.length, mentions: tmps };
 }
 export const renderPreviewMessage = (message = null) => {
   if (!message) return null;
