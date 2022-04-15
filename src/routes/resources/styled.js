@@ -5,7 +5,9 @@ const Styled = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-
+  background-color: #fff;
+  margin: 8px 24px 10px 0;
+  border-radius: 16px;
   .opts {
     padding: 20px 16px;
     display: flex;

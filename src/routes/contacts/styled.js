@@ -2,7 +2,7 @@ import styled from "styled-components";
 const StyledWrapper = styled.div`
   display: flex;
   height: 100%;
-  padding: 12px 48px 10px 0;
+  padding: 8px 48px 10px 0;
   > .left {
     border-radius: 16px 0 0 16px;
     background-color: #fff;

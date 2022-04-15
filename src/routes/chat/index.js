@@ -7,7 +7,7 @@ import { AiOutlineCaretDown } from "react-icons/ai";
 
 import StyledWrapper from "./styled";
 import AddIcon from "../../assets/icons/add.svg";
-import Search from "../../common/component/Search";
+import Server from "../../common/component/Server";
 import Tooltip from "../../common/component/Tooltip";
 // import Contact from "../../common/component/Contact";
 import CurrentUser from "../../common/component/CurrentUser";
@@ -53,7 +53,7 @@ export default function ChatPage() {
       )}
       <StyledWrapper>
         <div className="left">
-          <Search />
+          <Server />
           <div className="list channels">
             <h3 className="title">
               <span className="txt" onClick={handleToggleExpand}>

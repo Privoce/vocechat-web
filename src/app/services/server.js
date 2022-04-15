@@ -139,7 +139,7 @@ export const {
   useGetAgoraConfigQuery,
   useUpdateAgoraConfigMutation,
   useGetServerQuery,
-  useLazyGetMetricsQuery,
+  useGetMetricsQuery,
   useLazyGetServerQuery,
   useUpdateServerMutation,
   useUpdateLogoMutation,

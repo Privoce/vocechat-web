@@ -3,7 +3,7 @@
 import { Outlet, NavLink, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import StyledWrapper from "./styled";
-import ServerDropList from "./ServerDropList";
+import User from "./User";
 // import Tools from "./Tools";
 import Loading from "./Loading";
 import Menu from "./Menu";
@@ -18,10 +18,12 @@ import FolderIcon from "../../assets/icons/folder.svg?url";
 export default function HomePage() {
   const { pathname } = useLocation();
   const {
+    loginUid,
     ui: { ready },
   } = useSelector((store) => {
     return {
       ui: store.ui,
+      loginUid: store.authData.uid,
     };
   });
   const { data, loading } = usePreload();
@@ -43,11 +45,7 @@ export default function HomePage() {
       <Notification />
       <StyledWrapper>
         <div className={`col left`}>
-          <ServerDropList
-            data={data?.server}
-            memberCount={data.contacts?.length}
-            expand={false}
-          />
+          <User uid={loginUid} />
           <nav className="nav">
             <NavLink className="link" to={"/chat"}>
               <Tooltip tip="Chat">
