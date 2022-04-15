@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import styled from "styled-components";
+import Avatar from "../component/Avatar";
 import uploadIcon from "../../assets/icons/upload.image.svg?url";
-import { getInitials, getInitialsAvatar } from "../utils";
 const StyledWrapper = styled.div`
   width: 96px;
   height: 96px;
@@ -61,19 +61,11 @@ const StyledWrapper = styled.div`
 export default function AvatarUploader({
   url = "",
   name = "",
+  type = "user",
   uploadImage,
   disabled = false,
 }) {
   const [uploading, setUploading] = useState(false);
-  const [currSrc, setCurrSrc] = useState("");
-  useEffect(() => {
-    if (!url) {
-      const initialsSrc = getInitialsAvatar({ initials: getInitials(name) });
-      setCurrSrc(initialsSrc);
-    } else {
-      setCurrSrc(url);
-    }
-  }, [url, name]);
   const handleUpload = async (evt) => {
     if (uploading) return;
     const [file] = evt.target.files;
@@ -81,11 +73,10 @@ export default function AvatarUploader({
     await uploadImage(file);
     setUploading(false);
   };
-  if (!currSrc) return null;
   return (
     <StyledWrapper>
       <div className="avatar">
-        <img src={currSrc} alt="avatar" />
+        <Avatar type={type} url={url} name={name} />
         {!disabled && (
           <>
             <div className="tip">

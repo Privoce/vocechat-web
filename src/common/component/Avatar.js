@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
 import { getInitials, getInitialsAvatar } from "../utils";
-export default function Avatar({ url = "", name = "unkonw name", ...rest }) {
-  // console.log("avatar url", url);
+export default function Avatar({
+  url = "",
+  name = "unkonw name",
+  type = "user",
+  ...rest
+}) {
+  console.log("avatar url", url);
   const [src, setSrc] = useState("");
   const handleError = (err) => {
     if (url) {
@@ -9,6 +14,7 @@ export default function Avatar({ url = "", name = "unkonw name", ...rest }) {
     }
     const tmp = getInitialsAvatar({
       initials: getInitials(name),
+      background: type == "channel" ? "#4ea758" : undefined,
     });
     setSrc(tmp);
   };
@@ -16,6 +22,7 @@ export default function Avatar({ url = "", name = "unkonw name", ...rest }) {
     if (!url) {
       const tmp = getInitialsAvatar({
         initials: getInitials(name),
+        background: type == "channel" ? "#4ea758" : undefined,
       });
       setSrc(tmp);
     } else {

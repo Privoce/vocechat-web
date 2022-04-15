@@ -4,7 +4,9 @@ import toast from "react-hot-toast";
 import {
   useGetChannelQuery,
   useUpdateChannelMutation,
+  useUpdateIconMutation,
 } from "../../app/services/channel";
+import AvatarUploader from "../../common/component/AvatarUploader";
 import Input from "../../common/component/styled/Input";
 import Label from "../../common/component/styled/Label";
 import Textarea from "../../common/component/styled/Textarea";
@@ -50,6 +52,7 @@ export default function Overview({ id = 0 }) {
   const { data, refetch } = useGetChannelQuery(id);
   const [changed, setChanged] = useState(false);
   const [values, setValues] = useState(null);
+  const [updateChannelIcon] = useUpdateIconMutation();
   const [updateChannel, { isSuccess: updated }] = useUpdateChannelMutation();
   const handleUpdate = () => {
     const { name, description } = values;
@@ -61,6 +64,9 @@ export default function Overview({ id = 0 }) {
     setValues((prev) => {
       return { ...prev, [type]: newValue };
     });
+  };
+  const updateIcon = (image) => {
+    updateChannelIcon({ gid: id, image });
   };
   const handleReset = () => {
     console.log("reset", data);
@@ -93,9 +99,15 @@ export default function Overview({ id = 0 }) {
   if (!values || !id) return null;
   const { name, description } = values;
   const readOnly = !loginUser?.is_admin && channel?.owner != loginUser?.uid;
-
+  console.log("channel icon", channel);
   return (
     <StyledWrapper>
+      <AvatarUploader
+        type="channel"
+        url={channel?.icon}
+        name={name}
+        uploadImage={updateIcon}
+      />
       <div className="inputs">
         <div className="input">
           <Label htmlFor="name">Channel Name</Label>

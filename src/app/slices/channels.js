@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import BASE_URL from "../config";
 const initialState = {
   ids: [],
   byId: {},
@@ -17,6 +18,7 @@ const channelsSlice = createSlice({
       state.byId = Object.fromEntries(
         chs.map((c) => {
           const { gid } = c;
+          c.icon = `${BASE_URL}/resource/group_avatar?gid=${gid}`;
           return [gid, c];
         })
       );
@@ -26,7 +28,10 @@ const channelsSlice = createSlice({
       const ch = action.payload;
       const { gid, ...rest } = ch;
       state.ids.push(gid);
-      state.byId[gid] = rest;
+      state.byId[gid] = {
+        ...rest,
+        icon: `${BASE_URL}/resource/group_avatar?gid=${gid}`,
+      };
     },
     updateChannel(state, action) {
       const ignoreInPublic = ["add_member", "remove_member"];
@@ -65,7 +70,7 @@ const channelsSlice = createSlice({
           break;
 
         default:
-          state.byId[id] = { ...state.byId[id], members, ...rest };
+          state.byId[id] = { ...state.byId[id], ...rest };
           break;
       }
     },

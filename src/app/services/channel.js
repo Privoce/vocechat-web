@@ -1,7 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 // import toast from "react-hot-toast";
 import baseQuery from "./base.query";
-import { ContentTypes } from "../config";
+import BASE_URL, { ContentTypes } from "../config";
 import { updateChannel, removeChannel } from "../slices/channels";
 import { removeMessage } from "../slices/message";
 import { removeChannelSession } from "../slices/message.channel";
@@ -137,6 +137,29 @@ export const channelApi = createApi({
         body: members,
       }),
     }),
+    updateIcon: builder.mutation({
+      query: ({ gid, image }) => ({
+        headers: {
+          "content-type": "image/png",
+        },
+        url: `/group/${gid}/avatar`,
+        method: "POST",
+        body: image,
+      }),
+      async onQueryStarted({ gid }, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          dispatch(
+            updateChannel({
+              id: gid,
+              icon: `${BASE_URL}/resource/group_avatar?gid=${gid}&t=${new Date().getTime()}`,
+            })
+          );
+        } catch (error) {
+          console.log("err", error);
+        }
+      },
+    }),
   }),
 });
 
@@ -152,4 +175,5 @@ export const {
   useSendChannelMsgMutation,
   useAddMembersMutation,
   useRemoveMembersMutation,
+  useUpdateIconMutation,
 } = channelApi;
