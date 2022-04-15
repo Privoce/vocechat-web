@@ -11,9 +11,9 @@ const StyledWrapper = styled.div`
     &.left {
       align-items: center;
       position: relative;
-      background: #e5e7eb;
+      background: transparent;
       width: 64px;
-      box-shadow: inset -1px 0px 0px rgba(0, 0, 0, 0.1);
+      /* box-shadow: inset -1px 0px 0px rgba(0, 0, 0, 0.1); */
       transition: all 0.5s ease-in;
       > .divider {
         width: -webkit-fill-available;

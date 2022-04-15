@@ -1,6 +1,5 @@
 import styled from "styled-components";
 export const StyledHeader = styled.header`
-  width: 100%;
   height: 100%;
   /* padding: 0 20px 0 10px; */
   display: flex;
@@ -27,20 +26,6 @@ export const StyledHeader = styled.header`
       color: #616161;
     }
   }
-  .opts {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    .opt {
-      cursor: pointer;
-      width: 24px;
-      height: 24px;
-      img {
-        width: 100%;
-        height: 100%;
-      }
-    }
-  }
 `;
 export const StyledDMChat = styled.article`
   position: relative;
@@ -48,8 +33,8 @@ export const StyledDMChat = styled.article`
   flex-direction: column;
   width: 100%;
   padding: 0;
-  padding-bottom: 10px;
-  height: calc(100vh - 56px);
+  padding-bottom: 16px;
+  height: calc(100vh - 56px - 22px);
   > .chat {
     padding: 18px 16px;
     height: 100%;

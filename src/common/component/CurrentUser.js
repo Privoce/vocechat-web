@@ -7,7 +7,7 @@ import Avatar from "./Avatar";
 const StyledWrapper = styled.div`
   background-color: #e5e5e5;
   position: sticky;
-  bottom: 10px;
+  bottom: 16px;
   margin: 8px;
   width: 94%;
   width: -webkit-fill-available;

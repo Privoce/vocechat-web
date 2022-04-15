@@ -2,7 +2,10 @@ import styled from "styled-components";
 const StyledWrapper = styled.div`
   display: flex;
   height: 100%;
+  padding: 12px 48px 10px 0;
   > .left {
+    border-radius: 16px 0 0 16px;
+    background-color: #fff;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -29,7 +32,9 @@ const StyledWrapper = styled.div`
     }
   }
   .right {
-    height: 100vh;
+    border-radius: 0 16px 16px 0;
+    background-color: #fff;
+    /* height: 100vh; */
     width: 100%;
     display: flex;
     justify-content: center;

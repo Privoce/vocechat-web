@@ -1,6 +1,5 @@
 import styled from "styled-components";
 export const StyledHeader = styled.header`
-  width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
@@ -20,20 +19,6 @@ export const StyledHeader = styled.header`
       font-size: 16px;
       line-height: 24px;
       color: #616161;
-    }
-  }
-  .opts {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    .opt {
-      cursor: pointer;
-      width: 24px;
-      height: 24px;
-      img {
-        width: 100%;
-        height: 100%;
-      }
     }
   }
 `;
@@ -68,10 +53,10 @@ export const StyledContacts = styled.div`
   gap: 5px;
   /* todo */
   width: 226px;
-  height: calc(100vh - 56px);
+  height: calc(100vh - 56px - 22px);
   overflow-y: scroll;
-  background: #f5f6f7;
   padding: 8px;
+  box-shadow: inset 1px 0px 0px rgba(0, 0, 0, 0.1);
   > .add {
     cursor: pointer;
     display: flex;
@@ -101,18 +86,19 @@ export const StyledChannelChat = styled.article`
   width: 100%;
   /* margin-bottom: 120px; */
   > .wrapper {
+    background-color: #fff;
     display: flex;
     flex-direction: column;
     padding: 0;
-    padding-bottom: 10px;
-    height: calc(100vh - 56px);
+    padding-bottom: 16px;
+    height: calc(100vh - 56px - 22px);
     .chat {
       padding: 18px 16px;
       height: 100%;
       height: -webkit-fill-available;
       overflow: auto;
       > .info {
-        padding-top: 114px;
+        padding-top: 62px;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -129,15 +115,26 @@ export const StyledChannelChat = styled.article`
           line-height: 24px;
         }
         .edit {
-          color: #3c8ce7;
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          .icon {
+            width: 16px;
+            height: 16px;
+            path {
+              fill: #3c8ce7;
+            }
+          }
           padding: 0;
-          border: none;
-          outline: none;
-          background: none;
           font-style: normal;
           font-weight: 500;
           font-size: 16px;
           line-height: 24px;
+          background: linear-gradient(135deg, #3c8ce7 0%, #00eaff 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          text-fill-color: transparent;
         }
       }
       > .feed {

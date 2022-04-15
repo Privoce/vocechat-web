@@ -9,9 +9,14 @@ import Send from "../../../common/component/Send";
 import Contact from "../../../common/component/Contact";
 import Layout from "../Layout";
 import { renderMessageFragment } from "../utils";
+import EditIcon from "../../../assets/icons/edit.svg";
 import alertIcon from "../../../assets/icons/alert.svg?url";
 import peopleIcon from "../../../assets/icons/people.svg?url";
 import pinIcon from "../../../assets/icons/pin.svg?url";
+import searchIcon from "../../../assets/icons/search.svg?url";
+import headphoneIcon from "../../../assets/icons/headphone.svg?url";
+import boardosIcon from "../../../assets/icons/app.boardos.svg?url";
+import webrowseIcon from "../../../assets/icons/app.webrowse.svg?url";
 import addIcon from "../../../assets/icons/add.svg?url";
 import {
   // StyledNotification,
@@ -20,8 +25,10 @@ import {
   StyledHeader,
 } from "./styled";
 import AddMemberModal from "./AddMemberModal";
+import { NavLink, useLocation } from "react-router-dom";
 
 export default function ChannelChat({ cid = "", dropFiles = [] }) {
+  const { pathname } = useLocation();
   const [updateReadIndex] = useReadMessageMutation();
   const updateReadDebounced = useDebounce(updateReadIndex, 300);
   const [membersVisible, setMembersVisible] = useState(true);
@@ -73,30 +80,57 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
         context="channel"
         dropFiles={dropFiles}
         // ref={containerRef}
+        aside={
+          <>
+            <ul className="tools">
+              <li className="tool">
+                <Tooltip tip="Search" placement="left">
+                  <img src={searchIcon} alt="opt icon" />
+                </Tooltip>
+              </li>
+              <li className="tool">
+                <Tooltip tip="Voice/Video Chat" placement="left">
+                  <img src={headphoneIcon} alt="opt icon" />
+                </Tooltip>
+              </li>
+              <li className="tool">
+                <Tooltip tip="Notifications" placement="left">
+                  <img src={alertIcon} alt="opt icon" />
+                </Tooltip>
+              </li>
+              <li className="tool">
+                <Tooltip tip="Pin" placement="left">
+                  <img src={pinIcon} alt="opt icon" />
+                </Tooltip>
+              </li>
+              <li className="tool" onClick={toggleMembersVisible}>
+                <Tooltip tip="Channel Members" placement="left">
+                  <img src={peopleIcon} alt="opt icon" />
+                </Tooltip>
+              </li>
+            </ul>
+            <hr className="divider" />
+            <ul className="apps">
+              <li className="app">
+                <Tooltip tip="Webrowse" placement="left">
+                  <img src={webrowseIcon} alt="app icon" />
+                </Tooltip>
+              </li>
+              <li className="app">
+                <Tooltip tip="BoardOS" placement="left">
+                  <img src={boardosIcon} alt="app icon" />
+                </Tooltip>
+              </li>
+            </ul>
+          </>
+        }
         header={
-          <StyledHeader>
+          <StyledHeader className="head">
             <div className="txt">
               <ChannelIcon personal={!is_public} />
               <span className="title">{name}</span>
               <span className="desc">{description}</span>
             </div>
-            <ul className="opts">
-              <li className="opt">
-                <Tooltip tip="Notifications" placement="bottom">
-                  <img src={alertIcon} alt="opt icon" />
-                </Tooltip>
-              </li>
-              <li className="opt">
-                <Tooltip tip="Pin" placement="bottom">
-                  <img src={pinIcon} alt="opt icon" />
-                </Tooltip>
-              </li>
-              <li className="opt" onClick={toggleMembersVisible}>
-                <Tooltip tip="Channel Members" placement="bottom">
-                  <img src={peopleIcon} alt="opt icon" />
-                </Tooltip>
-              </li>
-            </ul>
           </StyledHeader>
         }
         contacts={
@@ -125,7 +159,13 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
                 <p className="desc">
                   This is the start of the #{name} channel.{" "}
                 </p>
-                {/* <button className="edit">Edit Channel</button> */}
+                <NavLink
+                  to={`/setting/channel/${cid}?f=${pathname}`}
+                  className="edit"
+                >
+                  <EditIcon className="icon" />
+                  Edit Channel
+                </NavLink>
               </div>
               <div className="feed">
                 {[...msgIds]

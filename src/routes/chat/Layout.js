@@ -9,14 +9,17 @@ const StyledWrapper = styled.article`
   position: relative;
   width: 100%;
   background: #fff;
-  height: 100vh;
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
   > .head {
+    box-sizing: content-box;
     height: 56px;
     padding: 0 20px;
-    box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.1); */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   }
   > .main {
-    height: calc(100vh - 56px);
+    height: calc(100vh - 56px - 22px);
     width: 100%;
     display: flex;
     align-items: flex-start;
@@ -26,6 +29,36 @@ const StyledWrapper = styled.article`
       box-shadow: inset 0px 10px 2px -10px rgba(0, 0, 0, 0.1);
       /* margin-top: 1px; */
       /* border-top: 1px solid transparent; */
+    }
+    > .aside {
+      padding: 12px;
+      position: absolute;
+      right: 0;
+      top: -56px;
+      transform: translateX(100%);
+      display: flex;
+      flex-direction: column;
+      .divider {
+        border: none;
+        background-color: #d4d4d4;
+        width: 16px;
+        height: 1px;
+        margin: 18px auto;
+      }
+      .tools,
+      .apps {
+        display: flex;
+        flex-direction: column;
+      }
+      .tools {
+        gap: 24px;
+        .tool {
+          cursor: pointer;
+        }
+      }
+      .apps {
+        gap: 15px;
+      }
     }
   }
   .drag_tip {
@@ -75,6 +108,7 @@ const StyledWrapper = styled.article`
 export default function Layout({
   children,
   header,
+  aside = null,
   contacts = null,
   dropFiles = [],
   context = "channel",
@@ -137,10 +171,11 @@ export default function Layout({
         <ImagePreviewModal data={previewImage} closeModal={closePreviewModal} />
       )}
       <StyledWrapper ref={drop}>
-        <header className="head">{header}</header>
+        {header}
         <main className="main" ref={messagesContainer}>
           {children}
           {contacts && <div className="members">{contacts}</div>}
+          {aside && <div className="aside">{aside}</div>}
         </main>
         <div
           className={`drag_tip ${
