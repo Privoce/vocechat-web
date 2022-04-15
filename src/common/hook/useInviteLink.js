@@ -1,33 +1,54 @@
 import { useState, useEffect } from "react";
 import useCopy from "./useCopy";
 import {
-  useCreateInviteLinkQuery,
+  useLazyCreateInviteLinkQuery as useCreateServerInviteLinkQuery,
   useGetSMTPConfigQuery,
 } from "../../app/services/server";
-export default function useInviteLink() {
+import { useLazyCreateInviteLinkQuery as useCreateChannelInviteLinkQuery } from "../../app/services/channel";
+export default function useInviteLink(cid = null) {
   const [finalLink, setFinalLink] = useState("");
   const {
     data: config,
-
     isSuccess: configQuerySuccess,
   } = useGetSMTPConfigQuery();
-  const { data: link, isLoading, refetch } = useCreateInviteLinkQuery();
+  const [
+    generateChannelInviteLink,
+    { data: channelInviteLink, isFetching: generatingChannelLink },
+  ] = useCreateChannelInviteLinkQuery();
+  const [
+    generateServerInviteLink,
+    { data: serverInviteLink, isFetching: generatingServerLink },
+  ] = useCreateServerInviteLinkQuery();
   const [linkCopied, copy] = useCopy();
   const copyLink = () => {
     copy(finalLink);
   };
+  const regenLink = cid
+    ? () => {
+        generateChannelInviteLink(cid);
+      }
+    : generateServerInviteLink;
   useEffect(() => {
-    if (link && config) {
-      const tmpURL = new URL(link);
+    if (cid) {
+      generateChannelInviteLink(cid);
+    } else {
+      generateServerInviteLink();
+    }
+  }, [cid]);
+
+  useEffect(() => {
+    const _link = serverInviteLink || channelInviteLink;
+    console.log("fetching", serverInviteLink, channelInviteLink);
+    if (_link && config) {
+      const tmpURL = new URL(_link);
       tmpURL.searchParams.set("code", config.enabled);
       setFinalLink(tmpURL.href);
     }
-  }, [link, config]);
-
+  }, [serverInviteLink, channelInviteLink, config]);
   return {
     enableSMTP: config?.enabled,
-    generating: isLoading,
-    generateNewLink: refetch,
+    generating: generatingChannelLink || generatingServerLink,
+    generateNewLink: regenLink,
     link: finalLink,
     linkCopied,
     copyLink,

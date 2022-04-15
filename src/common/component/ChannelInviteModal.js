@@ -77,7 +77,7 @@ const Styled = styled.div`
 import Modal from "./Modal";
 import Button from "./styled/Button";
 import Input from "./styled/Input";
-export default function InviteModal({ title, closeModal }) {
+export default function ChannelInviteModal({ cid = null, title, closeModal }) {
   const {
     enableSMTP,
     linkCopied,
@@ -85,7 +85,8 @@ export default function InviteModal({ title, closeModal }) {
     copyLink,
     generateNewLink,
     generating,
-  } = useInviteLink();
+  } = useInviteLink(cid);
+  if (!cid) return null;
   return (
     <Modal>
       <Styled>
@@ -98,6 +99,7 @@ export default function InviteModal({ title, closeModal }) {
             <label htmlFor="">Invite by Email</label>
             <div className="input">
               <Input
+                readOnly={true}
                 disabled={!enableSMTP}
                 type="email"
                 className="higher"
@@ -111,7 +113,12 @@ export default function InviteModal({ title, closeModal }) {
           <div className="link">
             <label htmlFor="">Or Send invite link to your friends</label>
             <div className="input">
-              <Input className="higher" placeholder="Generating" value={link} />
+              <Input
+                readOnly
+                className="higher"
+                placeholder="Generating"
+                value={link}
+              />
               <Button className="small" onClick={copyLink}>
                 {linkCopied ? `Copied` : `Copy`}
               </Button>
