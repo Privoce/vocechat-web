@@ -8,6 +8,9 @@ const MarkdownOverrides = createGlobalStyle`
     .toastui-editor-md-splitter{
       background-color:#D0D5DD ;
     }
+    .ProseMirror{
+      height: 100%;
+    }
   }
     *{
         margin: 0 ;

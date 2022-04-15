@@ -1,5 +1,7 @@
 // import React from 'react'
 import styled from "styled-components";
+import { useLocation, NavLink } from "react-router-dom";
+
 import backIcon from "../../assets/icons/arrow.left.svg?url";
 const StyledWrapper = styled.div`
   width: 100vw;
@@ -39,8 +41,6 @@ const StyledWrapper = styled.div`
         margin-bottom: 2px;
       }
       .item {
-        cursor: pointer;
-        padding: 4px 12px;
         font-weight: 500;
         font-size: 14px;
         line-height: 20px;
@@ -50,8 +50,14 @@ const StyledWrapper = styled.div`
         &.curr {
           background: #e7e5e4;
         }
+        > a {
+          display: block;
+          padding: 4px 12px;
+        }
       }
       &.danger .item {
+        cursor: pointer;
+        padding: 4px 12px;
         color: #ef4444;
         &:hover {
           background: none;
@@ -81,12 +87,9 @@ export default function StyledSettingContainer({
   navs = [],
   dangers = [],
   nav,
-  updateNav,
   children,
 }) {
-  const handleNavClick = (name) => {
-    updateNav(name);
-  };
+  const { pathname } = useLocation();
   return (
     <StyledWrapper>
       <div className="left">
@@ -100,10 +103,9 @@ export default function StyledSettingContainer({
                 return (
                   <li
                     key={name}
-                    onClick={handleNavClick.bind(null, name)}
                     className={`item ${name == nav?.name ? "curr" : ""}`}
                   >
-                    {title}
+                    <NavLink to={`${pathname}?nav=${name}`}>{title}</NavLink>
                   </li>
                 );
               })}

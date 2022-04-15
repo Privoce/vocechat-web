@@ -13,6 +13,11 @@ import {
   createSoftBreakPlugin,
   createComboboxPlugin,
   createMentionPlugin,
+  // comboboxSelectors,
+  // getMentionOnSelectItem,
+  // findMentionInput,
+  // removeMentionInput,
+  // isSelectionInMentionInput,
   createPlugins,
   ELEMENT_PARAGRAPH,
   getPlateEditorRef,
@@ -147,6 +152,18 @@ const Plugins = ({
   const handleChange = useCallback(
     async (val) => {
       console.log("tmps changed", val);
+      // const wtf = getMentionOnSelectItem();
+      // const plateEditor = getPlateEditorRef(`${TEXT_EDITOR_PREFIX}_${id}`);
+      // const currentMentionInput = findMentionInput(plateEditor);
+      // const items = comboboxSelectors.filteredItems();
+      // console.log(
+      //   "mention check",
+      //   items,
+      //   isSelectionInMentionInput(plateEditor)
+      // );
+      // if (items?.length == 0 && isSelectionInMentionInput(plateEditor)) {
+      //   removeMentionInput(plateEditor, currentMentionInput[1]);
+      // }
       const tmps = [];
       const getMixedText = (children) => {
         const mentions = [];
@@ -202,7 +219,9 @@ const Plugins = ({
           ? {
               type: "text",
               content: tmp.map((t) => t.content).join("\n"),
-              properties: { mentions: tmp.map((t) => t.mentions).flat() },
+              properties: {
+                mentions: tmp.map((t) => t.properties?.mentions || []).flat(),
+              },
             }
           : tmp;
       });
