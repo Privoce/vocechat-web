@@ -13,11 +13,11 @@ export default function useInviteLink(cid = null) {
   } = useGetSMTPConfigQuery();
   const [
     generateChannelInviteLink,
-    { data: channelInviteLink, isFetching: generatingChannelLink },
+    { data: channelInviteLink, isLoading: generatingChannelLink },
   ] = useCreateChannelInviteLinkQuery();
   const [
     generateServerInviteLink,
-    { data: serverInviteLink, isFetching: generatingServerLink },
+    { data: serverInviteLink, isLoading: generatingServerLink },
   ] = useCreateServerInviteLinkQuery();
   const [linkCopied, copy] = useCopy();
   const copyLink = () => {

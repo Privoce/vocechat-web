@@ -1,6 +1,7 @@
 // import { useEffect } from "react";
 import styled from "styled-components";
 import useInviteLink from "../hook/useInviteLink";
+import Input from "./styled/Input";
 import Button from "./styled/Button";
 const StyledWrapper = styled.div`
   display: flex;
@@ -16,23 +17,15 @@ const StyledWrapper = styled.div`
   .link {
     width: 512px;
     margin-bottom: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    box-shadow: 0px 1px 2px rgba(31, 41, 55, 0.08);
-    border-radius: 4px;
-    padding: 3px 4px 3px 8px;
-    .content {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      width: 512px;
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 20px;
-      color: #78787c;
+    position: relative;
+    button {
+      position: absolute;
+      right: 4px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    input {
+      padding-right: 75px;
     }
   }
   .sub_tip {
@@ -61,10 +54,13 @@ export default function InviteLink() {
         Share this link to invite people to this server.
       </span>
       <div className="link">
-        <span title={link} className="content">
-          {link}
-        </span>
-        <Button onClick={copyLink} className="main">
+        <Input
+          readOnly
+          className="higher"
+          placeholder="Generating"
+          value={link}
+        />
+        <Button onClick={copyLink} className="small">
           {linkCopied ? "Copied" : `Copy`}
         </Button>
       </div>
