@@ -41,9 +41,12 @@ const StyledWrapper = styled.div`
   }
 `;
 export default function Overview({ id = 0 }) {
-  const loginUser = useSelector(
-    (store) => store.contacts.byId[store.authData.uid]
-  );
+  const { loginUser, channel } = useSelector((store) => {
+    return {
+      loginUser: store.contacts.byId[store.authData.uid],
+      channel: store.channels.byId[id],
+    };
+  });
   const { data, refetch } = useGetChannelQuery(id);
   const [changed, setChanged] = useState(false);
   const [values, setValues] = useState(null);
@@ -89,14 +92,15 @@ export default function Overview({ id = 0 }) {
 
   if (!values || !id) return null;
   const { name, description } = values;
-  const isAdmin = loginUser?.is_admin;
+  const readOnly = !loginUser?.is_admin && channel?.owner != loginUser?.uid;
+
   return (
     <StyledWrapper>
       <div className="inputs">
         <div className="input">
           <Label htmlFor="name">Channel Name</Label>
           <Input
-            disabled={!isAdmin}
+            disabled={readOnly}
             className="name"
             data-type="name"
             onChange={handleChange}
@@ -109,7 +113,7 @@ export default function Overview({ id = 0 }) {
         <div className="input">
           <Label htmlFor="desc">Channel Topic</Label>
           <Textarea
-            disabled={!isAdmin}
+            disabled={readOnly}
             data-type="description"
             onChange={handleChange}
             value={description ?? ""}

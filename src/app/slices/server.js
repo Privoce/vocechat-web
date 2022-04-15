@@ -32,16 +32,7 @@ const serverSlice = createSlice({
         state[_key] = values[_key];
       });
     },
-    updateInviteLink(state, action) {
-      const { link, expire = 7 * 24 * 60 * 60 } = action.payload;
-      state.inviteLink = { link, expire };
-    },
   },
 });
-export const {
-  updateInfo,
-  resetServer,
-  fullfillServer,
-  updateInviteLink,
-} = serverSlice.actions;
+export const { updateInfo, resetServer, fullfillServer } = serverSlice.actions;
 export default serverSlice.reducer;

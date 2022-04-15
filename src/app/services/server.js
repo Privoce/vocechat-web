@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import BASE_URL from "../config";
-import { updateInviteLink, updateInfo } from "../slices/server";
+import { updateInfo } from "../slices/server";
 import baseQuery from "./base.query";
 const defaultExpireDuration = 7 * 24 * 60 * 60;
 export const serverApi = createApi({
@@ -107,18 +107,6 @@ export const serverApi = createApi({
         // 替换掉域名
         const invite = new URL(link);
         return `${location.origin}${invite.pathname}${invite.search}${invite.hash}`;
-      },
-      async onQueryStarted(
-        expire = defaultExpireDuration,
-        { dispatch, queryFulfilled }
-      ) {
-        try {
-          const { data: link } = await queryFulfilled;
-          console.log("link", link);
-          dispatch(updateInviteLink({ expire, link }));
-        } catch {
-          console.log("invite link error");
-        }
       },
     }),
     updateServer: builder.mutation({

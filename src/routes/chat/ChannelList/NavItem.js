@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDrop } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
 import { useSelector } from "react-redux";
 import Tippy from "@tippyjs/react";
 import useContextMenu from "../../../common/hook/useContextMenu";
 import ContextMenu from "../../../common/component/ContextMenu";
-import InviteModal from "../../../common/component/InviteModal";
+import InviteModal from "../../../common/component/ChannelInviteModal";
 import Tooltip from "../../../common/component/Tooltip";
 // import { useDebounce} from "rooks";
 import { useReadMessageMutation } from "../../../app/services/message";
@@ -17,6 +17,7 @@ import ChannelIcon from "../../../common/component/ChannelIcon";
 import { getUnreadCount } from "../utils";
 
 const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
+  const { pathname } = useLocation();
   const [inviteModalVisible, setInviteModalVisible] = useState(false);
   const navigate = useNavigate();
   const [muteChannel] = useUpdateMuteSettingMutation();
@@ -52,7 +53,7 @@ const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
     evt.stopPropagation();
     const { id } = evt.target.dataset;
     if (id) {
-      navigate(`/setting/channel/${id}`);
+      navigate(`/setting/channel/${id}?f=${pathname}`);
     }
   };
   const [{ isActive }, drop] = useDrop(() => ({
@@ -91,7 +92,7 @@ const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
       : { add_groups: [{ gid: id }] };
     muteChannel(data);
   };
-  const { is_public, name } = channel;
+  const { is_public, name, owner } = channel;
   const { unreads = 0, mentions = [] } = getUnreadCount({
     mids,
     messageData,
@@ -99,6 +100,7 @@ const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
     loginUid,
   });
   const isMentions = mentions.length !== 0;
+  const inviteIconVisible = loginUser?.is_admin || owner == loginUid;
   return (
     <>
       <Tippy
@@ -154,7 +156,7 @@ const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
             <span className={`txt ${unreads == 0 ? "read" : ""}`}>{name}</span>
           </div>
           <div className="icons">
-            {loginUser?.is_admin && (
+            {inviteIconVisible && (
               <Tooltip placement="bottom" tip="Add Member">
                 <i
                   className="icon invite"
@@ -180,6 +182,7 @@ const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
       </Tippy>
       {inviteModalVisible && (
         <InviteModal
+          cid={id}
           title={channel.name}
           closeModal={toggleInviteModalVisible}
         />

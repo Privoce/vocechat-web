@@ -72,6 +72,21 @@ export const channelApi = createApi({
       //   }
       // },
     }),
+    createInviteLink: builder.query({
+      query: (gid) => ({
+        headers: {
+          "content-type": "text/plain",
+          accept: "text/plain",
+        },
+        url: `/group/${gid}/create_invite_link`,
+        responseHandler: (response) => response.text(),
+      }),
+      transformResponse: (link) => {
+        // 替换掉域名
+        const invite = new URL(link);
+        return `${location.origin}${invite.pathname}${invite.search}${invite.hash}`;
+      },
+    }),
     removeChannel: builder.query({
       query: (id) => ({
         url: `group/${id}`,
@@ -126,6 +141,8 @@ export const channelApi = createApi({
 });
 
 export const {
+  useLazyCreateInviteLinkQuery,
+  useCreateInviteLinkQuery,
   useLazyGetHistoryMessagesQuery,
   useGetChannelQuery,
   useUpdateChannelMutation,

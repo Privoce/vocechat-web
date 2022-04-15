@@ -1,5 +1,5 @@
 // import React from 'react'
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import Tooltip from "../../common/component/Tooltip";
 import settingIcon from "../../assets/icons/setting.svg?url";
 import styled from "styled-components";
@@ -32,11 +32,12 @@ const StyledMenus = styled.ul`
   }
 `;
 export default function Menu() {
+  const { pathname } = useLocation();
   return (
     <StyledMenus>
       <li className="menu">
         <Tooltip placement="right" tip="Settings">
-          <NavLink to={"/setting"}>
+          <NavLink to={`/setting?f=${pathname}`}>
             <img src={settingIcon} alt="setting icon" className="icon" />
           </NavLink>
         </Tooltip>

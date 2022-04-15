@@ -6,12 +6,6 @@ export default async function handler({ operation, payload }) {
     return;
   }
   switch (operation) {
-    case "updateInviteLink":
-      {
-        const data = payload;
-        await table.setItem("inviteLink", data);
-      }
-      break;
     case "updateInfo":
       {
         const data = payload;
