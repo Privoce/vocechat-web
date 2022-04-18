@@ -98,7 +98,7 @@ export default function URLPreview({ url = "" }) {
       const title = data.site_name || data.title;
       const description = data.description;
       const ogImage = data.images.find((i) => !!i.url)?.url || "";
-      const favicon = data.favicon || `${new URL(url).origin}/favicon.ico`;
+      const favicon = data.favicon_url || `${new URL(url).origin}/favicon.ico`;
       setData({ favicon, title, description, ogImage });
       // console.log("wtf url", data);
     };
