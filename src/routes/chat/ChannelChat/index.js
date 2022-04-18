@@ -24,7 +24,7 @@ import {
   StyledChannelChat,
   StyledHeader,
 } from "./styled";
-import AddMemberModal from "./AddMemberModal";
+import ChannelInviteModal from "../../../common/component/ChannelInviteModal";
 import { NavLink, useLocation } from "react-router-dom";
 
 export default function ChannelChat({ cid = "", dropFiles = [] }) {
@@ -40,10 +40,12 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
     data,
     messageData,
     loginUid,
+    loginUser,
     footprint,
   } = useSelector((store) => {
     return {
       footprint: store.footprint,
+      loginUser: store.contacts.byId[store.authData.uid],
       loginUid: store.authData.uid,
       msgIds: store.channelMessage[cid] || [],
       userIds: store.contacts.ids,
@@ -62,18 +64,15 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
     setAddMemberModalVisible((prev) => !prev);
   };
 
-  const { name, description, is_public, members = [] } = data;
+  const { name, description, is_public, members = [], owner } = data;
   const memberIds = is_public ? userIds : members;
+  const addVisible = loginUser?.is_admin || owner == loginUid;
   console.log("channel message list", msgIds);
   const readIndex = footprint.readChannels[cid];
   return (
     <>
       {addMemberModalVisible && (
-        <AddMemberModal
-          cid={cid}
-          uids={members}
-          closeModal={toggleAddVisible}
-        />
+        <ChannelInviteModal cid={cid} closeModal={toggleAddVisible} />
       )}
       <Layout
         to={cid}
@@ -137,7 +136,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
           membersVisible ? (
             <>
               <StyledContacts>
-                {!is_public && (
+                {addVisible && (
                   <div className="add" onClick={toggleAddVisible}>
                     <img className="icon" src={addIcon} />
                     <div className="txt">Add members</div>
