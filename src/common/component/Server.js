@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 import Tippy from "@tippyjs/react";
 import { hideAll } from "tippy.js";
-import { useGetMetricsQuery } from "../../app/services/server";
 import addIcon from "../../assets/icons/add.svg?url";
 import mailIcon from "../../assets/icons/mail.svg?url";
 import Tooltip from "./Tooltip";
@@ -80,9 +79,9 @@ const StyledWrapper = styled.div`
   }
 `;
 export default function Server() {
-  const { data } = useGetMetricsQuery();
-  const { currentUser, server } = useSelector((store) => {
+  const { currentUser, server, userCount } = useSelector((store) => {
     return {
+      userCount: store.contacts.ids.length,
       currentUser: store.contacts.byId[store.authData.uid],
       server: store.server,
     };
@@ -106,7 +105,7 @@ export default function Server() {
   const handleCloseModal = () => {
     setChannelModalVisible(false);
   };
-  console.log("server info", server, data);
+  console.log("server info", server);
   const { name, description, logo } = server;
   return (
     <StyledWrapper>
@@ -124,7 +123,7 @@ export default function Server() {
           <h3 className="name" title={description}>
             {name}
           </h3>
-          <span className="desc">{data?.user_count} members</span>
+          <span className="desc">{userCount} members</span>
         </div>
       </div>
       <Tooltip tip="More" placement="bottom">
