@@ -111,6 +111,7 @@ const Plugins = ({
     createImagePlugin({
       options: {
         uploadImage: async (dataUrl) => {
+          console.log("upload image", dataUrl);
           const resp = await fetch(dataUrl);
           const blob = await resp.blob();
           const { thumbnail, ...rest } = await uploadFile(blob);

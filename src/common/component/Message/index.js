@@ -3,9 +3,8 @@ import dayjs from "dayjs";
 import isToday from "dayjs/plugin/isToday";
 import isYesterday from "dayjs/plugin/isYesterday";
 import { useSelector } from "react-redux";
-import { useInViewRef } from "rooks";
+import useInView from "./useInView";
 import Tippy from "@tippyjs/react";
-import { useLazyGetHistoryMessagesQuery } from "../../../app/services/channel";
 import Reaction from "./Reaction";
 import Reply from "./Reply";
 import Profile from "../Profile";
@@ -18,16 +17,14 @@ import Tooltip from "../Tooltip";
 dayjs.extend(isToday);
 dayjs.extend(isYesterday);
 function Message({
-  isFirst = false,
   contextId = 0,
   mid = "",
   context = "user",
   updateReadIndex,
   read = true,
 }) {
-  const [myRef, inView] = useInViewRef();
+  const inviewRef = useInView();
   const [edit, setEdit] = useState(false);
-  const [fetchMoreChannelMessage] = useLazyGetHistoryMessagesQuery();
   const avatarRef = useRef(null);
   const { message = {}, reactionMessageData, contactsData } = useSelector(
     (store) => {
@@ -64,12 +61,6 @@ function Message({
       updateReadIndex(data);
     }
   }, [mid, read]);
-  useEffect(() => {
-    if (isFirst && inView && context == "channel") {
-      // fetch new message
-      fetchMoreChannelMessage({ gid: contextId, mid });
-    }
-  }, [inView, isFirst, mid, contextId, context]);
 
   const reactions = reactionMessageData[mid];
   const currUser = contactsData[fromUid] || {};
@@ -81,12 +72,11 @@ function Message({
     : dayjsTime.isYesterday()
     ? "Yesterday"
     : null;
+
+  console.log("render message");
+  // return null;
   return (
-    <StyledWrapper
-      data-msg-mid={mid}
-      ref={myRef}
-      className={`message ${inView ? "in_view" : ""}`}
-    >
+    <StyledWrapper data-msg-mid={mid} ref={inviewRef} className={`message`}>
       <Tippy
         duration={0}
         interactive
