@@ -142,7 +142,7 @@ const StyledWrapper = styled.div`
         .title .icon {
           transform: rotate(-90deg);
         }
-        > .nav {
+        > .nav > .link:not(.active) {
           display: none;
         }
       }

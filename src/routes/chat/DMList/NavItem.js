@@ -88,7 +88,7 @@ const NavItem = ({ uid, mid, unreads, setFiles }) => {
       <NavLink
         ref={drop}
         key={uid}
-        className={`session ${isActive ? "drop_over" : ""}`}
+        className={`link session ${isActive ? "drop_over" : ""}`}
         to={`/chat/dm/${uid}`}
         onContextMenu={handleContextMenuEvent}
       >
