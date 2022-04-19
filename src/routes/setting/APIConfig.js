@@ -7,6 +7,23 @@ const Styled = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   gap: 15px;
+  .input {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    label {
+      white-space: nowrap;
+      font-size: 14px;
+      color: #555;
+    }
+  }
+  .tip {
+    font-size: 12px;
+    color: #999;
+    line-height: 1.5;
+  }
 `;
 import Input from "../../common/component/styled/Input";
 import Button from "../../common/component/styled/Button";
@@ -23,8 +40,15 @@ export default function APIConfig() {
   console.log("secret", data);
   return (
     <Styled>
-      <Input type="password" value={updatedSecret || data} />
+      <div className="input">
+        <label htmlFor="secret">API Secure Key:</label>
+        <Input type="password" id="secret" value={updatedSecret || data} />
+      </div>
       <Button onClick={updateSecret}>Update Secret</Button>
+      <div className="tip">
+        Tip: The security key agreed between the rustchat server and the
+        third-party app is used to encrypt the communication data.{" "}
+      </div>
     </Styled>
   );
 }

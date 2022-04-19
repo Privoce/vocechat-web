@@ -66,7 +66,7 @@ const navs = [
       },
       {
         name: "api",
-        title: "API",
+        title: "Third-party APP",
         component: <APIConfig />,
       },
     ],
