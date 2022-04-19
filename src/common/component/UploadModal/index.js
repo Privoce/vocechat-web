@@ -38,10 +38,10 @@ export default function UploadModal({
   useEffect(() => {
     if (uploadSuccess) {
       // 把已经上传的东西当做消息发出去
-      const { size, path, name, hash, ...rest } = data;
+      const { path, ...rest } = data;
       sendMessage({
         type: "file",
-        content: { size, name, path, hash },
+        content: { path },
         properties: rest,
       });
     }
