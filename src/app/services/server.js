@@ -22,6 +22,25 @@ export const serverApi = createApi({
         }
       },
     }),
+    getThirdPartySecret: builder.query({
+      query: () => ({
+        // headers: {
+        //   "content-type": "text/plain",
+        //   accept: "text/plain",
+        // },
+        url: `/admin/system/third_party_secret`,
+
+        responseHandler: (response) => response.text(),
+      }),
+      keepUnusedDataFor: 0,
+    }),
+    updateThirdPartySecret: builder.mutation({
+      query: () => ({
+        url: `/admin/system/third_party_secret`,
+        method: "POST",
+        responseHandler: (response) => response.text(),
+      }),
+    }),
     getMetrics: builder.query({
       query: () => ({ url: `/admin/system/metrics` }),
     }),
@@ -145,4 +164,6 @@ export const {
   useUpdateLogoMutation,
   useCreateInviteLinkQuery,
   useLazyCreateInviteLinkQuery,
+  useGetThirdPartySecretQuery,
+  useUpdateThirdPartySecretMutation,
 } = serverApi;

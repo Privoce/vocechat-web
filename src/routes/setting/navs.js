@@ -5,6 +5,7 @@ import Logins from "./config/Logins";
 import ConfigFirebase from "./config/Firebase";
 import ConfigSMTP from "./config/SMTP";
 import Notifications from "./Notifications";
+import APIConfig from "./APIConfig";
 import ManageMembers from "../../common/component/ManageMembers";
 import FAQ from "../../common/component/FAQ";
 import ConfigAgora from "./config/Agora";
@@ -62,6 +63,11 @@ const navs = [
         name: "social_login",
         title: "Social Login",
         component: <Logins />,
+      },
+      {
+        name: "api",
+        title: "API",
+        component: <APIConfig />,
       },
     ],
     admin: true,
