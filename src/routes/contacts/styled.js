@@ -20,6 +20,7 @@ const StyledWrapper = styled.div`
         flex-direction: column;
         gap: 4px;
         a {
+          border-radius: 6px;
           text-decoration: none;
         }
         .session {
