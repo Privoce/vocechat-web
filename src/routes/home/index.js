@@ -26,7 +26,7 @@ export default function HomePage() {
       loginUid: store.authData.uid,
     };
   });
-  const { data, loading } = usePreload();
+  const { loading } = usePreload();
   // console.log("index loading", loading, ready);
   if (loading || !ready) {
     return <Loading />;
@@ -51,31 +51,19 @@ export default function HomePage() {
               <Tooltip tip="Chat">
                 <img src={ChatIcon} alt="chat icon" />
               </Tooltip>
-              {/* {menuExpand && (
-                <span className="animate__animated animate__fadeIn">Chat</span>
-              )} */}
             </NavLink>
             <NavLink className="link" to={"/contacts"}>
               <Tooltip tip="Members">
                 <img src={ContactIcon} alt="contact icon" />
               </Tooltip>
-              {/* {menuExpand && (
-                <span className="animate__animated animate__fadeIn">
-                  Contacts
-                </span>
-              )} */}
             </NavLink>
             <NavLink className="link" to={"/files"}>
               <Tooltip tip="Files">
                 <img src={FolderIcon} alt="folder icon" />
               </Tooltip>
-              {/* {menuExpand && (
-                <span className="animate__animated animate__fadeIn">Files</span>
-              )} */}
             </NavLink>
           </nav>
           <div className="divider"></div>
-          {/* <Tools expand={menuExpand} /> */}
           <Menu />
         </div>
         <div className="col right">

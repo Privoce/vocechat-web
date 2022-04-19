@@ -3,7 +3,7 @@ import { NavLink, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Search from "../../common/component/Search";
 import Contact from "../../common/component/Contact";
-import CurrentUser from "../../common/component/CurrentUser";
+// import CurrentUser from "../../common/component/CurrentUser";
 import Profile from "../../common/component/Profile";
 
 import StyledWrapper from "./styled";
@@ -29,7 +29,7 @@ export default function ContactsPage() {
             })}
           </nav>
         </div>
-        <CurrentUser />
+        {/* <CurrentUser /> */}
       </div>
       {user_id && (
         <div className="right">
