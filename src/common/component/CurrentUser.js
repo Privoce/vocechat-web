@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import soundIcon from "../../assets/icons/sound.on.svg?url";
 import micIcon from "../../assets/icons/mic.on.svg?url";
 import Avatar from "./Avatar";
+import UserGuide from "./UserGuide";
 const StyledWrapper = styled.div`
   background-color: #e5e5e5;
   position: sticky;
@@ -66,20 +67,25 @@ export default function CurrentUser() {
   if (!currUser) return null;
   const { uid, name, avatar } = currUser;
   return (
-    <StyledWrapper>
-      <div className="profile">
-        <Avatar url={avatar} name={name} alt="user avatar" className="avatar" />
-        <div className="info">
-          <span className="name">{name}</span>
-          <span className="id">#{uid}</span>
+    <UserGuide step={1}>
+      <StyledWrapper>
+        <div className="profile">
+          <Avatar
+            url={avatar}
+            name={name}
+            alt="user avatar"
+            className="avatar"
+          />
+          <div className="info">
+            <span className="name">{name}</span>
+            <span className="id">#{uid}</span>
+          </div>
         </div>
-      </div>
-      {/* {expand && ( */}
-      <div className="settings">
-        <img src={soundIcon} className="icon" alt="mic icon" />
-        <img src={micIcon} className="icon" alt="sound icon" />
-      </div>
-      {/* )} */}
-    </StyledWrapper>
+        <div className="settings">
+          <img src={soundIcon} className="icon" alt="mic icon" />
+          <img src={micIcon} className="icon" alt="sound icon" />
+        </div>
+      </StyledWrapper>
+    </UserGuide>
   );
 }
