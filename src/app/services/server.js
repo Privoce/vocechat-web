@@ -74,6 +74,9 @@ export const serverApi = createApi({
     getSMTPConfig: builder.query({
       query: () => ({ url: `admin/smtp/config` }),
     }),
+    getSMTPStatus: builder.query({
+      query: () => ({ url: `/admin/smtp/enabled` }),
+    }),
     updateSMTPConfig: builder.mutation({
       query: (data) => ({
         url: `admin/smtp/config`,
@@ -148,6 +151,7 @@ export const serverApi = createApi({
 });
 
 export const {
+  useGetSMTPStatusQuery,
   useSendTestEmailMutation,
   useUpdateFirebaseConfigMutation,
   useGetFirebaseConfigQuery,

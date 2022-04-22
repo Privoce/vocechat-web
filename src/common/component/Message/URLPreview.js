@@ -105,7 +105,7 @@ export default function URLPreview({ url = "" }) {
     getMetaData(url);
   }, [url]);
 
-  if (!url || !data) return null;
+  if (!url || !data || !data.title) return null;
   const { favicon, title, description, ogImage } = data;
   return ogImage ? (
     <StyledDetails href={url} target="_blank">

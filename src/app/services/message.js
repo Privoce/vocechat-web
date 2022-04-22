@@ -45,6 +45,13 @@ export const messageApi = createApi({
         body: meta,
       }),
     }),
+    createArchive: builder.mutation({
+      query: (mids = []) => ({
+        url: `/resource/archive`,
+        method: "POST",
+        body: { mid_list: mids },
+      }),
+    }),
     uploadFile: builder.mutation({
       query: (formData) => ({
         // headers: {
@@ -62,6 +69,11 @@ export const messageApi = createApi({
     getOGInfo: builder.query({
       query: (url) => ({
         url: `/resource/open_graphic_parse?url=${encodeURIComponent(url)}`,
+      }),
+    }),
+    getArchiveMessage: builder.query({
+      query: (file_path) => ({
+        url: `/resource/archive?file_path=${encodeURIComponent(file_path)}`,
       }),
     }),
     replyMessage: builder.mutation({
@@ -102,6 +114,7 @@ export const messageApi = createApi({
 });
 
 export const {
+  useGetArchiveMessageQuery,
   useLazyGetOGInfoQuery,
   usePrepareUploadFileMutation,
   useUploadFileMutation,
@@ -110,4 +123,5 @@ export const {
   useReplyMessageMutation,
   useLazyDeleteMessageQuery,
   useReadMessageMutation,
+  useCreateArchiveMutation,
 } = messageApi;

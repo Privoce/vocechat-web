@@ -8,6 +8,7 @@ export const ContentTypes = {
   file: "rustchat/file",
   formData: "multipart/form-data",
   json: "application/json",
+  archive: "rustchat/archive",
 };
 export const firebaseConfig = {
   apiKey: "AIzaSyDyJ6B1Ouenoha_gdGkBwIkBNStlwhlbO0",

@@ -45,7 +45,9 @@ export default function ChannelInviteModal({
           Add friends to #{title || channel?.name}{" "}
           <CloseIcon className="close" onClick={closeModal} />
         </h2>
-        {!channel?.is_public && <AddMembers cid={cid} />}
+        {!channel?.is_public && (
+          <AddMembers cid={cid} closeModal={closeModal} />
+        )}
         <InviteByEmail cid={cid} />
       </Styled>
     </Modal>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import Modal from "../Modal";
 import Button from "../styled/Button";
 import ChannelIcon from "../ChannelIcon";
@@ -10,7 +10,6 @@ import StyledWrapper from "./styled";
 import StyledToggle from "../../component/styled/Toggle";
 import StyledCheckbox from "../../component/styled/Checkbox";
 import useFilteredUsers from "../../hook/useFilteredUsers";
-import { addChannel } from "../../../app/slices/channels";
 
 import { useCreateChannelMutation } from "../../../app/services/channel";
 
@@ -19,7 +18,6 @@ export default function ChannelModal({ personal = false, closeModal }) {
     return { conactsData: store.contacts.byId, loginUid: store.authData.uid };
   });
   const navigateTo = useNavigate();
-  const dispatch = useDispatch();
   const [data, setData] = useState({
     name: "",
     dsecription: "",
@@ -29,7 +27,7 @@ export default function ChannelModal({ personal = false, closeModal }) {
   const { contacts, input, updateInput } = useFilteredUsers();
   const [
     createChannel,
-    { isSuccess, isError, isLoading, data: newChannel },
+    { isSuccess, isError, isLoading, data: newChannelId },
   ] = useCreateChannelMutation();
 
   const handleToggle = () => {
@@ -59,10 +57,9 @@ export default function ChannelModal({ personal = false, closeModal }) {
     if (isSuccess) {
       toast.success("create new channel success");
       closeModal();
-      dispatch(addChannel(newChannel));
-      navigateTo(`/chat/channel/${newChannel.gid}`);
+      navigateTo(`/chat/channel/${newChannelId}`);
     }
-  }, [isSuccess, newChannel]);
+  }, [isSuccess, newChannelId]);
 
   const handleNameInput = (evt) => {
     setData((prev) => {

@@ -11,7 +11,7 @@ const StyledWrapper = styled.div`
   transition: all 0.5s ease;
   overflow: hidden;
   .left {
-    width: 260px;
+    width: 276px;
     /* height: 100%; */
     box-shadow: inset -1px 0px 0px rgba(0, 0, 0, 0.1);
     overflow-y: scroll;

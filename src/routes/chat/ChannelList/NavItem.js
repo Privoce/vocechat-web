@@ -82,8 +82,10 @@ const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
     }
   };
   const toggleInviteModalVisible = (evt) => {
-    evt.preventDefault();
-    evt.stopPropagation();
+    if (evt) {
+      evt.preventDefault();
+      evt.stopPropagation();
+    }
     setInviteModalVisible((prev) => !prev);
   };
   const handleMute = () => {

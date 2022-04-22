@@ -2,15 +2,15 @@ import { useState, useEffect } from "react";
 import useCopy from "./useCopy";
 import {
   useLazyCreateInviteLinkQuery as useCreateServerInviteLinkQuery,
-  useGetSMTPConfigQuery,
+  useGetSMTPStatusQuery,
 } from "../../app/services/server";
 import { useLazyCreateInviteLinkQuery as useCreateChannelInviteLinkQuery } from "../../app/services/channel";
 export default function useInviteLink(cid = null) {
   const [finalLink, setFinalLink] = useState("");
   const {
-    data: config,
-    isSuccess: configQuerySuccess,
-  } = useGetSMTPConfigQuery();
+    data: SMTPEnabled,
+    isSuccess: smtpStatusFetchSuccess,
+  } = useGetSMTPStatusQuery();
   const [
     generateChannelInviteLink,
     { data: channelInviteLink, isLoading: generatingChannelLink },
@@ -39,15 +39,15 @@ export default function useInviteLink(cid = null) {
   useEffect(() => {
     const _link = serverInviteLink || channelInviteLink;
     console.log("fetching", serverInviteLink, channelInviteLink);
-    if (_link && config) {
+    if (_link && smtpStatusFetchSuccess) {
       const tmpURL = new URL(_link);
-      tmpURL.searchParams.set("code", config.enabled);
+      tmpURL.searchParams.set("code", SMTPEnabled);
       setFinalLink(tmpURL.href);
     }
-  }, [serverInviteLink, channelInviteLink, config]);
+  }, [serverInviteLink, channelInviteLink, smtpStatusFetchSuccess]);
   return {
-    enableSMTP: config?.enabled,
-    generating: generatingChannelLink || generatingServerLink,
+    enableSMTP: SMTPEnabled,
+    generating: cid ? generatingChannelLink : generatingServerLink,
     generateNewLink: regenLink,
     link: finalLink,
     linkCopied,

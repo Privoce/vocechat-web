@@ -6,6 +6,7 @@ import { addUserMsg, removeUserMsg } from "../slices/message.user";
 import { addMessage, removeMessage } from "../slices/message";
 export const onMessageSendStarted = async (
   {
+    ignoreLocal = false,
     id,
     content,
     type = "text",
@@ -16,9 +17,11 @@ export const onMessageSendStarted = async (
   { dispatch, queryFulfilled },
   from = "channel"
 ) => {
+  // 忽略archive类型的消息
+  if (type == "archive") return;
   // id: who send to ,from_uid: who sent
-  console.log("handlers data", content, type, properties);
-  const isImage = properties.file_type?.startsWith("image");
+  console.log("handlers data", content, type, properties, ignoreLocal, id);
+  const isImage = properties.content_type?.startsWith("image");
   const ts = properties.local_id || new Date().getTime();
   // let imageData = null;
   // if (type == "image") {
@@ -39,17 +42,17 @@ export const onMessageSendStarted = async (
     properties,
     from_uid,
     reply_mid,
-    // 已读
-    read: true,
     sending: true,
   };
   const addContextMessage = from == "channel" ? addChannelMsg : addUserMsg;
   const removeContextMessage =
     from == "channel" ? removeChannelMsg : removeUserMsg;
-  batch(() => {
-    dispatch(addMessage({ mid: ts, ...tmpMsg }));
-    dispatch(addContextMessage({ id, mid: ts }));
-  });
+  if (!ignoreLocal) {
+    batch(() => {
+      dispatch(addMessage({ mid: ts, ...tmpMsg }));
+      dispatch(addContextMessage({ id, mid: ts }));
+    });
+  }
 
   try {
     const { data: server_mid } = await queryFulfilled;
