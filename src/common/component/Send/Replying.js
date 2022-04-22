@@ -8,6 +8,7 @@ import { getFileIcon, isImage } from "../../utils";
 import { removeReplyingMessage } from "../../../app/slices/message";
 import styled from "styled-components";
 const Styled = styled.div`
+  background-color: #f3f4f6;
   z-index: 999;
   display: flex;
   justify-content: space-between;
@@ -16,11 +17,6 @@ const Styled = styled.div`
   gap: 16px;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
-  background-color: #f3f4f6;
-  position: absolute;
-  left: 0;
-  top: 0;
-  transform: translateY(-100%);
   width: 100%;
   padding: 12px 16px;
   white-space: nowrap;
@@ -99,11 +95,11 @@ const renderContent = (data) => {
       break;
     case ContentTypes.file:
       {
-        const { file_type, name, size } = properties;
-        if (isImage(file_type, size)) {
+        const { content_type, name, size } = properties;
+        if (isImage(content_type, size)) {
           res = <img className="pic" src={pictureIcon} />;
         } else {
-          const icon = getFileIcon(file_type, name);
+          const icon = getFileIcon(content_type, name);
           res = (
             <>
               {icon}

@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect } from "react";
 import { useDrop } from "react-dnd";
+import { useDispatch } from "react-redux";
+
 import { NativeTypes } from "react-dnd-html5-backend";
 import styled from "styled-components";
+import { updateUploadFiles } from "../../app/slices/ui";
 import ImagePreviewModal from "../../common/component/ImagePreviewModal";
-import UploadModal from "../../common/component/UploadModal";
-
 const StyledWrapper = styled.article`
   position: relative;
   width: 100%;
@@ -110,34 +111,39 @@ export default function Layout({
   header,
   aside = null,
   contacts = null,
-  dropFiles = [],
+  // dropFiles = [],
   context = "channel",
   to = null,
 }) {
-  const messagesContainer = useRef(null);
-  const [files, setFiles] = useState([]);
-  const [previewImage, setPreviewImage] = useState(null);
-  const [{ isActive }, drop] = useDrop(() => ({
-    accept: [NativeTypes.FILE],
-    drop({ files }) {
-      console.log("drop files", files);
-      if (files.length) {
-        setFiles((prevs) => [...prevs, ...files]);
-      }
-    },
-    collect: (monitor) => ({
-      isActive: monitor.canDrop() && monitor.isOver(),
-    }),
-  }));
-  useEffect(() => {
-    if (dropFiles.length) {
-      setFiles((prevs) => [...prevs, ...dropFiles]);
-    }
-  }, [dropFiles]);
+  const dispatch = useDispatch();
 
-  const resetFiles = () => {
-    setFiles([]);
-  };
+  const messagesContainer = useRef(null);
+  const [previewImage, setPreviewImage] = useState(null);
+  const [{ isActive }, drop] = useDrop(
+    () => ({
+      accept: [NativeTypes.FILE],
+      drop({ files }) {
+        console.log("drop files", files, context, to);
+        if (files.length) {
+          const filesData = files.map((file) => {
+            const { size, type, name } = file;
+            const url = URL.createObjectURL(file);
+            return { size, type, name, url };
+          });
+          dispatch(updateUploadFiles({ context, id: to, data: filesData }));
+        }
+      },
+      collect: (monitor) => ({
+        isActive: monitor.canDrop() && monitor.isOver(),
+      }),
+    }),
+    [context, to]
+  );
+  // useEffect(() => {
+  //   if (dropFiles?.length) {
+  //     setFiles((prevs) => [...prevs, ...dropFiles]);
+  //   }
+  // }, [dropFiles]);
 
   const closePreviewModal = () => {
     setPreviewImage(null);
@@ -156,8 +162,9 @@ export default function Layout({
             target.classList.contains("preview")
           ) {
             const originUrl = target.dataset.origin || target.src;
+            const downloadLink = target.dataset.download || target.src;
             const meta = JSON.parse(target.dataset.meta || "{}");
-            setPreviewImage({ originUrl, ...meta });
+            setPreviewImage({ originUrl, downloadLink, ...meta });
           }
         },
         true
@@ -196,14 +203,6 @@ export default function Layout({
           </div>
         </div>
       </StyledWrapper>
-      {files.length !== 0 && (
-        <UploadModal
-          context={context}
-          files={files}
-          sendTo={to}
-          closeModal={resetFiles}
-        />
-      )}
     </>
   );
 }

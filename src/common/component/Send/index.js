@@ -3,12 +3,15 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import { useKey } from "rooks";
 import { getPlateEditorRef } from "@udecode/plate";
-import { updateInputMode } from "../../../app/slices/ui";
+
+import useSendMessage from "../../hook/useSendMessage";
+import useAddLocalFileMessage from "../../hook/useAddLocalFileMessage";
 import { removeReplyingMessage } from "../../../app/slices/message";
-import { useSendChannelMsgMutation } from "../../../app/services/channel";
-import { useSendMsgMutation } from "../../../app/services/contact";
-import { useReplyMessageMutation } from "../../../app/services/message";
+import { updateInputMode, updateUploadFiles } from "../../../app/slices/ui";
+import { ContentTypes } from "../../../app/config";
+
 import StyledSend from "./styled";
+import UploadFileList from "./UploadFileList";
 import Replying from "./Replying";
 import Toolbar from "./Toolbar";
 import EmojiPicker from "./EmojiPicker";
@@ -31,21 +34,20 @@ function Send({
   id = "",
 }) {
   const [markdownEditor, setMarkdownEditor] = useState(null);
-  const [replyMessage] = useReplyMessageMutation();
   const dispatch = useDispatch();
+  const addLocalFileMesage = useAddLocalFileMessage({ context, to: id });
   // 谁发的
-  const { from_uid, replying_mid = null, mode } = useSelector((store) => {
-    return {
-      mode: store.ui.inputMode,
-      from_uid: store.authData.uid,
-      replying_mid: store.message.replying[id],
-    };
-  });
-
-  const [sendMsg] = useSendMsgMutation();
-  const [sendChannelMsg] = useSendChannelMsgMutation();
-  const sendMessage = context == "channel" ? sendChannelMsg : sendMsg;
-  // const sendingMessage = userSending || channelSending;
+  const { from_uid, replying_mid = null, mode, uploadFiles } = useSelector(
+    (store) => {
+      return {
+        mode: store.ui.inputMode,
+        from_uid: store.authData.uid,
+        replying_mid: store.message.replying[id],
+        uploadFiles: store.ui.uploadFiles[`${context}_${id}`],
+      };
+    }
+  );
+  const { sendMessage } = useSendMessage({ context, from: from_uid, to: id });
 
   useEffect(() => {
     if (replying_mid) {
@@ -73,80 +75,93 @@ function Send({
     }
   };
   const handleSendMessage = async (msgs = []) => {
-    if (!msgs || msgs.length == 0 || !id) return;
-    for await (const msg of msgs) {
-      console.log("send msg", msg);
-      const { type: content_type, content, properties = {} } = msg;
-      if (replying_mid) {
-        console.log("replying", replying_mid);
-        await replyMessage({
-          id,
-          reply_mid: replying_mid,
-          type: content_type,
-          content,
-          context,
-          from_uid,
-        });
-        dispatch(removeReplyingMessage(id));
-      } else {
+    if (!id) return;
+    if (msgs && msgs.length) {
+      // send text msgs
+      for await (const msg of msgs) {
+        console.log("send msg", msg);
+        const { type: content_type, content, properties = {} } = msg;
+        properties.local_id = properties.local_id ?? new Date().getTime();
         await sendMessage({
           id,
+          reply_mid: replying_mid,
           type: content_type,
           content,
           from_uid,
           properties,
         });
+        if (replying_mid) {
+          dispatch(removeReplyingMessage(id));
+        }
       }
+    }
+    // send files
+    if (uploadFiles && uploadFiles.length !== 0) {
+      uploadFiles.forEach((fileInfo) => {
+        const ts = new Date().getTime();
+        const { url, name, size, type } = fileInfo;
+        const tmpMsg = {
+          mid: ts,
+          content: url,
+          content_type: ContentTypes.file,
+          created_at: ts,
+          properties: {
+            content_type: type,
+            name,
+            size,
+            local_id: ts,
+          },
+          from_uid,
+          sending: true,
+        };
+        addLocalFileMesage(tmpMsg);
+      });
+      dispatch(updateUploadFiles({ context, id, operation: "reset" }));
     }
   };
   const sendMarkdown = async (content) => {
-    if (replying_mid) {
-      console.log("replying", replying_mid);
-      await replyMessage({
-        id,
-        reply_mid: replying_mid,
-        type: "markdown",
-        content,
-        context,
-        from_uid,
-      });
-      dispatch(removeReplyingMessage(id));
-    } else {
-      sendMessage({
-        id,
-        type: "markdown",
-        content,
-        from_uid,
-        properties: { local_id: new Date().getTime() },
-      });
-    }
+    sendMessage({
+      id,
+      reply_mid: replying_mid,
+      type: "markdown",
+      content,
+      from_uid,
+      properties: { local_id: new Date().getTime() },
+    });
   };
   const toggleMode = () => {
     dispatch(updateInputMode(mode == Modes.text ? Modes.markdown : Modes.text));
   };
   const placeholder = `Send to ${Types[context]}${name} `;
   return (
-    <StyledSend
-      className={`send ${mode} ${replying_mid ? "reply" : ""} ${context}`}
-    >
+    <StyledSend className={`send ${replying_mid ? "reply" : ""} ${context}`}>
       {replying_mid && <Replying mid={replying_mid} id={id} />}
-      <EmojiPicker selectEmoji={insertEmoji} />
-      {mode == Modes.text && (
-        <MixedInput
-          members={members}
-          id={`${context}_${id}`}
-          placeholder={placeholder}
-          sendMessages={handleSendMessage}
+      <UploadFileList context={context} id={id} />
+
+      <div className={`send_box ${mode}`}>
+        <EmojiPicker selectEmoji={insertEmoji} />
+        {mode == Modes.text && (
+          <MixedInput
+            members={members}
+            id={`${context}_${id}`}
+            placeholder={placeholder}
+            sendMessages={handleSendMessage}
+          />
+        )}
+        <Toolbar
+          context={context}
+          to={id}
+          mode={mode}
+          toggleMode={toggleMode}
         />
-      )}
-      <Toolbar context={context} to={id} mode={mode} toggleMode={toggleMode} />
-      {mode == Modes.markdown && (
-        <MarkdownEditor
-          placeholder={placeholder}
-          setEditorInstance={setMarkdownEditor}
-          sendMarkdown={sendMarkdown}
-        />
-      )}
+        {mode == Modes.markdown && (
+          <MarkdownEditor
+            placeholder={placeholder}
+            setEditorInstance={setMarkdownEditor}
+            sendMarkdown={sendMarkdown}
+          />
+        )}
+      </div>
     </StyledSend>
   );
 }

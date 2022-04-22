@@ -1,27 +1,28 @@
-import React from "react";
-
-// import * as linkfy from "linkifyjs";
+import React, { useState, useEffect } from "react";
 import Linkit from "react-linkify";
-
 import dayjs from "dayjs";
+import BASE_URL, { ContentTypes } from "../../../app/config";
 import Mention from "./Mention";
 import MrakdownRender from "../MrakdownRender";
-import { getDefaultSize, isImage } from "../../utils";
-import FileBox from "../FileBox";
+import FileMessage from "../FileMessage";
 import URLPreview from "./URLPreview";
 import reactStringReplace from "react-string-replace";
+import { useGetArchiveMessageQuery } from "../../../app/services/message";
 const renderContent = ({
+  context,
+  to,
   from_uid,
   created_at,
   properties,
   content_type,
   content,
+  download,
   thumbnail,
   edited = false,
 }) => {
   let ctn = null;
   switch (content_type) {
-    case "text/plain":
+    case ContentTypes.text:
       ctn = (
         <>
           <Linkit
@@ -65,43 +66,43 @@ const renderContent = ({
         </>
       );
       break;
-    case "text/markdown":
+    case ContentTypes.markdown:
       {
         ctn = <MrakdownRender content={content} />;
       }
       break;
-    case "rustchat/file":
+    case ContentTypes.file:
       {
-        const { size, name, file_type } = properties;
-        if (isImage(file_type, size)) {
-          const { width, height } = getDefaultSize(properties);
-          ctn = (
-            <img
-              className="img preview"
-              style={{ width: `${width}px`, height: `${height}px` }}
-              data-meta={JSON.stringify({
-                width,
-                height,
-                name,
-                file_type,
-                size,
-              })}
-              data-origin={content}
-              src={thumbnail || content}
-            />
-          );
-        } else {
-          ctn = (
-            <FileBox
-              from_uid={from_uid}
-              created_at={created_at}
-              content={content}
-              size={size}
-              name={name}
-              file_type={file_type}
-            />
-          );
-        }
+        // const { size, name, file_type } = properties;
+        ctn = (
+          <FileMessage
+            content_type={""}
+            properties={properties}
+            context={context}
+            to={to}
+            download={download}
+            thumbnail={thumbnail}
+            from_uid={from_uid}
+            created_at={created_at}
+            content={content}
+          />
+        );
+      }
+      break;
+    case ContentTypes.archive:
+      {
+        // const { size, name, file_type } = properties;
+        ctn = (
+          <ForwardedMessage
+            properties={properties}
+            context={context}
+            to={to}
+            from_uid={from_uid}
+            created_at={created_at}
+            id={content}
+            thumbnail={thumbnail}
+          />
+        );
       }
       break;
 
@@ -110,5 +111,39 @@ const renderContent = ({
   }
   return ctn;
 };
+const ForwardedMessage = ({ context, to, from_uid, id }) => {
+  const [forwards, setForwards] = useState(null);
+  const { data, isSuccess } = useGetArchiveMessageQuery(id);
+  useEffect(() => {
+    if (isSuccess && data) {
+      const msgs = data.messages.map(
+        ({ content, file_id, thumbnail_id, content_type, properties }, idx) => {
+          const transformedContent =
+            content_type == ContentTypes.file
+              ? `${BASE_URL}/resource/archive/attachment?file_path=${id}&attachment_id=${file_id}`
+              : content;
+          const thumbnail =
+            content_type == ContentTypes.file
+              ? `${BASE_URL}/resource/archive/attachment?file_path=${id}&attachment_id=${thumbnail_id}`
+              : "";
+          return renderContent({
+            context,
+            to,
+            from_uid,
+            content: transformedContent,
+            content_type,
+            properties,
+            thumbnail,
+          });
+        }
+      );
+      setForwards(msgs);
+    }
+  }, [isSuccess, data]);
 
+  console.log("archive data", data);
+  if (!id) return null;
+
+  return forwards;
+};
 export default renderContent;

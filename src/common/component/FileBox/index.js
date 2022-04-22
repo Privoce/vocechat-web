@@ -60,7 +60,7 @@ const renderPreview = (data) => {
 export default function FileBox({
   preview = false,
   flex,
-  file_type,
+  file_type = "",
   name,
   size,
   created_at,

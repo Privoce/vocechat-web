@@ -1,8 +1,8 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { updateUploadFiles } from "../../../app/slices/ui";
 import Tooltip from "../../component/Tooltip";
-
-import UploadModal from "../../component/UploadModal";
 import AddIcon from "../../../assets/icons/add.solid.svg";
 import MarkdownIcon from "../../../assets/icons/markdown.svg";
 const Styled = styled.div`
@@ -40,51 +40,45 @@ const Styled = styled.div`
   }
 `;
 export default function Toolbar({ toggleMode, mode, to, context }) {
-  const [files, setFiles] = useState([]);
+  const dispatch = useDispatch();
   const fileInputRef = useRef(null);
-  const resetFiles = () => {
-    setFiles([]);
-    fileInputRef.current.value = "";
-  };
 
   const handleUpload = (evt) => {
     const files = [...evt.target.files];
     console.log("files", files);
-    setFiles([...evt.target.files]);
+    const filesData = files.map((file) => {
+      const { size, type, name } = file;
+      const url = URL.createObjectURL(file);
+      return { size, type, name, url };
+    });
+    dispatch(updateUploadFiles({ context, id: to, data: filesData }));
+    fileInputRef.current.value = null;
+    fileInputRef.current.value = "";
+    // setFiles([...evt.target.files]);
   };
   return (
-    <>
-      {files.length !== 0 && (
-        <UploadModal
-          context={context}
-          files={files}
-          sendTo={to}
-          closeModal={resetFiles}
-        />
-      )}
-      <Styled className={mode}>
-        <div className="md" onClick={toggleMode}>
-          <Tooltip placement="top" tip="Markdown">
-            <MarkdownIcon className={mode} />
-          </Tooltip>
-        </div>
-        <Tooltip placement="top" tip="Upload">
-          <div className="add">
-            <AddIcon />
-            <label htmlFor="file">
-              <input
-                size={24}
-                ref={fileInputRef}
-                multiple={false}
-                onChange={handleUpload}
-                type="file"
-                name="file"
-                id="file"
-              />
-            </label>
-          </div>
+    <Styled className={mode}>
+      <div className="md" onClick={toggleMode}>
+        <Tooltip placement="top" tip="Markdown">
+          <MarkdownIcon className={mode} />
         </Tooltip>
-      </Styled>
-    </>
+      </div>
+      <Tooltip placement="top" tip="Upload">
+        <div className="add">
+          <AddIcon />
+          <label htmlFor="file">
+            <input
+              size={24}
+              ref={fileInputRef}
+              multiple={true}
+              onChange={handleUpload}
+              type="file"
+              name="file"
+              id="file"
+            />
+          </label>
+        </div>
+      </Tooltip>
+    </Styled>
   );
 }

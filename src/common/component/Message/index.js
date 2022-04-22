@@ -47,6 +47,7 @@ function Message({
     sending = false,
     content,
     thumbnail,
+    download,
     content_type = "text/plain",
     edited,
     properties,
@@ -114,12 +115,15 @@ function Message({
             />
           ) : (
             renderContent({
+              context,
+              to: contextId,
               from_uid: fromUid,
               created_at: time,
               content_type,
               properties,
               content,
               thumbnail,
+              download,
               edited,
             })
           )}

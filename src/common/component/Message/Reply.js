@@ -116,9 +116,9 @@ const renderContent = (data) => {
       break;
     case ContentTypes.file:
       {
-        const { file_type, name, size } = properties;
-        const icon = getFileIcon(file_type, name);
-        if (isImage(file_type, size)) {
+        const { content_type, name, size } = properties;
+        const icon = getFileIcon(content_type, name);
+        if (isImage(content_type, size)) {
           res = <img className="pic" src={thumbnail} />;
         } else {
           res = (

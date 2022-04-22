@@ -70,10 +70,10 @@ const StyledMsg = styled.div`
         font-size: 10px;
       }
       &.sending {
-        opacity: 0.5;
+        opacity: 0.9;
       }
       .img {
-        max-width: 400px;
+        max-width: 480px;
         cursor: pointer;
       }
       > .link {

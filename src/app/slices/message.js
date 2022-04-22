@@ -33,7 +33,8 @@ const messageSlice = createSlice({
           data.file_path
         )}&download=true`;
         // image
-        const isPic = isImage(properties.file_type, properties.size);
+        const props = properties ?? {};
+        const isPic = isImage(props.content_type, props.size);
         if (isPic) {
           data.thumbnail = `${BASE_URL}/resource/file?file_path=${encodeURIComponent(
             data.file_path

@@ -67,7 +67,7 @@ export default function ImagePreviewModal({
   //     });
   // };
   if (!data) return null;
-  const { originUrl, name, type } = data;
+  const { originUrl, downloadLink, name, type } = data;
   return (
     <Modal>
       <StyledWrapper>
@@ -84,9 +84,9 @@ export default function ImagePreviewModal({
               className="origin"
               download={name}
               type={type}
-              href={originUrl}
-              // target="_blank"
-              // rel="noreferrer"
+              href={downloadLink || originUrl}
+              target="_blank"
+              rel="noreferrer"
             >
               Download original
             </a>

@@ -8,7 +8,8 @@ import {
 
 export default function useUploadFile() {
   const [data, setData] = useState(null);
-  const [uploadingFile, setUploadingFile] = useState(false);
+  // const [uploadingFile, setUploadingFile] = useState(false);
+  const canneledRef = useRef(false);
   const sliceUploadedCountRef = useRef(0);
   const totalSliceCountRef = useRef(1);
   const [
@@ -20,7 +21,7 @@ export default function useUploadFile() {
     { isLoading: isUploading, isSuccess: isUploaded, isError: uploadFileError },
   ] = useUploadFileMutation();
 
-  const uploadChunk = async (data) => {
+  const uploadChunk = (data) => {
     const { file_id, chunk, is_last } = data;
     const formData = new FormData();
     formData.append("file_id", file_id);
@@ -44,9 +45,10 @@ export default function useUploadFile() {
     console.log("file id", file_id);
 
     let uploadResult = null;
+    canneledRef.current = false;
     totalSliceCountRef.current = 1;
     sliceUploadedCountRef.current = 0;
-    setUploadingFile(true);
+    // setUploadingFile(true);
     // 2MB
     if (file_size <= 1000 * 1000 * 2) {
       // 一次性上传文件
@@ -60,6 +62,8 @@ export default function useUploadFile() {
       //  const chunk=file.slice(block_size * index, block_size * (index + 1));
 
       for await (const [idx] of _arr.entries()) {
+        // 退出循环
+        if (canneledRef.current) break;
         try {
           const chunk = file.slice(
             FILE_SLICE_SIZE * idx,
@@ -81,7 +85,7 @@ export default function useUploadFile() {
       }
       console.log("wtfff", uploadResult);
     }
-    setUploadingFile(false);
+    // setUploadingFile(false);
     const {
       data: { path, size, hash },
     } = uploadResult;
@@ -101,9 +105,13 @@ export default function useUploadFile() {
     setData(res);
     return res;
   };
+  const stopUploading = () => {
+    canneledRef.current = true;
+  };
   return {
+    stopUploading,
     data,
-    isUploading: uploadingFile,
+    isUploading: isPreparing || isUploading,
     progress: Number(
       (sliceUploadedCountRef.current / totalSliceCountRef.current) * 100
     ).toFixed(2),

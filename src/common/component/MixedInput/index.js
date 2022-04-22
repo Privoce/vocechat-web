@@ -1,5 +1,6 @@
-import { useRef, useState, useCallback } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import { useKey } from "rooks";
+import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { Editor, Transforms } from "slate";
 import {
@@ -9,7 +10,7 @@ import {
   createTrailingBlockPlugin,
   createNodeIdPlugin,
   createParagraphPlugin,
-  createImagePlugin,
+  // createImagePlugin,
   createSoftBreakPlugin,
   createComboboxPlugin,
   createMentionPlugin,
@@ -22,18 +23,14 @@ import {
   ELEMENT_PARAGRAPH,
   getPlateEditorRef,
   // usePlateEditorRef,
-  ELEMENT_IMAGE,
+  // ELEMENT_IMAGE,
   MentionCombobox,
-  // usePlateStore
 } from "@udecode/plate";
 import { ReactEditor } from "slate-react";
 import Styled from "./styled";
-// import StyledCombobox from "./StyledCombobox";
-import ImageElement from "./ImageElement";
 import { CONFIG } from "./config";
 import Contact from "../Contact";
-import useUploadFile from "../../hook/useUploadFile";
-// import Mention from "./Mention";
+import { updateUploadFiles } from "../../../app/slices/ui";
 export const TEXT_EDITOR_PREFIX = "rustchat_text_editor";
 export const setEditorFocus = (edtr) => {
   console.log("focus", edtr);
@@ -51,7 +48,7 @@ export const clearEditorAndFocus = (edtr) => {
 };
 
 let components = createPlateUI({
-  [ELEMENT_IMAGE]: ImageElement,
+  // [ELEMENT_IMAGE]: ImageElement,
   // customize your components by plugin key
 });
 const initialValue = [{ type: ELEMENT_PARAGRAPH, children: [{ text: "" }] }];
@@ -61,20 +58,40 @@ const Plugins = ({
   sendMessages,
   members = [],
 }) => {
+  const dispatch = useDispatch();
   const enableMentions = members.length > 0;
-  const { uploadFile } = useUploadFile();
   const filesRef = useRef([]);
-  // const plateEditor = usePlateEditorRef(`${TEXT_EDITOR_PREFIX}_${id}`);
   const contactData = useSelector((store) => store.contacts.byId);
   const [msgs, setMsgs] = useState([]);
   const [cmdKey, setCmdKey] = useState(false);
   const editableRef = useRef(null);
-  // const editor = useEditorRef();
   const initialProps = {
     ...CONFIG.editableProps,
     className: "box",
     placeholder,
   };
+  useEffect(() => {
+    const handlePasteEvent = (evt) => {
+      const files = [...evt.clipboardData.files];
+      if (files.length) {
+        const filesData = files.map((file) => {
+          const { size, type, name } = file;
+          console.log("paste event name", name);
+          const url = URL.createObjectURL(file);
+          return { size, type, name, url };
+        });
+        const [context, to] = id.split("_");
+
+        console.log("paste event", context, to, files, evt);
+        dispatch(updateUploadFiles({ context, id: to, data: filesData }));
+      }
+    };
+    window.addEventListener("paste", handlePasteEvent);
+    return () => {
+      window.removeEventListener("paste", handlePasteEvent);
+    };
+    // window.addEventListener("paste")
+  }, []);
 
   useKey(
     "Enter",
@@ -108,19 +125,6 @@ const Plugins = ({
   );
   const pluginArr = [
     createParagraphPlugin(),
-    createImagePlugin({
-      options: {
-        uploadImage: async (dataUrl) => {
-          console.log("upload image", dataUrl);
-          const resp = await fetch(dataUrl);
-          const blob = await resp.blob();
-          const { thumbnail, ...rest } = await uploadFile(blob);
-          const { name, file_type, size, path, hash } = rest;
-          filesRef.current.push({ name, file_type, size, path, hash });
-          return thumbnail;
-        },
-      },
-    }),
     createNodeIdPlugin(),
     createSoftBreakPlugin(CONFIG.softBreak),
     createTrailingBlockPlugin(CONFIG.trailingBlock),
@@ -153,18 +157,6 @@ const Plugins = ({
   const handleChange = useCallback(
     async (val) => {
       console.log("tmps changed", val);
-      // const wtf = getMentionOnSelectItem();
-      // const plateEditor = getPlateEditorRef(`${TEXT_EDITOR_PREFIX}_${id}`);
-      // const currentMentionInput = findMentionInput(plateEditor);
-      // const items = comboboxSelectors.filteredItems();
-      // console.log(
-      //   "mention check",
-      //   items,
-      //   isSelectionInMentionInput(plateEditor)
-      // );
-      // if (items?.length == 0 && isSelectionInMentionInput(plateEditor)) {
-      //   removeMentionInput(plateEditor, currentMentionInput[1]);
-      // }
       const tmps = [];
       const getMixedText = (children) => {
         const mentions = [];
@@ -270,7 +262,3 @@ const Plugins = ({
   );
 };
 export default Plugins;
-// export default memo(Plugins, (prevs, nexts) => {
-//   console.log("placeholder", prevs.placeholder, nexts.placeholder);
-//   return prevs.placeholder == nexts.placeholder;
-// });

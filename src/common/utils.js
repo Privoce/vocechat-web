@@ -38,9 +38,13 @@ export const getNonNullValues = (obj, whiteList = ["log_id"]) => {
   });
   return tmp;
 };
-export function getDefaultSize(size = null, min = 240) {
+export function getDefaultSize(size = null, min = 480) {
   if (!size) return { width: 0, height: 0 };
   const { width: oWidth, height: oHeight } = size;
+  if (oWidth == oHeight) {
+    const tmp = min > oWidth ? oWidth : min;
+    return { width: tmp, height: tmp };
+  }
   const isVertical = oWidth > oHeight ? false : true;
   let dWidth = 0;
   let dHeight = 0;
@@ -49,7 +53,6 @@ export function getDefaultSize(size = null, min = 240) {
     dWidth = (oWidth / oHeight) * dHeight;
   } else {
     dWidth = oWidth >= min ? min : oWidth;
-    //  dHeight = oHeight >= min ? min : oHeight;
     dHeight = (oHeight / oWidth) * dWidth;
   }
   return { width: dWidth, height: dHeight };
@@ -65,6 +68,22 @@ export function formatBytes(bytes, decimals = 2) {
 
   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
 }
+export const getImageSize = (url) => {
+  const size = { width: 0, height: 0 };
+  if (!url) return size;
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.src = url;
+    img.onload = () => {
+      size.width = img.width;
+      size.height = img.height;
+      resolve(size);
+    };
+    img.onerror = () => {
+      resolve(size);
+    };
+  });
+};
 export const getInitials = (name) => {
   const arr = name.split(" ").filter((n) => !!n);
   return arr

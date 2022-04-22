@@ -1,11 +1,20 @@
 // import second from 'first'
+import { removeReplyingMessage } from "../../app/slices/message";
 import { useSendChannelMsgMutation } from "../../app/services/channel";
 import { useSendMsgMutation } from "../../app/services/contact";
-export default function useSendMessage({
-  context = "user",
-  from = null,
-  to = null,
-}) {
+import { useReplyMessageMutation } from "../../app/services/message";
+export default function useSendMessage(
+  props = {
+    context: "user",
+    from: null,
+    to: null,
+  }
+) {
+  const { context = "user", from = null, to = null } = props;
+  const [
+    replyMessage,
+    { isError: replyErr, isLoading: replying, isSuccess: replySuccess },
+  ] = useReplyMessageMutation();
   const [
     sendChannelMsg,
     {
@@ -19,19 +28,64 @@ export default function useSendMessage({
     { isLoading: userSending, isSuccess: userSuccess, isError: userError },
   ] = useSendMsgMutation();
   const sendFn = context == "user" ? sendUserMsg : sendChannelMsg;
-  const sendMessage = ({ type = "text", content, properties = {} }) => {
-    sendFn({
-      id: to,
-      content,
-      properties: { ...properties, local_id: new Date().getTime() },
-      type,
-      from_uid: from,
-    });
+  const sendMessages = async ({
+    type = "text",
+    content,
+    users = [],
+    channels = [],
+  }) => {
+    if (users.length) {
+      for await (const uid of users) {
+        await sendUserMsg({
+          type,
+          id: uid,
+          content,
+        });
+      }
+    }
+    if (channels.length) {
+      for await (const cid of channels) {
+        await sendChannelMsg({
+          type,
+          id: cid,
+          content,
+        });
+      }
+    }
+  };
+  const sendMessage = async ({
+    type = "text",
+    content,
+    properties = {},
+    reply_mid = null,
+    ...rest
+  }) => {
+    if (reply_mid) {
+      await replyMessage({
+        id: to,
+        reply_mid,
+        type,
+        content,
+        context,
+        from_uid: from,
+      });
+      removeReplyingMessage(to);
+    } else {
+      await sendFn({
+        id: to,
+        content,
+        properties: { ...properties },
+        type,
+        from_uid: from,
+        ...rest,
+      });
+    }
   };
   return {
+    sendMessages,
     sendMessage,
-    isError: channelError || userError,
-    isSending: userSending || channelSending,
-    isSuccess: channelSuccess || userSuccess,
+    isError: channelError || userError || replyErr,
+    isSending: userSending || channelSending || replying,
+    isSuccess: channelSuccess || userSuccess || replySuccess,
   };
 }

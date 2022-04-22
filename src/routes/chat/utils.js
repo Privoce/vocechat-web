@@ -66,7 +66,8 @@ export const renderPreviewMessage = (message = null) => {
       break;
     case ContentTypes.file:
       {
-        if (isImage(properties.file_type, properties.size)) {
+        const props = properties ?? {};
+        if (isImage(props.content_type, props.size)) {
           res = `[image]`;
         } else {
           res = `[file]`;
