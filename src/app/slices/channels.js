@@ -14,7 +14,7 @@ const channelsSlice = createSlice({
     fullfillChannels(state, action) {
       console.log("set channels store", state);
       const chs = action.payload || [];
-      state.ids = chs.map(({ gid }) => gid);
+      state.ids = chs.map(({ gid }) => +gid);
       state.byId = Object.fromEntries(
         chs.map((c) => {
           const { gid } = c;
@@ -26,11 +26,16 @@ const channelsSlice = createSlice({
     addChannel(state, action) {
       // console.log("set channels store", action);
       const ch = action.payload;
-      const { gid, ...rest } = ch;
-      state.ids.push(gid);
+      const { gid, avatar_updated_at } = ch;
+      if (!state.ids.includes(+gid)) {
+        state.ids.push(+gid);
+      }
       state.byId[gid] = {
-        ...rest,
-        icon: `${BASE_URL}/resource/group_avatar?gid=${gid}`,
+        ...ch,
+        icon:
+          avatar_updated_at == 0
+            ? ""
+            : `${BASE_URL}/resource/group_avatar?gid=${gid}&t=${avatar_updated_at}`,
       };
     },
     updateChannel(state, action) {

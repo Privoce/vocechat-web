@@ -104,14 +104,14 @@ function ResourceManagement({ fileMessages }) {
             content,
             created_at,
             from_uid,
-            properties: { name, file_type, size },
+            properties: { name, content_type, size },
           } = data;
           return (
             <FileBox
               preview={view == Views.grid}
               flex={view == Views.item}
               key={mid}
-              file_type={file_type}
+              file_type={content_type}
               content={content}
               created_at={created_at}
               from_uid={from_uid}
