@@ -4,7 +4,7 @@ import Overview from "./Overview";
 import Logins from "./config/Logins";
 import ConfigFirebase from "./config/Firebase";
 import ConfigSMTP from "./config/SMTP";
-import Notifications from "./Notifications";
+// import Notifications from "./Notifications";
 import APIConfig from "./APIConfig";
 import ManageMembers from "../../common/component/ManageMembers";
 import FAQ from "../../common/component/FAQ";
@@ -24,11 +24,11 @@ const navs = [
         component: <ManageMembers />,
         admin: true,
       },
-      {
-        name: "notification",
-        title: "Notification",
-        component: <Notifications />,
-      },
+      // {
+      //   name: "notification",
+      //   title: "Notification",
+      //   component: <Notifications />,
+      // },
     ],
   },
   {

@@ -12,7 +12,7 @@ import EmojiPicker from "./EmojiPicker";
 import replyIcon from "../../../assets/icons/reply.svg?url";
 import reactIcon from "../../../assets/icons/reaction.svg?url";
 import editIcon from "../../../assets/icons/edit.svg?url";
-import bookmarkIcon from "../../../assets/icons/bookmark.svg?url";
+// import bookmarkIcon from "../../../assets/icons/bookmark.svg?url";
 import moreIcon from "../../../assets/icons/more.svg?url";
 import ForwardModal from "../ForwardModal";
 const StyledCmds = styled.ul`
@@ -47,11 +47,6 @@ const StyledCmds = styled.ul`
     left: -10px;
     top: 0;
     transform: translateX(-100%);
-  }
-  .menu {
-    position: absolute;
-    top: 0;
-    right: 36px;
   }
 `;
 export default function Commands({
@@ -117,21 +112,22 @@ export default function Commands({
           </Tooltip>
         </li>
       )}
-      <li className="cmd">
+      {/* <li className="cmd">
         <Tooltip placement="top" tip="Add to Favorites">
           <img src={bookmarkIcon} className="toggler" alt="icon bookmark" />
         </Tooltip>
-      </li>
+      </li> */}
       <Tippy
         onShow={handleTippyVisible.bind(null, true)}
         onHide={handleTippyVisible.bind(null, false)}
         interactive
+        popperOptions={{ strategy: "fixed" }}
         placement="left-start"
         trigger="click"
         content={
           <StyledMenu className="menu">
             {/* <li className="item">Edit Message</li> */}
-            <li className="item underline">Pin Message</li>
+            {/* <li className="item underline">Pin Message</li> */}
             <li className="item" onClick={toggleForwardModal}>
               Forward
             </li>

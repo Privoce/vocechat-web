@@ -10,9 +10,9 @@ const Styled = styled.div`
   align-items: center;
   justify-content: flex-end;
   gap: 10px;
-  /* &.markdown {
-    flex-direction: column;
-  } */
+  &.markdown .add {
+    display: none;
+  }
   .md {
     cursor: pointer;
     display: flex;

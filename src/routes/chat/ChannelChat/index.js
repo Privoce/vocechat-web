@@ -82,11 +82,11 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
         aside={
           <>
             <ul className="tools">
-              <li className="tool">
+              {/* <li className="tool">
                 <Tooltip tip="Search" placement="left">
                   <img src={searchIcon} alt="opt icon" />
                 </Tooltip>
-              </li>
+              </li> */}
               <li className="tool">
                 <Tooltip tip="Voice/Video Chat" placement="left">
                   <img src={headphoneIcon} alt="opt icon" />

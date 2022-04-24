@@ -4,8 +4,8 @@
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { BsChatText } from "react-icons/bs";
-import { RiUserAddLine } from "react-icons/ri";
-import { IoShareOutline } from "react-icons/io5";
+// import { RiUserAddLine } from "react-icons/ri";
+// import { IoShareOutline } from "react-icons/io5";
 import styled from "styled-components";
 
 import Avatar from "../../common/component/Avatar";
@@ -80,18 +80,18 @@ export default function Profile({ uid = null, type = "embed" }) {
             <BsChatText size={20} color="#616161" />
           </NavLink>
         </li>
-        <li className="icon add">
-          {/* <NavLink to={`/chat/dm/${uid}`}> */}
+        {/* <li className="icon add">
+          <NavLink to={`/chat/dm/${uid}`}>
           <RiUserAddLine size={20} color="#616161" />
-          {/* </NavLink> */}
+          </NavLink>
         </li>
         <li className="icon share">
-          {/* <NavLink to={`/chat/dm/${uid}`}> */}
+          <NavLink to={`/chat/dm/${uid}`}>
           <IoShareOutline size={20} color="#616161" />
-          {/* </NavLink> */}
-        </li>
+          </NavLink>
+        </li> */}
       </ul>
-      {type == "embed" && <hr className="line" />}
+      {/* {type == "embed" && <hr className="line" />} */}
     </StyledWrapper>
   );
 }

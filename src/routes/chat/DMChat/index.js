@@ -43,9 +43,9 @@ export default function DMChat({ uid = "", dropFiles = [] }) {
       aside={
         <>
           <ul className="tools">
-            <li className="tool">
+            {/* <li className="tool">
               <img src={searchIcon} alt="opt icon" />
-            </li>
+            </li> */}
             <li className="tool">
               <img src={alertIcon} alt="opt icon" />
             </li>
