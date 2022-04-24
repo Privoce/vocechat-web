@@ -114,6 +114,7 @@ export const messageApi = createApi({
 });
 
 export const {
+  useLazyGetArchiveMessageQuery,
   useGetArchiveMessageQuery,
   useLazyGetOGInfoQuery,
   usePrepareUploadFileMutation,

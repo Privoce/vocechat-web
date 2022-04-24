@@ -1,4 +1,4 @@
-// import React from 'react'
+import { useEffect, useState } from "react";
 import { NavLink, useNavigate, useMatch } from "react-router-dom";
 import { useDrop } from "react-dnd";
 import { useSelector, useDispatch } from "react-redux";
@@ -9,13 +9,19 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import Tippy from "@tippyjs/react";
 import { useReadMessageMutation } from "../../../app/services/message";
 import { removeUserSession } from "../../../app/slices/message.user";
-
+import useNormalizeMessage from "../../../common/hook/useNormalizeMessage";
 import useContextMenu from "../../../common/hook/useContextMenu";
 import ContextMenu from "../../../common/component/ContextMenu";
 dayjs.extend(relativeTime);
 import { renderPreviewMessage } from "../utils";
 import Contact from "../../../common/component/Contact";
+import { ContentTypes } from "../../../app/config";
 const NavItem = ({ uid, mid, unreads, setFiles }) => {
+  const [previewMsg, setPreviewMsg] = useState(null);
+  const {
+    messages: normalizedMessages,
+    normalizeMessage,
+  } = useNormalizeMessage();
   const dispatch = useDispatch();
   const pathMatched = useMatch(`/chat/dm/${uid}`);
   const [updateReadIndex] = useReadMessageMutation();
@@ -49,6 +55,21 @@ const NavItem = ({ uid, mid, unreads, setFiles }) => {
       isActive: monitor.canDrop() && monitor.isOver(),
     }),
   }));
+  useEffect(() => {
+    if (currMsg) {
+      if (currMsg.content_type == ContentTypes.archive) {
+        normalizeMessage(currMsg.content);
+      } else {
+        setPreviewMsg(currMsg);
+      }
+    }
+  }, [currMsg]);
+  useEffect(() => {
+    if (normalizedMessages) {
+      setPreviewMsg(normalizedMessages.pop());
+    }
+  }, [normalizedMessages]);
+
   const handleReadAll = () => {
     const param = { users: [{ uid, mid }] };
     updateReadIndex(param);
@@ -60,9 +81,11 @@ const NavItem = ({ uid, mid, unreads, setFiles }) => {
     }
   };
   if (!currUser) return null;
+  console.log("preview msg", previewMsg, normalizedMessages);
   return (
     <Tippy
       interactive
+      popperOptions={{ strategy: "fixed" }}
       placement="right-start"
       offset={[offset.y, offset.x]}
       visible={contextMenuVisible}
@@ -96,11 +119,13 @@ const NavItem = ({ uid, mid, unreads, setFiles }) => {
         <div className="details">
           <div className="up">
             <span className="name">{currUser.name}</span>
-            {currMsg && <time>{dayjs(currMsg.created_at).fromNow()}</time>}
+            {previewMsg && (
+              <time>{dayjs(previewMsg.created_at).fromNow()}</time>
+            )}
           </div>
 
           <div className="down">
-            <div className="msg">{renderPreviewMessage(currMsg)}</div>
+            <div className="msg">{renderPreviewMessage(previewMsg)}</div>
             {unreads > 0 && (
               <i className={`badge ${unreads > 99 ? "dot" : ""}`}>
                 {unreads > 99 ? null : unreads}

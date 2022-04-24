@@ -52,6 +52,7 @@ export const renderPreviewMessage = (message = null) => {
   if (!message) return null;
   const { content_type, content, properties = {} } = message;
   let res = null;
+
   switch (content_type) {
     case ContentTypes.text:
       {
@@ -62,8 +63,12 @@ export const renderPreviewMessage = (message = null) => {
       {
         res = `[markdown]`;
       }
-
       break;
+    // case ContentTypes.archive:
+    //   {
+    //     res = `[forward]`;
+    //   }
+    //   break;
     case ContentTypes.file:
       {
         const props = properties ?? {};

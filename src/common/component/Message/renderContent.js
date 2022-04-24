@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Linkit from "react-linkify";
 import dayjs from "dayjs";
-import BASE_URL, { ContentTypes } from "../../../app/config";
+import { ContentTypes } from "../../../app/config";
 import Mention from "./Mention";
+import useNormalizeMessage from "../../hook/useNormalizeMessage";
 import MrakdownRender from "../MrakdownRender";
 import FileMessage from "../FileMessage";
 import URLPreview from "./URLPreview";
 import reactStringReplace from "react-string-replace";
-import { useGetArchiveMessageQuery } from "../../../app/services/message";
 const renderContent = ({
   context,
   to,
@@ -45,7 +45,7 @@ const renderContent = ({
           >
             {reactStringReplace(
               content,
-              /(\s{1}\@[0-9]+\s{1})/g,
+              /(\s{1}@[0-9]+\s{1})/g,
               (match, idx) => {
                 console.log("match", match);
                 const uid = match.trim().slice(1);
@@ -112,36 +112,41 @@ const renderContent = ({
   return ctn;
 };
 const ForwardedMessage = ({ context, to, from_uid, id }) => {
+  const { normalizeMessage, messages } = useNormalizeMessage();
   const [forwards, setForwards] = useState(null);
-  const { data, isSuccess } = useGetArchiveMessageQuery(id);
   useEffect(() => {
-    if (isSuccess && data) {
-      const msgs = data.messages.map(
-        ({ content, file_id, thumbnail_id, content_type, properties }, idx) => {
-          const transformedContent =
-            content_type == ContentTypes.file
-              ? `${BASE_URL}/resource/archive/attachment?file_path=${id}&attachment_id=${file_id}`
-              : content;
-          const thumbnail =
-            content_type == ContentTypes.file
-              ? `${BASE_URL}/resource/archive/attachment?file_path=${id}&attachment_id=${thumbnail_id}`
-              : "";
+    if (id) {
+      normalizeMessage(id);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    if (messages) {
+      setForwards(
+        messages.map((msg) => {
+          const {
+            download,
+            content,
+            content_type,
+            properties,
+            thumbnail,
+          } = msg;
           return renderContent({
+            download,
             context,
             to,
             from_uid,
-            content: transformedContent,
+            content,
             content_type,
             properties,
             thumbnail,
           });
-        }
+        })
       );
-      setForwards(msgs);
     }
-  }, [isSuccess, data]);
+  }, [messages, context, to, from_uid]);
 
-  console.log("archive data", data);
+  console.log("archive data", messages);
   if (!id) return null;
 
   return forwards;
