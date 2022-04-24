@@ -23,7 +23,7 @@ export default function FileMessage({
   properties = { local_id: 0, name: "", size: 0, content_type: "" },
 }) {
   const [imageSize, setImageSize] = useState(null);
-  const [uploadinFile, setUploadinFile] = useState(false);
+  const [uploadingFile, setUploadingFile] = useState(false);
   const removeLocalMessage = useRemoveLocalMessage({ context, id: to });
   const {
     sendMessage,
@@ -46,7 +46,7 @@ export default function FileMessage({
   useEffect(() => {
     const handleUpSend = async ({ url, name, type }) => {
       try {
-        setUploadinFile(true);
+        setUploadingFile(true);
         if (type.startsWith("image")) {
           const size = await getImageSize(url);
           setImageSize(size);
@@ -56,9 +56,9 @@ export default function FileMessage({
           .then((blobFile) => new File([blobFile], name, { type }));
 
         await uploadFile(file);
-        setUploadinFile(false);
+        setUploadingFile(false);
       } catch (error) {
-        setUploadinFile(false);
+        setUploadingFile(false);
         console.log("fetch local file error", error);
       }
     };
@@ -97,9 +97,13 @@ export default function FileMessage({
   if (!content || !fromUser || !name) return null;
 
   console.log("file content", content, name, content_type, size);
+  const sending = uploadingFile || isSending;
+
   if (isImage(content_type, size))
     return (
       <Image
+        uploading={sending}
+        progress={progress}
         properties={{ ...imageSize, ...properties }}
         size={size}
         content={content}
@@ -107,7 +111,6 @@ export default function FileMessage({
         thumbnail={thumbnail}
       />
     );
-  const sending = uploadinFile || isSending;
   return (
     <Styled className={`file_message ${sending ? "sending" : ""}`}>
       <div className="basic">

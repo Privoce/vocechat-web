@@ -53,13 +53,14 @@ export default function ProfileBasicEditModal({
         description={intro}
         buttons={
           <>
-            <Button onClick={closeModal}>Cancel</Button>
+            <Button className="cancel" onClick={closeModal}>
+              Cancel
+            </Button>
             <Button onClick={handleUpdate}>
               {isLoading ? "Updating" : `Done`}
             </Button>
           </>
         }
-        className="animate__animated animate__fadeInDown animate__faster"
       >
         <div className="input">
           <label htmlFor={valueKey}>{label}</label>

@@ -108,6 +108,7 @@ const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
       <Tippy
         interactive
         placement="right-start"
+        popperOptions={{ strategy: "fixed" }}
         offset={[offset.y, offset.x]}
         visible={contextMenuVisible}
         onClickOutside={hideContextMenu}

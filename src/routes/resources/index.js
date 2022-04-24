@@ -11,13 +11,7 @@ import FileBox from "../../common/component/FileBox";
 const checkFilter = (data, filter, channelMessage) => {
   console.log("filter data", data);
   let selected = true;
-  const {
-    mid,
-    file_type,
-    created_at,
-    from_uid,
-    properties: { name },
-  } = data;
+  const { mid, file_type, created_at, from_uid, properties } = data;
   const {
     name: nameFilter,
     type: typeFilter,
@@ -25,6 +19,7 @@ const checkFilter = (data, filter, channelMessage) => {
     from: fromFilter,
     channel: channelFilter,
   } = filter;
+  const name = properties ? properties.name : "";
   if (fromFilter && fromFilter != from_uid) {
     selected = false;
   }
@@ -99,13 +94,8 @@ function ResourceManagement({ fileMessages }) {
           if (!data) return null;
           const isSelected = checkFilter(data, filter, channelMessage);
           if (!isSelected) return null;
-          const {
-            mid,
-            content,
-            created_at,
-            from_uid,
-            properties: { name, content_type, size },
-          } = data;
+          const { mid, content, created_at, from_uid, properties } = data;
+          const { name, content_type, size } = properties ?? {};
           return (
             <FileBox
               preview={view == Views.grid}

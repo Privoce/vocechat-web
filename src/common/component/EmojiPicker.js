@@ -33,6 +33,8 @@ export default function EmojiPicker({ onSelect, ...rest }) {
     <StyledWrapper>
       {visible ? (
         <Picker
+          emojiSize={28}
+          emojiTooltip={true}
           // set="twitter"
           // data={data}
           // set="twitter"

@@ -18,6 +18,7 @@ const StyledWrapper = styled.div`
       top: 0;
       z-index: 99;
       background: #fff;
+      border-top-left-radius: var(--br);
       box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.1);
       padding: 8px;
       width: calc(100% - 1px);

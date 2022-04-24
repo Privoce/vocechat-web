@@ -16,7 +16,7 @@ const MarkdownOverrides = createGlobalStyle`
         margin: 0 ;
         padding: 0;
     }
-    p {
+    p,.toastui-editor.md-mode {
         margin:0 ;
     font-weight: 400;
     font-size: 14px;

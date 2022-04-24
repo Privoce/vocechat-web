@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import styled from "styled-components";
-// import { useOutsideClick } from "rooks";
+
 import Tippy from "@tippyjs/react";
 import { hideAll } from "tippy.js";
 import { useSelector } from "react-redux";

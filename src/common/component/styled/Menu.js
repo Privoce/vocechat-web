@@ -1,6 +1,6 @@
 import styled from "styled-components";
 const StyledMenu = styled.ul`
-  z-index: 999;
+  /* z-index: 999; */
   display: flex;
   flex-direction: column;
   padding: 4px;
