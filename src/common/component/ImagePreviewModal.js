@@ -85,7 +85,7 @@ export default function ImagePreviewModal({
               download={name}
               type={type}
               href={downloadLink || originUrl}
-              target="_blank"
+              // target="_blank"
               rel="noreferrer"
             >
               Download original
