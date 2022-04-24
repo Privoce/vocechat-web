@@ -1,4 +1,4 @@
-// import React from 'react';
+// import React from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -75,28 +75,28 @@ export default function Contact({
   };
   if (!curr) return null;
   return (
-    <StyledWrapper
-      size={avatarSize}
-      onDoubleClick={dm ? handleDoubleClick : null}
-      className={`${interactive ? "interactive" : ""} ${
-        compact ? "compact" : ""
-      }`}
+    <Tippy
+      duration={0}
+      inertia={true}
+      interactive
+      disabled={!popover}
+      placement="left"
+      trigger="click"
+      content={<Profile uid={uid} type="card" />}
     >
-      <Tippy
-        duration={0}
-        inertia={true}
-        interactive
-        disabled={!popover}
-        placement="left"
-        trigger="click"
-        content={<Profile uid={uid} type="card" />}
+      <StyledWrapper
+        size={avatarSize}
+        onDoubleClick={dm ? handleDoubleClick : null}
+        className={`${interactive ? "interactive" : ""} ${
+          compact ? "compact" : ""
+        }`}
       >
         <div className="avatar">
           <Avatar url={curr.avatar} name={curr.name} alt="avatar" />
           <div className={`status ${curr.online ? "online" : "offline"}`}></div>
         </div>
-      </Tippy>
-      {!compact && <span className="name">{curr?.name}</span>}
-    </StyledWrapper>
+        {!compact && <span className="name">{curr?.name}</span>}
+      </StyledWrapper>
+    </Tippy>
   );
 }
