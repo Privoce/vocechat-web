@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 // import TextareaAutosize from "react-textarea-autosize";
 import { useDispatch, useSelector } from "react-redux";
 // import { useKey } from "rooks";
-import { getPlateEditorRef } from "@udecode/plate";
 
 import useSendMessage from "../../hook/useSendMessage";
 import useAddLocalFileMessage from "../../hook/useAddLocalFileMessage";
@@ -17,7 +16,7 @@ import Toolbar from "./Toolbar";
 import EmojiPicker from "./EmojiPicker";
 
 import MarkdownEditor from "../MarkdownEditor";
-import MixedInput, { TEXT_EDITOR_PREFIX, setEditorFocus } from "../MixedInput";
+import MixedInput, { useMixedEditor } from "../MixedInput";
 const Types = {
   channel: "#",
   user: "@",
@@ -33,6 +32,7 @@ function Send({
   // 发给谁，或者是channel，或者是user
   id = "",
 }) {
+  const editor = useMixedEditor(`${context}_${id}`);
   const [markdownEditor, setMarkdownEditor] = useState(null);
   const dispatch = useDispatch();
   const addLocalFileMesage = useAddLocalFileMessage({ context, to: id });
@@ -51,12 +51,7 @@ function Send({
 
   useEffect(() => {
     if (replying_mid) {
-      const editorRef = getPlateEditorRef(
-        `${TEXT_EDITOR_PREFIX}_${context}_${id}`
-      );
-      if (editorRef) {
-        setEditorFocus(editorRef);
-      }
+      editor.focus();
     }
   }, [replying_mid]);
 
@@ -65,13 +60,7 @@ function Send({
       // markdown insert emoji
       markdownEditor.insertText(emoji);
     } else {
-      const editorRef = getPlateEditorRef(
-        `${TEXT_EDITOR_PREFIX}_${context}_${id}`
-      );
-      if (editorRef) {
-        // console.log("wtf", editorRef);
-        editorRef.insertText(emoji);
-      }
+      editor.insertText(emoji);
     }
   };
   const handleSendMessage = async (msgs = []) => {
@@ -136,7 +125,7 @@ function Send({
   return (
     <StyledSend className={`send ${replying_mid ? "reply" : ""} ${context}`}>
       {replying_mid && <Replying mid={replying_mid} id={id} />}
-      <UploadFileList context={context} id={id} />
+      {mode == Modes.text && <UploadFileList context={context} id={id} />}
 
       <div className={`send_box ${mode}`}>
         <EmojiPicker selectEmoji={insertEmoji} />

@@ -1,7 +1,6 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import { useKey } from "rooks";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Editor, Transforms } from "slate";
 import {
   createPlateUI,
@@ -32,20 +31,6 @@ import { CONFIG } from "./config";
 import Contact from "../Contact";
 import { updateUploadFiles } from "../../../app/slices/ui";
 export const TEXT_EDITOR_PREFIX = "rustchat_text_editor";
-export const setEditorFocus = (edtr) => {
-  console.log("focus", edtr);
-  ReactEditor.focus(edtr);
-};
-export const clearEditorAndFocus = (edtr) => {
-  console.log("focus", edtr);
-
-  Transforms.delete(edtr, {
-    at: {
-      anchor: Editor.start(edtr, []),
-      focus: Editor.end(edtr, []),
-    },
-  });
-};
 
 let components = createPlateUI({
   // [ELEMENT_IMAGE]: ImageElement,
@@ -104,7 +89,12 @@ const Plugins = ({
       sendMessages(msgs);
       // 清空
       const plateEditor = getPlateEditorRef(`${TEXT_EDITOR_PREFIX}_${id}`);
-      clearEditorAndFocus(plateEditor);
+      Transforms.delete(plateEditor, {
+        at: {
+          anchor: Editor.start(plateEditor, []),
+          focus: Editor.end(plateEditor, []),
+        },
+      });
     },
     {
       // eventTypes: ["keydown"],
@@ -260,5 +250,23 @@ const Plugins = ({
       </Plate>
     </Styled>
   );
+};
+
+export const useMixedEditor = (key) => {
+  const editorRef = getPlateEditorRef(`${TEXT_EDITOR_PREFIX}_${key}`);
+  const focus = () => {
+    if (editorRef) {
+      ReactEditor.focus(editorRef);
+    }
+  };
+  const insertText = (txt) => {
+    if (editorRef) {
+      editorRef.insertText(txt);
+    }
+  };
+  return {
+    focus,
+    insertText,
+  };
 };
 export default Plugins;

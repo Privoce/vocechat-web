@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Styled from "./styled";
+import { useMixedEditor } from "../../MixedInput";
 import EditFileDetailsModal from "./EditFileDetails";
 import { updateUploadFiles } from "../../../../app/slices/ui";
 import { getFileIcon, formatBytes } from "../../../utils";
@@ -8,10 +9,11 @@ import EditIcon from "../../../../assets/icons/edit.svg";
 import DeleteIcon from "../../../../assets/icons/delete.svg";
 
 export default function UploadFileList({ context = "", id = null }) {
+  const eidtor = useMixedEditor(`${context}_${id}`);
   const [editInfo, setEditInfo] = useState(null);
   const dispatch = useDispatch();
   const files = useSelector(
-    (store) => store.ui.uploadFiles[`${context}_${id}`]
+    (store) => store.ui.uploadFiles[`${context}_${id}`] || []
   );
   const toggleModalVisible = (info) => {
     setEditInfo((prev) => (prev ? null : info));
@@ -34,6 +36,10 @@ export default function UploadFileList({ context = "", id = null }) {
       updateUploadFiles({ context, id, operation: "update", index, name })
     );
   };
+  useEffect(() => {
+    eidtor.focus();
+  }, [files.length]);
+
   if (!context || !id || !files || files.length == 0) return null;
   console.log("upload files", files);
   return (
