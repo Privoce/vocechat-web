@@ -9,6 +9,7 @@ import Tooltip from "./Tooltip";
 import ChannelIcon from "./ChannelIcon";
 import ChannelModal from "./ChannelModal";
 import ContactsModal from "./ContactsModal";
+import { NavLink, useLocation } from "react-router-dom";
 
 const StyledWrapper = styled.div`
   position: relative;
@@ -79,6 +80,7 @@ const StyledWrapper = styled.div`
   }
 `;
 export default function Server() {
+  const { pathname } = useLocation();
   const { currentUser, server, userCount } = useSelector((store) => {
     return {
       userCount: store.contacts.ids.length,
@@ -115,17 +117,19 @@ export default function Server() {
       {contactsModalVisible && (
         <ContactsModal closeModal={toggleContactsModalVisible} />
       )}
-      <div className="server">
-        <div className="logo">
-          <img src={logo} />
+      <NavLink to={`/setting?f=${pathname}`}>
+        <div className="server">
+          <div className="logo">
+            <img src={logo} />
+          </div>
+          <div className="info">
+            <h3 className="name" title={description}>
+              {name}
+            </h3>
+            <span className="desc">{userCount} members</span>
+          </div>
         </div>
-        <div className="info">
-          <h3 className="name" title={description}>
-            {name}
-          </h3>
-          <span className="desc">{userCount} members</span>
-        </div>
-      </div>
+      </NavLink>
       <Tooltip tip="More" placement="bottom">
         <Tippy
           interactive
