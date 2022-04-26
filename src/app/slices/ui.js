@@ -11,6 +11,7 @@ const initialState = {
   menuExpand: false,
   fileListView: Views.grid,
   uploadFiles: {},
+  selectMessages: {},
 };
 const uiSlice = createSlice({
   name: "ui",
@@ -40,6 +41,7 @@ const uiSlice = createSlice({
         state.userGuide[key] = obj[key];
       });
     },
+
     updateUploadFiles(state, action) {
       const {
         context = "channel",
@@ -105,6 +107,33 @@ const uiSlice = createSlice({
           break;
       }
     },
+    updateSelectMessages(state, action) {
+      const {
+        context = "channel",
+        id = null,
+        operation = "add",
+        data = null,
+      } = action.payload;
+      let currData = state.selectMessages[`${context}_${id}`];
+      switch (operation) {
+        case "add": {
+          currData = currData ? [...currData, data] : [data];
+          break;
+        }
+        case "remove": {
+          currData = currData.filter((mid) => mid != data);
+          break;
+        }
+        case "reset": {
+          currData = null;
+          break;
+        }
+
+        default:
+          break;
+      }
+      state.selectMessages[`${context}_${id}`] = currData;
+    },
   },
 });
 export const {
@@ -115,6 +144,7 @@ export const {
   toggleMenuExpand,
   updateFileListView,
   updateUploadFiles,
+  updateSelectMessages,
   updateUserGuide,
 } = uiSlice.actions;
 export default uiSlice.reducer;

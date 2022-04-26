@@ -62,7 +62,7 @@ const StyledWrapper = styled.div`
     align-items: flex-start;
     /* height: 100%; */
     /* justify-content: space-between; */
-    padding: 16px 32px 32px 32px;
+    padding: 16px;
     box-sizing: border-box;
     .title {
       font-weight: 600;
@@ -87,9 +87,17 @@ const StyledWrapper = styled.div`
         }
       }
     }
-    .reply {
+    .msgs {
+      border-radius: var(--br);
+      padding: 8px;
+      max-height: 200px;
+      overflow: auto;
+      background-color: #f4f4f5;
       width: 280px;
       margin-bottom: 4px;
+      > .reply {
+        background: none;
+      }
     }
     .input {
       margin-bottom: 32px;

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Tippy from "@tippyjs/react";
 import { hideAll } from "tippy.js";
 // import toast from "react-hot-toast";
+import { updateSelectMessages } from "../../../app/slices/ui";
 import { addReplyingMessage } from "../../../app/slices/message";
 import StyledMenu from "../styled/Menu";
 import Tooltip from "../../component/Tooltip";
@@ -15,6 +16,7 @@ import editIcon from "../../../assets/icons/edit.svg?url";
 // import bookmarkIcon from "../../../assets/icons/bookmark.svg?url";
 import moreIcon from "../../../assets/icons/more.svg?url";
 import ForwardModal from "../ForwardModal";
+import PinMessageModal from "./PinMessageModal";
 const StyledCmds = styled.ul`
   z-index: 9999;
   position: absolute;
@@ -50,12 +52,14 @@ const StyledCmds = styled.ul`
   }
 `;
 export default function Commands({
+  context = "user",
   contextId = 0,
   mid = 0,
   from_uid = 0,
   toggleEditMessage,
 }) {
   const dispatch = useDispatch();
+  const [pinModalVisible, setPinModalVisible] = useState(false);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [forwardModalVisible, setForwardModalVisible] = useState(false);
   const [tippyVisible, setTippyVisible] = useState(false);
@@ -77,8 +81,16 @@ export default function Commands({
     hideAll();
     setDeleteModalVisible((prev) => !prev);
   };
+  const togglePinModal = () => {
+    hideAll();
+    setPinModalVisible((prev) => !prev);
+  };
   const handleTippyVisible = (visible = true) => {
     setTippyVisible(visible);
+  };
+  const handleSelect = (mid) => {
+    dispatch(updateSelectMessages({ context, id: contextId, data: mid }));
+    hideAll();
   };
   return (
     <StyledCmds
@@ -127,12 +139,19 @@ export default function Commands({
         content={
           <StyledMenu className="menu">
             {/* <li className="item">Edit Message</li> */}
-            {/* <li className="item underline">Pin Message</li> */}
+            {context == "channel" && (
+              <li className="item underline" onClick={togglePinModal}>
+                Pin Message
+              </li>
+            )}
             <li className="item" onClick={toggleForwardModal}>
               Forward
             </li>
             <li className="item" onClick={handleReply.bind(null, true)}>
               Reply
+            </li>
+            <li className="item" onClick={handleSelect.bind(null, mid)}>
+              Select
             </li>
             {currUid == from_uid && (
               <li className="item danger" onClick={toggleDeleteModal}>
@@ -153,7 +172,14 @@ export default function Commands({
         <DeleteMessageConfirm closeModal={toggleDeleteModal} mid={mid} />
       )}
       {forwardModalVisible && (
-        <ForwardModal mid={mid} closeModal={toggleForwardModal} />
+        <ForwardModal mids={[mid]} closeModal={toggleForwardModal} />
+      )}
+      {pinModalVisible && (
+        <PinMessageModal
+          mid={mid}
+          gid={contextId}
+          closeModal={togglePinModal}
+        />
       )}
     </StyledCmds>
   );

@@ -26,10 +26,8 @@ const Modes = {
   markdown: "markdown",
 };
 function Send({
-  name,
-  context = "channel",
-  members = [],
   // 发给谁，或者是channel，或者是user
+  context = "channel",
   id = "",
 }) {
   const editor = useMixedEditor(`${context}_${id}`);
@@ -37,16 +35,25 @@ function Send({
   const dispatch = useDispatch();
   const addLocalFileMesage = useAddLocalFileMessage({ context, to: id });
   // 谁发的
-  const { from_uid, replying_mid = null, mode, uploadFiles } = useSelector(
-    (store) => {
-      return {
-        mode: store.ui.inputMode,
-        from_uid: store.authData.uid,
-        replying_mid: store.message.replying[id],
-        uploadFiles: store.ui.uploadFiles[`${context}_${id}`],
-      };
-    }
-  );
+  const {
+    from_uid,
+    replying_mid = null,
+    mode,
+    uploadFiles,
+    channelsData,
+    contactsData,
+    uids,
+  } = useSelector((store) => {
+    return {
+      channelsData: store.channels.byId,
+      uids: store.contacts.ids,
+      contactsData: store.contacts.byId,
+      mode: store.ui.inputMode,
+      from_uid: store.authData.uid,
+      replying_mid: store.message.replying[id],
+      uploadFiles: store.ui.uploadFiles[`${context}_${id}`],
+    };
+  });
   const { sendMessage } = useSendMessage({ context, from: from_uid, to: id });
 
   useEffect(() => {
@@ -121,7 +128,15 @@ function Send({
   const toggleMode = () => {
     dispatch(updateInputMode(mode == Modes.text ? Modes.markdown : Modes.text));
   };
+  const name =
+    context == "channel" ? channelsData[id]?.name : contactsData[id]?.name;
   const placeholder = `Send to ${Types[context]}${name} `;
+  const members =
+    context == "channel"
+      ? channelsData[id]?.is_public
+        ? uids
+        : channelsData[id]?.members
+      : [];
   return (
     <StyledSend className={`send ${replying_mid ? "reply" : ""} ${context}`}>
       {replying_mid && <Replying mid={replying_mid} id={id} />}

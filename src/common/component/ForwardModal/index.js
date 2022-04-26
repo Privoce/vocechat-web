@@ -16,7 +16,7 @@ import CloseIcon from "../../../assets/icons/close.circle.svg";
 import StyledCheckbox from "../../component/styled/Checkbox";
 import toast from "react-hot-toast";
 
-export default function ForwardModal({ mid, closeModal }) {
+export default function ForwardModal({ mids, closeModal }) {
   const [appendText, setAppendText] = useState("");
   const { sendMessages } = useSendMessage();
   const { forwardMessage, forwarding } = useForwardMessage();
@@ -45,7 +45,7 @@ export default function ForwardModal({ mid, closeModal }) {
   };
   const handleForward = async () => {
     await forwardMessage({
-      mids: [mid],
+      mids: mids,
       users: selectedMembers,
       channels: selectedChannels,
     });
@@ -170,8 +170,10 @@ export default function ForwardModal({ mid, closeModal }) {
               );
             })}
           </ul>
-          <div className="reply">
-            <Reply mid={mid} interactive={false} />
+          <div className="msgs">
+            {mids.map((mid) => (
+              <Reply key={mid} mid={mid} interactive={false} />
+            ))}
           </div>
           <Input
             className="input"

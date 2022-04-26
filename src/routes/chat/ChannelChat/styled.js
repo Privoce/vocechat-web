@@ -82,68 +82,53 @@ export const StyledContacts = styled.div`
   }
 `;
 export const StyledChannelChat = styled.article`
-  position: relative;
+  padding: 18px 16px;
   width: 100%;
-  /* margin-bottom: 120px; */
-  > .wrapper {
-    background-color: #fff;
+  height: 100%;
+  height: -webkit-fill-available;
+  overflow: auto;
+  > .info {
+    padding-top: 62px;
     display: flex;
     flex-direction: column;
-    padding: 0;
-    padding-bottom: 16px;
-    height: calc(100vh - 56px - 22px);
-    .chat {
-      padding: 18px 16px;
-      height: 100%;
-      height: -webkit-fill-available;
-      overflow: auto;
-      > .info {
-        padding-top: 62px;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-        .title {
-          font-weight: bold;
-          font-size: 36px;
-          line-height: 44px;
-        }
-        .desc {
-          color: #78787c;
-          font-weight: 500;
-          font-size: 16px;
-          line-height: 24px;
-        }
-        .edit {
-          display: flex;
-          align-items: center;
-          gap: 4px;
-          .icon {
-            width: 16px;
-            height: 16px;
-            path {
-              fill: #3c8ce7;
-            }
-          }
-          padding: 0;
-          font-style: normal;
-          font-weight: 500;
-          font-size: 16px;
-          line-height: 24px;
-          background: linear-gradient(135deg, #3c8ce7 0%, #00eaff 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-          text-fill-color: transparent;
+    align-items: flex-start;
+    gap: 8px;
+    .title {
+      font-weight: bold;
+      font-size: 36px;
+      line-height: 44px;
+    }
+    .desc {
+      color: #78787c;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 24px;
+    }
+    .edit {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      .icon {
+        width: 16px;
+        height: 16px;
+        path {
+          fill: #3c8ce7;
         }
       }
-      > .feed {
-        /* display: flex;
+      padding: 0;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 24px;
+      background: linear-gradient(135deg, #3c8ce7 0%, #00eaff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+    }
+  }
+  > .feed {
+    /* display: flex;
         flex-direction: column-reverse; */
-      }
-    }
-    > .send {
-      margin: 0 16px;
-    }
   }
 `;

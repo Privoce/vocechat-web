@@ -14,7 +14,8 @@ export default function Avatar({
     }
     const tmp = getInitialsAvatar({
       initials: getInitials(name),
-      background: type == "channel" ? "#4ea758" : undefined,
+      background: type == "channel" ? "#EAECF0" : undefined,
+      foreground: type == "channel" ? "#475467" : undefined,
     });
     setSrc(tmp);
   };
@@ -22,7 +23,8 @@ export default function Avatar({
     if (!url) {
       const tmp = getInitialsAvatar({
         initials: getInitials(name),
-        background: type == "channel" ? "#4ea758" : undefined,
+        background: type == "channel" ? "#EAECF0" : undefined,
+        foreground: type == "channel" ? "#475467" : undefined,
       });
       setSrc(tmp);
     } else {

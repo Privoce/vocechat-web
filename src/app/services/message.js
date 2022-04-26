@@ -76,6 +76,13 @@ export const messageApi = createApi({
         url: `/resource/archive?file_path=${encodeURIComponent(file_path)}`,
       }),
     }),
+    pinMessage: builder.mutation({
+      query: ({ gid, mid }) => ({
+        url: `/group/${gid}/pin`,
+        method: "POST",
+        body: { mid },
+      }),
+    }),
     replyMessage: builder.mutation({
       query: ({ reply_mid, content, type = "text" }) => ({
         headers: {
@@ -114,6 +121,7 @@ export const messageApi = createApi({
 });
 
 export const {
+  usePinMessageMutation,
   useLazyGetArchiveMessageQuery,
   useGetArchiveMessageQuery,
   useLazyGetOGInfoQuery,

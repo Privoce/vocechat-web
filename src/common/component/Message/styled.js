@@ -17,10 +17,15 @@ const StyledMsg = styled.div`
   }
   &:hover,
   &.preview {
+    content-visibility: inherit;
+    contain-intrinsic-size: inherit;
     background: #f5f6f7;
     .cmds {
       visibility: visible;
     }
+  }
+  &.readonly:hover {
+    background: none;
   }
   .avatar {
     flex-shrink: 0;

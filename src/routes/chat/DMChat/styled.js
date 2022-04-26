@@ -28,20 +28,9 @@ export const StyledHeader = styled.header`
   }
 `;
 export const StyledDMChat = styled.article`
-  position: relative;
-  display: flex;
-  flex-direction: column;
   width: 100%;
-  padding: 0;
-  padding-bottom: 16px;
-  height: calc(100vh - 56px - 22px);
-  > .chat {
-    padding: 18px 16px;
-    height: 100%;
-    height: -webkit-fill-available;
-    overflow: auto;
-  }
-  > .send {
-    margin: 0 16px;
-  }
+  padding: 18px 16px;
+  height: 100%;
+  height: -webkit-fill-available;
+  overflow: auto;
 `;

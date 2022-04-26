@@ -17,6 +17,7 @@ import Tooltip from "../Tooltip";
 dayjs.extend(isToday);
 dayjs.extend(isYesterday);
 function Message({
+  readOnly = false,
   contextId = 0,
   mid = "",
   context = "user",
@@ -77,8 +78,13 @@ function Message({
   console.log("render message");
   // return null;
   return (
-    <StyledWrapper data-msg-mid={mid} ref={inviewRef} className={`message`}>
+    <StyledWrapper
+      data-msg-mid={mid}
+      ref={inviewRef}
+      className={`message ${readOnly ? "readonly" : ""}`}
+    >
       <Tippy
+        disabled={readOnly}
         duration={0}
         interactive
         placement="left"
@@ -94,7 +100,7 @@ function Message({
           <span className="name">{currUser.name}</span>
           <Tooltip
             delay={200}
-            disabled={!timePrefix}
+            disabled={!timePrefix || readOnly}
             placement="top"
             tip={dayjsTime.format("YYYY-MM-DD h:mm:ss A")}
           >
@@ -130,8 +136,9 @@ function Message({
           {reactions && <Reaction mid={mid} reactions={reactions} />}
         </div>
       </div>
-      {!edit && (
+      {!edit && !readOnly && (
         <Commands
+          context={context}
           contextId={contextId}
           mid={mid}
           from_uid={fromUid}

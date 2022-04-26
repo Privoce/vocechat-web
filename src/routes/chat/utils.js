@@ -1,9 +1,13 @@
 import React from "react";
 import dayjs from "dayjs";
+import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
 import { isImage } from "../../common/utils";
 import { ContentTypes } from "../../app/config";
+import Checkbox from "../../common/component/styled/Checkbox";
 import Divider from "../../common/component/Divider";
 import Message from "../../common/component/Message";
+import { updateSelectMessages } from "../../app/slices/ui";
 // function debounce(callback, wait = 2000, immediate = false) {
 //   let timeout = null;
 //   return function () {
@@ -86,7 +90,66 @@ export const renderPreviewMessage = (message = null) => {
   }
   return res;
 };
+const StyledWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  > .overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+  > .check {
+    display: none;
+    margin-top: 18px;
+    margin-left: 8px;
+  }
+  > .message {
+    flex: 1;
+  }
+  &.select {
+    /* cursor: pointer; */
+    &:hover {
+      border-radius: var(--br);
+      background: #f5f6f7;
+    }
+    > .check {
+      display: block;
+    }
+  }
+`;
+const MessageWrapper = ({ selectMode = false, context, id, mid, children }) => {
+  const dispatch = useDispatch();
+
+  const selects = useSelector(
+    (store) => store.ui.selectMessages[`${context}_${id}`]
+  );
+  const selected = !!(selects && selects.find((s) => s == mid));
+  const toggleSelect = () => {
+    const operation = selected ? "remove" : "add";
+    dispatch(updateSelectMessages({ context, id, operation, data: mid }));
+  };
+  return (
+    <StyledWrapper className={selectMode ? "select" : ""}>
+      <Checkbox className="check" checked={selected} />
+      {/* {React.cloneElement(children, { readOnly: selected })} */}
+      {children}
+      {selectMode && (
+        <div
+          className="overlay"
+          onClick={selectMode ? toggleSelect : null}
+        ></div>
+      )}
+    </StyledWrapper>
+  );
+};
 export const renderMessageFragment = ({
+  selectMode = false,
   isFirst = false,
   read = true,
   updateReadIndex,
@@ -111,15 +174,23 @@ export const renderMessageFragment = ({
   return (
     <React.Fragment key={mid}>
       {divider && <Divider content={divider}></Divider>}
-      <Message
-        isFirst={isFirst}
-        updateReadIndex={updateReadIndex}
-        read={read}
+      <MessageWrapper
         context={context}
+        id={contextId}
         mid={mid}
-        key={mid}
-        contextId={contextId}
-      />
+        selectMode={selectMode}
+      >
+        <Message
+          readOnly={selectMode}
+          isFirst={isFirst}
+          updateReadIndex={updateReadIndex}
+          read={read}
+          context={context}
+          mid={mid}
+          key={mid}
+          contextId={contextId}
+        />
+      </MessageWrapper>
     </React.Fragment>
   );
 };

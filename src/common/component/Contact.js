@@ -35,12 +35,13 @@ const StyledWrapper = styled.div`
     }
     .status {
       position: absolute;
-      bottom: 0;
-      right: -2px;
+      bottom: -2px;
+      right: -4px;
       width: 10px;
       height: 10px;
+      box-sizing: content-box;
       border-radius: 50%;
-      outline: 2px solid #fff;
+      border: 2px solid #fff;
       &.online {
         background-color: #22c55e;
       }

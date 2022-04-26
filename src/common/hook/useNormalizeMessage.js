@@ -11,7 +11,14 @@ export default function useNormalizeMessage() {
   useEffect(() => {
     if (data && isSuccess) {
       const msgs = data.messages.map(
-        ({ content, file_id, thumbnail_id, content_type, properties }) => {
+        ({
+          content,
+          file_id,
+          thumbnail_id,
+          content_type,
+          properties,
+          from_user,
+        }) => {
           const transformedContent =
             content_type == ContentTypes.file
               ? `${BASE_URL}/resource/archive/attachment?file_path=${filePath}&attachment_id=${file_id}`
@@ -24,7 +31,13 @@ export default function useNormalizeMessage() {
             content_type == ContentTypes.file
               ? `${BASE_URL}/resource/archive/attachment?file_path=${filePath}&attachment_id=${file_id}&download=true`
               : "";
+          let user = { ...(data.users[from_user] || {}) };
+          user.avatar =
+            typeof user.avatar !== "undefined"
+              ? `${BASE_URL}/resource/archive/attachment?file_path=${filePath}&attachment_id=${user.avatar}`
+              : "";
           return {
+            user,
             content: transformedContent,
             content_type,
             properties,
