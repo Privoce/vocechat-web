@@ -2,13 +2,14 @@ import { useState, useRef } from "react";
 import styled from "styled-components";
 import { useOutsideClick } from "rooks";
 import Tooltip from "../../component/Tooltip";
-const StyledBtn = styled.button`
+const Styled = styled.div`
   position: relative;
-  outline: none;
   width: fit-content;
-  background: none;
   display: flex;
   align-items: center;
+  > .emoji {
+    cursor: pointer;
+  }
   > svg {
     width: 22px;
     height: 22px;
@@ -31,27 +32,39 @@ export default function EmojiPicker({ selectEmoji }) {
   const ref = useRef();
   const [visible, setVisible] = useState(false);
 
-  const openPicker = () => {
-    setVisible(true);
+  const togglePickerVisible = () => {
+    setVisible((prev) => !prev);
   };
   const handleSelect = (emoji) => {
     selectEmoji(emoji.native);
   };
   useOutsideClick(
     ref,
-    () => {
+    (evt) => {
+      const clickEle = evt.target;
+      const ignore =
+        (clickEle.nodeName == "svg" && clickEle.dataset.emoji == "toggler") ||
+        (clickEle.nodeName == "path" &&
+          clickEle.parentElement.dataset.emoji == "toggler");
+      // console.log("outside click", clickEle, clickEle.parentElement, ignore);
+      if (ignore) return;
+      // if(clickEle)
       setVisible(false);
     },
     visible
   );
   return (
     <Tooltip placement="top" tip="Emojis" disabled={visible}>
-      <StyledBtn>
+      <Styled>
         <div ref={ref} className={`picker ${visible ? "visible" : ""}`}>
           <Picker onSelect={handleSelect} />
         </div>
-        <SmileIcon onClick={visible ? null : openPicker} />
-      </StyledBtn>
+        <SmileIcon
+          data-emoji="toggler"
+          className="emoji"
+          onClick={togglePickerVisible}
+        />
+      </Styled>
     </Tooltip>
   );
 }

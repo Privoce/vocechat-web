@@ -7,6 +7,8 @@ import styled from "styled-components";
 const StyledWrapper = styled.div`
   filter: drop-shadow(0px 25px 50px rgba(31, 41, 55, 0.25));
   border-radius: 12px;
+  /* height: 358px;
+  overflow: hidden; */
   .emoji-mart {
     border: none;
     border-radius: 12px;
@@ -33,12 +35,13 @@ export default function EmojiPicker({ onSelect, ...rest }) {
     <StyledWrapper>
       {visible ? (
         <Picker
-          emojiSize={28}
+          perLine={10}
+          emojiSize={24}
           emojiTooltip={true}
           // set="twitter"
           // data={data}
           // set="twitter"
-          showPreview={false}
+          // showPreview={false}
           showSkinTones={false}
           onSelect={onSelect}
           {...rest}

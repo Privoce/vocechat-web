@@ -57,6 +57,7 @@ const MarkdownOverrides = createGlobalStyle`
   img{
     cursor: pointer;
       max-width:300px;
+      display: block;
   }
   ul {
      white-space: nowrap;
