@@ -2899,6 +2899,11 @@
   dependencies:
     immer "9.0.6"
 
+"@uiball/loaders@^1.2.4":
+  version "1.2.4"
+  resolved "http://mirrors.cloud.tencent.com/npm/@uiball%2floaders/-/loaders-1.2.4.tgz#3c60cba02d71ced80ac5f1c4f87ff9312d93d08b"
+  integrity sha512-Oy8dWNrmSi0dAmrBmr4laSDvMu/ZNEE8xRf4kp8R6t/L6NecLlxyRtjidOtu8a2IzcZwisp0mksGE2zATrJFoQ==
+
 "@webassemblyjs/ast@1.11.1":
   version "1.11.1"
   resolved "https://mirrors.cloud.tencent.com/npm/@webassemblyjs%2fast/-/ast-1.11.1.tgz#2bfd767eae1a6996f432ff7e8d7fc75679c0b6a7"

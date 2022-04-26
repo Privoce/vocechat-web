@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
+import { Ring } from "@uiball/loaders";
+
 import Button from "../../common/component/styled/Button";
 import useLogout from "../../common/hook/useLogout";
+
 const StyledWrapper = styled.div`
   width: 100vw;
   height: 100vh;
@@ -14,14 +17,6 @@ const StyledWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 200px;
-    height: 200px;
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-    padding: 10px;
-    border: 4px solid #999;
-    border-radius: 50%;
   }
   .reload {
     visibility: hidden;
@@ -49,7 +44,13 @@ export default function Loading() {
 
   return (
     <StyledWrapper>
-      <div className="loading">Loading...</div>
+      <Ring
+        className="loading"
+        size={40}
+        lineWeight={5}
+        speed={2}
+        color="black"
+      />
       {reloadVisible && (
         <Button
           className={`reload danger ${reloadVisible ? "visible" : ""}`}
