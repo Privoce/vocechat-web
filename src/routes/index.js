@@ -3,6 +3,7 @@ import { Route, Routes, HashRouter } from "react-router-dom";
 import { Provider, useSelector } from "react-redux";
 // import Welcome from './Welcome'
 import NotFoundPage from "./404";
+import OAuthPage from "./oauth";
 import LoginPage from "./login";
 import HomePage from "./home";
 import ChatPage from "./chat";
@@ -38,6 +39,14 @@ const PageRoutes = () => {
   return (
     <HashRouter>
       <Routes>
+        <Route
+          path="/oauth/:token"
+          element={
+            <RequireNoAuth>
+              <OAuthPage />
+            </RequireNoAuth>
+          }
+        />
         <Route
           path="/login"
           element={
