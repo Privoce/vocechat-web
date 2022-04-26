@@ -66,6 +66,9 @@ const StyledDetails = styled.a`
     font-size: 16px;
     line-height: 24px;
     color: #06aed4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .desc {
     font-weight: 400;
@@ -95,7 +98,7 @@ export default function URLPreview({ url = "" }) {
     const getMetaData = async (url) => {
       // todo
       const { data } = await getInfo(url);
-      const title = data.site_name || data.title;
+      const title = data.title || data.site_name;
       const description = data.description;
       const ogImage = data.images.find((i) => !!i.url)?.url || "";
       const favicon = data.favicon_url || `${new URL(url).origin}/favicon.ico`;
