@@ -160,6 +160,7 @@ export const renderMessageFragment = ({
 }) => {
   if (!curr) return null;
   let { created_at, mid } = curr;
+  const local_id = curr.properties?.local_id;
   let divider = null;
   let time = dayjs(created_at).format("YYYY/MM/DD");
   if (!prev) {
@@ -170,9 +171,10 @@ export const renderMessageFragment = ({
       divider = time;
     }
   }
-
+  const _key = local_id || mid;
+  // console.log("_key", _key, local_id, mid);
   return (
-    <React.Fragment key={mid}>
+    <React.Fragment key={_key}>
       {divider && <Divider content={divider}></Divider>}
       <MessageWrapper
         context={context}
@@ -187,7 +189,7 @@ export const renderMessageFragment = ({
           read={read}
           context={context}
           mid={mid}
-          key={mid}
+          key={_key}
           contextId={contextId}
         />
       </MessageWrapper>
