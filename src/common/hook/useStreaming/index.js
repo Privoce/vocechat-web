@@ -14,6 +14,7 @@ import {
   addChannel,
   removeChannel,
   updateChannel,
+  updatePinMessage,
 } from "../../../app/slices/channels";
 import {
   updateUsersVersion,
@@ -256,6 +257,12 @@ export default function useStreaming() {
             case "kick_from_group":
               console.log("kicked from group", data.gid);
               dispatch(removeChannel(data.gid));
+              break;
+            case "pinned_message_updated":
+              {
+                // const {gid,mid,msg}=data;
+                dispatch(updatePinMessage(data));
+              }
               break;
             case "chat":
               {

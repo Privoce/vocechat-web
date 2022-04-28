@@ -49,7 +49,7 @@ export default function ForwardModal({ mids, closeModal }) {
       users: selectedMembers,
       channels: selectedChannels,
     });
-    if (appendText) {
+    if (appendText.trim()) {
       await sendMessages({
         content: appendText,
         users: selectedMembers,
@@ -144,7 +144,7 @@ export default function ForwardModal({ mids, closeModal }) {
                     key={cid}
                     id={cid}
                     interactive={false}
-                    avatarSize={40}
+                    // avatarSize={40}
                   />
                   <CloseIcon
                     className="remove"
@@ -160,7 +160,7 @@ export default function ForwardModal({ mids, closeModal }) {
                     key={uid}
                     uid={uid}
                     interactive={false}
-                    avatarSize={40}
+                    // avatarSize={40}
                   />
                   <CloseIcon
                     className="remove"

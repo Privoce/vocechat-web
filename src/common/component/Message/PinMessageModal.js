@@ -15,23 +15,23 @@ const StyledPinModal = styled(StyledModal)`
     overflow-x: hidden;
   }
 `;
-// import { useDispatch } from "react-redux";
-// import BASE_URL from "../../app/config";
-import { usePinMessageMutation } from "../../../app/services/message";
+import usePinMessage from "../../hook/usePinMessage";
 import StyledModal from "../styled/Modal";
 import Button from "../styled/Button";
 import Modal from "../Modal";
 import PreviewMessage from "./PreviewMessage";
+import toast from "react-hot-toast";
 
 export default function PinMessageModal({ closeModal, mid = 0, gid = 0 }) {
   // const dispatch = useDispatch();
-  const [pinMessage, { isLoading, isSuccess }] = usePinMessageMutation();
+  const { pinMessage, isPining, isSuccess } = usePinMessage(gid);
   const handlePin = () => {
-    pinMessage({ mid, gid });
+    pinMessage(mid);
   };
   useEffect(() => {
     if (isSuccess) {
       closeModal();
+      toast.success("Pin Message Successfully");
     }
   }, [isSuccess]);
 
@@ -45,8 +45,8 @@ export default function PinMessageModal({ closeModal, mid = 0, gid = 0 }) {
             <Button onClick={closeModal} className="cancel">
               Cancel
             </Button>
-            <Button disabled={isLoading} onClick={handlePin} className="main">
-              {isLoading ? "Pining" : `Pin It`}
+            <Button disabled={isPining} onClick={handlePin} className="main">
+              {isPining ? "Pining" : `Pin It`}
             </Button>
           </>
         }
