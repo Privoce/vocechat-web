@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import StyledWrapper from "./styled";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import BASE_URL from "../../app/config";
 import { useRegisterMutation } from "../../app/services/contact";
 import { useCheckInviteTokenValidMutation } from "../../app/services/auth";
+import { useSelector } from "react-redux";
 
 export default function InvitePage() {
+  const { token: loginToken } = useSelector((store) => store.authData);
   const [secondPwd, setSecondPwd] = useState("");
   const [samePwd, setSamePwd] = useState(true);
   const [token, setToken] = useState("");
@@ -112,6 +114,7 @@ export default function InvitePage() {
   }, [data, isSuccess, isError, error]);
 
   const { email, password, name } = input;
+  if (loginToken) return <Navigate replace to="/" />;
   if (!token) return "token not found";
   if (checkLoading) return "checking token valid";
   if (!valid) return "invite token expires or invalid";
