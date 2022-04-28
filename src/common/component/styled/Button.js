@@ -19,7 +19,7 @@ const StyledButton = styled.button`
     background-color: #22ccee;
   }
   &:disabled {
-    background-color: #a5f0fc;
+    background-color: #d0d5dd;
   }
   &.small {
     padding: 8px 14px;
@@ -30,6 +30,9 @@ const StyledButton = styled.button`
     border: none;
     background-color: #ef4444;
     color: #fff;
+    &:disabled {
+      background-color: #fecdca;
+    }
   }
   &.ghost {
     border: 1px solid #1fe1f9;

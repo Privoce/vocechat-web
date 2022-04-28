@@ -29,7 +29,12 @@ export default function DeleteConfirmModal({ id, closeModal }) {
         description="Are you sure want to delete this channel?"
         buttons={
           <>
-            <Button onClick={closeModal.bind(null, undefined)}>Cancel</Button>
+            <Button
+              onClick={closeModal.bind(null, undefined)}
+              className="cancel"
+            >
+              Cancel
+            </Button>
             <Button onClick={handleDelete} className="danger">
               {isLoading ? "Deleting" : `Delete`}
             </Button>

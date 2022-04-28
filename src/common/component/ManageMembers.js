@@ -121,17 +121,18 @@ export default function ManageMembers({ cid = null }) {
     }
   }, [removeSuccess]);
   useEffect(() => {
+    if (copied) {
+      toast.success("Emial Copied!");
+    }
+  }, [copied]);
+  useEffect(() => {
     if (removeMemberSuccess) {
       toast.success("remove member successfully");
     }
   }, [removeMemberSuccess]);
   const handleCopy = (str) => {
     copy(str);
-    // const tippyInstance = tippyRef.current._tippy;
-    setTimeout(() => {
-      console.log("tippy close");
-      hideAll();
-    }, 800);
+    hideAll();
   };
   const channel = channels.byId[cid] ?? null;
   const uids = channel
@@ -165,6 +166,8 @@ export default function ManageMembers({ cid = null }) {
               <div className="right">
                 <span className="role">{is_admin ? "Admin" : "User"}</span>
                 <Tippy
+                  duration={0}
+                  delay={[0, 0]}
                   interactive
                   placement="right-start"
                   trigger="click"
@@ -175,7 +178,7 @@ export default function ManageMembers({ cid = null }) {
                           className="item"
                           onClick={handleCopy.bind(null, email)}
                         >
-                          {copied ? "Copied" : `Copy Email`}
+                          Copy Email
                         </li>
                       )}
                       {/* <li className="item underline">Mute</li> */}

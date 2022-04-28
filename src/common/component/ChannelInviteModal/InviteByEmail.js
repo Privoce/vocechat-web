@@ -1,22 +1,27 @@
-// import React from 'react'
+import { useEffect } from "react";
+import toast from "react-hot-toast";
 import styled from "styled-components";
 import useInviteLink from "../../hook/useInviteLink";
 const Styled = styled.div`
   padding: 16px 0;
   .input {
     position: relative;
-    button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    > .copy {
       position: absolute;
       right: 4px;
       top: 50%;
       transform: translateY(-50%);
-      &.copy {
-        padding-right: 8px;
-        background: none;
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 20px;
-        color: #22ccee;
+      padding-right: 8px;
+      background: none;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 20px;
+      color: #22ccee;
+      &:hover {
+        color: #088ab2;
       }
     }
     input {
@@ -70,6 +75,12 @@ export default function InviteByEmail({ cid = null }) {
     generateNewLink,
     generating,
   } = useInviteLink(cid);
+  useEffect(() => {
+    if (linkCopied) {
+      toast.success("Invite Link Copied!");
+    }
+  }, [linkCopied]);
+
   return (
     <Styled>
       <div className="invite">
@@ -79,11 +90,11 @@ export default function InviteByEmail({ cid = null }) {
             readOnly={true}
             disabled={!enableSMTP}
             type="email"
-            className="higher"
+            className="higher "
             placeholder={enableSMTP ? "Enter Email" : "Enable SMTP First"}
           />
-          <Button disabled={!enableSMTP} className="ghost small">
-            Invite
+          <Button disabled={!enableSMTP} className="send">
+            Send
           </Button>
         </div>
       </div>
@@ -97,7 +108,7 @@ export default function InviteByEmail({ cid = null }) {
             value={link}
           />
           <button className="copy" onClick={copyLink}>
-            {linkCopied ? `Copied` : `Copy`}
+            Copy
           </button>
         </div>
       </div>
