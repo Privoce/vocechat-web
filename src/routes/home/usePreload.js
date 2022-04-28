@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import initCache, { useRehydrate } from "../../app/cache";
+import { useLazyGetFavoritesQuery } from "../../app/services/message";
 import { useLazyGetContactsQuery } from "../../app/services/contact";
 import { useLazyGetServerQuery } from "../../app/services/server";
 import useStreaming from "../../common/hook/useStreaming";
@@ -13,6 +14,15 @@ export default function usePreload() {
   const { rehydrate, rehydrated } = useRehydrate();
   const loginUid = useSelector((store) => store.authData.uid);
   const { setStreamingReady } = useStreaming();
+  const [
+    getFavorites,
+    {
+      isLoading: favoritesLoading,
+      isSuccess: favoritesSuccess,
+      isError: favoritesError,
+      data: favorites,
+    },
+  ] = useLazyGetFavoritesQuery();
   const [
     getContacts,
     {
@@ -43,6 +53,7 @@ export default function usePreload() {
     if (rehydrated) {
       getContacts();
       getServer();
+      getFavorites();
     }
   }, [rehydrated]);
   const canStreaming = loginUid && rehydrated;
@@ -53,12 +64,14 @@ export default function usePreload() {
   }, [canStreaming]);
 
   return {
-    loading: contactsLoading || serverLoading || !rehydrated,
-    error: contactsError && serverError,
-    success: contactsSuccess && serverSuccess,
+    loading:
+      contactsLoading || serverLoading || favoritesLoading || !rehydrated,
+    error: contactsError && serverError && favoritesError,
+    success: contactsSuccess && serverSuccess && favoritesSuccess,
     data: {
       contacts,
       server,
+      favorites,
     },
   };
 }

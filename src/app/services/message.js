@@ -3,6 +3,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 
 import { ContentTypes } from "../config";
 import { updateReadChannels, updateReadUsers } from "../slices/footprint";
+import { fullfillFavorites, populateFavorite } from "../slices/favorites";
 import { onMessageSendStarted } from "./handlers";
 
 // import { updateMessage } from "../slices/message";
@@ -83,6 +84,50 @@ export const messageApi = createApi({
         body: { mid },
       }),
     }),
+    unpinMessage: builder.mutation({
+      query: ({ gid, mid }) => ({
+        url: `/group/${gid}/unpin`,
+        method: "POST",
+        body: { mid },
+      }),
+    }),
+    favoriteMessage: builder.mutation({
+      query: (mids) => ({
+        url: `/favorite`,
+        method: "POST",
+        body: { mid_list: mids },
+      }),
+    }),
+    getFavoriteDetails: builder.query({
+      query: (id) => ({
+        url: `/favorite/${id}`,
+      }),
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(populateFavorite({ id, data }));
+        } catch (err) {
+          console.log("get favorite list error", err);
+        }
+      },
+    }),
+    getFavorites: builder.query({
+      query: () => ({
+        url: `/favorite`,
+      }),
+      async onQueryStarted(data, { dispatch, queryFulfilled }) {
+        try {
+          const { data: favorites } = await queryFulfilled;
+          dispatch(fullfillFavorites(favorites));
+          for (const fav of favorites) {
+            const { id } = fav;
+            dispatch(messageApi.endpoints.getFavoriteDetails.initiate(id));
+          }
+        } catch (err) {
+          console.log("get favorite list error", err);
+        }
+      },
+    }),
     replyMessage: builder.mutation({
       query: ({ reply_mid, content, type = "text" }) => ({
         headers: {
@@ -121,6 +166,9 @@ export const messageApi = createApi({
 });
 
 export const {
+  useUnpinMessageMutation,
+  useLazyGetFavoritesQuery,
+  useFavoriteMessageMutation,
   usePinMessageMutation,
   useLazyGetArchiveMessageQuery,
   useGetArchiveMessageQuery,

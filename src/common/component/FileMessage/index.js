@@ -70,7 +70,15 @@ export default function FileMessage({
   useEffect(() => {
     const props = properties ?? {};
     const propsV2 = imageSize ? { ...props, ...imageSize } : props;
-    if (uploadSuccess) {
+    // 本地文件 并且上传成功
+    if (uploadSuccess && content.startsWith("blob:")) {
+      console.log(
+        "send local file message",
+        uploadSuccess,
+        propsV2,
+        data,
+        content
+      );
       // 把已经上传的东西当做消息发出去
       const { path } = data;
       sendMessage({
@@ -80,15 +88,16 @@ export default function FileMessage({
         properties: propsV2,
       });
     }
-  }, [uploadSuccess, data, properties]);
+  }, [uploadSuccess, data, properties, content]);
   useEffect(() => {
     if (sendMessageSuccess) {
       //  回收本地资源
-      // URL.revokeObjectURL(content);
+      URL.revokeObjectURL(content);
     }
   }, [sendMessageSuccess, content]);
   const handleCancel = () => {
     stopUploading();
+    URL.revokeObjectURL(content);
     removeLocalMessage(properties.local_id);
   };
   if (!properties) return null;

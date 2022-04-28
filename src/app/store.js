@@ -10,6 +10,7 @@ import contactsReducer from "./slices/contacts";
 import reactionMsgReducer from "./slices/message.reaction";
 import channelMsgReducer from "./slices/message.channel";
 import userMsgReducer from "./slices/message.user";
+import favoritesReducer from "./slices/favorites";
 import fileMsgReducer from "./slices/message.file";
 import messageReducer from "./slices/message";
 import { authApi } from "./services/auth";
@@ -23,6 +24,7 @@ const reducer = combineReducers({
   ui: uiReducer,
   footprint: footprintReducer,
   server: serverReducer,
+  favorites: favoritesReducer,
   contacts: contactsReducer,
   channels: channelsReducer,
   reactionMessage: reactionMsgReducer,
