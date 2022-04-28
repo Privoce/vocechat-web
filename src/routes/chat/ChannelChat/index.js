@@ -11,10 +11,10 @@ import Layout from "../Layout";
 import { renderMessageFragment } from "../utils";
 import EditIcon from "../../../assets/icons/edit.svg";
 // import alertIcon from "../../../assets/icons/alert.svg?url";
-import peopleIcon from "../../../assets/icons/people.svg?url";
-import pinIcon from "../../../assets/icons/pin.svg?url";
+import IconPeople from "../../../assets/icons/people.svg";
+import IconPin from "../../../assets/icons/pin.svg";
 // import searchIcon from "../../../assets/icons/search.svg?url";
-import headphoneIcon from "../../../assets/icons/headphone.svg?url";
+import IconHeadphone from "../../../assets/icons/headphone.svg";
 import boardosIcon from "../../../assets/icons/app.boardos.svg?url";
 import webrowseIcon from "../../../assets/icons/app.webrowse.svg?url";
 import addIcon from "../../../assets/icons/add.svg?url";
@@ -94,7 +94,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
               </li> */}
               <li className="tool">
                 <Tooltip tip="Voice/Video Chat" placement="left">
-                  <img src={headphoneIcon} alt="opt icon" />
+                  <IconHeadphone />
                 </Tooltip>
               </li>
               {/* <li className="tool">
@@ -124,16 +124,21 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
                   content={<PinList id={cid} />}
                 >
                   <li
-                    className={`tool ${pinCount > 0 ? "badge" : ""}`}
+                    className={`tool ${pinCount > 0 ? "badge" : ""} ${
+                      toolVisible == "pin" ? "active" : ""
+                    } `}
                     data-count={pinCount}
                   >
-                    <img src={pinIcon} alt="opt icon" />
+                    <IconPin />
                   </li>
                 </Tippy>
               </Tooltip>
-              <li className="tool" onClick={toggleMembersVisible}>
+              <li
+                className={`tool ${membersVisible ? "active" : ""}`}
+                onClick={toggleMembersVisible}
+              >
                 <Tooltip tip="Channel Members" placement="left">
-                  <img src={peopleIcon} alt="opt icon" />
+                  <IconPeople />
                 </Tooltip>
               </li>
             </ul>

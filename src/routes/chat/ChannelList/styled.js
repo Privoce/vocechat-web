@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
-import settingIcon from "../../../assets/icons/setting.svg?url";
-import inviteIcon from "../../../assets/icons/invite.from.channel.svg?url";
+
 const Styled = styled(NavLink)`
   position: relative;
   display: flex;
@@ -40,13 +39,8 @@ const Styled = styled(NavLink)`
       display: flex;
       width: 16px;
       height: 16px;
-      background-size: contain;
-
-      &.setting {
-        background-image: url(${settingIcon});
-      }
-      &.invite {
-        background-image: url(${inviteIcon});
+      &:hover path {
+        fill: #667085;
       }
     }
     > .badge {

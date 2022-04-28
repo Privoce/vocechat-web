@@ -46,7 +46,7 @@ export default function HomePage() {
       <StyledWrapper>
         <div className={`col left`}>
           <User uid={loginUid} />
-          <nav className="nav">
+          <nav className="link_navs">
             <NavLink className="link" to={"/chat"}>
               <Tooltip tip="Chat">
                 <img src={ChatIcon} alt="chat icon" />

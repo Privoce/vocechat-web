@@ -3,7 +3,7 @@ const StyledWrapper = styled.div`
   display: flex;
   width: 100vw;
   height: 100vh;
-  background-color: #f5f6f7;
+  background-color: var(--rustchat-navs-bg);
   > .col {
     height: 100%;
     display: flex;
@@ -28,7 +28,7 @@ const StyledWrapper = styled.div`
     &.right {
       width: 100%;
     }
-    > .nav {
+    .link_navs {
       display: flex;
       flex-direction: column;
       gap: 4px;

@@ -35,12 +35,12 @@ export default function Menu() {
   const { pathname } = useLocation();
   return (
     <StyledMenus>
-      <li className="menu">
-        <Tooltip placement="right" tip="Settings">
-          <NavLink to={`/setting?f=${pathname}`}>
+      <li className="menu link_navs">
+        <NavLink className="link" to={`/setting?f=${pathname}`}>
+          <Tooltip placement="right" tip="Settings">
             <img src={settingIcon} alt="setting icon" className="icon" />
-          </NavLink>
-        </Tooltip>
+          </Tooltip>
+        </NavLink>
         {/* {expand && (
           <span className="txt animate__animated animate__fadeIn">
             Settings

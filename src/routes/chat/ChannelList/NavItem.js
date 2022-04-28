@@ -8,6 +8,8 @@ import useContextMenu from "../../../common/hook/useContextMenu";
 import ContextMenu from "../../../common/component/ContextMenu";
 import InviteModal from "../../../common/component/ChannelInviteModal";
 import Tooltip from "../../../common/component/Tooltip";
+import IconSetting from "../../../assets/icons/setting.svg";
+import IconInvite from "../../../assets/icons/invite.from.channel.svg";
 // import { useDebounce} from "rooks";
 import { useReadMessageMutation } from "../../../app/services/message";
 import { useUpdateMuteSettingMutation } from "../../../app/services/contact";
@@ -161,19 +163,19 @@ const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
           <div className="icons">
             {inviteIconVisible && (
               <Tooltip placement="bottom" tip="Add Member">
-                <i
+                <IconInvite
                   className="icon invite"
                   data-id={id}
                   onClick={toggleInviteModalVisible}
-                ></i>
+                ></IconInvite>
               </Tooltip>
             )}
             <Tooltip placement="bottom" tip="Channel Setting">
-              <i
+              <IconSetting
                 className="icon setting"
                 data-id={id}
                 onClick={handleChannelSetting}
-              ></i>
+              ></IconSetting>
             </Tooltip>
             {unreads > 0 && (
               <i className={`badge ${isMentions ? "mention" : ""}`}>

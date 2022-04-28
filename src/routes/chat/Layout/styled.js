@@ -6,7 +6,7 @@ const Styled = styled.article`
   border-top-right-radius: 16px;
   border-bottom-right-radius: 16px;
   > .head {
-    box-sizing: content-box;
+    box-sizing: border-box;
     height: 56px;
     padding: 0 20px;
     /* box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.1); */
@@ -67,6 +67,12 @@ const Styled = styled.article`
         .tool {
           position: relative;
           cursor: pointer;
+          &.active svg path {
+            fill: #3f3f46;
+          }
+          &:not(.active):hover svg path {
+            fill: #51525c;
+          }
           &.badge:after {
             position: absolute;
             top: -8px;
