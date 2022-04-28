@@ -79,6 +79,28 @@ const channelsSlice = createSlice({
           break;
       }
     },
+    updatePinMessage(state, action) {
+      const { gid, mid, msg } = action.payload;
+      let msgs = state.byId[gid]?.pinned_messages;
+      if (!msgs) return;
+      if (msg) {
+        if (!msgs) {
+          msgs = [msg];
+        } else {
+          const idx = msgs.findIndex((msg) => msg.mid == mid);
+          if (idx > -1) {
+            msgs.splice(idx, 1);
+          }
+          msgs.push(msg);
+        }
+      } else {
+        // remove
+        const idx = msgs.findIndex((msg) => msg.mid == mid);
+        if (idx > -1) {
+          msgs.splice(idx, 1);
+        }
+      }
+    },
     removeChannel(state, action) {
       const gid = action.payload;
       const idx = state.ids.findIndex((i) => i == gid);
@@ -90,6 +112,7 @@ const channelsSlice = createSlice({
   },
 });
 export const {
+  updatePinMessage,
   resetChannels,
   fullfillChannels,
   addChannel,

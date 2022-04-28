@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDebounce } from "rooks";
 import { useSelector } from "react-redux";
+import PinList from "./PinList";
 import { useReadMessageMutation } from "../../../app/services/message";
 import useChatScroll from "../../../common/hook/useChatScroll";
 import ChannelIcon from "../../../common/component/ChannelIcon";
@@ -9,7 +10,7 @@ import Contact from "../../../common/component/Contact";
 import Layout from "../Layout";
 import { renderMessageFragment } from "../utils";
 import EditIcon from "../../../assets/icons/edit.svg";
-import alertIcon from "../../../assets/icons/alert.svg?url";
+// import alertIcon from "../../../assets/icons/alert.svg?url";
 import peopleIcon from "../../../assets/icons/people.svg?url";
 import pinIcon from "../../../assets/icons/pin.svg?url";
 // import searchIcon from "../../../assets/icons/search.svg?url";
@@ -25,8 +26,10 @@ import {
 } from "./styled";
 import ChannelInviteModal from "../../../common/component/ChannelInviteModal";
 import { NavLink, useLocation } from "react-router-dom";
+import Tippy from "@tippyjs/react";
 
 export default function ChannelChat({ cid = "", dropFiles = [] }) {
+  const [toolVisible, setToolVisible] = useState("");
   const { pathname } = useLocation();
   const [updateReadIndex] = useReadMessageMutation();
   const updateReadDebounced = useDebounce(updateReadIndex, 300);
@@ -70,6 +73,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
   const addVisible = loginUser?.is_admin || owner == loginUid;
   console.log("channel message list", msgIds);
   const readIndex = footprint.readChannels[cid];
+  const pinCount = data?.pinned_messages?.length || 0;
   return (
     <>
       {addMemberModalVisible && (
@@ -93,16 +97,40 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
                   <img src={headphoneIcon} alt="opt icon" />
                 </Tooltip>
               </li>
-              <li className="tool">
+              {/* <li className="tool">
                 <Tooltip tip="Notifications" placement="left">
                   <img src={alertIcon} alt="opt icon" />
                 </Tooltip>
-              </li>
-              <li className="tool">
-                <Tooltip tip="Pin" placement="left">
-                  <img src={pinIcon} alt="opt icon" />
-                </Tooltip>
-              </li>
+              </li> */}
+              <Tooltip
+                tip="Pin"
+                placement="left"
+                disabled={toolVisible == "pin"}
+              >
+                <Tippy
+                  onShow={() => {
+                    setToolVisible("pin");
+                  }}
+                  onHide={() => {
+                    setToolVisible("");
+                  }}
+                  delay={[0, 0]}
+                  duration={0}
+                  placement="left-start"
+                  popperOptions={{ strategy: "fixed" }}
+                  offset={[0, 80]}
+                  interactive
+                  trigger="click"
+                  content={<PinList id={cid} />}
+                >
+                  <li
+                    className={`tool ${pinCount > 0 ? "badge" : ""}`}
+                    data-count={pinCount}
+                  >
+                    <img src={pinIcon} alt="opt icon" />
+                  </li>
+                </Tippy>
+              </Tooltip>
               <li className="tool" onClick={toggleMembersVisible}>
                 <Tooltip tip="Channel Members" placement="left">
                   <img src={peopleIcon} alt="opt icon" />

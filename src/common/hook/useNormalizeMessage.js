@@ -33,9 +33,11 @@ export default function useNormalizeMessage() {
               : "";
           let user = { ...(data.users[from_user] || {}) };
           user.avatar =
-            typeof user.avatar !== "undefined"
+            user.avatar !== null
               ? `${BASE_URL}/resource/archive/attachment?file_path=${filePath}&attachment_id=${user.avatar}`
               : "";
+
+          console.log("user data", transformedContent, user);
           return {
             user,
             content: transformedContent,

@@ -65,7 +65,28 @@ const Styled = styled.article`
       .tools {
         gap: 24px;
         .tool {
+          position: relative;
           cursor: pointer;
+          &.badge:after {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            content: attr(data-count);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 16px;
+            height: 16px;
+
+            border-radius: 50%;
+            background-color: #22ccee;
+            color: #fff;
+            font-weight: 900;
+            font-size: 10px;
+            line-height: 10px;
+            text-align: center;
+            color: #ffffff;
+          }
         }
       }
       .apps {

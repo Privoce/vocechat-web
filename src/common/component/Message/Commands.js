@@ -8,7 +8,7 @@ import { updateSelectMessages } from "../../../app/slices/ui";
 import { addReplyingMessage } from "../../../app/slices/message";
 import StyledMenu from "../styled/Menu";
 import Tooltip from "../../component/Tooltip";
-import DeleteMessageConfirm from "./DeleteMessageConfirm";
+import DeleteMessageConfirm from "../DeleteMessageConfirm";
 import EmojiPicker from "./EmojiPicker";
 import replyIcon from "../../../assets/icons/reply.svg?url";
 import reactIcon from "../../../assets/icons/reaction.svg?url";
@@ -17,6 +17,7 @@ import editIcon from "../../../assets/icons/edit.svg?url";
 import moreIcon from "../../../assets/icons/more.svg?url";
 import ForwardModal from "../ForwardModal";
 import PinMessageModal from "./PinMessageModal";
+import usePinMessage from "../../hook/usePinMessage";
 const StyledCmds = styled.ul`
   z-index: 9999;
   position: absolute;
@@ -63,6 +64,9 @@ export default function Commands({
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [forwardModalVisible, setForwardModalVisible] = useState(false);
   const [tippyVisible, setTippyVisible] = useState(false);
+  const { canPin } = usePinMessage(
+    context == "channel" ? contextId : undefined
+  );
   const currUid = useSelector((store) => store.authData.uid);
   const cmdsRef = useRef(null);
   const handleReply = (fromMenu) => {
@@ -92,6 +96,7 @@ export default function Commands({
     dispatch(updateSelectMessages({ context, id: contextId, data: mid }));
     hideAll();
   };
+  const enablePin = context == "channel" && canPin;
   return (
     <StyledCmds
       ref={cmdsRef}
@@ -139,7 +144,7 @@ export default function Commands({
         content={
           <StyledMenu className="menu">
             {/* <li className="item">Edit Message</li> */}
-            {context == "channel" && (
+            {enablePin && (
               <li className="item underline" onClick={togglePinModal}>
                 Pin Message
               </li>
@@ -169,7 +174,7 @@ export default function Commands({
       </Tippy>
 
       {deleteModalVisible && (
-        <DeleteMessageConfirm closeModal={toggleDeleteModal} mid={mid} />
+        <DeleteMessageConfirm closeModal={toggleDeleteModal} mids={mid} />
       )}
       {forwardModalVisible && (
         <ForwardModal mids={[mid]} closeModal={toggleForwardModal} />
