@@ -11,9 +11,10 @@ import usePreload from "./usePreload";
 import Tooltip from "../../common/component/Tooltip";
 import Notification from "../../common/component/Notification";
 
-import ChatIcon from "../../assets/icons/chat.svg?url";
-import ContactIcon from "../../assets/icons/contact.svg?url";
-import FolderIcon from "../../assets/icons/folder.svg?url";
+import ChatIcon from "../../assets/icons/chat.svg";
+import ContactIcon from "../../assets/icons/contact.svg";
+import FavIcon from "../../assets/icons/bookmark.svg";
+import FolderIcon from "../../assets/icons/folder.svg";
 // const routes = ["/setting", "/setting/channel/:cid"];
 export default function HomePage() {
   const { pathname } = useLocation();
@@ -49,17 +50,22 @@ export default function HomePage() {
           <nav className="link_navs">
             <NavLink className="link" to={"/chat"}>
               <Tooltip tip="Chat">
-                <img src={ChatIcon} alt="chat icon" />
+                <ChatIcon />
               </Tooltip>
             </NavLink>
             <NavLink className="link" to={"/contacts"}>
               <Tooltip tip="Members">
-                <img src={ContactIcon} alt="contact icon" />
+                <ContactIcon />
+              </Tooltip>
+            </NavLink>
+            <NavLink className="link" to={"/favs"}>
+              <Tooltip tip="Favorites">
+                <FavIcon className="fav" />
               </Tooltip>
             </NavLink>
             <NavLink className="link" to={"/files"}>
               <Tooltip tip="Files">
-                <img src={FolderIcon} alt="folder icon" />
+                <FolderIcon />
               </Tooltip>
             </NavLink>
           </nav>

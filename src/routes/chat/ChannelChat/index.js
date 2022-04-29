@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDebounce } from "rooks";
 import { useSelector } from "react-redux";
 import PinList from "./PinList";
+import FavList from "./FavList";
 import { useReadMessageMutation } from "../../../app/services/message";
 import useChatScroll from "../../../common/hook/useChatScroll";
 import ChannelIcon from "../../../common/component/ChannelIcon";
@@ -11,6 +12,7 @@ import Layout from "../Layout";
 import { renderMessageFragment } from "../utils";
 import EditIcon from "../../../assets/icons/edit.svg";
 // import alertIcon from "../../../assets/icons/alert.svg?url";
+import IconFav from "../../../assets/icons/bookmark.svg";
 import IconPeople from "../../../assets/icons/people.svg";
 import IconPin from "../../../assets/icons/pin.svg";
 // import searchIcon from "../../../assets/icons/search.svg?url";
@@ -130,6 +132,37 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
                     data-count={pinCount}
                   >
                     <IconPin />
+                  </li>
+                </Tippy>
+              </Tooltip>
+              <Tooltip
+                tip="Favorite"
+                placement="left"
+                disabled={toolVisible == "favorite"}
+              >
+                <Tippy
+                  onShow={() => {
+                    setToolVisible("favorite");
+                  }}
+                  onHide={() => {
+                    setToolVisible("");
+                  }}
+                  delay={[0, 0]}
+                  duration={0}
+                  placement="left-start"
+                  popperOptions={{ strategy: "fixed" }}
+                  offset={[0, 180]}
+                  interactive
+                  trigger="click"
+                  content={<FavList cid={cid} />}
+                >
+                  <li
+                    className={`tool ${
+                      toolVisible == "favorite" ? "active" : ""
+                    } `}
+                    data-count={pinCount}
+                  >
+                    <IconFav />
                   </li>
                 </Tippy>
               </Tooltip>

@@ -7,6 +7,7 @@ import OAuthPage from "./oauth";
 import LoginPage from "./login";
 import HomePage from "./home";
 import ChatPage from "./chat";
+import FavoritesPage from "./favs";
 import ContactsPage from "./contacts";
 import RequireAuth from "../common/component/RequireAuth";
 import RequireNoAuth from "../common/component/RequireNoAuth";
@@ -78,6 +79,7 @@ const PageRoutes = () => {
             <Route index element={<ContactsPage />} />
             <Route path=":user_id" element={<ContactsPage />} />
           </Route>
+          <Route path="favs" element={<FavoritesPage />}></Route>
           <Route
             path="files"
             element={<ResourceManagement fileMessages={fileMessages} />}

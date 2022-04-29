@@ -45,7 +45,7 @@ export default function ForwardModal({ mids, closeModal }) {
   };
   const handleForward = async () => {
     await forwardMessage({
-      mids: mids,
+      mids: mids.map((mid) => +mid),
       users: selectedMembers,
       channels: selectedChannels,
     });

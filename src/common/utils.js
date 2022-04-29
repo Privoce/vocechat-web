@@ -1,4 +1,4 @@
-import { FILE_IMAGE_SIZE } from "../app/config";
+import BASE_URL, { FILE_IMAGE_SIZE, ContentTypes } from "../app/config";
 import IconPdf from "../assets/icons/file.pdf.svg";
 import IconAudio from "../assets/icons/file.audio.svg";
 import IconVideo from "../assets/icons/file.video.svg";
@@ -186,4 +186,50 @@ export const getFileIcon = (type, name = "") => {
       break;
   }
   return icon;
+};
+export const normalizeArchiveData = (data = null, filePath = null) => {
+  if (!data || !filePath) return [];
+  const { messages, users } = data;
+  return messages.map(
+    ({
+      source,
+      mid,
+      content,
+      file_id,
+      thumbnail_id,
+      content_type,
+      properties,
+      from_user,
+    }) => {
+      const transformedContent =
+        content_type == ContentTypes.file
+          ? `${BASE_URL}/resource/archive/attachment?file_path=${filePath}&attachment_id=${file_id}`
+          : content;
+      const thumbnail =
+        content_type == ContentTypes.file
+          ? `${BASE_URL}/resource/archive/attachment?file_path=${filePath}&attachment_id=${thumbnail_id}`
+          : "";
+      const download =
+        content_type == ContentTypes.file
+          ? `${BASE_URL}/resource/archive/attachment?file_path=${filePath}&attachment_id=${file_id}&download=true`
+          : "";
+      let user = { ...(users[from_user] || {}) };
+      user.avatar =
+        user.avatar !== null
+          ? `${BASE_URL}/resource/archive/attachment?file_path=${filePath}&attachment_id=${user.avatar}`
+          : "";
+
+      console.log("user data", transformedContent, user);
+      return {
+        source,
+        from_mid: mid,
+        user,
+        content: transformedContent,
+        content_type,
+        properties,
+        download,
+        thumbnail,
+      };
+    }
+  );
 };

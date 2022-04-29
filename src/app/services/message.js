@@ -1,11 +1,14 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-// import { batch } from "react-redux";
-
 import { ContentTypes } from "../config";
 import { updateReadChannels, updateReadUsers } from "../slices/footprint";
-import { fullfillFavorites, populateFavorite } from "../slices/favorites";
+import {
+  fullfillFavorites,
+  populateFavorite,
+  addFavorite,
+  deleteFavorite,
+} from "../slices/favorites";
 import { onMessageSendStarted } from "./handlers";
-
+import { normalizeArchiveData } from "../../common/utils";
 // import { updateMessage } from "../slices/message";
 import baseQuery from "./base.query";
 
@@ -97,6 +100,30 @@ export const messageApi = createApi({
         method: "POST",
         body: { mid_list: mids },
       }),
+      async onQueryStarted(mids, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          const { created_at, id } = data;
+          dispatch(addFavorite({ id, created_at }));
+          dispatch(messageApi.endpoints.getFavoriteDetails.initiate(id));
+        } catch (err) {
+          console.log("get favorite list error", err);
+        }
+      },
+    }),
+    removeFavorite: builder.query({
+      query: (id) => ({
+        url: `/favorite/${id}`,
+        method: "DELETE",
+      }),
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          dispatch(deleteFavorite(id));
+        } catch (err) {
+          console.log("get favorite list error", err);
+        }
+      },
     }),
     getFavoriteDetails: builder.query({
       query: (id) => ({
@@ -105,7 +132,8 @@ export const messageApi = createApi({
       async onQueryStarted(id, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          dispatch(populateFavorite({ id, data }));
+          const messages = normalizeArchiveData(data, id);
+          dispatch(populateFavorite({ id, messages }));
         } catch (err) {
           console.log("get favorite list error", err);
         }
@@ -166,6 +194,7 @@ export const messageApi = createApi({
 });
 
 export const {
+  useLazyRemoveFavoriteQuery,
   useUnpinMessageMutation,
   useLazyGetFavoritesQuery,
   useFavoriteMessageMutation,

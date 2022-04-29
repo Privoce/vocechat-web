@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useKey } from "rooks";
 import useDeleteMessage from "../../../common/hook/useDeleteMessage";
+import useFavMessage from "../../../common/hook/useFavMessage";
 import { updateSelectMessages } from "../../../app/slices/ui";
-import { useFavoriteMessageMutation } from "../../../app/services/message";
 import IconForward from "../../../assets/icons/forward.svg";
 import IconBookmark from "../../../assets/icons/bookmark.svg";
 import IconDelete from "../../../assets/icons/delete.svg";
@@ -40,7 +40,7 @@ const Styled = styled.div`
 export default function Operations({ context, id }) {
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const { canDelete } = useDeleteMessage();
-  const [favoriteMsg] = useFavoriteMessageMutation();
+  const { addFavorite } = useFavMessage(id);
   const mids = useSelector(
     (store) => store.ui.selectMessages[`${context}_${id}`]
   );
@@ -50,7 +50,7 @@ export default function Operations({ context, id }) {
     dispatch(updateSelectMessages({ context, id, operation: "reset" }));
   };
   const handleFav = async () => {
-    await favoriteMsg(mids);
+    await addFavorite(mids);
     dispatch(updateSelectMessages({ context, id, operation: "reset" }));
     toast.success("Messages Saved!");
   };

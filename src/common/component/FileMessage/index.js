@@ -103,7 +103,7 @@ export default function FileMessage({
   if (!properties) return null;
   const icon = getFileIcon(content_type, name);
 
-  if (!content || !fromUser || !name) return null;
+  if (!content || !name) return null;
 
   console.log("file content", content, name, content_type, size);
   const sending = uploadingFile || isSending;
@@ -134,9 +134,11 @@ export default function FileMessage({
               <>
                 <i className="size">{formatBytes(size)}</i>
                 <i className="time">{dayjs(created_at).fromNow()}</i>
-                <i className="from">
-                  by <strong>{fromUser.name}</strong>
-                </i>
+                {fromUser && (
+                  <i className="from">
+                    by <strong>{fromUser.name}</strong>
+                  </i>
+                )}
               </>
             )}
           </span>

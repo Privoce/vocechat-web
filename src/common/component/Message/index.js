@@ -138,6 +138,7 @@ function Message({
       </div>
       {!edit && !readOnly && (
         <Commands
+          content_type={content_type}
           context={context}
           contextId={contextId}
           mid={mid}
