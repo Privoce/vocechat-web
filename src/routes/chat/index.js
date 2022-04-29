@@ -7,11 +7,11 @@ import { AiOutlineCaretDown } from "react-icons/ai";
 
 import StyledWrapper from "./styled";
 import AddIcon from "../../assets/icons/add.svg";
+import BlankPlaceholder from "../../common/component/BlankPlaceholder";
 import Server from "../../common/component/Server";
 import Tooltip from "../../common/component/Tooltip";
 // import Contact from "../../common/component/Contact";
 import CurrentUser from "../../common/component/CurrentUser";
-import IconLogo from "../../assets/icons/rustchat.logo.svg";
 import ChannelChat from "./ChannelChat";
 import DMChat from "./DMChat";
 import ChannelList from "./ChannelList";
@@ -104,7 +104,7 @@ export default function ChatPage() {
           <CurrentUser />
         </div>
         <div className={`right ${placeholderVisible ? "placeholder" : ""}`}>
-          {placeholderVisible && <IconLogo />}
+          {placeholderVisible && <BlankPlaceholder />}
           {channel_id && (
             <ChannelChat cid={channel_id} dropFiles={channelDropFiles} />
           )}

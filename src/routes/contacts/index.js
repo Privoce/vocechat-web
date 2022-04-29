@@ -5,9 +5,9 @@ import Search from "../../common/component/Search";
 import Contact from "../../common/component/Contact";
 // import CurrentUser from "../../common/component/CurrentUser";
 import Profile from "../../common/component/Profile";
-import IconLogo from "../../assets/icons/rustchat.logo.svg";
 
 import StyledWrapper from "./styled";
+import BlankPlaceholder from "../../common/component/BlankPlaceholder";
 
 export default function ContactsPage() {
   const { user_id } = useParams();
@@ -38,7 +38,7 @@ export default function ContactsPage() {
         </div>
       ) : (
         <div className="right placeholder">
-          <IconLogo />
+          <BlankPlaceholder type="contact" />
         </div>
       )}
     </StyledWrapper>
