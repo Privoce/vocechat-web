@@ -1,4 +1,19 @@
 :root{
     /* border radius */
-    --br:8px
+    --br:8px;
+    --rustchat-navs-bg:#E5E7EB;
+    --rustchat-body-bg:#F5F6F7;
+    --rustchat-chat-bg:#fff;
+    --rustchat-channel-text-color:#1C1C1E;
+    --rustchat-msg-text-color:#374151;
 }
+/* @media (prefers-color-scheme: dark) {
+    :root{
+        --br:8px;
+        --rustchat-navs-bg:#121926;
+        --rustchat-body-bg:#1F2A37;
+        --rustchat-chat-bg:#384250;
+        --rustchat-channel-text-color:#fff;
+        --rustchat-msg-text-color:#fff;
+    }
+  } */
