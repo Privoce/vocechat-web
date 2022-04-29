@@ -44,9 +44,16 @@ const StyledWrapper = styled.div`
         line-height: 20px;
         color: #4b5563;
         border-radius: 8px;
-        &:hover,
-        &.active {
+        svg.fav path {
+          fill: #344054;
+        }
+        &:hover {
           background-color: rgba(0, 0, 0, 0.08);
+        }
+        &.active {
+          svg path {
+            fill: #55c7ec;
+          }
         }
       }
     }

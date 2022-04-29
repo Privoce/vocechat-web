@@ -151,6 +151,13 @@ const StyledWrapper = styled.div`
   > .right {
     border-radius: 0 16px 16px 0;
     width: 100%;
+    &.placeholder {
+      background-color: #fff;
+      height: calc(100vh - 22px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 `;
 

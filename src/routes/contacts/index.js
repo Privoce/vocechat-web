@@ -5,6 +5,7 @@ import Search from "../../common/component/Search";
 import Contact from "../../common/component/Contact";
 // import CurrentUser from "../../common/component/CurrentUser";
 import Profile from "../../common/component/Profile";
+import IconLogo from "../../assets/icons/rustchat.logo.svg";
 
 import StyledWrapper from "./styled";
 
@@ -31,9 +32,13 @@ export default function ContactsPage() {
         </div>
         {/* <CurrentUser /> */}
       </div>
-      {user_id && (
+      {user_id ? (
         <div className="right">
           <Profile uid={user_id} />
+        </div>
+      ) : (
+        <div className="right placeholder">
+          <IconLogo />
         </div>
       )}
     </StyledWrapper>

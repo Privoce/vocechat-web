@@ -40,6 +40,10 @@ const StyledWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: flex-start;
+    &.placeholder {
+      height: 100%;
+      align-items: center;
+    }
   }
 `;
 

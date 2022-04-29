@@ -11,6 +11,7 @@ import Server from "../../common/component/Server";
 import Tooltip from "../../common/component/Tooltip";
 // import Contact from "../../common/component/Contact";
 import CurrentUser from "../../common/component/CurrentUser";
+import IconLogo from "../../assets/icons/rustchat.logo.svg";
 import ChannelChat from "./ChannelChat";
 import DMChat from "./DMChat";
 import ChannelList from "./ChannelList";
@@ -43,6 +44,7 @@ export default function ChatPage() {
   const tmpUid =
     sessionUids.findIndex((i) => i == user_id) > -1 ? null : user_id;
   console.log("temp uid", tmpUid);
+  const placeholderVisible = !channel_id && !user_id;
   return (
     <>
       {channelModalVisible && (
@@ -101,7 +103,8 @@ export default function ChatPage() {
           </div>
           <CurrentUser />
         </div>
-        <div className="right">
+        <div className={`right ${placeholderVisible ? "placeholder" : ""}`}>
+          {placeholderVisible && <IconLogo />}
           {channel_id && (
             <ChannelChat cid={channel_id} dropFiles={channelDropFiles} />
           )}

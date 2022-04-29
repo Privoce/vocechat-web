@@ -1,8 +1,8 @@
 import styled from "styled-components";
 const StyledMenu = styled.ul`
-  /* z-index: 999; */
   display: flex;
   flex-direction: column;
+  gap: 2px;
   padding: 4px;
   background-color: #fff;
   box-shadow: 0px 20px 25px 20px rgba(31, 41, 55, 0.1),
@@ -11,10 +11,10 @@ const StyledMenu = styled.ul`
   .item {
     white-space: nowrap;
     cursor: pointer;
-    border-radius: 3px;
-    padding: 8px;
+    border-radius: 6px;
+    padding: 6px 8px;
     font-style: normal;
-    font-weight: 600;
+    font-weight: 500;
     font-size: 14px;
     line-height: 20px;
     color: #616161;
@@ -28,6 +28,10 @@ const StyledMenu = styled.ul`
     }
     &.danger {
       color: #a11043;
+      &:hover {
+        background-color: #b42318;
+        color: #fff;
+      }
     }
   }
 `;
