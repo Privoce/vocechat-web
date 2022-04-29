@@ -139,7 +139,7 @@ export default function Overview() {
               Minimum size is 128x128, We recommend at least 512x512 for the
               server. Max size limited to 5M.
             </div>
-            <button className="btn">Upload Image</button>
+            {/* <button className="btn">Upload Image</button> */}
           </div>
         )}
       </div>

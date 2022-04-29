@@ -34,5 +34,5 @@ const Styled = styled.input`
   }
 `;
 export default function StyledCheckbox(props) {
-  return <Styled {...props} type="checkbox" />;
+  return <Styled readOnly {...props} type="checkbox" />;
 }
