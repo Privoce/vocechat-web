@@ -3,6 +3,8 @@ import styled from "styled-components";
 import TextareaAutosize from "react-textarea-autosize";
 import { useKey } from "rooks";
 import { useEditMessageMutation } from "../../../app/services/message";
+import { useSelector } from "react-redux";
+import { ContentTypes } from "../../../app/config";
 const StyledWrapper = styled.div`
   width: 100%;
   .input {
@@ -43,11 +45,12 @@ const StyledWrapper = styled.div`
     }
   }
 `;
-export default function EditMessage({ content, mid, cancelEdit }) {
+export default function EditMessage({ mid, cancelEdit }) {
   const inputRef = useRef();
+  const msg = useSelector((store) => store.message[mid] || {});
   const [shift, setShift] = useState(false);
   const [enter, setEnter] = useState(false);
-  const [currMsg, setCurrMsg] = useState(content);
+  const [currMsg, setCurrMsg] = useState(msg.content);
   const [edit, { isLoading: isEditing, isSuccess }] = useEditMessageMutation();
   useEffect(() => {
     if (isSuccess) {
@@ -85,8 +88,13 @@ export default function EditMessage({ content, mid, cancelEdit }) {
     setEnter(e.key === "Enter");
   };
   const handleSave = () => {
-    edit({ mid, content: currMsg });
+    edit({
+      mid,
+      content: currMsg,
+      type: msg.content_type == ContentTypes.markdown ? "markdown" : "text",
+    });
   };
+  if (!msg) return null;
   return (
     <StyledWrapper>
       <div className="input">

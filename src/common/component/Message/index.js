@@ -114,11 +114,7 @@ function Message({
         <div className={`down ${sending ? "sending" : ""}`}>
           {reply_mid && <Reply mid={reply_mid} />}
           {edit ? (
-            <EditMessage
-              content={content}
-              mid={mid}
-              cancelEdit={toggleEditMessage}
-            />
+            <EditMessage mid={mid} cancelEdit={toggleEditMessage} />
           ) : (
             renderContent({
               context,
