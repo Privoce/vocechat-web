@@ -3189,6 +3189,25 @@ aggregate-error@^3.0.0:
     clean-stack "^2.0.0"
     indent-string "^4.0.0"
 
+agora-rtc-react@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.npmjs.org/agora-rtc-react/-/agora-rtc-react-1.1.1.tgz#3216349cc9e5f13a4b6a51db2aec0cac680fb2dc"
+  integrity sha512-0KTgAlVNEFyM6WH2F0Xxa+JhvP+erh0/7mCT7455TF6Wsnu83SKXtD7E8n6s3YsHdwciZfvUntQ9/ApRmipl+w==
+  dependencies:
+    agora-rtc-sdk-ng "^4.3.0"
+
+agora-rtc-sdk-ng@^4.3.0:
+  version "4.11.0"
+  resolved "https://registry.npmjs.org/agora-rtc-sdk-ng/-/agora-rtc-sdk-ng-4.11.0.tgz#57e422ed5e1f83af674abc03e0429bdf0e5e2c31"
+  integrity sha512-T4eE1RwBXOuJgimeqqnNR/hD6pTHowJrMN2HJqD6YTwMI/V7ZTKNYiETNRtykyJ7VIPCVlvVcC9yZgHBJb5vrg==
+  dependencies:
+    agora-rte-extension "^1.0.22"
+
+agora-rte-extension@^1.0.22:
+  version "1.0.23"
+  resolved "https://registry.npmjs.org/agora-rte-extension/-/agora-rte-extension-1.0.23.tgz#54a7215fd2cdcf2553d83570530950054f1e59a6"
+  integrity sha512-X2cGBg+L5ZJIFU91qvMASvRsBfg1HXTktVG3YROw9wxHsILSI7jgF9R9XraLc3fNX/UjovaYAlUW+hiJe0v6Xw==
+
 ajv-formats@^2.1.1:
   version "2.1.1"
   resolved "http://mirrors.cloud.tencent.com/npm/ajv-formats/-/ajv-formats-2.1.1.tgz#6e669400659eb74973bbf2e33327180a0996b520"
