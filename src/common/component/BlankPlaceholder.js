@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import ChannelModal from "../component/ChannelModal";
+import ServerInviteModal from "../component/ServerInviteModal";
 import IconChat from "../../assets/icons/placeholder.chat.svg";
 import IconAsk from "../../assets/icons/placeholder.question.svg";
 import IconInvite from "../../assets/icons/placeholder.invite.svg";
@@ -66,6 +67,7 @@ const Styled = styled.div`
 `;
 export default function BlankPlaceholder({ type = "chat" }) {
   const server = useSelector((store) => store.server);
+  const [inviteModalVisible, setInviteModalVisible] = useState(false);
   const [createChannelVisible, setCreateChannelVisible] = useState(false);
   const [contactListVisible, setContactListVisible] = useState(false);
   const toggleChannelModalVisible = () => {
@@ -73,6 +75,9 @@ export default function BlankPlaceholder({ type = "chat" }) {
   };
   const toggleContactListVisible = () => {
     setContactListVisible((prev) => !prev);
+  };
+  const toggleInviteModalVisible = () => {
+    setInviteModalVisible((prev) => !prev);
   };
   const chatTip =
     type == "chat"
@@ -91,10 +96,10 @@ export default function BlankPlaceholder({ type = "chat" }) {
           </p>
         </div>
         <div className="boxes">
-          <NavLink className="box" to={"#"}>
+          <div className="box" onClick={toggleInviteModalVisible}>
             <IconInvite className="icon" />
             <div className="txt">Invite your friends or teammates</div>
-          </NavLink>
+          </div>
           <div className="box" onClick={chatHanlder}>
             <IconChat className="icon" />
             <div className="txt">{chatTip}</div>
@@ -114,6 +119,9 @@ export default function BlankPlaceholder({ type = "chat" }) {
       )}
       {contactListVisible && (
         <ContactsModal closeModal={toggleContactListVisible} />
+      )}
+      {inviteModalVisible && (
+        <ServerInviteModal closeModal={toggleInviteModalVisible} />
       )}
     </>
   );
