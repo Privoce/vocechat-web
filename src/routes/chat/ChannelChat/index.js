@@ -59,11 +59,13 @@ export default function ChannelChat({ cid = '', dropFiles = [] }) {
   // };
   const toggleMembersVisible = () => {
     setMembersVisible((prev) => !prev);
+    setVideoCallVisiable(false);
   };
   const toggleAddVisible = () => {
     setAddMemberModalVisible((prev) => !prev);
   };
   const toggleVideoCallVisible = () => {
+    setMembersVisible(false);
     setVideoCallVisiable((prev) => !prev);
   };
 
