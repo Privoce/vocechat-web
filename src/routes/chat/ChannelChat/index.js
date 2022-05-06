@@ -130,7 +130,7 @@ export default function ChannelChat({ cid = '', dropFiles = [] }) {
                   offset={[0, 80]}
                   interactive
                   trigger="click"
-                //  content={<PinList id={cid} />}
+                // content={<PinList id={cid} />}
                 >
                   <li
                     className={`tool ${pinCount > 0 ? 'badge' : ''} ${toolVisible == 'pin' ? 'active' : ''} `}

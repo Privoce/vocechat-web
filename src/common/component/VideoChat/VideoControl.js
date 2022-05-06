@@ -34,7 +34,7 @@ const VideoControlWrapper = styled.div`
   text-align: center;
  }
 `;
-export default function VideoControl({ tracks }) {
+export default function VideoControl({ tracks, ScreenComponent }) {
     const [openVideo, setOpenVideo] = useState(true);
     const [openMic, setOpenMic] = useState(true);
     const [openScreenShare, setOpenScreenShare] = useState(false);
@@ -77,6 +77,7 @@ export default function VideoControl({ tracks }) {
                 <span className="magaButton">
                     <img className="icon" src={chatCloseIcon} />
                 </span>
+                {openScreenShare && <ScreenComponent />}
             </div>
         </VideoControlWrapper>
     );

@@ -59,7 +59,7 @@ export default function VideoCallListCell({
 }) {
     return (
         <Cell>
-            {!showVideo && (
+            {!(showVideo && track) && (
                 <div className="line">
                     <div className="avatarBox">
                         <Avatar className="avatar" url={avatar} name={username} type="user" />
@@ -72,7 +72,7 @@ export default function VideoCallListCell({
                     </div>
                 </div>
             )}
-            {showVideo && track && (
+            {(showVideo && track) && (
                 <div>
                     <div className="video">
                         <AgoraVideoPlayer videoTrack={track} style={{ height: '180px', width: '100%' }} />

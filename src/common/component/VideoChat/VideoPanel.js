@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import {
     createClient,
     createMicrophoneAndCameraTracks,
+    createScreenVideoTrack,
     AgoraVideoPlayer
 } from "agora-rtc-react";
 import VideoCallListCell from './VideoCallListCell';
@@ -9,6 +10,7 @@ import VideoControl from './VideoControl';
 import FullScreenIcon from '../../../assets/icons/fullscreen.svg?url';
 import { useEffect, useState } from 'react';
 import { toggleChat, addUser, removeUser, selectUsers } from '../../../app/slices/videocall';
+import ScreenSharing from './ScreenShare';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTrack, clientDebugger } from './helpers';
 import Owner from './Owner';
@@ -63,7 +65,8 @@ const appId = "020c861b44424b0eb0ff768ee9bffda2";
 
 function UserList(users) {
     return users ? users.map(item => {
-        return <VideoCallListCell key={item.uid} tracks={item.videoTrack} username={item.uid} showVideo={true}  ></VideoCallListCell>;
+        console.log(item);
+        return <VideoCallListCell key={item.uid} tracks={item.videoTrack} username={item.uid} showVideo={false}  ></VideoCallListCell>;
     }) : null;
 }
 
@@ -78,10 +81,27 @@ export default function VideoPanel({ onFullScreen, channel }) {
         let init = async (name) => {
             client.on("user-published", async (user, mediaType) => {
                 await client.subscribe(user, mediaType);
-                setUsers((prevUsers) => {
-                    return [...prevUsers, user];
-                });
+                if (mediaType == "video") {
+                    setUsers((prevUsers) => {
+                        return [...prevUsers, user];
+                    });
+                }
+                if (mediaType == "audio") {
+                    user.audioTrack?.play();
+                }
             });
+            client.on("user-unpublished", (user, type) => {
+                console.log("unpublished", user, type);
+                if (type === "audio") {
+                    user.audioTrack?.stop();
+                }
+                if (type === "video") {
+                    setUsers((prevUsers) => {
+                        return prevUsers.filter((User) => User.uid !== user.uid);
+                    });
+                }
+            });
+
             client.on("user-left", (user) => {
                 setUsers((prevUsers) => {
                     return prevUsers.filter((User) => User.uid !== user.uid);
@@ -95,9 +115,6 @@ export default function VideoPanel({ onFullScreen, channel }) {
             init(channel);
         }
     }, [ready, tracks]);
-    function openScreenShare() {
-
-    }
     return (
         <>
             {ready && (<VideoPanelWrapper>
@@ -108,7 +125,7 @@ export default function VideoPanel({ onFullScreen, channel }) {
                 {ready && tracks && <Owner track={tracks[1]} />}
                 {/* other user list */}
                 {UserList(users)}
-                <VideoControl tracks={tracks} onScreenShare={openScreenShare} />
+                <VideoControl tracks={tracks} client={client} ScreenComponent={ScreenSharing} onScreenSharingStopped={() => console.log("[agora] stop")} />
             </VideoPanelWrapper>)}
             {!ready && <JoinPanel />}
         </>
