@@ -34,7 +34,7 @@ export default function ServerInviteModal({ closeModal }) {
     <Modal>
       <Styled>
         <h2 className="title">
-          Invite friends to #{server.name}
+          Invite friends to {server.name}
           <CloseIcon className="close" onClick={closeModal} />
         </h2>
         <InviteByEmail />

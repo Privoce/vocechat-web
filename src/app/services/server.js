@@ -122,7 +122,7 @@ export const serverApi = createApi({
           "content-type": "text/plain",
           accept: "text/plain",
         },
-        url: `/admin/user/create_invite_link?expired_in=${expired_in}`,
+        url: `/admin/system/create_invite_link?expired_in=${expired_in}`,
         responseHandler: (response) => response.text(),
       }),
       transformResponse: (link) => {
