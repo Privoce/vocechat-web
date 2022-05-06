@@ -35,7 +35,7 @@ const StyledPicker = styled.div`
   }
 `;
 
-export default function EmojiPicker({ mid, hidePicker }) {
+export default function ReactionPicker({ mid, hidePicker }) {
   // const wrapperRef = useRef(null);
   const [reactMessage, { isLoading }] = useReactMessageMutation();
   const { reactionData, currUid } = useSelector((store) => {

@@ -4564,10 +4564,13 @@ email-addresses@^3.0.1:
   resolved "http://mirrors.cloud.tencent.com/npm/email-addresses/-/email-addresses-3.1.0.tgz#cabf7e085cbdb63008a70319a74e6136188812fb"
   integrity sha512-k0/r7GrWVL32kZlGwfPNgB2Y/mMXVTq/decgLczm/j34whdaspNrZO8CnXPf1laaHxI6ptUlsnAxN+UAPw+fzg==
 
-emoji-mart@^5.0.0:
-  version "5.0.0"
-  resolved "http://mirrors.cloud.tencent.com/npm/emoji-mart/-/emoji-mart-5.0.0.tgz#1c16bf4e675c59c08a73b11e385cf1cc4d425b27"
-  integrity sha512-4O75LxV/RPOrtC9+0qhHhfPgJgW/Kwc4zv15h190liC3vJ/5RVibIrnPlDZ0xqYx0bPVOy3W/QcDTZY+jq1qOw==
+emoji-mart@3.0.1:
+  version "3.0.1"
+  resolved "http://mirrors.cloud.tencent.com/npm/emoji-mart/-/emoji-mart-3.0.1.tgz#9ce86706e02aea0506345f98464814a662ca54c6"
+  integrity sha512-sxpmMKxqLvcscu6mFn9ITHeZNkGzIvD0BSNFE/LJESPbCA8s1jM6bCDPjWbV31xHq7JXaxgpHxLB54RCbBZSlg==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    prop-types "^15.6.0"
 
 emoji-regex@^8.0.0:
   version "8.0.0"
@@ -6261,17 +6264,17 @@ lines-and-columns@^1.1.6:
   resolved "https://mirrors.cloud.tencent.com/npm/lines-and-columns/-/lines-and-columns-1.2.4.tgz#eca284f75d2965079309dc0ad9255abb2ebc1632"
   integrity sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==
 
+linkify-it@3.0.3:
+  version "3.0.3"
+  resolved "http://mirrors.cloud.tencent.com/npm/linkify-it/-/linkify-it-3.0.3.tgz#a98baf44ce45a550efb4d49c769d07524cc2fa2e"
+  integrity sha512-ynTsyrFSdE5oZ/O9GEf00kPngmOfVwazR5GKDq6EYfhlpFug3J2zybX56a2PRRpc9P+FuSoGNAwjlbDs9jJBPQ==
+  dependencies:
+    uc.micro "^1.0.1"
+
 linkify-it@^2.0.3:
   version "2.2.0"
   resolved "http://mirrors.cloud.tencent.com/npm/linkify-it/-/linkify-it-2.2.0.tgz#e3b54697e78bf915c70a38acd78fd09e0058b1cf"
   integrity sha512-GnAl/knGn+i1U/wjBz3akz2stz+HrHLsxMwHQGofCDfPvlf+gDKN58UtfmUquTY4/MXeE2x7k19KQmeoZi94Iw==
-  dependencies:
-    uc.micro "^1.0.1"
-
-linkify-it@^4.0.1:
-  version "4.0.1"
-  resolved "http://mirrors.cloud.tencent.com/npm/linkify-it/-/linkify-it-4.0.1.tgz#01f1d5e508190d06669982ba31a7d9f56a5751ec"
-  integrity sha512-C7bfi1UZmoj8+PQx22XyeXCuBlokoyWQL5pWSP+EI6nzRylyThouddufc2c1NDIcP9k5agmN9fLpA7VNJfIiqw==
   dependencies:
     uc.micro "^1.0.1"
 

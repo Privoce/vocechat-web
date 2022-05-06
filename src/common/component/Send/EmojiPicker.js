@@ -36,6 +36,7 @@ export default function EmojiPicker({ selectEmoji }) {
     setVisible((prev) => !prev);
   };
   const handleSelect = (emoji) => {
+    console.log("semojii", emoji);
     selectEmoji(emoji.native);
   };
   useOutsideClick(

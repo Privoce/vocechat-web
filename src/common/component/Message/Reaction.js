@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Tippy from "@tippyjs/react";
 import { hideAll } from "tippy.js";
 import Emoji from "../Emoji";
-import EmojiPicker from "./EmojiPicker";
+import ReactionPicker from "./ReactionPicker";
 import Tooltip from "../Tooltip";
 import { useReactMessageMutation } from "../../../app/services/message";
 // import { Emojis } from "../../../app/config";
@@ -105,7 +105,7 @@ export default function Reaction({ mid, reactions = null }) {
           interactive
           placement="right-start"
           trigger="click"
-          content={<EmojiPicker mid={mid} hidePicker={hideAll} />}
+          content={<ReactionPicker mid={mid} hidePicker={hideAll} />}
         >
           <button className="add"></button>
         </Tippy>
