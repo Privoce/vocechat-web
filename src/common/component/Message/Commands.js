@@ -62,170 +62,171 @@ const StyledCmds = styled.ul`
  }
 `;
 export default function Commands({
- content_type = ContentTypes.text,
- context = 'user',
- contextId = 0,
- mid = 0,
- from_uid = 0,
- toggleEditMessage
+    content_type = ContentTypes.text,
+    context = 'user',
+    contextId = 0,
+    mid = 0,
+    from_uid = 0,
+    toggleEditMessage
 }) {
- const { addFavorite, isFavorited } = useFavMessage(context == 'channel' ? contextId : null);
- const [mids, setMids] = useState([]);
- const dispatch = useDispatch();
- const [pinModalVisible, setPinModalVisible] = useState(false);
- const [deleteModalVisible, setDeleteModalVisible] = useState(false);
- const [forwardModalVisible, setForwardModalVisible] = useState(false);
- const [tippyVisible, setTippyVisible] = useState(false);
- const { canPin, pins, unpinMessage, isUnpinSuccess } = usePinMessage(
-  context == 'channel' ? contextId : undefined
- );
- const currUid = useSelector((store) => store.authData.uid);
- const cmdsRef = useRef(null);
- const handleReply = (fromMenu) => {
-  if (contextId) {
-   dispatch(addReplyingMessage({ id: contextId, mid }));
-  }
-  if (fromMenu) {
-   hideAll();
-  }
- };
- const toggleForwardModal = () => {
-  hideAll();
-  console.log('midss', mids);
-  setForwardModalVisible((prev) => !prev);
- };
- const toggleDeleteModal = () => {
-  hideAll();
-  setDeleteModalVisible((prev) => !prev);
- };
- const togglePinModal = () => {
-  hideAll();
-  setPinModalVisible((prev) => !prev);
- };
- const handleTippyVisible = (visible = true) => {
-  setTippyVisible(visible);
- };
- const handleSelect = (mid) => {
-  dispatch(updateSelectMessages({ context, id: contextId, data: mid }));
-  hideAll();
- };
- const handleUnpin = () => {
-  hideAll();
-  unpinMessage(mid);
- };
- const handleAddFav = async () => {
-  hideAll();
-  const faved = isFavorited(mid);
-  if (faved) {
-   toast.success('Favorited!');
-   return;
-  }
-  await addFavorite(mid);
-  toast.success('Added Favorites!');
- };
- useEffect(() => {
-  if (isUnpinSuccess) {
-   toast.success('Unpin Message Successfully!');
-  }
- }, [isUnpinSuccess]);
+    const { addFavorite, isFavorited } = useFavMessage(context == 'channel' ? contextId : null);
+    const [mids, setMids] = useState([]);
+    const dispatch = useDispatch();
+    const [pinModalVisible, setPinModalVisible] = useState(false);
+    const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+    const [forwardModalVisible, setForwardModalVisible] = useState(false);
+    const [tippyVisible, setTippyVisible] = useState(false);
+    const { canPin, pins, unpinMessage, isUnpinSuccess } = usePinMessage(
+        context == 'channel' ? contextId : undefined
+    );
+    const currUid = useSelector((store) => store.authData.uid);
+    const cmdsRef = useRef(null);
+    const handleReply = (fromMenu) => {
+        if (contextId) {
+            dispatch(addReplyingMessage({ id: contextId, mid }));
+        }
+        if (fromMenu) {
+            hideAll();
+        }
+    };
+    const toggleForwardModal = () => {
+        hideAll();
+        console.log('midss', mids);
+        setForwardModalVisible((prev) => !prev);
+    };
+    const toggleDeleteModal = () => {
+        hideAll();
+        setDeleteModalVisible((prev) => !prev);
+    };
+    const togglePinModal = () => {
+        hideAll();
+        setPinModalVisible((prev) => !prev);
+    };
+    const handleTippyVisible = (visible = true) => {
+        setTippyVisible(visible);
+    };
+    const handleSelect = (mid) => {
+        dispatch(updateSelectMessages({ context, id: contextId, data: mid }));
+        hideAll();
+    };
+    const handleUnpin = () => {
+        hideAll();
+        unpinMessage(mid);
+    };
+    const handleAddFav = async () => {
+        hideAll();
+        const faved = isFavorited(mid);
+        if (faved) {
+            toast.success('Favorited!');
+            return;
+        }
+        await addFavorite(mid);
+        toast.success('Added Favorites!');
+    };
+    useEffect(() => {
+        if (isUnpinSuccess) {
+            toast.success('Unpin Message Successfully!');
+        }
+    }, [isUnpinSuccess]);
 
- useEffect(() => {
-  if (content_type == ContentTypes.archive) {
-   // forward message
-   const forwardEle = document.querySelector(`[data-msg-mid='${mid}'] .down [data-forwarded-mids]`);
-   if (forwardEle) {
-    const mids = forwardEle.dataset.forwardedMids.split(',');
-    setMids(mids);
-   }
-  } else {
-   setMids([mid]);
-  }
- }, [mid, content_type]);
+    useEffect(() => {
+        if (content_type == ContentTypes.archive) {
+            // forward message
+            const forwardEle = document.querySelector(`[data-msg-mid='${mid}'] .down [data-forwarded-mids]`);
+            if (forwardEle) {
+                const mids = forwardEle.dataset.forwardedMids.split(',');
+                setMids(mids);
+            }
+        } else {
+            setMids([mid]);
+        }
+    }, [mid, content_type]);
 
- const enablePin = context == 'channel' && canPin;
- const enableEdit =
-  currUid == from_uid && [ContentTypes.text, ContentTypes.markdown].includes(content_type);
- const enableReply = currUid != from_uid;
- const pinned = enablePin ? pins.findIndex((p) => p.mid == mid) > -1 : false;
- return (
-  <StyledCmds ref={cmdsRef} className={`cmds ${tippyVisible ? 'visible' : ''}`}>
-   <Tippy
-    duration={0}
-    delay={[0, 0]}
-    onShow={handleTippyVisible.bind(null, true)}
-    onHide={handleTippyVisible.bind(null, false)}
-    interactive
-    placement="left-start"
-    trigger="click"
-    content={<EmojiPicker mid={mid} hidePicker={hideAll} />}
-   >
-    <li className="cmd">
-     <Tooltip placement="top" tip="Add Reaction">
-      <img src={reactIcon} className="toggler" alt="icon emoji" />
-     </Tooltip>
-    </li>
-   </Tippy>
-   {enableEdit && (
-    <li className="cmd" onClick={toggleEditMessage}>
-     <Tooltip placement="top" tip="Edit">
-      <img src={editIcon} alt="icon edit" />
-     </Tooltip>
-    </li>
-   )}
-   {enableReply && (
-    <li className="cmd" onClick={handleReply}>
-     <Tooltip placement="top" tip="Reply">
-      <img src={replyIcon} alt="icon reply" />
-     </Tooltip>
-    </li>
-   )}
-   <li className="cmd fav" onClick={handleAddFav}>
-    <Tooltip placement="top" tip="Add to Favorites">
-     <IconBookmark />
-    </Tooltip>
-   </li>
-   <Tippy
-    onShow={handleTippyVisible.bind(null, true)}
-    onHide={handleTippyVisible.bind(null, false)}
-    interactive
-    popperOptions={{ strategy: 'fixed' }}
-    placement="left-start"
-    trigger="click"
-    content={
-     <StyledMenu className="menu">
-      {/* <li className="item">Edit Message</li> */}
-      {enablePin && (
-       <li className="item" onClick={pinned ? handleUnpin : togglePinModal}>
-        {pinned ? `Unpin Message` : `Pin Message`}
-       </li>
-      )}
-      <li className="item" onClick={toggleForwardModal}>
-       Forward
-      </li>
-      <li className="item" onClick={handleReply.bind(null, true)}>
-       Reply
-      </li>
-      <li className="item" onClick={handleSelect.bind(null, mid)}>
-       Select
-      </li>
-      {currUid == from_uid && (
-       <li className="item danger" onClick={toggleDeleteModal}>
-        Delete Message
-       </li>
-      )}
-     </StyledMenu>
-    }
-   >
-    <li className="cmd">
-     <Tooltip placement="top" tip="More">
-      <img src={moreIcon} alt="icon more" />
-     </Tooltip>
-    </li>
-   </Tippy>
+    const enablePin = context == 'channel' && canPin;
+    const enableEdit =
+        currUid == from_uid && [ContentTypes.text, ContentTypes.markdown].includes(content_type);
+    const enableReply = currUid != from_uid;
 
-   {deleteModalVisible && <DeleteMessageConfirm closeModal={toggleDeleteModal} mids={mid} />}
-   {forwardModalVisible && <ForwardModal mids={mids} closeModal={toggleForwardModal} />}
-   {pinModalVisible && <PinMessageModal mid={mid} gid={contextId} closeModal={togglePinModal} />}
-  </StyledCmds>
- );
+    const pinned = (enablePin && pins) ? pins.findIndex((p) => p.mid == mid) > -1 : false;
+    return (
+        <StyledCmds ref={cmdsRef} className={`cmds ${tippyVisible ? 'visible' : ''}`}>
+            <Tippy
+                duration={0}
+                delay={[0, 0]}
+                onShow={handleTippyVisible.bind(null, true)}
+                onHide={handleTippyVisible.bind(null, false)}
+                interactive
+                placement="left-start"
+                trigger="click"
+                content={<EmojiPicker mid={mid} hidePicker={hideAll} />}
+            >
+                <li className="cmd">
+                    <Tooltip placement="top" tip="Add Reaction">
+                        <img src={reactIcon} className="toggler" alt="icon emoji" />
+                    </Tooltip>
+                </li>
+            </Tippy>
+            {enableEdit && (
+                <li className="cmd" onClick={toggleEditMessage}>
+                    <Tooltip placement="top" tip="Edit">
+                        <img src={editIcon} alt="icon edit" />
+                    </Tooltip>
+                </li>
+            )}
+            {enableReply && (
+                <li className="cmd" onClick={handleReply}>
+                    <Tooltip placement="top" tip="Reply">
+                        <img src={replyIcon} alt="icon reply" />
+                    </Tooltip>
+                </li>
+            )}
+            <li className="cmd fav" onClick={handleAddFav}>
+                <Tooltip placement="top" tip="Add to Favorites">
+                    <IconBookmark />
+                </Tooltip>
+            </li>
+            <Tippy
+                onShow={handleTippyVisible.bind(null, true)}
+                onHide={handleTippyVisible.bind(null, false)}
+                interactive
+                popperOptions={{ strategy: 'fixed' }}
+                placement="left-start"
+                trigger="click"
+                content={
+                    <StyledMenu className="menu">
+                        {/* <li className="item">Edit Message</li> */}
+                        {enablePin && (
+                            <li className="item" onClick={pinned ? handleUnpin : togglePinModal}>
+                                {pinned ? `Unpin Message` : `Pin Message`}
+                            </li>
+                        )}
+                        <li className="item" onClick={toggleForwardModal}>
+                            Forward
+                        </li>
+                        <li className="item" onClick={handleReply.bind(null, true)}>
+                            Reply
+                        </li>
+                        <li className="item" onClick={handleSelect.bind(null, mid)}>
+                            Select
+                        </li>
+                        {currUid == from_uid && (
+                            <li className="item danger" onClick={toggleDeleteModal}>
+                                Delete Message
+                            </li>
+                        )}
+                    </StyledMenu>
+                }
+            >
+                <li className="cmd">
+                    <Tooltip placement="top" tip="More">
+                        <img src={moreIcon} alt="icon more" />
+                    </Tooltip>
+                </li>
+            </Tippy>
+
+            {deleteModalVisible && <DeleteMessageConfirm closeModal={toggleDeleteModal} mids={mid} />}
+            {forwardModalVisible && <ForwardModal mids={mids} closeModal={toggleForwardModal} />}
+            {pinModalVisible && <PinMessageModal mid={mid} gid={contextId} closeModal={togglePinModal} />}
+        </StyledCmds>
+    );
 }
