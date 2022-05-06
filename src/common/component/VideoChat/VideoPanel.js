@@ -8,7 +8,7 @@ import VideoCallListCell from './VideoCallListCell';
 import VideoControl from './VideoControl';
 import FullScreenIcon from '../../../assets/icons/fullscreen.svg?url';
 import { useEffect, useState } from 'react';
-import { addUser, removeUser, selectUsers } from '../../../app/slices/videocall';
+import { toggleChat, addUser, removeUser, selectUsers } from '../../../app/slices/videocall';
 import { useDispatch, useSelector } from 'react-redux';
 const VideoPanelWrapper = styled.div`
  display: flex;
