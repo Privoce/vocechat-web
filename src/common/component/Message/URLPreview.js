@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useLazyGetOGInfoQuery } from "../../../app/services/message";
+import favUrl from "../../../assets/icons/favicon.default.svg?url";
 const StyledCompact = styled.a`
   background: #f3f4f6;
   border: 1px solid #d4d4d4;
@@ -92,6 +93,7 @@ const StyledDetails = styled.a`
   }
 `;
 export default function URLPreview({ url = "" }) {
+  const [favicon, setFavicon] = useState("");
   const [getInfo] = useLazyGetOGInfoQuery();
   const [data, setData] = useState(null);
   useEffect(() => {
@@ -102,14 +104,17 @@ export default function URLPreview({ url = "" }) {
       const description = data.description;
       const ogImage = data.images.find((i) => !!i.url)?.url || "";
       const favicon = data.favicon_url || `${new URL(url).origin}/favicon.ico`;
-      setData({ favicon, title, description, ogImage });
+      setFavicon(favicon);
+      setData({ title, description, ogImage });
       // console.log("wtf url", data);
     };
     getMetaData(url);
   }, [url]);
-
+  const handleFavError = () => {
+    setFavicon(favUrl);
+  };
   if (!url || !data || !data.title) return null;
-  const { favicon, title, description, ogImage } = data;
+  const { title, description, ogImage } = data;
   return ogImage ? (
     <StyledDetails href={url} target="_blank">
       <h3 className="title">{title}</h3>
@@ -121,7 +126,7 @@ export default function URLPreview({ url = "" }) {
   ) : (
     <StyledCompact href={url} target="_blank">
       <div className="favicon">
-        <img src={favicon} alt="favicon" />
+        <img onError={handleFavError} src={favicon} alt="favicon" />
       </div>
       <div className="info">
         <h3 className="title">{title}</h3>
