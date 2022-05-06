@@ -4,8 +4,8 @@ import {
     createMicrophoneAndCameraTracks,
     AgoraVideoPlayer
 } from "agora-rtc-react";
-import VideoCallListCell from '../VideoCallListCell';
-import VideoControl from '../VideoControl';
+import VideoCallListCell from './VideoCallListCell';
+import VideoControl from './VideoControl';
 import FullScreenIcon from '../../../assets/icons/fullscreen.svg?url';
 import { useEffect, useState } from 'react';
 import { addUser, removeUser, selectUsers } from '../../../app/slices/videocall';

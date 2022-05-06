@@ -8,6 +8,7 @@ import useChatScroll from '../../../common/hook/useChatScroll';
 import ChannelIcon from '../../../common/component/ChannelIcon';
 import Tooltip from '../../../common/component/Tooltip';
 import Contact from '../../../common/component/Contact';
+import VideoCallPanel from '../../../common/component/VideoChat/VideoPanel';
 import Layout from '../Layout';
 import { renderMessageFragment } from '../utils';
 import EditIcon from '../../../assets/icons/edit.svg';
@@ -37,6 +38,7 @@ export default function ChannelChat({ cid = '', dropFiles = [] }) {
   const updateReadDebounced = useDebounce(updateReadIndex, 300);
   const [membersVisible, setMembersVisible] = useState(true);
   const [addMemberModalVisible, setAddMemberModalVisible] = useState(false);
+  const [videoCallVisible, setVideoCallVisiable] = useState(false);
   // const dispatch = useDispatch();
   const { selects, msgIds, userIds, data, messageData, loginUid, loginUser, footprint } =
     useSelector((store) => {
@@ -61,6 +63,10 @@ export default function ChannelChat({ cid = '', dropFiles = [] }) {
   const toggleAddVisible = () => {
     setAddMemberModalVisible((prev) => !prev);
   };
+  const toggleVideoCallVisible = () => {
+    setVideoCallVisiable((prev) => !prev);
+  };
+
 
   const { name, description, is_public, members = [], owner } = data;
   const memberIds = is_public ? userIds : members;
@@ -84,7 +90,7 @@ export default function ChannelChat({ cid = '', dropFiles = [] }) {
                   <img src={searchIcon} alt="opt icon" />
                 </Tooltip>
               </li> */}
-              <li className="tool">
+              <li className="tool" onClick={toggleVideoCallVisible}>
                 <Tooltip tip="Voice/Video Chat" placement="left">
                   <IconHeadphone />
                 </Tooltip>
@@ -175,8 +181,8 @@ export default function ChannelChat({ cid = '', dropFiles = [] }) {
           </StyledHeader>
         }
         contacts={
-          membersVisible ? (
-            <>
+          <>
+            {membersVisible && <>
               <StyledContacts>
                 {addVisible && (
                   <div className="add" onClick={toggleAddVisible}>
@@ -188,8 +194,11 @@ export default function ChannelChat({ cid = '', dropFiles = [] }) {
                   return <Contact key={uid} uid={uid} dm popover />;
                 })}
               </StyledContacts>
-            </>
-          ) : null
+            </>}
+            {videoCallVisible && <>
+              <VideoCallPanel />
+            </>}
+          </>
         }
       >
         <StyledChannelChat ref={ref}>
