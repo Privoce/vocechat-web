@@ -13,6 +13,7 @@ import userMsgReducer from "./slices/message.user";
 import favoritesReducer from "./slices/favorites";
 import fileMsgReducer from "./slices/message.file";
 import messageReducer from "./slices/message";
+import videoCallReducer from './slices/videocall';
 import { authApi } from "./services/auth";
 import { contactApi } from "./services/contact";
 import { channelApi } from "./services/channel";
@@ -32,6 +33,7 @@ const reducer = combineReducers({
   channelMessage: channelMsgReducer,
   fileMessage: fileMsgReducer,
   message: messageReducer,
+  videoCall: videoCallReducer,
   [authApi.reducerPath]: authApi.reducer,
   [messageApi.reducerPath]: messageApi.reducer,
   [contactApi.reducerPath]: contactApi.reducer,
@@ -42,7 +44,12 @@ const reducer = combineReducers({
 const store = configureStore({
   reducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware()
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ['videoCall/addUser', 'videoCall/removeUser'],
+        ignoredPaths: ['videoCall.users']
+      }
+    })
       .concat(
         authApi.middleware,
         contactApi.middleware,
