@@ -5,6 +5,8 @@ import { updateUploadFiles } from "../../../app/slices/ui";
 import Tooltip from "../../component/Tooltip";
 import AddIcon from "../../../assets/icons/add.solid.svg";
 import MarkdownIcon from "../../../assets/icons/markdown.svg";
+import FullscreenIcon from "../../../assets/icons/fullscreen.svg";
+import ExitFullscreenIcon from "../../../assets/icons/fullscreen.exit.svg";
 const Styled = styled.div`
   display: flex;
   align-items: center;
@@ -16,6 +18,7 @@ const Styled = styled.div`
   .md {
     cursor: pointer;
     display: flex;
+    gap: 14px;
     .markdown path {
       fill: #22ccee;
     }
@@ -39,10 +42,16 @@ const Styled = styled.div`
     }
   }
 `;
-export default function Toolbar({ toggleMode, mode, to, context }) {
+export default function Toolbar({
+  toggleMarkdownFullscreen,
+  fullscreen,
+  toggleMode,
+  mode,
+  to,
+  context,
+}) {
   const dispatch = useDispatch();
   const fileInputRef = useRef(null);
-
   const handleUpload = (evt) => {
     const files = [...evt.target.files];
     console.log("files", files);
@@ -58,10 +67,20 @@ export default function Toolbar({ toggleMode, mode, to, context }) {
   };
   return (
     <Styled className={mode}>
-      <div className="md" onClick={toggleMode}>
+      <div className="md">
         <Tooltip placement="top" tip="Markdown">
-          <MarkdownIcon className={mode} />
+          <MarkdownIcon className={mode} onClick={toggleMode} />
         </Tooltip>
+        {mode == "markdown" &&
+          (fullscreen ? (
+            <Tooltip placement="top" tip="Exit Fullscreen">
+              <ExitFullscreenIcon onClick={toggleMarkdownFullscreen} />
+            </Tooltip>
+          ) : (
+            <Tooltip placement="top" tip="Fullscreen">
+              <FullscreenIcon onClick={toggleMarkdownFullscreen} />
+            </Tooltip>
+          ))}
       </div>
       <Tooltip placement="top" tip="Upload">
         <div className="add">

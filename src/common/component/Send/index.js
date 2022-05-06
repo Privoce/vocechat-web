@@ -32,6 +32,7 @@ function Send({
 }) {
   const editor = useMixedEditor(`${context}_${id}`);
   const [markdownEditor, setMarkdownEditor] = useState(null);
+  const [markdownFullscreen, setMarkdownFullscreen] = useState(false);
   const dispatch = useDispatch();
   const addLocalFileMesage = useAddLocalFileMessage({ context, to: id });
   // 谁发的
@@ -67,6 +68,7 @@ function Send({
       // markdown insert emoji
       markdownEditor.insertText(emoji);
     } else {
+      console.log("emojii", emoji);
       editor.insertText(emoji);
     }
   };
@@ -128,6 +130,9 @@ function Send({
   const toggleMode = () => {
     dispatch(updateInputMode(mode == Modes.text ? Modes.markdown : Modes.text));
   };
+  const toggleMarkdownFullscreen = () => {
+    setMarkdownFullscreen((prev) => !prev);
+  };
   const name =
     context == "channel" ? channelsData[id]?.name : contactsData[id]?.name;
   const placeholder = `Send to ${Types[context]}${name} `;
@@ -138,7 +143,11 @@ function Send({
         : channelsData[id]?.members
       : [];
   return (
-    <StyledSend className={`send ${replying_mid ? "reply" : ""} ${context}`}>
+    <StyledSend
+      className={`send ${mode} ${markdownFullscreen ? "fullscreen" : ""} ${
+        replying_mid ? "reply" : ""
+      } ${context}`}
+    >
       {replying_mid && <Replying mid={replying_mid} id={id} />}
       {mode == Modes.text && <UploadFileList context={context} id={id} />}
 
@@ -157,9 +166,12 @@ function Send({
           to={id}
           mode={mode}
           toggleMode={toggleMode}
+          fullscreen={markdownFullscreen}
+          toggleMarkdownFullscreen={toggleMarkdownFullscreen}
         />
         {mode == Modes.markdown && (
           <MarkdownEditor
+            height={markdownFullscreen ? `calc(100vh - 168px)` : `30vh`}
             placeholder={placeholder}
             setEditorInstance={setMarkdownEditor}
             sendMarkdown={sendMarkdown}

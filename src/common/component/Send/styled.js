@@ -6,6 +6,9 @@ const StyledSend = styled.div`
   border-radius: var(--br);
   width: 100%;
   width: -webkit-fill-available;
+  &.markdown.fullscreen {
+    margin-top: -35px;
+  }
   .send_box {
     display: flex;
     justify-content: space-between;

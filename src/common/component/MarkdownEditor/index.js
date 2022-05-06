@@ -10,7 +10,12 @@ import useUploadFile from "../../hook/useUploadFile";
 
 import Button from "../../component/styled/Button";
 
-function MarkdownEditor({ placeholder, sendMarkdown, setEditorInstance }) {
+function MarkdownEditor({
+  height = "50vh",
+  placeholder,
+  sendMarkdown,
+  setEditorInstance,
+}) {
   const editorRef = useRef(undefined);
   const { uploadFile } = useUploadFile();
   // const [pHolder, setPHolder] = useState(placeholder);
@@ -52,7 +57,7 @@ function MarkdownEditor({ placeholder, sendMarkdown, setEditorInstance }) {
         hideModeSwitch={true}
         // initialValue="hello world!"
         previewStyle="vertical"
-        height="50vh"
+        height={height}
         initialEditType="markdown"
         useCommandShortcut={true}
       />

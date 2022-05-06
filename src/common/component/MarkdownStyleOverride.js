@@ -5,6 +5,10 @@ const MarkdownOverrides = createGlobalStyle`
 [class^='toastui-editor-']{
   .toastui-editor-md-container{
       border-bottom: none;
+      .toastui-editor-md-preview{
+padding-right: 0;
+padding-left: 8px;
+      }
     .toastui-editor-md-splitter{
       background-color:#D0D5DD ;
     }
@@ -16,13 +20,14 @@ const MarkdownOverrides = createGlobalStyle`
         margin: 0 ;
         padding: 0;
     }
-    p,.toastui-editor.md-mode {
+    .ProseMirror,p,.toastui-editor.md-mode {
         margin:0 ;
     font-weight: 400;
     font-size: 14px;
     line-height: 22px;
     color: #475467;
     margin-bottom: 16px;
+    word-break: break-all;
   }
   a{
       background-color: transparent;
