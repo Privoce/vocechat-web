@@ -72,7 +72,7 @@ const useMicrophoneAndCameraTracks = createMicrophoneAndCameraTracks();
 const appId = "020c861b44424b0eb0ff768ee9bffda2";
 
 
-export default function VideoPanel({ onFullScreen }) {
+export default function VideoPanel({ onFullScreen, channel }) {
     // const users = useSelector(selectUsers);
     const uid = useSelector((state) => state.authData.uid);
     const client = useClient();
@@ -99,7 +99,7 @@ export default function VideoPanel({ onFullScreen }) {
         };
         if (ready && tracks) {
             console.log("init ready");
-            init("123213");
+            init(channel);
         }
     }, [ready, tracks]);
     const List = users.map(item => {
@@ -109,9 +109,9 @@ export default function VideoPanel({ onFullScreen }) {
     return (
         <>
             {ready && (<VideoPanelWrapper>
-                {/* <div className="fullscreen">
+                <div className="fullscreen">
                     <img src={FullScreenIcon} className="icon" alt="fullscreen icon" onClick={onFullScreen} />
-                </div> */}
+                </div>
                 {ready && tracks &&
                     <div>
                         <div className="video">

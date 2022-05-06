@@ -214,7 +214,7 @@ export default function ChannelChat({ cid = '', dropFiles = [] }) {
               </StyledContacts>
             </>}
             {videoCallVisible && <>
-              <VideoPanel onFullScreen={toggleFullScreen} />
+              <VideoPanel onFullScreen={toggleFullScreen} channel={cid} />
             </>}
           </>
         }
