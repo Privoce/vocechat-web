@@ -3,6 +3,7 @@ import { useDebounce } from 'rooks';
 import { useSelector } from 'react-redux';
 import PinList from './PinList';
 import FavList from './FavList';
+// TODO: add alias for easyier import
 import { useReadMessageMutation } from '../../../app/services/message';
 import useChatScroll from '../../../common/hook/useChatScroll';
 import ChannelIcon from '../../../common/component/ChannelIcon';
