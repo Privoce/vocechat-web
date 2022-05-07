@@ -21,7 +21,7 @@ const Styled = styled(NavLink)`
       font-weight: 600;
       font-size: 14px;
       line-height: 20px;
-      width: 140px;
+      width: 150px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -35,8 +35,7 @@ const Styled = styled(NavLink)`
     align-items: center;
     gap: 8px;
     > .icon {
-      visibility: hidden;
-      display: flex;
+      display: none;
       width: 16px;
       height: 16px;
       &:hover path {
@@ -79,7 +78,7 @@ const Styled = styled(NavLink)`
       display: none;
     }
     > .icon {
-      visibility: visible;
+      display: flex;
     }
   }
 `;

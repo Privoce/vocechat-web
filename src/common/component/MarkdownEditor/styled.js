@@ -4,6 +4,9 @@ const StyledWrapper = styled.div`
   width: 100%;
   width: -webkit-fill-available;
   margin-top: 16px;
+  > div {
+    transition: height 0.5s ease 0s;
+  }
   .toastui-editor-defaultUI {
     border-bottom: none;
     border-radius: 0;
