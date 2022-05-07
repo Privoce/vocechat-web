@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import dayjs from "dayjs";
-
 import styled from "styled-components";
 import StyledMsg from "./styled";
 import renderContent from "./renderContent";
@@ -12,8 +10,8 @@ const StyledForward = styled.div`
   flex-direction: column;
   border-radius: var(--br);
   background-color: #f4f4f5;
-  padding: 8px;
   > .tip {
+    padding: 8px 8px 0 8px;
     display: flex;
     align-items: center;
     gap: 4px;
@@ -53,7 +51,7 @@ const ForwardedMessage = ({ context, to, from_uid, id }) => {
             {messages.map((msg, idx) => {
               const {
                 user = {},
-                created_at,
+                // created_at,
                 download,
                 content,
                 content_type,
@@ -61,7 +59,7 @@ const ForwardedMessage = ({ context, to, from_uid, id }) => {
                 thumbnail,
               } = msg;
               return (
-                <StyledMsg key={idx}>
+                <StyledMsg className="archive" key={idx}>
                   {user && (
                     <div className="avatar">
                       <Avatar url={user.avatar} name={user.name} />
@@ -70,9 +68,6 @@ const ForwardedMessage = ({ context, to, from_uid, id }) => {
                   <div className="details">
                     <div className="up">
                       <span className="name">{user?.name}</span>
-                      <i className="time">
-                        {dayjs(created_at).format("YYYY-MM-DD h:mm:ss A")}
-                      </i>
                     </div>
                     <div className="down">
                       {renderContent({

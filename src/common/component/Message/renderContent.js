@@ -11,8 +11,8 @@ import URLPreview from "./URLPreview";
 
 import reactStringReplace from "react-string-replace";
 const renderContent = ({
-  context,
-  to,
+  context = null,
+  to = null,
   from_uid,
   created_at,
   properties,
