@@ -200,7 +200,7 @@ export const normalizeArchiveData = (
   ) => {
     // uid存在，则favorite，否则archive
     const prefix = uid
-      ? `${BASE_URL}/favorite/attachment/${uid}/${file_id}/`
+      ? `${BASE_URL}/favorite/attachment/${uid}/${filePath}/`
       : `${BASE_URL}/resource/archive/attachment?file_path=${filePath}&attachment_id=`;
     return {
       transformedContent:

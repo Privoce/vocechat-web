@@ -2,7 +2,10 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Input from "../../common/component/styled/Input";
-import { useUpdatePasswordMutation } from "../../app/services/auth";
+import {
+  useUpdatePasswordMutation,
+  useGetCredentialsQuery,
+} from "../../app/services/auth";
 import StyledModal from "../../common/component/styled/Modal";
 import Button from "../../common/component/styled/Button";
 const StyledEdit = styled(StyledModal)`
@@ -23,6 +26,7 @@ const StyledEdit = styled(StyledModal)`
 import Modal from "../../common/component/Modal";
 import toast from "react-hot-toast";
 export default function ProfileBasicEditModal({ closeModal }) {
+  const { data } = useGetCredentialsQuery();
   const [input, setInput] = useState({
     current: "",
     newPassword: "",
@@ -60,7 +64,7 @@ export default function ProfileBasicEditModal({ closeModal }) {
   }, [isSuccess]);
   const { current, newPassword, confirmPassword } = input;
   const disableBtn =
-    !current ||
+    (data?.password && !current) ||
     !newPassword ||
     !confirmPassword ||
     newPassword !== confirmPassword ||
@@ -81,17 +85,19 @@ export default function ProfileBasicEditModal({ closeModal }) {
           </>
         }
       >
-        <div className="input">
-          <label htmlFor={"current"}>Current Password</label>
-          <Input
-            type="password"
-            id="current"
-            name="current"
-            value={current}
-            data-type="current"
-            onChange={handleChange}
-          ></Input>
-        </div>
+        {data?.password && (
+          <div className="input">
+            <label htmlFor={"current"}>Current Password</label>
+            <Input
+              type="password"
+              id="current"
+              name="current"
+              value={current}
+              data-type="current"
+              onChange={handleChange}
+            ></Input>
+          </div>
+        )}
         <div className="input">
           <label htmlFor={"newPassword"}>New Password</label>
           <Input

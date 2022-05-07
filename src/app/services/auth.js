@@ -95,6 +95,11 @@ export const authApi = createApi({
         url: `/token/metamask/nonce?public_address=${address}`,
       }),
     }),
+    getCredentials: builder.query({
+      query: () => ({
+        url: `/token/credentials`,
+      }),
+    }),
     logout: builder.query({
       query: () => ({ url: `token/logout` }),
     }),
@@ -102,6 +107,7 @@ export const authApi = createApi({
 });
 
 export const {
+  useGetCredentialsQuery,
   useUpdateDeviceTokenMutation,
   useGetOpenidMutation,
   useRenewMutation,
