@@ -2,17 +2,12 @@
 import Styled from "./styled";
 import { useSelector } from "react-redux";
 import SavedMessage from "../../common/component/Message/SavedMessage";
-// import Masonry from "masonry-layout";
-// import waterfall from "waterfall.js/src/waterfall";
-// import { Views } from "../../app/config";
-// import View from "./View";
-// import Search from "./Search";
-// import Filter from "./Filter";
-// import FileBox from "../../common/component/FileBox";
+import dayjs from "dayjs";
 function FavsPage() {
   // const listContainerRef = useRef(null);
   // const [filter, setFilter] = useState({});
   const { favorites } = useSelector((store) => {
+    console.log("favs", store.favorites);
     return {
       favorites: store.favorites,
       // channelMessage: store.channelMessage,
@@ -21,8 +16,22 @@ function FavsPage() {
   });
   return (
     <Styled>
-      {favorites.map(({ id, created_at }) => {
-        return <SavedMessage key={id} id={id} />;
+      {favorites.map(({ id, created_at, messages }) => {
+        const [
+          {
+            source: { gid, uid },
+          },
+        ] = messages;
+
+        return (
+          <div className="fav" key={id}>
+            <h4 className="tip">
+              {gid ? `gid:${gid}` : `uid:${uid}`}{" "}
+              {dayjs(created_at).format("YYYY-MM-DD")}
+            </h4>
+            <SavedMessage key={id} id={id} />
+          </div>
+        );
       })}
     </Styled>
   );

@@ -14,7 +14,7 @@ const StyledSaved = styled.div`
   padding: 8px;
 `;
 const SavedMessage = ({ cid, id }) => {
-  const { favorites } = useFavMessage(cid);
+  const { favorites } = useFavMessage({ cid });
   const [fav, setFav] = useState(null);
   const [messages, setMessages] = useState(null);
   useEffect(() => {

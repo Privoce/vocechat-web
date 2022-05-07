@@ -4,21 +4,20 @@ import {
   useLazyRemoveFavoriteQuery,
   useFavoriteMessageMutation,
 } from "../../app/services/message";
-export default function useFavMessage(cid = null) {
+export default function useFavMessage({ cid = null, uid = null }) {
   const [removeFav] = useLazyRemoveFavoriteQuery();
   const [addFav] = useFavoriteMessageMutation();
   const [favorites, setFavorites] = useState([]);
   const { favs = [] } = useSelector((store) => {
     return {
-      // mids: store.channelMessage.byId[cid],
       favs: store.favorites,
-      // loginUser: store.contacts.byId[store.authData.uid],
     };
   });
   const addFavorite = async (mid = []) => {
     const mids = Array.isArray(mid) ? mid.map((i) => +i) : [+mid];
     if (mids.length == 0) return;
-    await addFav(mids);
+    const { error = null } = await addFav(mids);
+    return !error;
   };
   const removeFavorite = (id) => {
     if (!id) return;
@@ -36,16 +35,23 @@ export default function useFavMessage(cid = null) {
     return mids.findIndex((i) => i == mid) > -1;
   };
   useEffect(() => {
-    const filtereds = cid
+    let filtereds = [];
+    filtereds = cid
       ? favs.filter((f) => {
           if (!f.messages) return false;
           return f.messages.every((m) => m.source.gid == cid);
         })
       : favs;
-    console.log("filtered", filtereds);
-    setFavorites(filtereds);
-  }, [cid, favs]);
+    filtereds = uid
+      ? filtereds.filter((f) => {
+          if (!f.messages) return false;
+          return f.messages.every((m) => m.source.uid == uid);
+        })
+      : filtereds;
 
+    setFavorites(filtereds);
+  }, [cid, uid, favs]);
+  console.log("filtered", cid, uid, favs);
   return {
     isFavorited,
     addFavorite,

@@ -1,10 +1,14 @@
 // import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDebounce } from "rooks";
+import Tippy from "@tippyjs/react";
+import FavList from "../FavList";
+
 import Tooltip from "../../../common/component/Tooltip";
-import alertIcon from "../../../assets/icons/alert.svg?url";
-import pinIcon from "../../../assets/icons/pin.svg?url";
+import FavIcon from "../../../assets/icons/bookmark.svg";
 // import searchIcon from "../../../assets/icons/search.svg?url";
+import IconHeadphone from "../../../assets/icons/headphone.svg";
+
 import boardosIcon from "../../../assets/icons/app.boardos.svg?url";
 import webrowseIcon from "../../../assets/icons/app.webrowse.svg?url";
 import useChatScroll from "../../../common/hook/useChatScroll";
@@ -48,15 +52,37 @@ export default function DMChat({ uid = "", dropFiles = [] }) {
       aside={
         <>
           <ul className="tools">
+            <li className="tool">
+              <IconHeadphone />
+            </li>
             {/* <li className="tool">
-              <img src={searchIcon} alt="opt icon" />
-            </li> */}
-            <li className="tool">
               <img src={alertIcon} alt="opt icon" />
-            </li>
-            <li className="tool">
-              <img src={pinIcon} alt="opt icon" />
-            </li>
+            </li> */}
+            <Tooltip tip="Favorite" placement="left">
+              <Tippy
+                // onShow={() => {
+                //   setToolVisible('favorite');
+                // }}
+                // onHide={() => {
+                //   setToolVisible('');
+                // }}
+                delay={[0, 0]}
+                duration={0}
+                placement="left-start"
+                popperOptions={{ strategy: "fixed" }}
+                offset={[0, 180]}
+                interactive
+                trigger="click"
+                content={<FavList uid={uid} />}
+              >
+                <li className={`tool fav`}>
+                  <FavIcon />
+                </li>
+              </Tippy>
+            </Tooltip>
+            {/* <li className="tool fav">
+              <FavIcon />
+            </li> */}
           </ul>
           <hr className="divider" />
           <ul className="apps">

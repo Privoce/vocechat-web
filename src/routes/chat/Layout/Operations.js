@@ -40,7 +40,7 @@ const Styled = styled.div`
 export default function Operations({ context, id }) {
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const { canDelete } = useDeleteMessage();
-  const { addFavorite } = useFavMessage(id);
+  const { addFavorite } = useFavMessage({});
   const mids = useSelector(
     (store) => store.ui.selectMessages[`${context}_${id}`]
   );
@@ -50,9 +50,14 @@ export default function Operations({ context, id }) {
     dispatch(updateSelectMessages({ context, id, operation: "reset" }));
   };
   const handleFav = async () => {
-    await addFavorite(mids);
-    dispatch(updateSelectMessages({ context, id, operation: "reset" }));
-    toast.success("Messages Saved!");
+    const added = await addFavorite(mids);
+    if (added) {
+      console.log("added", added);
+      dispatch(updateSelectMessages({ context, id, operation: "reset" }));
+      toast.success("Messages Saved!");
+    } else {
+      toast.error("Operation Failed!");
+    }
   };
   const toggleDeleteModal = (isSuccess = false) => {
     setDeleteModalVisible((prev) => !prev);

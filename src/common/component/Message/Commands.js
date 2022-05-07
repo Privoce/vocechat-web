@@ -69,9 +69,9 @@ export default function Commands({
   from_uid = 0,
   toggleEditMessage,
 }) {
-  const { addFavorite, isFavorited } = useFavMessage(
-    context == "channel" ? contextId : null
-  );
+  const { addFavorite, isFavorited } = useFavMessage({
+    cid: context == "channel" ? contextId : null,
+  });
   const [mids, setMids] = useState([]);
   const dispatch = useDispatch();
   const [pinModalVisible, setPinModalVisible] = useState(false);
@@ -122,8 +122,12 @@ export default function Commands({
       toast.success("Favorited!");
       return;
     }
-    await addFavorite(mid);
-    toast.success("Added Favorites!");
+    const added = await addFavorite(mid);
+    if (added) {
+      toast.success("Added Favorites!");
+    } else {
+      toast.error("Added Favorites Failed!");
+    }
   };
   useEffect(() => {
     if (isUnpinSuccess) {

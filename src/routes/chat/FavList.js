@@ -1,11 +1,11 @@
 // import React from "react";
 // import { useSelector } from "react-redux";
 import styled from "styled-components";
-import SavedMessage from "../../../common/component/Message/SavedMessage";
-import IconSurprise from "../../../assets/icons/emoji.suprise.svg";
+import SavedMessage from "../../common/component/Message/SavedMessage";
+import IconSurprise from "../../assets/icons/emoji.suprise.svg";
 // import IconForward from "../../../assets/icons/forward.svg";
-import IconBookmark from "../../../assets/icons/bookmark.svg";
-import useFavMessage from "../../../common/hook/useFavMessage";
+import IconBookmark from "../../assets/icons/bookmark.svg";
+import useFavMessage from "../../common/hook/useFavMessage";
 const Styled = styled.div`
   padding: 16px;
   background: #f9fafb;
@@ -82,8 +82,8 @@ const Styled = styled.div`
     }
   }
 `;
-export default function FavList({ cid = null }) {
-  const { favorites, removeFavorite } = useFavMessage(cid);
+export default function FavList({ cid = null, uid = null }) {
+  const { favorites, removeFavorite } = useFavMessage({ cid, uid });
   const handleRemove = (evt) => {
     const { id } = evt.currentTarget.dataset;
     console.log("remove fav", id);
