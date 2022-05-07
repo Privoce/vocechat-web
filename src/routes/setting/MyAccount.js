@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { useUpdateAvatarMutation } from "../../app/services/contact";
 import AvatarUploader from "../../common/component/AvatarUploader";
 import ProfileBasicEditModal from "./ProfileBasicEditModal";
+import UpdatePasswordModal from "./UpdatePasswordModal";
 const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -109,6 +110,7 @@ const EditModalInfo = {
   },
 };
 export default function MyAccount() {
+  const [passwordModal, setPasswordModal] = useState(false);
   const [editModal, setEditModal] = useState(null);
   const [
     uploadAvatar,
@@ -129,6 +131,9 @@ export default function MyAccount() {
   const closeBasicEditModal = () => {
     setEditModal(null);
   };
+  const togglePasswordModal = () => {
+    setPasswordModal((prev) => !prev);
+  };
   if (!loginUser) return null;
   const { uid, avatar, name, email } = loginUser;
   return (
@@ -146,22 +151,27 @@ export default function MyAccount() {
                 {name} <span className="gray"> #{uid}</span>
               </span>
             </div>
-            {/* <div className="right"> */}
             <button data-edit="name" onClick={handleBasicEdit} className="btn">
               Edit
             </button>
-            {/* </div> */}
           </div>
           <div className="row">
             <div className="info">
               <span className="label">email</span>
               <span className="txt">{email}</span>
             </div>
-            {/* <div className="right"> */}
             <button data-edit="email" onClick={handleBasicEdit} className="btn">
               Edit
             </button>
-            {/* </div> */}
+          </div>
+          <div className="row">
+            <div className="info">
+              <span className="label">password</span>
+              <span className="txt">*********</span>
+            </div>
+            <button onClick={togglePasswordModal} className="btn">
+              Edit
+            </button>
           </div>
         </div>
         <div className="danger">
@@ -180,6 +190,9 @@ export default function MyAccount() {
           value={eval(editModal)}
           closeModal={closeBasicEditModal}
         />
+      )}
+      {passwordModal && (
+        <UpdatePasswordModal closeModal={togglePasswordModal} />
       )}
     </>
   );

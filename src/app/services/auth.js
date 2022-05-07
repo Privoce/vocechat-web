@@ -83,6 +83,13 @@ export const authApi = createApi({
         body: { magic_token: token },
       }),
     }),
+    updatePassword: builder.mutation({
+      query: ({ old_password, new_password }) => ({
+        url: "user/change_password",
+        method: "POST",
+        body: { old_password, new_password },
+      }),
+    }),
     getMetamaskNonce: builder.query({
       query: (address) => ({
         url: `/token/metamask/nonce?public_address=${address}`,
@@ -102,4 +109,5 @@ export const {
   useLoginMutation,
   useLazyLogoutQuery,
   useCheckInviteTokenValidMutation,
+  useUpdatePasswordMutation,
 } = authApi;
