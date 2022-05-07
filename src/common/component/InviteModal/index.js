@@ -27,28 +27,32 @@ const Styled = styled.div`
   }
 `;
 import Modal from "../Modal";
-export default function ChannelInviteModal({
+// type: server,channel
+export default function InviteModal({
+  type = "server",
   cid = null,
   title = "",
   closeModal,
 }) {
-  const { channel } = useSelector((store) => {
+  const { channel, server } = useSelector((store) => {
     return {
       channel: store.channels.byId[cid],
+      server: store.server,
     };
   });
-  if (!cid) return null;
+  const finalTitle =
+    type == "server" ? server.name : `#${title || channel?.name}`;
   return (
     <Modal>
       <Styled>
         <h2 className="title">
-          Add friends to #{title || channel?.name}{" "}
+          Add friends to {finalTitle}
           <CloseIcon className="close" onClick={closeModal} />
         </h2>
         {!channel?.is_public && (
           <AddMembers cid={cid} closeModal={closeModal} />
         )}
-        <InviteByEmail cid={cid} />
+        <InviteByEmail cid={channel?.is_public ? null : cid} />
       </Styled>
     </Modal>
   );

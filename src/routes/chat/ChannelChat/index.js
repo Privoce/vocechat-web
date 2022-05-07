@@ -26,7 +26,7 @@ import {
   StyledChannelChat,
   StyledHeader,
 } from "./styled";
-import ChannelInviteModal from "../../../common/component/ChannelInviteModal";
+import InviteModal from "../../../common/component/InviteModal";
 import { NavLink, useLocation } from "react-router-dom";
 import Tippy from "@tippyjs/react";
 
@@ -79,7 +79,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
   return (
     <>
       {addMemberModalVisible && (
-        <ChannelInviteModal cid={cid} closeModal={toggleAddVisible} />
+        <InviteModal cid={cid} closeModal={toggleAddVisible} />
       )}
       <Layout
         to={cid}

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import ChannelModal from "../component/ChannelModal";
-import ServerInviteModal from "../component/ServerInviteModal";
+import InviteModal from "../component/InviteModal";
 import IconChat from "../../assets/icons/placeholder.chat.svg";
 import IconAsk from "../../assets/icons/placeholder.question.svg";
 import IconInvite from "../../assets/icons/placeholder.invite.svg";
@@ -121,7 +121,7 @@ export default function BlankPlaceholder({ type = "chat" }) {
         <ContactsModal closeModal={toggleContactListVisible} />
       )}
       {inviteModalVisible && (
-        <ServerInviteModal closeModal={toggleInviteModalVisible} />
+        <InviteModal closeModal={toggleInviteModalVisible} />
       )}
     </>
   );
