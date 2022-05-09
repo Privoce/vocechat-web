@@ -6,6 +6,7 @@ import BASE_URL, { tokenHeader } from "../config";
 const whiteList = [
   "login",
   "register",
+  "sendMagicLink",
   "checkInviteTokenValid",
   "getLoginConfig",
   "getServer",

@@ -12,7 +12,9 @@ import useStreaming from "../../common/hook/useStreaming";
 // let request = null;
 export default function usePreload() {
   const { rehydrate, rehydrated } = useRehydrate();
-  const loginUid = useSelector((store) => store.authData.uid);
+  const { loginUid, token } = useSelector((store) => {
+    return { loginUid: store.authData.uid, token: store.authData.token };
+  });
   const { setStreamingReady } = useStreaming();
   const [
     getFavorites,
@@ -56,11 +58,9 @@ export default function usePreload() {
       getFavorites();
     }
   }, [rehydrated]);
-  const canStreaming = loginUid && rehydrated;
+  const canStreaming = loginUid && rehydrated && !!token;
   useEffect(() => {
-    if (canStreaming) {
-      setStreamingReady(true);
-    }
+    setStreamingReady(canStreaming);
   }, [canStreaming]);
 
   return {

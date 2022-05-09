@@ -1,6 +1,4 @@
-import { useEffect } from "react";
 import { useDispatch, batch } from "react-redux";
-import { resetAuthData } from "../../app/slices/auth.data";
 import { resetFootprint } from "../../app/slices/footprint";
 import { resetChannels } from "../../app/slices/channels";
 import { resetContacts } from "../../app/slices/contacts";
@@ -25,12 +23,6 @@ export default function useLogout() {
       dispatch(resetFileMessage());
     });
   };
-
-  useEffect(() => {
-    if (isSuccess) {
-      dispatch(resetAuthData());
-    }
-  }, [isSuccess]);
 
   return { clearLocalData, logout, exited: isSuccess, exiting: isLoading };
 }

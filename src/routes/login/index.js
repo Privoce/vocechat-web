@@ -11,6 +11,7 @@ import SolidLoginButton from "./SolidLoginButton";
 import Input from "../../common/component/styled/Input";
 import Button from "../../common/component/styled/Button";
 import GoogleLoginButton from "./GoogleLoginButton";
+import MagicLinkLogin from "./MagicLinkLogin";
 import { useLoginMutation } from "../../app/services/auth";
 import { useGetLoginConfigQuery } from "../../app/services/server";
 import { setAuthData } from "../../app/slices/auth.data";
@@ -31,12 +32,30 @@ export default function LoginPage() {
     const query = new URLSearchParams(location.search);
     const code = query.get("code");
     const state = query.get("state");
+    const token = query.get("token");
+    const exists = query.get("exists");
+    // oidc login
     if (code && state) {
       login({
         code,
         state,
         type: "oidc",
       });
+    }
+    // magic link
+    if (token && typeof exists !== "undefined") {
+      console.log("tokken", token, exists);
+      const isLogin = exists == "true";
+      if (isLogin) {
+        // login
+        login({
+          token,
+          type: "magiclink",
+        });
+      } else {
+        // reg
+        location.href = `/#/reg/magiclink/${token}`;
+      }
     }
   }, []);
 
@@ -134,6 +153,7 @@ export default function LoginPage() {
         {(enableGoogleLogin || enableMetamaskLogin || oidc.length > 0) && (
           <hr className="or" />
         )}
+        <MagicLinkLogin />
         {enableGoogleLogin && <GoogleLoginButton login={login} />}
         {enableMetamaskLogin && <MetamaskLoginButton login={login} />}
         {oidc.length > 0 && <SolidLoginButton issuers={oidc} />}

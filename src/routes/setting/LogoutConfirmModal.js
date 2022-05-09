@@ -1,7 +1,7 @@
 // import React from "react";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 import StyledModal from "../../common/component/styled/Modal";
 import Button from "../../common/component/styled/Button";
@@ -27,8 +27,8 @@ const StyledConfirm = styled(StyledModal)`
   }
 `;
 import Modal from "../../common/component/Modal";
+import toast from "react-hot-toast";
 export default function LogoutConfirmModal({ closeModal }) {
-  const navigate = useNavigate();
   const [clearLocal, setClearLocal] = useState(false);
   const { logout, exited, exiting, clearLocalData } = useLogout();
   const handleLogout = () => {
@@ -43,7 +43,11 @@ export default function LogoutConfirmModal({ closeModal }) {
         console.log("clear all store");
         clearLocalData();
       }
-      navigate("/");
+      toast.success("Logout Successfully");
+      setTimeout(() => {
+        location.href = `${location.origin}#/login`;
+      }, 500);
+      // location.reload();
     }
   }, [exited, clearLocal]);
   return (

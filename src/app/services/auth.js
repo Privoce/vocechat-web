@@ -90,6 +90,13 @@ export const authApi = createApi({
         body: { old_password, new_password },
       }),
     }),
+    sendMagicLink: builder.mutation({
+      query: (email) => ({
+        url: "token/send_magic_link",
+        method: "POST",
+        body: { email },
+      }),
+    }),
     getMetamaskNonce: builder.query({
       query: (address) => ({
         url: `/token/metamask/nonce?public_address=${address}`,
@@ -102,11 +109,20 @@ export const authApi = createApi({
     }),
     logout: builder.query({
       query: () => ({ url: `token/logout` }),
+      async onQueryStarted(params, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          dispatch(resetAuthData());
+        } catch {
+          console.log("logout error");
+        }
+      },
     }),
   }),
 });
 
 export const {
+  useSendMagicLinkMutation,
   useGetCredentialsQuery,
   useUpdateDeviceTokenMutation,
   useGetOpenidMutation,
