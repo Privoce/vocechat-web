@@ -63,6 +63,7 @@ export default function VideoCallListCell({
   avatar = contactsById[username].avatar;
   console.log("[agora]username", username, contactsById[username].name);
   console.log("[agora]track", track);
+  console.log(avatar);
   return (
     <Cell>
       {!(showVideo && track) && (
@@ -70,15 +71,11 @@ export default function VideoCallListCell({
           <div className="avatarBox">
             <Avatar
               className="avatar"
-              url={avatar ? avatar : "https://www.gravatar.com/avatar/demo"}
-              name={
-                contactsById[username].name
-                  ? contactsById[username].name
-                  : username
-              }
+              // url={avatar ? avatar : "https://www.gravatar.com/avatar/demo"}
+              name={contactsById[username].name}
               type="user"
             />
-            {username}
+            {contactsById[username].name}
           </div>
           <div>
             <VideoIcon className="icon" />

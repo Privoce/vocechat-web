@@ -117,6 +117,9 @@ export default function VideoPanel({ onFullScreen, channel }) {
           return prevUsers.filter((User) => User.uid !== user.uid);
         });
       });
+      client.on("volume-indicator", (volumes) => {
+        console.log("[volume-indicator]", volumes);
+      });
       clientDebugger(client);
       await client.join(appId, name, null, uid);
       if (tracks) await client.publish([tracks[0], tracks[1]]);
