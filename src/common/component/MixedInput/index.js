@@ -21,6 +21,7 @@ import {
   createPlugins,
   ELEMENT_PARAGRAPH,
   getPlateEditorRef,
+
   // usePlateEditorRef,
   // ELEMENT_IMAGE,
   MentionCombobox,
@@ -37,8 +38,10 @@ let components = createPlateUI({
   // [ELEMENT_IMAGE]: ImageElement,
   // customize your components by plugin key
 });
-const initialValue = [{ type: ELEMENT_PARAGRAPH, children: [{ text: "" }] }];
+const initials = [{ type: ELEMENT_PARAGRAPH, children: [{ text: "" }] }];
 const Plugins = ({
+  updateDraft = null,
+  initialValue = initials,
   id = "",
   placeholder = "Write some markdown...",
   sendMessages,
@@ -48,6 +51,7 @@ const Plugins = ({
   const enableMentions = members.length > 0;
   const filesRef = useRef([]);
   const contactData = useSelector((store) => store.contacts.byId);
+  const [originalValue, setOriginalValue] = useState(initialValue);
   const [msgs, setMsgs] = useState([]);
   const [cmdKey, setCmdKey] = useState(false);
   const editableRef = useRef(null);
@@ -78,6 +82,9 @@ const Plugins = ({
     };
     // window.addEventListener("paste")
   }, []);
+  useEffect(() => {
+    updateDraft(originalValue);
+  }, [originalValue]);
 
   useKey(
     "Enter",
@@ -147,6 +154,7 @@ const Plugins = ({
 
   const handleChange = useCallback(
     async (val) => {
+      setOriginalValue(val);
       console.log("tmps changed", val);
       const tmps = [];
       const getMixedText = (children) => {

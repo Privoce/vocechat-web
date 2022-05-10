@@ -17,6 +17,7 @@ import EmojiPicker from "./EmojiPicker";
 
 import MarkdownEditor from "../MarkdownEditor";
 import MixedInput, { useMixedEditor } from "../MixedInput";
+import useDraft from "../../hook/useDraft";
 const Types = {
   channel: "#",
   user: "@",
@@ -30,6 +31,7 @@ function Send({
   context = "channel",
   id = "",
 }) {
+  const { getDraft, getUpdateDraft } = useDraft({ context, id });
   const editor = useMixedEditor(`${context}_${id}`);
   const [markdownEditor, setMarkdownEditor] = useState(null);
   const [markdownFullscreen, setMarkdownFullscreen] = useState(false);
@@ -155,6 +157,8 @@ function Send({
         <EmojiPicker selectEmoji={insertEmoji} />
         {mode == Modes.text && (
           <MixedInput
+            updateDraft={getUpdateDraft()}
+            initialValue={getDraft()}
             members={members}
             id={`${context}_${id}`}
             placeholder={placeholder}
@@ -171,6 +175,8 @@ function Send({
         />
         {mode == Modes.markdown && (
           <MarkdownEditor
+            updateDraft={getUpdateDraft("markdown")}
+            initialValue={getDraft("markdown")}
             height={markdownFullscreen ? `calc(100vh - 168px)` : `30vh`}
             placeholder={placeholder}
             setEditorInstance={setMarkdownEditor}

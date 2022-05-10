@@ -11,6 +11,8 @@ import useUploadFile from "../../hook/useUploadFile";
 import Button from "../../component/styled/Button";
 
 function MarkdownEditor({
+  updateDraft = null,
+  initialValue = "",
   height = "50vh",
   placeholder,
   sendMarkdown,
@@ -33,6 +35,11 @@ function MarkdownEditor({
     return () => {
       if (editor) {
         const editorInstance = editor.getInstance();
+        const md = editorInstance.getMarkdown();
+        if (updateDraft) {
+          updateDraft(md);
+        }
+        console.log("mmmm", md);
         editorInstance.destroy();
       }
     };
@@ -49,6 +56,7 @@ function MarkdownEditor({
   return (
     <StyledWrapper className="input">
       <Editor
+        initialValue={initialValue}
         plugins={[codeSyntaxHighlight]}
         placeholder={placeholder}
         // onChange={handleChange}

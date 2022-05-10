@@ -12,6 +12,8 @@ const initialState = {
   fileListView: Views.grid,
   uploadFiles: {},
   selectMessages: {},
+  draftMarkdown: {},
+  draftMixedText: {},
 };
 const uiSlice = createSlice({
   name: "ui",
@@ -34,6 +36,14 @@ const uiSlice = createSlice({
     },
     updateFileListView(state, action) {
       state.fileListView = action.payload;
+    },
+    updateDraftMarkdown(state, action) {
+      const { key, value } = action.payload;
+      state.draftMarkdown[key] = value;
+    },
+    updateDraftMixedText(state, action) {
+      const { key, value } = action.payload;
+      state.draftMixedText[key] = value;
     },
     updateUserGuide(state, action) {
       const obj = action.payload || {};
@@ -146,5 +156,7 @@ export const {
   updateUploadFiles,
   updateSelectMessages,
   updateUserGuide,
+  updateDraftMarkdown,
+  updateDraftMixedText,
 } = uiSlice.actions;
 export default uiSlice.reducer;

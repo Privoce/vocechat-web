@@ -4,7 +4,7 @@ import styled from "styled-components";
 import FavoritedMessage from "../../common/component/Message/FavoritedMessage";
 import IconSurprise from "../../assets/icons/emoji.suprise.svg";
 // import IconForward from "../../../assets/icons/forward.svg";
-import IconBookmark from "../../assets/icons/bookmark.svg";
+import IconRemove from "../../assets/icons/close.svg";
 import useFavMessage from "../../common/hook/useFavMessage";
 const Styled = styled.div`
   padding: 16px;
@@ -58,8 +58,8 @@ const Styled = styled.div`
         align-items: center;
         gap: 4px;
         position: absolute;
-        top: 4px;
-        right: 4px;
+        top: 8px;
+        right: 8px;
         padding: 4px;
         border: 1px solid rgba(0, 0, 0, 0.08);
         border-radius: 6px;
@@ -68,10 +68,11 @@ const Styled = styled.div`
           background: none;
           border: none;
           svg {
-            width: 16px;
-            height: 16px;
+            width: 24px;
+            height: 24px;
             path {
-              fill: #d92d20;
+              fill: #667085;
+              fill-opacity: 1;
             }
           }
         }
@@ -116,7 +117,7 @@ export default function FavList({ cid = null, uid = null }) {
                     <IconForward />
                   </button> */}
                   <button className="btn" data-id={id} onClick={handleRemove}>
-                    <IconBookmark />
+                    <IconRemove />
                   </button>
                 </div>
               </li>
