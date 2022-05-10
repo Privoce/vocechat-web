@@ -28,6 +28,9 @@ const StyledWrapper = styled.div`
         line-height: 32px;
         color: #101828;
         margin-bottom: 8px;
+        &.error {
+          color: red;
+        }
       }
       .desc {
         text-align: center;

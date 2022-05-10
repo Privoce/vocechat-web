@@ -5,7 +5,8 @@ const StyledWrapper = styled.div`
   align-items: center;
   height: 100vh;
   .form {
-    padding: 36px 40px 32px 40px;
+    max-width: 440px;
+    padding: 32px 40px 32px 40px;
     /* border: 1px solid #eee; */
     box-shadow: 0px 4px 8px -2px rgba(16, 24, 40, 0.1),
       0px 2px 4px -2px rgba(16, 24, 40, 0.06);
@@ -14,7 +15,6 @@ const StyledWrapper = styled.div`
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding-bottom: 24px;
       .logo {
         width: 56px;
         height: 56px;
@@ -28,12 +28,14 @@ const StyledWrapper = styled.div`
         color: #101828;
         margin-bottom: 8px;
       }
-    }
-    .desc {
-      font-weight: normal;
-      font-size: 16px;
-      line-height: 24px;
-      color: #667085;
+      .desc {
+        text-align: center;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 24px;
+        color: #667085;
+        margin-bottom: 24px;
+      }
     }
     form {
       display: flex;

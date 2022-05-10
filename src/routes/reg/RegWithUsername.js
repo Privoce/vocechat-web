@@ -8,15 +8,28 @@ import { setAuthData } from "../../app/slices/auth.data";
 
 import Input from "../../common/component/styled/Input";
 import Button from "../../common/component/styled/Button";
-import { useLoginMutation } from "../../app/services/auth";
+import {
+  useLoginMutation,
+  useCheckInviteTokenValidMutation,
+} from "../../app/services/auth";
 import toast from "react-hot-toast";
 
 export default function RegWithUsername() {
   const { token } = useParams();
+  const [
+    checkTokenInvalid,
+    { data: isTokenValid, isLoading: checkingToken },
+  ] = useCheckInviteTokenValidMutation();
   const [login, { isLoading, error, isSuccess, data }] = useLoginMutation();
   // const navigateTo = useNavigate();
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
+  useEffect(() => {
+    if (token) {
+      checkTokenInvalid(token);
+    }
+  }, [token]);
+
   useEffect(() => {
     console.log("errr", error);
     switch (error?.status) {
@@ -53,6 +66,13 @@ export default function RegWithUsername() {
     setUsername(value);
   };
   if (!token) return "no token";
+  if (checkingToken) return "checking token valid...";
+  if (!isTokenValid)
+    return (
+      <div className="tips">
+        <h2 className="title error">Invalided Token!</h2>
+      </div>
+    );
   return (
     <>
       <div className="tips">

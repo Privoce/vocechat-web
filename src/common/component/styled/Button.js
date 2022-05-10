@@ -11,6 +11,9 @@ const StyledButton = styled.button`
   line-height: 24px;
   color: #fff;
   background-color: #22ccee;
+  &.flex {
+    width: 100%;
+  }
   &:hover,
   &:active {
     background-color: #06aed4;
