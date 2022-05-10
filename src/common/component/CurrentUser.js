@@ -1,14 +1,20 @@
 // import { useEffect } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import soundIcon from '../../assets/icons/sound.on.svg?url';
-import micIcon from '../../assets/icons/mic.on.svg?url';
-import SignalIcon from '../../assets/icons/signal.svg?url';
-import HeadPhoneIcon from '../../assets/icons/headphone.svg?url';
-import VideoIcon from '../../assets/icons/video.svg?url';
+import soundIcon from "../../assets/icons/sound.on.svg?url";
+import micIcon from "../../assets/icons/mic.on.svg?url";
+import SignalIcon from "../../assets/icons/signal.svg?url";
+import HeadPhoneIcon from "../../assets/icons/headphone.svg?url";
+import VideoIcon from "../../assets/icons/video.svg?url";
+import videoDisableIcon from "../../assets/icons/video.disable.svg?url";
+
 import Avatar from "./Avatar";
 // import UserGuide from "./UserGuide";
-import { toggleChat } from '../../app/slices/videocall';
+import {
+  toggleChat,
+  toggleVideo,
+  toggleAudio,
+} from "../../app/slices/videocall";
 
 const StyledWrapper = styled.div`
   background-color: #e5e5e5;
@@ -65,51 +71,51 @@ const StyledWrapper = styled.div`
   }
 `;
 const CurrentUserWrapper = styled.div`
- background-color: #e5e5e5;
- position: sticky;
- bottom: 16px;
- margin: 8px;
- width: 94%;
- width: -webkit-fill-available;
- border-radius: 25px;
- padding: 7px 8px 7px 4px;
- display: flex;
- flex-direction: column;
- align-items: center;
- justify-content: space-between;
- .signal {
+  background-color: #e5e5e5;
+  position: sticky;
+  bottom: 16px;
+  margin: 8px;
+  width: 94%;
+  width: -webkit-fill-available;
+  border-radius: 25px;
+  padding: 7px 8px 7px 4px;
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  flex-direction: column;
   align-items: center;
-  width: 100%;
-  .status {
-   font-size: 14px;
-   color: #027a48;
-   font-weight: 700;
+  justify-content: space-between;
+  .signal {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    .status {
+      font-size: 14px;
+      color: #027a48;
+      font-weight: 700;
+    }
+    .title {
+      font-size: 12px;
+      color: #52525b;
+      margin-top: 5px;
+    }
   }
-  .title {
-   font-size: 12px;
-   color: #52525b;
-   margin-top: 5px;
+  .control {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-bottom: 1px solid #e8e8e9;
+    .button {
+      display: flex;
+      align-items: center;
+      status: Default;
+      background: #ffffff80;
+      border-radius: 8px;
+      padding: 8px 12px;
+      margin: 10px 0px;
+    }
   }
- }
- .control {
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  border-bottom: 1px solid #e8e8e9;
-  .button {
-   display: flex;
-   align-items: center;
-   status: Default;
-   background: #ffffff80;
-   border-radius: 8px;
-   padding: 8px 12px;
-   margin: 10px 0px;
-  }
- }
 `;
 export default function CurrentUser() {
   const currUser = useSelector((store) => {
@@ -118,6 +124,7 @@ export default function CurrentUser() {
   const onChat = useSelector((store) => {
     return store.videoCall.onChat;
   });
+  const videoState = useSelector((state) => state.videoCall.trackState.video);
   const dispatch = useDispatch();
   if (!currUser) return null;
   const { uid, name, avatar } = currUser;
@@ -126,13 +133,13 @@ export default function CurrentUser() {
       {onChat && (
         <div
           style={{
-            width: '100%'
+            width: "100%",
           }}
         >
           <div className="signal">
-            <div style={{ display: 'flex' }}>
+            <div style={{ display: "flex" }}>
               <img src={SignalIcon} className="icon" alt="signal icon" />
-              <div style={{ marginLeft: '10px' }}>
+              <div style={{ marginLeft: "10px" }}>
                 <div className="status">Voice Connected</div>
                 <div className="title">RustChat/lounge</div>
               </div>
@@ -142,12 +149,20 @@ export default function CurrentUser() {
             </div>
           </div>
           <div className="control">
-            <div className="button">
-              <img src={VideoIcon} className="icon" alt="video icon" />
+            <div className="button" onClick={() => dispatch(toggleVideo())}>
+              <img
+                src={videoState ? VideoIcon : videoDisableIcon}
+                className="icon"
+                alt="video icon"
+              />
               Video
             </div>
-            <div className="button">
-              <img src={VideoIcon} className="icon" alt="signal icon" />
+            <div className="button" onClick={() => dispatch(toggleAudio())}>
+              <img
+                src={videoState ? VideoIcon : videoDisableIcon}
+                className="icon"
+                alt="signal icon"
+              />
               Screen
             </div>
           </div>
@@ -155,7 +170,12 @@ export default function CurrentUser() {
       )}
       <StyledWrapper>
         <div className="profile">
-          <Avatar url={avatar} name={name} alt="user avatar" className="avatar" />
+          <Avatar
+            url={avatar}
+            name={name}
+            alt="user avatar"
+            className="avatar"
+          />
           <div className="info">
             <span className="name">{name}</span>
             <span className="id">#{uid}</span>
@@ -163,7 +183,12 @@ export default function CurrentUser() {
         </div>
         {/* {expand && ( */}
         <div className="settings">
-          <img src={soundIcon} className="icon" alt="mic icon" onClick={() => dispatch(toggleChat())} />
+          <img
+            src={soundIcon}
+            className="icon"
+            alt="mic icon"
+            onClick={() => dispatch(toggleChat())}
+          />
           <img src={micIcon} className="icon" alt="sound icon" />
         </div>
         {/* )} */}
