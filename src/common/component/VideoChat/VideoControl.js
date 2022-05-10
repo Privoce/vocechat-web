@@ -36,7 +36,7 @@ const VideoControlWrapper = styled.div`
     text-align: center;
   }
 `;
-export default function VideoControl({ tracks, ScreenComponent }) {
+export default function VideoControl({ tracks, ScreenComponent, onCloseChat }) {
   const openVideo = useSelector((state) => state.videoCall.trackState.video);
   const openAudio = useSelector((state) => state.videoCall.trackState.audio);
   const trackState = useSelector((state) => state.videoCall.trackState);
@@ -81,7 +81,7 @@ export default function VideoControl({ tracks, ScreenComponent }) {
         <span className="button">
           <img className="icon" src={moreIcon} />
         </span>
-        <span className="magaButton">
+        <span className="magaButton" onClick={() => onCloseChat()}>
           <img className="icon" src={chatCloseIcon} />
         </span>
         {openScreenShare && <ScreenComponent />}
