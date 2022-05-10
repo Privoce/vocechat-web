@@ -94,7 +94,7 @@ export default function VideoCallListCell({
             <div className="nameTag">
               {" "}
               <MicOnIcon style={{ height: "15px", width: "25px" }} />
-              {username}
+              {contactsById[username].name}
             </div>
           </div>
         </div>
