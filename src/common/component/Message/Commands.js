@@ -22,7 +22,7 @@ import usePinMessage from "../../hook/usePinMessage";
 import { ContentTypes } from "../../../app/config";
 import toast from "react-hot-toast";
 const StyledCmds = styled.ul`
-  z-index: 9999;
+  /* z-index: 9999; */
   position: absolute;
   right: 10px;
   top: 0;
