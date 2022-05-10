@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDebounce } from 'rooks';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import PinList from './PinList';
 import FavList from './FavList';
 // TODO: add alias for easyier import
@@ -30,6 +30,7 @@ import {
 } from './styled';
 import ChannelInviteModal from '../../../common/component/ChannelInviteModal';
 import { NavLink, useLocation } from 'react-router-dom';
+import { toggleChat } from '../../../app/slices/videocall';
 import Tippy from '@tippyjs/react';
 
 export default function ChannelChat({ cid = '', dropFiles = [] }) {
@@ -41,6 +42,7 @@ export default function ChannelChat({ cid = '', dropFiles = [] }) {
   const [addMemberModalVisible, setAddMemberModalVisible] = useState(false);
   const [videoCallVisible, setVideoCallVisiable] = useState(false);
   const [fullScreen, setFullScreen] = useState(false);
+  const dispatch = useDispatch();
 
   // const dispatch = useDispatch();
   const { selects, msgIds, userIds, data, messageData, loginUid, loginUser, footprint } =
@@ -63,6 +65,9 @@ export default function ChannelChat({ cid = '', dropFiles = [] }) {
   const toggleMembersVisible = () => {
     setMembersVisible((prev) => !prev);
     setVideoCallVisiable(false);
+    if (videoCallVisible) {
+      dispatch(toggleChat());
+    }
   };
   const toggleAddVisible = () => {
     setAddMemberModalVisible((prev) => !prev);
@@ -70,6 +75,7 @@ export default function ChannelChat({ cid = '', dropFiles = [] }) {
   const toggleVideoCallVisible = () => {
     setMembersVisible(false);
     setVideoCallVisiable((prev) => !prev);
+    dispatch(toggleChat());
   };
   const toggleFullScreen = () => {
     if (fullScreen) {
