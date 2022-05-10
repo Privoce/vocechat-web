@@ -41,11 +41,17 @@ self.addEventListener("notificationclick", function (event) {
   );
 });
 // Scripts for firebase and firebase messaging
+// importScripts(
+//   "https://www.gstatic.com/firebasejs/9.8.1/firebase-app-compat.js"
+// );
+// importScripts(
+//   "https://www.gstatic.com/firebasejs/9.8.1/firebase-messaging-compat.js"
+// );
 importScripts(
-  "https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"
+  "https://cdnjs.cloudflare.com/ajax/libs/firebase/9.8.1/firebase-app-compat.min.js"
 );
 importScripts(
-  "https://www.gstatic.com/firebasejs/9.6.10/firebase-messaging-compat.js"
+  "https://cdnjs.cloudflare.com/ajax/libs/firebase/9.8.1/firebase-messaging-compat.min.js"
 );
 
 // Initialize the Firebase app in the service worker by passing the generated config

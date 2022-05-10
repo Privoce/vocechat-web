@@ -79,6 +79,18 @@
     "webpack": "^5.72.0",
     "webpack-dev-server": "^4.9.0",
     "webpack-manifest-plugin": "^5.0.0",
+    "workbox-background-sync": "^6.5.3",
+    "workbox-broadcast-update": "^6.5.3",
+    "workbox-cacheable-response": "^6.5.3",
+    "workbox-core": "^6.5.3",
+    "workbox-expiration": "^6.5.3",
+    "workbox-google-analytics": "^6.5.3",
+    "workbox-navigation-preload": "^6.5.3",
+    "workbox-precaching": "^6.5.3",
+    "workbox-range-requests": "^6.5.3",
+    "workbox-routing": "^6.5.3",
+    "workbox-strategies": "^6.5.3",
+    "workbox-streams": "^6.5.3",
     "workbox-webpack-plugin": "^6.5.3"
   },
   "resolutions": {
