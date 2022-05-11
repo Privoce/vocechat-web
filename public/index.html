@@ -45,6 +45,7 @@
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  <!-- <link rel="manifest" id="my-manifest-placeholder"> -->
   <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -76,13 +77,17 @@
 
   #root-modal>.wrapper,
   #modal-modal>.wrapper {
-    pointer-events: all;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(2, 2, 2, .4);
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  #root-modal.mask>.wrapper,
+  #modal-modal.mask>.wrapper {
+    background-color: rgba(2, 2, 2, .4);
+    pointer-events: all;
+    width: 100vw;
+    height: 100vh;
   }
 </style>
 <style>
