@@ -23,7 +23,6 @@ import SettingPage from "./setting";
 import SettingChannelPage from "./settingChannel";
 import toast from "react-hot-toast";
 import ResourceManagement from "./resources";
-import Manifest from "../common/component/Manifest";
 
 const PageRoutes = () => {
   const {
@@ -129,7 +128,6 @@ export default function ReduxRoutes() {
   // };
   return (
     <Provider store={store}>
-      <Manifest />
       <Meta />
       <PageRoutes />
     </Provider>

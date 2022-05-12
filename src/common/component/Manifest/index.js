@@ -2,7 +2,10 @@ import { useEffect, useState, useRef } from "react";
 // import { useGetServerQuery } from "../../../app/services/server";
 // import manifest from "./manifest.json";
 import Prompt from "./Prompt";
+import usePrompt from "./usePrompt";
+
 export default function Manifest() {
+  const { setCanneled } = usePrompt();
   const deferredPromptRef = useRef(null);
   const [popup, setPopup] = useState(false);
   // const { data, isSuccess } = useGetServerQuery();
@@ -56,6 +59,7 @@ export default function Manifest() {
     deferredPromptRef.current = null;
   };
   const handleClose = async () => {
+    setCanneled();
     setPopup(false);
   };
   if (!popup) return null;
