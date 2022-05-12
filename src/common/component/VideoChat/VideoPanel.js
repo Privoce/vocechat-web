@@ -88,6 +88,9 @@ export default function VideoPanel({ onFullScreen, channel }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // used for debugger
+    window.agoraClient = client;
+    // used for debugger
     let init = async (name) => {
       client.on("user-published", async (user, mediaType) => {
         await client.subscribe(user, mediaType);
@@ -111,14 +114,23 @@ export default function VideoPanel({ onFullScreen, channel }) {
           });
         }
       });
-
+      client.on("user-joined", async (user) => {
+        console.log("[agora]User Joined", user);
+        if (user.hasVideo) {
+          await client.subscribe(user, "video");
+          setUsers((prevUsers) => {
+            return [...prevUsers, user];
+          });
+        }
+        if (user.hasAudio) {
+          await client.subscribe(user, "audio");
+          user.audioTrack?.play();
+        }
+      });
       client.on("user-left", (user) => {
         setUsers((prevUsers) => {
           return prevUsers.filter((User) => User.uid !== user.uid);
         });
-      });
-      client.on("volume-indicator", (volumes) => {
-        console.log("[volume-indicator]", volumes);
       });
       clientDebugger(client);
       await client.join(appId, name, null, uid);
@@ -145,9 +157,11 @@ export default function VideoPanel({ onFullScreen, channel }) {
             ScreenComponent={ScreenSharing}
             onScreenSharingStopped={() => console.log("[agora] stop")}
             onCloseChat={async () => {
-              await client.leave();
+              tracks[0].stop();
               tracks[0].close();
+              tracks[1].stop();
               tracks[1].close();
+              await client.leave();
               dispatch(toggleChat());
             }}
           />
