@@ -8,6 +8,7 @@ export default function ContextMenu({ items = [], hideMenu }) {
         if (!item) return null;
         const {
           title,
+          icon = null,
           handler = (evt) => {
             evt.preventDefault();
             hideMenu();
@@ -26,6 +27,7 @@ export default function ContextMenu({ items = [], hideMenu }) {
               hideMenu();
             }}
           >
+            {icon}
             {title}
           </li>
         );

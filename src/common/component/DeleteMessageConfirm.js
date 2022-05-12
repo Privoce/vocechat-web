@@ -22,7 +22,9 @@ export default function DeleteMessageConfirmModal({ closeModal, mids = [] }) {
         // className="animate__animated animate__fadeInDown animate__faster"
         buttons={
           <>
-            <Button onClick={closeModal.bind(null, false)}>Cancel</Button>
+            <Button className="cancel" onClick={closeModal.bind(null, false)}>
+              Cancel
+            </Button>
             <Button
               disabled={isDeleting}
               onClick={handleDelete}
