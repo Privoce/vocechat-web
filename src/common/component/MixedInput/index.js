@@ -9,7 +9,6 @@ import {
   createTrailingBlockPlugin,
   createNodeIdPlugin,
   createParagraphPlugin,
-  // createImagePlugin,
   createSoftBreakPlugin,
   // createComboboxPlugin,
   createMentionPlugin,
@@ -21,7 +20,6 @@ import {
   createPlugins,
   ELEMENT_PARAGRAPH,
   getPlateEditorRef,
-
   // usePlateEditorRef,
   // ELEMENT_IMAGE,
   MentionCombobox,
@@ -51,7 +49,6 @@ const Plugins = ({
   const enableMentions = members.length > 0;
   const filesRef = useRef([]);
   const contactData = useSelector((store) => store.contacts.byId);
-  const [originalValue, setOriginalValue] = useState(initialValue);
   const [msgs, setMsgs] = useState([]);
   const [cmdKey, setCmdKey] = useState(false);
   const editableRef = useRef(null);
@@ -79,12 +76,13 @@ const Plugins = ({
     window.addEventListener("paste", handlePasteEvent);
     return () => {
       window.removeEventListener("paste", handlePasteEvent);
+      const plateEditor = getPlateEditorRef(`${TEXT_EDITOR_PREFIX}_${id}`);
+      if (plateEditor && updateDraft) {
+        updateDraft(plateEditor.children);
+      }
     };
     // window.addEventListener("paste")
-  }, []);
-  useEffect(() => {
-    updateDraft(originalValue);
-  }, [originalValue]);
+  }, [id, updateDraft]);
 
   useKey(
     "Enter",
@@ -154,7 +152,6 @@ const Plugins = ({
 
   const handleChange = useCallback(
     async (val) => {
-      setOriginalValue(val);
       console.log("tmps changed", val);
       const tmps = [];
       const getMixedText = (children) => {
