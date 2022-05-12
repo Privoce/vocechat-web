@@ -10,7 +10,7 @@ const StyledWrapper = styled.div`
     flex-direction: column;
     min-width: 260px;
     box-shadow: inset -1px 0px 0px rgba(0, 0, 0, 0.05);
-    height: calc(100vh - 22px);
+    height: 100%;
     overflow: auto;
     border-radius: 16px 0 0 16px;
     .list {
@@ -153,7 +153,7 @@ const StyledWrapper = styled.div`
     width: 100%;
     &.placeholder {
       background-color: #fff;
-      height: calc(100vh - 22px);
+      height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
