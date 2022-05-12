@@ -14,7 +14,7 @@ import {
   createMentionPlugin,
   // comboboxSelectors,
   // getMentionOnSelectItem,
-  // findMentionInput,
+  findMentionInput,
   // removeMentionInput,
   // isSelectionInMentionInput,
   createPlugins,
@@ -47,7 +47,6 @@ const Plugins = ({
 }) => {
   const dispatch = useDispatch();
   const enableMentions = members.length > 0;
-  const filesRef = useRef([]);
   const contactData = useSelector((store) => store.contacts.byId);
   const [msgs, setMsgs] = useState([]);
   const [cmdKey, setCmdKey] = useState(false);
@@ -57,6 +56,7 @@ const Plugins = ({
     className: "box",
     placeholder,
   };
+  const plateEditor = getPlateEditorRef(`${TEXT_EDITOR_PREFIX}_${id}`);
   useEffect(() => {
     const handlePasteEvent = (evt) => {
       const files = [...evt.clipboardData.files];
@@ -76,7 +76,6 @@ const Plugins = ({
     window.addEventListener("paste", handlePasteEvent);
     return () => {
       window.removeEventListener("paste", handlePasteEvent);
-      const plateEditor = getPlateEditorRef(`${TEXT_EDITOR_PREFIX}_${id}`);
       if (plateEditor && updateDraft) {
         updateDraft(plateEditor.children);
       }
@@ -87,14 +86,18 @@ const Plugins = ({
   useKey(
     "Enter",
     (evt) => {
-      console.log("enter keypress", evt);
+      const mentionInputs = findMentionInput(plateEditor);
       if (evt.shiftKey || evt.ctrlKey || evt.altKey || evt.isComposing) {
         return true;
       }
+      // 正在at操作
+      if (mentionInputs) {
+        return true;
+      }
       evt.preventDefault();
+      // return true;
       sendMessages(msgs);
       // 清空
-      const plateEditor = getPlateEditorRef(`${TEXT_EDITOR_PREFIX}_${id}`);
       Transforms.delete(plateEditor, {
         at: {
           anchor: Editor.start(plateEditor, []),
@@ -166,40 +169,24 @@ const Plugins = ({
         return { value: arr.join(""), mentions };
       };
       for (const v of val) {
-        if (v.type == "img") {
-          // img
-          const url = v.url;
-          const file_path = decodeURIComponent(
-            new URL(url).searchParams.get("file_path")
-          );
-          console.log("files", filesRef.current, file_path);
-          const json = filesRef.current.find((f) => f.path == file_path) || {};
-          const { name, size, hash, path, ...rest } = json;
-          tmps.push({
-            type: "file",
-            content: { name, size, hash, path },
-            properties: rest,
-          });
+        // p
+        const { value, mentions } = getMixedText(v.children);
+        const prev = tmps[tmps.length - 1];
+        if (!prev) {
+          tmps.push([
+            { type: "text", content: value, properties: { mentions } },
+          ]);
         } else {
-          // p
-          const { value, mentions } = getMixedText(v.children);
-          const prev = tmps[tmps.length - 1];
-          if (!prev) {
+          if (Array.isArray(prev)) {
+            tmps[tmps.length - 1].push({
+              type: "text",
+              content: value,
+              properties: { mentions },
+            });
+          } else {
             tmps.push([
               { type: "text", content: value, properties: { mentions } },
             ]);
-          } else {
-            if (Array.isArray(prev)) {
-              tmps[tmps.length - 1].push({
-                type: "text",
-                content: value,
-                properties: { mentions },
-              });
-            } else {
-              tmps.push([
-                { type: "text", content: value, properties: { mentions } },
-              ]);
-            }
           }
         }
       }
@@ -224,8 +211,9 @@ const Plugins = ({
   return (
     <Styled className="input" ref={editableRef}>
       <Plate
-        onChange={handleChange}
         id={`${TEXT_EDITOR_PREFIX}_${id}`}
+        // key={`${TEXT_EDITOR_PREFIX}_${id}`}
+        onChange={handleChange}
         editableProps={{ ...initialProps, style: { userSelect: "text" } }}
         initialValue={initialValue}
         plugins={plugins}
@@ -235,7 +223,13 @@ const Plugins = ({
             // component={StyledCombobox}
             onRenderItem={({ item }) => {
               console.log("wtf", item);
-              return <Contact uid={item.data.uid} interactive={false} />;
+              return (
+                <Contact
+                  key={item.data.uid}
+                  uid={item.data.uid}
+                  interactive={false}
+                />
+              );
             }}
             items={members.map((id) => {
               const data = contactData[id];
