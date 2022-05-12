@@ -5,9 +5,8 @@ const Cell = styled.div`
   width: 100%;
   .video {
     width: 226px;
-    padding: 10px;
+    padding: 5px;
     overflow: hidden;
-    border-radius: 20px;
   }
   .nameTag {
     display: inline-block;

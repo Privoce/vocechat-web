@@ -72,7 +72,7 @@ function UserList(users) {
             key={item.uid}
             tracks={item.videoTrack}
             username={item.uid}
-            showVideo={false}
+            showVideo={item.hasVideo}
           ></VideoCallListCell>
         );
       })
@@ -94,6 +94,13 @@ export default function VideoPanel({ onFullScreen, channel }) {
     let init = async (name) => {
       client.on("user-published", async (user, mediaType) => {
         await client.subscribe(user, mediaType);
+        console.log(
+          "[agora] new user",
+          user,
+          mediaType,
+          user.hasAudio,
+          user.hasVideo
+        );
         if (mediaType == "video") {
           setUsers((prevUsers) => {
             return [...prevUsers, user];

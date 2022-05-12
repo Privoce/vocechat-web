@@ -34,9 +34,8 @@ const Cell = styled.div`
   }
   .video {
     width: 226px;
-    padding: 10px;
+    padding: 5px;
     overflow: hidden;
-    border-radius: 20px;
   }
   .nameTag {
     display: inline-block;
@@ -44,9 +43,8 @@ const Cell = styled.div`
     z-index: 90;
     background-color: #000;
     color: #fff;
-    maring-top: -20px;
     padding: 3px 5px;
-    top: -40px;
+    top: -31px;
   }
 `;
 export default function VideoCallListCell({
@@ -56,17 +54,15 @@ export default function VideoCallListCell({
   // openVoice = false,
   // openVideo = false,
   showVideo = false,
-  track,
+  tracks,
 }) {
   const contactsById = useSelector((state) => state.contacts.byId);
   if (!username) return null;
   avatar = contactsById[username].avatar;
-  console.log("[agora]username", username, contactsById[username].name);
-  console.log("[agora]track", track);
   console.log(avatar);
   return (
     <Cell>
-      {!(showVideo && track) && (
+      {!(showVideo && tracks) && (
         <div className="line">
           <div className="avatarBox">
             <Avatar
@@ -84,11 +80,11 @@ export default function VideoCallListCell({
           </div>
         </div>
       )}
-      {showVideo && track && (
+      {showVideo && tracks && (
         <div>
           <div className="video">
             <AgoraVideoPlayer
-              videoTrack={track}
+              videoTrack={tracks}
               style={{ height: "180px", width: "100%" }}
             />
             <div className="nameTag">
