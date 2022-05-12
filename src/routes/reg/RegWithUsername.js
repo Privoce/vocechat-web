@@ -13,6 +13,7 @@ import {
   useCheckInviteTokenValidMutation,
 } from "../../app/services/auth";
 import toast from "react-hot-toast";
+import ExpiredTip from "./ExpiredTip";
 
 export default function RegWithUsername() {
   const { token } = useParams();
@@ -66,13 +67,8 @@ export default function RegWithUsername() {
     setUsername(value);
   };
   if (!token) return "no token";
-  if (checkingToken) return "checking token valid...";
-  if (!isTokenValid)
-    return (
-      <div className="tips">
-        <h2 className="title error">Invalided Token!</h2>
-      </div>
-    );
+  if (checkingToken) return "checking Magic Link...";
+  if (!isTokenValid) return <ExpiredTip />;
   return (
     <>
       <div className="tips">
