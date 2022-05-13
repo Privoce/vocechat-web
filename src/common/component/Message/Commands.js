@@ -18,6 +18,7 @@ import moreIcon from "../../../assets/icons/more.svg?url";
 import toast from "react-hot-toast";
 import useMessageOperation from "./useMessageOperation";
 const StyledCmds = styled.ul`
+  z-index: 999;
   position: absolute;
   right: 10px;
   top: 0;
@@ -159,6 +160,8 @@ export default function Commands({
           </Tooltip>
         </li>
         <Tippy
+          duration={0}
+          delay={[0, 0]}
           onShow={handleTippyVisible.bind(null, true)}
           onHide={handleTippyVisible.bind(null, false)}
           interactive

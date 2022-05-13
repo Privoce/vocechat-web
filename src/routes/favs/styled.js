@@ -8,7 +8,7 @@ const Styled = styled.div`
   overflow: auto;
   .left {
     padding: 8px;
-    width: 268px;
+    min-width: 268px;
     box-shadow: inset -1px 0px 0px rgba(0, 0, 0, 0.1);
     .filters {
       display: flex;

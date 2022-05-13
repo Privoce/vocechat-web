@@ -8,7 +8,7 @@ const StyledWrapper = styled.div`
     position: relative;
     display: flex;
     flex-direction: column;
-    min-width: 260px;
+    min-width: 268px;
     box-shadow: inset -1px 0px 0px rgba(0, 0, 0, 0.05);
     height: 100%;
     overflow: auto;
