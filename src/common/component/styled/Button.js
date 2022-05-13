@@ -29,6 +29,11 @@ const StyledButton = styled.button`
     font-size: 14px;
     line-height: 20px;
   }
+  &.mini {
+    padding: 4px 10px;
+    font-size: 12px;
+    line-height: 18px;
+  }
   &.danger {
     border: none;
     background-color: #ef4444;
