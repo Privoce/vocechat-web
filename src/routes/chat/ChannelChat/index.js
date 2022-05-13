@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDebounce } from "rooks";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import PinList from "./PinList";
 import FavList from "../FavList";
 import { useReadMessageMutation } from "../../../app/services/message";
+import { updateRemeberedNavs } from "../../../app/slices/ui";
 import useChatScroll from "../../../common/hook/useChatScroll";
 import ChannelIcon from "../../../common/component/ChannelIcon";
 import Tooltip from "../../../common/component/Tooltip";
@@ -33,11 +34,11 @@ import Tippy from "@tippyjs/react";
 export default function ChannelChat({ cid = "", dropFiles = [] }) {
   const [toolVisible, setToolVisible] = useState("");
   const { pathname } = useLocation();
+  const dispatch = useDispatch();
   const [updateReadIndex] = useReadMessageMutation();
   const updateReadDebounced = useDebounce(updateReadIndex, 300);
   const [membersVisible, setMembersVisible] = useState(true);
   const [addMemberModalVisible, setAddMemberModalVisible] = useState(false);
-  // const dispatch = useDispatch();
   const {
     selects,
     msgIds,
@@ -63,6 +64,13 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
   // const handleClearUnreads = () => {
   //   dispatch(readMessage(msgIds));
   // };
+  useEffect(() => {
+    dispatch(updateRemeberedNavs());
+    return () => {
+      dispatch(updateRemeberedNavs({ path: pathname }));
+    };
+  }, [pathname]);
+
   const toggleMembersVisible = () => {
     setMembersVisible((prev) => !prev);
   };

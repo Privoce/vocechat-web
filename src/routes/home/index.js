@@ -8,8 +8,10 @@ import User from "./User";
 import Loading from "./Loading";
 import Menu from "./Menu";
 import usePreload from "./usePreload";
+import usePWABadge from "../../common/hook/usePWABadge";
 import Tooltip from "../../common/component/Tooltip";
 import Notification from "../../common/component/Notification";
+import Manifest from "../../common/component/Manifest";
 
 import ChatIcon from "../../assets/icons/chat.svg";
 import ContactIcon from "../../assets/icons/contact.svg";
@@ -17,10 +19,14 @@ import FavIcon from "../../assets/icons/bookmark.svg";
 import FolderIcon from "../../assets/icons/folder.svg";
 // const routes = ["/setting", "/setting/channel/:cid"];
 export default function HomePage() {
+  usePWABadge();
   const { pathname } = useLocation();
   const {
     loginUid,
-    ui: { ready },
+    ui: {
+      ready,
+      remeberedNavs: { chat: chatPath, contact: contactPath },
+    },
   } = useSelector((store) => {
     return {
       ui: store.ui,
@@ -41,19 +47,23 @@ export default function HomePage() {
       </>
     );
   }
+  const chatNav = chatPath || "/chat";
+  const contactNav = contactPath || "/contacts";
+
   return (
     <>
+      <Manifest />
       <Notification />
       <StyledWrapper>
         <div className={`col left`}>
           <User uid={loginUid} />
           <nav className="link_navs">
-            <NavLink className="link" to={"/chat"}>
+            <NavLink className="link" to={chatNav}>
               <Tooltip tip="Chat">
                 <ChatIcon />
               </Tooltip>
             </NavLink>
-            <NavLink className="link" to={"/contacts"}>
+            <NavLink className="link" to={contactNav}>
               <Tooltip tip="Members">
                 <ContactIcon />
               </Tooltip>
