@@ -12,8 +12,9 @@ import ContactsModal from "./ContactsModal";
 import { NavLink, useLocation } from "react-router-dom";
 
 const StyledWrapper = styled.div`
+  min-height: 56px;
   position: relative;
-  padding: 15px 15px 15px 20px;
+  padding: 6px 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;

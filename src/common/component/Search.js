@@ -15,7 +15,7 @@ import ContactsModal from "./ContactsModal";
 const StyledWrapper = styled.div`
   position: relative;
   min-height: 56px;
-  padding: 0 10px 0 16px;
+  padding: 6px 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;

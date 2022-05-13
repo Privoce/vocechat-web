@@ -164,7 +164,9 @@ export default function ManageMembers({ cid = null }) {
                 </div>
               </div>
               <div className="right">
-                <span className="role">{is_admin ? "Admin" : "User"}</span>
+                <span className="role">
+                  {is_admin ? "Admin" : cid ? "Member" : "User"}
+                </span>
                 <Tippy
                   duration={0}
                   delay={[0, 0]}

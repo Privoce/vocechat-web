@@ -16,6 +16,7 @@ const StyledMsg = styled.div`
     background: #f5f6f7;
   }
   &:hover,
+  &.contextVisible,
   &.preview {
     content-visibility: inherit;
     contain-intrinsic-size: inherit;

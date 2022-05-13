@@ -5,7 +5,7 @@ import Prompt from "./Prompt";
 import usePrompt from "./usePrompt";
 
 export default function Manifest() {
-  const { setCanneled } = usePrompt();
+  const { setCanneled, prompted } = usePrompt();
   const deferredPromptRef = useRef(null);
   const [popup, setPopup] = useState(false);
   // const { data, isSuccess } = useGetServerQuery();
@@ -62,6 +62,6 @@ export default function Manifest() {
     setCanneled();
     setPopup(false);
   };
-  if (!popup) return null;
+  if (!popup || prompted) return null;
   return <Prompt handleInstall={handleInstall} closePrompt={handleClose} />;
 }

@@ -1,5 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { KEY_REFRESH_TOKEN, KEY_TOKEN, KEY_UID, KEY_EXPIRE } from "../config";
+import {
+  KEY_PWA_INSTALLED,
+  KEY_REFRESH_TOKEN,
+  KEY_TOKEN,
+  KEY_UID,
+  KEY_EXPIRE,
+} from "../config";
 const initialState = {
   uid: null,
   token: localStorage.getItem(KEY_TOKEN),
@@ -43,6 +49,8 @@ const authDataSlice = createSlice({
       localStorage.removeItem(KEY_TOKEN);
       localStorage.removeItem(KEY_REFRESH_TOKEN);
       localStorage.removeItem(KEY_UID);
+      localStorage.removeItem(KEY_PWA_INSTALLED);
+
       return emptyState;
     },
     setUid(state, action) {

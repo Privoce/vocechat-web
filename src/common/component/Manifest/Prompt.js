@@ -51,9 +51,7 @@ export default function Prompt({ handleInstall, closePrompt }) {
         <IconClose className="close" onClick={closePrompt} />
         <div className="tip">
           <h2 className="title">Install web app on desktop?</h2>
-          <p className="desc">
-            Put it on your desktop for quick access to apps.
-          </p>
+          <p className="desc">Add to desktop for quick access to this app.</p>
         </div>
         <div className="btns">
           <Button className="ghost cancel small" onClick={closePrompt}>

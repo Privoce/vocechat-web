@@ -100,7 +100,9 @@ function Message({
         onContextMenu={handleContextMenuEvent}
         data-msg-mid={mid}
         ref={inviewRef}
-        className={`message ${readOnly ? "readonly" : ""}`}
+        className={`message ${readOnly ? "readonly" : ""} ${
+          contextMenuVisible ? "contextVisible" : ""
+        } `}
       >
         <Tippy
           disabled={readOnly}

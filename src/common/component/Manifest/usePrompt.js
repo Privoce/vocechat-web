@@ -1,16 +1,16 @@
 // import React from "react";
-const Key = `RUSTCHAT_PWA_PROMPT`;
+import { KEY_PWA_INSTALLED } from "../../../app/config";
 export default function usePrompt() {
   const resetPrompt = () => {
-    localStorage.removeItem(Key);
+    localStorage.removeItem(KEY_PWA_INSTALLED);
   };
   const setPrompt = () => {
-    localStorage.setItem(Key, true);
+    localStorage.setItem(KEY_PWA_INSTALLED, true);
   };
 
   return {
     setCanneled: setPrompt,
-    prompted: !!localStorage.getItem(Key),
+    prompted: !!localStorage.getItem(KEY_PWA_INSTALLED),
     resetPrompt,
   };
 }
