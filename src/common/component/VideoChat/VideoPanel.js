@@ -12,7 +12,6 @@ import {
 } from "../../../app/slices/videocall";
 import ScreenSharing from "./ScreenShare";
 import { useDispatch, useSelector } from "react-redux";
-import { getTrack, clientDebugger } from "./helpers";
 import Owner from "./Owner";
 import JoinPanel from "./JoinPanel";
 const VideoPanelWrapper = styled.div`
@@ -134,7 +133,6 @@ export default function VideoPanel({ onFullScreen, channel }) {
           return prevUsers.filter((User) => User.uid !== user.uid);
         });
       });
-      clientDebugger(client);
       await client.join(appId, name, null, uid);
       if (tracks) await client.publish([tracks[0], tracks[1]]);
     };
