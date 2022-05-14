@@ -139,6 +139,12 @@ export default function VideoPanel({ onFullScreen, channel }) {
     if (ready && tracks) {
       init(channel);
     }
+    return async () => {
+      tracks[0].stop();
+      tracks[0].close();
+      tracks[1].stop();
+      tracks[1].close();
+    };
   }, [channel, client, ready, tracks, uid]);
   return (
     <>
