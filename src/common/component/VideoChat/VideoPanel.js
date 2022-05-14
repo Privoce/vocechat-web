@@ -1,10 +1,5 @@
 import styled from "styled-components";
-import {
-  createClient,
-  createMicrophoneAndCameraTracks,
-  createScreenVideoTrack,
-  AgoraVideoPlayer,
-} from "agora-rtc-react";
+import { createClient, createMicrophoneAndCameraTracks } from "agora-rtc-react";
 import VideoCallListCell from "./VideoCallListCell";
 import VideoControl from "./VideoControl";
 import FullScreenIcon from "../../../assets/icons/fullscreen.svg?url";
@@ -146,7 +141,7 @@ export default function VideoPanel({ onFullScreen, channel }) {
     if (ready && tracks) {
       init(channel);
     }
-  }, [ready, tracks]);
+  }, [channel, client, ready, tracks, uid]);
   return (
     <>
       {ready && (
