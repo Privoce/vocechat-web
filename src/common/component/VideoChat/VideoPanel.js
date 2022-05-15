@@ -64,27 +64,13 @@ const useMicrophoneAndCameraTracks = createMicrophoneAndCameraTracks();
 
 const appId = "020c861b44424b0eb0ff768ee9bffda2";
 
-function UserList(users, mutedVideoList) {
-  return users
-    ? users.map((item) => {
-        console.log("[agora] muted item", item);
-        return (
-          <VideoCallListCell
-            key={item.uid}
-            tracks={item.videoTrack}
-            username={item.uid}
-            showVideo={item.hasVideo}
-            isMuted={mutedVideoList.indexOf(item.uid) != -1}
-          ></VideoCallListCell>
-        );
-      })
-    : null;
-}
-
 export default function VideoPanel({ onFullScreen, channel }) {
   // const users = useSelector(selectUsers);
   const uid = useSelector((state) => state.authData.uid);
   const client = useClient();
+  const [cameraDevices, setCameraDevices] = useState([]);
+  const [microphoneDevices, setMicrophoneDevices] = useState([]);
+  const [headPhoneDevices, setHeadPhoneDevices] = useState([]);
 
   const [users, setUsers] = useState([]);
   const [mutedVideoList, setMutedVideoList] = useState([]);
@@ -99,6 +85,17 @@ export default function VideoPanel({ onFullScreen, channel }) {
   useEffect(() => {
     // used for debugger
     window.agoraClient = client;
+    window.agoraRTC = AgoraRTC;
+    AgoraRTC.getCameras().then((devices) => {
+      setCameraDevices(devices);
+    });
+    AgoraRTC.getMicrophones().then((devices) => {
+      setMicrophoneDevices(devices);
+    });
+    AgoraRTC.getPlaybackDevices().then((devices) => {
+      setHeadPhoneDevices(devices);
+    });
+
     // used for debugger
     let init = async (name) => {
       client.on("user-published", async (user, mediaType) => {
@@ -142,16 +139,19 @@ export default function VideoPanel({ onFullScreen, channel }) {
       });
       client.on("user-info-updated", (uid, msg) => {
         if (msg == "mute-video") {
-          setMutedVideoList((prevUsers) => {
-            return [...prevUsers, uid];
-          });
+          setMutedVideoList([uid]);
         }
         if (msg == "unmute-video") {
-          setMutedVideoList((prevUsers) => {
-            return prevUsers.filter((User) => User !== uid);
-          });
+          setMutedVideoList([]);
         }
         console.log("[agora] user-info-updated", uid, msg);
+      });
+      client.on("volume-indicator", function (result) {
+        result.forEach(function (volume, index) {
+          console.log(
+            `[agora] ${index} UID ${volume.uid} Level ${volume.level}`
+          );
+        });
       });
       await client.join(appId, name, null, uid);
       if (tracks) await client.publish([tracks[0], tracks[1]]);
@@ -160,12 +160,27 @@ export default function VideoPanel({ onFullScreen, channel }) {
       init(channel);
     }
     return async () => {
+      if (!tracks) return;
       tracks[0].stop();
       tracks[0].close();
       tracks[1].stop();
       tracks[1].close();
     };
   }, [channel, client, ready, tracks, uid]);
+  const switchDevice = (e) => {
+    let value = e.target.value;
+    const [type, deviceId] = value.split(",");
+    console.log(type, deviceId);
+    if (type == "headphone") {
+      tracks[0].setPlaybackDevice(deviceId);
+    }
+    if (type == "microphone") {
+      tracks[0].setDevice(deviceId);
+    }
+    if (type == "camera") {
+      tracks[1].setDevice(deviceId);
+    }
+  };
   return (
     <>
       {ready && (
@@ -179,10 +194,64 @@ export default function VideoPanel({ onFullScreen, channel }) {
             />
             <div>频道内现有{channelNumbers}人</div>
           </div>
+          <div>设备选择</div>
+          <select name="cars" id="cars" onChange={switchDevice}>
+            <optgroup label="麦克风">
+              {microphoneDevices.map((device) => {
+                return (
+                  <option
+                    key={device.deviceId}
+                    value={"microphone," + device.deviceId}
+                  >
+                    {device.label}
+                  </option>
+                );
+              })}
+            </optgroup>
+            <optgroup label="摄像头">
+              {cameraDevices.map((device) => {
+                return (
+                  <option
+                    key={device.deviceId}
+                    value={"camera," + device.deviceId}
+                  >
+                    {device.label}
+                  </option>
+                );
+              })}
+            </optgroup>
+            {/* <optgroup label="播放器">
+              {headPhoneDevices.map((device) => {
+                return (
+                  <option
+                    key={device.deviceId}
+                    data-type="headphone"
+                    value={"headphone," + device.deviceId}
+                  >
+                    {device.label}
+                  </option>
+                );
+              })}
+            </optgroup> */}
+          </select>
+          <hr />
           {/* for owner view */}
           {ready && tracks && <Owner track={tracks[1]} />}
           {/* other user list */}
-          {UserList(users, mutedVideoList)}
+          {users
+            ? users.map((item) => {
+                console.log("[agora] muted item", item, mutedVideoList);
+                return (
+                  <VideoCallListCell
+                    key={item.uid}
+                    tracks={item.videoTrack}
+                    username={item.uid}
+                    showVideo={item.hasVideo}
+                    isMuted={mutedVideoList.indexOf(item.uid) != -1}
+                  ></VideoCallListCell>
+                );
+              })
+            : null}
           <VideoControl
             tracks={tracks}
             client={client}
