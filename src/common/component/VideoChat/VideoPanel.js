@@ -1,5 +1,8 @@
 import styled from "styled-components";
-import { createClient, createMicrophoneAndCameraTracks } from "agora-rtc-react";
+import AgoraRTC, {
+  createClient,
+  createMicrophoneAndCameraTracks,
+} from "agora-rtc-react";
 import VideoCallListCell from "./VideoCallListCell";
 import VideoControl from "./VideoControl";
 import FullScreenIcon from "../../../assets/icons/fullscreen.svg?url";
@@ -10,6 +13,7 @@ import {
   removeUser,
   selectUsers,
 } from "../../../app/slices/videocall";
+import useInterval from "../../hook/useInterval";
 import ScreenSharing from "./ScreenShare";
 import { useDispatch, useSelector } from "react-redux";
 import Owner from "./Owner";
@@ -24,6 +28,7 @@ const VideoPanelWrapper = styled.div`
     border-bottom: 1px solid #f2f2f2;
     flex-direction: row-reverse;
     padding: 10px;
+    justify-content: space-between;
   }
   .controlGroup {
     display: flex;
@@ -52,21 +57,24 @@ const VideoPanelWrapper = styled.div`
   }
 `;
 
+AgoraRTC.setLogLevel(2);
 const config = { mode: "rtc", codec: "vp8" };
 const useClient = createClient(config);
 const useMicrophoneAndCameraTracks = createMicrophoneAndCameraTracks();
 
 const appId = "020c861b44424b0eb0ff768ee9bffda2";
 
-function UserList(users) {
+function UserList(users, mutedVideoList) {
   return users
     ? users.map((item) => {
+        console.log("[agora] muted item", item);
         return (
           <VideoCallListCell
             key={item.uid}
             tracks={item.videoTrack}
             username={item.uid}
             showVideo={item.hasVideo}
+            isMuted={mutedVideoList.indexOf(item.uid) != -1}
           ></VideoCallListCell>
         );
       })
@@ -77,9 +85,16 @@ export default function VideoPanel({ onFullScreen, channel }) {
   // const users = useSelector(selectUsers);
   const uid = useSelector((state) => state.authData.uid);
   const client = useClient();
+
   const [users, setUsers] = useState([]);
+  const [mutedVideoList, setMutedVideoList] = useState([]);
   const { ready, tracks } = useMicrophoneAndCameraTracks();
   const dispatch = useDispatch();
+  const [channelNumbers, setChannelNumbers] = useState(0);
+
+  useInterval(() => {
+    setChannelNumbers(client.remoteUsers.length + 1);
+  }, 500);
 
   useEffect(() => {
     // used for debugger
@@ -88,13 +103,6 @@ export default function VideoPanel({ onFullScreen, channel }) {
     let init = async (name) => {
       client.on("user-published", async (user, mediaType) => {
         await client.subscribe(user, mediaType);
-        console.log(
-          "[agora] new user",
-          user,
-          mediaType,
-          user.hasAudio,
-          user.hasVideo
-        );
         if (mediaType == "video") {
           setUsers((prevUsers) => {
             return [...prevUsers, user];
@@ -116,7 +124,6 @@ export default function VideoPanel({ onFullScreen, channel }) {
         }
       });
       client.on("user-joined", async (user) => {
-        console.log("[agora]User Joined", user);
         if (user.hasVideo) {
           await client.subscribe(user, "video");
           setUsers((prevUsers) => {
@@ -132,6 +139,19 @@ export default function VideoPanel({ onFullScreen, channel }) {
         setUsers((prevUsers) => {
           return prevUsers.filter((User) => User.uid !== user.uid);
         });
+      });
+      client.on("user-info-updated", (uid, msg) => {
+        if (msg == "mute-video") {
+          setMutedVideoList((prevUsers) => {
+            return [...prevUsers, uid];
+          });
+        }
+        if (msg == "unmute-video") {
+          setMutedVideoList((prevUsers) => {
+            return prevUsers.filter((User) => User !== uid);
+          });
+        }
+        console.log("[agora] user-info-updated", uid, msg);
       });
       await client.join(appId, name, null, uid);
       if (tracks) await client.publish([tracks[0], tracks[1]]);
@@ -150,13 +170,19 @@ export default function VideoPanel({ onFullScreen, channel }) {
     <>
       {ready && (
         <VideoPanelWrapper>
-          {/* <div className="fullscreen">
-                    <img src={FullScreenIcon} className="icon" alt="fullscreen icon" onClick={onFullScreen} />
-                </div> */}
+          <div className="fullscreen">
+            <img
+              src={FullScreenIcon}
+              className="icon"
+              alt="fullscreen icon"
+              onClick={onFullScreen}
+            />
+            <div>频道内现有{channelNumbers}人</div>
+          </div>
           {/* for owner view */}
           {ready && tracks && <Owner track={tracks[1]} />}
           {/* other user list */}
-          {UserList(users)}
+          {UserList(users, mutedVideoList)}
           <VideoControl
             tracks={tracks}
             client={client}
