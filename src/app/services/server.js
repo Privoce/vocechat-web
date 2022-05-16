@@ -29,7 +29,6 @@ export const serverApi = createApi({
         //   accept: "text/plain",
         // },
         url: `/admin/system/third_party_secret`,
-
         responseHandler: (response) => response.text(),
       }),
       keepUnusedDataFor: 0,
@@ -43,6 +42,16 @@ export const serverApi = createApi({
     }),
     getMetrics: builder.query({
       query: () => ({ url: `/admin/system/metrics` }),
+    }),
+    getServerVersion: builder.query({
+      query: () => ({
+        headers: {
+          // "content-type": "text/plain",
+          accept: "text/plain",
+        },
+        url: `/admin/system/version`,
+        responseHandler: (response) => response.text(),
+      }),
     }),
     getFirebaseConfig: builder.query({
       query: () => ({ url: `admin/fcm/config` }),
@@ -161,6 +170,7 @@ export const serverApi = createApi({
 });
 
 export const {
+  useGetServerVersionQuery,
   useGetGoogleAuthConfigQuery,
   useUpdateGoogleAuthConfigMutation,
   useGetSMTPStatusQuery,
