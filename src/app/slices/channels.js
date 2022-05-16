@@ -40,7 +40,6 @@ const channelsSlice = createSlice({
     },
     updateChannel(state, action) {
       const ignoreInPublic = ["add_member", "remove_member"];
-      // console.log("set channels store", action);
       const { id, operation, members = [], ...rest } = action.payload;
       const currChannel = state.byId[id];
       if (
@@ -48,7 +47,6 @@ const channelsSlice = createSlice({
         (currChannel.is_public && ignoreInPublic.includes(operation))
       )
         return;
-
       switch (operation) {
         case "remove_member":
           {
@@ -71,9 +69,7 @@ const channelsSlice = createSlice({
             console.log("add member to channel", [..._set]);
             state.byId[id].members = [..._set];
           }
-
           break;
-
         default:
           state.byId[id] = { ...state.byId[id], ...rest };
           break;

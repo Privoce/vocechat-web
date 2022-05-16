@@ -6,6 +6,14 @@ const Styled = styled.div`
   border-radius: 8px;
   background-color: #fff;
   min-width: 440px;
+  &.compact {
+    padding: 16px;
+    min-width: 406px;
+    .title,
+    .desc {
+      text-align: left;
+    }
+  }
   .title {
     text-align: center;
     font-weight: 600;
@@ -19,10 +27,10 @@ const Styled = styled.div`
     font-size: 14px;
     line-height: 20px;
     color: #6b7280;
-    padding-bottom: 32px;
+    margin-bottom: 8px;
   }
   .btns {
-    padding-top: 32px;
+    padding-top: 16px;
     width: 100%;
     display: flex;
     justify-content: flex-end;

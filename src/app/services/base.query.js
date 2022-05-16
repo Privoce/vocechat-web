@@ -10,6 +10,7 @@ const whiteList = [
   "checkInviteTokenValid",
   "getGoogleAuthConfig",
   "getLoginConfig",
+  "getServerVersion",
   "getServer",
   "getOpenid",
   "getMetamaskNonce",

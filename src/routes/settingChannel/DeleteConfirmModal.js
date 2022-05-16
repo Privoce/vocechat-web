@@ -25,6 +25,7 @@ export default function DeleteConfirmModal({ id, closeModal }) {
   return (
     <Modal id="modal-modal">
       <StyledModal
+        className="compact"
         title="Delete Channel"
         description="Are you sure want to delete this channel?"
         buttons={

@@ -115,6 +115,7 @@ export default function StyledSettingContainer({
         {dangers.length ? (
           <ul className="items danger">
             {dangers.map((d) => {
+              if (!d) return null;
               const { title, handler } = d;
               return (
                 <li key={title} onClick={handler} className="item">
