@@ -1,18 +1,38 @@
-// import { useState, useEffect } from "react";
+// import { useState } from "react";
 import StyledContainer from "./StyledContainer";
 import Textarea from "../../../common/component/styled/Textarea";
 import Toggle from "../../../common/component/styled/Toggle";
 import Label from "../../../common/component/styled/Label";
+import Input from "../../../common/component/styled/Input";
 import SaveTip from "../../../common/component/SaveTip";
 import useConfig from "./useConfig";
-
+import useGoogleAuthConfig from "../../../common/hook/useGoogleAuthConfig";
+import toast from "react-hot-toast";
 export default function Logins() {
+  const {
+    changed: clientIdChanged,
+    clientId,
+    updateClientId,
+    updateServerClientId,
+  } = useGoogleAuthConfig();
   const { values, updateConfig, setValues, reset, changed } = useConfig(
     "login"
   );
-  const handleUpdate = () => {
-    // const { token_url, description } = values;
-    updateConfig(values);
+  const handleUpdate = async () => {
+    const { google } = values;
+    if (changed) {
+      updateConfig(values);
+    }
+    if (google && clientIdChanged) {
+      // 更新google client id
+      await updateServerClientId();
+      if (!changed) {
+        toast.success("Configuration Updated!");
+      }
+    }
+  };
+  const handleGoogleClientIdChange = (evt) => {
+    updateClientId(evt.target.value);
   };
   const handleChange = (evt) => {
     const newValue = evt.target.value;
@@ -29,6 +49,7 @@ export default function Logins() {
   };
   if (!values) return null;
   const { google, metamask, password, oidc = [] } = values ?? {};
+  const valuesChanged = clientIdChanged || changed;
   return (
     <StyledContainer>
       <div className="inputs">
@@ -46,6 +67,15 @@ export default function Logins() {
             data-checked={google}
           ></Toggle>
         </div>
+        {google && (
+          <div className="input row">
+            <Input
+              onChange={handleGoogleClientIdChange}
+              placeholder="Client ID"
+              value={clientId}
+            />
+          </div>
+        )}
         <div className="input row">
           <Label>Metamask</Label>
           <Toggle
@@ -64,56 +94,10 @@ export default function Logins() {
             placeholder="Input issuer list, one line, one issuer"
           />
         </div>
-
-        {/* <div className="input">
-          <Label htmlFor="name">Token Url</Label>
-          <Input
-            disabled={!enabled}
-            data-type="token_url"
-            onChange={handleChange}
-            value={token_url || "https://oauth2.googleapis.com/token"}
-            name="token_url"
-            placeholder="Token URL"
-          />
-        </div>
-        <div className="input">
-          <Label htmlFor="desc">Project ID</Label>
-          <Input
-            disabled={!enabled}
-            type={"number"}
-            data-type="project_id"
-            onChange={handleChange}
-            value={project_id}
-            name="project_id"
-            placeholder="Project ID"
-          />
-        </div>
-        <div className="input">
-          <Label htmlFor="desc">Private Key</Label>
-          <Textarea
-            rows={10}
-            disabled={!enabled}
-            data-type="private_key"
-            onChange={handleChange}
-            value={private_key}
-            name="private_key"
-            placeholder="Private key"
-          />
-        </div>
-        <div className="input">
-          <Label htmlFor="desc">Client Email</Label>
-          <Input
-            disabled={!enabled}
-            data-type="client_email"
-            onChange={handleChange}
-            value={client_email}
-            name="client_email"
-            placeholder="Client Email address"
-          />
-        </div> */}
       </div>
-      {changed && <SaveTip saveHandler={handleUpdate} resetHandler={reset} />}
-      {/* <button onClick={handleUpdate} className="btn">update</button> */}
+      {valuesChanged && (
+        <SaveTip saveHandler={handleUpdate} resetHandler={reset} />
+      )}
     </StyledContainer>
   );
 }

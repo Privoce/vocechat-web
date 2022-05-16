@@ -8,6 +8,7 @@ const whiteList = [
   "register",
   "sendMagicLink",
   "checkInviteTokenValid",
+  "getGoogleAuthConfig",
   "getLoginConfig",
   "getServer",
   "getOpenid",

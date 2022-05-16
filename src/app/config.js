@@ -20,8 +20,6 @@ export const firebaseConfig = {
   measurementId: "G-XV476KEC8P",
 };
 export const vapidKey = `BGXCn-5YRXSFw38Q9lUKJ5bibL212-yIQn1pCvthGhp6_KwA29FO1Ax_d_7if1vfC2a5wTSVO8AcZrc-Hm1aS0Y`;
-export const googleClientID =
-  "418687074928-naojba82n9ktf0rkvnqoor4nhr54ql1b.apps.googleusercontent.com";
 // "840319286941-6ds7lbvk55eq8mjortf68cb2ll65lprt.apps.googleusercontent.com";
 export const tokenHeader = "X-API-Key";
 export const FILE_SLICE_SIZE = 1000 * 200 * 8; //200kb

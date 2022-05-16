@@ -15,9 +15,10 @@ import MagicLinkLogin from "./MagicLinkLogin";
 import { useLoginMutation } from "../../app/services/auth";
 import { useGetLoginConfigQuery } from "../../app/services/server";
 import { setAuthData } from "../../app/slices/auth.data";
-
+import useGoogleAuthConfig from "../../common/hook/useGoogleAuthConfig";
 export default function LoginPage() {
   const [login, { data, isSuccess, isLoading, error }] = useLoginMutation();
+  const { clientId } = useGoogleAuthConfig();
   const {
     data: loginConfig,
     isSuccess: loginConfigSuccess,
@@ -114,6 +115,7 @@ export default function LoginPage() {
     metamask: enableMetamaskLogin,
     oidc,
   } = loginConfig;
+  const googleLogin = enableGoogleLogin && clientId;
   return (
     <StyledWrapper>
       <div className="form">
@@ -150,11 +152,11 @@ export default function LoginPage() {
             {isLoading ? "Signing" : `Sign in`}
           </Button>
         </form>
-        {(enableGoogleLogin || enableMetamaskLogin || oidc.length > 0) && (
+        {(googleLogin || enableMetamaskLogin || oidc.length > 0) && (
           <hr className="or" />
         )}
         <MagicLinkLogin />
-        {enableGoogleLogin && <GoogleLoginButton login={login} />}
+        {googleLogin && <GoogleLoginButton login={login} clientId={clientId} />}
         {enableMetamaskLogin && <MetamaskLoginButton login={login} />}
         {oidc.length > 0 && <SolidLoginButton issuers={oidc} />}
       </div>

@@ -47,6 +47,16 @@ export const serverApi = createApi({
     getFirebaseConfig: builder.query({
       query: () => ({ url: `admin/fcm/config` }),
     }),
+    getGoogleAuthConfig: builder.query({
+      query: () => ({ url: `admin/google_auth/config` }),
+    }),
+    updateGoogleAuthConfig: builder.mutation({
+      query: (data) => ({
+        url: `admin/google_auth/config`,
+        method: "POST",
+        body: data,
+      }),
+    }),
     sendTestEmail: builder.mutation({
       query: (data) => ({
         url: `/admin/system/send_mail`,
@@ -151,6 +161,8 @@ export const serverApi = createApi({
 });
 
 export const {
+  useGetGoogleAuthConfigQuery,
+  useUpdateGoogleAuthConfigMutation,
   useGetSMTPStatusQuery,
   useSendTestEmailMutation,
   useUpdateFirebaseConfigMutation,
