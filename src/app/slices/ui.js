@@ -14,6 +14,10 @@ const initialState = {
   selectMessages: {},
   draftMarkdown: {},
   draftMixedText: {},
+  remeberedNavs: {
+    chat: null,
+    contact: null,
+  },
 };
 const uiSlice = createSlice({
   name: "ui",
@@ -36,6 +40,10 @@ const uiSlice = createSlice({
     },
     updateFileListView(state, action) {
       state.fileListView = action.payload;
+    },
+    updateRemeberedNavs(state, action) {
+      const { key = "chat", path = null } = action.payload || {};
+      state.remeberedNavs[key] = path;
     },
     updateDraftMarkdown(state, action) {
       const { key, value } = action.payload;
@@ -158,5 +166,6 @@ export const {
   updateUserGuide,
   updateDraftMarkdown,
   updateDraftMixedText,
+  updateRemeberedNavs,
 } = uiSlice.actions;
 export default uiSlice.reducer;
