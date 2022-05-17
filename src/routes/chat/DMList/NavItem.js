@@ -34,7 +34,6 @@ const NavItem = ({ uid, mid, unreads, setFiles }) => {
   const navigate = useNavigate();
   const {
     visible: contextMenuVisible,
-    offset,
     handleContextMenuEvent,
     hideContextMenu,
   } = useContextMenu();
@@ -87,8 +86,8 @@ const NavItem = ({ uid, mid, unreads, setFiles }) => {
       interactive
       popperOptions={{ strategy: "fixed" }}
       placement="right-start"
-      offset={[offset.y, offset.x]}
       visible={contextMenuVisible}
+      followCursor={"initial"}
       onClickOutside={hideContextMenu}
       key={uid}
       content={

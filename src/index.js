@@ -7,6 +7,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import "./assets/vars.css";
 import "animate.css";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import TippyDefault from "./common/component/TippyDefault";
 import MarkdownStyleOverride from "./common/component/MarkdownStyleOverride";
 import ReduxRoutes from "./routes";
 import NewVersion from "./common/component/NewVersion";
@@ -15,6 +16,7 @@ root.render(
   <>
     <Reset />
     <Toaster />
+    <TippyDefault />
     <DndProvider backend={HTML5Backend}>
       <ReduxRoutes />
     </DndProvider>

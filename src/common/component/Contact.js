@@ -77,7 +77,6 @@ export default function Contact({
   if (!curr) return null;
   return (
     <Tippy
-      duration={0}
       inertia={true}
       interactive
       disabled={!popover}

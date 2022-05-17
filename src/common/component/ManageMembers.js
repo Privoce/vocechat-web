@@ -168,8 +168,6 @@ export default function ManageMembers({ cid = null }) {
                   {is_admin ? "Admin" : cid ? "Member" : "User"}
                 </span>
                 <Tippy
-                  duration={0}
-                  delay={[0, 0]}
                   interactive
                   placement="right-start"
                   trigger="click"

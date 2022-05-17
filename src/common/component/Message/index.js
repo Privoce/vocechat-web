@@ -29,7 +29,6 @@ function Message({
 }) {
   const {
     visible: contextMenuVisible,
-    offset,
     handleContextMenuEvent,
     hideContextMenu,
   } = useContextMenu();
@@ -97,7 +96,6 @@ function Message({
     >
       <Tippy
         disabled={readOnly}
-        duration={0}
         interactive
         placement="left"
         trigger="click"
@@ -114,7 +112,6 @@ function Message({
         mid={mid}
         visible={contextMenuVisible}
         hide={hideContextMenu}
-        offset={offset}
       >
         <div className="details">
           <div className="up">

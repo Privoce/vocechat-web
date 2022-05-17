@@ -1,4 +1,4 @@
-// import { useState, useEffect } from "react";
+// import { useState } from "react";
 import Tippy from "@tippyjs/react";
 import { useDispatch } from "react-redux";
 import ContextMenu from "../ContextMenu";
@@ -18,7 +18,6 @@ export default function MessageContextMenu({
   context,
   contextId,
   mid,
-  offset = {},
   visible,
   hide,
   editMessage,
@@ -26,7 +25,7 @@ export default function MessageContextMenu({
 }) {
   const {
     copyContent,
-    isMarkdown,
+    // isMarkdown,
     canEdit,
     canPin,
     canCopy,
@@ -57,8 +56,13 @@ export default function MessageContextMenu({
       {PinModal}
       {DeleteModal}
       <Tippy
-        duration={0}
-        delay={[0, 0]}
+        visible={visible}
+        followCursor={"initial"}
+        interactive
+        placement="right-start"
+        popperOptions={{ strategy: "fixed" }}
+        onClickOutside={hide}
+        key={mid}
         content={
           <ContextMenu
             hideMenu={hide}
@@ -102,13 +106,6 @@ export default function MessageContextMenu({
             ]}
           />
         }
-        interactive
-        placement="right-start"
-        popperOptions={{ strategy: "fixed" }}
-        offset={[offset.y, offset.x]}
-        visible={visible}
-        onClickOutside={hide}
-        key={mid}
       >
         {children}
       </Tippy>

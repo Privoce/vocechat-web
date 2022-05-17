@@ -125,8 +125,6 @@ export default function Commands({
         className={`cmds ${tippyVisible ? "visible" : ""}`}
       >
         <Tippy
-          duration={0}
-          delay={[0, 0]}
           onShow={handleTippyVisible.bind(null, true)}
           onHide={handleTippyVisible.bind(null, false)}
           interactive
@@ -160,8 +158,6 @@ export default function Commands({
           </Tooltip>
         </li>
         <Tippy
-          duration={0}
-          delay={[0, 0]}
           onShow={handleTippyVisible.bind(null, true)}
           onHide={handleTippyVisible.bind(null, false)}
           interactive

@@ -17,7 +17,6 @@ export default function Mention({ uid, popover = true }) {
   return (
     <Tippy
       disabled={!popover}
-      duration={0}
       interactive
       placement="top"
       trigger="click"

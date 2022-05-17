@@ -124,8 +124,6 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
                   onHide={() => {
                     setToolVisible("");
                   }}
-                  delay={[0, 0]}
-                  duration={0}
                   placement="left-start"
                   popperOptions={{ strategy: "fixed" }}
                   offset={[0, 80]}
@@ -155,8 +153,6 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
                   onHide={() => {
                     setToolVisible("");
                   }}
-                  delay={[0, 0]}
-                  duration={0}
                   placement="left-start"
                   popperOptions={{ strategy: "fixed" }}
                   offset={[0, 180]}

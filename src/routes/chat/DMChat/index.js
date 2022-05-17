@@ -60,14 +60,6 @@ export default function DMChat({ uid = "", dropFiles = [] }) {
             </li> */}
             <Tooltip tip="Favorite" placement="left">
               <Tippy
-                // onShow={() => {
-                //   setToolVisible('favorite');
-                // }}
-                // onHide={() => {
-                //   setToolVisible('');
-                // }}
-                delay={[0, 0]}
-                duration={0}
                 placement="left-start"
                 popperOptions={{ strategy: "fixed" }}
                 offset={[0, 180]}
