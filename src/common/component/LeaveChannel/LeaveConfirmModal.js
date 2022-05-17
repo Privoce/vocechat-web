@@ -25,7 +25,7 @@ export default function LeaveConfirmModal({ id, closeModal, handleNextStep }) {
         title="Leave Channel"
         description={
           isOwner
-            ? "You have to transfer the ownership first"
+            ? "You need to transfer your channel ownership to someone else before leaving the channel."
             : "Are you sure want to leave this channel?"
         }
         buttons={

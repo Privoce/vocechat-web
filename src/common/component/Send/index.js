@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 import useSendMessage from "../../hook/useSendMessage";
 import useAddLocalFileMessage from "../../hook/useAddLocalFileMessage";
-import { removeReplyingMessage } from "../../../app/slices/message";
 import { updateInputMode, updateUploadFiles } from "../../../app/slices/ui";
 import { ContentTypes } from "../../../app/config";
 
@@ -90,9 +89,6 @@ function Send({
           from_uid,
           properties,
         });
-        if (replying_mid) {
-          dispatch(removeReplyingMessage(id));
-        }
       }
     }
     // send files
