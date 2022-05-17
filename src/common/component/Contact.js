@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Tippy from "@tippyjs/react";
+import IconOwner from "../../assets/icons/owner.svg";
 import Avatar from "./Avatar";
 import Profile from "./Profile";
 
@@ -62,6 +63,7 @@ const StyledWrapper = styled.div`
   }
 `;
 export default function Contact({
+  owner = false,
   dm = false,
   interactive = true,
   uid = "",
@@ -96,6 +98,7 @@ export default function Contact({
           <div className={`status ${curr.online ? "online" : "offline"}`}></div>
         </div>
         {!compact && <span className="name">{curr?.name}</span>}
+        {owner && <IconOwner />}
       </StyledWrapper>
     </Tippy>
   );

@@ -79,7 +79,9 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
   };
 
   const { name, description, is_public, members = [], owner } = data;
-  const memberIds = is_public ? userIds : members;
+  const memberIds = is_public
+    ? userIds
+    : members.sort((n) => (n == owner ? -1 : 0));
   const addVisible = loginUser?.is_admin || owner == loginUid;
   console.log("channel message list", msgIds);
   const readIndex = footprint.readChannels[cid];
@@ -214,7 +216,15 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
                   </div>
                 )}
                 {memberIds.map((uid) => {
-                  return <Contact key={uid} uid={uid} dm popover />;
+                  return (
+                    <Contact
+                      owner={owner == uid}
+                      key={uid}
+                      uid={uid}
+                      dm
+                      popover
+                    />
+                  );
                 })}
               </StyledContacts>
             </>

@@ -12,6 +12,7 @@ import Contact from "./Contact";
 import StyledMenu from "./styled/Menu";
 import InviteLink from "./InviteLink";
 import moreIcon from "../../assets/icons/more.svg?url";
+import IconOwner from "../../assets/icons/owner.svg";
 const StyledWrapper = styled.section`
   display: flex;
   flex-direction: column;
@@ -58,6 +59,9 @@ const StyledWrapper = styled.section`
             font-size: 14px;
             line-height: 20px;
             color: #52525b;
+            display: flex;
+            align-items: center;
+            gap: 4px;
           }
           .email {
             font-weight: normal;
@@ -154,12 +158,15 @@ export default function ManageMembers({ cid = null }) {
       <ul className="members">
         {uids.map((uid) => {
           const { name, email, is_admin } = contacts.byId[uid];
+          const owner = channel && channel.owner == uid;
           return (
             <li key={uid} className="member">
               <div className="left">
                 <Contact compact uid={uid} interactive={false} />
                 <div className="info">
-                  <span className="name">{name}</span>
+                  <span className="name">
+                    {name} {owner && <IconOwner />}
+                  </span>
                   <span className="email">{email}</span>
                 </div>
               </div>
