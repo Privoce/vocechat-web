@@ -3,6 +3,7 @@ import { removeReplyingMessage } from "../../app/slices/message";
 import { useSendChannelMsgMutation } from "../../app/services/channel";
 import { useSendMsgMutation } from "../../app/services/contact";
 import { useReplyMessageMutation } from "../../app/services/message";
+import { useDispatch } from "react-redux";
 export default function useSendMessage(
   props = {
     context: "user",
@@ -10,6 +11,7 @@ export default function useSendMessage(
     to: null,
   }
 ) {
+  const dispatch = useDispatch();
   const { context = "user", from = null, to = null } = props;
   const [
     replyMessage,
@@ -61,6 +63,7 @@ export default function useSendMessage(
     ...rest
   }) => {
     if (reply_mid) {
+      dispatch(removeReplyingMessage(to));
       await replyMessage({
         id: to,
         reply_mid,
@@ -69,7 +72,6 @@ export default function useSendMessage(
         context,
         from_uid: from,
       });
-      removeReplyingMessage(to);
     } else {
       await sendFn({
         id: to,
