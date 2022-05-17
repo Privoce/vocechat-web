@@ -4,9 +4,9 @@ const initialState = {
   onChat: false,
   channelName: "",
   trackState: {
-    video: true,
-    audio: true,
-    screen: true,
+    video: false,
+    audio: false,
+    screen: false,
   },
   users: [],
 };

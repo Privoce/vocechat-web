@@ -130,7 +130,7 @@ export default function CurrentUser() {
   const { uid, name, avatar } = currUser;
   return (
     <CurrentUserWrapper>
-      {onChat && (
+      {false && onChat && (
         <div
           style={{
             width: "100%",

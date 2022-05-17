@@ -30,6 +30,10 @@ const VideoPanelWrapper = styled.div`
     padding: 10px;
     justify-content: space-between;
   }
+  .userList {
+    padding-bottom: 140px;
+    overflow: auto;
+  }
   .controlGroup {
     display: flex;
     flex-direction: row;
@@ -102,7 +106,11 @@ export default function VideoPanel({ onFullScreen, channel }) {
         await client.subscribe(user, mediaType);
         if (mediaType == "video") {
           setUsers((prevUsers) => {
-            return [...prevUsers, user];
+            console.log("agora", "新用户加入");
+            let prevUserWithoutCurrent = prevUsers.filter(
+              (User) => user.uid != User.uid
+            );
+            return [...prevUserWithoutCurrent, user];
           });
         }
         if (mediaType == "audio") {
@@ -115,9 +123,7 @@ export default function VideoPanel({ onFullScreen, channel }) {
           user.audioTrack?.stop();
         }
         if (type === "video") {
-          setUsers((prevUsers) => {
-            return prevUsers.filter((User) => User.uid !== user.uid);
-          });
+          user.videoTrack?.stop();
         }
       });
       client.on("user-joined", async (user) => {
@@ -165,6 +171,7 @@ export default function VideoPanel({ onFullScreen, channel }) {
       tracks[0].close();
       tracks[1].stop();
       tracks[1].close();
+      client.leave();
     };
   }, [channel, client, ready, tracks, uid]);
   const switchDevice = (e) => {
@@ -186,72 +193,33 @@ export default function VideoPanel({ onFullScreen, channel }) {
       {ready && (
         <VideoPanelWrapper>
           <div className="fullscreen">
-            <img
+            {/* <img
               src={FullScreenIcon}
               className="icon"
               alt="fullscreen icon"
               onClick={onFullScreen}
-            />
+            /> */}
             <div>频道内现有{channelNumbers}人</div>
           </div>
-          <div>设备选择</div>
-          <select name="cars" id="cars" onChange={switchDevice}>
-            <optgroup label="麦克风">
-              {microphoneDevices.map((device) => {
-                return (
-                  <option
-                    key={device.deviceId}
-                    value={"microphone," + device.deviceId}
-                  >
-                    {device.label}
-                  </option>
-                );
-              })}
-            </optgroup>
-            <optgroup label="摄像头">
-              {cameraDevices.map((device) => {
-                return (
-                  <option
-                    key={device.deviceId}
-                    value={"camera," + device.deviceId}
-                  >
-                    {device.label}
-                  </option>
-                );
-              })}
-            </optgroup>
-            {/* <optgroup label="播放器">
-              {headPhoneDevices.map((device) => {
-                return (
-                  <option
-                    key={device.deviceId}
-                    data-type="headphone"
-                    value={"headphone," + device.deviceId}
-                  >
-                    {device.label}
-                  </option>
-                );
-              })}
-            </optgroup> */}
-          </select>
-          <hr />
           {/* for owner view */}
           {ready && tracks && <Owner track={tracks[1]} />}
           {/* other user list */}
-          {users
-            ? users.map((item) => {
-                console.log("[agora] muted item", item, mutedVideoList);
-                return (
-                  <VideoCallListCell
-                    key={item.uid}
-                    tracks={item.videoTrack}
-                    username={item.uid}
-                    showVideo={item.hasVideo}
-                    isMuted={mutedVideoList.indexOf(item.uid) != -1}
-                  ></VideoCallListCell>
-                );
-              })
-            : null}
+          <div className="userList">
+            {users
+              ? users.map((item) => {
+                  console.log("[agora] muted item", item, mutedVideoList);
+                  return (
+                    <VideoCallListCell
+                      key={item.uid}
+                      tracks={item.videoTrack}
+                      username={item.uid}
+                      showVideo={item.hasVideo}
+                      isMuted={mutedVideoList.indexOf(item.uid) != -1}
+                    ></VideoCallListCell>
+                  );
+                })
+              : null}
+          </div>
           <VideoControl
             tracks={tracks}
             client={client}

@@ -23,7 +23,7 @@ const Wrapper = styled.div`
 
 export default function Device({ track, type }) {
   const [devices, setDevices] = useState([]);
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
   const show = () => setVisible(true);
   const hide = () => setVisible(false);
   useEffect(() => {
