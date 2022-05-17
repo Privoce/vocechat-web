@@ -2,6 +2,7 @@ import videoIcon from "../../../assets/icons/video.svg?url";
 import videoDisableIcon from "../../../assets/icons/video.disable.svg?url";
 import chatCloseIcon from "../../../assets/icons/chat.close.svg?url";
 import screenShareIcon from "../../../assets/icons/screen.share.svg?url";
+import Device from "./Device";
 import moreIcon from "../../../assets/icons/more.svg?url";
 import micIcon from "../../../assets/icons/mic.on.svg?url";
 import micOffIcon from "../../../assets/icons/mic.off.svg?url";
@@ -23,7 +24,7 @@ const VideoControlWrapper = styled.div`
     padding: 10px;
     border-radius: 5px;
     margin: 10px 5px;
-    flex: 0 0 20%;
+    flex: 0 0 28%;
     text-align: center;
   }
   .magaButton {
@@ -46,38 +47,38 @@ export default function VideoControl({ tracks, ScreenComponent, onCloseChat }) {
   return (
     <VideoControlWrapper>
       <div className="controlGroup">
-        <span
-          className="button"
-          onClick={() => {
-            dispatch(toggleVideo());
-            tracks[1].setEnabled(!trackState.video);
-          }}
-        >
+        <span className="button">
+          <Device track={tracks[1]} type="camera" />
           <img
+            onClick={() => {
+              dispatch(toggleVideo());
+              tracks[1].setMuted(!trackState.video);
+            }}
             className="icon"
             src={openVideo ? videoIcon : videoDisableIcon}
           />
         </span>
-        <span
-          className="button"
-          onClick={() => {
-            dispatch(toggleAudio());
-            tracks[0].setEnabled(!trackState.audio);
-          }}
-        >
-          <img className="icon" src={openAudio ? micIcon : micOffIcon} />
+        <span className="button">
+          <Device track={tracks[0]} type="microphone" />
+          <img
+            className="icon"
+            src={openAudio ? micIcon : micOffIcon}
+            onClick={() => {
+              dispatch(toggleAudio());
+              tracks[0].setEnabled(!trackState.audio);
+            }}
+          />
         </span>
 
-        <span
+        {/* <span
           className="button"
           onClick={() => setOpenScreenShare(!openScreenShare)}
         >
-          {/* TODO: ScreenShare Disable Icon */}
           <img
             className="icon"
             src={openScreenShare ? screenShareIcon : screenShareIcon}
           />
-        </span>
+        </span> */}
         <span className="button">
           <img className="icon" src={moreIcon} />
         </span>
