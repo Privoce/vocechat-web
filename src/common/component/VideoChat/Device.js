@@ -48,7 +48,6 @@ export default function Device({ track, type }) {
         interactive
         visible={visible}
         onClickOutside={hide}
-        hideOnClick={false}
         content={
           <DeviceSelector
             type={type}
