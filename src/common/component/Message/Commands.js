@@ -165,7 +165,6 @@ export default function Commands({
           onShow={handleTippyVisible.bind(null, true)}
           onHide={handleTippyVisible.bind(null, false)}
           interactive
-          popperOptions={{ strategy: "fixed" }}
           placement="left-start"
           trigger="click"
           content={

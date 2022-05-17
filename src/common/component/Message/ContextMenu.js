@@ -74,7 +74,7 @@ export default function MessageContextMenu({
                 handler: handleReply,
               },
               canCopy && {
-                title: isMarkdown ? "Copy Markdown" : "Copy Text",
+                title: "Copy",
                 icon: <IconCopy className="icon" />,
                 handler: copyContent,
               },

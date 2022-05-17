@@ -87,35 +87,35 @@ function Message({
   console.log("render message");
   // return null;
   return (
-    <ContextMenu
-      editMessage={toggleEditMessage}
-      context={context}
-      contextId={contextId}
-      mid={mid}
-      visible={contextMenuVisible}
-      hide={hideContextMenu}
-      offset={offset}
+    <StyledWrapper
+      onContextMenu={handleContextMenuEvent}
+      data-msg-mid={mid}
+      ref={inviewRef}
+      className={`message ${readOnly ? "readonly" : ""} ${
+        contextMenuVisible ? "contextVisible" : ""
+      } `}
     >
-      <StyledWrapper
-        onContextMenu={handleContextMenuEvent}
-        data-msg-mid={mid}
-        ref={inviewRef}
-        className={`message ${readOnly ? "readonly" : ""} ${
-          contextMenuVisible ? "contextVisible" : ""
-        } `}
+      <Tippy
+        disabled={readOnly}
+        duration={0}
+        interactive
+        placement="left"
+        trigger="click"
+        content={<Profile uid={fromUid} type="card" />}
       >
-        <Tippy
-          disabled={readOnly}
-          duration={0}
-          interactive
-          placement="left"
-          trigger="click"
-          content={<Profile uid={fromUid} type="card" />}
-        >
-          <div className="avatar" data-uid={fromUid} ref={avatarRef}>
-            <Avatar url={currUser.avatar} name={currUser.name} />
-          </div>
-        </Tippy>
+        <div className="avatar" data-uid={fromUid} ref={avatarRef}>
+          <Avatar url={currUser.avatar} name={currUser.name} />
+        </div>
+      </Tippy>
+      <ContextMenu
+        editMessage={toggleEditMessage}
+        context={context}
+        contextId={contextId}
+        mid={mid}
+        visible={contextMenuVisible}
+        hide={hideContextMenu}
+        offset={offset}
+      >
         <div className="details">
           <div className="up">
             <span className="name">{currUser.name}</span>
@@ -153,18 +153,19 @@ function Message({
             {reactions && <Reaction mid={mid} reactions={reactions} />}
           </div>
         </div>
-        {!edit && !readOnly && (
-          <Commands
-            content_type={content_type}
-            context={context}
-            contextId={contextId}
-            mid={mid}
-            from_uid={fromUid}
-            toggleEditMessage={toggleEditMessage}
-          />
-        )}
-      </StyledWrapper>
-    </ContextMenu>
+      </ContextMenu>
+
+      {!edit && !readOnly && (
+        <Commands
+          content_type={content_type}
+          context={context}
+          contextId={contextId}
+          mid={mid}
+          from_uid={fromUid}
+          toggleEditMessage={toggleEditMessage}
+        />
+      )}
+    </StyledWrapper>
   );
 }
 export default React.memo(Message, (prevs, nexts) => {

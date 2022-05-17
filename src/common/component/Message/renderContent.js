@@ -78,7 +78,6 @@ const renderContent = ({
         // const { size, name, file_type } = properties;
         ctn = (
           <FileMessage
-            content_type={""}
             properties={properties}
             context={context}
             to={to}

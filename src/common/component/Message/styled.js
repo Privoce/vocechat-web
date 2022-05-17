@@ -7,19 +7,19 @@ const StyledMsg = styled.div`
   padding: 4px 8px;
   margin: 8px 0;
   border-radius: 8px;
-  content-visibility: auto;
-  contain-intrinsic-size: auto 150px;
-  &.in_view {
+  /* content-visibility: auto;
+  contain-intrinsic-size: auto 150px; */
+  /* &.in_view {
     content-visibility: visible;
-  }
+  } */
   &[data-highlight="true"] {
     background: #f5f6f7;
   }
   &:hover,
   &.contextVisible,
   &.preview {
-    content-visibility: inherit;
-    contain-intrinsic-size: inherit;
+    /* content-visibility: inherit;
+    contain-intrinsic-size: inherit; */
     background: #f5f6f7;
     .cmds {
       visibility: visible;
