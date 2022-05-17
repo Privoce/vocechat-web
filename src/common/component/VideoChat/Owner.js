@@ -11,7 +11,7 @@ const Cell = styled.div`
   .nameTag {
     display: inline-block;
     position: relative;
-    z-index: 90;
+    z-index: 0;
     background-color: #000;
     color: #fff;
     padding: 3px 5px;

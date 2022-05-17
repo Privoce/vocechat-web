@@ -40,7 +40,7 @@ const Cell = styled.div`
   .nameTag {
     display: inline-block;
     position: relative;
-    z-index: 90;
+    z-index: 0;
     background-color: #000;
     color: #fff;
     padding: 3px 5px;
@@ -55,19 +55,31 @@ export default function VideoCallListCell({
   // openVideo = false,
   showVideo = false,
   tracks,
+  isMuted,
 }) {
   const contactsById = useSelector((state) => state.contacts.byId);
   if (!username) return null;
   avatar = contactsById[username].avatar;
-  console.log(avatar);
+
+  let flag = true;
+  if (!tracks) {
+    flag = false;
+  }
+  if (!showVideo) {
+    flag = false;
+  }
+  if (isMuted) {
+    flag = false;
+  }
+
   return (
     <Cell>
-      {!(showVideo && tracks) && (
+      {!flag && (
         <div className="line">
           <div className="avatarBox">
             <Avatar
               className="avatar"
-              // url={avatar ? avatar : "https://www.gravatar.com/avatar/demo"}
+              url={avatar ? avatar : "https://www.gravatar.com/avatar/demo"}
               name={contactsById[username].name}
               type="user"
             />
@@ -80,7 +92,7 @@ export default function VideoCallListCell({
           </div>
         </div>
       )}
-      {showVideo && tracks && (
+      {flag && (
         <div>
           <div className="video">
             <AgoraVideoPlayer
