@@ -1,13 +1,14 @@
 // import { useState } from "react";
+import toast from "react-hot-toast";
 import StyledContainer from "./StyledContainer";
-import Textarea from "../../../common/component/styled/Textarea";
 import Toggle from "../../../common/component/styled/Toggle";
 import Label from "../../../common/component/styled/Label";
 import Input from "../../../common/component/styled/Input";
 import SaveTip from "../../../common/component/SaveTip";
 import useConfig from "./useConfig";
+import Tooltip from "./Tooltip";
+import IssuerList from "./IssuerList";
 import useGoogleAuthConfig from "../../../common/hook/useGoogleAuthConfig";
-import toast from "react-hot-toast";
 export default function Logins() {
   const {
     changed: clientIdChanged,
@@ -34,14 +35,14 @@ export default function Logins() {
   const handleGoogleClientIdChange = (evt) => {
     updateClientId(evt.target.value);
   };
-  const handleChange = (evt) => {
-    const newValue = evt.target.value;
-    const { type } = evt.target.dataset;
-    const items = newValue ? newValue.split("\n") : [];
-    setValues((prev) => {
-      return { ...prev, [type]: items };
-    });
-  };
+  // const handleChange = (evt) => {
+  //   const newValue = evt.target.value;
+  //   const { type } = evt.target.dataset;
+  //   const items = newValue ? newValue.split("\n") : [];
+  //   setValues((prev) => {
+  //     return { ...prev, [type]: items };
+  //   });
+  // };
   const handleToggle = (val) => {
     setValues((prev) => {
       return { ...prev, ...val };
@@ -53,46 +54,71 @@ export default function Logins() {
   return (
     <StyledContainer>
       <div className="inputs">
-        <div className="input row">
-          <Label>Password</Label>
-          <Toggle
-            onClick={handleToggle.bind(null, { password: !password })}
-            data-checked={password}
-          ></Toggle>
+        <div className="input">
+          <div className="row">
+            <div className="title">
+              <div className="txt">
+                <Label>Password</Label>
+              </div>
+              <span className="desc">Allows members login with password.</span>
+            </div>
+            <Toggle
+              onClick={handleToggle.bind(null, { password: !password })}
+              data-checked={password}
+            ></Toggle>
+          </div>
         </div>
-        <div className="input row">
-          <Label>Google</Label>
-          <Toggle
-            onClick={handleToggle.bind(null, { google: !google })}
-            data-checked={google}
-          ></Toggle>
-        </div>
-        {google && (
-          <div className="input row">
+        <div className="input">
+          <div className="row">
+            <div className="title">
+              <div className="txt">
+                <Label>Google</Label>
+                <Tooltip link="https://doc.rustchat.com/en-us/login-google.html" />
+              </div>
+              <span className="desc">Allows members login with Google.</span>
+            </div>
+            <Toggle
+              onClick={handleToggle.bind(null, { google: !google })}
+              data-checked={google}
+            ></Toggle>
+          </div>
+          <div className="row">
             <Input
+              disabled={!google}
               onChange={handleGoogleClientIdChange}
               placeholder="Client ID"
               value={clientId}
             />
           </div>
-        )}
-        <div className="input row">
-          <Label>Metamask</Label>
-          <Toggle
-            onClick={handleToggle.bind(null, { metamask: !metamask })}
-            data-checked={metamask}
-          ></Toggle>
         </div>
         <div className="input">
-          <Label htmlFor="desc">OIDC</Label>
-          <Textarea
-            rows={10}
-            data-type="oidc"
-            onChange={handleChange}
-            value={oidc.join("\n")}
-            name="oidc"
-            placeholder="Input issuer list, one line, one issuer"
-          />
+          <div className="row">
+            <div className="title">
+              <div className="txt">
+                <Label>Metamask</Label>
+                <Tooltip link="https://doc.rustchat.com/en-us/login-metamask.html" />
+              </div>
+              <span className="desc">Allows members login with Metamask.</span>
+            </div>
+            <Toggle
+              onClick={handleToggle.bind(null, { metamask: !metamask })}
+              data-checked={metamask}
+            ></Toggle>
+          </div>
+        </div>
+        <div className="input">
+          <div className="row">
+            <div className="title">
+              <div className="txt">
+                <Label htmlFor="desc">OIDC</Label>
+                <Tooltip link="https://doc.rustchat.com/en-us/login-webid.html" />
+              </div>
+              <span className="desc">Save my login details for next time.</span>
+            </div>
+          </div>
+          <div className="row">
+            <IssuerList />
+          </div>
         </div>
       </div>
       {valuesChanged && (

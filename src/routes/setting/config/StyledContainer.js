@@ -10,17 +10,39 @@ const StyledContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 24px;
+    gap: 32px;
     .input {
       width: 100%;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      gap: 8px;
-      &.row {
+      gap: 16px;
+      .row {
+        width: 100%;
+        display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
+        .title {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          .txt {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 8px;
+            .icon {
+              cursor: pointer;
+            }
+          }
+          .desc {
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 20px;
+            color: #667085;
+          }
+        }
       }
     }
   }
