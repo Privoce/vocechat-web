@@ -4,6 +4,20 @@ import styled from "styled-components";
 const StyledWrapper = styled.div`
   width: 100%;
   position: relative;
+  display: flex;
+  overflow: hidden;
+  border-radius: 4px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0px 1px 2px rgba(31, 41, 55, 0.08);
+  .prefix {
+    padding: 8px 16px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: #9ca3af;
+    background: #f3f4f6;
+    border-right: 1px solid #e5e7eb;
+  }
   .view {
     position: absolute;
     top: 50%;
@@ -15,15 +29,18 @@ const StyledWrapper = styled.div`
 const StyledInput = styled.input`
   width: 100%;
   background: #ffffff;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0px 1px 2px rgba(31, 41, 55, 0.08);
-  border-radius: 4px;
+
   font-weight: normal;
   font-size: 14px;
   line-height: 20px;
   color: #333;
   padding: 8px;
   outline: none;
+  &:not(.inner) {
+    border-radius: 4px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0px 1px 2px rgba(31, 41, 55, 0.08);
+  }
   &.higher {
     padding: 12px 8px;
   }
@@ -51,14 +68,19 @@ const StyledInput = styled.input`
   }
 `;
 
-export default function Input({ type = "text", ...rest }) {
+export default function Input({
+  type = "text",
+  prefix = "",
+  className,
+  ...rest
+}) {
   const [inputType, setInputType] = useState(type);
   const togglePasswordVisible = () => {
     setInputType((prev) => (prev == "password" ? "text" : "password"));
   };
   return type == "password" ? (
-    <StyledWrapper>
-      <StyledInput type={inputType} {...rest} />
+    <StyledWrapper className={className}>
+      <StyledInput type={inputType} className="inner" {...rest} />
       <div className="view" onClick={togglePasswordVisible}>
         {inputType == "password" ? (
           <HiEyeOff color="#78787c" />
@@ -67,8 +89,13 @@ export default function Input({ type = "text", ...rest }) {
         )}
       </div>
     </StyledWrapper>
+  ) : prefix ? (
+    <StyledWrapper className={className}>
+      <span className="prefix">{prefix}</span>
+      <StyledInput className="inner" type={inputType} {...rest} />
+    </StyledWrapper>
   ) : (
-    <StyledInput type={inputType} {...rest} />
+    <StyledInput type={inputType} className={className} {...rest} />
   );
 }
 
