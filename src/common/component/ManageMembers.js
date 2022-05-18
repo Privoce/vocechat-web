@@ -6,13 +6,18 @@ import { hideAll } from "tippy.js";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import useCopy from "../hook/useCopy";
-import { useLazyDeleteContactQuery } from "../../app/services/contact";
+import {
+  useLazyDeleteContactQuery,
+  useUpdateContactMutation,
+} from "../../app/services/contact";
 import { useRemoveMembersMutation } from "../../app/services/channel";
 import Contact from "./Contact";
 import StyledMenu from "./styled/Menu";
 import InviteLink from "./InviteLink";
 import moreIcon from "../../assets/icons/more.svg?url";
 import IconOwner from "../../assets/icons/owner.svg";
+import IconArrowDown from "../../assets/icons/arrow.down.svg";
+import IconCheck from "../../assets/icons/check.sign.svg";
 const StyledWrapper = styled.section`
   display: flex;
   flex-direction: column;
@@ -81,6 +86,16 @@ const StyledWrapper = styled.section`
           line-height: 18px;
           text-align: right;
           color: #616161;
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          .icon {
+            cursor: pointer;
+          }
+          /* override */
+          .menu {
+            min-width: 120px;
+          }
         }
         .opts {
           position: relative;
@@ -108,6 +123,10 @@ export default function ManageMembers({ cid = null }) {
   });
   const [copied, copy] = useCopy();
   const [
+    updateContact,
+    { isSuccess: updateSuccess },
+  ] = useUpdateContactMutation();
+  const [
     removeUser,
     { isSuccess: removeSuccess },
   ] = useLazyDeleteContactQuery();
@@ -121,7 +140,7 @@ export default function ManageMembers({ cid = null }) {
   };
   useEffect(() => {
     if (removeSuccess) {
-      toast.success("delete successfully");
+      toast.success("Delete Successfully");
     }
   }, [removeSuccess]);
   useEffect(() => {
@@ -131,12 +150,22 @@ export default function ManageMembers({ cid = null }) {
   }, [copied]);
   useEffect(() => {
     if (removeMemberSuccess) {
-      toast.success("remove member successfully");
+      toast.success("Remove Member successfully");
     }
   }, [removeMemberSuccess]);
+  useEffect(() => {
+    if (updateSuccess) {
+      toast.success("Update Successfully");
+    }
+  }, [updateSuccess]);
   const handleCopy = (str) => {
     copy(str);
     hideAll();
+  };
+  const handleToggleRole = ({ ignore = false, uid = null, isAdmin = true }) => {
+    hideAll();
+    if (ignore) return;
+    updateContact({ id: uid, is_admin: isAdmin });
   };
   const channel = channels.byId[cid] ?? null;
   const uids = channel
@@ -159,6 +188,8 @@ export default function ManageMembers({ cid = null }) {
         {uids.map((uid) => {
           const { name, email, is_admin } = contacts.byId[uid];
           const owner = channel && channel.owner == uid;
+          const switchRoleVisible = loginUser.is_admin && loginUser.uid !== uid;
+          const dotsVisible = email || loginUser?.is_admin;
           return (
             <li key={uid} className="member">
               <div className="left">
@@ -172,40 +203,77 @@ export default function ManageMembers({ cid = null }) {
               </div>
               <div className="right">
                 <span className="role">
-                  {is_admin ? "Admin" : cid ? "Member" : "User"}
+                  {is_admin ? "Admin" : "User"}
+                  {switchRoleVisible && (
+                    <Tippy
+                      interactive
+                      placement="bottom-end"
+                      trigger="click"
+                      content={
+                        <StyledMenu className="menu">
+                          <li
+                            className="item"
+                            onClick={handleToggleRole.bind(null, {
+                              ignore: is_admin,
+                              uid,
+                              isAdmin: true,
+                            })}
+                          >
+                            Admin
+                            {is_admin && <IconCheck className="icon" />}
+                          </li>
+                          <li
+                            className="item"
+                            onClick={handleToggleRole.bind(null, {
+                              ignore: !is_admin,
+                              uid,
+                              isAdmin: false,
+                            })}
+                          >
+                            User
+                            {!is_admin && <IconCheck className="icon" />}
+                          </li>
+                        </StyledMenu>
+                      }
+                    >
+                      <IconArrowDown className="icon" />
+                    </Tippy>
+                  )}
                 </span>
-                <Tippy
-                  interactive
-                  placement="right-start"
-                  trigger="click"
-                  content={
-                    <StyledMenu className="menu">
-                      {email && (
-                        <li
-                          className="item"
-                          onClick={handleCopy.bind(null, email)}
-                        >
-                          Copy Email
-                        </li>
-                      )}
-                      {/* <li className="item underline">Mute</li> */}
-                      {/* <li className="item underline">Change Nickname</li> */}
-                      {/* <li className="item danger">Ban</li> */}
-                      {loginUser?.is_admin && (
-                        <li
-                          className="item danger"
-                          onClick={handleRemoveUser.bind(null, uid)}
-                        >
-                          Remove
-                        </li>
-                      )}
-                    </StyledMenu>
-                  }
-                >
-                  <div className="opts">
-                    <img className="dots" src={moreIcon} alt="dots icon" />
-                  </div>
-                </Tippy>
+                {dotsVisible && (
+                  <Tippy
+                    interactive
+                    placement="right-start"
+                    trigger="click"
+                    content={
+                      <StyledMenu className="menu">
+                        {email && (
+                          <li
+                            className="item"
+                            onClick={handleCopy.bind(null, email)}
+                          >
+                            Copy Email
+                          </li>
+                        )}
+                        {/* <li className="item underline">Mute</li> */}
+                        {/* <li className="item underline">Change Nickname</li> */}
+                        {/* <li className="item danger">Ban</li> */}
+                        {loginUser?.is_admin && (
+                          <li
+                            className="item danger"
+                            onClick={handleRemoveUser.bind(null, uid)}
+                          >
+                            Remove
+                          </li>
+                        )}
+                      </StyledMenu>
+                    }
+                  >
+                    <div className="opts">
+                      <img className="dots" src={moreIcon} alt="dots icon" />
+                    </div>
+                  </Tippy>
+                )}
               </div>
             </li>
           );
