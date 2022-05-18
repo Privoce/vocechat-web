@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import { useState, useEffect } from "react";
 // import { useDispatch } from "react-redux";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import BASE_URL from "../../app/config";
 import StyledWrapper from "./styled";
@@ -17,7 +17,7 @@ export default function SendMagicLinkPage() {
     { isSuccess, isLoading, error },
   ] = useSendMagicLinkMutation();
 
-  // const navigateTo = useNavigate();
+  const navigateTo = useNavigate();
   // const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   useEffect(() => {
@@ -48,6 +48,9 @@ export default function SendMagicLinkPage() {
     }
   }, [error]);
 
+  const handlePwdPath = () => {
+    navigateTo("/login");
+  };
   const handleLogin = (evt) => {
     evt.preventDefault();
     sendMagicLink(email);
@@ -94,6 +97,8 @@ export default function SendMagicLinkPage() {
                 {isLoading ? "Sending" : `Continue with Email`}
               </Button>
             </form>
+            <hr className="or" />
+            <Button onClick={handlePwdPath}>Sign in with Password</Button>
           </>
         )}
       </div>

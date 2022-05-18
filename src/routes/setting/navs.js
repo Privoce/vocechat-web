@@ -61,7 +61,7 @@ const navs = [
       },
       {
         name: "social_login",
-        title: "Social Login",
+        title: "Login Methods",
         component: <Logins />,
       },
       {
@@ -98,7 +98,7 @@ const useNavs = () => {
     return store.contacts.byId[store.authData.uid];
   });
   const Navs = navs.filter((nav) => {
-    if (loginUser.is_admin) {
+    if (loginUser?.is_admin) {
       return true;
     } else {
       return !nav.admin;

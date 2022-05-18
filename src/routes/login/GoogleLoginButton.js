@@ -7,18 +7,18 @@ import { StyledSocialButton } from "./styled";
 export default function GoogleLoginButton({ login, clientId }) {
   const { signIn, loaded } = useGoogleLogin({
     onScriptLoadFailure: (wtf) => {
-      console.log("google login script load failure", wtf);
+      console.error("google login script load failure", wtf);
     },
     clientId,
     onSuccess: ({ tokenId, ...rest }) => {
-      console.log("success", tokenId, rest);
+      console.info("google oauth success", tokenId, rest);
       login({
         id_token: tokenId,
         type: "google",
       });
     },
     onFailure: (wtf) => {
-      console.log("google login  failure", wtf);
+      console.error("google login failure", wtf);
     },
   });
   const handleGoogleLogin = () => {
@@ -26,9 +26,9 @@ export default function GoogleLoginButton({ login, clientId }) {
   };
   console.log("google login ", loaded);
   return (
-    <StyledSocialButton onClick={handleGoogleLogin}>
+    <StyledSocialButton disabled={!loaded} onClick={handleGoogleLogin}>
       <img className="icon" src={googleSvg} alt="google icon" />
-      Sign in with Google
+      {loaded ? `Sign in with Google` : `Initailizing`}
     </StyledSocialButton>
   );
 }

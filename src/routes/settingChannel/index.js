@@ -39,8 +39,8 @@ export default function ChannelSetting() {
   };
   if (!cid) return null;
   const currNav = flatenNavs.find((n) => n.name == navKey) || flatenNavs[0];
-  const canDelete = isAdmin || channel.owner == loginUid;
-  const canLeave = !channel.is_public;
+  const canDelete = isAdmin || channel?.owner == loginUid;
+  const canLeave = !channel?.is_public;
 
   return (
     <>

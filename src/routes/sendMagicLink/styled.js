@@ -43,6 +43,28 @@ const StyledWrapper = styled.div`
       gap: 20px;
       width: 360px;
     }
+    .or {
+      border: none;
+      position: relative;
+      height: 1px;
+      background-color: #e4e7ec;
+      margin: 26px 0;
+      &:after {
+        padding: 4px;
+        background-color: #fff;
+        content: "OR";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate3d(-50%, -50%, 0);
+        font-size: 14px;
+        line-height: 20px;
+        color: #667085;
+      }
+    }
+    button {
+      width: 100%;
+    }
   }
 `;
 

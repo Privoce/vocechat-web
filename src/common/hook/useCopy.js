@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { copyImageToClipboard } from "copy-image-clipboard";
+
 const useCopy = () => {
   const copyToClipboard = (str) => {
     const el = document.createElement("textarea");
@@ -23,13 +25,22 @@ const useCopy = () => {
 
   const [copied, setCopied] = useState(false);
 
-  const copy = (text) => {
+  const copy = (text, isImage = false) => {
     let inter = 0;
     if (!copied) {
-      setCopied(copyToClipboard(text));
-      inter = setTimeout(() => {
-        setCopied(false);
-      }, 500);
+      if (!isImage) {
+        setCopied(copyToClipboard(text));
+        inter = setTimeout(() => {
+          setCopied(false);
+        }, 500);
+      } else {
+        copyImageToClipboard(text).then(() => {
+          setCopied(true);
+          inter = setTimeout(() => {
+            setCopied(false);
+          }, 500);
+        });
+      }
     }
     return () => {
       clearTimeout(inter);

@@ -12,6 +12,7 @@ const StyledMenu = styled.ul`
   .item {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 14px;
     white-space: nowrap;
     cursor: pointer;
@@ -23,8 +24,8 @@ const StyledMenu = styled.ul`
     line-height: 20px;
     color: #616161;
     .icon {
-      width: 20px;
-      height: 20px;
+      width: 12px;
+      height: 12px;
       path {
         fill: #475467;
       }

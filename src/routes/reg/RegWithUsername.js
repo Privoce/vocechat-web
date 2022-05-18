@@ -46,7 +46,7 @@ export default function RegWithUsername() {
     if (isSuccess && data) {
       // 更新本地认证信息
       console.log("login data", data);
-      toast.success("login success");
+      toast.success("Login Successfully");
       dispatch(setAuthData(data));
       location.href = `/#/`;
     }
