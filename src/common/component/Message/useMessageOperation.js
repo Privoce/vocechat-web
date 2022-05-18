@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
-import { copyImageToClipboard } from "copy-image-clipboard";
 import DeleteMessageConfirm from "../DeleteMessageConfirm";
 import ForwardModal from "../ForwardModal";
 import PinMessageModal from "./PinMessageModal";
@@ -43,26 +42,23 @@ export default function useMessageOperation({ mid, context, contextId }) {
     setPinModalVisible((prev) => !prev);
   };
   const copyContent = (image = false) => {
-    if (image) {
-      copyImageToClipboard(content);
-    } else {
-      copy(content);
-    }
+    copy(content, image);
   };
   useEffect(() => {
-    if (content_type == ContentTypes.archive) {
+    if (forwardModalVisible && content_type == ContentTypes.archive) {
       // forward message
       const forwardEle = document.querySelector(
         `[data-msg-mid='${mid}'] .down [data-forwarded-mids]`
       );
       if (forwardEle) {
+        console.log("ddddd", mid, forwardEle.dataset);
         const mids = forwardEle.dataset.forwardedMids.split(",");
         setMids(mids);
       }
     } else {
       setMids([mid]);
     }
-  }, [mid, content_type]);
+  }, [mid, forwardModalVisible, content_type]);
   useEffect(() => {
     if (isUnpinSuccess) {
       toast.success("Unpin Message Successfully!");

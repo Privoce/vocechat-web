@@ -226,16 +226,19 @@ export const normalizeArchiveData = (
       from_user,
     }) => {
       let user = { ...(users[from_user] || {}) };
-      const { transformedContent, thumbnail, download, avatar } = getUrls(uid, {
-        content,
-        content_type,
-        filePath,
-        file_id,
-        thumbnail_id,
-        avatar: user.avatar,
-      });
+      const { transformedContent, thumbnail, download, avatarUrl } = getUrls(
+        uid,
+        {
+          content,
+          content_type,
+          filePath,
+          file_id,
+          thumbnail_id,
+          avatar: user.avatar,
+        }
+      );
 
-      user.avatar = avatar;
+      user.avatar = avatarUrl;
 
       console.log("user data", transformedContent, user);
       return {
