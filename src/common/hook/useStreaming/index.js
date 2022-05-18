@@ -228,6 +228,17 @@ export default function useStreaming() {
               console.log("joined group", data.group);
               dispatch(addChannel(data.group));
               break;
+            case "group_changed":
+              {
+                const { gid, ...rest } = data;
+                dispatch(
+                  updateChannel({
+                    id: gid,
+                    ...rest,
+                  })
+                );
+              }
+              break;
             case "user_joined_group":
               {
                 console.log("new user joined group", data.gid);
@@ -245,13 +256,17 @@ export default function useStreaming() {
             case "user_leaved_group":
               {
                 const { gid, uid: uids } = data;
-                dispatch(
-                  updateChannel({
-                    operation: "remove_member",
-                    id: gid,
-                    members: uids,
-                  })
-                );
+                if (uids.findIndex((id) => id == loginUid) > -1) {
+                  dispatch(removeChannel(gid));
+                } else {
+                  dispatch(
+                    updateChannel({
+                      operation: "remove_member",
+                      id: gid,
+                      members: uids,
+                    })
+                  );
+                }
               }
               break;
             case "kick_from_group":

@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
-// import TextareaAutosize from "react-textarea-autosize";
 import { useDispatch, useSelector } from "react-redux";
-// import { useKey } from "rooks";
-
 import useSendMessage from "../../hook/useSendMessage";
 import useAddLocalFileMessage from "../../hook/useAddLocalFileMessage";
 import { updateInputMode, updateUploadFiles } from "../../../app/slices/ui";

@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import BASE_URL from "../config";
+import { getNonNullValues } from "../../common/utils";
 const initialState = {
   ids: [],
   byId: {},
@@ -71,7 +72,7 @@ const channelsSlice = createSlice({
           }
           break;
         default:
-          state.byId[id] = { ...state.byId[id], ...rest };
+          state.byId[id] = { ...state.byId[id], ...getNonNullValues(rest) };
           break;
       }
     },
