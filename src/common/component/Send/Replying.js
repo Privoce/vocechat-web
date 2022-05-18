@@ -1,5 +1,7 @@
 // import React from 'react'
 import { useDispatch, useSelector } from "react-redux";
+import reactStringReplace from "react-string-replace";
+import Mention from "../Message/Mention";
 import { ContentTypes } from "../../../app/config";
 import MrakdownRender from "../MrakdownRender";
 import closeIcon from "../../../assets/icons/close.circle.svg?url";
@@ -84,7 +86,15 @@ const renderContent = (data) => {
   let res = null;
   switch (content_type) {
     case ContentTypes.text:
-      res = content;
+      res = reactStringReplace(
+        content,
+        /(\s{1}@[0-9]+\s{1})/g,
+        (match, idx) => {
+          console.log("match", match);
+          const uid = match.trim().slice(1);
+          return <Mention popover={false} key={idx} uid={uid} />;
+        }
+      );
       break;
     case ContentTypes.markdown:
       res = (
