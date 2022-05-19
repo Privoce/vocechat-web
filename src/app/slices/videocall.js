@@ -1,6 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {};
+const initialState = {
+ openPanel: false,
+ devices: {
+  currentMic: "default",
+  currentCamera: "default",
+  mics: [],
+  cameras: [],
+  playbacks: []
+ }
+};
 
 // 定义 AGORA 信令
 // 格式：user,cmd
