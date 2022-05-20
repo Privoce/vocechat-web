@@ -1,12 +1,11 @@
 import { useRef } from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
-import { updateUploadFiles } from "../../../app/slices/ui";
 import Tooltip from "../../component/Tooltip";
 import AddIcon from "../../../assets/icons/add.solid.svg";
 import MarkdownIcon from "../../../assets/icons/markdown.svg";
 import FullscreenIcon from "../../../assets/icons/fullscreen.svg";
 import ExitFullscreenIcon from "../../../assets/icons/fullscreen.exit.svg";
+import useUploadFile from "../../hook/useUploadFile";
 const Styled = styled.div`
   display: flex;
   align-items: center;
@@ -50,7 +49,7 @@ export default function Toolbar({
   to,
   context,
 }) {
-  const dispatch = useDispatch();
+  const { addStageFile } = useUploadFile({ context, id: to });
   const fileInputRef = useRef(null);
   const handleUpload = (evt) => {
     const files = [...evt.target.files];
@@ -60,7 +59,7 @@ export default function Toolbar({
       const url = URL.createObjectURL(file);
       return { size, type, name, url };
     });
-    dispatch(updateUploadFiles({ context, id: to, data: filesData }));
+    addStageFile(filesData);
     fileInputRef.current.value = null;
     fileInputRef.current.value = "";
     // setFiles([...evt.target.files]);

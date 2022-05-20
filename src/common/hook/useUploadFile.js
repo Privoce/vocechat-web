@@ -1,12 +1,23 @@
 import { useState, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 // import { ContentTypes } from "../../app/config";
+import { updateUploadFiles } from "../../app/slices/ui";
 import BASE_URL, { FILE_SLICE_SIZE } from "../../app/config";
 import {
   usePrepareUploadFileMutation,
   useUploadFileMutation,
 } from "../../app/services/message";
+import toast from "react-hot-toast";
 
-export default function useUploadFile() {
+export default function useUploadFile(props = {}) {
+  const { context = "", id = "" } = props;
+  const dispatch = useDispatch();
+  const { stageFiles, replying } = useSelector((store) => {
+    return {
+      stageFiles: store.ui.uploadFiles[`${context}_${id}`] || [],
+      replying: store.message.replying[id],
+    };
+  });
   const [data, setData] = useState(null);
   // const [uploadingFile, setUploadingFile] = useState(false);
   const canneledRef = useRef(false);
@@ -108,6 +119,32 @@ export default function useUploadFile() {
   const stopUploading = () => {
     canneledRef.current = true;
   };
+  const removeStageFile = (idx) => {
+    dispatch(
+      updateUploadFiles({ context, id, operation: "remove", index: idx })
+    );
+  };
+  const addStageFile = (fileData = {}) => {
+    if (replying) {
+      toast.error("Only text is supported when replying a message");
+      return;
+    }
+    dispatch(updateUploadFiles({ context, id, data: fileData }));
+  };
+  const resetStageFiles = () => {
+    dispatch(updateUploadFiles({ context, id, operation: "reset" }));
+  };
+  const updateStageFile = (idx, data = {}) => {
+    dispatch(
+      updateUploadFiles({
+        context,
+        id,
+        operation: "update",
+        index: idx,
+        ...data,
+      })
+    );
+  };
   return {
     stopUploading,
     data,
@@ -118,5 +155,10 @@ export default function useUploadFile() {
     uploadFile,
     isError: uploadFileError,
     isSuccess: !!data,
+    stageFiles,
+    addStageFile,
+    resetStageFiles,
+    removeStageFile,
+    updateStageFile,
   };
 }

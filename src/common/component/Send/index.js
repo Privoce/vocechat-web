@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useSendMessage from "../../hook/useSendMessage";
 import useAddLocalFileMessage from "../../hook/useAddLocalFileMessage";
-import { updateInputMode, updateUploadFiles } from "../../../app/slices/ui";
+import { updateInputMode } from "../../../app/slices/ui";
 import { ContentTypes } from "../../../app/config";
 
 import StyledSend from "./styled";
@@ -14,6 +14,7 @@ import EmojiPicker from "./EmojiPicker";
 import MarkdownEditor from "../MarkdownEditor";
 import MixedInput, { useMixedEditor } from "../MixedInput";
 import useDraft from "../../hook/useDraft";
+import useUploadFile from "../../hook/useUploadFile";
 const Types = {
   channel: "#",
   user: "@",
@@ -27,6 +28,7 @@ function Send({
   context = "channel",
   id = "",
 }) {
+  const { resetStageFiles } = useUploadFile({ context, id });
   const { getDraft, getUpdateDraft } = useDraft({ context, id });
   const editor = useMixedEditor(`${context}_${id}`);
   const [markdownEditor, setMarkdownEditor] = useState(null);
@@ -109,7 +111,7 @@ function Send({
         };
         addLocalFileMesage(tmpMsg);
       });
-      dispatch(updateUploadFiles({ context, id, operation: "reset" }));
+      resetStageFiles();
     }
   };
   const sendMarkdown = async (content) => {

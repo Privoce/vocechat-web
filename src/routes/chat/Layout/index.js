@@ -1,13 +1,13 @@
 import { useState, useRef, useEffect } from "react";
 import { useDrop } from "react-dnd";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { NativeTypes } from "react-dnd-html5-backend";
-import { updateUploadFiles } from "../../../app/slices/ui";
 import ImagePreviewModal from "../../../common/component/ImagePreviewModal";
 import Send from "../../../common/component/Send";
 import Styled from "./styled";
 import Operations from "./Operations";
+import useUploadFile from "../../../common/hook/useUploadFile";
 
 export default function Layout({
   children,
@@ -18,8 +18,7 @@ export default function Layout({
   context = "channel",
   to = null,
 }) {
-  const dispatch = useDispatch();
-
+  const { addStageFile } = useUploadFile({ context, id: to });
   const messagesContainer = useRef(null);
   const [previewImage, setPreviewImage] = useState(null);
   const selects = useSelector(
@@ -36,7 +35,7 @@ export default function Layout({
             const url = URL.createObjectURL(file);
             return { size, type, name, url };
           });
-          dispatch(updateUploadFiles({ context, id: to, data: filesData }));
+          addStageFile(filesData);
         }
       },
       collect: (monitor) => ({
@@ -52,7 +51,7 @@ export default function Layout({
         const url = URL.createObjectURL(file);
         return { size, type, name, url };
       });
-      dispatch(updateUploadFiles({ context, id: to, data: filesData }));
+      addStageFile(filesData);
     }
   }, [dropFiles]);
 
