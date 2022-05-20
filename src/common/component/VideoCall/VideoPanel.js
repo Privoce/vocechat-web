@@ -18,6 +18,10 @@ const Wrapper = styled.div`
   flex-grow: 1;
   overflow: auto;
  }
+ .control {
+  z-index: 1;
+  background: #fff;
+ }
 `;
 
 export default function VideoPanel() {
@@ -25,9 +29,18 @@ export default function VideoPanel() {
   <Wrapper>
    <Header />
    <div className="users">
-    {["Ding Yi"].map((item) => {
-     return <User key={item} id={item} />;
-    })}
+    {["Ding Yi", "Helper", "Helper1", "Helper2", "Helper3", "Helper4", "Helper5", "Helper6"].map(
+     (item) => {
+      return (
+       <User
+        key={item}
+        id={item}
+        openMic={Math.random() * 10 > 1}
+        openVideo={Math.random() * 10 > 1}
+       />
+      );
+     }
+    )}
    </div>
    <div className="control">
     <Control />
