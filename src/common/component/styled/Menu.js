@@ -23,7 +23,6 @@ const StyledMenu = styled.ul`
     font-size: 14px;
     line-height: 20px;
     color: #616161;
-
     .icon {
       width: 20px;
       height: 20px;
@@ -63,6 +62,14 @@ const StyledMenu = styled.ul`
       &:hover {
         background-color: #b42318;
         color: #fff;
+      }
+    }
+    &[data-disabled="true"] {
+      color: #a4a8b3;
+      .icon {
+        path {
+          fill: #a4a8b3;
+        }
       }
     }
   }

@@ -58,7 +58,7 @@ const StyledInput = styled.input`
     background-color: #f9fafb;
   }
   &::placeholder {
-    color: #78787c;
+    color: #d1d5db;
   }
   &[type="password"] {
     padding-right: 30px;

@@ -117,7 +117,7 @@ export default function Logins() {
             </div>
           </div>
           <div className="row">
-            <IssuerList />
+            <IssuerList issuers={oidc} />
           </div>
         </div>
       </div>
