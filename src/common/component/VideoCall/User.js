@@ -5,6 +5,7 @@ import MicDisabledIcon from "../../../assets/icons/mic.disabled.svg?url";
 import soundOnIcon from "../../../assets/icons/sound.on.svg?url";
 import soundOffIcon from "../../../assets/icons/sound.off.svg?url";
 import micRedIcon from "../../../assets/icons/mic.red.svg?url";
+import { useSelector } from "react-redux";
 const Wrapper = styled.div`
  .no-video {
   display: flex;
@@ -139,7 +140,9 @@ const Wrapper = styled.div`
   }
  }
 `;
-export default function user({ id, openMic, openVideo }) {
+export default function User({ id, openMic, openVideo }) {
+ const byId = useSelector((state) => state.contacts.byId);
+ const user = byId[id];
  return (
   <Wrapper>
    {openVideo && (
@@ -148,7 +151,7 @@ export default function user({ id, openMic, openVideo }) {
       <div className="agora-player"></div>
       <div className="name-tag">
        <img src={micRedIcon} alt="mic close icon" className="icon" />
-       <span className="label">laasdkaskdkasdkaskdkaskdaskbel</span>
+       <span className="label">{user.name}</span>
       </div>
      </div>
     </div>
@@ -156,8 +159,8 @@ export default function user({ id, openMic, openVideo }) {
    {!openVideo && (
     <div className="no-video">
      <div className="people">
-      <Avatar className="avatar" name={id} />
-      <div className="name">丁一</div>
+      <Avatar className="avatar" name={user.name} url={user.avatar != "" ? user.avatar : null} />
+      <div className="name">{user.name}</div>
      </div>
      <div className="actions">
       <img src={openMic ? MicOnIcon : MicDisabledIcon} className="icon" alt="mic control" />

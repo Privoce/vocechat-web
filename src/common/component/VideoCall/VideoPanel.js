@@ -2,6 +2,8 @@ import styled from "styled-components";
 import Control from "./Control";
 import Header from "./Header";
 import User from "./User";
+import { useSelector } from "react-redux";
+import { selectUsers } from "../../../app/slices/videocall";
 
 const Wrapper = styled.div`
  display: flex;
@@ -25,22 +27,14 @@ const Wrapper = styled.div`
 `;
 
 export default function VideoPanel() {
+ const users = useSelector(selectUsers);
  return (
   <Wrapper>
    <Header />
    <div className="users">
-    {["Ding Yi", "Helper", "Helper1", "Helper2", "Helper3", "Helper4", "Helper5", "Helper6"].map(
-     (item) => {
-      return (
-       <User
-        key={item}
-        id={item}
-        openMic={Math.random() * 10 > 1}
-        openVideo={Math.random() * 10 > 1}
-       />
-      );
-     }
-    )}
+    {users.map((item) => {
+     return <User key={item.id} id={item.id} openMic={item.openMic} openVideo={item.openVideo} />;
+    })}
    </div>
    <div className="control">
     <Control />
