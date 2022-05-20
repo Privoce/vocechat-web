@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import Tippy from "@tippyjs/react";
 import dropdownIcon from "../../../assets/icons/dropdown.svg?url";
@@ -62,18 +62,19 @@ export default function DeviceSelector({ type }) {
  const [visible, setVisible] = useState(false);
  const show = () => setVisible(true);
  const hide = () => setVisible(false);
- useEffect(() => {
-  async function init() {
-   console.log(123);
-   setDevices([]);
-  }
-  if (devices.length == 0) {
-   init();
-  }
- });
+ //   useEffect(() => {
+ //     async function init() {
+ //       console.log(123);
+ //       setDevices([]);
+ //     }
+ //     if (devices.length == 0) {
+ //       init();
+ //     }
+ //   }, [devices, type]);
  const handleClick = (e) => {
   hide();
   if (e != "default") {
+   setDevices([]);
    console.log(123);
   }
  };

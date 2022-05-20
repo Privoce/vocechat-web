@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
  openPanel: false,
+ users: [], // user struct {id,name,openVideo,openMic}
  devices: {
   currentMic: "default",
   currentCamera: "default",
