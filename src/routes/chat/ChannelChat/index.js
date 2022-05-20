@@ -31,9 +31,6 @@ import {
 } from "./styled";
 import InviteModal from "../../../common/component/InviteModal";
 import VideoPanel from "../../../common/component/VideoCall/VideoPanel";
-import { NavLink, useLocation } from "react-router-dom";
-import Tippy from "@tippyjs/react";
-
 export default function ChannelChat({ cid = "", dropFiles = [] }) {
  const [toolVisible, setToolVisible] = useState("");
  const { pathname } = useLocation();
