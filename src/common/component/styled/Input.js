@@ -80,7 +80,11 @@ export default function Input({
   };
   return type == "password" ? (
     <StyledWrapper className={className}>
-      <StyledInput type={inputType} className="inner" {...rest} />
+      <StyledInput
+        type={inputType}
+        className={`inner ${className}`}
+        {...rest}
+      />
       <div className="view" onClick={togglePasswordVisible}>
         {inputType == "password" ? (
           <HiEyeOff color="#78787c" />
@@ -92,7 +96,11 @@ export default function Input({
   ) : prefix ? (
     <StyledWrapper className={className}>
       <span className="prefix">{prefix}</span>
-      <StyledInput className="inner" type={inputType} {...rest} />
+      <StyledInput
+        className={`inner ${className}`}
+        type={inputType}
+        {...rest}
+      />
     </StyledWrapper>
   ) : (
     <StyledInput type={inputType} className={className} {...rest} />

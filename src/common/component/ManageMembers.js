@@ -212,7 +212,7 @@ export default function ManageMembers({ cid = null }) {
                       content={
                         <StyledMenu className="menu">
                           <li
-                            className="item"
+                            className="item sb"
                             onClick={handleToggleRole.bind(null, {
                               ignore: is_admin,
                               uid,
@@ -223,7 +223,7 @@ export default function ManageMembers({ cid = null }) {
                             {is_admin && <IconCheck className="icon" />}
                           </li>
                           <li
-                            className="item"
+                            className="item sb"
                             onClick={handleToggleRole.bind(null, {
                               ignore: !is_admin,
                               uid,

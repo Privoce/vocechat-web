@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDebounce } from "rooks";
+import { NavLink, useLocation } from "react-router-dom";
+import Tippy from "@tippyjs/react";
 import { useDispatch, useSelector } from "react-redux";
 import PinList from "./PinList";
 import FavList from "../FavList";
@@ -28,8 +30,6 @@ import {
   StyledHeader,
 } from "./styled";
 import InviteModal from "../../../common/component/InviteModal";
-import { NavLink, useLocation } from "react-router-dom";
-import Tippy from "@tippyjs/react";
 
 export default function ChannelChat({ cid = "", dropFiles = [] }) {
   const [toolVisible, setToolVisible] = useState("");

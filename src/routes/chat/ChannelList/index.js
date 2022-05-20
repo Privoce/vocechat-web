@@ -7,7 +7,7 @@ import NavItem from "./NavItem";
 export default function ChannelList({ setDropFiles }) {
   const [currId, setCurrId] = useState(null);
   const { channelIds } = useSelector((store) => {
-    return { channelIds: store.channels.ids, channelData: store.channels.byId };
+    return { channelIds: store.channels.ids };
   });
 
   const setRemoveChannel = (cid = undefined) => {
