@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import callEndIcon from "../../../assets/icons/call.end.svg?url";
-import dropdownIcon from "../../../assets/icons/dropdown.svg?url";
 import micOnIcon from "../../../assets/icons/mic.hightlight.svg?url";
 // import micOff from "../../../assets/icons/mic.hightlight.disabled.svg?url";
 import videoOnIcon from "../../../assets/icons/video.highlight.svg?url";
 // import videoOff from "../../../assets/icons/video.hightlight.disabled.svg?url";
 import shareScreenIcon from "../../../assets/icons/sharescreen.svg?url";
 import moreIcon from "../../../assets/icons/more.svg?url";
+import DeviceSelector from "./DeviceSelector";
 
 const Wrapper = styled.div`
  display: flex;
@@ -88,7 +88,7 @@ export default function Control() {
    <div className="actions">
     <div className="button">
      <div className="dropdown">
-      <img src={dropdownIcon} alt="dropdown" />
+      <DeviceSelector type="microphone" />
      </div>
      <div className="btn">
       <img src={micOnIcon} className="icon" alt="dropdown" />
@@ -96,7 +96,7 @@ export default function Control() {
     </div>
     <div className="button">
      <div className="dropdown">
-      <img src={dropdownIcon} alt="dropdown" />
+      <DeviceSelector type="camera" />
      </div>
      <div className="btn">
       <img src={videoOnIcon} className="icon" alt="dropdown" />
