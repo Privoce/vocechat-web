@@ -8,7 +8,7 @@ export default function useFilteredUsers() {
     if (!input) {
       setFilteredUsers(contacts);
     } else {
-      let str = ["", ...input.toLowerCase(), ""].join(".*");
+      let str = ["", input.toLowerCase(), ""].join(".*");
       let reg = new RegExp(str);
       setFilteredUsers(
         contacts.filter((c) => {
