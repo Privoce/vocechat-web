@@ -16,7 +16,7 @@ import StyledMenu from "./styled/Menu";
 import InviteLink from "./InviteLink";
 import moreIcon from "../../assets/icons/more.svg?url";
 import IconOwner from "../../assets/icons/owner.svg";
-import IconArrowDown from "../../assets/icons/arrow.down.svg";
+import IconArrowDown from "../../assets/icons/arrow.down.mini.svg";
 import IconCheck from "../../assets/icons/check.sign.svg";
 const StyledWrapper = styled.section`
   display: flex;
@@ -44,7 +44,7 @@ const StyledWrapper = styled.section`
   .members {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 4px;
     width: 512px;
     margin-bottom: 176px;
     .member {
@@ -52,7 +52,11 @@ const StyledWrapper = styled.section`
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0;
+      padding: 8px 12px;
+      border-radius: var(--br);
+      &:hover {
+        background: #f9fafb;
+      }
       .left {
         display: flex;
         gap: 8px;
@@ -89,12 +93,16 @@ const StyledWrapper = styled.section`
           display: flex;
           align-items: center;
           gap: 4px;
-          .icon {
+          > .icon {
             cursor: pointer;
           }
           /* override */
           .menu {
             min-width: 120px;
+            .item .icon {
+              width: 16px;
+              height: 12px;
+            }
           }
         }
         .opts {

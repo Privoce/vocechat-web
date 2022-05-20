@@ -54,12 +54,6 @@ const channelsSlice = createSlice({
             const filtered = state.byId[id].members.filter(
               (id) => members.findIndex((uid) => uid == id) == -1
             );
-            console.log(
-              "remove member from channel",
-              filtered,
-              members,
-              state.byId[id].members
-            );
             state.byId[id].members = filtered;
           }
           break;

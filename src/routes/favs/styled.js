@@ -45,11 +45,14 @@ const Styled = styled.div`
     flex-direction: column;
     gap: 32px;
     overflow-y: scroll;
-    .fav {
+    .container {
       max-width: 600px;
       display: flex;
       flex-direction: column;
       gap: 4px;
+      > .favorite {
+        background: #f2f4f7;
+      }
       .tip {
         display: inline-flex;
         align-items: center;

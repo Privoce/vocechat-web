@@ -34,10 +34,17 @@ const StyledWrapper = styled.div`
   }
   .name {
     /* user-select: text; */
+    display: flex;
     font-weight: 600;
     font-size: 14px;
     line-height: 20px;
     color: #52525b;
+    .txt {
+      max-width: 140px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 `;
 export default function Channel({
@@ -66,9 +73,10 @@ export default function Channel({
         <Avatar type="channel" url={avatar} name={"#"} alt="avatar" />
       </div>
       {!compact && (
-        <span className="name">
-          {name} ({is_public ? totalMemberCount : members.length})
-        </span>
+        <div className="name">
+          <span className="txt">{name}</span> (
+          {is_public ? totalMemberCount : members.length})
+        </div>
       )}
     </StyledWrapper>
   );

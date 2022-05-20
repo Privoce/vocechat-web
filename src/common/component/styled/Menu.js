@@ -10,9 +10,9 @@ const StyledMenu = styled.ul`
   border-radius: 12px;
   min-width: 200px;
   .item {
+    position: relative;
     display: flex;
     align-items: center;
-
     gap: 14px;
     white-space: nowrap;
     cursor: pointer;
@@ -44,7 +44,19 @@ const StyledMenu = styled.ul`
       }
     }
     &.underline {
-      border-bottom: 1px solid #e5e5e5;
+      margin-bottom: 9px;
+      &:before {
+        position: absolute;
+        content: "";
+        left: 6px;
+        bottom: -4px;
+        display: block;
+        padding: 0 6px;
+        box-sizing: border-box;
+        width: calc(100% - 12px);
+        height: 1px;
+        background-color: #f2f4f7;
+      }
     }
     &.danger {
       color: #a11043;

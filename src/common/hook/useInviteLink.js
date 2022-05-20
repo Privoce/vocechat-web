@@ -23,11 +23,6 @@ export default function useInviteLink(cid = null) {
   const copyLink = () => {
     copy(finalLink);
   };
-  const regenLink = cid
-    ? () => {
-        generateChannelInviteLink(cid);
-      }
-    : generateServerInviteLink;
   useEffect(() => {
     if (cid) {
       generateChannelInviteLink(cid);
@@ -45,10 +40,15 @@ export default function useInviteLink(cid = null) {
       setFinalLink(tmpURL.href);
     }
   }, [serverInviteLink, channelInviteLink, smtpStatusFetchSuccess]);
+  const genServerLink = () => {
+    generateServerInviteLink();
+  };
   return {
     enableSMTP: SMTPEnabled,
     generating: cid ? generatingChannelLink : generatingServerLink,
-    generateNewLink: regenLink,
+    generateNewLink: cid
+      ? generateChannelInviteLink.bind(null, cid)
+      : genServerLink,
     link: finalLink,
     linkCopied,
     copyLink,

@@ -7,8 +7,8 @@ const StyledButton = styled.button`
   box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
   border-radius: var(--br, 4px);
   font-weight: 500;
-  font-size: 16px;
-  line-height: 24px;
+  font-size: 14px;
+  line-height: 20px;
   color: #fff;
   background-color: #22ccee;
   &.flex {

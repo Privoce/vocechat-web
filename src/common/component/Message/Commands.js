@@ -5,7 +5,8 @@ import Tippy from "@tippyjs/react";
 import { hideAll } from "tippy.js";
 import { updateSelectMessages } from "../../../app/slices/ui";
 import { addReplyingMessage } from "../../../app/slices/message";
-import StyledMenu from "../styled/Menu";
+// import StyledMenu from "../styled/Menu";
+import ContextMenu from "../ContextMenu";
 import Tooltip from "../../component/Tooltip";
 
 import useFavMessage from "../../hook/useFavMessage";
@@ -14,6 +15,10 @@ import replyIcon from "../../../assets/icons/reply.svg?url";
 import reactIcon from "../../../assets/icons/reaction.svg?url";
 import editIcon from "../../../assets/icons/edit.svg?url";
 import IconBookmark from "../../../assets/icons/bookmark.add.svg";
+import IconPin from "../../../assets/icons/pin.svg";
+import IconForward from "../../../assets/icons/forward.svg";
+import IconSelect from "../../../assets/icons/select.svg";
+import IconDelete from "../../../assets/icons/delete.svg";
 import moreIcon from "../../../assets/icons/more.svg?url";
 import toast from "react-hot-toast";
 import useMessageOperation from "./useMessageOperation";
@@ -164,30 +169,32 @@ export default function Commands({
           placement="left-start"
           trigger="click"
           content={
-            <StyledMenu className="menu">
-              {canPin && (
-                <li
-                  className="item"
-                  onClick={pinned ? handleUnpin : togglePinModal}
-                >
-                  {pinned ? `Unpin Message` : `Pin Message`}
-                </li>
-              )}
-              <li className="item" onClick={toggleForwardModal}>
-                Forward
-              </li>
-              <li className="item" onClick={handleReply.bind(null, true)}>
-                Reply
-              </li>
-              <li className="item" onClick={handleSelect.bind(null, mid)}>
-                Select
-              </li>
-              {canDelete && (
-                <li className="item danger" onClick={toggleDeleteModal}>
-                  Delete Message
-                </li>
-              )}
-            </StyledMenu>
+            <ContextMenu
+              items={[
+                canPin && {
+                  title: pinned ? `Unpin Message` : `Pin Message`,
+                  icon: <IconPin className="icon" />,
+                  handler: pinned ? handleUnpin : togglePinModal,
+                },
+                {
+                  title: "Forward",
+                  icon: <IconForward className="icon" />,
+                  handler: toggleForwardModal,
+                },
+                {
+                  title: "Select",
+                  icon: <IconSelect className="icon" />,
+                  handler: handleSelect.bind(null, mid),
+                },
+
+                canDelete && {
+                  title: " Delete",
+                  danger: true,
+                  icon: <IconDelete className="icon" />,
+                  handler: toggleDeleteModal,
+                },
+              ]}
+            />
           }
         >
           <li className="cmd">

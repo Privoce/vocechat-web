@@ -157,7 +157,7 @@ function FavsPage() {
             </span>
           );
           return (
-            <div className="fav" key={id}>
+            <div className="container" key={id}>
               <h4 className="tip">
                 {tip}
                 {dayjs(created_at).format("YYYY-MM-DD")}

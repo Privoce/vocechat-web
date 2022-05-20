@@ -34,6 +34,10 @@ const Styled = styled.div`
       align-items: center;
       gap: 8px;
       color: #616161;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 20px;
+      color: #475467;
       .icon {
         width: 15px;
         height: auto;

@@ -28,6 +28,9 @@ const Styled = styled.div`
     &:disabled svg path {
       fill: #ccc;
     }
+    &:hover {
+      background: #eaecf0;
+    }
   }
   .close {
     cursor: pointer;

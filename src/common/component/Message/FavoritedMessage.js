@@ -23,7 +23,10 @@ const FavoritedMessage = ({ id }) => {
       const favorite_mids = messages.map(({ from_mid }) => from_mid) || [];
 
       setMsgs(
-        <StyledFav data-favorite-mids={favorite_mids.join(",")}>
+        <StyledFav
+          data-favorite-mids={favorite_mids.join(",")}
+          className="favorite"
+        >
           <div className="list">
             {messages.map((msg, idx) => {
               const {

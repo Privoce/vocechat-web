@@ -54,12 +54,7 @@ export default function InviteLink() {
         Share this link to invite people to this server.
       </span>
       <div className="link">
-        <Input
-          readOnly
-          className="higher"
-          placeholder="Generating"
-          value={link}
-        />
+        <Input readOnly placeholder="Generating" value={link} />
         <Button onClick={copyLink} className="small">
           {linkCopied ? "Copied" : `Copy`}
         </Button>

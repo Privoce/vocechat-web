@@ -19,6 +19,7 @@ const Styled = styled.article`
     justify-content: space-between;
     position: relative;
     > .chat {
+      border-bottom-right-radius: 16px;
       width: 100%;
       background-color: #fff;
       display: flex;

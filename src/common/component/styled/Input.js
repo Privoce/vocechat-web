@@ -41,9 +41,6 @@ const StyledInput = styled.input`
     border: 1px solid #e5e7eb;
     box-shadow: 0px 1px 2px rgba(31, 41, 55, 0.08);
   }
-  &.higher {
-    padding: 12px 8px;
-  }
   &.large {
     font-weight: 400;
     font-size: 16px;

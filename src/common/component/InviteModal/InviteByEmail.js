@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import styled from "styled-components";
 import useInviteLink from "../../hook/useInviteLink";
@@ -67,6 +67,7 @@ const Styled = styled.div`
 import Button from "../styled/Button";
 import Input from "../styled/Input";
 export default function InviteByEmail({ cid = null }) {
+  const [email, setEmail] = useState("");
   const {
     enableSMTP,
     linkCopied,
@@ -80,20 +81,22 @@ export default function InviteByEmail({ cid = null }) {
       toast.success("Invite Link Copied!");
     }
   }, [linkCopied]);
-
+  const handleEmail = (evt) => {
+    setEmail(evt.target.value);
+  };
   return (
     <Styled>
       <div className="invite">
         <label htmlFor="">Invite by Email</label>
         <div className="input">
           <Input
-            readOnly={true}
+            value={email}
+            onChange={handleEmail}
             disabled={!enableSMTP}
             type="email"
-            className="higher "
             placeholder={enableSMTP ? "Enter Email" : "Enable SMTP First"}
           />
-          <Button disabled={!enableSMTP} className="send">
+          <Button disabled={!enableSMTP || !email} className="send">
             Send
           </Button>
         </div>
@@ -103,7 +106,7 @@ export default function InviteByEmail({ cid = null }) {
         <div className="input">
           <Input
             readOnly
-            className="higher invite"
+            className="invite"
             placeholder="Generating"
             value={link}
           />

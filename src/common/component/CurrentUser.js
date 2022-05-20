@@ -6,14 +6,14 @@ import micIcon from "../../assets/icons/mic.on.svg?url";
 import Avatar from "./Avatar";
 // import UserGuide from "./UserGuide";
 const StyledWrapper = styled.div`
-  background-color: #e5e5e5;
+  background-color: #f4f4f5;
   position: sticky;
   bottom: 16px;
   margin: 8px;
   width: 94%;
   width: -webkit-fill-available;
   border-radius: 25px;
-  padding: 7px 8px 7px 4px;
+  padding: 8px;
   display: flex;
   align-items: center;
   justify-content: space-between;

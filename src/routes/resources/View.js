@@ -16,6 +16,9 @@ const Styled = styled.ul`
     cursor: pointer;
     padding: 8px;
     box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   &.item .item,
   &.grid .grid {
