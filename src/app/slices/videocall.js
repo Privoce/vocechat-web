@@ -1,7 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import AgoraRTC from "agora-rtc-sdk-ng";
-
-window.client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
 
 const initialState = {
  openPanel: false,
