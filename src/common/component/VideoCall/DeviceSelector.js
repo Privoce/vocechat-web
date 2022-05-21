@@ -2,6 +2,10 @@ import { useState } from "react";
 import styled from "styled-components";
 import Tippy from "@tippyjs/react";
 import dropdownIcon from "../../../assets/icons/dropdown.svg?url";
+import radioIcon from "../../../assets/icons/radio.svg?url";
+import radioCheckedIcon from "../../../assets/icons/radio.checked.svg?url";
+import { useDispatch } from "react-redux";
+import { setDevice } from "../../../app/slices/videocall";
 
 const Wrapper = styled.div`
  color: #475467;
@@ -13,6 +17,14 @@ const Wrapper = styled.div`
  flex-direction: column;
  align-items: flex-start;
  padding: 10px;
+ hr {
+  display: block;
+  height: 1px;
+  width: 100%;
+  color: #f2f4f7;
+  border-top: 1px solid #f2f4f7;
+  margin-bottom: 13px;
+ }
  .title {
   font-family: "Inter";
   font-style: normal;
@@ -24,58 +36,132 @@ const Wrapper = styled.div`
  .radioBox {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
  }
- .radio {
-  padding: 8px;
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 20px;
-  color: #475467;
-  width: 281px;
-  height: 36px;
-  text-align: left;
+ .item {
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  .radio {
+   padding: 8px;
+   font-family: "Inter";
+   font-style: normal;
+   font-weight: 600;
+   font-size: 14px;
+   line-height: 20px;
+   color: #475467;
+   width: 160px;
+   height: 36px;
+   text-align: left;
+  }
+  .radio-icon {
+   width: 20px;
+   height: 20px;
+  }
  }
 `;
-export function Device({ type, devices, handleClick }) {
+export function Device({ type, inputs, outputs, currentInput, currentOutput, handleClick }) {
  return (
   <Wrapper>
-   <div className="title">
-    {type == "microphone" ? "Microphone".toUpperCase() : "Camera".toUpperCase()}
-   </div>
-   <div className="radioBox">
-    {devices.map((device) => {
-     return (
-      <div key={device.deviceId} className="radio" onClick={() => handleClick(device.deviceId)}>
-       {device.label}
+   <>
+    {type == "camera" && (
+     <>
+      <div className="title">CAMERA</div>
+      <div className="radioBox">
+       {inputs.map((device) => {
+        return (
+         <>
+          <div className="item">
+           <div
+            key={device.deviceId}
+            className="radio"
+            onClick={() => {
+             handleClick(device.deviceId, "camera");
+            }}
+           >
+            {device.label}
+           </div>
+           <img
+            src={device.deviceId == currentInput ? radioCheckedIcon : radioIcon}
+            alt="radio"
+            onClick={() => {
+             handleClick(device.deviceId, "camera");
+            }}
+            className="radio-icon"
+           />
+          </div>
+         </>
+        );
+       })}
       </div>
-     );
-    })}
-   </div>
+     </>
+    )}
+    {type == "microphone" && (
+     <>
+      <div className="title">INPUT</div>
+      <div className="radioBox">
+       {inputs.map((device) => {
+        return (
+         <>
+          <div className="item">
+           <div
+            key={device.deviceId}
+            className="radio"
+            onClick={() => handleClick(device.deviceId, "microphone")}
+           >
+            {device.label}
+           </div>
+           <img
+            src={device.deviceId == currentInput ? radioCheckedIcon : radioIcon}
+            alt="radio"
+            className="radio-icon"
+            onClick={() => handleClick(device.deviceId, "microphone")}
+           />
+          </div>
+         </>
+        );
+       })}
+      </div>
+      <hr />
+      <div className="title">OUTPUT</div>
+      <div className="radioBox">
+       {outputs.map((device) => {
+        return (
+         <>
+          <div className="item">
+           <div
+            key={device.deviceId}
+            className="radio"
+            onClick={() => handleClick(device.deviceId, "playback")}
+           >
+            {device.label}
+           </div>
+           <img
+            src={device.deviceId == currentOutput ? radioCheckedIcon : radioIcon}
+            onClick={() => handleClick(device.deviceId, "playback")}
+            alt="radio"
+            className="radio-icon"
+           />
+          </div>
+         </>
+        );
+       })}
+      </div>
+     </>
+    )}
+   </>
   </Wrapper>
  );
 }
-export default function DeviceSelector({ type }) {
- const [devices, setDevices] = useState([]);
+export default function DeviceSelector({ type, inputs, outputs, currentInput, currentOutput }) {
+ const dispatch = useDispatch();
  const [visible, setVisible] = useState(false);
  const show = () => setVisible(true);
  const hide = () => setVisible(false);
- //   useEffect(() => {
- //     async function init() {
- //       console.log(123);
- //       setDevices([]);
- //     }
- //     if (devices.length == 0) {
- //       init();
- //     }
- //   }, [devices, type]);
- const handleClick = (e) => {
+ const handleClick = (e, type) => {
   hide();
   if (e != "default") {
-   setDevices([]);
-   console.log(123);
+   dispatch(setDevice({ deviceId: e, type }));
   }
  };
 
@@ -85,7 +171,16 @@ export default function DeviceSelector({ type }) {
     interactive
     visible={visible}
     onClickOutside={hide}
-    content={<Device type={type} devices={devices} onClick={handleClick} />}
+    content={
+     <Device
+      type={type}
+      inputs={inputs}
+      outputs={outputs}
+      currentInput={currentInput}
+      currentOutput={currentOutput}
+      handleClick={handleClick}
+     />
+    }
    >
     <img onClick={visible ? hide : show} src={dropdownIcon} alt="arrow down" />
    </Tippy>

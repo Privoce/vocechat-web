@@ -18,9 +18,18 @@ const initialState = {
  },
  // 用于记录所有系统设备
  devices: {
-  mics: [{ id: "default", label: "Default" }],
-  cameras: [{ id: "default", label: "Default" }],
-  playbacks: [{ id: "default", label: "Default" }]
+  mics: [
+   { deviceId: "default", label: "Default" },
+   { deviceId: "default2", label: "Default2" }
+  ],
+  cameras: [
+   { deviceId: "default", label: "Default" },
+   { deviceId: "default2", label: "Default2" }
+  ],
+  playbacks: [
+   { deviceId: "default", label: "Default" },
+   { deviceId: "default2", label: "Default2" }
+  ]
  }
 };
 
@@ -75,6 +84,19 @@ const videocallSlice = createSlice({
   resetState: (state) => {
    state.users = [];
   },
+  setDevice: (state, payload) => {
+   const { deviceId, type } = payload.payload;
+   console.log("[agora]", deviceId, type, payload);
+   if (type == "camera") {
+    state.device.currentCamera = deviceId;
+   }
+   if (type == "microphone") {
+    state.device.currentMic = deviceId;
+   }
+   if (type == "playback") {
+    state.device.currentPlayBack = deviceId;
+   }
+  },
 
   join: (state, payload) => {
    // add current channel name;
@@ -93,6 +115,6 @@ export const selectDevices = (state) => state.videocall.devices;
 export const selectUsers = (state) => state.videocall.users;
 export const selectDevice = (state) => state.videocall.device;
 
-export const { resetState, toggleShare, toggleCamera, toggleMic, start, end } =
+export const { resetState, toggleShare, toggleCamera, toggleMic, start, end, setDevice } =
  videocallSlice.actions;
 export default videocallSlice.reducer;

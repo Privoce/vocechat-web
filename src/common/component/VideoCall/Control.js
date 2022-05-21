@@ -10,6 +10,7 @@ import DeviceSelector from "./DeviceSelector";
 import { useSelector, useDispatch } from "react-redux";
 import {
  selectDevice,
+ selectDevices,
  toggleCamera,
  toggleMic,
  toggleShare,
@@ -93,13 +94,20 @@ const Wrapper = styled.div`
 export default function Control() {
  const dispatch = useDispatch();
  const deviceState = useSelector(selectDevice);
+ const { mics, cameras, playbacks } = useSelector(selectDevices);
  const { mic, camera, share, currentMic, currentCamera, currentPlayBack } = deviceState;
  return (
   <Wrapper>
    <div className="actions">
     <div className="button">
      <div className="dropdown">
-      <DeviceSelector type="microphone" currentInput={currentMic} currentOutPut={currentPlayBack} />
+      <DeviceSelector
+       type="microphone"
+       currentInput={currentMic}
+       currentOutput={currentPlayBack}
+       inputs={mics}
+       outputs={playbacks}
+      />
      </div>
      <div
       className="btn"
@@ -112,7 +120,7 @@ export default function Control() {
     </div>
     <div className="button">
      <div className="dropdown">
-      <DeviceSelector type="camera" current={currentCamera} />
+      <DeviceSelector type="camera" currentInput={currentCamera} inputs={cameras} />
      </div>
      <div
       className="btn"
