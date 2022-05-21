@@ -31,6 +31,7 @@ import {
 } from "./styled";
 import InviteModal from "../../../common/component/InviteModal";
 import VideoPanel from "../../../common/component/VideoCall/VideoPanel";
+import { end, start } from "../../../app/slices/videocall";
 export default function ChannelChat({ cid = "", dropFiles = [] }) {
  const [toolVisible, setToolVisible] = useState("");
  const { pathname } = useLocation();
@@ -40,6 +41,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
  const [membersVisible, setMembersVisible] = useState(true);
  const [addMemberModalVisible, setAddMemberModalVisible] = useState(false);
  const [videoCallVisible, setVideoCallVisible] = useState(false);
+ const openPanel = useSelector((state) => state.videocall.openPanel);
  const { selects, msgIds, userIds, data, messageData, loginUid, loginUser, footprint } =
   useSelector((store) => {
    return {
@@ -59,10 +61,13 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
  // };
  useEffect(() => {
   dispatch(updateRemeberedNavs());
+  if (!openPanel) {
+   setVideoCallVisible(false);
+  }
   return () => {
    dispatch(updateRemeberedNavs({ path: pathname }));
   };
- }, [pathname]);
+ }, [pathname, openPanel]);
 
  const toggleMembersVisible = () => {
   // TODO: Reudx State
@@ -75,7 +80,13 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
 
  const toggleVideoCallVisible = () => {
   if (membersVisible) setMembersVisible(false);
+  if (videoCallVisible) {
+   dispatch(end());
+  } else {
+   dispatch(start());
+  }
   setVideoCallVisible((prev) => !prev);
+
   // TODO: Reudx State
  };
 

@@ -56,6 +56,13 @@ const videocallSlice = createSlice({
  name: "videocall",
  initialState,
  reducers: {
+  start: (state) => {
+   state.openPanel = true;
+  },
+  end: (state) => {
+   state.users = [];
+   state.openPanel = false;
+  },
   toggleMic: (state) => {
    state.device.mic = !state.device.mic;
   },
@@ -68,6 +75,7 @@ const videocallSlice = createSlice({
   resetState: (state) => {
    state.users = [];
   },
+
   join: (state, payload) => {
    // add current channel name;
    state.channelName = payload;
@@ -85,5 +93,6 @@ export const selectDevices = (state) => state.videocall.devices;
 export const selectUsers = (state) => state.videocall.users;
 export const selectDevice = (state) => state.videocall.device;
 
-export const { resetState, toggleShare, toggleCamera, toggleMic } = videocallSlice.actions;
+export const { resetState, toggleShare, toggleCamera, toggleMic, start, end } =
+ videocallSlice.actions;
 export default videocallSlice.reducer;

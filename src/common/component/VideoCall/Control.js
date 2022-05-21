@@ -8,7 +8,13 @@ import shareScreenIcon from "../../../assets/icons/sharescreen.svg?url";
 import moreIcon from "../../../assets/icons/more.svg?url";
 import DeviceSelector from "./DeviceSelector";
 import { useSelector, useDispatch } from "react-redux";
-import { selectDevice, toggleCamera, toggleMic, toggleShare } from "../../../app/slices/videocall";
+import {
+ selectDevice,
+ toggleCamera,
+ toggleMic,
+ toggleShare,
+ end
+} from "../../../app/slices/videocall";
 
 const Wrapper = styled.div`
  display: flex;
@@ -135,7 +141,12 @@ export default function Control() {
     </div>
    </div>
    <div className="actions">
-    <div className="disable">
+    <div
+     className="disable"
+     onClick={() => {
+      dispatch(end());
+     }}
+    >
      <img src={callEndIcon} alt="disable" />
     </div>
    </div>
