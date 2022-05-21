@@ -13,7 +13,8 @@ const initialState = {
   camera: false,
   share: false,
   currentMic: "default",
-  currentCamera: "default"
+  currentCamera: "default",
+  currentPlayBack: "default"
  },
  // 用于记录所有系统设备
  devices: {
@@ -56,7 +57,13 @@ const videocallSlice = createSlice({
  initialState,
  reducers: {
   toggleMic: (state) => {
-   state.devices.mic = !state.devices.mic;
+   state.device.mic = !state.device.mic;
+  },
+  toggleCamera: (state) => {
+   state.device.camera = !state.device.camera;
+  },
+  toggleShare: (state) => {
+   state.device.share = !state.device.share;
   },
   resetState: (state) => {
    state.users = [];
@@ -74,8 +81,9 @@ const videocallSlice = createSlice({
  }
 });
 
-export const selectDevice = (state) => state.videocall.devices;
+export const selectDevices = (state) => state.videocall.devices;
 export const selectUsers = (state) => state.videocall.users;
+export const selectDevice = (state) => state.videocall.device;
 
-export const { resetState } = videocallSlice.actions;
+export const { resetState, toggleShare, toggleCamera, toggleMic } = videocallSlice.actions;
 export default videocallSlice.reducer;

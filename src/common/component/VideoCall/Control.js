@@ -1,12 +1,14 @@
 import styled from "styled-components";
 import callEndIcon from "../../../assets/icons/call.end.svg?url";
 import micOnIcon from "../../../assets/icons/mic.hightlight.svg?url";
-// import micOff from "../../../assets/icons/mic.hightlight.disabled.svg?url";
+import micOffIcon from "../../../assets/icons/mic.highlight.disabled.svg?url";
 import videoOnIcon from "../../../assets/icons/video.highlight.svg?url";
-// import videoOff from "../../../assets/icons/video.hightlight.disabled.svg?url";
+import videoOffIcon from "../../../assets/icons/video.highlight.disable.svg?url";
 import shareScreenIcon from "../../../assets/icons/sharescreen.svg?url";
 import moreIcon from "../../../assets/icons/more.svg?url";
 import DeviceSelector from "./DeviceSelector";
+import { useSelector, useDispatch } from "react-redux";
+import { selectDevice, toggleCamera, toggleMic, toggleShare } from "../../../app/slices/videocall";
 
 const Wrapper = styled.div`
  display: flex;
@@ -83,28 +85,47 @@ const Wrapper = styled.div`
  }
 `;
 export default function Control() {
+ const dispatch = useDispatch();
+ const deviceState = useSelector(selectDevice);
+ const { mic, camera, share, currentMic, currentCamera, currentPlayBack } = deviceState;
  return (
   <Wrapper>
    <div className="actions">
     <div className="button">
      <div className="dropdown">
-      <DeviceSelector type="microphone" />
+      <DeviceSelector type="microphone" currentInput={currentMic} currentOutPut={currentPlayBack} />
      </div>
-     <div className="btn">
-      <img src={micOnIcon} className="icon" alt="dropdown" />
+     <div
+      className="btn"
+      onClick={() => {
+       dispatch(toggleMic());
+      }}
+     >
+      <img src={mic ? micOnIcon : micOffIcon} className="icon" alt="dropdown" />
      </div>
     </div>
     <div className="button">
      <div className="dropdown">
-      <DeviceSelector type="camera" />
+      <DeviceSelector type="camera" current={currentCamera} />
      </div>
-     <div className="btn">
-      <img src={videoOnIcon} className="icon" alt="dropdown" />
+     <div
+      className="btn"
+      onClick={() => {
+       dispatch(toggleCamera());
+      }}
+     >
+      <img src={camera ? videoOnIcon : videoOffIcon} className="icon" alt="dropdown" />
      </div>
     </div>
     <div className="button">
-     <div className="btn">
-      <img src={shareScreenIcon} className="icon" alt="dropdown" />
+     <div
+      className="btn"
+      onClick={() => {
+       dispatch(toggleShare());
+      }}
+     >
+      {/* TODO: 新增一个正在分享的 Icon */}
+      <img src={share ? shareScreenIcon : shareScreenIcon} className="icon" alt="dropdown" />
      </div>
     </div>
     <div className="button">
