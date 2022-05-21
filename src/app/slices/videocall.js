@@ -1,11 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
+import AgoraRTC from "agora-rtc-sdk-ng";
+
+window.client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
 
 const initialState = {
  openPanel: false,
  users: [
-  { id: 1, username: "123", openVideo: true, openMic: false },
-  { id: 2, username: "123", openVideo: false, openMic: true },
-  { id: 4, username: "123", openVideo: false, openMic: true }
+  { id: 1, openVideo: true, openMic: false },
+  { id: 2, openVideo: false, openMic: true },
+  { id: 3, openVideo: false, openMic: true },
+  { id: 4, openVideo: false, openMic: true },
+  { id: 5, openVideo: false, openMic: true }
  ], // user struct {id,name,openVideo,openMic}
  // 用于控制本地的设备
  device: {
@@ -86,7 +91,6 @@ const videocallSlice = createSlice({
   },
   setDevice: (state, payload) => {
    const { deviceId, type } = payload.payload;
-   console.log("[agora]", deviceId, type, payload);
    if (type == "camera") {
     state.device.currentCamera = deviceId;
    }
