@@ -24,8 +24,8 @@ const initialState = {
 };
 
 // 定义 AGORA 信令
-// 格式：user,cmd
-// Example: 1,LOGIN
+// 格式：user|cmd|args
+// Example: 1|LOGIN|{}
 
 const commandMap = {
  login: "LOGIN",
@@ -38,7 +38,7 @@ const commandMap = {
 };
 
 // function parseCMD(command) {
-//   var cmds = command.split(",");
+//   var cmds = command.split("|");
 //   return {
 //     user: cmds[0],
 //     cmd: cmds[1],
