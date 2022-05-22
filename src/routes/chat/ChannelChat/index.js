@@ -93,7 +93,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
  const { name, description, is_public, members = [], owner } = data;
  const memberIds = is_public ? userIds : members.sort((n) => (n == owner ? -1 : 0));
  const addVisible = loginUser?.is_admin || owner == loginUid;
- console.log("channel message list", msgIds);
+ //  console.log("channel message list", msgIds);
  const readIndex = footprint.readChannels[cid];
  const pinCount = data?.pinned_messages?.length || 0;
  return (
@@ -217,7 +217,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
       ) : null}
       {videoCallVisible && (
        <>
-        <VideoPanel />
+        <VideoPanel cid={cid} />
        </>
       )}
      </>

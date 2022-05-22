@@ -3160,6 +3160,11 @@ agora-rte-extension@^1.0.22:
   resolved "https://registry.npmmirror.com/agora-rte-extension/-/agora-rte-extension-1.0.23.tgz#54a7215fd2cdcf2553d83570530950054f1e59a6"
   integrity sha512-X2cGBg+L5ZJIFU91qvMASvRsBfg1HXTktVG3YROw9wxHsILSI7jgF9R9XraLc3fNX/UjovaYAlUW+hiJe0v6Xw==
 
+agora-rtm-sdk@^1.4.4:
+  version "1.4.4"
+  resolved "https://registry.npmmirror.com/agora-rtm-sdk/-/agora-rtm-sdk-1.4.4.tgz#48fd9a5638ec2caba9120d030939d9714c39c33e"
+  integrity sha512-Cks9kOJQ94HNle6s9mRqozf8VEwQD2WDrjJyA30rV3odBJ1UUDsASE5AItdr0znD8RDx0D7V+vpI9A9VQzmgvw==
+
 ajv-formats@^2.1.1:
   version "2.1.1"
   resolved "https://mirrors.tencent.com/npm/ajv-formats/-/ajv-formats-2.1.1.tgz#6e669400659eb74973bbf2e33327180a0996b520"

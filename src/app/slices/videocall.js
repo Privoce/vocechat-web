@@ -2,13 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
  openPanel: false,
- users: [
-  { id: 1, openVideo: true, openMic: false },
-  { id: 2, openVideo: false, openMic: true },
-  { id: 3, openVideo: false, openMic: true },
-  { id: 4, openVideo: false, openMic: true },
-  { id: 5, openVideo: false, openMic: true }
- ], // user struct {id,name,openVideo,openMic}
+ users: [{ id: 1, openVideo: false, openMic: false }], // user struct {id,name,openVideo,openMic}
  // 用于控制本地的设备
  device: {
   mic: false,
@@ -34,34 +28,6 @@ const initialState = {
   ]
  }
 };
-
-// 定义 AGORA 信令
-// 格式：user|cmd|args
-// Example: 1|LOGIN|{}
-
-const commandMap = {
- login: "LOGIN",
- join: "JOIN",
- openMic: "OPENMIC",
- closeMic: "CLOSEMIC",
- openVideo: "OPENVIDEO",
- closeVideo: "CLOSEVIDEO",
- leave: "LEAVE"
-};
-
-// function parseCMD(command) {
-//   var cmds = command.split("|");
-//   return {
-//     user: cmds[0],
-//     cmd: cmds[1],
-//     args: JSON.parse(cmds[2]),
-//   };
-// }
-
-function buildCMD(user, cmd, args) {
- const argString = JSON.stringify(args);
- return `${user},${cmd.toUpperCase()},${argString}`;
-}
 
 const videocallSlice = createSlice({
  name: "videocall",
@@ -98,16 +64,63 @@ const videocallSlice = createSlice({
     state.device.currentPlayBack = deviceId;
    }
   },
-
   join: (state, payload) => {
-   // add current channel name;
    state.channelName = payload;
-   // join rtc channel
-   // join rtm channel
   },
-  test_1(name) {
-   window.clientInfo.join(name);
-   window.rtmClient.send(buildCMD(1, commandMap.login));
+  openMic: (state) => {
+   state.device.mic = true;
+  },
+  openVideo: (state) => {
+   state.device.camera = true;
+  },
+  closeMic: (state) => {
+   state.device.mic = false;
+  },
+  closeVideo: (state) => {
+   state.device.camera = false;
+  },
+  addUser: (state, payload) => {
+   state.users.push(payload.payload.user);
+  },
+  removeUser: (state, payload) => {
+   state.users = state.users.filter((user) => user.id != payload.payload.id);
+  },
+  addUsers: (state, payload) => {
+   const ids = payload.payload.ids;
+   const users = ids.map((item) => {
+    return {
+     id: item,
+     openMic: false,
+     openVide: false
+    };
+   });
+   state.users.push(...users);
+  },
+  openUserVideo: (state, payload) => {
+   const id = payload.payload.id;
+   const user = state.users.find((user) => user.id == id);
+   user.openVideo = true;
+  },
+  closeUserVideo: (state, payload) => {
+   const id = payload.payload.id;
+   const user = state.users.find((user) => user.id == id);
+   user.openVideo = false;
+  },
+  openUserMic: (state, payload) => {
+   const id = payload.payload.id;
+   const user = state.users.find((user) => user.id == id);
+   user.openMic = true;
+  },
+  closeUserMic: (state, payload) => {
+   const id = payload.payload.id;
+   const user = state.users.find((user) => user.id == id);
+   user.openMic = false;
+  },
+  setDevices: (state, payload) => {
+   const { microphone, camera, playback } = payload.payload;
+   state.devices.mics = microphone;
+   state.devices.cameras = camera;
+   state.devices.playbacks = playback;
   }
  }
 });
@@ -116,6 +129,25 @@ export const selectDevices = (state) => state.videocall.devices;
 export const selectUsers = (state) => state.videocall.users;
 export const selectDevice = (state) => state.videocall.device;
 
-export const { resetState, toggleShare, toggleCamera, toggleMic, start, end, setDevice } =
- videocallSlice.actions;
+export const {
+ resetState,
+ toggleShare,
+ toggleCamera,
+ toggleMic,
+ openMic,
+ openVideo,
+ closeMic,
+ closeVideo,
+ start,
+ end,
+ setDevice,
+ addUser,
+ removeUser,
+ openUserVideo,
+ closeUserVideo,
+ openUserMic,
+ closeUserMic,
+ setDevices,
+ addUsers
+} = videocallSlice.actions;
 export default videocallSlice.reducer;

@@ -8,14 +8,7 @@ import shareScreenIcon from "../../../assets/icons/sharescreen.svg?url";
 import moreIcon from "../../../assets/icons/more.svg?url";
 import DeviceSelector from "./DeviceSelector";
 import { useSelector, useDispatch } from "react-redux";
-import {
- selectDevice,
- selectDevices,
- toggleCamera,
- toggleMic,
- toggleShare,
- end
-} from "../../../app/slices/videocall";
+import { selectDevice, selectDevices, toggleShare, end } from "../../../app/slices/videocall";
 
 const Wrapper = styled.div`
  display: flex;
@@ -91,7 +84,7 @@ const Wrapper = styled.div`
   }
  }
 `;
-export default function Control() {
+export default function Control({ client }) {
  const dispatch = useDispatch();
  const deviceState = useSelector(selectDevice);
  const { mics, cameras, playbacks } = useSelector(selectDevices);
@@ -112,7 +105,12 @@ export default function Control() {
      <div
       className="btn"
       onClick={() => {
-       dispatch(toggleMic());
+       if (mic) {
+        client.closeMic();
+       } else {
+        client.openMic();
+       }
+       //   dispatch(toggleMic());
       }}
      >
       <img src={mic ? micOnIcon : micOffIcon} className="icon" alt="dropdown" />
@@ -125,7 +123,12 @@ export default function Control() {
      <div
       className="btn"
       onClick={() => {
-       dispatch(toggleCamera());
+       if (camera) {
+        client.closeVideo();
+       } else {
+        client.openVideo();
+       }
+       //   dispatch(toggleCamera());
       }}
      >
       <img src={camera ? videoOnIcon : videoOffIcon} className="icon" alt="dropdown" />
