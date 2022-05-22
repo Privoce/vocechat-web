@@ -42,6 +42,7 @@ const Wrapper = styled.div`
   flex-direction: row;
   display: flex;
   align-items: center;
+  gap: 8px;
   .radio {
    padding: 8px;
    font-family: "Inter";
@@ -53,6 +54,8 @@ const Wrapper = styled.div`
    width: 160px;
    height: 36px;
    text-align: left;
+   overflow: hidden;
+   white-space: nowrap;
   }
   .radio-icon {
    width: 20px;
@@ -70,10 +73,9 @@ export function Device({ type, inputs, outputs, currentInput, currentOutput, han
       <div className="radioBox">
        {inputs.map((device) => {
         return (
-         <>
+         <div key={device.deviceId}>
           <div className="item">
            <div
-            key={device.deviceId}
             className="radio"
             onClick={() => {
              handleClick(device.deviceId, "camera");
@@ -90,7 +92,7 @@ export function Device({ type, inputs, outputs, currentInput, currentOutput, han
             className="radio-icon"
            />
           </div>
-         </>
+         </div>
         );
        })}
       </div>
@@ -102,13 +104,9 @@ export function Device({ type, inputs, outputs, currentInput, currentOutput, han
       <div className="radioBox">
        {inputs.map((device) => {
         return (
-         <>
+         <div key={device.deviceId}>
           <div className="item">
-           <div
-            key={device.deviceId}
-            className="radio"
-            onClick={() => handleClick(device.deviceId, "microphone")}
-           >
+           <div className="radio" onClick={() => handleClick(device.deviceId, "microphone")}>
             {device.label}
            </div>
            <img
@@ -118,7 +116,7 @@ export function Device({ type, inputs, outputs, currentInput, currentOutput, han
             onClick={() => handleClick(device.deviceId, "microphone")}
            />
           </div>
-         </>
+         </div>
         );
        })}
       </div>
@@ -127,13 +125,9 @@ export function Device({ type, inputs, outputs, currentInput, currentOutput, han
       <div className="radioBox">
        {outputs.map((device) => {
         return (
-         <>
+         <div key={device.deviceId}>
           <div className="item">
-           <div
-            key={device.deviceId}
-            className="radio"
-            onClick={() => handleClick(device.deviceId, "playback")}
-           >
+           <div className="radio" onClick={() => handleClick(device.deviceId, "playback")}>
             {device.label}
            </div>
            <img
@@ -143,7 +137,7 @@ export function Device({ type, inputs, outputs, currentInput, currentOutput, han
             className="radio-icon"
            />
           </div>
-         </>
+         </div>
         );
        })}
       </div>
