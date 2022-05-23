@@ -77,11 +77,11 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
   const toggleAddVisible = () => {
     setAddMemberModalVisible((prev) => !prev);
   };
-
+  if (!data) return null;
   const { name, description, is_public, members = [], owner } = data;
   const memberIds = is_public
     ? userIds
-    : members.sort((n) => (n == owner ? -1 : 0));
+    : members.slice(0).sort((n) => (n == owner ? -1 : 0));
   const addVisible = loginUser?.is_admin || owner == loginUid;
   console.log("channel message list", msgIds);
   const readIndex = footprint.readChannels[cid];
