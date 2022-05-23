@@ -1,6 +1,6 @@
 {
   "name": "rustchat-web",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "private": true,
   "homepage": "https://privoce.rustchat.com",
   "dependencies": {
@@ -43,7 +43,6 @@
     "masonry-layout": "^4.2.2",
     "mini-css-extract-plugin": "^2.6.0",
     "pwa-badge": "^1.1.1",
-    "re-resizable": "^6.9.9",
     "react": "^18.1.0",
     "react-circular-progressbar": "^2.0.4",
     "react-dev-utils": "^12.0.1",
@@ -66,9 +65,7 @@
     "rooks": "^5.11.2",
     "semver": "^7.3.7",
     "slate": "^0.78.0",
-    "slate-auto-replace": "^0.12.1",
     "slate-history": "^0.66.0",
-    "slate-hyperscript": "^0.77.0",
     "slate-react": "^0.79.0",
     "source-map-loader": "^3.0.1",
     "style-loader": "^3.3.1",
@@ -84,7 +81,6 @@
     "workbox-cacheable-response": "^6.5.3",
     "workbox-core": "^6.5.3",
     "workbox-expiration": "^6.5.3",
-    "workbox-google-analytics": "^6.5.3",
     "workbox-navigation-preload": "^6.5.3",
     "workbox-precaching": "^6.5.3",
     "workbox-range-requests": "^6.5.3",
@@ -124,7 +120,6 @@
   "devDependencies": {
     "@commitlint/cli": "^17.0.0",
     "@commitlint/config-conventional": "^17.0.0",
-    "autoprefixer": "^10.4.7",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^4.0.0",
@@ -135,7 +130,6 @@
     "lint-staged": "^12.4.1",
     "patch-package": "^6.4.7",
     "postinstall-postinstall": "^2.1.0",
-    "prettier": "^2.6.2",
-    "redux-immutable-state-invariant": "^2.1.0"
+    "prettier": "^2.6.2"
   }
 }
