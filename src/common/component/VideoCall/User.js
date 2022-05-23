@@ -145,7 +145,7 @@ export default function User({ id, openMic, openVideo, client }) {
  const byId = useSelector((state) => state.contacts.byId);
  const user = byId[id];
  const userWithTrack = client.getUserById(id);
- console.log("[agora]", userWithTrack);
+ console.log("[agora] User.js", { id, openMic, openVideo, client }, userWithTrack);
  return (
   <Wrapper>
    {openVideo && (

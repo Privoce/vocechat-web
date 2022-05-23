@@ -155,6 +155,7 @@ export default function Control({ client }) {
     <div
      className="disable"
      onClick={() => {
+      client.leave();
       dispatch(end());
      }}
     >
