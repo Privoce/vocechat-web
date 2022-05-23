@@ -108,6 +108,13 @@ export class AgoraClient {
   }
  }
  getUserById(uid) {
+  if (uid == this.uid) {
+   return {
+    uid,
+    audioTrack: this.rtc.audioTrack,
+    videoTrack: this.rtc.videoTrack
+   };
+  }
   const user = this.rtc.remoteUsers.find((user) => user.uid == uid);
   return user;
  }
@@ -242,6 +249,7 @@ export class AgoraClient {
  // 用户初次进入后，对历史用户进行批量加入
  async _initMember() {
   const ids = await this.rtm.channel.getMembers();
-  store.dispatch(addUsers({ ids }));
+  const filterIds = ids.filter((id) => id != this.uid);
+  store.dispatch(addUsers({ filterIds }));
  }
 }
