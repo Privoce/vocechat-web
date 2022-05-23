@@ -13,7 +13,7 @@ export default function MagicLinkLogin() {
     // signIn();
   };
   return (
-    <StyledMagicButton onClick={handleGoogleLogin} href="#">
+    <StyledMagicButton onClick={handleGoogleLogin}>
       Sign in with Magic Link
     </StyledMagicButton>
   );
