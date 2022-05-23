@@ -1,7 +1,7 @@
-## TODO
-
-- state management: Redux or Recoil
-- router: react-route
-
-## refs
-- http://rustchat.com:3000/api/swagger
+- preview demo: https://privoce.rustchat.com/
+- design: https://www.figma.com/file/EHnNr53kNmDWgUT86It6CH/UI
+- backend APIs: https://dev.rustchat.com/api/swagger
+- text editor: https://plate.udecode.io/docs/installation
+- markdown editor: https://nhn.github.io/tui.editor/latest/
+- redux:  [@reduxjs/toolkit](https://redux-toolkit.js.org/introduction/getting-started)
+- indexDB wrapper: https://github.com/localForage/localForage
