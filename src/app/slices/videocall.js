@@ -77,7 +77,7 @@ const videocallSlice = createSlice({
    state.users = state.users.filter((user) => user.id != payload.payload.id);
   },
   addUsers: (state, payload) => {
-   const ids = payload.payload.ids;
+   const ids = payload.payload.filterIds;
    const users = ids.map((item) => {
     return {
      id: item,

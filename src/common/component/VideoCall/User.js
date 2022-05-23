@@ -145,13 +145,13 @@ export default function User({ id, openMic, openVideo, client }) {
  const byId = useSelector((state) => state.contacts.byId);
  const user = byId[id];
  const userWithTrack = client.getUserById(id);
-
+ console.log("[agora]", userWithTrack);
  return (
   <Wrapper>
    {openVideo && (
     <div className="video">
      <div className="player">
-      <AgoraVideoPlayer className="agora-player" videoTrack={userWithTrack.videoTrack} />
+      <AgoraVideoPlayer className="agora-player" videoTrack={userWithTrack?.videoTrack} />
       <div className="name-tag">
        <img src={micRedIcon} alt="mic close icon" className="icon" />
        <span className="label">{user.name}</span>

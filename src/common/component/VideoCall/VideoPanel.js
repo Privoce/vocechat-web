@@ -75,8 +75,8 @@ export default function VideoPanel({ cid }) {
  const client = useMemo(() => new AgoraClient(uid), [uid]);
  useEffect(() => {
   client.join(cid).then(setShowPanel(true));
-  return () => {
-   client.leave();
+  return async () => {
+   await client.leave();
   };
  }, [client, uid, cid]);
  const users = useSelector(selectUsers);
