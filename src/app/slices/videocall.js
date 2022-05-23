@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
  openPanel: false,
- users: [{ id: 1, openVideo: false, openMic: false }], // user struct {id,name,openVideo,openMic}
+ users: [], // user struct {id,name,openVideo,openMic}
  // 用于控制本地的设备
  device: {
   mic: false,
@@ -14,18 +14,9 @@ const initialState = {
  },
  // 用于记录所有系统设备
  devices: {
-  mics: [
-   { deviceId: "default", label: "Default" },
-   { deviceId: "default2", label: "Default2" }
-  ],
-  cameras: [
-   { deviceId: "default", label: "Default" },
-   { deviceId: "default2", label: "Default2" }
-  ],
-  playbacks: [
-   { deviceId: "default", label: "Default" },
-   { deviceId: "default2", label: "Default2" }
-  ]
+  mics: [],
+  cameras: [],
+  playbacks: []
  }
 };
 
