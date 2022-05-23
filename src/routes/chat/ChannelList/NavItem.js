@@ -153,7 +153,7 @@ const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
           className={`link ${isActive ? "drop_over" : ""} ${
             muted ? "muted" : ""
           }`}
-          activeClassName="link_active"
+          activeclassname="link_active"
           to={`/chat/channel/${id}`}
         >
           <div className={`name`} title={name}>

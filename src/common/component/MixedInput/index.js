@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import { useKey } from "rooks";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Editor, Transforms } from "slate";
 import {
   createPlateUI,
@@ -22,14 +22,15 @@ import {
   getPlateEditorRef,
   // usePlateEditorRef,
   // ELEMENT_IMAGE,
+  // useComboboxControls,
   MentionCombobox,
 } from "@udecode/plate";
 import { createComboboxPlugin } from "@udecode/plate-combobox";
 import { ReactEditor } from "slate-react";
+import useUploadFile from "../../hook/useUploadFile";
 import Styled from "./styled";
 import { CONFIG } from "./config";
 import Contact from "../Contact";
-import { updateUploadFiles } from "../../../app/slices/ui";
 export const TEXT_EDITOR_PREFIX = "rustchat_text_editor";
 
 let components = createPlateUI({
@@ -45,7 +46,9 @@ const Plugins = ({
   sendMessages,
   members = [],
 }) => {
-  const dispatch = useDispatch();
+  // const { getMenuProps, getItemProps } = useComboboxControls();
+  const [context, to] = id.split("_");
+  const { addStageFile } = useUploadFile({ context, id: to });
   const enableMentions = members.length > 0;
   const contactData = useSelector((store) => store.contacts.byId);
   const [msgs, setMsgs] = useState([]);
@@ -70,7 +73,7 @@ const Plugins = ({
         const [context, to] = id.split("_");
 
         console.log("paste event", context, to, files, evt);
-        dispatch(updateUploadFiles({ context, id: to, data: filesData }));
+        addStageFile(filesData);
       }
     };
     window.addEventListener("paste", handlePasteEvent);
@@ -86,12 +89,15 @@ const Plugins = ({
   useKey(
     "Enter",
     (evt) => {
+      // 是否在at操作
       const mentionInputs = findMentionInput(plateEditor);
-      if (evt.shiftKey || evt.ctrlKey || evt.altKey || evt.isComposing) {
-        return true;
-      }
-      // 正在at操作
-      if (mentionInputs) {
+      if (
+        mentionInputs ||
+        evt.shiftKey ||
+        evt.ctrlKey ||
+        evt.altKey ||
+        evt.isComposing
+      ) {
         return true;
       }
       evt.preventDefault();
