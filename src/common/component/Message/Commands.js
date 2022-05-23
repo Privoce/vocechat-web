@@ -4,12 +4,12 @@ import styled from "styled-components";
 import Tippy from "@tippyjs/react";
 import { hideAll } from "tippy.js";
 import { updateSelectMessages } from "../../../app/slices/ui";
-import { addReplyingMessage } from "../../../app/slices/message";
 // import StyledMenu from "../styled/Menu";
 import ContextMenu from "../ContextMenu";
 import Tooltip from "../../component/Tooltip";
 
 import useFavMessage from "../../hook/useFavMessage";
+import useSendMessage from "../../hook/useSendMessage";
 import ReactionPicker from "./ReactionPicker";
 import replyIcon from "../../../assets/icons/reply.svg?url";
 import reactIcon from "../../../assets/icons/reaction.svg?url";
@@ -82,6 +82,7 @@ export default function Commands({
     DeleteModal,
     ForwardModal,
   } = useMessageOperation({ mid, context, contextId });
+  const { setReplying } = useSendMessage({ context, to: contextId });
   const { addFavorite, isFavorited } = useFavMessage({
     cid: context == "channel" ? contextId : null,
   });
@@ -90,7 +91,7 @@ export default function Commands({
   const cmdsRef = useRef(null);
   const handleReply = (fromMenu) => {
     if (contextId) {
-      dispatch(addReplyingMessage({ id: contextId, mid }));
+      setReplying(mid);
     }
     if (fromMenu) {
       hideAll();

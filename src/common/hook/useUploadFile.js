@@ -15,7 +15,7 @@ export default function useUploadFile(props = {}) {
   const { stageFiles, replying } = useSelector((store) => {
     return {
       stageFiles: store.ui.uploadFiles[`${context}_${id}`] || [],
-      replying: store.message.replying[id],
+      replying: store.message.replying[`${context}_${id}`],
     };
   });
   const [data, setData] = useState(null);

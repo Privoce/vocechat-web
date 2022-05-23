@@ -1,18 +1,19 @@
 // import second from 'first'
-import { removeReplyingMessage } from "../../app/slices/message";
+import {
+  removeReplyingMessage,
+  addReplyingMessage,
+} from "../../app/slices/message";
 import { useSendChannelMsgMutation } from "../../app/services/channel";
 import { useSendMsgMutation } from "../../app/services/contact";
 import { useReplyMessageMutation } from "../../app/services/message";
-import { useDispatch } from "react-redux";
-export default function useSendMessage(
-  props = {
-    context: "user",
-    from: null,
-    to: null,
-  }
-) {
+import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
+export default function useSendMessage(props) {
+  const { context = "user", from = null, to = null } = props || {};
   const dispatch = useDispatch();
-  const { context = "user", from = null, to = null } = props;
+  const stageFiles = useSelector(
+    (store) => store.ui.uploadFiles[`${context}_${to}`] || []
+  );
   const [
     replyMessage,
     { isError: replyErr, isLoading: replying, isSuccess: replySuccess },
@@ -63,7 +64,7 @@ export default function useSendMessage(
     ...rest
   }) => {
     if (reply_mid) {
-      dispatch(removeReplyingMessage(to));
+      removeReplying();
       await replyMessage({
         id: to,
         reply_mid,
@@ -83,7 +84,19 @@ export default function useSendMessage(
       });
     }
   };
+  const setReplying = (mid) => {
+    if (stageFiles.length !== 0) {
+      toast.error("Only text is supported when replying a message");
+      return;
+    }
+    dispatch(addReplyingMessage({ mid, key: `${context}_${to}` }));
+  };
+  const removeReplying = () => {
+    dispatch(removeReplyingMessage(`${context}_${to}`));
+  };
   return {
+    setReplying,
+    removeReplying,
     sendMessages,
     sendMessage,
     isError: channelError || userError || replyErr,

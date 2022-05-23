@@ -52,14 +52,14 @@ const messageSlice = createSlice({
       });
     },
     addReplyingMessage(state, action) {
-      const { id, mid } = action.payload;
-      console.log("to ", id, mid);
-      state.replying[id] = mid;
+      const { key, mid } = action.payload;
+      console.log("to ", key, mid);
+      state.replying[key] = mid;
     },
     removeReplyingMessage(state, action) {
-      const id = action.payload;
-      if (state.replying[id]) {
-        delete state.replying[id];
+      const key = action.payload;
+      if (state.replying[key]) {
+        delete state.replying[key];
       }
     },
   },

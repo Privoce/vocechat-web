@@ -51,7 +51,7 @@ function Send({
       contactsData: store.contacts.byId,
       mode: store.ui.inputMode,
       from_uid: store.authData.uid,
-      replying_mid: store.message.replying[id],
+      replying_mid: store.message.replying[`${context}_${id}`],
       uploadFiles: store.ui.uploadFiles[`${context}_${id}`],
     };
   });
@@ -145,7 +145,9 @@ function Send({
         replying_mid ? "reply" : ""
       } ${context}`}
     >
-      {replying_mid && <Replying mid={replying_mid} id={id} />}
+      {replying_mid && (
+        <Replying context={context} mid={replying_mid} id={id} />
+      )}
       {mode == Modes.text && <UploadFileList context={context} id={id} />}
 
       <div className={`send_box ${mode}`}>

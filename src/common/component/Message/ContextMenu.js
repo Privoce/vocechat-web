@@ -10,8 +10,7 @@ import IconPin from "../../../assets/icons/pin.svg";
 import IconCopy from "../../../assets/icons/copy.svg";
 import IconSelect from "../../../assets/icons/select.svg";
 import { updateSelectMessages } from "../../../app/slices/ui";
-import { addReplyingMessage } from "../../../app/slices/message";
-
+import useSendMessage from "../../hook/useSendMessage";
 import useMessageOperation from "./useMessageOperation";
 
 export default function MessageContextMenu({
@@ -40,6 +39,7 @@ export default function MessageContextMenu({
     DeleteModal,
   } = useMessageOperation({ mid, contextId, context });
   const dispatch = useDispatch();
+  const { setReplying } = useSendMessage({ context, to: contextId });
   const handleSelect = () => {
     dispatch(updateSelectMessages({ context, id: contextId, data: mid }));
     // hideAll();
@@ -47,7 +47,7 @@ export default function MessageContextMenu({
   const handleReply = () => {
     // console.log("dddd", contextId, mid);
     if (contextId) {
-      dispatch(addReplyingMessage({ id: contextId, mid }));
+      setReplying(mid);
     }
   };
   return (

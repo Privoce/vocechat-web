@@ -1,5 +1,5 @@
 // import React from 'react'
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import reactStringReplace from "react-string-replace";
 import Mention from "../Message/Mention";
 import { ContentTypes } from "../../../app/config";
@@ -7,7 +7,7 @@ import MrakdownRender from "../MrakdownRender";
 import closeIcon from "../../../assets/icons/close.circle.svg?url";
 import pictureIcon from "../../../assets/icons/picture.svg?url";
 import { getFileIcon, isImage } from "../../utils";
-import { removeReplyingMessage } from "../../../app/slices/message";
+import useSendMessage from "../../hook/useSendMessage";
 import styled from "styled-components";
 const Styled = styled.div`
   background-color: #f3f4f6;
@@ -124,13 +124,13 @@ const renderContent = (data) => {
   }
   return res;
 };
-export default function Replying({ id, mid }) {
+export default function Replying({ context, id, mid }) {
+  const { removeReplying } = useSendMessage({ to: id, context });
   const { msg, contactsData } = useSelector((store) => {
     return { contactsData: store.contacts.byId, msg: store.message[mid] };
   });
-  const dispatch = useDispatch();
   const removeReply = () => {
-    dispatch(removeReplyingMessage(id));
+    removeReplying();
   };
   if (!msg) return null;
   const { from_uid } = msg;
