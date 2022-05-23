@@ -6,6 +6,7 @@ import soundOnIcon from "../../../assets/icons/sound.on.svg?url";
 import soundOffIcon from "../../../assets/icons/sound.off.svg?url";
 import micRedIcon from "../../../assets/icons/mic.red.svg?url";
 import { useSelector } from "react-redux";
+import AgoraVideoPlayer from "./VideoPlayer";
 const Wrapper = styled.div`
  .no-video {
   display: flex;
@@ -140,15 +141,17 @@ const Wrapper = styled.div`
   }
  }
 `;
-export default function User({ id, openMic, openVideo }) {
+export default function User({ id, openMic, openVideo, client }) {
  const byId = useSelector((state) => state.contacts.byId);
  const user = byId[id];
+ const userWithTrack = client.getUserById(id);
+
  return (
   <Wrapper>
    {openVideo && (
     <div className="video">
      <div className="player">
-      <div className="agora-player"></div>
+      <AgoraVideoPlayer className="agora-player" videoTrack={userWithTrack.videoTrack} />
       <div className="name-tag">
        <img src={micRedIcon} alt="mic close icon" className="icon" />
        <span className="label">{user.name}</span>

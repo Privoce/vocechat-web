@@ -71,6 +71,7 @@ const Wrapper = styled.div`
 export default function VideoPanel({ cid }) {
  const [showPanel, setShowPanel] = useState(false);
  const uid = useSelector((state) => state.authData.uid);
+ const device = useSelector((state) => state.videocall.device);
  const client = useMemo(() => new AgoraClient(uid), [uid]);
  useEffect(() => {
   client.join(cid).then(setShowPanel(true));
@@ -85,8 +86,17 @@ export default function VideoPanel({ cid }) {
     <div className="videoPanel">
      <Header />
      <div className="users">
+      <User id={uid} openMic={device.mic} openVideo={device.camera} client={client} />
       {users.map((item) => {
-       return <User key={item.id} id={item.id} openMic={item.openMic} openVideo={item.openVideo} />;
+       return (
+        <User
+         key={item.id}
+         id={item.id}
+         openMic={item.openMic}
+         openVideo={item.openVideo}
+         client={client}
+        />
+       );
       })}
      </div>
      <div className="control">
