@@ -3,6 +3,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import baseQuery from "./base.query";
 import BASE_URL, { ContentTypes } from "../config";
 import { updateChannel, removeChannel } from "../slices/channels";
+import { updateRemeberedNavs } from "../slices/ui";
 import { removeMessage } from "../slices/message";
 import { removeChannelSession } from "../slices/message.channel";
 import { removeReactionMessage } from "../slices/message.reaction";
@@ -104,11 +105,19 @@ export const channelApi = createApi({
         method: "DELETE",
       }),
       async onQueryStarted(id, { dispatch, getState, queryFulfilled }) {
-        const { channelMessage } = getState();
+        const {
+          channelMessage,
+          ui: {
+            remeberedNavs: { chat: remeberedPath },
+          },
+        } = getState();
         try {
           await queryFulfilled;
           // 删掉该channel下的所有消息&reaction
           const mids = channelMessage[id];
+          if (remeberedPath == `/chat/channel/${id}`) {
+            dispatch(updateRemeberedNavs({ path: null }));
+          }
           if (mids) {
             dispatch(removeChannelSession(id));
             dispatch(removeMessage(mids));
