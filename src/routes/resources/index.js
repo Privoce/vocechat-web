@@ -77,7 +77,7 @@ function ResourceManagement({ fileMessages }) {
     //     msnry.destory()
     //   }
     // }
-  }, [view]);
+  }, [view, filter]);
 
   console.log("files", fileMessages);
   return (
