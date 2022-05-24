@@ -53,6 +53,7 @@
     "react-helmet": "^6.1.0",
     "react-hot-toast": "^2.2.0",
     "react-icons": "^4.3.1",
+    "react-infinite-scroller": "^1.2.6",
     "react-linkify": "^1.0.0-alpha",
     "react-pdf": "^5.7.2",
     "react-redux": "^8.0.2",

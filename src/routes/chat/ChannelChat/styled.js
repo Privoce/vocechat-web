@@ -86,7 +86,8 @@ export const StyledChannelChat = styled.article`
   width: 100%;
   height: 100%;
   height: -webkit-fill-available;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
   > .info {
     padding-top: 62px;
     display: flex;
@@ -127,8 +128,10 @@ export const StyledChannelChat = styled.article`
       text-fill-color: transparent;
     }
   }
-  > .feed {
-    /* display: flex;
-        flex-direction: column-reverse; */
-  }
+  /* > .feed {
+    overflow-anchor: none;
+    > div {
+      overflow-anchor: auto;
+    }
+  } */
 `;
