@@ -1,6 +1,6 @@
 // import React from 'react';
 // import { useEffect } from "react";
-import { Outlet, NavLink, useLocation } from "react-router-dom";
+import { Outlet, NavLink, useLocation, useMatch } from "react-router-dom";
 import { useSelector } from "react-redux";
 import StyledWrapper from "./styled";
 import User from "./User";
@@ -20,6 +20,8 @@ import FolderIcon from "../../assets/icons/folder.svg";
 // const routes = ["/setting", "/setting/channel/:cid"];
 export default function HomePage() {
   usePWABadge();
+  const isHomePath = useMatch(`/`);
+  const isChatHomePath = useMatch(`/chat`);
   const { pathname } = useLocation();
   const {
     loginUid,
@@ -47,7 +49,8 @@ export default function HomePage() {
       </>
     );
   }
-  const chatNav = chatPath || "/chat";
+  // 有点绕
+  const chatNav = isChatHomePath ? "/chat" : chatPath || "/chat";
   const contactNav = contactPath || "/contacts";
 
   return (
@@ -58,7 +61,10 @@ export default function HomePage() {
         <div className={`col left`}>
           <User uid={loginUid} />
           <nav className="link_navs">
-            <NavLink className="link" to={chatNav}>
+            <NavLink
+              className={`link ${isHomePath ? "active" : ""}`}
+              to={chatNav}
+            >
               <Tooltip tip="Chat">
                 <ChatIcon />
               </Tooltip>

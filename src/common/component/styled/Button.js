@@ -47,6 +47,10 @@ const StyledButton = styled.button`
     background: none;
     color: #1fe1f9;
   }
+  &.border_less {
+    box-shadow: none;
+    border: none;
+  }
   &.cancel {
     border: 1px solid #e5e7eb;
     background: none;

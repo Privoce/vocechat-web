@@ -19,6 +19,7 @@ import IconQuestion from "../../../assets/icons/question.svg";
 export default function Tooltip({ link = "#" }) {
   return (
     <Tippy
+      delay={[0, 500]}
       interactive
       arrow={roundArrow}
       placement="bottom"

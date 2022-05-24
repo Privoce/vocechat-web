@@ -43,9 +43,9 @@ const StyledInput = styled.input`
   }
   &.large {
     font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    padding: 10px 14px;
+    font-size: 14px;
+    line-height: 20px;
+    padding: 11px 8px;
   }
   &.none {
     outline: none;

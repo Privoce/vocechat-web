@@ -22,8 +22,6 @@ const StyledWrapper = styled.section`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: calc(100vh - 94px);
-  overflow-y: scroll;
   .intro {
     display: flex;
     flex-direction: column;
