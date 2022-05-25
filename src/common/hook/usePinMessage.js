@@ -32,6 +32,7 @@ export default function usePinMessage(cid = null) {
   }, [channel]);
 
   return {
+    channel,
     pins,
     canPin: loginUser.is_admin || channel?.owner == loginUser.uid,
     pinMessage,

@@ -24,7 +24,7 @@ import toast from "react-hot-toast";
 
 export default function PinMessageModal({ closeModal, mid = 0, gid = 0 }) {
   // const dispatch = useDispatch();
-  const { pinMessage, isPining, isSuccess } = usePinMessage(gid);
+  const { channel, pinMessage, isPining, isSuccess } = usePinMessage(gid);
   const handlePin = () => {
     pinMessage(mid);
   };
@@ -51,7 +51,7 @@ export default function PinMessageModal({ closeModal, mid = 0, gid = 0 }) {
           </>
         }
         title="Pin It"
-        description="You sure you want to pin this message to #gerenal?"
+        description={`Do you want to pin this message to #${channel?.name}`}
       >
         <PreviewMessage mid={mid} />
       </StyledPinModal>
