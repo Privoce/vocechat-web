@@ -80,7 +80,7 @@ const NavItem = ({ uid, mid, unreads, setFiles }) => {
     }
   };
   if (!currUser) return null;
-  console.log("preview msg", previewMsg, normalizedMessages);
+  // console.log("preview msg", previewMsg, normalizedMessages);
   return (
     <Tippy
       interactive

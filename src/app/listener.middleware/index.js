@@ -33,7 +33,7 @@ listenerMiddleware.startListening({
   predicate: (action) => {
     const { type = "" } = action;
     const [prefix] = type.split("/");
-    console.log("operation", type, operations.includes(prefix));
+    // console.log("operation", type, operations.includes(prefix));
     return operations.includes(prefix);
     // console.log("listener predicate", action, currentState, previousState);
     // return true;
@@ -41,7 +41,7 @@ listenerMiddleware.startListening({
   effect: async (action, listenerApi) => {
     const { type = "", payload } = action;
     const [prefix, operation] = type.split("/");
-    console.log("effect opt", action);
+    // console.log("effect opt", action);
     if (!window.CACHE && prefix !== "__rtkq") return;
 
     const state = listenerApi.getState()[prefix];

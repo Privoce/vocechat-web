@@ -1037,9 +1037,9 @@
     "@babel/helper-validator-identifier" "^7.16.7"
     to-fast-properties "^2.0.0"
 
-"@commitlint/cli@^17.0.0":
+"@commitlint/cli@^17.0.1":
   version "17.0.0"
-  resolved "http://mirrors.cloud.tencent.com/npm/@commitlint%2fcli/-/cli-17.0.0.tgz#6c86c6b0eba4ba1204a19833c3c962b623f35518"
+  resolved "https://mirrors.cloud.tencent.com/npm/@commitlint%2fcli/-/cli-17.0.0.tgz#6c86c6b0eba4ba1204a19833c3c962b623f35518"
   integrity sha512-Np6slCdVVG1XwMvwbZrXIzS1INPAD5QmN4L6al04AmCd4nAPU63gxgxC5Mz0Fmx7va23Uvb0S7yEFV1JPhvPUQ==
   dependencies:
     "@commitlint/format" "^17.0.0"
@@ -1829,10 +1829,10 @@
   resolved "http://mirrors.cloud.tencent.com/npm/@react-hook%2fmerged-ref/-/merged-ref-1.3.2.tgz#919b387a5f79ed67f2578f2015ab7b7d337787d2"
   integrity sha512-cQ9Y8m4zlrw/qotReo33E+3Sy9FVqMZb5JwUlb3wj3IJJ1cNJtxcgfWF6rS2NZQrfBJ2nAnckUdPJjMyIJTNZg==
 
-"@reduxjs/toolkit@^1.8.1":
-  version "1.8.1"
-  resolved "http://mirrors.cloud.tencent.com/npm/@reduxjs%2ftoolkit/-/toolkit-1.8.1.tgz#94ee1981b8cf9227cda40163a04704a9544c9a9f"
-  integrity sha512-Q6mzbTpO9nOYRnkwpDlFOAbQnd3g7zj7CtHAZWz5SzE5lcV97Tf8f3SzOO8BoPOMYBFgfZaqTUZqgGu+a0+Fng==
+"@reduxjs/toolkit@^1.8.2":
+  version "1.8.2"
+  resolved "https://mirrors.cloud.tencent.com/npm/@reduxjs%2ftoolkit/-/toolkit-1.8.2.tgz#352fd17bc858af51d21ce8d28183a930cab9e638"
+  integrity sha512-CtPw5TkN1pHRigMFCOS/0qg3b/yfPV5qGCsltVnIz7bx4PKTJlGHYfIxm97qskLknMzuGfjExaYdXJ77QTL0vg==
   dependencies:
     immer "^9.0.7"
     redux "^4.1.2"
@@ -6089,10 +6089,10 @@ linkifyjs@^3.0.5:
   resolved "http://mirrors.cloud.tencent.com/npm/linkifyjs/-/linkifyjs-3.0.5.tgz#99e51a3a0c0e232fcb63ebb89eea3ff923378f34"
   integrity sha512-1Y9XQH65eQKA9p2xtk+zxvnTeQBG7rdAXSkUG97DmuI/Xhji9uaUzaWxRj6rf9YC0v8KKHkxav7tnLX82Sz5Fg==
 
-lint-staged@^12.4.1:
-  version "12.4.1"
-  resolved "http://mirrors.cloud.tencent.com/npm/lint-staged/-/lint-staged-12.4.1.tgz#63fa27bfc8a33515f6902f63f6670864f1fb233c"
-  integrity sha512-PTXgzpflrQ+pODQTG116QNB+Q6uUTDg5B5HqGvNhoQSGt8Qy+MA/6zSnR8n38+sxP5TapzeQGTvoKni0KRS8Vg==
+lint-staged@^12.4.2:
+  version "12.4.2"
+  resolved "https://mirrors.cloud.tencent.com/npm/lint-staged/-/lint-staged-12.4.2.tgz#380a5ec5a7a23caa9420972b0f98c8192afddecd"
+  integrity sha512-JAJGIzY/OioIUtrRePr8go6qUxij//mL+RGGoFKU3VWQRtIHgWoHizSqH0QVn2OwrbXS9Q6CICQjfj+E5qvrXg==
   dependencies:
     cli-truncate "^3.1.0"
     colorette "^2.0.16"

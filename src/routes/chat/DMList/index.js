@@ -32,7 +32,7 @@ export default function DMList({ uids, setDropFiles }) {
 
     return { lastMid, unreads, uid };
   });
-  console.log("temp uids", sessions);
+  // console.log("temp uids", sessions);
   return sessions
     .sort((s1, s2) => {
       if (!s1.lastMid) return s2.lastMid - Infinity;

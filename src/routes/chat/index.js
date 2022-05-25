@@ -43,7 +43,7 @@ export default function ChatPage() {
   };
   const tmpUid =
     sessionUids.findIndex((i) => i == user_id) > -1 ? null : user_id;
-  console.log("temp uid", tmpUid);
+  // console.log("temp uid", tmpUid);
   const placeholderVisible = !channel_id && !user_id;
   return (
     <>

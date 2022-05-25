@@ -108,7 +108,7 @@ export default function Server() {
   const handleCloseModal = () => {
     setChannelModalVisible(false);
   };
-  console.log("server info", server);
+  // console.log("server info", server);
   const { name, description, logo } = server;
   return (
     <StyledWrapper>

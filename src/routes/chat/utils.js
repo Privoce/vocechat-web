@@ -26,7 +26,7 @@ export function getUnreadCount({
   loginUid = 0,
   readIndex = 0,
 }) {
-  console.log({ mids, loginUid, readIndex });
+  // console.log({ mids, loginUid, readIndex });
   // 先过滤掉空信息和from自己的
   const others = mids.filter((mid) => {
     const { from_uid = 0 } = messageData[mid] || {};
@@ -49,7 +49,7 @@ export function getUnreadCount({
       }
     });
   });
-  console.log("unreads", final.length, tmps);
+  // console.log("unreads", final.length, tmps);
   return { unreads: final.length, mentions: tmps };
 }
 export const renderPreviewMessage = (message = null) => {

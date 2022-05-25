@@ -240,7 +240,7 @@ export const normalizeArchiveData = (
 
       user.avatar = avatarUrl;
 
-      console.log("user data", transformedContent, user);
+      // console.log("user data", transformedContent, user);
       return {
         source,
         from_mid: mid,

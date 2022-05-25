@@ -102,7 +102,7 @@ export default function LoginPage() {
   const handleInput = (evt) => {
     const { type } = evt.target.dataset;
     const { value } = evt.target;
-    console.log(type, value);
+    // console.log(type, value);
     setInput((prev) => {
       prev[type] = value;
       return { ...prev };

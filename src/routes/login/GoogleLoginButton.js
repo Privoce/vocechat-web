@@ -24,7 +24,7 @@ export default function GoogleLoginButton({ login, clientId }) {
   const handleGoogleLogin = () => {
     signIn();
   };
-  console.log("google login ", loaded);
+  // console.log("google login ", loaded);
   return (
     <StyledSocialButton disabled={!loaded} onClick={handleGoogleLogin}>
       <img className="icon" src={googleSvg} alt="google icon" />

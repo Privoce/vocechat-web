@@ -6,12 +6,10 @@ export default function Avatar({
   type = "user",
   ...rest
 }) {
-  console.log("avatar url", url);
+  // console.log("avatar url", url);
   const [src, setSrc] = useState("");
   const handleError = (err) => {
-    if (url) {
-      console.log("load avatar error", url, err);
-    }
+    console.log("load avatar error", err);
     const tmp = getInitialsAvatar({
       initials: getInitials(name),
       background: type == "channel" ? "#EAECF0" : undefined,
