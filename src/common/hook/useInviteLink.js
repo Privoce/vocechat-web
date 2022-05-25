@@ -19,7 +19,7 @@ export default function useInviteLink(cid = null) {
     generateServerInviteLink,
     { data: serverInviteLink, isLoading: generatingServerLink },
   ] = useCreateServerInviteLinkQuery();
-  const [linkCopied, copy] = useCopy();
+  const { copied, copy } = useCopy({ enableToast: false });
   const copyLink = () => {
     copy(finalLink);
   };
@@ -50,7 +50,7 @@ export default function useInviteLink(cid = null) {
       ? generateChannelInviteLink.bind(null, cid)
       : genServerLink,
     link: finalLink,
-    linkCopied,
+    linkCopied: copied,
     copyLink,
   };
 }

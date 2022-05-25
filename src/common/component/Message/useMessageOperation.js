@@ -9,7 +9,7 @@ import useCopy from "../../hook/useCopy";
 import usePinMessage from "../../hook/usePinMessage";
 
 export default function useMessageOperation({ mid, context, contextId }) {
-  const [copied, copy] = useCopy();
+  const { copy } = useCopy();
   const { content_type, properties, currUid, from_uid, content } = useSelector(
     (store) => {
       return {
@@ -64,11 +64,6 @@ export default function useMessageOperation({ mid, context, contextId }) {
       toast.success("Unpin Message Successfully!");
     }
   }, [isUnpinSuccess]);
-  useEffect(() => {
-    if (copied) {
-      toast.success("Copied");
-    }
-  }, [copied]);
   const enablePin = context == "channel" && canPin;
   // const enableReply = currUid != from_uid;
   const isImage =
@@ -83,7 +78,9 @@ export default function useMessageOperation({ mid, context, contextId }) {
     [ContentTypes.text, ContentTypes.markdown].includes(content_type) ||
     isImage;
   return {
-    copyContent: isImage ? copyContent.bind(null, true) : copyContent,
+    copyContent: isImage
+      ? copyContent.bind(null, true)
+      : copyContent.bind(null, false),
     canCopy,
     isImage,
     isMarkdown: content_type == ContentTypes.markdown,

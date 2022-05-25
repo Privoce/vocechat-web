@@ -127,7 +127,7 @@ export default function ManageMembers({ cid = null }) {
       loginUser: store.contacts.byId[store.authData.uid],
     };
   });
-  const [copied, copy] = useCopy();
+  const { copy } = useCopy();
   const [
     updateContact,
     { isSuccess: updateSuccess },
@@ -149,11 +149,6 @@ export default function ManageMembers({ cid = null }) {
       toast.success("Delete Successfully");
     }
   }, [removeSuccess]);
-  useEffect(() => {
-    if (copied) {
-      toast.success("Emial Copied!");
-    }
-  }, [copied]);
   useEffect(() => {
     if (removeMemberSuccess) {
       toast.success("Remove Member successfully");

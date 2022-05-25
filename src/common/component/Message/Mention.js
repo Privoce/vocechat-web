@@ -10,7 +10,7 @@ const Styled = styled.span`
     cursor: pointer;
   }
 `;
-export default function Mention({ uid, popover = true }) {
+export default function Mention({ uid, popover = true, cid }) {
   const contactsData = useSelector((store) => store.contacts.byId);
   const user = contactsData[uid];
   if (!user) return null;
@@ -20,7 +20,7 @@ export default function Mention({ uid, popover = true }) {
       interactive
       placement="top"
       trigger="click"
-      content={<Profile uid={uid} type="card" />}
+      content={<Profile uid={uid} type="card" cid={cid} />}
     >
       <Styled className={popover ? "clickable" : ""}>{`@${user.name}`}</Styled>
     </Tippy>

@@ -99,7 +99,7 @@ function Message({
         interactive
         placement="left"
         trigger="click"
-        content={<Profile uid={fromUid} type="card" />}
+        content={<Profile uid={fromUid} type="card" cid={contextId} />}
       >
         <div className="avatar" data-uid={fromUid} ref={avatarRef}>
           <Avatar url={currUser.avatar} name={currUser.name} />

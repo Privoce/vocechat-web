@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import useSendMessage from "../../hook/useSendMessage";
 import useAddLocalFileMessage from "../../hook/useAddLocalFileMessage";
 import { updateInputMode } from "../../../app/slices/ui";
-import { ContentTypes } from "../../../app/config";
+import { ContentTypes, ChatPrefixs } from "../../../app/config";
 
 import StyledSend from "./styled";
 import UploadFileList from "./UploadFileList";
@@ -15,10 +15,7 @@ import MarkdownEditor from "../MarkdownEditor";
 import MixedInput, { useMixedEditor } from "../MixedInput";
 import useDraft from "../../hook/useDraft";
 import useUploadFile from "../../hook/useUploadFile";
-const Types = {
-  channel: "#",
-  user: "@",
-};
+
 const Modes = {
   text: "text",
   markdown: "markdown",
@@ -132,7 +129,7 @@ function Send({
   };
   const name =
     context == "channel" ? channelsData[id]?.name : contactsData[id]?.name;
-  const placeholder = `Send to ${Types[context]}${name} `;
+  const placeholder = `Send to ${ChatPrefixs[context]}${name} `;
   const members =
     context == "channel"
       ? channelsData[id]?.is_public

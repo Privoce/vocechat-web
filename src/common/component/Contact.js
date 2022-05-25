@@ -63,6 +63,7 @@ const StyledWrapper = styled.div`
   }
 `;
 export default function Contact({
+  cid = null,
   owner = false,
   dm = false,
   interactive = true,
@@ -84,7 +85,7 @@ export default function Contact({
       disabled={!popover}
       placement="left"
       trigger="click"
-      content={<Profile uid={uid} type="card" />}
+      content={<Profile uid={uid} type="card" cid={cid} />}
     >
       <StyledWrapper
         size={avatarSize}

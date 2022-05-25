@@ -51,7 +51,7 @@ const renderContent = ({
               (match, idx) => {
                 console.log("match", match);
                 const uid = match.trim().slice(1);
-                return <Mention key={idx} uid={uid} />;
+                return <Mention key={idx} uid={uid} cid={to} />;
               }
             )}
             {/* {content.replace(/\s{1}\@[1-9]+\s{1}/g,)} */}
