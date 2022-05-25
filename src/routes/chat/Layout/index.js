@@ -8,6 +8,7 @@ import Send from "../../../common/component/Send";
 import Styled from "./styled";
 import Operations from "./Operations";
 import useUploadFile from "../../../common/hook/useUploadFile";
+import { ChatPrefixs } from "../../../app/config";
 
 export default function Layout({
   children,
@@ -21,9 +22,13 @@ export default function Layout({
   const { addStageFile } = useUploadFile({ context, id: to });
   const messagesContainer = useRef(null);
   const [previewImage, setPreviewImage] = useState(null);
-  const selects = useSelector(
-    (store) => store.ui.selectMessages[`${context}_${to}`]
-  );
+  const { selects, channelsData, contactsData } = useSelector((store) => {
+    return {
+      selects: store.ui.selectMessages[`${context}_${to}`],
+      channelsData: store.channels.byId,
+      contactsData: store.contacts.byId,
+    };
+  });
   const [{ isActive }, drop] = useDrop(
     () => ({
       accept: [NativeTypes.FILE],
@@ -81,7 +86,8 @@ export default function Layout({
       );
     }
   }, []);
-
+  const name =
+    context == "channel" ? channelsData[to]?.name : contactsData[to]?.name;
   return (
     <>
       {previewImage && (
@@ -111,7 +117,7 @@ export default function Layout({
             }`}
           >
             <div className="inner">
-              <h4 className="head">Upload to #Channel</h4>
+              <h4 className="head">{`Send to ${ChatPrefixs[context]}${name}`}</h4>
               <span className="intro">
                 Photos accept jpg, png, max size limit to 10M.
               </span>

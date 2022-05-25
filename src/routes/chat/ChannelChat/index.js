@@ -86,7 +86,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
   const addVisible = loginUser?.is_admin || owner == loginUid;
   const readIndex = footprint.readChannels[cid];
   const pinCount = data?.pinned_messages?.length || 0;
-  const finalHasMore = selects ? false : hasMore;
+  // const finalHasMore = selects ? false : hasMore;
   return (
     <>
       {addMemberModalVisible && (
@@ -212,6 +212,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
                       owner={owner == uid}
                       key={uid}
                       uid={uid}
+                      cid={cid}
                       dm
                       popover
                     />
