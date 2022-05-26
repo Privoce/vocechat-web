@@ -4,7 +4,8 @@ import MicOnIcon from "../../../assets/icons/mic.on.svg?url";
 import MicDisabledIcon from "../../../assets/icons/mic.disabled.svg?url";
 import soundOnIcon from "../../../assets/icons/sound.on.svg?url";
 import soundOffIcon from "../../../assets/icons/sound.off.svg?url";
-import micRedIcon from "../../../assets/icons/mic.red.svg?url";
+import micRedOffIcon from "../../../assets/icons/mic.red.svg?url";
+import micRedOnIcon from "../../../assets/icons/mic.red.on.svg?url";
 import { useSelector } from "react-redux";
 import AgoraVideoPlayer from "./VideoPlayer";
 const Wrapper = styled.div`
@@ -101,19 +102,29 @@ const Wrapper = styled.div`
     border-radius: 4px;
    }
    .name-tag {
-    position: relative;
     display: flex;
     flex-direction: row;
+    justify-content: center;
     align-items: center;
-    padding: 2px;
+    padding: 4px 8px;
     gap: 4px;
-    width: 83px;
-    height: 18px;
-    left: 0px;
-    bottom: 18px;
-    border-bottom-left-radius: 4px;
 
-    background: #0a0a0a;
+    width: 78px;
+    height: 28px;
+
+    /* base / black 50% */
+
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    position: relative;
+    top: -36px;
+    left: 8px;
     .icon {
      width: 13px;
      height: 13px;
@@ -122,16 +133,22 @@ const Wrapper = styled.div`
      flex-grow: 0;
     }
     .label {
-     width: 62px;
-     height: 14px;
+     width: 42px;
+     height: 20px;
 
-     font-family: "SF Pro Text";
+     font-family: "Inter";
      font-style: normal;
-     font-weight: 500;
-     font-size: 11.5px;
-     line-height: 14px;
-     letter-spacing: -0.04em;
-     color: #ffffff;
+     font-weight: 600;
+     font-size: 14px;
+     line-height: 20px;
+     /* identical to box height, or 143% */
+
+     /* Gray iron / 300 */
+
+     color: #d1d1d6;
+
+     /* Inside auto layout */
+
      flex: none;
      order: 1;
      flex-grow: 0;
@@ -153,7 +170,7 @@ export default function User({ id, openMic, openVideo, client }) {
      <div className="player">
       <AgoraVideoPlayer className="agora-player" videoTrack={userWithTrack?.videoTrack} />
       <div className="name-tag">
-       <img src={micRedIcon} alt="mic close icon" className="icon" />
+       <img src={openMic ? micRedOnIcon : micRedOffIcon} alt="mic close icon" className="icon" />
        <span className="label">{user.name}</span>
       </div>
      </div>
