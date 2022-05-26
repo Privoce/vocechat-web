@@ -90,21 +90,21 @@ export class AgoraClient {
 
  async leave() {
   //   exit rtc
-  if (this.rtc.audioTrack) {
-   this.rtc.audioTrack.stop();
-   this.rtc.audioTrack.close();
-  }
-  if (this.rtc.videotrack) {
-   this.rtc.videotrack.stop();
-   this.rtc.videotrack.close();
+  if (this.rtc.client.localTracks) {
+   this.rtc.client.localTracks.map((track) => {
+    track.stop();
+    track.close();
+   });
   }
   this.rtc.client.leave();
   //   exit rtm
   if (this.rtm.channel) {
    this.rtm.channel.leave();
+   console.log("[agora]leave RTM Channel");
   }
   if (this.rtm.client) {
    this.rtm.client.logout();
+   console.log("[agora]logoOut Rtm Client");
   }
  }
  getUserById(uid) {
