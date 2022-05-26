@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.04db3e9c.css",
-    "main.js": "/static/js/main.4947c8ad.js",
+    "main.js": "/static/js/main.a2e6651b.js",
     "static/media/favicon.default.svg?url": "/static/media/favicon.default.93dadf850c30fff21b21.svg",
     "service-worker.js": "/service-worker.js",
     "static/media/app.webrowse.svg?url": "/static/media/app.webrowse.f8d9c67612182a5a00d8.svg",
@@ -25,13 +25,12 @@
     "static/media/add.svg?url": "/static/media/add.e485bd98d900244beebc.svg",
     "static/media/channel.svg?url": "/static/media/channel.a72cc13c77b3112e68c1.svg",
     "static/media/more.svg?url": "/static/media/more.54cac536d52aae6f342e.svg",
-    "static/media/mail.svg?url": "/static/media/mail.406f52a37e66b72d9262.svg",
     "static/media/arrow.left.svg?url": "/static/media/arrow.left.92fbb139607631555459.svg",
     "main.04db3e9c.css.map": "/static/css/main.04db3e9c.css.map",
-    "main.4947c8ad.js.map": "/static/js/main.4947c8ad.js.map"
+    "main.a2e6651b.js.map": "/static/js/main.a2e6651b.js.map"
   },
   "entrypoints": [
     "static/css/main.04db3e9c.css",
-    "static/js/main.4947c8ad.js"
+    "static/js/main.a2e6651b.js"
   ]
 }
