@@ -115,7 +115,7 @@ export class AgoraClient {
     videoTrack: this.rtc.videoTrack
    };
   }
-  const user = this.rtc.remoteUsers.find((user) => user.uid == uid);
+  const user = this.rtc.client.remoteUsers.find((user) => user.uid == uid);
   return user;
  }
  openVideo() {
