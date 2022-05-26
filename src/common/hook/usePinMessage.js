@@ -25,6 +25,12 @@ export default function usePinMessage(cid = null) {
     if (!mid || !cid) return;
     unpin({ mid, gid: +cid });
   };
+  const getPinInfo = (mid) => {
+    const pins = channel?.pinned_messages;
+    if (pins?.length == 0) return;
+    const pinned = pins.find((p) => p.mid == mid);
+    return pinned;
+  };
   useEffect(() => {
     if (channel) {
       setPins(channel.pinned_messages);
@@ -32,6 +38,7 @@ export default function usePinMessage(cid = null) {
   }, [channel]);
 
   return {
+    getPinInfo,
     channel,
     pins,
     canPin: loginUser.is_admin || channel?.owner == loginUser.uid,

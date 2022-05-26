@@ -15,6 +15,9 @@ const StyledMsg = styled.div`
   &[data-highlight="true"] {
     background: #f5f6f7;
   }
+  &.pinned {
+    background: #ecfdff;
+  }
   &:hover,
   &.contextVisible,
   &.preview {
@@ -104,6 +107,23 @@ const StyledMsg = styled.div`
       }
       .down {
         color: #475467;
+      }
+    }
+  }
+  &.pinned {
+    padding-top: 26px;
+    > .details {
+      position: relative;
+      &:before {
+        position: absolute;
+        left: 0;
+        top: -4px;
+        transform: translateY(-100%);
+        content: attr(data-pin-tip);
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 18px;
+        color: #98a2b3;
       }
     }
   }

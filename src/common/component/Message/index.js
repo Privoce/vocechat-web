@@ -17,6 +17,7 @@ import Tooltip from "../Tooltip";
 import ContextMenu from "./ContextMenu";
 
 import useContextMenu from "../../hook/useContextMenu";
+import usePinMessage from "../../hook/usePinMessage";
 dayjs.extend(isToday);
 dayjs.extend(isYesterday);
 function Message({
@@ -35,6 +36,7 @@ function Message({
   const inviewRef = useInView();
   const [edit, setEdit] = useState(false);
   const avatarRef = useRef(null);
+  const { getPinInfo } = usePinMessage(context == "channel" ? contextId : null);
   const { message = {}, reactionMessageData, contactsData } = useSelector(
     (store) => {
       return {
@@ -83,7 +85,7 @@ function Message({
     ? "Yesterday"
     : null;
 
-  console.log("render message");
+  const pinInfo = getPinInfo(mid);
   // return null;
   return (
     <StyledWrapper
@@ -91,8 +93,8 @@ function Message({
       data-msg-mid={mid}
       ref={inviewRef}
       className={`message ${readOnly ? "readonly" : ""} ${
-        contextMenuVisible ? "contextVisible" : ""
-      } `}
+        pinInfo ? "pinned" : ""
+      } ${contextMenuVisible ? "contextVisible" : ""} `}
     >
       <Tippy
         disabled={readOnly}
@@ -113,7 +115,10 @@ function Message({
         visible={contextMenuVisible}
         hide={hideContextMenu}
       >
-        <div className="details">
+        <div
+          className="details"
+          data-pin-tip={`pinned by ${contactsData[pinInfo?.created_by]?.name}`}
+        >
           <div className="up">
             <span className="name">{currUser.name}</span>
             <Tooltip
