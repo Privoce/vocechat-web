@@ -23,6 +23,10 @@ const StyledContainer = styled.div`
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
+        &.inputs {
+          flex-direction: column;
+          gap: 8px;
+        }
         .title {
           display: flex;
           flex-direction: column;

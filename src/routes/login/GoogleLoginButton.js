@@ -1,6 +1,5 @@
 // import { useState, useEffect } from "react";
 import { useGoogleLogin } from "react-google-login";
-// import { googleClientID } from "../../app/config";
 
 import googleSvg from "../../assets/icons/google.svg?url";
 import { StyledSocialButton } from "./styled";

@@ -66,6 +66,16 @@ export const serverApi = createApi({
         body: data,
       }),
     }),
+    getGithubAuthConfig: builder.query({
+      query: () => ({ url: `admin/github_auth/config` }),
+    }),
+    updateGithubAuthConfig: builder.mutation({
+      query: (data) => ({
+        url: `admin/github_auth/config`,
+        method: "POST",
+        body: data,
+      }),
+    }),
     sendTestEmail: builder.mutation({
       query: (data) => ({
         url: `/admin/system/send_mail`,
@@ -171,6 +181,8 @@ export const serverApi = createApi({
 
 export const {
   useGetServerVersionQuery,
+  useGetGithubAuthConfigQuery,
+  useUpdateGithubAuthConfigMutation,
   useGetGoogleAuthConfigQuery,
   useUpdateGoogleAuthConfigMutation,
   useGetSMTPStatusQuery,

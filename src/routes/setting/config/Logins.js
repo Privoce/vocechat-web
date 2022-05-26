@@ -9,13 +9,19 @@ import useConfig from "./useConfig";
 import Tooltip from "./Tooltip";
 import IssuerList from "./IssuerList";
 import useGoogleAuthConfig from "../../../common/hook/useGoogleAuthConfig";
+import useGithubAuthConfig from "../../../common/hook/useGithubAuthConfig";
 export default function Logins() {
   const {
     changed: clientIdChanged,
     clientId,
     updateClientId,
-    updateServerClientId,
+    updateClientIdToServer,
   } = useGoogleAuthConfig();
+  const {
+    changed: githubChanged,
+    githubConfig,
+    updateGithubConfig,
+  } = useGithubAuthConfig();
   const { values, updateConfig, setValues, reset, changed } = useConfig(
     "login"
   );
@@ -26,7 +32,7 @@ export default function Logins() {
     }
     if (google && clientIdChanged) {
       // 更新google client id
-      await updateServerClientId();
+      await updateClientIdToServer();
       if (!changed) {
         toast.success("Configuration Updated!");
       }
@@ -49,7 +55,7 @@ export default function Logins() {
     });
   };
   if (!values) return null;
-  const { google, metamask, password, oidc = [] } = values ?? {};
+  const { google, github, metamask, password, oidc = [] } = values ?? {};
   const valuesChanged = clientIdChanged || changed;
   return (
     <StyledContainer>
@@ -85,6 +91,35 @@ export default function Logins() {
           <div className="row">
             <Input
               disabled={!google}
+              onChange={handleGoogleClientIdChange}
+              placeholder="Client ID"
+              value={clientId}
+            />
+          </div>
+        </div>
+        <div className="input">
+          <div className="row">
+            <div className="title">
+              <div className="txt">
+                <Label>Github</Label>
+                <Tooltip link="https://doc.rustchat.com/en-us/login-github.html" />
+              </div>
+              <span className="desc">Allows members login with Github.</span>
+            </div>
+            <Toggle
+              onClick={handleToggle.bind(null, { github: !github })}
+              data-checked={github}
+            ></Toggle>
+          </div>
+          <div className="row inputs">
+            <Input
+              disabled={!github}
+              onChange={handleGoogleClientIdChange}
+              placeholder="Client ID"
+              value={clientId}
+            />
+            <Input
+              disabled={!github}
               onChange={handleGoogleClientIdChange}
               placeholder="Client ID"
               value={clientId}

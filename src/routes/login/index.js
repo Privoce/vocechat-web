@@ -16,6 +16,7 @@ import { useLoginMutation } from "../../app/services/auth";
 import { useGetLoginConfigQuery } from "../../app/services/server";
 import { setAuthData } from "../../app/slices/auth.data";
 import useGoogleAuthConfig from "../../common/hook/useGoogleAuthConfig";
+// import GithubLoginButton from "./GithubLoginButton";
 export default function LoginPage() {
   const [login, { data, isSuccess, isLoading, error }] = useLoginMutation();
   const { clientId } = useGoogleAuthConfig();
@@ -157,6 +158,7 @@ export default function LoginPage() {
         )}
         <MagicLinkLogin />
         {googleLogin && <GoogleLoginButton login={login} clientId={clientId} />}
+        {/* <GithubLoginButton login={login} clientId={clientId} /> */}
         {enableMetamaskLogin && <MetamaskLoginButton login={login} />}
         {oidc.length > 0 && <SolidLoginButton issuers={oidc} />}
       </div>
