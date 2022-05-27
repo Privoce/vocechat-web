@@ -26,8 +26,9 @@ export default function usePinMessage(cid = null) {
     unpin({ mid, gid: +cid });
   };
   const getPinInfo = (mid) => {
-    const pins = channel?.pinned_messages;
-    if (pins?.length == 0) return;
+    if (!cid || !channel) return;
+    const pins = channel.pinned_messages;
+    if (!pins || pins.length == 0) return;
     const pinned = pins.find((p) => p.mid == mid);
     return pinned;
   };
