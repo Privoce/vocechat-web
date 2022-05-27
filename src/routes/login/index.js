@@ -13,13 +13,19 @@ import Button from "../../common/component/styled/Button";
 import GoogleLoginButton from "./GoogleLoginButton";
 import MagicLinkLogin from "./MagicLinkLogin";
 import { useLoginMutation } from "../../app/services/auth";
-import { useGetLoginConfigQuery } from "../../app/services/server";
+import {
+  useGetLoginConfigQuery,
+  useGetSMTPStatusQuery,
+} from "../../app/services/server";
 import { setAuthData } from "../../app/slices/auth.data";
 import useGoogleAuthConfig from "../../common/hook/useGoogleAuthConfig";
-// import GithubLoginButton from "./GithubLoginButton";
+import GithubLoginButton from "./GithubLoginButton";
+import useGithubAuthConfig from "../../common/hook/useGithubAuthConfig";
 export default function LoginPage() {
+  const { data: enableSMTP } = useGetSMTPStatusQuery();
   const [login, { data, isSuccess, isLoading, error }] = useLoginMutation();
   const { clientId } = useGoogleAuthConfig();
+  const { config: githubAuthConfig } = useGithubAuthConfig();
   const {
     data: loginConfig,
     isSuccess: loginConfigSuccess,
@@ -32,17 +38,34 @@ export default function LoginPage() {
   });
   useEffect(() => {
     const query = new URLSearchParams(location.search);
+    // const githubCode = query.get("gcode");
+    const oauth = query.get("oauth");
     const code = query.get("code");
     const state = query.get("state");
     const token = query.get("token");
     const exists = query.get("exists");
-    // oidc login
-    if (code && state) {
-      login({
-        code,
-        state,
-        type: "oidc",
-      });
+    if (oauth) {
+      switch (oauth) {
+        case "github":
+          if (code) {
+            login({
+              code: code,
+              type: "github",
+            });
+          }
+          break;
+        case "oidc":
+          if (code && state) {
+            login({
+              code,
+              state,
+              type: "oidc",
+            });
+          }
+          break;
+        default:
+          break;
+      }
     }
     // magic link
     if (token && typeof exists !== "undefined") {
@@ -156,9 +179,9 @@ export default function LoginPage() {
         {(googleLogin || enableMetamaskLogin || oidc.length > 0) && (
           <hr className="or" />
         )}
-        <MagicLinkLogin />
+        {enableSMTP && <MagicLinkLogin />}
         {googleLogin && <GoogleLoginButton login={login} clientId={clientId} />}
-        {/* <GithubLoginButton login={login} clientId={clientId} /> */}
+        <GithubLoginButton config={githubAuthConfig} />
         {enableMetamaskLogin && <MetamaskLoginButton login={login} />}
         {oidc.length > 0 && <SolidLoginButton issuers={oidc} />}
       </div>

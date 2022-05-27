@@ -6,30 +6,35 @@ import {
 } from "../../app/services/server";
 export default function useGithubAuthConfig() {
   const [changed, setChanged] = useState(false);
-  const [clientId, setClientId] = useState("");
+  const [config, setConfig] = useState({});
   const { data } = useGetGithubAuthConfigQuery(undefined, {
     refetchOnMountOrArgChange: true,
   });
-  const [
-    updateGithubAuthConfig,
-    { isSuccess },
-  ] = useUpdateGithubAuthConfigMutation();
+  const [updateAuthConfig, { isSuccess }] = useUpdateGithubAuthConfigMutation();
   useEffect(() => {
     if (data) {
-      setClientId(data.client_id);
+      setConfig(data);
     }
   }, [data]);
 
   useEffect(() => {
-    setChanged(isSuccess ? false : data?.client_id !== clientId);
-  }, [data, clientId, isSuccess]);
-
+    setChanged(
+      isSuccess ? false : JSON.stringify(data) !== JSON.stringify(config)
+    );
+  }, [data, config, isSuccess]);
+  const updateGithubAuthConfig = (obj) => {
+    setConfig((prev) => {
+      return { ...prev, ...obj };
+    });
+  };
+  const updateGithubAuthConfigToServer = async () => {
+    await updateAuthConfig(config);
+  };
   return {
-    config: data,
+    config,
     changed,
-    clientId,
-    updateClientId: setClientId,
     updateGithubAuthConfig,
+    updateGithubAuthConfigToServer,
     isSuccess,
   };
 }

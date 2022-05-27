@@ -2,9 +2,11 @@
 // import { useGoogleLogin } from "react-google-login";
 import IconGithub from "../../assets/icons/github.svg";
 import { StyledSocialButton } from "./styled";
-export default function GithubLoginButton({ login, clientId }) {
+export default function GithubLoginButton({ config = {} }) {
+  const { client_id } = config;
   const handleGithubLogin = () => {
-    console.log("github login");
+    location.href = `http://github.com/login/oauth/authorize?client_id=${client_id}`;
+    // console.log("github login");
   };
   // console.log("google login ", loaded);
   return (
