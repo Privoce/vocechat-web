@@ -42,6 +42,16 @@ const userMsgSlice = createSlice({
         }
       }
     },
+    replaceUserMsg(state, action) {
+      const { id, localMid, serverMid } = action.payload;
+      if (state.byId[id]) {
+        const localIdx = state.byId[id].findIndex((i) => i == localMid);
+        if (localIdx > -1 && serverMid) {
+          // 存在 则再删除
+          state.byId[id].splice(localIdx, 1, serverMid);
+        }
+      }
+    },
     removeUserSession(state, action) {
       const ids = Array.isArray(action.payload)
         ? action.payload
@@ -59,5 +69,6 @@ export const {
   fullfillUserMsg,
   addUserMsg,
   removeUserMsg,
+  replaceUserMsg,
 } = userMsgSlice.actions;
 export default userMsgSlice.reducer;

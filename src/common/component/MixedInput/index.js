@@ -79,9 +79,9 @@ const Plugins = ({
     window.addEventListener("paste", handlePasteEvent);
     return () => {
       window.removeEventListener("paste", handlePasteEvent);
-      if (plateEditor && updateDraft) {
-        updateDraft(plateEditor.children);
-      }
+      // if (plateEditor && updateDraft) {
+      //   updateDraft(plateEditor.children);
+      // }
     };
     // window.addEventListener("paste")
   }, [id, updateDraft]);
@@ -277,3 +277,9 @@ export const useMixedEditor = (key) => {
   };
 };
 export default Plugins;
+// export default memo(Plugins, (prev, next) => {
+//   return (
+//     prev.id == next.id &&
+//     JSON.stringify(prev.initialValue) == JSON.stringify(next.initialValue)
+//   );
+// });

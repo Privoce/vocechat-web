@@ -33,6 +33,16 @@ const channelMsgSlice = createSlice({
         }
       }
     },
+    replaceChannelMsg(state, action) {
+      const { id, localMid, serverMid } = action.payload;
+      if (state[id]) {
+        const localIdx = state[id].findIndex((i) => i == localMid);
+        if (localIdx > -1 && serverMid) {
+          // 存在 则再删除
+          state[id].splice(localIdx, 1, serverMid);
+        }
+      }
+    },
     removeChannelSession(state, action) {
       const ids = Array.isArray(action.payload)
         ? action.payload
@@ -49,5 +59,6 @@ export const {
   fullfillChannelMsg,
   addChannelMsg,
   removeChannelMsg,
+  replaceChannelMsg,
 } = channelMsgSlice.actions;
 export default channelMsgSlice.reducer;

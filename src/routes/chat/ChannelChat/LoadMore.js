@@ -7,7 +7,7 @@ const Styled = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  padding: 8px;
+  padding: 30px 0;
   /* background-color: #eee; */
 `;
 export default function LoadMore() {

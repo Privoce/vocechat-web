@@ -123,7 +123,14 @@ const StyledWrapper = styled.div`
     }
   }
 `;
-const MessageWrapper = ({ selectMode = false, context, id, mid, children }) => {
+const MessageWrapper = ({
+  selectMode = false,
+  context,
+  id,
+  mid,
+  children,
+  ...rest
+}) => {
   const dispatch = useDispatch();
 
   const selects = useSelector(
@@ -135,7 +142,7 @@ const MessageWrapper = ({ selectMode = false, context, id, mid, children }) => {
     dispatch(updateSelectMessages({ context, id, operation, data: mid }));
   };
   return (
-    <StyledWrapper className={selectMode ? "select" : ""}>
+    <StyledWrapper className={selectMode ? "select" : ""} {...rest}>
       <Checkbox className="check" checked={selected} />
       {/* {React.cloneElement(children, { readOnly: selected })} */}
       {children}
@@ -177,6 +184,8 @@ export const renderMessageFragment = ({
     <React.Fragment key={_key}>
       {divider && <Divider content={divider}></Divider>}
       <MessageWrapper
+        key={_key}
+        data-key={_key}
         context={context}
         id={contextId}
         mid={mid}

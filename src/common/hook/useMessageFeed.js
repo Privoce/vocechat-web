@@ -35,10 +35,14 @@ export default function useMessageFeed({ context = "channel", id = null }) {
   const [hasMore, setHasMore] = useState(true);
   const [appends, setAppends] = useState([]);
   const [items, setItems] = useState([]);
-  const mids = useSelector((store) => {
-    return context == "channel"
-      ? store.channelMessage[id] || []
-      : store.userMessage.byId[id] || [];
+  const { mids, messageData } = useSelector((store) => {
+    return {
+      mids:
+        context == "channel"
+          ? store.channelMessage[id] || []
+          : store.userMessage.byId[id] || [],
+      messageData: store.message,
+    };
   });
   useEffect(() => {
     listRef.current = [];
@@ -47,7 +51,16 @@ export default function useMessageFeed({ context = "channel", id = null }) {
     setHasMore(true);
     setAppends([]);
   }, [context, id]);
-
+  useEffect(() => {
+    if (appends.length) {
+      const feedsWrapperEle = document.querySelector(
+        `#RUSTCHAT_FEED_${context}_${id}`
+      );
+      if (feedsWrapperEle) {
+        feedsWrapperEle.scrollTop = feedsWrapperEle.scrollHeight;
+      }
+    }
+  }, [appends, context, id]);
   useEffect(() => {
     if (listRef.current.length == 0) {
       //   初次
@@ -67,6 +80,7 @@ export default function useMessageFeed({ context = "channel", id = null }) {
       if (appends.length) {
         setAppends(appends);
       }
+      console.log("appends", appends);
     }
   }, [mids]);
   const pullUp = () => {
@@ -97,7 +111,7 @@ export default function useMessageFeed({ context = "channel", id = null }) {
       setItems(listRef.current);
       console.log("pull up", currPageInfo, listRef.current);
       setHasMore(pageInfo.pageNumber !== 1);
-    }, 300);
+    }, 800);
   };
   const pullDown = () => {
     // 向下加载
