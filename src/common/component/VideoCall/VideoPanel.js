@@ -4,8 +4,8 @@ import Header from "./Header";
 import User from "./User";
 import { useSelector } from "react-redux";
 import { selectUsers } from "../../../app/slices/videocall";
-import { AgoraClient } from "../../agora";
-import { useEffect, useState, useMemo } from "react";
+
+import { useEffect, useState } from "react";
 
 const Wrapper = styled.div`
  .videoPanel {
@@ -68,11 +68,10 @@ const Wrapper = styled.div`
  }
 `;
 
-export default function VideoPanel({ cid }) {
+export default function VideoPanel({ cid, client }) {
  const [showPanel, setShowPanel] = useState(false);
  const uid = useSelector((state) => state.authData.uid);
  const device = useSelector((state) => state.videocall.device);
- const client = useMemo(() => new AgoraClient(uid), [uid]);
  useEffect(() => {
   client.join(cid).then(setShowPanel(true));
   return async () => {

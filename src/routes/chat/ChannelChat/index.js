@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useDebounce } from "rooks";
 import { NavLink, useLocation } from "react-router-dom";
 import Tippy from "@tippyjs/react";
 import { useDispatch, useSelector } from "react-redux";
 import PinList from "./PinList";
 import FavList from "../FavList";
+import { AgoraClient } from "../../../common/agora";
 import { useReadMessageMutation } from "../../../app/services/message";
 import { updateRemeberedNavs } from "../../../app/slices/ui";
 import useChatScroll from "../../../common/hook/useChatScroll";
@@ -41,7 +42,6 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
  const [membersVisible, setMembersVisible] = useState(true);
  const [addMemberModalVisible, setAddMemberModalVisible] = useState(false);
  const [videoCallVisible, setVideoCallVisible] = useState(false);
- const openPanel = useSelector((state) => state.videocall.openPanel);
  const { selects, msgIds, userIds, data, messageData, loginUid, loginUser, footprint } =
   useSelector((store) => {
    return {
@@ -61,13 +61,13 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
  // };
  useEffect(() => {
   dispatch(updateRemeberedNavs());
-  if (!openPanel) {
-   setVideoCallVisible(false);
+  if (videoCallVisible) {
+   toggleVideoCallVisible();
   }
   return () => {
    dispatch(updateRemeberedNavs({ path: pathname }));
   };
- }, [pathname, openPanel]);
+ }, [pathname]);
 
  const toggleMembersVisible = () => {
   // TODO: Reudx State
@@ -86,7 +86,6 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
    dispatch(start());
   }
   setVideoCallVisible((prev) => !prev);
-
   // TODO: Reudx State
  };
 
@@ -96,6 +95,9 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
  //  console.log("channel message list", msgIds);
  const readIndex = footprint.readChannels[cid];
  const pinCount = data?.pinned_messages?.length || 0;
+ const uid = useSelector((state) => state.authData.uid);
+ const client = useMemo(() => new AgoraClient(uid), [uid]);
+
  return (
   <>
    {addMemberModalVisible && <InviteModal cid={cid} closeModal={toggleAddVisible} />}
@@ -217,7 +219,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
       ) : null}
       {videoCallVisible && (
        <>
-        <VideoPanel cid={cid} />
+        <VideoPanel cid={cid} client={client} />
        </>
       )}
      </>
