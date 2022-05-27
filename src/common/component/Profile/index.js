@@ -1,46 +1,34 @@
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { NavLink, useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
+import { NavLink } from "react-router-dom";
+// import toast from "react-hot-toast";
 import Tippy from "@tippyjs/react";
-import { hideAll } from "tippy.js";
+// import { hideAll } from "tippy.js";
 import IconMessage from "../../../assets/icons/message.svg";
 import IconCall from "../../../assets/icons/call.svg";
 import IconMore from "../../../assets/icons/more.svg";
 import Avatar from "../Avatar";
 import StyledWrapper from "./styled";
 import StyledMenu from "../styled/Menu";
-import useCopy from "../../hook/useCopy";
-import { useRemoveMembersMutation } from "../../../app/services/channel";
-import { useLazyDeleteContactQuery } from "../../../app/services/contact";
+import useContactOperation from "../../hook/useContactOperation";
 
 export default function Profile({ uid = null, type = "embed", cid = null }) {
-  const navigateTo = useNavigate();
-  const [
-    removeUser,
-    { isSuccess: removeUserSuccess },
-  ] = useLazyDeleteContactQuery();
-  const [
+  const {
+    canCall,
+    call,
+    canCopyEmail,
+    copyEmail,
     removeFromChannel,
-    { isSuccess: removeSuccess },
-  ] = useRemoveMembersMutation();
-  const { copy } = useCopy();
-  const { data, channel, loginUid, isAdmin } = useSelector((store) => {
+    canRemoveFromChannel,
+    canRemove,
+    removeUser,
+  } = useContactOperation({ uid, cid });
+
+  const { data } = useSelector((store) => {
     return {
       data: store.contacts.byId[uid],
-      channel: store.channels.byId[cid],
-      loginUid: store.authData.uid,
-      isAdmin: store.contacts.byId[store.authData.uid]?.is_admin,
     };
   });
-  useEffect(() => {
-    if (removeSuccess || removeUserSuccess) {
-      toast.success("Remove Successfully");
-      if (removeUserSuccess) {
-        navigateTo(`/contacts`);
-      }
-    }
-  }, [removeSuccess, removeUserSuccess]);
 
   if (!data) return null;
   // console.log("profile", data);
@@ -50,27 +38,10 @@ export default function Profile({ uid = null, type = "embed", cid = null }) {
     avatar,
     // introduction = "This guy has nothing to introduce",
   } = data;
-  const handleClick = () => {
-    toast.success("cooming soon...");
-  };
-  const handlCopyEmail = () => {
-    copy(email);
-    hideAll();
-  };
-  const handleRemove = ({ from = "channel", uid }) => {
-    const remove = from == "channel" ? removeFromChannel : removeUser;
-    remove(from == "channel" ? { id: +cid, members: [+uid] } : uid);
-    hideAll();
-  };
-  const canCall = type == "card" && loginUid != uid;
-  const canRemoveFromServer = type == "embed" && isAdmin;
-  const canRemoveFromChannel =
-    cid &&
-    !channel?.is_public &&
-    (isAdmin || channel?.owner == loginUid) &&
-    channel?.owner != uid;
+  const enableCall = type == "card" && canCall;
+  const canRemoveFromServer = type == "embed" && canRemove;
   const hasMore =
-    canCall || email || canRemoveFromChannel || canRemoveFromServer;
+    enableCall || email || canRemoveFromChannel || canRemoveFromServer;
   return (
     <StyledWrapper className={type}>
       <Avatar className="avatar" url={avatar} name={name} />
@@ -86,7 +57,7 @@ export default function Profile({ uid = null, type = "embed", cid = null }) {
         </NavLink>
         {/* <NavLink to={`#`}> */}
         {type == "embed" && (
-          <li className="icon call" onClick={handleClick}>
+          <li className="icon call" onClick={call}>
             <IconCall />
             <span className="txt">Call</span>
           </li>
@@ -101,30 +72,24 @@ export default function Profile({ uid = null, type = "embed", cid = null }) {
           hideOnClick={true}
           content={
             <StyledMenu>
-              {canCall && (
-                <li className="item">
+              {enableCall && (
+                <li className="item" onClick={call}>
                   {/* <IconCall className="icon" /> */}
                   Call
                 </li>
               )}
-              {email && (
-                <li className="item" onClick={handlCopyEmail}>
+              {canCopyEmail && (
+                <li className="item" onClick={copyEmail}>
                   Copy Email
                 </li>
               )}
               {canRemoveFromChannel && (
-                <li
-                  className="item danger"
-                  onClick={handleRemove.bind(null, { uid })}
-                >
+                <li className="item danger" onClick={removeFromChannel}>
                   Remove from Channel
                 </li>
               )}
               {canRemoveFromServer && (
-                <li
-                  className="item danger"
-                  onClick={handleRemove.bind(null, { from: "server", uid })}
-                >
+                <li className="item danger" onClick={removeUser}>
                   Remove from Server
                 </li>
               )}
