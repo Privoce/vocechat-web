@@ -135,6 +135,7 @@ export default function LoginPage() {
   const { email, password } = input;
   if (!loginConfigSuccess) return null;
   const {
+    magic_link,
     google: enableGoogleLogin,
     metamask: enableMetamaskLogin,
     oidc,
@@ -176,10 +177,11 @@ export default function LoginPage() {
             {isLoading ? "Signing" : `Sign in`}
           </Button>
         </form>
-        {(googleLogin || enableMetamaskLogin || oidc.length > 0) && (
-          <hr className="or" />
-        )}
-        {enableSMTP && <MagicLinkLogin />}
+        {(magic_link ||
+          googleLogin ||
+          enableMetamaskLogin ||
+          oidc.length > 0) && <hr className="or" />}
+        {enableSMTP && magic_link && <MagicLinkLogin />}
         {googleLogin && <GoogleLoginButton login={login} clientId={clientId} />}
         <GithubLoginButton config={githubAuthConfig} />
         {enableMetamaskLogin && <MetamaskLoginButton login={login} />}
