@@ -118,8 +118,14 @@ const handler = (data, dispatch, currState) => {
         switch (type) {
           case "like":
             {
+              // rid reaction's mid
               dispatch(
-                toggleReactionMessage({ from_uid, mid: detailMid, action })
+                toggleReactionMessage({
+                  from_uid,
+                  mid: detailMid,
+                  rid: mid,
+                  action,
+                })
               );
             }
 

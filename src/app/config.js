@@ -1,6 +1,6 @@
 // const BASE_URL = `${location.origin}/api`;
 const BASE_URL = `https://dev.rustchat.com/api`;
-export const CACHE_VERSION = `0.2.13`;
+export const CACHE_VERSION = `0.2.15`;
 export const ContentTypes = {
   text: "text/plain",
   markdown: "text/markdown",

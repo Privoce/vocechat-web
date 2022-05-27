@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 import { useReactMessageMutation } from "../../../app/services/message";
 import { Emojis } from "../../../app/config";
-import Emoji from "../Emoji";
+import Emoji from "../ReactionItem";
 const StyledPicker = styled.div`
   background: none;
   z-index: 999;

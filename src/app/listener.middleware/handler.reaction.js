@@ -8,8 +8,9 @@ export default async function handler({ operation, data = {}, payload }) {
   switch (operation) {
     case "toggleReactionMessage":
       {
-        const { mid } = payload;
+        const { mid, rid } = payload;
         await table.setItem(mid + "", data[mid]);
+        await table.setItem(rid + "", data[rid]);
       }
       break;
     case "removeReactionMessage":

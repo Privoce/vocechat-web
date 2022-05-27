@@ -18,7 +18,7 @@ const Emojis = {
   "🎉": <EmojiCelebrate className="emoji" />,
 };
 
-export default function EmojiItem({ native = "" }) {
+export default function ReactionItem({ native = "" }) {
   if (!native || !Emojis[native]) return null;
 
   return Emojis[native];
