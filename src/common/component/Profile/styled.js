@@ -64,9 +64,9 @@ const StyledWrapper = styled.div`
         }
       }
       &.disabled {
-        color: #ccc;
+        color: #667085;
         svg path {
-          fill: #ccc;
+          fill: #667085;
         }
       }
       .txt {
