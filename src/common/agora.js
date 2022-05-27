@@ -202,6 +202,9 @@ export class AgoraClient {
    this.rtm.channel.on("ChannelMessage", handleChannelMsg);
    this.rtm.channel.on("MemberJoined", handleRTMMemberJoined);
    this.rtm.channel.on("MemberLeft", handleRTMMemberLeft);
+   this.rtc.client.on("volume-indicator", (volumes) => {
+    console.log("[agora] voulume", volumes);
+   });
   }
  }
  // 用于在开发环境规避 Channel 冲突的问题。
