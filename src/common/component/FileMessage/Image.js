@@ -6,10 +6,6 @@ const Styled = styled.div`
   position: relative;
   width: fit-content;
   height: fit-content;
-  /* min-height: 240px;
-  max-height: 480px;
-  min-width: 240px;
-  max-width: 480px; */
   img {
     object-fit: cover;
   }
@@ -26,17 +22,6 @@ const Styled = styled.div`
     .progress {
       width: 15px;
       height: 15px;
-      /* svg {
-        .CircularProgressbar-background {
-          fill: transparent;
-        }
-        .CircularProgressbar-trail {
-          stroke: #000;
-        }
-        .CircularProgressbar-path {
-          stroke: #000;
-        }
-      } */
       .CircularProgressbar-path {
         stroke: #444;
       }

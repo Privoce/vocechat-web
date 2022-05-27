@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 // import { ContentTypes } from "../../../app/config";
 import { useSelector } from "react-redux";
@@ -9,12 +9,14 @@ import { useLazyDeleteContactQuery } from "../../app/services/contact";
 import useCopy from "./useCopy";
 
 export default function useContactOperation({ uid, cid }) {
+  const [passedUid, setPassedUid] = useState(undefined);
+
   const [
     removeUser,
     { isSuccess: removeUserSuccess },
   ] = useLazyDeleteContactQuery();
   const [
-    removeFromChannel,
+    removeInChannel,
     { isSuccess: removeSuccess },
   ] = useRemoveMembersMutation();
   const navigateTo = useNavigate();
@@ -28,6 +30,10 @@ export default function useContactOperation({ uid, cid }) {
     };
   });
   useEffect(() => {
+    setPassedUid(uid ?? loginUid);
+  }, [uid, loginUid]);
+
+  useEffect(() => {
     if (removeSuccess || removeUserSuccess) {
       toast.success("Remove Successfully");
       if (removeUserSuccess) {
@@ -35,16 +41,22 @@ export default function useContactOperation({ uid, cid }) {
       }
     }
   }, [removeSuccess, removeUserSuccess]);
-  const handleRemoveFromChannel = () => {
-    removeFromChannel({ id: +cid, members: [+uid] });
+  const handleRemoveFromChannel = (id) => {
+    const isNumber = !Number.isNaN(+id);
+    const finalId = isNumber ? id || passedUid : passedUid;
+    removeInChannel({ id: +cid, members: [+finalId] });
     hideAll();
   };
-  const handleRemove = () => {
-    removeUser(uid);
+  const handleRemove = (id) => {
+    const isNumber = !Number.isNaN(+id);
+    const finalId = isNumber ? id || passedUid : passedUid;
+    removeUser(finalId);
     hideAll();
   };
-  const copyEmail = () => {
-    copy(user?.email);
+  const copyEmail = (email) => {
+    const isString = typeof email == "string";
+    const finalEmail = isString ? email || user?.email : user?.email;
+    copy(finalEmail);
     hideAll();
   };
   const startChat = () => {
@@ -55,10 +67,7 @@ export default function useContactOperation({ uid, cid }) {
     hideAll();
   };
   const canRemoveFromChannel =
-    cid &&
-    !channel?.is_public &&
-    (isAdmin || channel?.owner == loginUid) &&
-    channel?.owner != uid;
+    cid && !channel?.is_public && (isAdmin || channel?.owner == loginUid);
   const canCall = loginUid != uid;
   const canRemove = isAdmin && loginUid != uid;
   return {

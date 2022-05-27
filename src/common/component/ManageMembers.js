@@ -5,12 +5,7 @@ import Tippy from "@tippyjs/react";
 import { hideAll } from "tippy.js";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
-import useCopy from "../hook/useCopy";
-import {
-  useLazyDeleteContactQuery,
-  useUpdateContactMutation,
-} from "../../app/services/contact";
-import { useRemoveMembersMutation } from "../../app/services/channel";
+import { useUpdateContactMutation } from "../../app/services/contact";
 import Contact from "./Contact";
 import StyledMenu from "./styled/Menu";
 import InviteLink from "./InviteLink";
@@ -18,6 +13,7 @@ import moreIcon from "../../assets/icons/more.svg?url";
 import IconOwner from "../../assets/icons/owner.svg";
 import IconArrowDown from "../../assets/icons/arrow.down.mini.svg";
 import IconCheck from "../../assets/icons/check.sign.svg";
+import useContactOperation from "../hook/useContactOperation";
 const StyledWrapper = styled.section`
   display: flex;
   flex-direction: column;
@@ -107,7 +103,6 @@ const StyledWrapper = styled.section`
           position: relative;
           width: 24px;
           height: 24px;
-
           .dots {
             cursor: pointer;
           }
@@ -127,42 +122,24 @@ export default function ManageMembers({ cid = null }) {
       loginUser: store.contacts.byId[store.authData.uid],
     };
   });
-  const { copy } = useCopy();
+  const {
+    copyEmail,
+    removeFromChannel,
+    removeUser,
+    canRemove,
+    canRemoveFromChannel,
+  } = useContactOperation({ cid });
   const [
     updateContact,
     { isSuccess: updateSuccess },
   ] = useUpdateContactMutation();
-  const [
-    removeUser,
-    { isSuccess: removeSuccess },
-  ] = useLazyDeleteContactQuery();
-  const [
-    removeMemberFromChannel,
-    { isSuccess: removeMemberSuccess },
-  ] = useRemoveMembersMutation();
-  const remove = cid ? removeMemberFromChannel : removeUser;
-  const handleRemoveUser = (uid) => {
-    remove(cid ? { id: cid, members: [+uid] } : uid);
-  };
-  useEffect(() => {
-    if (removeSuccess) {
-      toast.success("Delete Successfully");
-    }
-  }, [removeSuccess]);
-  useEffect(() => {
-    if (removeMemberSuccess) {
-      toast.success("Remove Member successfully");
-    }
-  }, [removeMemberSuccess]);
+
   useEffect(() => {
     if (updateSuccess) {
       toast.success("Update Successfully");
     }
   }, [updateSuccess]);
-  const handleCopy = (str) => {
-    copy(str);
-    hideAll();
-  };
+
   const handleToggleRole = ({ ignore = false, uid = null, isAdmin = true }) => {
     hideAll();
     if (ignore) return;
@@ -251,7 +228,7 @@ export default function ManageMembers({ cid = null }) {
                         {email && (
                           <li
                             className="item"
-                            onClick={handleCopy.bind(null, email)}
+                            onClick={copyEmail.bind(null, email)}
                           >
                             Copy Email
                           </li>
@@ -259,12 +236,20 @@ export default function ManageMembers({ cid = null }) {
                         {/* <li className="item underline">Mute</li> */}
                         {/* <li className="item underline">Change Nickname</li> */}
                         {/* <li className="item danger">Ban</li> */}
-                        {loginUser?.is_admin && (
+                        {canRemoveFromChannel && (
                           <li
                             className="item danger"
-                            onClick={handleRemoveUser.bind(null, uid)}
+                            onClick={removeFromChannel.bind(null, uid)}
                           >
-                            Remove
+                            Remove From Channel
+                          </li>
+                        )}
+                        {canRemove && !cid && (
+                          <li
+                            className="item danger"
+                            onClick={removeUser.bind(null, uid)}
+                          >
+                            Remove From Server
                           </li>
                         )}
                       </StyledMenu>
