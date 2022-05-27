@@ -80,10 +80,7 @@ export class AgoraClient {
    this.token,
    this.uid
   );
-  // add track && publish track
-  this.rtc.audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
-  this.rtc.videoTrack = await AgoraRTC.createCameraVideoTrack();
-  await this.rtc.client.publish([this.rtc.audioTrack, this.rtc.videoTrack]);
+
   // load device for system.
   await this._initDevice();
  }
@@ -118,7 +115,10 @@ export class AgoraClient {
   const user = this.rtc.client.remoteUsers.find((user) => user.uid == uid);
   return user;
  }
- openVideo() {
+ async openVideo() {
+  if (!this.rtc.videoTrack) {
+   this.rtc.videoTrack = await AgoraRTC.createCameraVideoTrack();
+  }
   this.rtc.client.publish([this.rtc.videoTrack]);
   this._send(commandMap.openVideo);
   store.dispatch(openVideo());
@@ -127,7 +127,10 @@ export class AgoraClient {
   this._send(commandMap.closeVideo);
   store.dispatch(closeVideo());
  }
- openMic() {
+ async openMic() {
+  if (!this.rtc.audioTrack) {
+   this.rtc.audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+  }
   this.rtc.client.publish([this.rtc.audioTrack]);
   this._send(commandMap.openMic);
   store.dispatch(openMic());
