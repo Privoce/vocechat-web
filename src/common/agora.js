@@ -44,7 +44,9 @@ export class AgoraClient {
   this.token = null;
   this.appId = "020c861b44424b0eb0ff768ee9bffda2";
   this.rtc.client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
-  this.rtm.client = AgoraRTM.createInstance(this.appId);
+  this.rtm.client = AgoraRTM.createInstance(this.appId, {
+   logFilter: AgoraRTM.LOG_FILTER_OFF
+  });
   this._log("create rtc client");
   this._debuuger();
  }

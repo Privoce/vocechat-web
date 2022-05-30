@@ -167,7 +167,7 @@ module.exports = function (webpackEnv) {
        ecma: 8
       },
       compress: {
-       drop_console: false,
+       drop_console: true,
        ecma: 5,
        warnings: false,
        // Disabled because of an issue with Uglify breaking seemingly valid code:
