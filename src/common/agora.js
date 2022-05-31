@@ -59,6 +59,7 @@ export class AgoraClient {
   this._initCallbacks();
   // load device for system.
   await this._initDevice();
+  await this._initDeviceChange();
  }
 
  async leave() {
@@ -233,5 +234,16 @@ export class AgoraClient {
     playback: playbacks
    })
   );
+ }
+ async _initDeviceChange() {
+  AgoraRTC.onCameraChanged = async () => {
+   await this._initDevice();
+  };
+  AgoraRTC.onMicrophoneChanged = async () => {
+   await this._initDevice();
+  };
+  AgoraRTC.onPlaybackDeviceChanged = async () => {
+   await this._initDevice();
+  };
  }
 }
