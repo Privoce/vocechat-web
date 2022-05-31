@@ -1,5 +1,5 @@
-const BASE_URL = `${location.origin}/api`;
-// const BASE_URL = `https://dev.rustchat.com/api`;
+// const BASE_URL = `${location.origin}/api`;
+const BASE_URL = `https://dev.rustchat.com/api`;
 export const CACHE_VERSION = `0.2.16`;
 export const ContentTypes = {
   text: "text/plain",
