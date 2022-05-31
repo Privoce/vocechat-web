@@ -100,7 +100,7 @@ export class AgoraClient {
  closeVideo() {
   // 使用 Muted 来控制视频
   this.rtc.videoTrackMuted = true;
-  this.rtc.videoTrack.setMuted(this.rtc.audioTrackMuted);
+  this.rtc.videoTrack.setMuted(true);
   store.dispatch(closeVideo());
  }
  async openMic() {
@@ -112,14 +112,14 @@ export class AgoraClient {
   //  第二次打开时，则使用 Muted 来控制音频的播放
   if (this.audioTrackMuted) {
    this.rtc.audioTrackMuted = false;
-   this.rtc.audioTrack.setMuted(this.rtc.audioTrackMuted);
+   this.rtc.audioTrack.setMuted(false);
   }
   store.dispatch(openMic());
  }
  closeMic() {
   // 使用 Muted 来控制音频
   this.rtc.audioTrackMuted = true;
-  this.rtc.audioTrack.setMuted(this.rtc.audioTrackMuted);
+  this.rtc.audioTrack.setMuted(true);
   store.dispatch(closeMic());
  }
  // private function
