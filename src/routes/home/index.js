@@ -76,7 +76,7 @@ export default function HomePage() {
             </NavLink>
             <NavLink className="link" to={"/favs"}>
               <Tooltip tip="Favorites">
-                <FavIcon />
+                <FavIcon className="fav" />
               </Tooltip>
             </NavLink>
             <NavLink className="link" to={"/files"}>
@@ -85,7 +85,7 @@ export default function HomePage() {
               </Tooltip>
             </NavLink>
           </nav>
-          {/* <div className="divider"></div> */}
+          <div className="divider"></div>
           <Menu />
         </div>
         <div className="col right">

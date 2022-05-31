@@ -1,8 +1,16 @@
 import toast from "react-hot-toast";
 import { batch } from "react-redux";
 import { ContentTypes } from "../config";
-import { addChannelMsg, removeChannelMsg } from "../slices/message.channel";
-import { addUserMsg, removeUserMsg } from "../slices/message.user";
+import {
+  addChannelMsg,
+  removeChannelMsg,
+  replaceChannelMsg,
+} from "../slices/message.channel";
+import {
+  addUserMsg,
+  removeUserMsg,
+  replaceUserMsg,
+} from "../slices/message.user";
 import { addMessage, removeMessage } from "../slices/message";
 export const onMessageSendStarted = async (
   {
@@ -47,6 +55,8 @@ export const onMessageSendStarted = async (
   const addContextMessage = from == "channel" ? addChannelMsg : addUserMsg;
   const removeContextMessage =
     from == "channel" ? removeChannelMsg : removeUserMsg;
+  const replaceContextMsg =
+    from == "channel" ? replaceChannelMsg : replaceUserMsg;
   if (!ignoreLocal) {
     batch(() => {
       dispatch(addMessage({ mid: ts, ...tmpMsg }));
@@ -58,10 +68,9 @@ export const onMessageSendStarted = async (
     const { data: server_mid } = await queryFulfilled;
     console.log("message server mid", server_mid);
     batch(() => {
-      dispatch(removeContextMessage({ id, mid: ts }));
-      dispatch(removeMessage(ts));
       dispatch(addMessage({ mid: server_mid, ...tmpMsg }));
-      dispatch(addContextMessage({ id, mid: server_mid }));
+      dispatch(replaceContextMsg({ id, localMid: ts, serverMid: server_mid }));
+      dispatch(removeMessage(ts));
     });
     // dispatch(removePendingMessage({ id, mid:ts, type: from }));
   } catch {

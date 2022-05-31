@@ -32,25 +32,27 @@ const StyledWrapper = styled.div`
       display: flex;
       flex-direction: column;
       gap: 4px;
-      padding: 24px 12px;
+      padding: 24px 8px 10px 8px;
       .link {
         display: flex;
         align-items: center;
         gap: 10px;
         text-decoration: none;
-        padding: 8px 12px;
+        padding: 8px;
         font-weight: 600;
         font-size: 14px;
         line-height: 20px;
         color: #4b5563;
         border-radius: 8px;
+        svg.fav path {
+          fill: #344054;
+        }
         &:hover {
           background-color: rgba(0, 0, 0, 0.08);
         }
         &.active {
-          background-color: #55c7ec;
           svg path {
-            fill: #fff;
+            fill: #55c7ec;
           }
         }
       }
