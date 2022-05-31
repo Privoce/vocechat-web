@@ -1,4 +1,4 @@
-// import React from "react";
+import React from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import reactStringReplace from "react-string-replace";
@@ -137,7 +137,7 @@ const renderContent = (data) => {
   }
   return res;
 };
-export default function Reply({ mid, interactive = true }) {
+const Reply = ({ mid, interactive = true }) => {
   const { data, users } = useSelector((store) => {
     return { data: store.message[mid], users: store.contacts.byId };
   });
@@ -158,6 +158,7 @@ export default function Reply({ mid, interactive = true }) {
   if (!currUser) return null;
   return (
     <Styled
+      key={mid}
       data-mid={mid}
       className={`reply ${interactive ? "clickable" : ""}`}
       onClick={interactive ? handleClick : null}
@@ -169,4 +170,8 @@ export default function Reply({ mid, interactive = true }) {
       <div className="content">{renderContent(data)}</div>
     </Styled>
   );
-}
+};
+
+export default React.memo(Reply, (prevs, nexts) => {
+  return prevs.mid == nexts.mid;
+});

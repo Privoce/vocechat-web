@@ -135,7 +135,7 @@ function Message({
             </Tooltip>
           </div>
           <div className={`down ${sending ? "sending" : ""}`}>
-            {reply_mid && <Reply mid={reply_mid} />}
+            {reply_mid && <Reply key={reply_mid} mid={reply_mid} />}
             {edit ? (
               <EditMessage mid={mid} cancelEdit={toggleEditMessage} />
             ) : (

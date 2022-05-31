@@ -1,11 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import { getInitials, getInitialsAvatar } from "../utils";
-export default function Avatar({
-  url = "",
-  name = "unkonw name",
-  type = "user",
-  ...rest
-}) {
+const Avatar = ({ url = "", name = "unkonw name", type = "user", ...rest }) => {
   // console.log("avatar url", url);
   const [src, setSrc] = useState("");
   const handleError = (err) => {
@@ -31,4 +26,11 @@ export default function Avatar({
   }, [url, name]);
   if (!src) return null;
   return <img src={src} onError={handleError} {...rest} />;
-}
+};
+
+export default memo(Avatar, (prevs, nexts) => {
+  // const prevKey = prevs.url + prevs.name;
+  // const nextKey = nexts.url + nexts.name;
+  // return prevKey == nextKey;
+  return prevs.url == nexts.url;
+});

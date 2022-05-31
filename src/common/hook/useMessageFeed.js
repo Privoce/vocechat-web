@@ -1,8 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 const getFeedWithPagination = (config) => {
-  const { pageNumber = 1, pageSize = 10, mids = [], isLast = false } =
-    config || {};
+  const { pageNumber = 1, pageSize = 20, mids = [] } = config || {};
   const shadowMids = mids.slice(0);
 
   if (shadowMids.length == 0)
@@ -13,27 +12,30 @@ const getFeedWithPagination = (config) => {
       ids: [],
     };
   shadowMids.sort((a, b) => {
-    return Number(a) - Number(b);
+    return Number(b) - Number(a);
   });
   console.log("message pagination", shadowMids);
   const pageCount = Math.ceil(shadowMids.length / pageSize);
-  const computedPageNumber = isLast ? pageCount : pageNumber;
   const ids = shadowMids.slice(
-    (computedPageNumber - 1) * pageSize,
-    computedPageNumber * pageSize
+    (pageNumber - 1) * pageSize,
+    pageNumber * pageSize
   );
-  return {
+  const info = {
+    isFirst: pageNumber == 1,
+    isLast: pageNumber == pageCount,
     pageCount,
     pageSize,
-    pageNumber: computedPageNumber,
+    pageNumber,
     ids,
   };
+  console.log("get page Info", info);
+  return info;
 };
 export default function useMessageFeed({ context = "channel", id = null }) {
   const listRef = useRef([]);
   const pageRef = useRef(null);
   const [hasMore, setHasMore] = useState(true);
-  const [appends, setAppends] = useState([]);
+  // const [appends, setAppends] = useState([]);
   const [items, setItems] = useState([]);
   const { mids, messageData } = useSelector((store) => {
     return {
@@ -49,46 +51,72 @@ export default function useMessageFeed({ context = "channel", id = null }) {
     pageRef.current = [];
     setItems([]);
     setHasMore(true);
-    setAppends([]);
+    // setAppends([]);
   }, [context, id]);
+  // useEffect(() => {
+  //   if (appends.length) {
+  //     const feedsWrapperEle = document.querySelector(
+  //       `#RUSTCHAT_FEED_${context}_${id}`
+  //     );
+  //     if (feedsWrapperEle) {
+  //       feedsWrapperEle.scrollTop = feedsWrapperEle.scrollHeight;
+  //     }
+  //   }
+  // }, [appends, context, id]);
   useEffect(() => {
-    if (appends.length) {
-      const feedsWrapperEle = document.querySelector(
-        `#RUSTCHAT_FEED_${context}_${id}`
-      );
-      if (feedsWrapperEle) {
-        feedsWrapperEle.scrollTop = feedsWrapperEle.scrollHeight;
+    const container = document.querySelector("#ScrollFeedWrapper");
+    const handler = (e) => {
+      e.preventDefault();
+      var n = 0;
+      if ("deltaY" in e) n = 1 === e.deltaMode ? 20 * -e.deltaY : -e.deltaY;
+      else if ("wheelDeltaY" in e) n = (e.wheelDeltaY / 120) * 20;
+      else if ("wheelDelta" in e) n = (e.wheelDelta / 120) * 20;
+      else {
+        // if (!("detail"in e))
+        //     return void a.v(e, "invalid wheel event: ");
+        n = (-e.detail / 3) * 20;
       }
+      container.scrollTop += n;
+    };
+    if (container) {
+      container.addEventListener("wheel", handler);
     }
-  }, [appends, context, id]);
+    return () => {
+      if (container) {
+        container.removeEventListener("wheel", handler);
+      }
+    };
+  }, []);
+
   useEffect(() => {
     if (listRef.current.length == 0) {
       //   初次
-      const pageInfo = getFeedWithPagination({ mids, isLast: true });
-      console.log("pull up 2", pageInfo);
+      const pageInfo = getFeedWithPagination({ mids });
+      console.log("pull down 2", pageInfo);
       pageRef.current = pageInfo;
       listRef.current = pageInfo.ids;
       setItems(listRef.current);
       console.log("message pageInfo", mids, pageInfo);
     } else {
       //   追加
-      const lastMid = listRef.current.slice(-1);
+      const lastMid = listRef.current[0];
       const sorteds = mids.slice(0).sort((a, b) => {
-        return Number(a) - Number(b);
+        return Number(b) - Number(a);
       });
-      const appends = sorteds.filter((s) => s > lastMid);
-      if (appends.length) {
-        setAppends(appends);
+      const prepends = sorteds.filter((s) => s > lastMid);
+      if (prepends.length) {
+        setItems((prevs) => [...prepends, ...prevs]);
       }
-      console.log("appends", appends);
+      console.log("prepends", prepends, items);
     }
   }, [mids]);
-  const pullUp = () => {
+  const pullDown = () => {
+    // 向下加载
     const currPageInfo = pageRef.current;
-    console.log("pull up", currPageInfo);
-    // 第一页
-    if (currPageInfo && currPageInfo.pageNumber == 1) {
-      setHasMore(false);
+    console.log("pull down", currPageInfo);
+    // 最后一页
+    if (currPageInfo && currPageInfo.isLast) {
+      setHasMore(true);
       return;
     }
     let pageInfo = null;
@@ -96,32 +124,28 @@ export default function useMessageFeed({ context = "channel", id = null }) {
       // 初始化
       pageInfo = getFeedWithPagination({
         mids,
-        isLast: true,
       });
     } else {
-      const prevPageNumber = currPageInfo.pageNumber - 1;
+      const nextPageNumber = currPageInfo.pageNumber + 1;
       pageInfo = getFeedWithPagination({
         mids,
-        pageNumber: prevPageNumber,
+        pageNumber: nextPageNumber,
       });
     }
     pageRef.current = pageInfo;
-    listRef.current = [...pageInfo.ids, ...listRef.current];
+    listRef.current = [...listRef.current, ...pageInfo.ids];
     setTimeout(() => {
       setItems(listRef.current);
       console.log("pull up", currPageInfo, listRef.current);
-      setHasMore(pageInfo.pageNumber !== 1);
-    }, 800);
-  };
-  const pullDown = () => {
-    // 向下加载
+      setHasMore(!pageInfo.isLast);
+    }, 1000);
   };
 
   return {
     mids,
-    appends,
+    // appends,
     hasMore,
-    pullUp,
+    // pullUp,
     pullDown,
     list: items,
   };
