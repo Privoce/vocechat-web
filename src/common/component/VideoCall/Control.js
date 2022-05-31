@@ -110,7 +110,6 @@ export default function Control({ client }) {
        } else {
         client.openMic();
        }
-       //   dispatch(toggleMic());
       }}
      >
       <img src={mic ? micOnIcon : micOffIcon} className="icon" alt="dropdown" />

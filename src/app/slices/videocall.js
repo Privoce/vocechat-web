@@ -30,6 +30,14 @@ const videocallSlice = createSlice({
   end: (state) => {
    state.users = [];
    state.openPanel = false;
+   state.device = {
+    mic: false,
+    camera: false,
+    share: false,
+    currentMic: "default",
+    currentCamera: "default",
+    currentPlayBack: "default"
+   };
   },
   toggleMic: (state) => {
    state.device.mic = !state.device.mic;
@@ -42,6 +50,14 @@ const videocallSlice = createSlice({
   },
   resetState: (state) => {
    state.users = [];
+   state.device = {
+    mic: false,
+    camera: false,
+    share: false,
+    currentMic: "default",
+    currentCamera: "default",
+    currentPlayBack: "default"
+   };
   },
   setDevice: (state, payload) => {
    const { deviceId, type } = payload.payload;

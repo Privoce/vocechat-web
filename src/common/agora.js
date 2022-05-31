@@ -1,5 +1,4 @@
 import AgoraRTC from "agora-rtc-sdk-ng";
-import AgoraRTM from "agora-rtm-sdk";
 import store from "../app/store";
 import {
  openMic,
@@ -12,26 +11,19 @@ import {
  closeUserVideo,
  openUserMic,
  closeUserMic,
- setDevices,
- addUsers
+ setDevices
 } from "../app/slices/videocall.js";
 
-const commandMap = {
- login: "LOGIN",
- join: "JOIN",
- openMic: "OPENMIC",
- closeMic: "CLOSEMIC",
- openVideo: "OPENVIDEO",
- closeVideo: "CLOSEVIDEO",
- leave: "LEAVE"
-};
 export class AgoraClient {
- constructor(uid) {
+ constructor(uid, cid) {
   this.uid = uid;
+  this.cid = cid;
   this.rtc = {
    client: null,
    audioTrack: null,
    videotrack: null,
+   videoTrackMuted: true,
+   audioTrackMuted: true,
    remoteUser: [],
    isLogin: false
   };
@@ -44,9 +36,6 @@ export class AgoraClient {
   this.token = null;
   this.appId = "020c861b44424b0eb0ff768ee9bffda2";
   this.rtc.client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
-  this.rtm.client = AgoraRTM.createInstance(this.appId, {
-   logFilter: AgoraRTM.LOG_FILTER_OFF
-  });
   this._log("create rtc client");
   this._debuuger();
  }
@@ -59,22 +48,6 @@ export class AgoraClient {
  // TODO: 部分已经发布的 track 无法正常播放，需要进一步解决
 
  async join(channelId) {
-  //   join rtm
-  await this.rtm.client.login({
-   uid: this.uid.toString(),
-   token: this.token
-  });
-  // join rtm channel for send login msg
-  this.rtm.channel = this.rtm.client.createChannel(this._getChchannelNameById(channelId));
-  await this.rtm.channel.join();
-
-  this._send(commandMap.login, {});
-
-  // load default members from rtm
-  this._initMember();
-  // add rtm channel msg login & logout & onMessageReceived
-  this._initCallbacks();
-
   //   join rtc
   await this.rtc.client.join(
    this.appId,
@@ -83,6 +56,7 @@ export class AgoraClient {
    this.uid
   );
 
+  this._initCallbacks();
   // load device for system.
   await this._initDevice();
  }
@@ -96,15 +70,6 @@ export class AgoraClient {
    });
   }
   this.rtc.client.leave();
-  //   exit rtm
-  if (this.rtm.channel) {
-   this.rtm.channel.leave();
-   console.log("[agora]leave RTM Channel");
-  }
-  if (this.rtm.client) {
-   this.rtm.client.logout();
-   console.log("[agora]logoOut Rtm Client");
-  }
  }
  getUserById(uid) {
   if (uid == this.uid) {
@@ -118,99 +83,115 @@ export class AgoraClient {
   return user;
  }
  async openVideo() {
+  // 初次开启视频，发布 Video Track
   if (!this.rtc.videoTrack) {
    this.rtc.videoTrack = await AgoraRTC.createCameraVideoTrack();
+   await this.rtc.client.publish([this.rtc.videoTrack]);
   }
-  this.rtc.client.publish([this.rtc.videoTrack]);
-  this._send(commandMap.openVideo);
+  // 第二次打开时，则使用 Muted 来控制视频的播放
+  if (this.videoTrackMuted) {
+   this.audioTrackMuted = false;
+   this.rtc.audioTrack.setMuted(false);
+  }
+
   store.dispatch(openVideo());
  }
  closeVideo() {
-  this._send(commandMap.closeVideo);
+  // 使用 Muted 来控制视频
+  this.rtc.videoTrackMuted = true;
+  this.rtc.videoTrack.setMuted(this.rtc.audioTrackMuted);
   store.dispatch(closeVideo());
  }
  async openMic() {
+  // 初次开始视频，发布 Audio Track
   if (!this.rtc.audioTrack) {
    this.rtc.audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+   await this.rtc.client.publish([this.rtc.audioTrack]);
   }
-  this.rtc.client.publish([this.rtc.audioTrack]);
-  this._send(commandMap.openMic);
+  //  第二次打开时，则使用 Muted 来控制音频的播放
+  if (this.audioTrackMuted) {
+   this.rtc.audioTrackMuted = false;
+   this.rtc.audioTrack.setMuted(this.rtc.audioTrackMuted);
+  }
   store.dispatch(openMic());
  }
  closeMic() {
-  this._send(commandMap.closeMic);
+  // 使用 Muted 来控制音频
+  this.rtc.audioTrackMuted = true;
+  this.rtc.audioTrack.setMuted(this.rtc.audioTrackMuted);
   store.dispatch(closeMic());
  }
  // private function
- async _send(msg, args) {
-  function build(uid, msg, args = {}) {
-   const argString = JSON.stringify(args);
-   return `${uid}|${msg.toUpperCase()}|${argString}`;
-  }
-  this.rtm.channel.sendMessage({ text: build(this.uid, msg, args) });
- }
  _initCallbacks() {
-  if (this.rtm.client) {
-   const handleChannelMsg = (message, memberId) => {
-    // 处理音频信令
-    function _parseMessage(command) {
-     var cmds = command.split("|");
-     return {
-      user: cmds[0],
-      cmd: cmds[1],
-      args: JSON.parse(cmds[2])
-     };
-    }
-    const { user, cmd, args } = _parseMessage(message.text);
-    console.log(args);
-    //  当前用户的信息不可能出现，如果出现则是异常信令 & memeber ID != userid ,则有异常
-    if (user == this.uid || user != memberId) {
-     return;
-    }
-    // 找到用户和对应的 Track
-    const userWithTrack = this.rtc.client.remoteUsers.find((user) => user.uid == memberId);
-    // 开启视频则控制 Component 展示 & 订阅对应的 Track；
-    if (cmd == commandMap.openVideo) {
-     store.dispatch(openUserVideo({ id: memberId }));
-     this.rtc.client.subscribe(userWithTrack, "video");
-    }
-    // 开启音频则控制 Component Icon 展示 & 订阅对应的 Track；
-    // 订阅完成后并播放；
-    if (cmd == commandMap.openMic) {
-     store.dispatch(openUserMic({ id: memberId }));
-     this.rtc.client.subscribe(userWithTrack, "audio");
-     userWithTrack.audioTrack?.play();
-    }
-    if (cmd == commandMap.closeVideo) {
-     store.dispatch(closeUserVideo({ id: memberId }));
-     this.rtc.client.unsubscribe(userWithTrack, "video");
-    }
-    if (cmd == commandMap.closeMic) {
-     store.dispatch(closeUserMic({ id: memberId }));
-     this.rtc.client.unsubscribe(userWithTrack, "audio");
-    }
-   };
-   // 有 RTM 用户加入，进入 Redux
-   const handleRTMMemberJoined = (memberId) => {
-    store.dispatch(
-     addUser({
-      user: { id: parseInt(memberId), openVideo: false, openMic: false }
-     })
-    );
-   };
-   // 有 RTM 用户退出，则从 Redux 中移除。
-   const handleRTMMemberLeft = (memberId) => {
-    store.dispatch(removeUser({ id: parseInt(memberId) }));
-    this._log("[rtm][MemberLeft]", memberId);
-   };
-   // 处理对应的 RTM 事件
-   this.rtm.channel.on("ChannelMessage", handleChannelMsg);
-   this.rtm.channel.on("MemberJoined", handleRTMMemberJoined);
-   this.rtm.channel.on("MemberLeft", handleRTMMemberLeft);
-   this.rtc.client.on("volume-indicator", (volumes) => {
-    console.log("[agora] voulume", volumes);
-   });
-  }
+  // rtc
+  // this.rtc.client.enableAudioVolumeIndicator();
+  this.rtc.client.on("volume-indicator", (volumes) => {
+   if (volumes.length == 0) return; // 没有人说话
+   console.log("[agora] voulume", volumes);
+  });
+
+  const handleRTCUserPublished = async (user, type) => {
+   await this.rtc.client.subscribe(user, type);
+   if (type == "audio") {
+    user.audioTrack?.play();
+    store.dispatch(openUserMic({ id: user.uid }));
+   }
+   if (type == "video") {
+    store.dispatch(openUserVideo({ id: user.uid }));
+   }
+  };
+  const handleRTCUserUnpublished = async (user, type) => {
+   await this.rtc.client.unsubscribe(user, type);
+   if (type == "audio") {
+    user.audioTrack?.play();
+    store.dispatch(closeUserMic({ id: user.uid }));
+   }
+   if (type == "video") {
+    store.dispatch(closeUserVideo({ id: user.uid }));
+   }
+  };
+  // RTC 实现用户加入/离开的控制
+  // 用来控制是否上具体信息。
+  const handleRTCUserJoined = async (user) => {
+   this._log(user);
+   store.dispatch(
+    addUser({
+     user: { id: parseInt(user.uid), openVideo: false, openMic: false }
+    })
+   );
+  };
+  const handleRTCUserLeft = async (user) => {
+   store.dispatch(removeUser({ id: parseInt(user.uid) }));
+  };
+  // 用户状态变化的记录
+  // 暂时没有用这个部分
+  // 直接使用 published  和 unpublished 来处理
+  const handleRTCUserInfoUpdated = async (user, msg) => {
+   this._log(user, msg);
+   switch (msg) {
+    case "mute-audio":
+     break;
+    case "mute-video":
+     break;
+    case "unmute-audio":
+     break;
+    case "unmute-video":
+     break;
+    // only for native sdk currnt not work
+    case "enable-local-video":
+     break;
+    case "disable-local-video":
+     break;
+
+    default:
+     break;
+   }
+  };
+  this.rtc.client.on("user-info-updated", handleRTCUserInfoUpdated);
+  this.rtc.client.on("user-joined", handleRTCUserJoined);
+  this.rtc.client.on("user-left", handleRTCUserLeft);
+  this.rtc.client.on("user-published", handleRTCUserPublished);
+  this.rtc.client.on("user-unpublished", handleRTCUserUnpublished);
  }
  // 用于在开发环境规避 Channel 冲突的问题。
  _getChchannelNameById(channelId) {
@@ -225,7 +206,6 @@ export class AgoraClient {
  _debuuger() {
   if (!window || process.env.NODE_ENV == "production") return;
   window.agoraRtc = this.rtc;
-  window.agoraRtm = this.rtm;
  }
  // 自带 prefix 的 log
  _log(...msg) {
@@ -253,11 +233,5 @@ export class AgoraClient {
     playback: playbacks
    })
   );
- }
- // 用户初次进入后，对历史用户进行批量加入
- async _initMember() {
-  const ids = await this.rtm.channel.getMembers();
-  const filterIds = ids.filter((id) => id != this.uid);
-  store.dispatch(addUsers({ filterIds }));
  }
 }

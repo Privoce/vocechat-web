@@ -41,7 +41,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
  const updateReadDebounced = useDebounce(updateReadIndex, 300);
  const [membersVisible, setMembersVisible] = useState(true);
  const [addMemberModalVisible, setAddMemberModalVisible] = useState(false);
- const [videoCallVisible, setVideoCallVisible] = useState(false);
+ const openVideoPanel = useSelector((state) => state.videocall.openPanel);
  const { selects, msgIds, userIds, data, messageData, loginUid, loginUser, footprint } =
   useSelector((store) => {
    return {
@@ -61,7 +61,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
  // };
  useEffect(() => {
   dispatch(updateRemeberedNavs());
-  if (videoCallVisible) {
+  if (openVideoPanel) {
    toggleVideoCallVisible();
   }
   return () => {
@@ -71,7 +71,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
 
  const toggleMembersVisible = () => {
   // TODO: Reudx State
-  if (videoCallVisible) setVideoCallVisible(false);
+  if (openVideoPanel) dispatch(end());
   setMembersVisible((prev) => !prev);
  };
  const toggleAddVisible = () => {
@@ -80,12 +80,11 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
 
  const toggleVideoCallVisible = () => {
   if (membersVisible) setMembersVisible(false);
-  if (videoCallVisible) {
+  if (openVideoPanel) {
    dispatch(end());
   } else {
    dispatch(start());
   }
-  setVideoCallVisible((prev) => !prev);
   // TODO: Reudx State
  };
 
@@ -96,7 +95,8 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
  const readIndex = footprint.readChannels[cid];
  const pinCount = data?.pinned_messages?.length || 0;
  const uid = useSelector((state) => state.authData.uid);
- const client = useMemo(() => new AgoraClient(uid), [uid]);
+
+ const client = useMemo(() => new AgoraClient(uid, cid), [uid, cid]);
 
  return (
   <>
@@ -114,7 +114,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
                   <img src={searchIcon} alt="opt icon" />
                 </Tooltip>
               </li> */}
-       <li className={`tool ${videoCallVisible ? "active" : ""}`} onClick={toggleVideoCallVisible}>
+       <li className={`tool ${openVideoPanel ? "active" : ""}`} onClick={toggleVideoCallVisible}>
         <Tooltip tip="Voice/Video Chat" placement="left">
          <IconHeadphone />
         </Tooltip>
@@ -217,7 +217,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
         </StyledContacts>
        </>
       ) : null}
-      {videoCallVisible && (
+      {openVideoPanel && (
        <>
         <VideoPanel cid={cid} client={client} />
        </>
