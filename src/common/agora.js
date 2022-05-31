@@ -11,7 +11,8 @@ import {
  closeUserVideo,
  openUserMic,
  closeUserMic,
- setDevices
+ setDevices,
+ resetState
 } from "../app/slices/videocall.js";
 
 export class AgoraClient {
@@ -71,6 +72,7 @@ export class AgoraClient {
    });
   }
   this.rtc.client.leave();
+  store.dispatch(resetState());
  }
  getUserById(uid) {
   if (uid == this.uid) {
