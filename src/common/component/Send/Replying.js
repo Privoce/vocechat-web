@@ -21,10 +21,8 @@ const Styled = styled.div`
   border-top-right-radius: 8px;
   width: 100%;
   padding: 12px 16px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   .prefix {
+    white-space: nowrap;
     color: #667085;
     font-style: normal;
     font-weight: 400;
@@ -36,12 +34,13 @@ const Styled = styled.div`
     }
   }
   .content {
+    white-space: normal;
+    height: 20px;
+    /* overflow-y: hidden; */
     color: #616161;
     overflow: hidden;
-    text-overflow: ellipsis;
+    /* text-overflow: ellipsis; */
     padding-right: 30px;
-    display: flex;
-    align-items: center;
     font-weight: 500;
     font-size: 14px;
     line-height: 20px;
