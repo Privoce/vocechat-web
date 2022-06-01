@@ -85,6 +85,12 @@ export class AgoraClient {
   const user = this.rtc.client.remoteUsers.find((user) => user.uid == uid);
   return user;
  }
+ /**
+  * 控制视频的显示与否
+  *
+  * 1. 因为需要红点在需要的时候开启，所以默认第一次要发布 track;
+  * 2. 后续的控制采用 setMuted
+  */
  async openVideo() {
   // 初次开启视频，发布 Video Track
   if (!this.rtc.videoTrack) {
@@ -92,9 +98,10 @@ export class AgoraClient {
    await this.rtc.client.publish([this.rtc.videoTrack]);
   }
   // 第二次打开时，则使用 Muted 来控制视频的播放
-  if (this.videoTrackMuted) {
-   this.audioTrackMuted = false;
-   this.rtc.audioTrack.setMuted(false);
+  if (this.rtc.videoTrackMuted) {
+   this._log("第二次打开");
+   this.videoTrackMuted = false;
+   await this.rtc.videoTrack.setMuted(false);
   }
 
   store.dispatch(openVideo());
@@ -112,7 +119,7 @@ export class AgoraClient {
    await this.rtc.client.publish([this.rtc.audioTrack]);
   }
   //  第二次打开时，则使用 Muted 来控制音频的播放
-  if (this.audioTrackMuted) {
+  if (this.rtc.audioTrackMuted) {
    this.rtc.audioTrackMuted = false;
    this.rtc.audioTrack.setMuted(false);
   }
@@ -207,7 +214,7 @@ export class AgoraClient {
  }
  //  在开发环境下，将 rtc 和 rtm 挂载至全局的 Window 下，以便调试
  _debuuger() {
-  if (!window || process.env.NODE_ENV == "production") return;
+  // if (!window || process.env.NODE_ENV == "production") return;
   window.agoraRtc = this.rtc;
  }
  // 自带 prefix 的 log
