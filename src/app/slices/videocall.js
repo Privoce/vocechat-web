@@ -87,7 +87,9 @@ const videocallSlice = createSlice({
    state.device.camera = false;
   },
   addUser: (state, payload) => {
-   state.users.push(payload.payload.user);
+   if (!state.users.some((user) => user.id == payload.payload.user.id)) {
+    state.users.push(payload.payload.user);
+   }
   },
   removeUser: (state, payload) => {
    state.users = state.users.filter((user) => user.id != payload.payload.id);

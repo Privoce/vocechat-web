@@ -73,6 +73,8 @@ export class AgoraClient {
    });
   }
   this.rtc.client.leave();
+  this.audioTrack = null;
+  this.videoTrack = null;
   store.dispatch(resetState());
  }
  getUserById(uid) {
@@ -177,7 +179,6 @@ export class AgoraClient {
   // RTC 实现用户加入/离开的控制
   // 用来控制是否上具体信息。
   const handleRTCUserJoined = async (user) => {
-   this._log(user);
    store.dispatch(
     addUser({
      user: { id: parseInt(user.uid), openVideo: false, openMic: false }
