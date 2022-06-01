@@ -87,8 +87,10 @@ function Message({
 
   const pinInfo = getPinInfo(mid);
   // return null;
+  const _key = properties?.local_id || mid;
   return (
     <StyledWrapper
+      key={_key}
       onContextMenu={handleContextMenuEvent}
       data-msg-mid={mid}
       ref={inviewRef}
@@ -97,6 +99,8 @@ function Message({
       } ${contextMenuVisible ? "contextVisible" : ""} `}
     >
       <Tippy
+        key={_key}
+        popperOptions={{ strategy: "fixed" }}
         disabled={readOnly}
         interactive
         placement="left"

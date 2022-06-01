@@ -1,7 +1,7 @@
 // import { useRef } from "react";
 // import styled from "styled-components";
 import StyledMenu from "./styled/Menu";
-export default function ContextMenu({ items = [], hideMenu }) {
+export default function ContextMenu({ items = [], hideMenu = null }) {
   return (
     <StyledMenu>
       {items.map((item) => {
@@ -11,7 +11,9 @@ export default function ContextMenu({ items = [], hideMenu }) {
           icon = null,
           handler = (evt) => {
             evt.preventDefault();
-            hideMenu();
+            if (hideMenu) {
+              hideMenu();
+            }
           },
           underline = false,
           danger = false,
@@ -24,7 +26,9 @@ export default function ContextMenu({ items = [], hideMenu }) {
             key={title}
             onClick={(evt) => {
               handler(evt);
-              hideMenu();
+              if (hideMenu) {
+                hideMenu();
+              }
             }}
           >
             {icon}

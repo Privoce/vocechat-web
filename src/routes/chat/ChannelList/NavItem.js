@@ -128,10 +128,10 @@ const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
                 title: muted ? "Unmute" : "Mute",
                 handler: handleMute,
               },
-              {
-                title: "Notification Settings",
-                underline: true,
-              },
+              // {
+              //   title: "Notification Settings",
+              //   underline: true,
+              // },
               {
                 title: "Invite People",
                 handler: toggleInviteModalVisible,

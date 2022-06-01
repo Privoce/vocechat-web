@@ -3,14 +3,11 @@ import { useDebounce } from "rooks";
 import { NavLink, useLocation } from "react-router-dom";
 import Tippy from "@tippyjs/react";
 import { useDispatch, useSelector } from "react-redux";
-// import InfiniteScroll from "react-infinite-scroll-component";
 import PinList from "./PinList";
 import FavList from "../FavList";
 import { useReadMessageMutation } from "../../../app/services/message";
 import { updateRemeberedNavs } from "../../../app/slices/ui";
-// import useChatScroll from "../../../common/hook/useChatScroll";
-import useMessageFeed from "../../../common/hook/useMessageFeed";
-
+import useChatScroll from "../../../common/hook/useChatScroll";
 import ChannelIcon from "../../../common/component/ChannelIcon";
 import Tooltip from "../../../common/component/Tooltip";
 import Contact from "../../../common/component/Contact";
@@ -33,13 +30,8 @@ import {
   StyledHeader,
 } from "./styled";
 import InviteModal from "../../../common/component/InviteModal";
-import LoadMore from "./LoadMore";
 
 export default function ChannelChat({ cid = "", dropFiles = [] }) {
-  const { list: msgIds, appends, hasMore, pullDown } = useMessageFeed({
-    context: "channel",
-    id: cid,
-  });
   const [toolVisible, setToolVisible] = useState("");
   const { pathname } = useLocation();
   const dispatch = useDispatch();
@@ -49,7 +41,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
   const [addMemberModalVisible, setAddMemberModalVisible] = useState(false);
   const {
     selects,
-    // msgIds,
+    msgIds,
     userIds,
     data,
     messageData,
@@ -62,13 +54,13 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
       footprint: store.footprint,
       loginUser: store.contacts.byId[store.authData.uid],
       loginUid: store.authData.uid,
-      // msgIds: store.channelMessage[cid] || [],
+      msgIds: store.channelMessage[cid] || [],
       userIds: store.contacts.ids,
       data: store.channels.byId[cid] || {},
       messageData: store.message || {},
     };
   });
-  // const ref = useChatScroll(msgIds);
+  const ref = useChatScroll(msgIds);
   // const handleClearUnreads = () => {
   //   dispatch(readMessage(msgIds));
   // };
@@ -231,42 +223,41 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
           ) : null
         }
       >
-        <StyledChannelChat id="ScrollFeedWrapper">
-          {/* <div className="feed"> */}
-          {[...msgIds].map((mid, idx) => {
-            const curr = messageData[mid];
-            if (!curr) return null;
-            const isFirst = idx == 0;
-            const prev =
-              idx == msgIds.length - 1 ? null : messageData[msgIds[idx + 1]];
-            const read = curr?.from_uid == loginUid || mid <= readIndex;
-            return renderMessageFragment({
-              selectMode: !!selects,
-              updateReadIndex: updateReadDebounced,
-              read,
-              isFirst,
-              prev,
-              curr,
-              contextId: cid,
-              context: "channel",
-            });
-          })}
-          {hasMore ? (
-            <LoadMore pullDown={pullDown} />
-          ) : (
-            <div className="info">
-              <h2 className="title">Welcome to #{name} !</h2>
-              <p className="desc">This is the start of the #{name} channel. </p>
-              <NavLink
-                to={`/setting/channel/${cid}?f=${pathname}`}
-                className="edit"
-              >
-                <EditIcon className="icon" />
-                Edit Channel
-              </NavLink>
-            </div>
-          )}
-          {/* </div> */}
+        <StyledChannelChat ref={ref}>
+          <div className="info">
+            <h2 className="title">Welcome to #{name} !</h2>
+            <p className="desc">This is the start of the #{name} channel. </p>
+            <NavLink
+              to={`/setting/channel/${cid}?f=${pathname}`}
+              className="edit"
+            >
+              <EditIcon className="icon" />
+              Edit Channel
+            </NavLink>
+          </div>
+          <div className="feed">
+            {[...msgIds]
+              .sort((a, b) => {
+                return Number(a) - Number(b);
+              })
+              .map((mid, idx) => {
+                const curr = messageData[mid];
+                if (!curr) return null;
+                const isFirst = idx == 0;
+                const prev = idx == 0 ? null : messageData[msgIds[idx - 1]];
+                const read = curr?.from_uid == loginUid || mid <= readIndex;
+                return renderMessageFragment({
+                  selectMode: !!selects,
+                  updateReadIndex: updateReadDebounced,
+                  read,
+                  isFirst,
+                  prev,
+                  curr,
+                  contextId: cid,
+                  context: "channel",
+                });
+              })}
+          </div>
         </StyledChannelChat>
         {/* {unreads != 0 && (
         <StyledNotification>

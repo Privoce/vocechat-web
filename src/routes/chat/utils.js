@@ -179,10 +179,9 @@ export const renderMessageFragment = ({
     }
   }
   const _key = local_id || mid;
-  // console.log("_key", _key, local_id, mid);
+  console.log("_key", _key, local_id, mid);
   return (
     <React.Fragment key={_key}>
-      {divider && <Divider content={divider}></Divider>}
       <MessageWrapper
         key={_key}
         data-key={_key}
@@ -202,8 +201,17 @@ export const renderMessageFragment = ({
           contextId={contextId}
         />
       </MessageWrapper>
+      {divider && <Divider content={divider}></Divider>}
     </React.Fragment>
   );
+  // React.memo(
+  // (prevs, nexts) => {
+  //   // curr.properties?.local_id
+  //   const prevObj = prevs.curr || undefined;
+  //   const nextObj = nexts.curr || undefined;
+  //   return prevObj?.properties?.local_id === nextObj?.properties?.local_id;
+  // }
+  // );
 };
 
 export default getUnreadCount;

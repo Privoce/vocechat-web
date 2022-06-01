@@ -8,6 +8,7 @@ import { removeMessage } from "../slices/message";
 import { removeChannelSession } from "../slices/message.channel";
 import { removeReactionMessage } from "../slices/message.reaction";
 import { onMessageSendStarted } from "./handlers";
+import handleChatMessage from "../../common/hook/useStreaming/chat.handler";
 export const channelApi = createApi({
   reducerPath: "channelApi",
   baseQuery,
@@ -58,31 +59,19 @@ export const channelApi = createApi({
       },
     }),
     getHistoryMessages: builder.query({
-      query: ({ gid, mid = 0, limit = 50 }) => ({
-        url: `/group/${gid}/history?before=${mid}&limit=${limit}`,
+      query: ({ gid, mid = null, limit = 100 }) => ({
+        url: mid
+          ? `/group/${gid}/history?before=${mid}&limit=${limit}`
+          : `/group/${gid}/history?limit=${limit}`,
       }),
-      // async onQueryStarted(id, { dispatch, getState, queryFulfilled }) {
-      //   const {
-      //     ui: { channelSetting },
-      //     channelMessage,
-      //   } = getState();
-      //   try {
-      //     await queryFulfilled;
-      //     dispatch(removeChannel(id));
-      //     if (id == channelSetting) {
-      //       dispatch(toggleChannelSetting());
-      //     }
-      //     // 删掉该channel下的所有消息&reaction
-      //     const mids = channelMessage[id];
-      //     if (mids) {
-      //       dispatch(removeChannelSession(id));
-      //       dispatch(removeMessage(mids));
-      //       dispatch(removeReactionMessage(mids));
-      //     }
-      //   } catch {
-      //     console.log("remove channel error");
-      //   }
-      // },
+      async onQueryStarted(id, { dispatch, getState, queryFulfilled }) {
+        const { data: messages } = await queryFulfilled;
+        if (messages?.length) {
+          messages.forEach((msg) => {
+            handleChatMessage(msg, dispatch, getState());
+          });
+        }
+      },
     }),
     createInviteLink: builder.query({
       query: (gid) => ({

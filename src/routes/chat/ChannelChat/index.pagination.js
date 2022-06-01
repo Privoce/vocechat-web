@@ -2,15 +2,15 @@ import { useState, useEffect } from "react";
 import { useDebounce } from "rooks";
 import { NavLink, useLocation } from "react-router-dom";
 import Tippy from "@tippyjs/react";
-import InfiniteScroll from "react-infinite-scroller";
 import { useDispatch, useSelector } from "react-redux";
+// import InfiniteScroll from "react-infinite-scroll-component";
 import PinList from "./PinList";
-import LoadMore from "./LoadMore";
 import FavList from "../FavList";
 import { useReadMessageMutation } from "../../../app/services/message";
 import { updateRemeberedNavs } from "../../../app/slices/ui";
 // import useChatScroll from "../../../common/hook/useChatScroll";
 import useMessageFeed from "../../../common/hook/useMessageFeed";
+
 import ChannelIcon from "../../../common/component/ChannelIcon";
 import Tooltip from "../../../common/component/Tooltip";
 import Contact from "../../../common/component/Contact";
@@ -26,11 +26,17 @@ import IconHeadphone from "../../../assets/icons/headphone.svg";
 import boardosIcon from "../../../assets/icons/app.boardos.svg?url";
 import webrowseIcon from "../../../assets/icons/app.webrowse.svg?url";
 import addIcon from "../../../assets/icons/add.svg?url";
-import { StyledContacts, StyledChannelChat, StyledHeader } from "./styled";
+import {
+  // StyledNotification,
+  StyledContacts,
+  StyledChannelChat,
+  StyledHeader,
+} from "./styled";
 import InviteModal from "../../../common/component/InviteModal";
+import LoadMore from "./LoadMore";
 
 export default function ChannelChat({ cid = "", dropFiles = [] }) {
-  const { list: msgIdList, appends, hasMore, pullUp } = useMessageFeed({
+  const { list: msgIds, prepends, hasMore, pullDown } = useMessageFeed({
     context: "channel",
     id: cid,
   });
@@ -43,6 +49,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
   const [addMemberModalVisible, setAddMemberModalVisible] = useState(false);
   const {
     selects,
+    // msgIds,
     userIds,
     data,
     messageData,
@@ -55,16 +62,16 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
       footprint: store.footprint,
       loginUser: store.contacts.byId[store.authData.uid],
       loginUid: store.authData.uid,
+      // msgIds: store.channelMessage[cid] || [],
       userIds: store.contacts.ids,
       data: store.channels.byId[cid] || {},
       messageData: store.message || {},
     };
   });
-  // const ref = useChatScroll(mids);
+  // const ref = useChatScroll(msgIds);
   // const handleClearUnreads = () => {
   //   dispatch(readMessage(msgIds));
   // };
-  // remember the route while switching out
   useEffect(() => {
     dispatch(updateRemeberedNavs());
     return () => {
@@ -84,10 +91,10 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
     ? userIds
     : members.slice(0).sort((n) => (n == owner ? -1 : 0));
   const addVisible = loginUser?.is_admin || owner == loginUid;
+  console.log("channel message list", msgIds);
   const readIndex = footprint.readChannels[cid];
   const pinCount = data?.pinned_messages?.length || 0;
-  // const finalHasMore = selects ? false : hasMore;
-  const msgs = [...msgIdList, ...appends];
+  const feeds = [...prepends, ...msgIds];
   return (
     <>
       {addMemberModalVisible && (
@@ -211,10 +218,10 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
                   return (
                     <Contact
                       enableContextMenu={true}
+                      cid={cid}
                       owner={owner == uid}
                       key={uid}
                       uid={uid}
-                      cid={cid}
                       dm
                       popover
                     />
@@ -226,7 +233,28 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
         }
       >
         <StyledChannelChat id={`RUSTCHAT_FEED_channel_${cid}`}>
-          {!hasMore && (
+          {/* <div className="feed"> */}
+          {feeds.map((mid, idx) => {
+            const curr = messageData[mid];
+            if (!curr) return null;
+            const isFirst = idx == 0;
+            const prev =
+              idx == feeds.length - 1 ? null : messageData[feeds[idx + 1]];
+            const read = curr?.from_uid == loginUid || mid <= readIndex;
+            return renderMessageFragment({
+              selectMode: !!selects,
+              updateReadIndex: updateReadDebounced,
+              read,
+              isFirst,
+              prev,
+              curr,
+              contextId: cid,
+              context: "channel",
+            });
+          })}
+          {hasMore ? (
+            <LoadMore pullDown={pullDown} />
+          ) : (
             <div className="info">
               <h2 className="title">Welcome to #{name} !</h2>
               <p className="desc">This is the start of the #{name} channel. </p>
@@ -239,33 +267,6 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
               </NavLink>
             </div>
           )}
-          {/* <div className="feed"> */}
-          <InfiniteScroll
-            threshold={100}
-            hasMore={hasMore}
-            useWindow={false}
-            loader={<LoadMore />}
-            isReverse={true}
-            loadMore={pullUp}
-          >
-            {msgs.map((mid, idx) => {
-              const curr = messageData[mid];
-              if (!curr) return null;
-              const isFirst = idx == 0;
-              const prev = idx == 0 ? null : messageData[msgs[idx - 1]];
-              const read = curr?.from_uid == loginUid || mid <= readIndex;
-              return renderMessageFragment({
-                selectMode: !!selects,
-                updateReadIndex: updateReadDebounced,
-                read,
-                isFirst,
-                prev,
-                curr,
-                contextId: cid,
-                context: "channel",
-              });
-            })}
-          </InfiniteScroll>
           {/* </div> */}
         </StyledChannelChat>
         {/* {unreads != 0 && (
