@@ -104,6 +104,7 @@ export default function Control({ client }) {
        currentOutput={currentPlayBack}
        inputs={mics}
        outputs={playbacks}
+       client={client}
       />
      </div>
      <div
@@ -121,7 +122,7 @@ export default function Control({ client }) {
     </div>
     <div className="button">
      <div className="dropdown">
-      <DeviceSelector type="camera" currentInput={currentCamera} inputs={cameras} />
+      <DeviceSelector type="camera" currentInput={currentCamera} inputs={cameras} client={client} />
      </div>
      <div
       className="btn"

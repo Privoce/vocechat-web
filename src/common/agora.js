@@ -12,7 +12,8 @@ import {
  openUserMic,
  closeUserMic,
  setDevices,
- resetState
+ resetState,
+ setDevice
 } from "../app/slices/videocall.js";
 
 export class AgoraClient {
@@ -96,6 +97,7 @@ export class AgoraClient {
   if (!this.rtc.videoTrack) {
    this.rtc.videoTrack = await AgoraRTC.createCameraVideoTrack();
    await this.rtc.client.publish([this.rtc.videoTrack]);
+   this._initDefaultCamera();
   }
   // 第二次打开时，则使用 Muted 来控制视频的播放
   if (this.rtc.videoTrackMuted) {
@@ -117,6 +119,7 @@ export class AgoraClient {
   if (!this.rtc.audioTrack) {
    this.rtc.audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
    await this.rtc.client.publish([this.rtc.audioTrack]);
+   this._initDefaultMicrophone();
   }
   //  第二次打开时，则使用 Muted 来控制音频的播放
   if (this.rtc.audioTrackMuted) {
@@ -130,6 +133,17 @@ export class AgoraClient {
   this.rtc.audioTrackMuted = true;
   this.rtc.audioTrack.setMuted(true);
   store.dispatch(closeMic());
+ }
+ setDevice(deviceId, type) {
+  if (type == "camera") {
+   this.rtc.videoTrack.setDevice(deviceId);
+  }
+  if (type == "microphone") {
+   this.rtc.audioTrack.setDevice(deviceId);
+  }
+  if (type == "playback") {
+   this.rtc.audioTrack.setPlaybackDevice(deviceId);
+  }
  }
  // private function
  _initCallbacks() {
@@ -254,5 +268,23 @@ export class AgoraClient {
   AgoraRTC.onPlaybackDeviceChanged = async () => {
    await this._initDevice();
   };
+ }
+ async _initDefaultMicrophone() {
+  const microphone = await AgoraRTC.getMicrophones();
+  const microphones = microphone.map((item) => {
+   return { deviceId: item.deviceId, label: item.label };
+  });
+  store.dispatch(setDevice({ deviceId: microphones[0].deviceId, type: "microphone" }));
+  this.setDevice(microphones[0].deviceId, "microphone");
+ }
+ async _initDefaultCamera() {
+  const camera = await AgoraRTC.getCameras();
+
+  const cameras = camera.map((item) => {
+   return { deviceId: item.deviceId, label: item.label };
+  });
+
+  store.dispatch(setDevice({ deviceId: cameras[0].deviceId, type: "camera" }));
+  this.setDevice(cameras[0].deviceId, "camera");
  }
 }

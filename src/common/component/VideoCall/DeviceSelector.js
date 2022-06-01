@@ -61,7 +61,15 @@ const Wrapper = styled.div`
   }
  }
 `;
-export function Device({ type, inputs, outputs, currentInput, currentOutput, handleClick }) {
+export function Device({
+ type,
+ inputs,
+ outputs,
+ currentInput,
+ currentOutput,
+ handleClick,
+ client
+}) {
  return (
   <Wrapper>
    <>
@@ -76,6 +84,7 @@ export function Device({ type, inputs, outputs, currentInput, currentOutput, han
            <div
             className="radio"
             onClick={() => {
+             client.setDevice(device.deviceId, "camera");
              handleClick(device.deviceId, "camera");
             }}
            >
@@ -85,6 +94,7 @@ export function Device({ type, inputs, outputs, currentInput, currentOutput, han
             src={device.deviceId == currentInput ? radioCheckedIcon : radioIcon}
             alt="radio"
             onClick={() => {
+             client.setDevice(device.deviceId, "camera");
              handleClick(device.deviceId, "camera");
             }}
             className="radio-icon"
@@ -104,14 +114,23 @@ export function Device({ type, inputs, outputs, currentInput, currentOutput, han
         return (
          <div key={device.deviceId}>
           <div className="item">
-           <div className="radio" onClick={() => handleClick(device.deviceId, "microphone")}>
+           <div
+            className="radio"
+            onClick={() => {
+             client.setDevice(device.deviceId, "microphone");
+             handleClick(device.deviceId, "microphone");
+            }}
+           >
             {device.label}
            </div>
            <img
             src={device.deviceId == currentInput ? radioCheckedIcon : radioIcon}
             alt="radio"
             className="radio-icon"
-            onClick={() => handleClick(device.deviceId, "microphone")}
+            onClick={() => {
+             client.setDevice(device.deviceId, "microphone");
+             handleClick(device.deviceId, "microphone");
+            }}
            />
           </div>
          </div>
@@ -125,12 +144,21 @@ export function Device({ type, inputs, outputs, currentInput, currentOutput, han
         return (
          <div key={device.deviceId}>
           <div className="item">
-           <div className="radio" onClick={() => handleClick(device.deviceId, "playback")}>
+           <div
+            className="radio"
+            onClick={() => {
+             client.setDevice(device.deviceId, "playback");
+             handleClick(device.deviceId, "playback");
+            }}
+           >
             {device.label}
            </div>
            <img
             src={device.deviceId == currentOutput ? radioCheckedIcon : radioIcon}
-            onClick={() => handleClick(device.deviceId, "playback")}
+            onClick={() => {
+             client.setDevice(device.deviceId, "playback");
+             handleClick(device.deviceId, "playback");
+            }}
             alt="radio"
             className="radio-icon"
            />
@@ -145,7 +173,14 @@ export function Device({ type, inputs, outputs, currentInput, currentOutput, han
   </Wrapper>
  );
 }
-export default function DeviceSelector({ type, inputs, outputs, currentInput, currentOutput }) {
+export default function DeviceSelector({
+ type,
+ inputs,
+ outputs,
+ currentInput,
+ currentOutput,
+ client
+}) {
  const dispatch = useDispatch();
  const [visible, setVisible] = useState(false);
  const show = () => setVisible(true);
@@ -171,6 +206,7 @@ export default function DeviceSelector({ type, inputs, outputs, currentInput, cu
       currentInput={currentInput}
       currentOutput={currentOutput}
       handleClick={handleClick}
+      client={client}
      />
     }
    >
