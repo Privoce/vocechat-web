@@ -42,7 +42,6 @@ const Wrapper = styled.div`
     border-radius: 16px;
    }
    .name {
-    font-family: "Inter";
     font-style: normal;
     font-weight: 600;
     font-size: 14px;
@@ -136,7 +135,6 @@ const Wrapper = styled.div`
      width: 42px;
      height: 20px;
 
-     font-family: "Inter";
      font-style: normal;
      font-weight: 600;
      font-size: 14px;

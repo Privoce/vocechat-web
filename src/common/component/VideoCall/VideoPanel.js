@@ -48,7 +48,6 @@ const Wrapper = styled.div`
 
    /* Text sm/Semibold */
 
-   font-family: "Inter";
    font-style: normal;
    font-weight: 600;
    font-size: 14px;

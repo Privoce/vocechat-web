@@ -26,7 +26,6 @@ const Wrapper = styled.div`
   margin-bottom: 13px;
  }
  .title {
-  font-family: "Inter";
   font-style: normal;
   font-weight: 700;
   font-size: 12px;
@@ -45,7 +44,6 @@ const Wrapper = styled.div`
   gap: 8px;
   .radio {
    padding: 8px;
-   font-family: "Inter";
    font-style: normal;
    font-weight: 600;
    font-size: 14px;
