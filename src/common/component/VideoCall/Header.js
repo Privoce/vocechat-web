@@ -23,6 +23,9 @@ const Wrapper = styled.div`
   order: 0;
   flex-grow: 0;
  }
+ .icon {
+  cursor: pointer;
+ }
 `;
 export default function Header() {
  return (

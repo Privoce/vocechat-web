@@ -26,6 +26,7 @@ const Wrapper = styled.div`
  .icon {
   width: 24px;
   height: 24px;
+  cursor: pointer;
  }
  .actions {
   display: flex;
@@ -45,6 +46,7 @@ const Wrapper = styled.div`
    height: 4.75px;
    left: calc(76% - 8px / 2);
    top: calc(5% - 4.75px / 2 + 0.62px);
+   cursor: pointer;
   }
   .button {
    position: relative;
@@ -53,6 +55,7 @@ const Wrapper = styled.div`
    flex: none;
    order: 0;
    flex-grow: 0;
+
    .btn {
     display: flex;
     flex-direction: row;
@@ -73,6 +76,7 @@ const Wrapper = styled.div`
    padding: 8px 12px;
    background: #d92d20;
    border-radius: 8px;
+   cursor: pointer;
 
    width: 210px;
    height: 40px;
