@@ -62,6 +62,8 @@ export class AgoraClient {
   // load device for system.
   await this._initDevice();
   await this._initDeviceChange();
+  this.openMic();
+  this.openVideo();
  }
 
  async leave() {
