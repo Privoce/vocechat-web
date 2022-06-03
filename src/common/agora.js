@@ -13,7 +13,9 @@ import {
  closeUserMic,
  setDevices,
  resetState,
- setDevice
+ setDevice,
+ setVolume,
+ setUserVolume
 } from "../app/slices/videocall.js";
 
 export class AgoraClient {
@@ -152,10 +154,19 @@ export class AgoraClient {
  // private function
  _initCallbacks() {
   // rtc
-  // this.rtc.client.enableAudioVolumeIndicator();
+  this.rtc.client.enableAudioVolumeIndicator();
   this.rtc.client.on("volume-indicator", (volumes) => {
    if (volumes.length == 0) return; // 没有人说话
-   console.log("[agora] voulume", volumes);
+
+   volumes.map((item) => {
+    // set current user volume
+    this._log("volume", item);
+    if (item.uid == this.uid) {
+     store.dispatch(setVolume(parseInt(item.level)));
+    }
+    // set other user volume
+    store.dispatch(setUserVolume({ id: item.uid, volume: parseInt(item.level) }));
+   });
   });
 
   const handleRTCUserPublished = async (user, type) => {
@@ -183,7 +194,12 @@ export class AgoraClient {
   const handleRTCUserJoined = async (user) => {
    store.dispatch(
     addUser({
-     user: { id: parseInt(user.uid), openVideo: false, openMic: false }
+     user: {
+      id: parseInt(user.uid),
+      openVideo: false,
+      openMic: false,
+      volume: 0
+     }
     })
    );
   };

@@ -10,7 +10,8 @@ const initialState = {
   share: false,
   currentMic: "default",
   currentCamera: "default",
-  currentPlayBack: "default"
+  currentPlayBack: "default",
+  volume: 0
  },
  // 用于记录所有系统设备
  devices: {
@@ -100,7 +101,8 @@ const videocallSlice = createSlice({
     return {
      id: item,
      openMic: false,
-     openVide: false
+     openVide: false,
+     volume: 0
     };
    });
    state.users.push(...users);
@@ -130,6 +132,14 @@ const videocallSlice = createSlice({
    state.devices.mics = microphone;
    state.devices.cameras = camera;
    state.devices.playbacks = playback;
+  },
+  setUserVolume: (state, payload) => {
+   const id = payload.payload.id;
+   const user = state.users.find((user) => user.id == id);
+   user.volume = payload.payload.volume;
+  },
+  setVolume: (state, payload) => {
+   state.device.volume = payload.payload;
   }
  }
 });
@@ -157,6 +167,8 @@ export const {
  openUserMic,
  closeUserMic,
  setDevices,
- addUsers
+ addUsers,
+ setVolume,
+ setUserVolume
 } = videocallSlice.actions;
 export default videocallSlice.reducer;

@@ -84,7 +84,13 @@ export default function VideoPanel({ cid, client }) {
     <div className="videoPanel">
      <Header />
      <div className="users">
-      <User id={uid} openMic={device.mic} openVideo={device.camera} client={client} />
+      <User
+       id={uid}
+       openMic={device.mic}
+       openVideo={device.camera}
+       client={client}
+       volume={device.volume}
+      />
       {users.map((item) => {
        return (
         <User
@@ -93,6 +99,7 @@ export default function VideoPanel({ cid, client }) {
          openMic={item.openMic}
          openVideo={item.openVideo}
          client={client}
+         volume={item.volume}
         />
        );
       })}

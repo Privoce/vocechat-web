@@ -5,7 +5,11 @@ import MicDisabledIcon from "../../../assets/icons/mic.disabled.svg?url";
 import soundOnIcon from "../../../assets/icons/sound.on.svg?url";
 import soundOffIcon from "../../../assets/icons/sound.off.svg?url";
 import micRedOffIcon from "../../../assets/icons/mic.red.svg?url";
-import micRedOnIcon from "../../../assets/icons/mic.red.on.svg?url";
+import ZeroIcon from "../../../assets/icons/volume/0.svg?url";
+import OneIcon from "../../../assets/icons/volume/1.svg?url";
+import TwoIcon from "../../../assets/icons/volume/2.svg?url";
+import ThreeIcon from "../../../assets/icons/volume/3.svg?url";
+import FourIcon from "../../../assets/icons/volume/4.svg?url";
 import { useSelector } from "react-redux";
 import AgoraVideoPlayer from "./VideoPlayer";
 const Wrapper = styled.div`
@@ -156,10 +160,25 @@ const Wrapper = styled.div`
   }
  }
 `;
-export default function User({ id, openMic, openVideo, client }) {
+export default function User({ id, openMic, openVideo, volume, client }) {
  const byId = useSelector((state) => state.contacts.byId);
  const user = byId[id];
  const userWithTrack = client.getUserById(id);
+ const volumeIcon = () => {
+  if (parseInt(volume) > 90) {
+   return FourIcon;
+  }
+  if (parseInt(volume) > 50) {
+   return ThreeIcon;
+  }
+  if (parseInt(volume) > 30) {
+   return TwoIcon;
+  }
+  if (parseInt(volume) > 10) {
+   return OneIcon;
+  }
+  return ZeroIcon;
+ };
  return (
   <Wrapper>
    {openVideo && (
@@ -167,7 +186,7 @@ export default function User({ id, openMic, openVideo, client }) {
      <div className="player">
       <AgoraVideoPlayer className="agora-player" videoTrack={userWithTrack?.videoTrack} />
       <div className="name-tag">
-       <img src={openMic ? micRedOnIcon : micRedOffIcon} alt="mic close icon" className="icon" />
+       <img src={openMic ? volumeIcon() : micRedOffIcon} alt="mic close icon" className="icon" />
        <span className="label">{user.name}</span>
       </div>
      </div>
