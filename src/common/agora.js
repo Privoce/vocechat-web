@@ -43,29 +43,25 @@ export class AgoraClient {
   this._log("create rtc client");
   this._debuuger();
  }
- // 加入 Channel & 发布当前本地的 Track
- // 在第一版当中，采用了 RTC 作为基本的数据发布 & 同步的能力，出现了诸如 1. 用户信息无法很好的维护；2. 用户行为无法很好的记录等问题
- // 在当前重构版本中，采用了 RTM 进行信令的发布，从而规避了 AgoraRTC 本身的一些设计的不合理之处（Muted 掉一个服务，会导致 RTC Track 被 unpublished）
- // 因此，这个版本中优先使用 RTM，RTC 仅用做流的同步。
- // 用户信息也采用 RTM 的 Memebers 来进行管理。
-
- // TODO: 部分已经发布的 track 无法正常播放，需要进一步解决
 
  async join(channelId) {
-  //   join rtc
-  await this.rtc.client.join(
-   this.appId,
-   this._getChchannelNameById(channelId),
-   this.token,
-   this.uid
-  );
+  try {
+   //   join rtc
+   await this.rtc.client.join(
+    this.appId,
+    this._getChchannelNameById(channelId),
+    this.token,
+    this.uid
+   );
 
-  this._initCallbacks();
-  // load device for system.
-  await this._initDevice();
-  await this._initDeviceChange();
-  this.openMic();
-  this.openVideo();
+   this._initCallbacks();
+   await this._initDevice();
+   await this._initDeviceChange();
+   this.openMic();
+   this.openVideo();
+  } catch (error) {
+   this._log("join error", error);
+  }
  }
 
  async leave() {
@@ -160,12 +156,12 @@ export class AgoraClient {
 
    volumes.map((item) => {
     // set current user volume
-    this._log("volume", item);
     if (item.uid == this.uid) {
      store.dispatch(setVolume(parseInt(item.level)));
+    } else {
+     store.dispatch(setUserVolume({ id: item.uid, volume: parseInt(item.level) }));
     }
     // set other user volume
-    store.dispatch(setUserVolume({ id: item.uid, volume: parseInt(item.level) }));
    });
   });
 
