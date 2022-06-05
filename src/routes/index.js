@@ -24,6 +24,7 @@ import SettingChannelPage from "./settingChannel";
 import OnboardingPage from "./onboarding";
 import toast from "react-hot-toast";
 import ResourceManagement from "./resources";
+import RequireInitialized from "../common/component/RequireInitialized";
 
 const PageRoutes = () => {
  const {
@@ -49,9 +50,11 @@ const PageRoutes = () => {
     <Route
      path="/login"
      element={
-      <RequireNoAuth>
-       <LoginPage />
-      </RequireNoAuth>
+      <RequireInitialized>
+       <RequireNoAuth>
+        <LoginPage />
+       </RequireNoAuth>
+      </RequireInitialized>
      }
     />
     <Route
@@ -89,9 +92,11 @@ const PageRoutes = () => {
     <Route
      path="/"
      element={
-      <RequireAuth>
-       <HomePage />
-      </RequireAuth>
+      <RequireInitialized>
+       <RequireAuth>
+        <HomePage />
+       </RequireAuth>
+      </RequireInitialized>
      }
     >
      <Route path="setting">

@@ -1,7 +1,10 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
+import toast from "react-hot-toast";
 import StyledInput from "../../../common/component/styled/Input";
 import StyledButton from "../../../common/component/styled/Button";
-import toast from "react-hot-toast";
+import { useCreateAdminMutation } from "../../../app/services/server";
+import { useLoginMutation } from "../../../app/services/auth";
 
 const StyledAdminCredentialsStep = styled.div`
  height: 100%;
@@ -19,7 +22,34 @@ const StyledAdminCredentialsStep = styled.div`
  }
 `;
 
-export default function AdminCredentialsStep({ step, setStep, data, setData }) {
+export default function AdminCredentialsStep({ step, setStep }) {
+ const [
+  createAdmin,
+  { isLoading: isSignUpLoading, isSuccess: isSignUpSuccess, error: signUpError }
+ ] = useCreateAdminMutation();
+ const [login, { isLoading: isLoginLoading, isSuccess: isLoginSuccess, error: loginError }] =
+  useLoginMutation();
+
+ const [email, setEmail] = useState("");
+ const [password, setPassword] = useState("");
+ const [confirm, setConfirm] = useState("");
+
+ // Display error
+ useEffect(() => {
+  if (signUpError === undefined) return;
+  toast.error(`Failed to sign up: ${signUpError.data}`);
+ }, [signUpError]);
+
+ useEffect(() => {
+  if (loginError === undefined) return;
+  toast.error(`Login failed: ${loginError.data}`);
+ }, [loginError]);
+
+ // Increment `step` when both signing up and logging in have completed
+ useEffect(() => {
+  if (isSignUpSuccess && isLoginSuccess) setStep(step + 1);
+ }, [isSignUpSuccess, isLoginSuccess]);
+
  return (
   <StyledAdminCredentialsStep>
    <span className="primaryText">Now let’s set up your admin account</span>
@@ -27,56 +57,51 @@ export default function AdminCredentialsStep({ step, setStep, data, setData }) {
    <StyledInput
     className="input"
     placeholder="Enter your email"
-    value={data.adminEmail}
-    onChange={(e) =>
-     setData({
-      ...data,
-      adminEmail: e.target.value
-     })
-    }
+    value={email}
+    onChange={(e) => setEmail(e.target.value)}
    />
    <StyledInput
     className="input"
     type="password"
     placeholder="Enter your password"
-    value={data.adminPassword}
-    onChange={(e) =>
-     setData({
-      ...data,
-      adminPassword: e.target.value
-     })
-    }
+    value={password}
+    onChange={(e) => setPassword(e.target.value)}
    />
    <StyledInput
     className="input"
     type="password"
     placeholder="Confirm your password"
-    value={data.adminPassword2}
-    onChange={(e) =>
-     setData({
-      ...data,
-      adminPassword2: e.target.value
-     })
-    }
+    value={confirm}
+    onChange={(e) => setConfirm(e.target.value)}
    />
    <StyledButton
     className="button"
-    onClick={() => {
+    onClick={async () => {
      // Verification for admin credentials
-     if (data.adminEmail === "") {
+     if (email === "") {
       toast.error("Please enter admin email!");
       return;
-     } else if (data.adminPassword === "") {
+     } else if (password === "") {
       toast.error("Please enter admin password!");
       return;
-     } else if (data.adminPassword !== data.adminPassword2) {
+     } else if (password !== confirm) {
       toast.error("Two passwords do not match!");
       return;
      }
-     setStep(step + 1);
+     await createAdmin({
+      email,
+      name: "Admin",
+      password,
+      gender: 0
+     });
+     await login({
+      email,
+      password,
+      type: "password"
+     });
     }}
    >
-    Sign Up
+    {!(isSignUpLoading || isLoginLoading) ? "Sign Up" : "..."}
    </StyledButton>
   </StyledAdminCredentialsStep>
  );

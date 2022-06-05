@@ -11,11 +11,7 @@ import StyledOnboardingPage from "./styled";
 export default function OnboardingPage() {
  const [step, setStep] = useState(0);
  const [data, setData] = useState({
-  spaceName: "",
-  adminEmail: "",
-  adminPassword: "",
-  adminPassword2: "",
-  inviteRule: null
+  spaceName: ""
  });
  const props = { step, setStep, data, setData };
 
