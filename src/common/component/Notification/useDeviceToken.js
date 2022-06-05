@@ -2,9 +2,9 @@ import { useState } from "react";
 import { initializeApp } from "firebase/app";
 import { getToken, getMessaging } from "firebase/messaging";
 import { firebaseConfig } from "../../../app/config";
-const messaging = getMessaging(initializeApp(firebaseConfig));
 const useDeviceToken = (vapidKey) => {
   const [token, setToken] = useState(null);
+  const messaging = getMessaging(initializeApp(firebaseConfig));
 
   getToken(messaging, {
     vapidKey,

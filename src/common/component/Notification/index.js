@@ -20,12 +20,13 @@ const Notification = () => {
       const { newPath } = event.data;
       navigateTo(newPath);
     };
-    navigator.serviceWorker.addEventListener(
+    // https only
+    navigator.serviceWorker?.addEventListener(
       "message",
       handleServiceworkerMessage
     );
     return () => {
-      navigator.serviceWorker.removeEventListener(
+      navigator.serviceWorker?.removeEventListener(
         "message",
         handleServiceworkerMessage
       );
