@@ -23,19 +23,16 @@ export class AgoraClient {
   this.uid = uid;
   this.cid = cid;
   this.rtc = {
-   client: null,
    audioTrack: null,
-   videotrack: null,
+   videoTrack: null,
    videoTrackMuted: true,
    audioTrackMuted: true,
-   remoteUser: [],
-   isLogin: false
+   remoteUser: []
   };
 
   this.rtm = {
    client: null,
-   channel: null,
-   isLogin: false
+   channel: null
   };
   this.token = null;
   this.appId = "020c861b44424b0eb0ff768ee9bffda2";
@@ -146,6 +143,33 @@ export class AgoraClient {
   if (type == "playback") {
    this.rtc.audioTrack.setPlaybackDevice(deviceId);
   }
+ }
+ async openScreenShare() {
+  // 如果有摄像头 Track 就先取消播放；
+  if (this.rtc.videoTrack) {
+   await this.rtc.videoTrack.stop();
+   await this.rtc.videoTrack.close();
+   await this.rtc.client.unpublish([this.rtc.videoTrack]);
+  }
+  // 创建 screen share 并发布
+  this.rtc.videoTrack = await AgoraRTC.createScreenVideoTrack(
+   {
+    encoderConfig: "1080p_1",
+    optimizationMode: "motion" // 流畅优先
+   },
+   "disable"
+  );
+  await this.rtc.client.publish([this.rtc.videoTrack]);
+  store.dispatch(openVideo());
+ }
+ async closeScreenShare() {
+  store.dispatch(closeVideo());
+  // 取消发布现有的 Track；
+  this.rtc.videoTrack.stop();
+  this.rtc.videoTrack.close();
+  await this.rtc.client.unpublish([this.rtc.videoTrack]);
+  this.rtc.videoTrack = null;
+  this.videoTrackMuted = true;
  }
  // private function
  _initCallbacks() {

@@ -98,6 +98,7 @@ export default function VideoPanel({ cid, client }) {
          id={item.id}
          openMic={item.openMic}
          openVideo={item.openVideo}
+         openShare={item.openShare}
          client={client}
          volume={item.volume}
         />

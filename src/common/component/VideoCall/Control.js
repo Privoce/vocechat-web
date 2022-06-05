@@ -142,6 +142,11 @@ export default function Control({ client }) {
      <div
       className="btn"
       onClick={() => {
+       if (!share) {
+        client.openScreenShare();
+       } else {
+        client.closeScreenShare();
+       }
        dispatch(toggleShare());
       }}
      >
