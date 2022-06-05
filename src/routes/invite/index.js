@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import StyledWrapper from "./styled";
-import { useNavigate, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import BASE_URL from "../../app/config";
 import { useRegisterMutation } from "../../app/services/contact";
@@ -14,7 +14,7 @@ export default function InvitePage() {
   const [token, setToken] = useState("");
   const [valid, setValid] = useState(false);
   // const [sp] = useSearchParams();
-  const navigateTo = useNavigate();
+  // const navigateTo = useNavigate();
   const [
     register,
     { data, isLoading, isSuccess, isError, error },
@@ -90,7 +90,8 @@ export default function InvitePage() {
       // 去登录
       toast.success("register success, login please");
       setTimeout(() => {
-        navigateTo("/login");
+        location.href = `/#/login`;
+        // navigateTo("/login",);
       }, 500);
     } else if (isError) {
       console.log("register failed", error);
