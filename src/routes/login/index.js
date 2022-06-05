@@ -140,6 +140,7 @@ export default function LoginPage() {
     metamask: enableMetamaskLogin,
     oidc,
   } = loginConfig;
+  const enableMagicLink = enableSMTP && magic_link;
   const googleLogin = enableGoogleLogin && clientId;
   return (
     <StyledWrapper>
@@ -177,11 +178,11 @@ export default function LoginPage() {
             {isLoading ? "Signing" : `Sign in`}
           </Button>
         </form>
-        {(magic_link ||
+        {(enableMagicLink ||
           googleLogin ||
           enableMetamaskLogin ||
           oidc.length > 0) && <hr className="or" />}
-        {enableSMTP && magic_link && <MagicLinkLogin />}
+        {enableMagicLink && <MagicLinkLogin />}
         {googleLogin && <GoogleLoginButton login={login} clientId={clientId} />}
         <GithubLoginButton config={githubAuthConfig} />
         {enableMetamaskLogin && <MetamaskLoginButton login={login} />}
