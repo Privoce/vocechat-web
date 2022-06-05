@@ -3,10 +3,12 @@ import { useDebounce } from "rooks";
 import { NavLink, useLocation } from "react-router-dom";
 import Tippy from "@tippyjs/react";
 import { useDispatch, useSelector } from "react-redux";
+// import InfiniteScroll from "react-infinite-scroll-component";
 import PinList from "./PinList";
 import FavList from "../FavList";
 import { useReadMessageMutation } from "../../../app/services/message";
 import { updateRemeberedNavs } from "../../../app/slices/ui";
+// import useChatScroll from "../../../common/hook/useChatScroll";
 import useMessageFeed from "../../../common/hook/useMessageFeed";
 
 import ChannelIcon from "../../../common/component/ChannelIcon";
@@ -34,7 +36,7 @@ import InviteModal from "../../../common/component/InviteModal";
 import LoadMore from "./LoadMore";
 
 export default function ChannelChat({ cid = "", dropFiles = [] }) {
-  const { list: msgIds, appends, hasMore, pullUp } = useMessageFeed({
+  const { list: msgIds, prepends, hasMore, pullDown } = useMessageFeed({
     context: "channel",
     id: cid,
   });
@@ -92,7 +94,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
   console.log("channel message list", msgIds);
   const readIndex = footprint.readChannels[cid];
   const pinCount = data?.pinned_messages?.length || 0;
-  const feeds = [...msgIds, ...appends];
+  const feeds = [...prepends, ...msgIds];
   return (
     <>
       {addMemberModalVisible && (
@@ -231,9 +233,27 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
         }
       >
         <StyledChannelChat id={`RUSTCHAT_FEED_channel_${cid}`}>
-          {/* <div className="anchor"></div> */}
+          {/* <div className="feed"> */}
+          {feeds.map((mid, idx) => {
+            const curr = messageData[mid];
+            if (!curr) return null;
+            const isFirst = idx == 0;
+            const prev =
+              idx == feeds.length - 1 ? null : messageData[feeds[idx + 1]];
+            const read = curr?.from_uid == loginUid || mid <= readIndex;
+            return renderMessageFragment({
+              selectMode: !!selects,
+              updateReadIndex: updateReadDebounced,
+              read,
+              isFirst,
+              prev,
+              curr,
+              contextId: cid,
+              context: "channel",
+            });
+          })}
           {hasMore ? (
-            <LoadMore pullUp={pullUp} />
+            <LoadMore pullDown={pullDown} />
           ) : (
             <div className="info">
               <h2 className="title">Welcome to #{name} !</h2>
@@ -247,25 +267,6 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
               </NavLink>
             </div>
           )}
-          {/* <div className="feed"> */}
-          {feeds.map((mid, idx) => {
-            const curr = messageData[mid];
-            if (!curr) return null;
-            const isFirst = idx == 0;
-            const prev = isFirst ? null : messageData[feeds[idx - 1]];
-            const read = curr?.from_uid == loginUid || mid <= readIndex;
-            return renderMessageFragment({
-              selectMode: !!selects,
-              updateReadIndex: updateReadDebounced,
-              read,
-              isFirst,
-              prev,
-              curr,
-              contextId: cid,
-              context: "channel",
-            });
-          })}
-
           {/* </div> */}
         </StyledChannelChat>
         {/* {unreads != 0 && (

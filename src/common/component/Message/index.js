@@ -103,7 +103,7 @@ function Message({
         popperOptions={{ strategy: "fixed" }}
         disabled={readOnly}
         interactive
-        placement="left"
+        placement="right"
         trigger="click"
         content={<Profile uid={fromUid} type="card" cid={contextId} />}
       >

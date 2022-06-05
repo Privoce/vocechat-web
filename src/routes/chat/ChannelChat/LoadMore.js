@@ -11,7 +11,7 @@ const Styled = styled.div`
   padding: 30px 0;
   /* background-color: #eee; */
 `;
-export default function LoadMore({ pullDown = null }) {
+export default function LoadMore({ pullUp = null }) {
   const ref = useRef(undefined);
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -19,10 +19,10 @@ export default function LoadMore({ pullDown = null }) {
         entries.forEach((entry) => {
           const intersecting = entry.isIntersecting;
           //   const currEle = entry.target;
-          if (intersecting && pullDown) {
+          if (intersecting && pullUp) {
             // load more
             console.log("inview");
-            pullDown();
+            pullUp();
           }
         });
       },
@@ -37,7 +37,7 @@ export default function LoadMore({ pullDown = null }) {
         observer.unobserve(currEle);
       }
     };
-  }, [ref, pullDown]);
+  }, [ref, pullUp]);
   return (
     <Styled ref={ref}>
       <Waveform

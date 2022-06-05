@@ -1,8 +1,10 @@
 import { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useLazyGetHistoryMessagesQuery } from "../../app/services/channel";
+
 const getFeedWithPagination = (config) => {
-  const { pageNumber = 1, pageSize = 20, mids = [] } = config || {};
+  const { pageNumber = 1, pageSize = 30, mids = [], isLast = false } =
+    config || {};
   const shadowMids = mids.slice(0);
 
   if (shadowMids.length == 0)
@@ -15,119 +17,112 @@ const getFeedWithPagination = (config) => {
       ids: [],
     };
   shadowMids.sort((a, b) => {
-    return Number(b) - Number(a);
+    return Number(a) - Number(b);
   });
   console.log("message pagination", shadowMids);
   const pageCount = Math.ceil(shadowMids.length / pageSize);
+  const computedPageNumber = isLast ? pageCount : pageNumber;
   const ids = shadowMids.slice(
-    (pageNumber - 1) * pageSize,
-    pageNumber * pageSize
+    (computedPageNumber - 1) * pageSize,
+    computedPageNumber * pageSize
   );
-  const info = {
-    isFirst: pageNumber == 1,
-    isLast: pageNumber == pageCount,
+  return {
+    isFirst: computedPageNumber == 1,
+    isLast: computedPageNumber == pageCount,
     pageCount,
     pageSize,
-    pageNumber,
+    pageNumber: computedPageNumber,
     ids,
   };
-  console.log("get page Info", info);
-  return info;
 };
+let curScrollPos = 0;
+let oldScroll = 0;
 export default function useMessageFeed({ context = "channel", id = null }) {
   const [loadMoreFromServer] = useLazyGetHistoryMessagesQuery();
   const listRef = useRef([]);
   const pageRef = useRef(null);
+  const containerRef = useRef(null);
   const [hasMore, setHasMore] = useState(true);
-  const [prepends, setPrepends] = useState([]);
-  // const [appends, setAppends] = useState([]);
+  const [appends, setAppends] = useState([]);
   const [items, setItems] = useState([]);
-  const { mids } = useSelector((store) => {
+  const { mids, messageData, loginUid } = useSelector((store) => {
     return {
+      loginUid: store.authData.uid,
       mids:
         context == "channel"
           ? store.channelMessage[id] || []
           : store.userMessage.byId[id] || [],
-      // messageData: store.message,
+      messageData: store.message,
     };
   });
   useEffect(() => {
     listRef.current = [];
     pageRef.current = [];
     setItems([]);
-    setPrepends([]);
     setHasMore(true);
-    // setAppends([]);
+    setAppends([]);
   }, [context, id]);
-  // useEffect(() => {
-  //   if (prepends.length) {
-  //     const feedsWrapperEle = document.querySelector(
-  //       `#RUSTCHAT_FEED_${context}_${id}`
-  //     );
-  //     const [newestId]=prepends;
-
-  //     if (feedsWrapperEle) {
-  //       feedsWrapperEle.scrollTop = feedsWrapperEle.scrollHeight;
-  //     }
-  //   }
-  // }, [prepends, context, id,messageData]);
   useEffect(() => {
-    const container = document.querySelector(`#RUSTCHAT_FEED_${context}_${id}`);
-    const handler = (e) => {
-      e.preventDefault();
-      var n = 0;
-      if ("deltaY" in e) n = 1 === e.deltaMode ? 20 * -e.deltaY : -e.deltaY;
-      else if ("wheelDeltaY" in e) n = (e.wheelDeltaY / 120) * 20;
-      else if ("wheelDelta" in e) n = (e.wheelDelta / 120) * 20;
-      else {
-        n = (-e.detail / 3) * 20;
+    if (items.length) {
+      containerRef.current = document.querySelector(
+        `#RUSTCHAT_FEED_${context}_${id}`
+      );
+      if (containerRef.current) {
+        const newScroll =
+          containerRef.current.scrollHeight - containerRef.current.clientHeight;
+        containerRef.current.scrollTop = curScrollPos + (newScroll - oldScroll);
       }
-      container.scrollTop += n;
-    };
-    if (container) {
-      container.addEventListener("wheel", handler);
     }
-    return () => {
-      if (container) {
-        container.removeEventListener("wheel", handler);
-      }
-    };
-  }, [context, id]);
-
+  }, [items, context, id]);
   useEffect(() => {
-    const fetchMore = () => {
-      if (listRef.current.length == 0 && mids.length) {
-        //   初次
-        const pageInfo = getFeedWithPagination({ mids });
-        console.log("pull down 2", pageInfo);
-        pageRef.current = pageInfo;
-        listRef.current = pageInfo.ids;
-        setItems(listRef.current);
-        console.log("message pageInfo", mids, pageInfo);
-      } else {
-        //   追加
-        const lastMid = listRef.current[0];
-        const sorteds = mids.slice(0).sort((a, b) => {
-          return Number(b) - Number(a);
-        });
-        const prepends = sorteds.filter((s) => s > lastMid);
-        if (prepends.length) {
-          setPrepends(prepends);
+    if (listRef.current.length == 0 && mids.length) {
+      //   初次
+      const pageInfo = getFeedWithPagination({ mids, isLast: true });
+      console.log("pull up 2", pageInfo);
+      pageRef.current = pageInfo;
+      listRef.current = pageInfo.ids;
+      setItems(listRef.current);
+      console.log("message pageInfo", mids, pageInfo);
+    } else {
+      //   追加
+      const lastMid = listRef.current.slice(-1);
+      const sorteds = mids.slice(0).sort((a, b) => {
+        return Number(a) - Number(b);
+      });
+      const appends = sorteds.filter((s) => s > lastMid);
+      if (appends.length) {
+        const [newestMsgId] = appends.slice(-1);
+        // 自己发的消息
+        const container = containerRef.current;
+        if (container) {
+          const msgFromSelf = loginUid == messageData[newestMsgId]?.from_uid;
+          const scrollDistance =
+            container.scrollHeight -
+            (container.offsetHeight + container.scrollTop);
+          console.log("scrollDistance", msgFromSelf, scrollDistance);
+          if (msgFromSelf) {
+            container.scrollTop = container.scrollHeight;
+          } else if (scrollDistance <= 100) {
+            setTimeout(() => {
+              container.scrollTop = container.scrollHeight;
+            }, 100);
+          }
         }
-        console.log("prepends", prepends, items);
+        setAppends(appends);
       }
-    };
-    fetchMore();
-  }, [mids]);
-
-  const pullDown = async () => {
-    // 向下加载
+      console.log("appends", appends, listRef.current);
+    }
+  }, [mids, messageData, loginUid]);
+  const pullUp = async () => {
     const currPageInfo = pageRef.current;
-    console.log("pull down", currPageInfo);
-    // 最后一页
-    if (currPageInfo && currPageInfo.isLast) {
-      const [mid] = currPageInfo.ids.slice(-1);
-      const { data: newList } = await loadMoreFromServer({ mid, gid: id });
+    console.log("pull up", currPageInfo);
+    // 第一页
+    if (currPageInfo && currPageInfo.isFirst) {
+      const [firstMid] = currPageInfo.ids;
+      const { data: newList } = await loadMoreFromServer({
+        mid: firstMid,
+        gid: id,
+      });
       if (newList.length == 0) {
         setHasMore(false);
         return;
@@ -138,29 +133,37 @@ export default function useMessageFeed({ context = "channel", id = null }) {
       // 初始化
       pageInfo = getFeedWithPagination({
         mids,
+        isLast: true,
       });
     } else {
-      const nextPageNumber = currPageInfo.pageNumber + 1;
+      const prevPageNumber = currPageInfo.pageNumber - 1;
       pageInfo = getFeedWithPagination({
         mids,
-        pageNumber: nextPageNumber,
+        pageNumber: prevPageNumber,
       });
     }
     pageRef.current = pageInfo;
-    listRef.current = [...listRef.current, ...pageInfo.ids];
+    listRef.current = [...pageInfo.ids, ...listRef.current];
     setTimeout(() => {
-      setHasMore(!pageInfo.isLast);
+      const container = containerRef.current;
+      if (container) {
+        curScrollPos = container.scrollTop;
+        oldScroll = container.scrollHeight - container.clientHeight;
+      }
       setItems(listRef.current);
-      console.log("pull down update", currPageInfo, listRef.current);
-    }, 1000);
+      console.log("pull up", currPageInfo, listRef.current);
+      setHasMore(pageInfo.pageNumber !== 1);
+    }, 800);
+  };
+  const pullDown = () => {
+    // 向下加载
   };
 
   return {
     mids,
-    prepends,
-    // appends,
+    appends,
     hasMore,
-    // pullUp,
+    pullUp,
     pullDown,
     list: items,
   };

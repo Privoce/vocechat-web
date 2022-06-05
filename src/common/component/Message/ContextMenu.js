@@ -27,6 +27,7 @@ export default function MessageContextMenu({
     // isMarkdown,
     canEdit,
     canPin,
+    canDelete,
     canCopy,
     canReply,
     pinned,
@@ -97,7 +98,7 @@ export default function MessageContextMenu({
                 icon: <IconSelect className="icon" />,
                 handler: handleSelect,
               },
-              {
+              canDelete && {
                 title: "Delete",
                 danger: true,
                 icon: <IconDelete className="icon" />,

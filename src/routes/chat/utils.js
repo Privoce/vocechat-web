@@ -182,6 +182,7 @@ export const renderMessageFragment = ({
   console.log("_key", _key, local_id, mid);
   return (
     <React.Fragment key={_key}>
+      {divider && <Divider content={divider}></Divider>}
       <MessageWrapper
         key={_key}
         data-key={_key}
@@ -201,7 +202,6 @@ export const renderMessageFragment = ({
           contextId={contextId}
         />
       </MessageWrapper>
-      {divider && <Divider content={divider}></Divider>}
     </React.Fragment>
   );
   // React.memo(
