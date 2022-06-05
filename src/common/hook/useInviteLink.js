@@ -35,9 +35,9 @@ export default function useInviteLink(cid = null) {
     const _link = serverInviteLink || channelInviteLink;
     console.log("fetching", serverInviteLink, channelInviteLink);
     if (_link && smtpStatusFetchSuccess) {
-      const tmpURL = new URL(_link);
-      tmpURL.searchParams.set("code", SMTPEnabled);
-      setFinalLink(tmpURL.href);
+      // const tmpURL = new URL(_link);
+      // tmpURL.searchParams.set("code", SMTPEnabled);
+      setFinalLink(_link);
     }
   }, [serverInviteLink, channelInviteLink, smtpStatusFetchSuccess]);
   const genServerLink = () => {
