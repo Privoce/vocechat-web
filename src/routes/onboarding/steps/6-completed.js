@@ -14,7 +14,7 @@ const StyledLastStep = styled.div`
  }
 
  > .tip {
-  width: 588px;
+  width: 560px;
   font-size: 20px;
   line-height: 24px;
   text-align: center;
@@ -26,7 +26,7 @@ const StyledLastStep = styled.div`
  }
 `;
 
-export default function LastStep({ data, onButtonClick }) {
+export default function CompletedStep({ data, step, setStep }) {
  return (
   <StyledLastStep>
    <span className="primaryText">Welcome to {data.spaceName}</span>
@@ -35,7 +35,7 @@ export default function LastStep({ data, onButtonClick }) {
     More settings, including domain resolution, privileges, securities, and invites are available in{" "}
     <span className="strong">Settings</span>
    </span>
-   <StyledButton className="startButton" onClick={onButtonClick}>
+   <StyledButton className="startButton" onClick={() => setStep(step + 1)}>
     <img src={PlayIcon} alt="play icon" />
     <span>Start</span>
    </StyledButton>

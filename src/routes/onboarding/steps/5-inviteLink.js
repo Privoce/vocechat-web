@@ -51,7 +51,7 @@ const StyledInviteLinkStep = styled.div`
  }
 `;
 
-export default function InviteLinkStep() {
+export default function InviteLinkStep({ step, setStep }) {
  const { link, linkCopied, copyLink } = useInviteLink();
 
  return (
@@ -65,6 +65,9 @@ export default function InviteLinkStep() {
      {linkCopied ? "Copied" : `Copy`}
     </StyledButton>
    </div>
+   <StyledButton className="button border_less ghost" onClick={() => setStep(step + 1)}>
+    Skip
+   </StyledButton>
   </StyledInviteLinkStep>
  );
 }

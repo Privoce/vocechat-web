@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import StyledInput from "../../../common/component/styled/Input";
+import StyledButton from "../../../common/component/styled/Button";
+import toast from "react-hot-toast";
 
 const StyledAdminCredentialsStep = styled.div`
  height: 100%;
@@ -8,12 +10,16 @@ const StyledAdminCredentialsStep = styled.div`
  justify-content: center;
  align-items: center;
 
- > .input:not(:last-child) {
+ > .input:not(:nth-last-child(2)) {
   margin-bottom: 20px;
+ }
+
+ > .button {
+  margin-top: 24px;
  }
 `;
 
-export default function AdminCredentialsStep({ data, setData }) {
+export default function AdminCredentialsStep({ step, setStep, data, setData }) {
  return (
   <StyledAdminCredentialsStep>
    <span className="primaryText">Now let’s set up your admin account</span>
@@ -53,6 +59,25 @@ export default function AdminCredentialsStep({ data, setData }) {
      })
     }
    />
+   <StyledButton
+    className="button"
+    onClick={() => {
+     // Verification for admin credentials
+     if (data.adminEmail === "") {
+      toast.error("Please enter admin email!");
+      return;
+     } else if (data.adminPassword === "") {
+      toast.error("Please enter admin password!");
+      return;
+     } else if (data.adminPassword !== data.adminPassword2) {
+      toast.error("Two passwords do not match!");
+      return;
+     }
+     setStep(step + 1);
+    }}
+   >
+    Sign Up
+   </StyledButton>
   </StyledAdminCredentialsStep>
  );
 }

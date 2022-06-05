@@ -16,21 +16,6 @@ const StyledOnboardingPage = styled.div`
    border: 1px solid #f2f4f7;
    border-radius: 12px;
    box-shadow: 0 4px 8px -2px rgba(16, 24, 40, 0.1), 0px 2px 4px -2px rgba(16, 24, 40, 0.06);
-
-   > .buttonBack,
-   > .buttonNext {
-    position: absolute;
-    bottom: 32px;
-   }
-
-   > .buttonBack {
-    left: 30px;
-    color: #98a2b3;
-   }
-
-   > .buttonNext {
-    right: 30px;
-   }
   }
  }
 
@@ -84,8 +69,21 @@ const StyledOnboardingPage = styled.div`
   line-height: 24px;
   padding: 10px 14px;
   border: 1px solid #d0d5dd;
-  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
   border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
+ }
+
+ .button {
+  width: 360px;
+
+  &.ghost.border_less {
+   width: fit-content;
+   font-weight: 500;
+   font-size: 16px;
+   line-height: 24px;
+   color: #98a2b3;
+   margin-top: 14px;
+  }
  }
 `;
 
