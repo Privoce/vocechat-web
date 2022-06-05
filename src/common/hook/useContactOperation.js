@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 // import { ContentTypes } from "../../../app/config";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useMatch } from "react-router-dom";
 import { hideAll } from "tippy.js";
 import { useRemoveMembersMutation } from "../../app/services/channel";
 import { useLazyDeleteContactQuery } from "../../app/services/contact";
@@ -10,7 +10,7 @@ import useCopy from "./useCopy";
 
 export default function useContactOperation({ uid, cid }) {
   const [passedUid, setPassedUid] = useState(undefined);
-
+  const isUserDetailPath = useMatch(`/contacts/${uid}`);
   const [
     removeUser,
     { isSuccess: removeUserSuccess },
@@ -36,11 +36,11 @@ export default function useContactOperation({ uid, cid }) {
   useEffect(() => {
     if (removeSuccess || removeUserSuccess) {
       toast.success("Remove Successfully");
-      if (removeUserSuccess) {
+      if (removeUserSuccess && isUserDetailPath) {
         navigateTo(`/contacts`);
       }
     }
-  }, [removeSuccess, removeUserSuccess]);
+  }, [removeSuccess, removeUserSuccess, isUserDetailPath]);
   const handleRemoveFromChannel = (id) => {
     const isNumber = !Number.isNaN(+id);
     const finalId = isNumber ? id || passedUid : passedUid;
