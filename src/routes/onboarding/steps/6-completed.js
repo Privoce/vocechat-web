@@ -37,7 +37,7 @@ export default function CompletedStep({ data, setStep }) {
    </span>
    <StyledButton className="startButton" onClick={() => setStep((prev) => prev + 1)}>
     <img src={PlayIcon} alt="play icon" />
-    <span>Start</span>
+    <span>Enter</span>
    </StyledButton>
   </StyledLastStep>
  );

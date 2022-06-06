@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { v4 as UUIDv4 } from "uuid";
 import { useRef, useState } from "react";
+import styled from "styled-components";
+import { nanoid } from "@reduxjs/toolkit";
 
 const StyledForm = styled.form`
  > .option {
@@ -66,7 +66,7 @@ const StyledForm = styled.form`
 
 export default function Radio({ options, value = undefined, onChange = undefined }) {
  const [innerValue, setInnerValue] = useState(0);
- const id = useRef(UUIDv4());
+ const id = useRef(nanoid());
 
  return (
   <StyledForm>

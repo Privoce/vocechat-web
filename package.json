@@ -75,7 +75,6 @@
     "styled-reset": "^4.4.1",
     "terser-webpack-plugin": "^5.3.3",
     "tippy.js": "^6.3.7",
-    "uuid": "^8.3.2",
     "webpack": "^5.73.0",
     "webpack-dev-server": "^4.9.1",
     "webpack-manifest-plugin": "^5.0.0",
