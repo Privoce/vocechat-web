@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useLazyGetHistoryMessagesQuery } from "../../app/services/channel";
 
 const getFeedWithPagination = (config) => {
-  const { pageNumber = 1, pageSize = 30, mids = [], isLast = false } =
+  const { pageNumber = 1, pageSize = 40, mids = [], isLast = false } =
     config || {};
   const shadowMids = mids.slice(0);
 
@@ -22,10 +22,11 @@ const getFeedWithPagination = (config) => {
   console.log("message pagination", shadowMids);
   const pageCount = Math.ceil(shadowMids.length / pageSize);
   const computedPageNumber = isLast ? pageCount : pageNumber;
-  const ids = shadowMids.slice(
-    (computedPageNumber - 1) * pageSize,
-    computedPageNumber * pageSize
-  );
+  const _start = -(pageCount - computedPageNumber + 1) * pageSize;
+  const _tmp = _start + pageSize;
+  const _end = _tmp == 0 ? undefined : _tmp;
+  const ids = shadowMids.slice(_start, _end);
+  console.log("start,end", _start, _end, ids);
   return {
     isFirst: computedPageNumber == 1,
     isLast: computedPageNumber == pageCount,
