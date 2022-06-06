@@ -17,6 +17,7 @@ const whiteList = [
   "getOpenid",
   "getMetamaskNonce",
   "renew",
+  "getInitialized",
 ];
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
