@@ -10,14 +10,14 @@ const StyledFirstStep = styled.div`
  align-items: center;
 `;
 
-export default function WelcomeStep({ step, setStep }) {
+export default function WelcomeStep({ setStep }) {
  return (
   <StyledFirstStep>
    <span className="primaryText">Welcome to your Rustchat!</span>
    <span className="secondaryText">
     Everything in this space is owned by you. Let’s set up your space!
    </span>
-   <StyledButton className="startButton" onClick={() => setStep(step + 1)}>
+   <StyledButton className="startButton" onClick={() => setStep((prev) => prev + 1)}>
     <img src={PlayIcon} alt="play icon" />
     <span>Start</span>
    </StyledButton>

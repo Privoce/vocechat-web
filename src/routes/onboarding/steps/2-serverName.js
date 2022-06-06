@@ -19,7 +19,7 @@ const StyledSpaceNameStep = styled.div`
  }
 `;
 
-export default function SpaceNameStep({ step, setStep, data, setData }) {
+export default function ServerNameStep({ setStep, data, setData }) {
  return (
   <StyledSpaceNameStep>
    <span className="primaryText">Create a new server</span>
@@ -29,11 +29,11 @@ export default function SpaceNameStep({ step, setStep, data, setData }) {
    <StyledInput
     className="input"
     placeholder="Enter server name"
-    value={data.spaceName}
+    value={data.serverName}
     onChange={(e) =>
      setData({
       ...data,
-      spaceName: e.target.value
+      serverName: e.target.value
      })
     }
    />
@@ -41,11 +41,11 @@ export default function SpaceNameStep({ step, setStep, data, setData }) {
     className="button"
     onClick={() => {
      // Verification for space name
-     if (data.spaceName === "") {
+     if (data.serverName === "") {
       toast.error("Please enter server name!");
       return;
      }
-     setStep(step + 1);
+     setStep((prev) => prev + 1);
     }}
    >
     Create Server

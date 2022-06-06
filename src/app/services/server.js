@@ -178,7 +178,7 @@ export const serverApi = createApi({
   }),
   createAdmin: builder.mutation({
    query: (data) => ({
-    url: `/admin/system/createAdmin`,
+    url: `/admin/system/create_admin`,
     method: "POST",
     body: data
    })

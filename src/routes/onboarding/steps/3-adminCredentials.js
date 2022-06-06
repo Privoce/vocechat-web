@@ -1,10 +1,17 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
 import StyledInput from "../../../common/component/styled/Input";
 import StyledButton from "../../../common/component/styled/Button";
-import { useCreateAdminMutation } from "../../../app/services/server";
+import {
+ useCreateAdminMutation,
+ useGetInitializedQuery,
+ useGetServerQuery,
+ useUpdateServerMutation
+} from "../../../app/services/server";
 import { useLoginMutation } from "../../../app/services/auth";
+import { setAuthData } from "../../../app/slices/auth.data";
 
 const StyledAdminCredentialsStep = styled.div`
  height: 100%;
@@ -22,13 +29,18 @@ const StyledAdminCredentialsStep = styled.div`
  }
 `;
 
-export default function AdminCredentialsStep({ step, setStep }) {
+export default function AdminCredentialsStep({ data, setStep }) {
+ const dispatch = useDispatch();
+
+ const [createAdmin, { isLoading: isSigningUp, error: signUpError }] = useCreateAdminMutation();
  const [
-  createAdmin,
-  { isLoading: isSignUpLoading, isSuccess: isSignUpSuccess, error: signUpError }
- ] = useCreateAdminMutation();
- const [login, { isLoading: isLoginLoading, isSuccess: isLoginSuccess, error: loginError }] =
-  useLoginMutation();
+  login,
+  { isLoading: isLoggingIn, isSuccess: isLoggedIn, error: loginError, data: loginData }
+ ] = useLoginMutation();
+ const { refetch: refetchInitialized } = useGetInitializedQuery();
+ const { data: serverData } = useGetServerQuery();
+ const [updateServer, { isLoading: isUpdatingServer, isSuccess: isUpdatedServer }] =
+  useUpdateServerMutation();
 
  const [email, setEmail] = useState("");
  const [password, setPassword] = useState("");
@@ -39,16 +51,32 @@ export default function AdminCredentialsStep({ step, setStep }) {
   if (signUpError === undefined) return;
   toast.error(`Failed to sign up: ${signUpError.data}`);
  }, [signUpError]);
-
  useEffect(() => {
   if (loginError === undefined) return;
   toast.error(`Login failed: ${loginError.data}`);
  }, [loginError]);
 
- // Increment `step` when both signing up and logging in have completed
+ // After logged in
  useEffect(() => {
-  if (isSignUpSuccess && isLoginSuccess) setStep(step + 1);
- }, [isSignUpSuccess, isLoginSuccess]);
+  if (isLoggedIn && loginData) {
+   // Update local auth data
+   dispatch(setAuthData(loginData));
+   // Update initialized state
+   refetchInitialized();
+   // Set server name
+   updateServer({
+    ...serverData,
+    name: data.serverName
+   });
+  }
+ }, [isLoggedIn, loginData]);
+
+ // After updated server
+ useEffect(() => {
+  if (isUpdatedServer) {
+   setStep((prev) => prev + 1);
+  }
+ }, [isUpdatedServer]);
 
  return (
   <StyledAdminCredentialsStep>
@@ -101,7 +129,7 @@ export default function AdminCredentialsStep({ step, setStep }) {
      });
     }}
    >
-    {!(isSignUpLoading || isLoginLoading) ? "Sign Up" : "..."}
+    {!(isSigningUp || isLoggingIn || isUpdatingServer) ? "Sign Up" : "..."}
    </StyledButton>
   </StyledAdminCredentialsStep>
  );

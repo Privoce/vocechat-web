@@ -18,8 +18,7 @@ const whiteList = [
  "getMetamaskNonce",
  "renew",
  "getInitialized",
- "createAdmin",
- "updateLoginConfig"
+ "createAdmin"
 ];
 const baseQuery = fetchBaseQuery({
  baseUrl: BASE_URL,

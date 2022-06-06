@@ -26,16 +26,16 @@ const StyledLastStep = styled.div`
  }
 `;
 
-export default function CompletedStep({ data, step, setStep }) {
+export default function CompletedStep({ data, setStep }) {
  return (
   <StyledLastStep>
-   <span className="primaryText">Welcome to {data.spaceName}</span>
+   <span className="primaryText">Welcome to {data.serverName}</span>
    <span className="secondaryText">Proudly presented by Rustchat</span>
    <span className="tip">
     More settings, including domain resolution, privileges, securities, and invites are available in{" "}
     <span className="strong">Settings</span>
    </span>
-   <StyledButton className="startButton" onClick={() => setStep(step + 1)}>
+   <StyledButton className="startButton" onClick={() => setStep((prev) => prev + 1)}>
     <img src={PlayIcon} alt="play icon" />
     <span>Start</span>
    </StyledButton>

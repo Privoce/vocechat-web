@@ -17,11 +17,11 @@ const StyledInviteRuleStep = styled.div`
  }
 `;
 
-export default function InviteRuleStep({ step, setStep }) {
+export default function InviteRuleStep({ setStep }) {
  const { data: loginConfig } = useGetLoginConfigQuery();
  const [updateLoginConfig, { isSuccess, error }] = useUpdateLoginConfigMutation();
 
- const [value, setValue] = useState(null);
+ const [value, setValue] = useState(0);
 
  // Display error
  useEffect(() => {
@@ -31,7 +31,7 @@ export default function InviteRuleStep({ step, setStep }) {
 
  // Increment `step` when updating has completed
  useEffect(() => {
-  if (isSuccess) setStep(step + 1);
+  if (isSuccess) setStep((prev) => prev + 1);
  }, [isSuccess]);
 
  return (
@@ -41,18 +41,18 @@ export default function InviteRuleStep({ step, setStep }) {
    <StyledRadio
     options={["Everyone", "Invitation link only"]}
     value={value}
-    onChange={(v) => {
+    onChange={async (v) => {
      setValue(v);
      if (loginConfig !== undefined) {
       const whoCanSignUp = ["EveryOne", "InvitationOnly"][v];
-      updateLoginConfig({
+      await updateLoginConfig({
        ...loginConfig,
        who_can_sign_up: whoCanSignUp
       });
      }
     }}
    />
-   <StyledButton className="button border_less ghost" onClick={() => setStep(step + 1)}>
+   <StyledButton className="button border_less ghost" onClick={() => setStep((prev) => prev + 1)}>
     Skip
    </StyledButton>
   </StyledInviteRuleStep>
