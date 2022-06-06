@@ -1,38 +1,38 @@
 {
- "extends": ["eslint:recommended", "plugin:react/recommended", "prettier"],
- "plugins": ["react-hooks"],
- "rules": {
-  "react/jsx-uses-react": "off",
-  "react/react-in-jsx-scope": "off",
-  "semi": 2,
-  "no-console": "off",
-  "react/prop-types": 0,
-  "react/no-unescaped-entities": "off",
-  "no-unused-vars": ["error", { "ignoreRestSiblings": true }],
-  "react-hooks/rules-of-hooks": "error",
-  "react-hooks/exhaustive-deps": "warn",
-  "max-lines": ["warn", { "max": 500 }],
-  "react/display-name": 0
- },
- "parserOptions": {
-  "ecmaVersion": 2021,
-  "sourceType": "module",
-  "ecmaFeatures": {
-   "jsx": true
+  "extends": ["eslint:recommended", "plugin:react/recommended", "prettier"],
+  "plugins": ["react-hooks"],
+  "rules": {
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off",
+    "semi": 2,
+    "no-console": "off",
+    "react/prop-types": 0,
+    "react/no-unescaped-entities": "off",
+    "no-unused-vars": ["error", { "ignoreRestSiblings": true }],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "max-lines": ["warn", { "max": 500 }],
+    "react/display-name": 0
+  },
+  "parserOptions": {
+    "ecmaVersion": 2021,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "globals": {
+    "UE": true
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true,
+    "serviceworker": true
+  },
+  "settings": {
+    "react": {
+      "version": "17"
+    }
   }
- },
- "globals": {
-  "UE": true
- },
- "env": {
-  "browser": true,
-  "node": true,
-  "es6": true,
-  "serviceworker": true
- },
- "settings": {
-  "react": {
-   "version": "17"
-  }
- }
 }
