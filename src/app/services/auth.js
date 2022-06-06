@@ -1,7 +1,12 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { nanoid } from "@reduxjs/toolkit";
 import baseQuery from "./base.query";
-import { setAuthData, updateToken, resetAuthData } from "../slices/auth.data";
+import {
+  setAuthData,
+  updateToken,
+  resetAuthData,
+  updateInitilize,
+} from "../slices/auth.data";
 import BASE_URL, { KEY_DEVICE_KEY } from "../config";
 const getDeviceId = () => {
   let d = localStorage.getItem(KEY_DEVICE_KEY);
@@ -129,10 +134,24 @@ export const authApi = createApi({
         }
       },
     }),
+    getInitialized: builder.query({
+      query: () => ({
+        url: `/admin/system/initialized`,
+      }),
+      async onQueryStarted(params, { dispatch, queryFulfilled }) {
+        try {
+          const { data: isInitized } = await queryFulfilled;
+          dispatch(updateInitilize(isInitized));
+        } catch {
+          console.log("api initialized error");
+        }
+      },
+    }),
   }),
 });
 
 export const {
+  useGetInitializedQuery,
   useSendMagicLinkMutation,
   useGetCredentialsQuery,
   useUpdateDeviceTokenMutation,

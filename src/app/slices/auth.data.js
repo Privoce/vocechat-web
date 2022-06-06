@@ -7,12 +7,14 @@ import {
   KEY_EXPIRE,
 } from "../config";
 const initialState = {
+  initialized: true,
   uid: null,
   token: localStorage.getItem(KEY_TOKEN),
   expireTime: localStorage.getItem(KEY_EXPIRE) || new Date().getTime(),
   refreshToken: localStorage.getItem(KEY_REFRESH_TOKEN),
 };
 const emptyState = {
+  initialized: true,
   uid: null,
   token: null,
   expireTime: new Date().getTime(),
@@ -24,11 +26,13 @@ const authDataSlice = createSlice({
   reducers: {
     setAuthData(state, action) {
       const {
+        initialized = true,
         user: { uid },
         token,
         refresh_token,
         expired_in = 0,
       } = action.payload;
+      state.initialized = initialized;
       state.uid = uid;
       state.token = token;
       state.refreshToken = refresh_token;
@@ -58,6 +62,10 @@ const authDataSlice = createSlice({
       state.uid = uid;
       console.log("set uid orginal");
     },
+    updateInitilize(state, action) {
+      const isInitized = action.payload;
+      state.initialized = isInitized;
+    },
     updateToken(state, action) {
       const { token, refresh_token, expired_in } = action.payload;
       console.log("refresh token");
@@ -72,6 +80,7 @@ const authDataSlice = createSlice({
   },
 });
 export const {
+  updateInitilize,
   setAuthData,
   resetAuthData,
   setUid,
