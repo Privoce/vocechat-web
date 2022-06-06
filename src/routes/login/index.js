@@ -1,7 +1,5 @@
 /* eslint-disable no-undef */
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import BASE_URL from "../../app/config";
 // import web3 from "web3";
@@ -17,21 +15,18 @@ import {
   useGetLoginConfigQuery,
   useGetSMTPStatusQuery,
 } from "../../app/services/server";
-import { setAuthData } from "../../app/slices/auth.data";
 import useGoogleAuthConfig from "../../common/hook/useGoogleAuthConfig";
 import GithubLoginButton from "./GithubLoginButton";
 import useGithubAuthConfig from "../../common/hook/useGithubAuthConfig";
 export default function LoginPage() {
   const { data: enableSMTP } = useGetSMTPStatusQuery();
-  const [login, { data, isSuccess, isLoading, error }] = useLoginMutation();
+  const [login, { isSuccess, isLoading, error }] = useLoginMutation();
   const { clientId } = useGoogleAuthConfig();
   const { config: githubAuthConfig } = useGithubAuthConfig();
   const {
     data: loginConfig,
     isSuccess: loginConfigSuccess,
   } = useGetLoginConfigQuery(undefined, { pollingInterval: 10000 });
-  const navigateTo = useNavigate();
-  const dispatch = useDispatch();
   const [input, setInput] = useState({
     email: "",
     password: "",
@@ -105,14 +100,11 @@ export default function LoginPage() {
     }
   }, [error]);
   useEffect(() => {
-    if (isSuccess && data) {
-      // 更新本地认证信息
-      console.log("login data", data);
+    if (isSuccess) {
       toast.success("Login Successfully");
-      dispatch(setAuthData(data));
-      navigateTo("/");
+      // navigateTo("/");
     }
-  }, [isSuccess, data]);
+  }, [isSuccess]);
 
   const handleLogin = (evt) => {
     evt.preventDefault();
@@ -136,12 +128,19 @@ export default function LoginPage() {
   if (!loginConfigSuccess) return null;
   const {
     magic_link,
+    github: enableGithubLogin,
     google: enableGoogleLogin,
     metamask: enableMetamaskLogin,
-    oidc,
+    oidc = [],
   } = loginConfig;
   const enableMagicLink = enableSMTP && magic_link;
   const googleLogin = enableGoogleLogin && clientId;
+  const hasDivider =
+    enableMagicLink ||
+    googleLogin ||
+    enableMetamaskLogin ||
+    oidc.length > 0 ||
+    enableGithubLogin;
   return (
     <StyledWrapper>
       <div className="form">
@@ -178,13 +177,10 @@ export default function LoginPage() {
             {isLoading ? "Signing" : `Sign in`}
           </Button>
         </form>
-        {(enableMagicLink ||
-          googleLogin ||
-          enableMetamaskLogin ||
-          oidc.length > 0) && <hr className="or" />}
+        {hasDivider && <hr className="or" />}
         {enableMagicLink && <MagicLinkLogin />}
         {googleLogin && <GoogleLoginButton login={login} clientId={clientId} />}
-        <GithubLoginButton config={githubAuthConfig} />
+        {enableGithubLogin && <GithubLoginButton config={githubAuthConfig} />}
         {enableMetamaskLogin && <MetamaskLoginButton login={login} />}
         {oidc.length > 0 && <SolidLoginButton issuers={oidc} />}
       </div>

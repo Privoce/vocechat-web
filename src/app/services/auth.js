@@ -1,7 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { nanoid } from "@reduxjs/toolkit";
 import baseQuery from "./base.query";
-import { updateToken, resetAuthData } from "../slices/auth.data";
+import { setAuthData, updateToken, resetAuthData } from "../slices/auth.data";
 import BASE_URL, { KEY_DEVICE_KEY } from "../config";
 const getDeviceId = () => {
   let d = localStorage.getItem(KEY_DEVICE_KEY);
@@ -33,6 +33,17 @@ export const authApi = createApi({
             : `${BASE_URL}/resource/avatar?uid=${data.user.uid}&t=${avatar_updated_at}`;
         return data;
       },
+      async onQueryStarted(params, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          if (data) {
+            console.log("login resp", data);
+            dispatch(setAuthData(data));
+          }
+        } catch {
+          console.log("login error");
+        }
+      },
     }),
     // 更新token
     renew: builder.mutation({
@@ -50,7 +61,7 @@ export const authApi = createApi({
           dispatch(updateToken(data));
         } catch {
           dispatch(resetAuthData());
-          console.log("remove channel error");
+          console.log("renew token error");
         }
       },
     }),

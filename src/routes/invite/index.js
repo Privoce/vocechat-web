@@ -96,19 +96,22 @@ export default function InvitePage() {
     } else if (isError) {
       console.log("register failed", error);
       switch (error.status) {
+        case 400:
+          toast.error("Register Failed: please check inputs");
+          break;
         case 412:
-          toast.error("register failed: invalid token or expired");
+          toast.error("Register Failed: invalid token or expired");
           break;
         case 409: {
           const tips = {
             email_conflict: "email conflict",
             name_conflict: "name conflict",
           };
-          toast.error(`register failed: ${tips[error.data?.reason]}`);
+          toast.error(`Register Failed: ${tips[error.data?.reason]}`);
           break;
         }
         default:
-          toast.error("register failed");
+          toast.error("Register Failed");
           break;
       }
     }
