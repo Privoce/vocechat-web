@@ -1,6 +1,6 @@
 {
   "name": "rustchat-web",
-  "version": "0.2.11",
+  "version": "0.2.12",
   "private": true,
   "homepage": "https://privoce.rustchat.com",
   "dependencies": {
@@ -96,7 +96,7 @@
   },
   "scripts": {
     "start": "REACT_APP_BUILD_TIME=$(date +%s) node scripts/start.js",
-    "build": "REACT_APP_BUILD_TIME=$(date +%s) node scripts/build.js",
+    "build": "rm -rf build && REACT_APP_BUILD_TIME=$(date +%s) node scripts/build.js",
     "deploy": "yarn build && gh-pages -d build",
     "lint": "lint-staged",
     "prepare": "husky install",
