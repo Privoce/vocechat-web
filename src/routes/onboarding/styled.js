@@ -4,21 +4,6 @@ const StyledOnboardingPage = styled.div`
  height: 100vh;
  overflow-y: auto;
 
- > .horizontalBox {
-  width: calc(100vw - 40px);
-  max-width: 860px;
-  margin: 0 auto;
-  padding: max(50vh - 340px, 50px) 0;
-
-  > .verticalBox {
-   position: relative;
-   height: 680px;
-   border: 1px solid #f2f4f7;
-   border-radius: 12px;
-   box-shadow: 0 4px 8px -2px rgba(16, 24, 40, 0.1), 0px 2px 4px -2px rgba(16, 24, 40, 0.06);
-  }
- }
-
  // shared with child components
  .primaryText,
  .secondaryText {

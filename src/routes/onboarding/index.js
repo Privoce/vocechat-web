@@ -22,17 +22,13 @@ export default function OnboardingPage() {
     <title>Rustchat Setup</title>
    </Helmet>
    <StyledOnboardingPage>
-    <div className="horizontalBox">
-     <div className="verticalBox">
-      {step === 0 && <WelcomeStep {...props} />}
-      {step === 1 && <ServerNameStep {...props} />}
-      {step === 2 && <AdminCredentialsStep {...props} />}
-      {step === 3 && <InviteRuleStep {...props} />}
-      {step === 4 && <InviteLinkStep {...props} />}
-      {step === 5 && <CompletedStep {...props} />}
-      {step === 6 && <Navigate replace to="/" />}
-     </div>
-    </div>
+    {step === 0 && <WelcomeStep {...props} />}
+    {step === 1 && <ServerNameStep {...props} />}
+    {step === 2 && <AdminCredentialsStep {...props} />}
+    {step === 3 && <InviteRuleStep {...props} />}
+    {step === 4 && <InviteLinkStep {...props} />}
+    {step === 5 && <CompletedStep {...props} />}
+    {step === 6 && <Navigate replace to="/" />}
    </StyledOnboardingPage>
   </>
  );
