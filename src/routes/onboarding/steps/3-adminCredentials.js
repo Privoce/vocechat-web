@@ -6,12 +6,11 @@ import StyledInput from "../../../common/component/styled/Input";
 import StyledButton from "../../../common/component/styled/Button";
 import {
  useCreateAdminMutation,
- useGetInitializedQuery,
  useGetServerQuery,
  useUpdateServerMutation
 } from "../../../app/services/server";
 import { useLoginMutation } from "../../../app/services/auth";
-import { setAuthData } from "../../../app/slices/auth.data";
+import { updateInitialized } from "../../../app/slices/auth.data";
 
 const StyledAdminCredentialsStep = styled.div`
  height: 100%;
@@ -33,11 +32,8 @@ export default function AdminCredentialsStep({ data, setStep }) {
  const dispatch = useDispatch();
 
  const [createAdmin, { isLoading: isSigningUp, error: signUpError }] = useCreateAdminMutation();
- const [
-  login,
-  { isLoading: isLoggingIn, isSuccess: isLoggedIn, error: loginError, data: loginData }
- ] = useLoginMutation();
- const { refetch: refetchInitialized } = useGetInitializedQuery();
+ const [login, { isLoading: isLoggingIn, isSuccess: isLoggedIn, error: loginError }] =
+  useLoginMutation();
  const { data: serverData } = useGetServerQuery();
  const [updateServer, { isLoading: isUpdatingServer, isSuccess: isUpdatedServer }] =
   useUpdateServerMutation();
@@ -58,18 +54,17 @@ export default function AdminCredentialsStep({ data, setStep }) {
 
  // After logged in
  useEffect(() => {
-  if (isLoggedIn && loginData) {
-   // Update local auth data
-   dispatch(setAuthData(loginData));
-   // Update initialized state
-   refetchInitialized();
-   // Set server name
-   updateServer({
-    ...serverData,
-    name: data.serverName
-   });
+  if (isLoggedIn) {
+   dispatch(updateInitialized(true));
+   setTimeout(() => {
+    // Set server name
+    updateServer({
+     ...serverData,
+     name: data.serverName
+    });
+   }, 0);
   }
- }, [isLoggedIn, loginData]);
+ }, [isLoggedIn]);
 
  // After updated server
  useEffect(() => {
