@@ -26,7 +26,7 @@ export default function LoginPage() {
   const {
     data: loginConfig,
     isSuccess: loginConfigSuccess,
-  } = useGetLoginConfigQuery(undefined, { pollingInterval: 10000 });
+  } = useGetLoginConfigQuery();
   const [input, setInput] = useState({
     email: "",
     password: "",
