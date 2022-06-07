@@ -35,15 +35,17 @@ const Styled = styled.div`
   }
   .content {
     white-space: normal;
-    height: 20px;
-    /* overflow-y: hidden; */
     color: #616161;
     overflow: hidden;
-    /* text-overflow: ellipsis; */
     padding-right: 30px;
     font-weight: 500;
     font-size: 14px;
     line-height: 20px;
+    > .pic {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+    }
     .md {
       position: relative;
       max-height: 100px;
@@ -81,7 +83,7 @@ const Styled = styled.div`
   }
 `;
 const renderContent = (data) => {
-  const { content_type, content, properties } = data;
+  const { content_type, content, thumbnail = "", properties } = data;
   let res = null;
   switch (content_type) {
     case ContentTypes.text:
@@ -105,8 +107,10 @@ const renderContent = (data) => {
     case ContentTypes.file:
       {
         const { content_type, name, size } = properties;
-        if (isImage(content_type, size)) {
-          res = <img className="pic" src={pictureIcon} />;
+        const image = isImage(content_type, size);
+        // console.log("replying data", content_type, size, image);
+        if (image) {
+          res = <img className="pic" src={thumbnail || pictureIcon} />;
         } else {
           const icon = getFileIcon(content_type, name);
           res = (
@@ -121,6 +125,7 @@ const renderContent = (data) => {
     default:
       break;
   }
+  // console.log("replying data", data);
   return res;
 };
 export default function Replying({ context, id, mid }) {
@@ -136,10 +141,10 @@ export default function Replying({ context, id, mid }) {
   const user = contactsData[from_uid];
   return (
     <Styled className="reply">
-      <span className="prefix">
+      <div className="prefix">
         Replying to <em>{user?.name}</em>
-      </span>
-      <span className="content">{renderContent(msg)}</span>
+      </div>
+      <div className="content">{renderContent(msg)}</div>
       <button className="close" onClick={removeReply}>
         <img src={closeIcon} alt="close icon" />
       </button>
