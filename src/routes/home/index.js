@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import StyledWrapper from "./styled";
 import User from "./User";
 // import Tools from "./Tools";
-import Loading from "./Loading";
+import Loading from "../../common/component/Loading";
 import Menu from "./Menu";
 import usePreload from "./usePreload";
 import usePWABadge from "../../common/hook/usePWABadge";
@@ -38,7 +38,7 @@ export default function HomePage() {
   const { loading } = usePreload();
   // console.log("index loading", loading, ready);
   if (loading || !ready) {
-    return <Loading />;
+    return <Loading reload={true} />;
   }
   const isSettingPage = pathname.startsWith("/setting");
   if (isSettingPage) {
