@@ -2324,7 +2324,7 @@
   dependencies:
     "@types/express" "*"
 
-"@types/serve-static@*":
+"@types/serve-static@*", "@types/serve-static@^1.13.10":
   version "1.13.10"
   resolved "https://mirrors.cloud.tencent.com/npm/@types%2fserve-static/-/serve-static-1.13.10.tgz#f5e0ce8797d2d7cc5ebeda48a52c96c4fa47a8d9"
   integrity sha512-nCkHGI4w7ZgAdNkrEu0bv+4xNV/XDqW+DydknebMOQwkpDGx8G+HTlj7R7ABI8i8nKxVw0wtKPi1D+lPOkh4YQ==
@@ -2458,10 +2458,10 @@
   dependencies:
     "@udecode/plate-core" "11.2.1"
 
-"@udecode/plate-headless@11.2.1":
-  version "11.2.1"
-  resolved "http://mirrors.cloud.tencent.com/npm/@udecode%2fplate-headless/-/plate-headless-11.2.1.tgz#d7ce58be6f61eb855ad7c239d3359e1fb0345fb6"
-  integrity sha512-qGjksXTNLecxTlp2vC4necT2GAe0SAu0ECreYhMvy8CqlsQ+3IqOkwjWQMqlCcaeNasc+umpG47LiN6PRNSd0w==
+"@udecode/plate-headless@11.3.0":
+  version "11.3.0"
+  resolved "http://mirrors.cloud.tencent.com/npm/@udecode%2fplate-headless/-/plate-headless-11.3.0.tgz#e89909b9c8191cfcbf7402a7e1b00ab980429668"
+  integrity sha512-BXLLqPiH135Q3EH574Y2yMGcS8/b4jMZB3C7ycBG+Yiq6dH1kQkjY6jph3zVZMKyYPEdgIGp3wbyuMWZzCtwdg==
   dependencies:
     "@udecode/plate-alignment" "11.2.1"
     "@udecode/plate-autoformat" "11.2.1"
@@ -2492,10 +2492,10 @@
     "@udecode/plate-paragraph" "11.2.1"
     "@udecode/plate-reset-node" "11.2.1"
     "@udecode/plate-select" "11.2.1"
-    "@udecode/plate-serializer-csv" "11.2.1"
-    "@udecode/plate-serializer-docx" "11.2.1"
+    "@udecode/plate-serializer-csv" "11.3.0"
+    "@udecode/plate-serializer-docx" "11.3.0"
     "@udecode/plate-serializer-md" "11.2.1"
-    "@udecode/plate-table" "11.2.1"
+    "@udecode/plate-table" "11.3.0"
     "@udecode/plate-trailing-block" "11.2.1"
 
 "@udecode/plate-highlight@11.2.1":
@@ -2623,19 +2623,19 @@
   dependencies:
     "@udecode/plate-core" "11.2.1"
 
-"@udecode/plate-serializer-csv@11.2.1":
-  version "11.2.1"
-  resolved "http://mirrors.cloud.tencent.com/npm/@udecode%2fplate-serializer-csv/-/plate-serializer-csv-11.2.1.tgz#a5c94f7ed14f0ec951e18e54f9e5ba9c65a5dd25"
-  integrity sha512-DgK6r2Joi4EICWfPUB+xEmseKdevwnmk2Wfokzw4qJrxxeC9M7CEv2rrVZWO+fVdr6hOykmy5Oc0rpcSFX6i1g==
+"@udecode/plate-serializer-csv@11.3.0":
+  version "11.3.0"
+  resolved "http://mirrors.cloud.tencent.com/npm/@udecode%2fplate-serializer-csv/-/plate-serializer-csv-11.3.0.tgz#5193df5227716234e7714c907f7b318c2c01025f"
+  integrity sha512-Fg2smSzVQ/wpfX97wb0Yvpp3F3pfTxQBq8MpC1gv7KFZQCphVjCTK81SXcsghO8h5YJ1DCIZhXJ/xGX/U1YlmQ==
   dependencies:
     "@udecode/plate-core" "11.2.1"
-    "@udecode/plate-table" "11.2.1"
+    "@udecode/plate-table" "11.3.0"
     papaparse "^5.3.2"
 
-"@udecode/plate-serializer-docx@11.2.1":
-  version "11.2.1"
-  resolved "http://mirrors.cloud.tencent.com/npm/@udecode%2fplate-serializer-docx/-/plate-serializer-docx-11.2.1.tgz#bb2a08b8df74fe7dbdbd70d1031f9cdc1c75312d"
-  integrity sha512-xNhe4dzj7PYoog2SeAW/yOr4VYESmF0ulSbK8O1Zmj07zNxZaPz5OYWRkWCNS6C6wmOTim4J8a9SGRd9cND9Xg==
+"@udecode/plate-serializer-docx@11.3.0":
+  version "11.3.0"
+  resolved "http://mirrors.cloud.tencent.com/npm/@udecode%2fplate-serializer-docx/-/plate-serializer-docx-11.3.0.tgz#47049250fd99861895f310af9ea4d369c5cc4984"
+  integrity sha512-/gSQYyXIv13t0nEsLBdMJuNbX9eompHB/LCYyTLalIzSc+ExAnRZ/1xbHUGAzKmoBavDkjR15trkHvDQn+yvHQ==
   dependencies:
     "@udecode/plate-core" "11.2.1"
     "@udecode/plate-heading" "11.2.1"
@@ -2643,7 +2643,7 @@
     "@udecode/plate-indent" "11.2.1"
     "@udecode/plate-indent-list" "11.2.1"
     "@udecode/plate-paragraph" "11.2.1"
-    "@udecode/plate-table" "11.2.1"
+    "@udecode/plate-table" "11.3.0"
     validator "^13.7.0"
 
 "@udecode/plate-serializer-md@11.2.1":
@@ -2670,10 +2670,10 @@
     "@udecode/plate-core" "11.2.1"
     clsx "^1.1.1"
 
-"@udecode/plate-table@11.2.1":
-  version "11.2.1"
-  resolved "http://mirrors.cloud.tencent.com/npm/@udecode%2fplate-table/-/plate-table-11.2.1.tgz#d7da6bbbc840b2355da7cb1690af940d4e8ef43d"
-  integrity sha512-T1B4bBraWzDy5GL9ZahLbS3WzG8HZOrLfW8ngn3WTHcBvxO0asjCnIs3kZ1XD0PJ+934qJpedaQT02H/tXsLkQ==
+"@udecode/plate-table@11.3.0":
+  version "11.3.0"
+  resolved "http://mirrors.cloud.tencent.com/npm/@udecode%2fplate-table/-/plate-table-11.3.0.tgz#3304c1a33f1e0d273efcf98920d662513eddd8ae"
+  integrity sha512-Y3bGjK99btBQLBAMspnKXumscBuZT9i8hcszXizWu5B9fu8Nm3I4yGUEINeRmaMETEnMXKdVG1kPXqQmvI2FrA==
   dependencies:
     "@udecode/plate-core" "11.2.1"
 
@@ -2853,14 +2853,14 @@
     "@udecode/plate-core" "11.2.1"
     react-popper "^2.3.0"
 
-"@udecode/plate-ui-table@11.2.1":
-  version "11.2.1"
-  resolved "http://mirrors.cloud.tencent.com/npm/@udecode%2fplate-ui-table/-/plate-ui-table-11.2.1.tgz#8fd1e8e182dafad401b20831a8733444776e5f99"
-  integrity sha512-rpegQJrQHsGeS/tCDIIqA2hy4Z7Naiff8e/oHOvN36iolEYH2qiayJ+FbsJuDF8TgBqlpXEk2vD2vYB5ohZidw==
+"@udecode/plate-ui-table@11.3.0":
+  version "11.3.0"
+  resolved "http://mirrors.cloud.tencent.com/npm/@udecode%2fplate-ui-table/-/plate-ui-table-11.3.0.tgz#935ee8ca0cfbe6b3860c5e56a4f3829131907e89"
+  integrity sha512-2dnQtk86tH3iFoEVAhgunVPzs1ilGlEVoBGlPsbmRvt+BY2YLSvz7yGlVnUvY9fFsKCVMCxOEKep1tBFxQYB1A==
   dependencies:
     "@udecode/plate-core" "11.2.1"
     "@udecode/plate-styled-components" "11.2.1"
-    "@udecode/plate-table" "11.2.1"
+    "@udecode/plate-table" "11.3.0"
     "@udecode/plate-ui-button" "11.2.1"
     "@udecode/plate-ui-popover" "11.2.1"
     "@udecode/plate-ui-toolbar" "11.2.1"
@@ -2879,12 +2879,12 @@
     react-popper "^2.3.0"
     react-use "^17.3.2"
 
-"@udecode/plate-ui@11.2.1":
-  version "11.2.1"
-  resolved "http://mirrors.cloud.tencent.com/npm/@udecode%2fplate-ui/-/plate-ui-11.2.1.tgz#f3892c4e33b3bf573959685a06b3f51eb901d1b1"
-  integrity sha512-jgi+rZGO2E/WYnKrdMTQNcPyf2pUY1xOM0XP7ttnpF1kx7eb8x8/q9ovFkIWOPLNoUjV3RS35SDEVzsWkfL+EA==
+"@udecode/plate-ui@11.3.0":
+  version "11.3.0"
+  resolved "http://mirrors.cloud.tencent.com/npm/@udecode%2fplate-ui/-/plate-ui-11.3.0.tgz#9b6d4cd6fb5507c9d6d9f213c685bbaf043ec213"
+  integrity sha512-csx3GSXd0Iirlkps+HzvDyICxYd4nVjpyGq1Vativ8oT70sYe61J5Nl2/giBl7J5Wvrnrstkgcbu6nVuvXwECA==
   dependencies:
-    "@udecode/plate-headless" "11.2.1"
+    "@udecode/plate-headless" "11.3.0"
     "@udecode/plate-styled-components" "11.2.1"
     "@udecode/plate-ui-alignment" "11.2.1"
     "@udecode/plate-ui-block-quote" "11.2.1"
@@ -2903,16 +2903,16 @@
     "@udecode/plate-ui-placeholder" "11.2.1"
     "@udecode/plate-ui-popover" "11.2.1"
     "@udecode/plate-ui-popper" "11.2.1"
-    "@udecode/plate-ui-table" "11.2.1"
+    "@udecode/plate-ui-table" "11.3.0"
     "@udecode/plate-ui-toolbar" "11.2.1"
 
-"@udecode/plate@^11.2.1":
-  version "11.2.1"
-  resolved "http://mirrors.cloud.tencent.com/npm/@udecode%2fplate/-/plate-11.2.1.tgz#d60a90b17d79dc3407922858cbce4dc85d89e337"
-  integrity sha512-dHg1EGiflq31Td27x8YkRj84EOGhe322wnP3qMtbIny6iM5tKOcloCiJNuFM3RSowuh1MLUrmZD94IOCRMsqtA==
+"@udecode/plate@^11.3.0":
+  version "11.3.0"
+  resolved "http://mirrors.cloud.tencent.com/npm/@udecode%2fplate/-/plate-11.3.0.tgz#76f782e54fe8ecb96c35860a33972b8f1362bf5f"
+  integrity sha512-EYnTUJ53gG1IPEwxad8fSLlkLYghNAk4bPaRTAndvFPtneihU9a3/kf0syUyljLB6HtvTitz+BW/PTcgJScxcQ==
   dependencies:
-    "@udecode/plate-headless" "11.2.1"
-    "@udecode/plate-ui" "11.2.1"
+    "@udecode/plate-headless" "11.3.0"
+    "@udecode/plate-ui" "11.3.0"
 
 "@udecode/zustood@^1.1.1":
   version "1.1.1"
@@ -6376,6 +6376,11 @@ masonry-layout@^4.2.2:
     get-size "^2.0.2"
     outlayer "^2.1.0"
 
+md5-file@^5.0.0:
+  version "5.0.0"
+  resolved "http://mirrors.cloud.tencent.com/npm/md5-file/-/md5-file-5.0.0.tgz#e519f631feca9c39e7f9ea1780b63c4745012e20"
+  integrity sha512-xbEFXCYVWrSx/gEKS1VPlg84h/4L20znVIulKw6kMfmBUAZNAnF00eczz9ICMl+/hjQGo5KSXRxbL/47X3rmMw==
+
 mdast-util-from-markdown@^0.8.0:
   version "0.8.5"
   resolved "http://mirrors.cloud.tencent.com/npm/mdast-util-from-markdown/-/mdast-util-from-markdown-0.8.5.tgz#d1ef2ca42bc377ecb0463a987910dae89bd9a28c"
@@ -9412,15 +9417,16 @@ webpack-dev-middleware@^5.3.1:
     range-parser "^1.2.1"
     schema-utils "^4.0.0"
 
-webpack-dev-server@^4.9.1:
-  version "4.9.1"
-  resolved "https://mirrors.cloud.tencent.com/npm/webpack-dev-server/-/webpack-dev-server-4.9.1.tgz#184607b0287c791aeaa45e58e8fe75fcb4d7e2a8"
-  integrity sha512-CTMfu2UMdR/4OOZVHRpdy84pNopOuigVIsRbGX3LVDMWNP8EUgC5mUBMErbwBlHTEX99ejZJpVqrir6EXAEajA==
+webpack-dev-server@^4.9.2:
+  version "4.9.2"
+  resolved "http://mirrors.cloud.tencent.com/npm/webpack-dev-server/-/webpack-dev-server-4.9.2.tgz#c188db28c7bff12f87deda2a5595679ebbc3c9bc"
+  integrity sha512-H95Ns95dP24ZsEzO6G9iT+PNw4Q7ltll1GfJHV4fKphuHWgKFzGHWi4alTlTnpk1SPPk41X+l2RB7rLfIhnB9Q==
   dependencies:
     "@types/bonjour" "^3.5.9"
     "@types/connect-history-api-fallback" "^1.3.5"
     "@types/express" "^4.17.13"
     "@types/serve-index" "^1.9.1"
+    "@types/serve-static" "^1.13.10"
     "@types/sockjs" "^0.3.33"
     "@types/ws" "^8.5.1"
     ansi-html-community "^0.0.8"
