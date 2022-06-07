@@ -75,7 +75,9 @@ const Styled = styled.div`
     }
     .pic {
       display: inherit;
-      max-width: 34px;
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
     }
     .icon {
       width: 15px;
