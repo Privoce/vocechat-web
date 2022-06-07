@@ -629,8 +629,8 @@
     font-size: 14px;
     line-height: 20px;
     > .pic {
-      width: 50px;
-      height: 50px;
+      width: 40px;
+      height: 40px;
       object-fit: cover;
     }
     .md {
@@ -1026,7 +1026,9 @@
     }
     .pic {
       display: inherit;
-      max-width: 34px;
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
     }
     .icon {
       width: 15px;
