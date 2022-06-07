@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useLazyGetOGInfoQuery } from "../../../app/services/message";
-import favUrl from "../../../assets/icons/favicon.default.svg?url";
+// import favUrl from "../../../assets/icons/favicon.default.svg?url";
 const StyledCompact = styled.a`
   background: #f3f4f6;
   border: 1px solid #d4d4d4;
@@ -111,7 +111,7 @@ export default function URLPreview({ url = "" }) {
     getMetaData(url);
   }, [url]);
   const handleFavError = () => {
-    setFavicon(favUrl);
+    setFavicon("");
   };
   if (!url || !data || !data.title) return null;
   const { title, description, ogImage } = data;
@@ -125,9 +125,11 @@ export default function URLPreview({ url = "" }) {
     </StyledDetails>
   ) : (
     <StyledCompact href={url} target="_blank">
-      <div className="favicon">
-        <img onError={handleFavError} src={favicon} alt="favicon" />
-      </div>
+      {favicon && (
+        <div className="favicon">
+          <img onError={handleFavError} src={favicon} alt="favicon" />
+        </div>
+      )}
       <div className="info">
         <h3 className="title">{title}</h3>
         <p className="desc dots">{description}</p>
