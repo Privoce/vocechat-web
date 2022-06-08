@@ -4,7 +4,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { Reset } from "styled-reset";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import "./assets/vars.css";
+import "./assets/base.css";
 import "animate.css";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import TippyDefault from "./common/component/TippyDefault";
