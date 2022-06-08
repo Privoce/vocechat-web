@@ -92,6 +92,7 @@ export default function useMessageFeed({ context = "channel", id = null }) {
       });
       const appends = sorteds.filter((s) => s > lastMid);
       if (appends.length) {
+        setAppends(appends);
         const [newestMsgId] = appends.slice(-1);
         // 自己发的消息
         const container = containerRef.current;
@@ -109,7 +110,6 @@ export default function useMessageFeed({ context = "channel", id = null }) {
             }, 100);
           }
         }
-        setAppends(appends);
       }
       console.log("appends", appends, listRef.current);
     }
@@ -146,14 +146,14 @@ export default function useMessageFeed({ context = "channel", id = null }) {
     pageRef.current = pageInfo;
     listRef.current = [...pageInfo.ids, ...listRef.current];
     setTimeout(() => {
+      setItems(listRef.current);
+      console.log("pull up", currPageInfo, listRef.current);
+      setHasMore(pageInfo.pageNumber !== 1);
       const container = containerRef.current;
       if (container) {
         curScrollPos = container.scrollTop;
         oldScroll = container.scrollHeight - container.clientHeight;
       }
-      setItems(listRef.current);
-      console.log("pull up", currPageInfo, listRef.current);
-      setHasMore(pageInfo.pageNumber !== 1);
     }, 800);
   };
   const pullDown = () => {
