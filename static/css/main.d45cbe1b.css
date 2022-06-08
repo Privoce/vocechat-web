@@ -1,4 +1,4 @@
-:root{--br:8px;--rustchat-navs-bg:#e5e7eb;--rustchat-body-bg:#f5f6f7;--rustchat-chat-bg:#fff;--rustchat-channel-text-color:#1c1c1e;--rustchat-msg-text-color:#374151;--animate-duration:1s;--animate-delay:1s;--animate-repeat:1}/*!
+::-webkit-scrollbar-thumb{background:#ddd;border-radius:4px}::-webkit-scrollbar{background:#0000;height:5px;width:5px}:root{--br:8px;--rustchat-navs-bg:#e5e7eb;--rustchat-body-bg:#f5f6f7;--rustchat-chat-bg:#fff;--rustchat-channel-text-color:#1c1c1e;--rustchat-msg-text-color:#374151;--animate-duration:1s;--animate-delay:1s;--animate-repeat:1}/*!
  * animate.css - https://animate.style/
  * Version - 4.1.1
  * Licensed under the MIT license - http://opensource.org/licenses/MIT
