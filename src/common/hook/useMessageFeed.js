@@ -76,18 +76,25 @@ export default function useMessageFeed({ context = "channel", id = null }) {
     }
   }, [items, context, id]);
   useEffect(() => {
-    if (listRef.current.length == 0 && mids.length) {
+    const serverMids = mids.filter((id) => {
+      const ts = new Date().getTime();
+      return Math.abs(ts - id) > 5 * 1000;
+    });
+    if (listRef.current.length == 0 && serverMids.length) {
       //   初次
-      const pageInfo = getFeedWithPagination({ mids, isLast: true });
+      const pageInfo = getFeedWithPagination({
+        mids: serverMids,
+        isLast: true,
+      });
       console.log("pull up 2", pageInfo);
       pageRef.current = pageInfo;
       listRef.current = pageInfo.ids;
       setItems(listRef.current);
-      console.log("message pageInfo", mids, pageInfo);
+      console.log("message pageInfo", serverMids, pageInfo);
     } else {
       //   追加
       const lastMid = listRef.current.slice(-1);
-      const sorteds = mids.slice(0).sort((a, b) => {
+      const sorteds = serverMids.slice(0).sort((a, b) => {
         return Number(a) - Number(b);
       });
       const appends = sorteds.filter((s) => s > lastMid);

@@ -88,7 +88,7 @@ export const StyledChannelChat = styled.article`
   height: -webkit-fill-available;
   overflow-x: hidden;
   overflow-y: auto;
-  /* overflow-anchor: none; */
+  overflow-anchor: auto;
   /* pagination start */
   /* transform: rotate(180deg);
   direction: rtl;

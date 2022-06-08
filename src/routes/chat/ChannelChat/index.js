@@ -8,7 +8,6 @@ import FavList from "../FavList";
 import { useReadMessageMutation } from "../../../app/services/message";
 import { updateRemeberedNavs } from "../../../app/slices/ui";
 import useMessageFeed from "../../../common/hook/useMessageFeed";
-
 import ChannelIcon from "../../../common/component/ChannelIcon";
 import Tooltip from "../../../common/component/Tooltip";
 import Contact from "../../../common/component/Contact";
@@ -32,12 +31,14 @@ import {
 } from "./styled";
 import InviteModal from "../../../common/component/InviteModal";
 import LoadMore from "./LoadMore";
+// import useChatScroll from "../../../common/hook/useChatScroll";
 
 export default function ChannelChat({ cid = "", dropFiles = [] }) {
   const { list: msgIds, appends, hasMore, pullUp } = useMessageFeed({
     context: "channel",
     id: cid,
   });
+  // const scrollObserveRef = useChatScroll([msgIds, appends]);
   const [toolVisible, setToolVisible] = useState("");
   const { pathname } = useLocation();
   const dispatch = useDispatch();
@@ -230,7 +231,10 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
           ) : null
         }
       >
-        <StyledChannelChat id={`RUSTCHAT_FEED_channel_${cid}`}>
+        <StyledChannelChat
+          // ref={scrollObserveRef}
+          id={`RUSTCHAT_FEED_channel_${cid}`}
+        >
           {/* <div className="anchor"></div> */}
           {hasMore ? (
             <LoadMore pullUp={pullUp} />
