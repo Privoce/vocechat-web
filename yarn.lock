@@ -2458,10 +2458,10 @@
   dependencies:
     "@udecode/plate-core" "11.2.1"
 
-"@udecode/plate-headless@11.3.0":
-  version "11.3.0"
-  resolved "http://mirrors.cloud.tencent.com/npm/@udecode%2fplate-headless/-/plate-headless-11.3.0.tgz#e89909b9c8191cfcbf7402a7e1b00ab980429668"
-  integrity sha512-BXLLqPiH135Q3EH574Y2yMGcS8/b4jMZB3C7ycBG+Yiq6dH1kQkjY6jph3zVZMKyYPEdgIGp3wbyuMWZzCtwdg==
+"@udecode/plate-headless@11.3.1":
+  version "11.3.1"
+  resolved "http://mirrors.cloud.tencent.com/npm/@udecode%2fplate-headless/-/plate-headless-11.3.1.tgz#fcaeb507597287889b1193b23bee38e5c1db4087"
+  integrity sha512-1Yj2i3nHudUNsMMFZnYq/cfksMleJnC2UEsmnv8ojWZRM9Xm6pxnCYcKDYo9A/MC7tdYasQ06mOhwFFYf3k5hg==
   dependencies:
     "@udecode/plate-alignment" "11.2.1"
     "@udecode/plate-autoformat" "11.2.1"
@@ -2492,10 +2492,10 @@
     "@udecode/plate-paragraph" "11.2.1"
     "@udecode/plate-reset-node" "11.2.1"
     "@udecode/plate-select" "11.2.1"
-    "@udecode/plate-serializer-csv" "11.3.0"
-    "@udecode/plate-serializer-docx" "11.3.0"
+    "@udecode/plate-serializer-csv" "11.3.1"
+    "@udecode/plate-serializer-docx" "11.3.1"
     "@udecode/plate-serializer-md" "11.2.1"
-    "@udecode/plate-table" "11.3.0"
+    "@udecode/plate-table" "11.3.1"
     "@udecode/plate-trailing-block" "11.2.1"
 
 "@udecode/plate-highlight@11.2.1":
@@ -2623,19 +2623,19 @@
   dependencies:
     "@udecode/plate-core" "11.2.1"
 
-"@udecode/plate-serializer-csv@11.3.0":
-  version "11.3.0"
-  resolved "http://mirrors.cloud.tencent.com/npm/@udecode%2fplate-serializer-csv/-/plate-serializer-csv-11.3.0.tgz#5193df5227716234e7714c907f7b318c2c01025f"
-  integrity sha512-Fg2smSzVQ/wpfX97wb0Yvpp3F3pfTxQBq8MpC1gv7KFZQCphVjCTK81SXcsghO8h5YJ1DCIZhXJ/xGX/U1YlmQ==
+"@udecode/plate-serializer-csv@11.3.1":
+  version "11.3.1"
+  resolved "http://mirrors.cloud.tencent.com/npm/@udecode%2fplate-serializer-csv/-/plate-serializer-csv-11.3.1.tgz#48f7b57e9113b03153db50855c29c25a268b9111"
+  integrity sha512-O0UsfKuE2AWn+2vsRQxRWdJOZFaTS13xEwdovF03EIrcv7Jcbd9EbfkduaVrrj8ncvzxK8kuzRrqJgIw4xBt5A==
   dependencies:
     "@udecode/plate-core" "11.2.1"
-    "@udecode/plate-table" "11.3.0"
+    "@udecode/plate-table" "11.3.1"
     papaparse "^5.3.2"
 
-"@udecode/plate-serializer-docx@11.3.0":
-  version "11.3.0"
-  resolved "http://mirrors.cloud.tencent.com/npm/@udecode%2fplate-serializer-docx/-/plate-serializer-docx-11.3.0.tgz#47049250fd99861895f310af9ea4d369c5cc4984"
-  integrity sha512-/gSQYyXIv13t0nEsLBdMJuNbX9eompHB/LCYyTLalIzSc+ExAnRZ/1xbHUGAzKmoBavDkjR15trkHvDQn+yvHQ==
+"@udecode/plate-serializer-docx@11.3.1":
+  version "11.3.1"
+  resolved "http://mirrors.cloud.tencent.com/npm/@udecode%2fplate-serializer-docx/-/plate-serializer-docx-11.3.1.tgz#49ec08fb0ce49c9a96aa86f1aae717ddc77b97ac"
+  integrity sha512-d6/piVrc/+azZSEsx0PSgCbn/bcIyZjTSciWRYPPqWdCiE1X/Ty3RpxXjIEm26abLj6aH8BHRmoLuMLG1a0B0A==
   dependencies:
     "@udecode/plate-core" "11.2.1"
     "@udecode/plate-heading" "11.2.1"
@@ -2643,7 +2643,7 @@
     "@udecode/plate-indent" "11.2.1"
     "@udecode/plate-indent-list" "11.2.1"
     "@udecode/plate-paragraph" "11.2.1"
-    "@udecode/plate-table" "11.3.0"
+    "@udecode/plate-table" "11.3.1"
     validator "^13.7.0"
 
 "@udecode/plate-serializer-md@11.2.1":
@@ -2670,10 +2670,10 @@
     "@udecode/plate-core" "11.2.1"
     clsx "^1.1.1"
 
-"@udecode/plate-table@11.3.0":
-  version "11.3.0"
-  resolved "http://mirrors.cloud.tencent.com/npm/@udecode%2fplate-table/-/plate-table-11.3.0.tgz#3304c1a33f1e0d273efcf98920d662513eddd8ae"
-  integrity sha512-Y3bGjK99btBQLBAMspnKXumscBuZT9i8hcszXizWu5B9fu8Nm3I4yGUEINeRmaMETEnMXKdVG1kPXqQmvI2FrA==
+"@udecode/plate-table@11.3.1":
+  version "11.3.1"
+  resolved "http://mirrors.cloud.tencent.com/npm/@udecode%2fplate-table/-/plate-table-11.3.1.tgz#829bc0820df51c00443b10ff24666e25d288c0c4"
+  integrity sha512-zB1TYa3LBUMdVKJHVRZBAMbqgQHaKQ4O1LYVlFDKaU9ebPtEoJrb5YsVBtsw/6SUcfqFAmHhNK50SP+sHKu6hg==
   dependencies:
     "@udecode/plate-core" "11.2.1"
 
@@ -2853,14 +2853,14 @@
     "@udecode/plate-core" "11.2.1"
     react-popper "^2.3.0"
 
-"@udecode/plate-ui-table@11.3.0":
-  version "11.3.0"
-  resolved "http://mirrors.cloud.tencent.com/npm/@udecode%2fplate-ui-table/-/plate-ui-table-11.3.0.tgz#935ee8ca0cfbe6b3860c5e56a4f3829131907e89"
-  integrity sha512-2dnQtk86tH3iFoEVAhgunVPzs1ilGlEVoBGlPsbmRvt+BY2YLSvz7yGlVnUvY9fFsKCVMCxOEKep1tBFxQYB1A==
+"@udecode/plate-ui-table@11.3.1":
+  version "11.3.1"
+  resolved "http://mirrors.cloud.tencent.com/npm/@udecode%2fplate-ui-table/-/plate-ui-table-11.3.1.tgz#c543064784943160fae87014cfa629133cc5e5ba"
+  integrity sha512-QmYIl5K4Zu6KFzXn0Xr9ywIm/VBC29x+iwrzzHWKDV59GdAKaGEln5X0aUSsjQtTfBbB9fyTAK5BIDoEPpJgPw==
   dependencies:
     "@udecode/plate-core" "11.2.1"
     "@udecode/plate-styled-components" "11.2.1"
-    "@udecode/plate-table" "11.3.0"
+    "@udecode/plate-table" "11.3.1"
     "@udecode/plate-ui-button" "11.2.1"
     "@udecode/plate-ui-popover" "11.2.1"
     "@udecode/plate-ui-toolbar" "11.2.1"
@@ -2879,12 +2879,12 @@
     react-popper "^2.3.0"
     react-use "^17.3.2"
 
-"@udecode/plate-ui@11.3.0":
-  version "11.3.0"
-  resolved "http://mirrors.cloud.tencent.com/npm/@udecode%2fplate-ui/-/plate-ui-11.3.0.tgz#9b6d4cd6fb5507c9d6d9f213c685bbaf043ec213"
-  integrity sha512-csx3GSXd0Iirlkps+HzvDyICxYd4nVjpyGq1Vativ8oT70sYe61J5Nl2/giBl7J5Wvrnrstkgcbu6nVuvXwECA==
+"@udecode/plate-ui@11.3.1":
+  version "11.3.1"
+  resolved "http://mirrors.cloud.tencent.com/npm/@udecode%2fplate-ui/-/plate-ui-11.3.1.tgz#e4c49f5c0dcb1a10c140d4e30af18a03c4ae11f5"
+  integrity sha512-WfzfEXlZ3RF+DkxxFCynnk++MOqaz6B8MimBKxnEPs+wANQFmEZyyv9+rbjBq7eOp59ZlEE05uTi6yuaHP7dmA==
   dependencies:
-    "@udecode/plate-headless" "11.3.0"
+    "@udecode/plate-headless" "11.3.1"
     "@udecode/plate-styled-components" "11.2.1"
     "@udecode/plate-ui-alignment" "11.2.1"
     "@udecode/plate-ui-block-quote" "11.2.1"
@@ -2903,16 +2903,16 @@
     "@udecode/plate-ui-placeholder" "11.2.1"
     "@udecode/plate-ui-popover" "11.2.1"
     "@udecode/plate-ui-popper" "11.2.1"
-    "@udecode/plate-ui-table" "11.3.0"
+    "@udecode/plate-ui-table" "11.3.1"
     "@udecode/plate-ui-toolbar" "11.2.1"
 
-"@udecode/plate@^11.3.0":
-  version "11.3.0"
-  resolved "http://mirrors.cloud.tencent.com/npm/@udecode%2fplate/-/plate-11.3.0.tgz#76f782e54fe8ecb96c35860a33972b8f1362bf5f"
-  integrity sha512-EYnTUJ53gG1IPEwxad8fSLlkLYghNAk4bPaRTAndvFPtneihU9a3/kf0syUyljLB6HtvTitz+BW/PTcgJScxcQ==
+"@udecode/plate@^11.3.1":
+  version "11.3.1"
+  resolved "http://mirrors.cloud.tencent.com/npm/@udecode%2fplate/-/plate-11.3.1.tgz#07c7a8958bc623154a1373c97dd12b76606ca1d4"
+  integrity sha512-L6yzodPBs12E87wf+J/E+CWzWzKf/Mg50vTQhMpf8eGCgX5cUcmJ4eLYwubZbepYMha8/wM7cKg+i0rTqcuUdA==
   dependencies:
-    "@udecode/plate-headless" "11.3.0"
-    "@udecode/plate-ui" "11.3.0"
+    "@udecode/plate-headless" "11.3.1"
+    "@udecode/plate-ui" "11.3.1"
 
 "@udecode/zustood@^1.1.1":
   version "1.1.1"
@@ -3529,6 +3529,17 @@ browserslist@^4.0.0, browserslist@^4.14.5, browserslist@^4.16.6, browserslist@^4
     node-releases "^2.0.3"
     picocolors "^1.0.0"
 
+browserslist@^4.20.4:
+  version "4.20.4"
+  resolved "https://mirrors.tencent.com/npm/browserslist/-/browserslist-4.20.4.tgz#98096c9042af689ee1e0271333dbc564b8ce4477"
+  integrity sha512-ok1d+1WpnU24XYN7oC3QWgTyMhY/avPJ/r9T00xxvUOIparA/gc+UPUMaod3i+G6s+nI2nUb9xZ5k794uIwShw==
+  dependencies:
+    caniuse-lite "^1.0.30001349"
+    electron-to-chromium "^1.4.147"
+    escalade "^3.1.1"
+    node-releases "^2.0.5"
+    picocolors "^1.0.0"
+
 buffer-from@^1.0.0:
   version "1.1.2"
   resolved "https://mirrors.tencent.com/npm/buffer-from/-/buffer-from-1.1.2.tgz#2b146a6fd72e80b4f55d255f35ed59a3a9a41bd5"
@@ -3608,6 +3619,11 @@ caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001332:
   version "1.0.30001341"
   resolved "https://mirrors.tencent.com/npm/caniuse-lite/-/caniuse-lite-1.0.30001341.tgz#59590c8ffa8b5939cf4161f00827b8873ad72498"
   integrity sha512-2SodVrFFtvGENGCv0ChVJIDQ0KPaS1cg7/qtfMaICgeMolDdo/Z2OD32F0Aq9yl6F4YFwGPBS5AaPqNYiW4PoA==
+
+caniuse-lite@^1.0.30001349:
+  version "1.0.30001349"
+  resolved "https://mirrors.tencent.com/npm/caniuse-lite/-/caniuse-lite-1.0.30001349.tgz#90740086a2eb2e825084944169d313c9793aeba4"
+  integrity sha512-VFaWW3jeo6DLU5rwdiasosxhYSduJgSGil4cSyX3/85fbctlE58pXAkWyuRmVA0r2RxsOSVYUTZcySJ8WpbTxw==
 
 case-sensitive-paths-webpack-plugin@^2.4.0:
   version "2.4.0"
@@ -4172,10 +4188,10 @@ dargs@^7.0.0:
   resolved "http://mirrors.cloud.tencent.com/npm/dargs/-/dargs-7.0.0.tgz#04015c41de0bcb69ec84050f3d9be0caf8d6d5cc"
   integrity sha512-2iy1EkLdlBzQGvbweYRFxmFath8+K7+AKB0TlhHWkNuH+TmovaMH/Wp7V7R4u7f4SnX3OgLsU9t1NI9ioDnUpg==
 
-dayjs@^1.11.2:
-  version "1.11.2"
-  resolved "https://mirrors.tencent.com/npm/dayjs/-/dayjs-1.11.2.tgz#fa0f5223ef0d6724b3d8327134890cfe3d72fbe5"
-  integrity sha512-F4LXf1OeU9hrSYRPTTj/6FbO4HTjPKXvEIC1P2kcnFurViINCVk3ZV0xAS3XVx9MkMsXbbqlK6hjseaYbgKEHw==
+dayjs@^1.11.3:
+  version "1.11.3"
+  resolved "https://mirrors.cloud.tencent.com/npm/dayjs/-/dayjs-1.11.3.tgz#4754eb694a624057b9ad2224b67b15d552589258"
+  integrity sha512-xxwlswWOlGhzgQ4TKzASQkUhqERI3egRNqgV4ScR8wlANA/A9tZ7miXa44vTTKEq5l7vWoL5G57bG3zA+Kow0A==
 
 debug@2.6.9, debug@^2.6.0, debug@^2.6.9:
   version "2.6.9"
@@ -4442,6 +4458,11 @@ electron-to-chromium@^1.4.118:
   version "1.4.137"
   resolved "https://mirrors.tencent.com/npm/electron-to-chromium/-/electron-to-chromium-1.4.137.tgz#186180a45617283f1c012284458510cd99d6787f"
   integrity sha512-0Rcpald12O11BUogJagX3HsCN3FE83DSqWjgXoHo5a72KUKMSfI39XBgJpgNNxS9fuGzytaFjE06kZkiVFy2qA==
+
+electron-to-chromium@^1.4.147:
+  version "1.4.147"
+  resolved "https://mirrors.tencent.com/npm/electron-to-chromium/-/electron-to-chromium-1.4.147.tgz#1ecf318737b21ba1e5b53319eb1edf8143892270"
+  integrity sha512-czclPqxLMPqPMkahKcske4TaS5lcznsc26ByBlEFDU8grTBVK9C5W6K9I6oEEhm4Ai4jTihGnys90xY1yjXcRg==
 
 email-addresses@^3.0.1:
   version "3.1.0"
@@ -6657,6 +6678,11 @@ node-releases@^2.0.3:
   version "2.0.4"
   resolved "https://mirrors.tencent.com/npm/node-releases/-/node-releases-2.0.4.tgz#f38252370c43854dc48aa431c766c6c398f40476"
   integrity sha512-gbMzqQtTtDz/00jQzZ21PQzdI9PyLYqUSvD0p3naOhX4odFji0ZxYdnVwPTxmSwkmxhcFImpozceidSG+AgoPQ==
+
+node-releases@^2.0.5:
+  version "2.0.5"
+  resolved "https://mirrors.tencent.com/npm/node-releases/-/node-releases-2.0.5.tgz#280ed5bc3eba0d96ce44897d8aee478bfb3d9666"
+  integrity sha512-U9h1NLROZTq9uE1SNffn6WuPDg8icmi3ns4rEl/oTfIle4iLjTliCzgTsbaIFMq/Xn078/lfY/BL0GWZ+psK4Q==
 
 normalize-package-data@^2.5.0:
   version "2.5.0"
