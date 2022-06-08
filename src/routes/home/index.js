@@ -38,7 +38,7 @@ export default function HomePage() {
   const { loading } = usePreload();
   // console.log("index loading", loading, ready);
   if (loading || !ready) {
-    return <Loading reload={true} />;
+    return <Loading reload={true} fullscreen={true} />;
   }
   const isSettingPage = pathname.startsWith("/setting");
   if (isSettingPage) {

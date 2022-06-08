@@ -45,7 +45,7 @@ const PageRoutes = () => {
 
   return (
     <HashRouter>
-      <Suspense fallback={<Loading />}>
+      <Suspense fallback={<Loading fullscreen={true} />}>
         <Routes>
           <Route path="/oauth/:token" element={<OAuthPage />} />
           <Route
@@ -97,23 +97,76 @@ const PageRoutes = () => {
             }
           >
             <Route path="setting">
-              <Route index element={<SettingPage />} />
+              <Route
+                index
+                element={
+                  <Suspense fallback={<Loading />}>
+                    <SettingPage />
+                  </Suspense>
+                }
+              />
               <Route path="channel/:cid" element={<SettingChannelPage />} />
             </Route>
-            <Route index element={<ChatPage />} />
+            <Route
+              index
+              element={
+                <Suspense fallback={<Loading />}>
+                  <ChatPage />
+                </Suspense>
+              }
+            />
             <Route path="chat">
               <Route index element={<ChatPage />} />
-              <Route path="channel/:channel_id" element={<ChatPage />} />
-              <Route path="dm/:user_id" element={<ChatPage />} />
+              <Route
+                path="channel/:channel_id"
+                element={
+                  <Suspense fallback={<Loading />}>
+                    <ChatPage />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="dm/:user_id"
+                element={
+                  <Suspense fallback={<Loading />}>
+                    <ChatPage />
+                  </Suspense>
+                }
+              />
             </Route>
             <Route path="contacts">
-              <Route index element={<ContactsPage />} />
-              <Route path=":user_id" element={<ContactsPage />} />
+              <Route
+                index
+                element={
+                  <Suspense fallback={<Loading />}>
+                    <ContactsPage />
+                  </Suspense>
+                }
+              />
+              <Route
+                path=":user_id"
+                element={
+                  <Suspense fallback={<Loading />}>
+                    <ContactsPage />
+                  </Suspense>
+                }
+              />
             </Route>
-            <Route path="favs" element={<FavoritesPage />}></Route>
+            <Route
+              path="favs"
+              element={
+                <Suspense fallback={<Loading />}>
+                  <FavoritesPage />
+                </Suspense>
+              }
+            ></Route>
             <Route
               path="files"
-              element={<ResourceManagement fileMessages={fileMessages} />}
+              element={
+                <Suspense fallback={<Loading />}>
+                  <ResourceManagement fileMessages={fileMessages} />
+                </Suspense>
+              }
             ></Route>
           </Route>
           <Route path="*" element={<NotFoundPage />} />

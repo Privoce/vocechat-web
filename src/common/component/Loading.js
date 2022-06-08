@@ -13,13 +13,17 @@ opacity: 1;
 }
 `;
 const StyledWrapper = styled.div`
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   gap: 15px;
   align-items: center;
   justify-content: center;
+  &.fullscreen {
+    width: 100vw;
+    height: 100vh;
+  }
   .loading {
     display: flex;
     align-items: center;
@@ -33,14 +37,14 @@ const StyledWrapper = styled.div`
     }
   }
 `;
-export default function Loading({ reload = false }) {
+export default function Loading({ reload = false, fullscreen = false }) {
   const { clearLocalData } = useLogout();
   const handleReload = () => {
     clearLocalData();
     location.reload(true);
   };
   return (
-    <StyledWrapper>
+    <StyledWrapper className={fullscreen ? "fullscreen" : ""}>
       <Ring
         className="loading"
         size={40}
