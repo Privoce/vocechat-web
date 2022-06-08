@@ -19,19 +19,17 @@ const Styled = styled.div`
     height: 100%;
     overflow-y: scroll;
     width: 100%;
-
     display: flex;
     &.item {
       gap: 8px;
       flex-direction: column;
-      /* align-items: flex-start; */
     }
     &.grid {
       flex-direction: row;
       flex-wrap: wrap;
       > .file_box {
         flex-direction: column;
-        margin-right: 8px;
+        /* margin-right: 8px; */
         margin-bottom: 8px;
       }
     }

@@ -62,8 +62,16 @@ function ResourceManagement({ fileMessages }) {
   };
   useEffect(() => {
     if (view == Views.grid && listContainerRef) {
+      const container = listContainerRef.current;
+      const cWidth = container.getBoundingClientRect().width - 16 * 2;
+      const count = Math.floor(cWidth / 368);
+      const leftWidth = cWidth % 368;
+      const gutter = Math.max(Math.floor(leftWidth / (count - 1)), 8);
+      console.log("gutter", gutter, cWidth, count, leftWidth);
       msnry = new Masonry(listContainerRef.current, {
         // options
+        fitWidth: true,
+        gutter,
         itemSelector: ".file_box",
         // columnWidth: 200
       });
