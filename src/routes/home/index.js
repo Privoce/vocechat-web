@@ -75,7 +75,7 @@ export default function HomePage() {
               </Tooltip>
             </NavLink>
             <NavLink className="link" to={"/favs"}>
-              <Tooltip tip="Favorites">
+              <Tooltip tip="Saved Items">
                 <FavIcon />
               </Tooltip>
             </NavLink>

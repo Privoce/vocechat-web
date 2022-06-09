@@ -12,7 +12,7 @@ const StyledWrapper = styled.div`
     min-width: 268px;
     box-shadow: inset -1px 0px 0px rgba(0, 0, 0, 0.1);
     .list {
-      margin: 12px 8px;
+      padding: 12px 8px;
       overflow: scroll;
       padding-bottom: 50px;
       > .nav {
