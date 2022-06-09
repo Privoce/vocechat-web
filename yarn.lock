@@ -2731,10 +2731,10 @@
     "@udecode/plate-styled-components" "11.2.1"
     "@udecode/plate-ui-popper" "11.2.1"
 
-"@udecode/plate-ui-dnd@11.2.1":
-  version "11.2.1"
-  resolved "http://mirrors.cloud.tencent.com/npm/@udecode%2fplate-ui-dnd/-/plate-ui-dnd-11.2.1.tgz#e236b75f902d30d6baffd794be1fc66cc4a93cc6"
-  integrity sha512-XtvAquQXgphl7gM1oBuVhBg0qidNyju2L9b5RYTuw2rYwMgu2Bttu1Q6XLsu0BTD+c3VXrZM2XSA+6B9N0x+CA==
+"@udecode/plate-ui-dnd@12.0.0":
+  version "12.0.0"
+  resolved "http://mirrors.cloud.tencent.com/npm/@udecode%2fplate-ui-dnd/-/plate-ui-dnd-12.0.0.tgz#2d38ed65144e45b18e9e84240d8bd7fb732a165a"
+  integrity sha512-EDWxGaP0sPZ0IbYyJvPJQPNA41EOwsQGgu4WY/gnHAA/DT+CsSMPNE6xlslIwIH6PlliKsn/6L7Z4c2w7nCUdQ==
   dependencies:
     "@react-hook/merged-ref" "^1.3.2"
     "@tippyjs/react" "^4.2.6"
@@ -2879,10 +2879,10 @@
     react-popper "^2.3.0"
     react-use "^17.3.2"
 
-"@udecode/plate-ui@11.3.1":
-  version "11.3.1"
-  resolved "http://mirrors.cloud.tencent.com/npm/@udecode%2fplate-ui/-/plate-ui-11.3.1.tgz#e4c49f5c0dcb1a10c140d4e30af18a03c4ae11f5"
-  integrity sha512-WfzfEXlZ3RF+DkxxFCynnk++MOqaz6B8MimBKxnEPs+wANQFmEZyyv9+rbjBq7eOp59ZlEE05uTi6yuaHP7dmA==
+"@udecode/plate-ui@12.0.0":
+  version "12.0.0"
+  resolved "http://mirrors.cloud.tencent.com/npm/@udecode%2fplate-ui/-/plate-ui-12.0.0.tgz#4a43b49c7aee25574ab513af09e2257e7edb4016"
+  integrity sha512-7vo4EtTBtUyXlOE9NCKd9VA/wkMtQxZphwhYypCTKQQECfRmLpuv0PP+crO0MfuA+JK/1M8LHQBlzexIjUPcew==
   dependencies:
     "@udecode/plate-headless" "11.3.1"
     "@udecode/plate-styled-components" "11.2.1"
@@ -2891,7 +2891,7 @@
     "@udecode/plate-ui-button" "11.2.1"
     "@udecode/plate-ui-code-block" "11.2.1"
     "@udecode/plate-ui-combobox" "11.2.1"
-    "@udecode/plate-ui-dnd" "11.2.1"
+    "@udecode/plate-ui-dnd" "12.0.0"
     "@udecode/plate-ui-find-replace" "11.2.1"
     "@udecode/plate-ui-font" "11.2.1"
     "@udecode/plate-ui-image" "11.2.1"
@@ -2906,13 +2906,13 @@
     "@udecode/plate-ui-table" "11.3.1"
     "@udecode/plate-ui-toolbar" "11.2.1"
 
-"@udecode/plate@^11.3.1":
-  version "11.3.1"
-  resolved "http://mirrors.cloud.tencent.com/npm/@udecode%2fplate/-/plate-11.3.1.tgz#07c7a8958bc623154a1373c97dd12b76606ca1d4"
-  integrity sha512-L6yzodPBs12E87wf+J/E+CWzWzKf/Mg50vTQhMpf8eGCgX5cUcmJ4eLYwubZbepYMha8/wM7cKg+i0rTqcuUdA==
+"@udecode/plate@^12.0.0":
+  version "12.0.0"
+  resolved "http://mirrors.cloud.tencent.com/npm/@udecode%2fplate/-/plate-12.0.0.tgz#ed752a6bdefc17d72abdfb2f8f252843b14fd002"
+  integrity sha512-DYqq2UqbKd85M2f7Jl1LUcKdwGmo4DF8FSGQlxFuj94xVSZE8F1ObqCWh9IyKCz+k1Gckl2OPuulD3K9YM8ikQ==
   dependencies:
     "@udecode/plate-headless" "11.3.1"
-    "@udecode/plate-ui" "11.3.1"
+    "@udecode/plate-ui" "12.0.0"
 
 "@udecode/zustood@^1.1.1":
   version "1.1.1"
