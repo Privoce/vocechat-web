@@ -30,7 +30,7 @@ import {
   StyledHeader,
 } from "./styled";
 import InviteModal from "../../../common/component/InviteModal";
-import LoadMore from "./LoadMore";
+import LoadMore from "../LoadMore";
 // import useChatScroll from "../../../common/hook/useChatScroll";
 
 export default function ChannelChat({ cid = "", dropFiles = [] }) {

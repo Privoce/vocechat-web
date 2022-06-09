@@ -7,6 +7,8 @@ import { updateMute } from "../slices/footprint";
 import { fullfillContacts } from "../slices/contacts";
 import BASE_URL, { ContentTypes } from "../config";
 import { onMessageSendStarted } from "./handlers";
+import handleChatMessage from "../../common/hook/useStreaming/chat.handler";
+
 export const contactApi = createApi({
   reducerPath: "contactApi",
   baseQuery,
@@ -110,10 +112,26 @@ export const contactApi = createApi({
         await onMessageSendStarted.call(this, param1, param2, "user");
       },
     }),
+    getHistoryMessages: builder.query({
+      query: ({ id, mid = null, limit = 100 }) => ({
+        url: mid
+          ? `/user/${id}/history?before=${mid}&limit=${limit}`
+          : `/user/${id}/history?limit=${limit}`,
+      }),
+      async onQueryStarted(params, { dispatch, getState, queryFulfilled }) {
+        const { data: messages } = await queryFulfilled;
+        if (messages?.length) {
+          messages.forEach((msg) => {
+            handleChatMessage(msg, dispatch, getState());
+          });
+        }
+      },
+    }),
   }),
 });
 
 export const {
+  useLazyGetHistoryMessagesQuery,
   useUpdateContactMutation,
   useUpdateMuteSettingMutation,
   useLazyDeleteContactQuery,

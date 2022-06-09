@@ -59,12 +59,12 @@ export const channelApi = createApi({
       },
     }),
     getHistoryMessages: builder.query({
-      query: ({ gid, mid = null, limit = 100 }) => ({
+      query: ({ id, mid = null, limit = 100 }) => ({
         url: mid
-          ? `/group/${gid}/history?before=${mid}&limit=${limit}`
-          : `/group/${gid}/history?limit=${limit}`,
+          ? `/group/${id}/history?before=${mid}&limit=${limit}`
+          : `/group/${id}/history?limit=${limit}`,
       }),
-      async onQueryStarted(id, { dispatch, getState, queryFulfilled }) {
+      async onQueryStarted(params, { dispatch, getState, queryFulfilled }) {
         const { data: messages } = await queryFulfilled;
         if (messages?.length) {
           messages.forEach((msg) => {

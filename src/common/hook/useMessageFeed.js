@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useLazyGetHistoryMessagesQuery } from "../../app/services/channel";
+import { useLazyGetHistoryMessagesQuery as useLazyGetDMHistoryMsg } from "../../app/services/contact";
 
 const getFeedWithPagination = (config) => {
   const { pageNumber = 1, pageSize = 40, mids = [], isLast = false } =
@@ -39,13 +40,16 @@ const getFeedWithPagination = (config) => {
 let curScrollPos = 0;
 let oldScroll = 0;
 export default function useMessageFeed({ context = "channel", id = null }) {
-  const [loadMoreFromServer] = useLazyGetHistoryMessagesQuery();
+  const [loadMoreChannelMsgs] = useLazyGetHistoryMessagesQuery();
+  const [loadMoreDmMsgs] = useLazyGetDMHistoryMsg();
   const listRef = useRef([]);
   const pageRef = useRef(null);
   const containerRef = useRef(null);
   const [hasMore, setHasMore] = useState(true);
   const [appends, setAppends] = useState([]);
   const [items, setItems] = useState([]);
+  const loadMoreMsgsFromServer =
+    context == "channel" ? loadMoreChannelMsgs : loadMoreDmMsgs;
   const { mids, messageData, loginUid } = useSelector((store) => {
     return {
       loginUid: store.authData.uid,
@@ -127,9 +131,9 @@ export default function useMessageFeed({ context = "channel", id = null }) {
     // 第一页
     if (currPageInfo && currPageInfo.isFirst) {
       const [firstMid] = currPageInfo.ids;
-      const { data: newList } = await loadMoreFromServer({
+      const { data: newList } = await loadMoreMsgsFromServer({
         mid: firstMid,
-        gid: id,
+        id,
       });
       if (newList.length == 0) {
         setHasMore(false);
