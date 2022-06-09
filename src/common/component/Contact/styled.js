@@ -23,6 +23,7 @@ const StyledWrapper = styled.div`
     height: ${({ size }) => `${size}px`};
     position: relative;
     img {
+      object-fit: cover;
       border-radius: 50%;
       width: 100%;
       height: 100%;

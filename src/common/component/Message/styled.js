@@ -31,12 +31,13 @@ const StyledMsg = styled.div`
   &.readonly:hover {
     background: none;
   }
-  .avatar {
+  > .avatar {
     flex-shrink: 0;
     cursor: pointer;
     width: 40px;
     height: 40px;
     img {
+      object-fit: cover;
       width: 100%;
       height: 100%;
       border-radius: 50%;
