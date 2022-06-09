@@ -430,6 +430,6 @@
     background-color: #f9fafb;
   }
   &::placeholder {
-    color: #78787c;
+    color: #d1d5db;
   }
 `},5120:(e,i,t)=>{t.d(i,{Z:()=>o});var n=t(7313),l=t(1026),a=t(4695),s=t(5564);function o(){let e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:null;const[i,t]=(0,n.useState)(""),{data:o,isSuccess:r}=(0,a.n8)(),[c,{data:d,isLoading:p}]=(0,s.CU)(),[x,{data:h,isLoading:m}]=(0,a.CU)(),{copied:g,copy:f}=(0,l.Z)({enableToast:!1}),u=()=>{f(i)};(0,n.useEffect)((()=>{e?c(e):x()}),[e]),(0,n.useEffect)((()=>{const e=h||d;e&&r&&t(e)}),[h,d,r]);const b=()=>{x()};return{enableSMTP:o,generating:e?p:m,generateNewLink:e?c.bind(null,e):b,link:i,linkCopied:g,copyLink:u}}},169:(e,i,t)=>{e.exports=t.p+"static/media/more.54cac536d52aae6f342e.svg"}}]);

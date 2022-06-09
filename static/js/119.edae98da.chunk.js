@@ -11,6 +11,7 @@
     width: 80px;
     height: 80px;
     border-radius: 50%;
+    object-fit: cover;
   }
   .name {
     user-select: text;

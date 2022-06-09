@@ -21,6 +21,7 @@
     height: ${e=>{let{size:t}=e;return`${t}px`}};
     position: relative;
     img {
+      object-fit: cover;
       border-radius: 50%;
       width: 100%;
       height: 100%;
@@ -65,6 +66,7 @@
     width: 80px;
     height: 80px;
     border-radius: 50%;
+    object-fit: cover;
   }
   .name {
     user-select: text;
