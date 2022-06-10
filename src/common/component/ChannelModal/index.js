@@ -94,7 +94,7 @@ export default function ChannelModal({ personal = false, closeModal }) {
               <input
                 value={input}
                 onChange={handleInputChange}
-                placeholder="Type username to search"
+                placeholder="Type Username to search"
               />
             </div>
             {contacts && (

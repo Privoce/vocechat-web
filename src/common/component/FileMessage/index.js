@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useSelector } from "react-redux";
 import Styled from "./styled";
-import Image from "./Image";
+import ImageMessage from "./ImageMessage";
 import useRemoveLocalMessage from "../../hook/useRemoveLocalMessage";
 import useUploadFile from "../../hook/useUploadFile";
 import useSendMessage from "../../hook/useSendMessage";
@@ -113,7 +113,8 @@ export default function FileMessage({
 
   if (isImage(content_type, size))
     return (
-      <Image
+      <ImageMessage
+        key={properties?.local_id}
         uploading={sending}
         progress={progress}
         properties={{ ...imageSize, ...properties }}

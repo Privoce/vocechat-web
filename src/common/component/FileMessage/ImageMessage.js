@@ -1,4 +1,4 @@
-// import React from 'react'
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
@@ -29,7 +29,7 @@ const Styled = styled.div`
   }
 `;
 import { getDefaultSize } from "../../utils";
-export default function Image({
+export default function ImageMessage({
   uploading,
   progress,
   thumbnail,
@@ -37,8 +37,21 @@ export default function Image({
   content,
   properties = {},
 }) {
+  const [url, setUrl] = useState(thumbnail);
   const { width = 0, height = 0 } = getDefaultSize(properties);
   console.log("image props", properties, width, height);
+  useEffect(() => {
+    const newUrl = thumbnail;
+    const img = new Image();
+    img.onload = () => {
+      setUrl(newUrl);
+    };
+    img.onerror = () => {
+      setUrl("");
+    };
+    img.src = newUrl;
+  }, [thumbnail]);
+
   return (
     <Styled>
       {uploading && (
@@ -64,7 +77,7 @@ export default function Image({
         data-meta={JSON.stringify(properties)}
         data-origin={content}
         data-download={download}
-        src={thumbnail || download || content}
+        src={url}
       />
     </Styled>
   );

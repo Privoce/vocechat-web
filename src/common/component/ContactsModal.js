@@ -16,7 +16,7 @@ const StyledWrapper = styled.div`
   box-shadow: 0px 25px 50px rgba(31, 41, 55, 0.25);
   border-radius: 8px;
   transition: all 0.5s ease;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   .search {
     box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.1);
     padding: 8px;
@@ -67,7 +67,7 @@ export default function ContactsModal({ closeModal }) {
           <input
             value={input}
             onChange={handleSearch}
-            placeholder="Type username to search"
+            placeholder="Type Username to search"
           />
         </div>
         {contacts && (
