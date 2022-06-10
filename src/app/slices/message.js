@@ -25,7 +25,8 @@ const messageSlice = createSlice({
       if (sending && state[mid]) return;
       const isFile = content_type == ContentTypes.file;
       // image
-      const isPic = isImage(properties.content_type, properties.size);
+      const props = properties ?? {};
+      const isPic = isImage(props.content_type, props.size);
       if (isFile) {
         if (!sending) {
           data.file_path = content;
