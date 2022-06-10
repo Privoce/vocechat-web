@@ -18,8 +18,10 @@ export default function ContactContextMenu({
     copyEmail,
     canCopyEmail,
     startChat,
+    canRemove,
     canRemoveFromChannel,
     removeFromChannel,
+    removeUser,
   } = useContactOperation({
     uid,
     cid,
@@ -55,6 +57,11 @@ export default function ContactContextMenu({
                 danger: true,
                 title: "Remove From Channel",
                 handler: removeFromChannel,
+              },
+              canRemove && {
+                danger: true,
+                title: "Remove From Server",
+                handler: removeUser,
               },
             ]}
           />

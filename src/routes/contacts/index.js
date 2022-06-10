@@ -33,7 +33,7 @@ export default function ContactsPage() {
             {contactIds.map((uid) => {
               return (
                 <NavLink key={uid} className="session" to={`/contacts/${uid}`}>
-                  <Contact uid={uid} />
+                  <Contact uid={uid} enableContextMenu={true} />
                 </NavLink>
               );
             })}

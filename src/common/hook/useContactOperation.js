@@ -69,7 +69,7 @@ export default function useContactOperation({ uid, cid }) {
   const canRemoveFromChannel =
     cid && !channel?.is_public && (isAdmin || channel?.owner == loginUid);
   const canCall = loginUid != uid;
-  const canRemove = isAdmin && loginUid != uid;
+  const canRemove = isAdmin && loginUid != uid && !cid;
   return {
     canRemove,
     removeUser: handleRemove,

@@ -25,6 +25,8 @@ export default function ContextMenu({ items = [], hideMenu = null }) {
             }`}
             key={title}
             onClick={(evt) => {
+              evt.stopPropagation();
+              evt.preventDefault();
               handler(evt);
               if (hideMenu) {
                 hideMenu();
