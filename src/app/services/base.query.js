@@ -40,7 +40,7 @@ const baseQueryWithTokenCheck = async (args, api, extraOptions) => {
   const {
     token,
     refreshToken,
-    expireTime = new Date().getTime(),
+    expireTime = +new Date(),
   } = api.getState().authData;
   let result = null;
   if (

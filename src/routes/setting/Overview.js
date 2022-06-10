@@ -128,7 +128,7 @@ export default function Overview() {
         <div className="preview">
           <LogoUploader
             disabled={!isAdmin}
-            url={uploadSuccess ? `${logo}?t=${new Date().getTime()}` : logo}
+            url={uploadSuccess ? `${logo}?t=${+new Date()}` : logo}
             name={name}
             uploadImage={uploadLogo}
           />

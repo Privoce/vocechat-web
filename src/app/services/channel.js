@@ -162,7 +162,7 @@ export const channelApi = createApi({
           dispatch(
             updateChannel({
               id: gid,
-              icon: `${BASE_URL}/resource/group_avatar?gid=${gid}&t=${new Date().getTime()}`,
+              icon: `${BASE_URL}/resource/group_avatar?gid=${gid}&t=${+new Date()}`,
             })
           );
         } catch (error) {

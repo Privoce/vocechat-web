@@ -76,7 +76,7 @@ function Send({
       for await (const msg of msgs) {
         console.log("send msg", msg);
         const { type: content_type, content, properties = {} } = msg;
-        properties.local_id = properties.local_id ?? new Date().getTime();
+        properties.local_id = properties.local_id ?? +new Date();
         await sendMessage({
           id,
           reply_mid: replying_mid,
@@ -90,7 +90,7 @@ function Send({
     // send files
     if (uploadFiles && uploadFiles.length !== 0) {
       uploadFiles.forEach((fileInfo) => {
-        const ts = new Date().getTime();
+        const ts = +new Date();
         const { url, name, size, type } = fileInfo;
         const tmpMsg = {
           mid: ts,
@@ -118,7 +118,7 @@ function Send({
       type: "markdown",
       content,
       from_uid,
-      properties: { local_id: new Date().getTime() },
+      properties: { local_id: +new Date() },
     });
   };
   const toggleMode = () => {

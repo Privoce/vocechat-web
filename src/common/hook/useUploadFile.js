@@ -44,7 +44,7 @@ export default function useUploadFile(props = {}) {
     if (!file) return;
     setData(null);
     const {
-      name = `rustchat-${new Date().getTime()}.${file.type.split("/")[1]}`,
+      name = `rustchat-${+new Date()}.${file.type.split("/")[1]}`,
       type: file_type,
       size: file_size,
     } = file;

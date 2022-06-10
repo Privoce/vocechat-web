@@ -64,7 +64,7 @@ export default function useStreaming() {
     if (initialized || initializing) return;
     // 如果token快要过期，先renew
     const {
-      authData: { token, expireTime = new Date().getTime(), refreshToken },
+      authData: { token, expireTime = +new Date(), refreshToken },
     } = store.getState();
     let api_token = token;
     const tokenAlmostExpire = dayjs().isAfter(new Date(expireTime - 20 * 1000));

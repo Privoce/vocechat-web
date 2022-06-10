@@ -12,7 +12,7 @@ export const onMessageSendStarted = async (
     type = "text",
     from_uid,
     reply_mid = null,
-    properties = { local_id: new Date().getTime() },
+    properties = { local_id: +new Date() },
   },
   { dispatch, queryFulfilled },
   from = "channel"
@@ -22,7 +22,7 @@ export const onMessageSendStarted = async (
   // id: who send to ,from_uid: who sent
   console.log("handlers data", content, type, properties, ignoreLocal, id);
   const isImage = properties.content_type?.startsWith("image");
-  const ts = properties.local_id || new Date().getTime();
+  const ts = properties.local_id || +new Date();
   // let imageData = null;
   // if (type == "image") {
   //   if (typeof content == "string" && content.startsWith("data:image")) {
