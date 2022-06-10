@@ -24,21 +24,24 @@ const messageSlice = createSlice({
       // 如果是正发送，并且已存在，则不覆盖
       if (sending && state[mid]) return;
       const isFile = content_type == ContentTypes.file;
-      if (!sending && isFile) {
-        data.file_path = content;
-        data.content = `${BASE_URL}/resource/file?file_path=${encodeURIComponent(
-          data.file_path
-        )}`;
-        data.download = `${BASE_URL}/resource/file?file_path=${encodeURIComponent(
-          data.file_path
-        )}&download=true`;
-        // image
-        const props = properties ?? {};
-        const isPic = isImage(props.content_type, props.size);
-        if (isPic) {
-          data.thumbnail = `${BASE_URL}/resource/file?file_path=${encodeURIComponent(
+      // image
+      const isPic = isImage(properties.content_type, properties.size);
+      if (isFile) {
+        if (!sending) {
+          data.file_path = content;
+          data.content = `${BASE_URL}/resource/file?file_path=${encodeURIComponent(
             data.file_path
-          )}&thumbnail=true`;
+          )}`;
+          data.download = `${BASE_URL}/resource/file?file_path=${encodeURIComponent(
+            data.file_path
+          )}&download=true`;
+          data.thumbnail = isPic
+            ? `${BASE_URL}/resource/file?file_path=${encodeURIComponent(
+                data.file_path
+              )}&thumbnail=true`
+            : "";
+        } else if (isPic) {
+          data.thumbnail = content;
         }
       }
       state[mid] = data;

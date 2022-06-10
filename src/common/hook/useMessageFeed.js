@@ -81,8 +81,8 @@ export default function useMessageFeed({ context = "channel", id = null }) {
   }, [items, context, id]);
   useEffect(() => {
     const serverMids = mids.filter((id) => {
-      const ts = new Date().getTime();
-      return Math.abs(ts - id) > 5 * 1000;
+      const ts = +new Date();
+      return Math.abs(ts - id) > 10 * 1000;
     });
     if (listRef.current.length == 0 && serverMids.length) {
       //   初次
@@ -97,11 +97,12 @@ export default function useMessageFeed({ context = "channel", id = null }) {
       console.log("message pageInfo", serverMids, pageInfo);
     } else {
       //   追加
-      const lastMid = listRef.current.slice(-1);
-      const sorteds = serverMids.slice(0).sort((a, b) => {
+      const [lastMid] = listRef.current.slice(-1);
+      const sorteds = mids.slice(0).sort((a, b) => {
         return Number(a) - Number(b);
       });
       const appends = sorteds.filter((s) => s > lastMid);
+      console.log("appends", appends, sorteds, lastMid, mids);
       if (appends.length) {
         setAppends(appends);
         const [newestMsgId] = appends.slice(-1);
@@ -122,7 +123,6 @@ export default function useMessageFeed({ context = "channel", id = null }) {
           }
         }
       }
-      console.log("appends", appends, listRef.current);
     }
   }, [mids, messageData, loginUid]);
   const pullUp = async () => {
