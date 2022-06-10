@@ -96,6 +96,7 @@
     width: 32px;
     height: 32px;
     img {
+      object-fit: cover;
       border-radius: 50%;
       width: 100%;
       height: 100%;

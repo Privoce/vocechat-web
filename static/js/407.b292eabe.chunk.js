@@ -214,6 +214,8 @@
       img {
         width: 100%;
         height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
       }
     }
     .info {
@@ -259,6 +261,7 @@
       width: 32px;
       height: 32px;
       border-radius: 50%;
+      object-fit: cover;
     }
     .toggle {
     }
