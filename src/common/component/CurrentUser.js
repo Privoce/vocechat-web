@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import soundIcon from "../../assets/icons/sound.on.svg?url";
 import micIcon from "../../assets/icons/mic.on.svg?url";
 import Avatar from "./Avatar";
+import useConfig from "../hook/useConfig";
 // import UserGuide from "./UserGuide";
 const StyledWrapper = styled.div`
   background-color: #f4f4f5;
@@ -60,6 +61,7 @@ const StyledWrapper = styled.div`
   }
 `;
 export default function CurrentUser() {
+  const { values: agoraConfig } = useConfig("agora");
   const currUser = useSelector((store) => {
     return store.contacts.byId[store.authData.uid];
   });
@@ -76,10 +78,12 @@ export default function CurrentUser() {
           <span className="id">#{uid}</span>
         </div>
       </div>
-      <div className="settings">
-        <img src={soundIcon} className="icon" alt="mic icon" />
-        <img src={micIcon} className="icon" alt="sound icon" />
-      </div>
+      {agoraConfig.enabled && (
+        <div className="settings">
+          <img src={soundIcon} className="icon" alt="mic icon" />
+          <img src={micIcon} className="icon" alt="sound icon" />
+        </div>
+      )}
     </StyledWrapper>
     // </UserGuide>
   );

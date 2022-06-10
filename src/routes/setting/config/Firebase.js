@@ -5,7 +5,7 @@ import Textarea from "../../../common/component/styled/Textarea";
 import Toggle from "../../../common/component/styled/Toggle";
 import Label from "../../../common/component/styled/Label";
 import SaveTip from "../../../common/component/SaveTip";
-import useConfig from "./useConfig";
+import useConfig from "../../../common/hook/useConfig";
 
 export default function ConfigFirebase() {
   const {

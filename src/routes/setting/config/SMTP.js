@@ -8,7 +8,7 @@ const StyledTest = styled.div`
 `;
 import { useSendTestEmailMutation } from "../../../app/services/server";
 import iconQuestion from "../../../assets/icons/question.svg?url";
-import useConfig from "./useConfig";
+import useConfig from "../../../common/hook/useConfig";
 import StyledContainer from "./StyledContainer";
 import Input from "../../../common/component/styled/Input";
 import Button from "../../../common/component/styled/Button";

@@ -8,6 +8,7 @@ import FavList from "../FavList";
 import { useReadMessageMutation } from "../../../app/services/message";
 import { updateRemeberedNavs } from "../../../app/slices/ui";
 import useMessageFeed from "../../../common/hook/useMessageFeed";
+import useConfig from "../../../common/hook/useConfig";
 import ChannelIcon from "../../../common/component/ChannelIcon";
 import Tooltip from "../../../common/component/Tooltip";
 import Contact from "../../../common/component/Contact";
@@ -34,6 +35,7 @@ import LoadMore from "../LoadMore";
 // import useChatScroll from "../../../common/hook/useChatScroll";
 
 export default function ChannelChat({ cid = "", dropFiles = [] }) {
+  const { values: agoraConfig } = useConfig("agora");
   const { list: msgIds, appends, hasMore, pullUp } = useMessageFeed({
     context: "channel",
     id: cid,
@@ -107,11 +109,13 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
         aside={
           <>
             <ul className="tools">
-              <li className="tool">
-                <Tooltip tip="Voice/Video Chat" placement="left">
-                  <IconHeadphone />
-                </Tooltip>
-              </li>
+              {agoraConfig.enabled && (
+                <li className="tool">
+                  <Tooltip tip="Voice/Video Chat" placement="left">
+                    <IconHeadphone />
+                  </Tooltip>
+                </li>
+              )}
               <Tooltip
                 tip="Pin"
                 placement="left"

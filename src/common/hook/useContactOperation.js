@@ -6,10 +6,12 @@ import { useNavigate, useMatch } from "react-router-dom";
 import { hideAll } from "tippy.js";
 import { useRemoveMembersMutation } from "../../app/services/channel";
 import { useLazyDeleteContactQuery } from "../../app/services/contact";
+import useConfig from "./useConfig";
 import useCopy from "./useCopy";
 
 export default function useContactOperation({ uid, cid }) {
   const [passedUid, setPassedUid] = useState(undefined);
+  const { values: agoraConfig } = useConfig("agora");
   const isUserDetailPath = useMatch(`/contacts/${uid}`);
   const [
     removeUser,
@@ -68,7 +70,7 @@ export default function useContactOperation({ uid, cid }) {
   };
   const canRemoveFromChannel =
     cid && !channel?.is_public && (isAdmin || channel?.owner == loginUid);
-  const canCall = loginUid != uid;
+  const canCall = agoraConfig.enabled && loginUid != uid;
   const canRemove = isAdmin && loginUid != uid && !cid;
   return {
     canRemove,

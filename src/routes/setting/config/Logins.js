@@ -5,7 +5,7 @@ import Toggle from "../../../common/component/styled/Toggle";
 import Label from "../../../common/component/styled/Label";
 import Input from "../../../common/component/styled/Input";
 import SaveTip from "../../../common/component/SaveTip";
-import useConfig from "./useConfig";
+import useConfig from "../../../common/hook/useConfig";
 import Tooltip from "./Tooltip";
 import IssuerList from "./IssuerList";
 import useGoogleAuthConfig from "../../../common/hook/useGoogleAuthConfig";

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { isObjectEqual } from "../../../common/utils";
+import { isObjectEqual } from "../utils";
 import toast from "react-hot-toast";
 import {
   useGetAgoraConfigQuery,
@@ -10,7 +10,7 @@ import {
   useUpdateSMTPConfigMutation,
   useUpdateAgoraConfigMutation,
   useUpdateFirebaseConfigMutation,
-} from "../../../app/services/server";
+} from "../../app/services/server";
 export default function useConfig(config = "smtp") {
   const [changed, setChanged] = useState(false);
   const [values, setValues] = useState({});

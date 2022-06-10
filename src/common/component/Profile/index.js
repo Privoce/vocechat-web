@@ -56,7 +56,7 @@ export default function Profile({ uid = null, type = "embed", cid = null }) {
           </li>
         </NavLink>
         {/* <NavLink to={`#`}> */}
-        {type == "embed" && (
+        {enableCall && (
           <li className="icon call" onClick={call}>
             <IconCall />
             <span className="txt">Call</span>
