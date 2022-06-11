@@ -217,21 +217,23 @@ export default function Overview() {
             placeholder="Tell the world a bit about this server"
           />
         </div>
-        <div className="radioButton">
-          <p className="label">Default Sign Up</p>
-          <p className="tip">Who can sign up this server.</p>
-          <StyledRadio
-            options={["Everyone", "Invitation Link Only"]}
-            values={["EveryOne", "InvitationOnly"]}
-            value={whoCanSignUp}
-            onChange={(v) =>
-              setLoginConfigValues({
-                ...loginConfig,
-                who_can_sign_up: v
-              })
-            }
-          />
-        </div>
+        {isAdmin && (
+          <div className="radioButton">
+            <p className="label">Default Sign Up</p>
+            <p className="tip">Who can sign up this server.</p>
+            <StyledRadio
+              options={["Everyone", "Invitation Link Only"]}
+              values={["EveryOne", "InvitationOnly"]}
+              value={whoCanSignUp}
+              onChange={(v) =>
+                setLoginConfigValues({
+                  ...loginConfig,
+                  who_can_sign_up: v
+                })
+              }
+            />
+          </div>
+        )}
       </div>
       {changed && <SaveTip saveHandler={handleUpdate} resetHandler={handleReset} />}
       {/* <button onClick={handleUpdate} className="btn">update</button> */}
