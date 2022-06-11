@@ -5,7 +5,7 @@ import BASE_URL from "../../app/config";
 // import web3 from "web3";
 import StyledWrapper from "./styled";
 import MetamaskLoginButton from "./MetamaskLoginButton";
-import SolidLoginButton from "./SolidLoginButton";
+import OidcLoginButton from "./OidcLoginButton";
 import Input from "../../common/component/styled/Input";
 import Button from "../../common/component/styled/Button";
 import GoogleLoginButton from "./GoogleLoginButton";
@@ -16,7 +16,6 @@ import { useGetLoginConfigQuery, useGetSMTPStatusQuery } from "../../app/service
 import useGoogleAuthConfig from "../../common/hook/useGoogleAuthConfig";
 import GithubLoginButton from "./GithubLoginButton";
 import useGithubAuthConfig from "../../common/hook/useGithubAuthConfig";
-
 export default function LoginPage() {
   const { data: enableSMTP } = useGetSMTPStatusQuery();
   const [login, { isSuccess, isLoading, error }] = useLoginMutation();
@@ -171,7 +170,7 @@ export default function LoginPage() {
         {googleLogin && <GoogleLoginButton login={login} clientId={clientId} />}
         {enableGithubLogin && <GithubLoginButton config={githubAuthConfig} />}
         {enableMetamaskLogin && <MetamaskLoginButton login={login} />}
-        {oidc.length > 0 && <SolidLoginButton issuers={oidc} />}
+        {oidc.length > 0 && <OidcLoginButton issuers={oidc} />}
         {whoCanSignUp === "EveryOne" && <SignUpLink />}
       </div>
     </StyledWrapper>

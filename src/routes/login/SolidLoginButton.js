@@ -1,16 +1,15 @@
 /* eslint-disable no-undef */
 import { useEffect } from "react";
 import { useGetOpenidMutation } from "../../app/services/auth";
-import solidSvg from "../../assets/icons/solid.svg?url";
 import { StyledSocialButton } from "./styled";
 
-export default function SolidLoginButton({ issuers }) {
+export default function SolidLoginButton({ issuer }) {
   const [getOpenId, { data, isLoading, isSuccess }] = useGetOpenidMutation();
 
   const handleSolidLogin = () => {
     getOpenId({
       // issuer: "solidweb.org",
-      issuer: issuers[0],
+      issuer,
       redirect_uri: `${location.origin}/#/login`
     });
   };
@@ -24,8 +23,8 @@ export default function SolidLoginButton({ issuers }) {
 
   return (
     <StyledSocialButton disabled={isLoading} onClick={handleSolidLogin}>
-      <img src={solidSvg} className="icon" alt="solid icon" />
-      {isLoading ? `Redirecting...` : `Sign in with Solid`}
+      <img src={issuer.favicon} className="icon" alt="icon" />
+      Login with {issuer.domain}
     </StyledSocialButton>
   );
 }

@@ -24,7 +24,10 @@ const Styled = styled.div`
     height: 20px !important;
   }
 `;
-export default function Select({ options = [], updateSelect = null }) {
+
+const CURRENT_NOT_SET = {};
+
+export default function Select({ options = [], updateSelect = null, current = CURRENT_NOT_SET }) {
   const [optionsVisible, setOptionsVisible] = useState(false);
   const [curr, setCurr] = useState(undefined);
   const toggleVisible = () => {
@@ -62,7 +65,9 @@ export default function Select({ options = [], updateSelect = null }) {
       }
     >
       <Styled onClick={toggleVisible}>
-        <span className="txt">{curr?.title || `Select`}</span>
+        <span className="txt">
+          {(current !== CURRENT_NOT_SET ? current : curr)?.title || `Select`}
+        </span>
         <IconArrow className="icon" />
       </Styled>
     </Tippy>

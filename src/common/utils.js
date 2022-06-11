@@ -10,12 +10,8 @@ export const isImage = (file_type = "", size = 0) => {
   return file_type.startsWith("image") && size <= FILE_IMAGE_SIZE;
 };
 export const isObjectEqual = (obj1, obj2) => {
-  let o1 = Object.entries(obj1 ?? {})
-    .sort()
-    .toString();
-  let o2 = Object.entries(obj2 ?? {})
-    .sort()
-    .toString();
+  let o1 = JSON.stringify(obj1 ?? {});
+  let o2 = JSON.stringify(obj2 ?? {});
   return o1 === o2;
 };
 export const isTreatAsImage = (file) => {
