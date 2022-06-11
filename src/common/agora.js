@@ -21,6 +21,7 @@ import {
 export class AgoraClient {
  constructor(uid) {
   this.uid = uid;
+  this.cid = null;
   this.rtc = {
    audioTrack: null,
    videoTrack: null,
@@ -42,13 +43,24 @@ export class AgoraClient {
 
  async join(channelId) {
   try {
-   //   join rtc
-   await this.rtc.client.join(
-    this.appId,
-    this._getChchannelNameById(channelId),
-    this.token,
-    this.uid
-   );
+   // 如果 CID 存在，则说明当前仍在某个组内
+   // 则 1. 加入对应的 Channel
+   //    2. 重新打开 Channel
+   if (this.cid) {
+    //   join rtc
+    await this.rtc.client.join(this.appId, this.cid, this.token, this.uid);
+   } else {
+    //   join rtc
+    await this.rtc.client.join(
+     this.appId,
+     this._getChchannelNameById(channelId),
+     this.token,
+     this.uid
+    );
+    this.cid = this._getChchannelNameById(channelId);
+   }
+
+   this.cid = channelId;
 
    this._initCallbacks();
    await this._initDevice();
@@ -71,6 +83,7 @@ export class AgoraClient {
   this.rtc.client.leave();
   this.audioTrack = null;
   this.videoTrack = null;
+  this.cid = null;
   store.dispatch(resetState());
  }
  getUserById(uid) {
