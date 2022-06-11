@@ -5,28 +5,28 @@ import StyledRadio from "../../../common/component/styled/Radio";
 import StyledButton from "../../../common/component/styled/Button";
 import { useGetLoginConfigQuery, useUpdateLoginConfigMutation } from "../../../app/services/server";
 
-const StyledInviteRuleStep = styled.div`
+const StyledWhoCanSignUpStep = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  > .input:not(:nth-last-child(2)) {
-    margin-bottom: 20px;
+  > form {
+    width: 512px;
   }
 `;
 
-export default function InviteRuleStep({ setStep }) {
+export default function WhoCanInviteStep({ setStep }) {
   const { data: loginConfig } = useGetLoginConfigQuery();
   const [updateLoginConfig, { isSuccess, error }] = useUpdateLoginConfigMutation();
 
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState("EveryOne");
 
   // Display error
   useEffect(() => {
     if (error === undefined) return;
-    toast.error(`Failed to update invitation rule: ${error.data}`);
+    toast.error(`Failed to update sign up rule: ${error.data}`);
   }, [error]);
 
   // Increment `step` when updating has completed
@@ -35,19 +35,19 @@ export default function InviteRuleStep({ setStep }) {
   }, [isSuccess]);
 
   return (
-    <StyledInviteRuleStep>
+    <StyledWhoCanSignUpStep>
       <span className="primaryText">Last step: invite others!</span>
       <span className="secondaryText">Firstly, who can sign up to this server?</span>
       <StyledRadio
         options={["Everyone", "Invitation link only"]}
+        values={["EveryOne", "InvitationOnly"]}
         value={value}
-        onChange={async (v) => {
+        onChange={(v) => {
           setValue(v);
           if (loginConfig !== undefined) {
-            const whoCanSignUp = ["EveryOne", "InvitationOnly"][v];
-            await updateLoginConfig({
+            updateLoginConfig({
               ...loginConfig,
-              who_can_sign_up: whoCanSignUp
+              who_can_sign_up: v
             });
           }
         }}
@@ -58,6 +58,6 @@ export default function InviteRuleStep({ setStep }) {
       >
         Skip
       </StyledButton>
-    </StyledInviteRuleStep>
+    </StyledWhoCanSignUpStep>
   );
 }

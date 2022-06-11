@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet";
 import WelcomeStep from "./steps/1-welcome";
 import ServerNameStep from "./steps/2-serverName";
 import AdminCredentialsStep from "./steps/3-adminCredentials";
-import InviteRuleStep from "./steps/4-inviteRule";
+import WhoCanInviteStep from "./steps/4-whoCanInvite";
 import InviteLinkStep from "./steps/5-inviteLink";
 import CompletedStep from "./steps/6-completed";
 import StyledOnboardingPage from "./styled";
@@ -25,7 +25,7 @@ export default function OnboardingPage() {
         {step === 0 && <WelcomeStep {...props} />}
         {step === 1 && <ServerNameStep {...props} />}
         {step === 2 && <AdminCredentialsStep {...props} />}
-        {step === 3 && <InviteRuleStep {...props} />}
+        {step === 3 && <WhoCanInviteStep {...props} />}
         {step === 4 && <InviteLinkStep {...props} />}
         {step === 5 && <CompletedStep {...props} />}
         {step === 6 && <Navigate replace to="/" />}
