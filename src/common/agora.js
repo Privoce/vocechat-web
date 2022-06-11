@@ -19,9 +19,8 @@ import {
 } from "../app/slices/videocall.js";
 
 export class AgoraClient {
- constructor(uid, cid) {
+ constructor(uid) {
   this.uid = uid;
-  this.cid = cid;
   this.rtc = {
    audioTrack: null,
    videoTrack: null,

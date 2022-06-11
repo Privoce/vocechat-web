@@ -1,11 +1,10 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { useDebounce } from "rooks";
 import { NavLink, useLocation } from "react-router-dom";
 import Tippy from "@tippyjs/react";
 import { useDispatch, useSelector } from "react-redux";
 import PinList from "./PinList";
 import FavList from "../FavList";
-import { AgoraClient } from "../../../common/agora";
 import { useReadMessageMutation } from "../../../app/services/message";
 import { updateRemeberedNavs } from "../../../app/slices/ui";
 import useChatScroll from "../../../common/hook/useChatScroll";
@@ -33,7 +32,7 @@ import {
 import InviteModal from "../../../common/component/InviteModal";
 import VideoPanel from "../../../common/component/VideoCall/VideoPanel";
 import { end, start } from "../../../app/slices/videocall";
-export default function ChannelChat({ cid = "", dropFiles = [] }) {
+export default function ChannelChat({ cid = "", dropFiles = [], client = null }) {
  const [toolVisible, setToolVisible] = useState("");
  const { pathname } = useLocation();
  const dispatch = useDispatch();
@@ -94,9 +93,6 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
  //  console.log("channel message list", msgIds);
  const readIndex = footprint.readChannels[cid];
  const pinCount = data?.pinned_messages?.length || 0;
- const uid = useSelector((state) => state.authData.uid);
-
- const client = useMemo(() => new AgoraClient(uid, cid), [uid, cid]);
 
  return (
   <>
