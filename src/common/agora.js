@@ -174,8 +174,11 @@ export class AgoraClient {
  // private function
  _initCallbacks() {
   // rtc
+  AgoraRTC.setParameter("AUDIO_VOLUME_INDICATION_INTERVAL", 400);
   this.rtc.client.enableAudioVolumeIndicator();
+  this._log(this.rtc.client);
   this.rtc.client.on("volume-indicator", (volumes) => {
+   console.log("[agora] volume update");
    if (volumes.length == 0) return; // 没有人说话
 
    volumes.map((item) => {

@@ -74,7 +74,7 @@ export default function VideoPanel({ cid, client }) {
  useEffect(() => {
   client.join(cid).then(setShowPanel(true));
   return async () => {
-   await client.leave();
+   //    await client.leave();
   };
  }, [client, uid, cid]);
  const users = useSelector(selectUsers);
