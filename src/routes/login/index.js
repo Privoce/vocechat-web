@@ -10,11 +10,13 @@ import Input from "../../common/component/styled/Input";
 import Button from "../../common/component/styled/Button";
 import GoogleLoginButton from "./GoogleLoginButton";
 import MagicLinkLogin from "./MagicLinkLogin";
+import SignUpLink from "./SignUpLink";
 import { useLoginMutation } from "../../app/services/auth";
 import { useGetLoginConfigQuery, useGetSMTPStatusQuery } from "../../app/services/server";
 import useGoogleAuthConfig from "../../common/hook/useGoogleAuthConfig";
 import GithubLoginButton from "./GithubLoginButton";
 import useGithubAuthConfig from "../../common/hook/useGithubAuthConfig";
+
 export default function LoginPage() {
   const { data: enableSMTP } = useGetSMTPStatusQuery();
   const [login, { isSuccess, isLoading, error }] = useLoginMutation();
@@ -125,7 +127,8 @@ export default function LoginPage() {
     github: enableGithubLogin,
     google: enableGoogleLogin,
     metamask: enableMetamaskLogin,
-    oidc = []
+    oidc = [],
+    who_can_sign_up: whoCanSignUp
   } = loginConfig;
   const enableMagicLink = enableSMTP && magic_link;
   const googleLogin = enableGoogleLogin && clientId;
@@ -169,6 +172,7 @@ export default function LoginPage() {
         {enableGithubLogin && <GithubLoginButton config={githubAuthConfig} />}
         {enableMetamaskLogin && <MetamaskLoginButton login={login} />}
         {oidc.length > 0 && <SolidLoginButton issuers={oidc} />}
+        {whoCanSignUp === "EveryOne" && <SignUpLink />}
       </div>
     </StyledWrapper>
   );
