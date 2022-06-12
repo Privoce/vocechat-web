@@ -1,6 +1,7 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 import { useOutsideClick, useKey } from "rooks";
+import { Ring } from "@uiball/loaders";
 import Modal from "./Modal";
 const AniFadeIn = keyframes`
 from{
@@ -21,13 +22,30 @@ const StyledWrapper = styled.div`
   align-items: center;
   justify-content: center;
   .box {
+    position: relative;
+    transition: all 0.2s ease;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     gap: 10px;
-    img {
-      max-width: 70vw;
-      max-height: 80vh;
+    > .loading {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    > .image {
+      overflow: auto;
+      img {
+        max-width: 70vw;
+        max-height: 80vh;
+        /* width: 100%;
+        height: 100%;
+        object-fit: contain; */
+      }
+    }
+    &.loading .image img {
+      filter: blur(2px);
     }
     .origin {
       font-weight: bold;
@@ -42,9 +60,11 @@ const StyledWrapper = styled.div`
 `;
 export default function ImagePreviewModal({
   download = true,
-  data = null,
+  data,
   closeModal,
 }) {
+  const [url, setUrl] = useState(data?.thumbnail);
+  const [loading, setLoading] = useState(true);
   const wrapperRef = useRef();
   useOutsideClick(wrapperRef, closeModal);
   useKey(
@@ -55,29 +75,36 @@ export default function ImagePreviewModal({
     },
     { eventTypes: ["keyup"] }
   );
-  // const handleMetaDataLoaded = (wtf) => {
-  //   console.log("meta data", wtf);
-  // };
-  // const handleDownload = (evt) => {
-  //   evt.preventDefault();
-  //   fetch(evt.target.href)
-  //     .then((response) => response.blob())
-  //     .then((blob) => {
-  //       console.log(blob);
-  //     });
-  // };
+  useEffect(() => {
+    if (data) {
+      const { originUrl } = data;
+      if (!originUrl) setLoading(false);
+      const img = new Image();
+      img.src = originUrl;
+      img.onload = () => {
+        setUrl(originUrl);
+        setLoading(false);
+      };
+      img.onerror = () => {
+        setLoading(false);
+      };
+    }
+  }, [data]);
+
   if (!data) return null;
   const { originUrl, downloadLink, name, type } = data;
   return (
     <Modal>
       <StyledWrapper>
-        <div className="box" ref={wrapperRef}>
-          <img
-            // onLoadedMetadata={handleMetaDataLoaded}
-            src={originUrl}
-            alt="preview image"
-            className="animate__animated animate__fadeIn animate__faster"
-          />
+        <div className={`box ${loading ? "loading" : ""}`} ref={wrapperRef}>
+          <div className="image">
+            <img
+              // onLoadedMetadata={handleMetaDataLoaded}
+              src={url}
+              alt="preview"
+              className={`animate__animated animate__fadeIn animate__faster`}
+            />
+          </div>
           {download && (
             <a
               // onClick={handleDownload}
@@ -90,6 +117,11 @@ export default function ImagePreviewModal({
             >
               Download original
             </a>
+          )}
+          {loading && (
+            <div className="loading">
+              <Ring />
+            </div>
           )}
         </div>
       </StyledWrapper>

@@ -81,10 +81,6 @@ const StyledMsg = styled.div`
       &.sending {
         opacity: 0.9;
       }
-      .img {
-        max-width: 480px;
-        cursor: pointer;
-      }
       > .link {
         text-decoration: none;
         border-radius: 2px;

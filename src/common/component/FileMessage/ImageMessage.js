@@ -6,7 +6,9 @@ const Styled = styled.div`
   position: relative;
   width: fit-content;
   height: fit-content;
-  img {
+  > img {
+    max-width: 480px;
+    cursor: zoom-in;
     object-fit: cover;
   }
   .overlay {

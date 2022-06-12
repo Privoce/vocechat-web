@@ -20,7 +20,7 @@ export default function Layout({
   to = null,
 }) {
   const { addStageFile } = useUploadFile({ context, id: to });
-  const messagesContainer = useRef(null);
+  const messagesContainer = useRef(undefined);
   const [previewImage, setPreviewImage] = useState(null);
   const { selects, channelsData, contactsData } = useSelector((store) => {
     return {
@@ -64,8 +64,8 @@ export default function Layout({
     setPreviewImage(null);
   };
   useEffect(() => {
-    if (messagesContainer) {
-      const container = messagesContainer.current;
+    const container = messagesContainer?.current;
+    if (container) {
       // 点击查看大图
       container.addEventListener(
         "click",
@@ -76,10 +76,11 @@ export default function Layout({
             target.nodeName == "IMG" &&
             target.classList.contains("preview")
           ) {
+            const thumbnail = target.src;
             const originUrl = target.dataset.origin || target.src;
             const downloadLink = target.dataset.download || target.src;
             const meta = JSON.parse(target.dataset.meta || "{}");
-            setPreviewImage({ originUrl, downloadLink, ...meta });
+            setPreviewImage({ thumbnail, originUrl, downloadLink, ...meta });
           }
         },
         true
