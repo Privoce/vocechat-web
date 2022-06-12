@@ -29,7 +29,7 @@ const StyledOicdLoginModal = styled(StyledModal)`
 `;
 
 export default function OidcLoginButton({ issuers }) {
-  const [modal, setModal] = useState(true);
+  const [modal, setModal] = useState(false);
   if (!issuers) return null;
   return (
     <>
