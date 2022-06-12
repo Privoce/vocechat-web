@@ -42,8 +42,8 @@ export default function Select({ options = [], updateSelect = null, current = CU
   };
   return (
     <Tippy
-      trigger="click"
       visible={optionsVisible}
+      appendTo={document.body}
       placement="bottom"
       interactive
       content={
