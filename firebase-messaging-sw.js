@@ -6,7 +6,7 @@ self.addEventListener("notificationclick", function (event) {
   event.waitUntil(
     (async function () {
       const allClients = await clients.matchAll({
-        includeUncontrolled: true,
+        includeUncontrolled: true
       });
       const [firstClient] = allClients;
       // 没有数据
@@ -15,12 +15,7 @@ self.addEventListener("notificationclick", function (event) {
         firstClient.focus();
         return;
       }
-      const {
-        rustchat_from_uid,
-        rustchat_to_uid,
-        rustchat_to_gid,
-      } = customData;
-
+      const { rustchat_from_uid, rustchat_to_uid, rustchat_to_gid } = customData;
       let chatClient;
       let redirectPath = rustchat_to_uid
         ? `/chat/dm/${rustchat_from_uid}`
@@ -47,9 +42,7 @@ self.addEventListener("notificationclick", function (event) {
 // importScripts(
 //   "https://www.gstatic.com/firebasejs/9.8.1/firebase-messaging-compat.js"
 // );
-importScripts(
-  "https://cdnjs.cloudflare.com/ajax/libs/firebase/9.8.1/firebase-app-compat.min.js"
-);
+importScripts("https://cdnjs.cloudflare.com/ajax/libs/firebase/9.8.1/firebase-app-compat.min.js");
 importScripts(
   "https://cdnjs.cloudflare.com/ajax/libs/firebase/9.8.1/firebase-messaging-compat.min.js"
 );
@@ -62,7 +55,7 @@ const firebaseConfig = {
   storageBucket: "rustchat-develop.appspot.com",
   messagingSenderId: "418687074928",
   appId: "1:418687074928:web:753286adbf239f5af9eab5",
-  measurementId: "G-XV476KEC8P",
+  measurementId: "G-XV476KEC8P"
 };
 
 firebase.initializeApp(firebaseConfig);

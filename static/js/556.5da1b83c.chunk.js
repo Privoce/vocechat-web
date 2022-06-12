@@ -199,8 +199,7 @@
   background: #fff;
   /* gap: 20px; */
   border: 1px solid #e5e7eb;
-  box-shadow: 0px 4px 8px -2px rgba(16, 24, 40, 0.1),
-    0px 2px 4px -2px rgba(16, 24, 40, 0.06);
+  box-shadow: 0px 4px 8px -2px rgba(16, 24, 40, 0.1), 0px 2px 4px -2px rgba(16, 24, 40, 0.06);
   border-radius: 25px;
   .txt {
     padding: 8px;

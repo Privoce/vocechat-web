@@ -6,8 +6,7 @@
   .form {
     max-width: 440px;
     padding: 36px 40px 32px 40px;
-    box-shadow: 0px 4px 8px -2px rgba(16, 24, 40, 0.1),
-      0px 2px 4px -2px rgba(16, 24, 40, 0.06);
+    box-shadow: 0px 4px 8px -2px rgba(16, 24, 40, 0.1), 0px 2px 4px -2px rgba(16, 24, 40, 0.06);
     border-radius: 12px;
     .tips {
       display: flex;
