@@ -7,9 +7,7 @@ export default function FileItem({ file = null }) {
     if (file) {
       const { type, name } = file;
       if (isTreatAsImage(file)) {
-        setIcon(
-          <img src={URL.createObjectURL(file)} alt="thumb" className="thumb" />
-        );
+        setIcon(<img src={URL.createObjectURL(file)} alt="thumb" className="thumb" />);
         return;
       }
       console.log("file type", type, name);

@@ -24,11 +24,11 @@ const Styled = styled.div`
   }
 `;
 export default function MrakdownRender({ content }) {
-  const mdContainer = useRef(null);
+  const mdContainer = useRef(undefined);
   const [previewImage, setPreviewImage] = useState(null);
   useEffect(() => {
-    if (mdContainer) {
-      const container = mdContainer.current;
+    const container = mdContainer?.current;
+    if (container) {
       // 点击查看大图
       container.addEventListener(
         "click",
@@ -56,11 +56,7 @@ export default function MrakdownRender({ content }) {
   return (
     <>
       {previewImage && (
-        <ImagePreviewModal
-          download={false}
-          data={previewImage}
-          closeModal={closePreviewModal}
-        />
+        <ImagePreviewModal download={false} data={previewImage} closeModal={closePreviewModal} />
       )}
       <Styled ref={mdContainer}>
         <Viewer

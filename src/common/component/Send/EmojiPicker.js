@@ -45,8 +45,7 @@ export default function EmojiPicker({ selectEmoji }) {
       const clickEle = evt.target;
       const ignore =
         (clickEle.nodeName == "svg" && clickEle.dataset.emoji == "toggler") ||
-        (clickEle.nodeName == "path" &&
-          clickEle.parentElement.dataset.emoji == "toggler");
+        (clickEle.nodeName == "path" && clickEle.parentElement.dataset.emoji == "toggler");
       // console.log("outside click", clickEle, clickEle.parentElement, ignore);
       if (ignore) return;
       // if(clickEle)
@@ -60,11 +59,7 @@ export default function EmojiPicker({ selectEmoji }) {
         <div ref={ref} className={`picker ${visible ? "visible" : ""}`}>
           <Picker onSelect={handleSelect} />
         </div>
-        <SmileIcon
-          data-emoji="toggler"
-          className="emoji"
-          onClick={togglePickerVisible}
-        />
+        <SmileIcon data-emoji="toggler" className="emoji" onClick={togglePickerVisible} />
       </Styled>
     </Tooltip>
   );

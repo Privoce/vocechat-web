@@ -70,8 +70,7 @@ const StyledDetails = styled.div`
   position: relative;
   background: #ffffff;
   border-radius: var(--br);
-  box-shadow: 0px 12px 16px -4px rgba(16, 24, 40, 0.08),
-    0px 4px 6px -2px rgba(16, 24, 40, 0.03);
+  box-shadow: 0px 12px 16px -4px rgba(16, 24, 40, 0.08), 0px 4px 6px -2px rgba(16, 24, 40, 0.03);
   display: flex;
   align-items: flex-start;
   gap: 8px;
@@ -132,7 +131,7 @@ export default function Reaction({ mid, reactions = null }) {
   const [reactWithEmoji] = useReactMessageMutation();
   const { currUid } = useSelector((store) => {
     return {
-      currUid: store.authData.uid,
+      currUid: store.authData.uid
     };
   });
   const handleReact = (emoji) => {
@@ -156,18 +155,14 @@ export default function Reaction({ mid, reactions = null }) {
               // visible={true}
               interactive
               placement="top"
-              content={
-                <ReactionDetails uids={uids} emoji={reaction} index={idx} />
-              }
+              content={<ReactionDetails uids={uids} emoji={reaction} index={idx} />}
             >
               <i className="emoji">
                 <ReactionItem native={reaction} />
               </i>
             </Tippy>
 
-            {uids.length > 1 ? (
-              <em className="count">{`${uids.length}`} </em>
-            ) : null}
+            {uids.length > 1 ? <em className="count">{`${uids.length}`} </em> : null}
           </span>
         ) : null;
       })}

@@ -64,7 +64,7 @@ export default function AvatarUploader({
   name = "",
   type = "user",
   uploadImage,
-  disabled = false,
+  disabled = false
 }) {
   const [uploading, setUploading] = useState(false);
   const handleUpload = async (evt) => {
@@ -80,9 +80,7 @@ export default function AvatarUploader({
         <Avatar type={type} url={url} name={name} />
         {!disabled && (
           <>
-            <div className="tip">
-              {uploading ? `Uploading` : `Change Avatar`}
-            </div>
+            <div className="tip">{uploading ? `Uploading` : `Change Avatar`}</div>
             <input
               multiple={false}
               onChange={handleUpload}

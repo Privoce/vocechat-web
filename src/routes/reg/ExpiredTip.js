@@ -26,9 +26,7 @@ export default function ExpiredTip() {
   return (
     <Styled>
       <div className="title">Magic link expired</div>
-      <p className="desc">
-        Go back to your original Rustchat tab and request a new magic link.
-      </p>
+      <p className="desc">Go back to your original Rustchat tab and request a new magic link.</p>
       <p className="desc">You can close this window now.</p>
     </Styled>
   );

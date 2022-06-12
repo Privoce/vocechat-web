@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import BASE_URL, { ContentTypes } from "../config";
 import { isImage } from "../../common/utils";
 const initialState = {
-  replying: {},
+  replying: {}
 };
 const messageSlice = createSlice({
   name: "message",
@@ -48,9 +48,7 @@ const messageSlice = createSlice({
       state[mid] = data;
     },
     removeMessage(state, action) {
-      const mids = Array.isArray(action.payload)
-        ? action.payload
-        : [action.payload];
+      const mids = Array.isArray(action.payload) ? action.payload : [action.payload];
       mids.forEach((id) => {
         delete state[id];
       });
@@ -65,8 +63,8 @@ const messageSlice = createSlice({
       if (state.replying[key]) {
         delete state.replying[key];
       }
-    },
-  },
+    }
+  }
 });
 export const {
   resetMessage,
@@ -76,6 +74,6 @@ export const {
   addMessage,
   removeMessage,
   addReplyingMessage,
-  removeReplyingMessage,
+  removeReplyingMessage
 } = messageSlice.actions;
 export default messageSlice.reducer;

@@ -1,18 +1,8 @@
 import { batch } from "react-redux";
-import {
-  addChannelMsg,
-  removeChannelMsg,
-} from "../../../app/slices/message.channel";
-import {
-  addMessage,
-  removeMessage,
-  updateMessage,
-} from "../../../app/slices/message";
+import { addChannelMsg, removeChannelMsg } from "../../../app/slices/message.channel";
+import { addMessage, removeMessage, updateMessage } from "../../../app/slices/message";
 import { toggleReactionMessage } from "../../../app/slices/message.reaction";
-import {
-  addFileMessage,
-  removeFileMessage,
-} from "../../../app/slices/message.file";
+import { addFileMessage, removeFileMessage } from "../../../app/slices/message.file";
 import { addUserMsg, removeUserMsg } from "../../../app/slices/message.user";
 import { updateAfterMid } from "../../../app/slices/footprint";
 import { ContentTypes } from "../../../app/config";
@@ -29,8 +19,8 @@ const handler = (data, dispatch, currState) => {
       type,
       properties,
       expires_in,
-      detail: innerDetail,
-    },
+      detail: innerDetail
+    }
   } = data;
   const common = {
     from_uid,
@@ -38,7 +28,7 @@ const handler = (data, dispatch, currState) => {
     content,
     content_type,
     properties,
-    expires_in,
+    expires_in
   };
   switch (type) {
     case "normal":
@@ -64,7 +54,7 @@ const handler = (data, dispatch, currState) => {
               mid,
               // 如果是自己发的消息，就是已读
               read,
-              ...common,
+              ...common
             })
           );
           // 未推送完  or  不是自己发的消息
@@ -74,7 +64,7 @@ const handler = (data, dispatch, currState) => {
             appendMessage({
               id,
               mid,
-              local_id: properties ? properties.local_id : null,
+              local_id: properties ? properties.local_id : null
             })
           );
           // 加到file message 列表
@@ -94,7 +84,7 @@ const handler = (data, dispatch, currState) => {
               reply_mid: detailMid,
               // 如果是自己发的消息，就是已读
               read,
-              ...common,
+              ...common
             })
           );
           // 未推送完  or  不是自己发的消息
@@ -103,7 +93,7 @@ const handler = (data, dispatch, currState) => {
             appendMessage({
               id,
               mid,
-              local_id: properties ? properties.local_id : null,
+              local_id: properties ? properties.local_id : null
             })
           );
           // }
@@ -112,8 +102,7 @@ const handler = (data, dispatch, currState) => {
       break;
     case "reaction":
       {
-        const removeContextMessage =
-          to == "user" ? removeUserMsg : removeChannelMsg;
+        const removeContextMessage = to == "user" ? removeUserMsg : removeChannelMsg;
         const { type, action, content, content_type, properties } = innerDetail;
         switch (type) {
           case "like":
@@ -124,7 +113,7 @@ const handler = (data, dispatch, currState) => {
                   from_uid,
                   mid: detailMid,
                   rid: mid,
-                  action,
+                  action
                 })
               );
             }
@@ -150,7 +139,7 @@ const handler = (data, dispatch, currState) => {
                   content,
                   content_type,
                   properties,
-                  edited: true,
+                  edited: true
                 })
               );
             }

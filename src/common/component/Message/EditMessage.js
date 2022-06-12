@@ -91,7 +91,7 @@ export default function EditMessage({ mid, cancelEdit }) {
     edit({
       mid,
       content: currMsg,
-      type: msg.content_type == ContentTypes.markdown ? "markdown" : "text",
+      type: msg.content_type == ContentTypes.markdown ? "markdown" : "text"
     });
   };
   if (!msg) return null;
@@ -121,8 +121,7 @@ export default function EditMessage({ mid, cancelEdit }) {
           esc to <button onClick={cancelEdit}>cancel</button>
         </span>
         <span className="opt">
-          enter to{" "}
-          <button onClick={handleSave}>{isEditing ? "saving" : `save`}</button>
+          enter to <button onClick={handleSave}>{isEditing ? "saving" : `save`}</button>
         </span>
       </div>
     </StyledWrapper>

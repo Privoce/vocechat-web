@@ -15,10 +15,10 @@ export const channelApi = createApi({
   refetchOnFocus: true,
   endpoints: (builder) => ({
     getChannels: builder.query({
-      query: () => ({ url: `group` }),
+      query: () => ({ url: `group` })
     }),
     getChannel: builder.query({
-      query: (id) => ({ url: `group/${id}` }),
+      query: (id) => ({ url: `group/${id}` })
     }),
     leaveChannel: builder.query({
       query: (id) => ({ url: `group/${id}/leave` }),
@@ -29,25 +29,22 @@ export const channelApi = createApi({
         } catch {
           console.log("channel update failed");
         }
-      },
+      }
     }),
     createChannel: builder.mutation({
       query: (data) => ({
         url: "group",
         method: "POST",
-        body: data,
-      }),
+        body: data
+      })
     }),
     updateChannel: builder.mutation({
       query: ({ id, ...data }) => ({
         url: `group/${id}`,
         method: "PUT",
-        body: data,
+        body: data
       }),
-      async onQueryStarted(
-        { id, name, description },
-        { dispatch, queryFulfilled }
-      ) {
+      async onQueryStarted({ id, name, description }, { dispatch, queryFulfilled }) {
         // id: who send to ,from_uid: who sent
         const patchResult = dispatch(updateChannel({ id, name, description }));
         try {
@@ -56,13 +53,13 @@ export const channelApi = createApi({
           console.log("channel update failed");
           patchResult.undo();
         }
-      },
+      }
     }),
     getHistoryMessages: builder.query({
       query: ({ id, mid = null, limit = 100 }) => ({
         url: mid
           ? `/group/${id}/history?before=${mid}&limit=${limit}`
-          : `/group/${id}/history?limit=${limit}`,
+          : `/group/${id}/history?limit=${limit}`
       }),
       async onQueryStarted(params, { dispatch, getState, queryFulfilled }) {
         const { data: messages } = await queryFulfilled;
@@ -71,34 +68,34 @@ export const channelApi = createApi({
             handleChatMessage(msg, dispatch, getState());
           });
         }
-      },
+      }
     }),
     createInviteLink: builder.query({
       query: (gid) => ({
         headers: {
           "content-type": "text/plain",
-          accept: "text/plain",
+          accept: "text/plain"
         },
         url: `/group/${gid}/create_invite_link`,
-        responseHandler: (response) => response.text(),
+        responseHandler: (response) => response.text()
       }),
       transformResponse: (link) => {
         // 替换掉域名
         const invite = new URL(link);
         return `${location.origin}${invite.pathname}${invite.search}${invite.hash}`;
-      },
+      }
     }),
     removeChannel: builder.query({
       query: (id) => ({
         url: `group/${id}`,
-        method: "DELETE",
+        method: "DELETE"
       }),
       async onQueryStarted(id, { dispatch, getState, queryFulfilled }) {
         const {
           channelMessage,
           ui: {
-            remeberedNavs: { chat: remeberedPath },
-          },
+            remeberedNavs: { chat: remeberedPath }
+          }
         } = getState();
         try {
           await queryFulfilled;
@@ -115,7 +112,7 @@ export const channelApi = createApi({
         } catch {
           console.log("remove channel error");
         }
-      },
+      }
     }),
     sendChannelMsg: builder.mutation({
       query: ({ id, content, type = "text", properties = "" }) => ({
@@ -123,38 +120,38 @@ export const channelApi = createApi({
           "content-type": ContentTypes[type],
           "X-Properties": properties
             ? btoa(unescape(encodeURIComponent(JSON.stringify(properties))))
-            : "",
+            : ""
         },
         url: `group/${id}/send`,
         method: "POST",
-        body: type == "file" ? JSON.stringify(content) : content,
+        body: type == "file" ? JSON.stringify(content) : content
       }),
       async onQueryStarted(param1, param2) {
         await onMessageSendStarted.call(this, param1, param2, "channel");
-      },
+      }
     }),
     addMembers: builder.mutation({
       query: ({ id, members }) => ({
         url: `group/${id}/members/add`,
         method: "POST",
-        body: members,
-      }),
+        body: members
+      })
     }),
     removeMembers: builder.mutation({
       query: ({ id, members }) => ({
         url: `group/${id}/members/remove`,
         method: "POST",
-        body: members,
-      }),
+        body: members
+      })
     }),
     updateIcon: builder.mutation({
       query: ({ gid, image }) => ({
         headers: {
-          "content-type": "image/png",
+          "content-type": "image/png"
         },
         url: `/group/${gid}/avatar`,
         method: "POST",
-        body: image,
+        body: image
       }),
       async onQueryStarted({ gid }, { dispatch, queryFulfilled }) {
         try {
@@ -162,15 +159,15 @@ export const channelApi = createApi({
           dispatch(
             updateChannel({
               id: gid,
-              icon: `${BASE_URL}/resource/group_avatar?gid=${gid}&t=${+new Date()}`,
+              icon: `${BASE_URL}/resource/group_avatar?gid=${gid}&t=${+new Date()}`
             })
           );
         } catch (error) {
           console.log("err", error);
         }
-      },
-    }),
-  }),
+      }
+    })
+  })
 });
 
 export const {
@@ -186,5 +183,5 @@ export const {
   useSendChannelMsgMutation,
   useAddMembersMutation,
   useRemoveMembersMutation,
-  useUpdateIconMutation,
+  useUpdateIconMutation
 } = channelApi;

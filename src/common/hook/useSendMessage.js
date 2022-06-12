@@ -1,8 +1,5 @@
 // import second from 'first'
-import {
-  removeReplyingMessage,
-  addReplyingMessage,
-} from "../../app/slices/message";
+import { removeReplyingMessage, addReplyingMessage } from "../../app/slices/message";
 import { useSendChannelMsgMutation } from "../../app/services/channel";
 import { useSendMsgMutation } from "../../app/services/contact";
 import { useReplyMessageMutation } from "../../app/services/message";
@@ -11,38 +8,23 @@ import toast from "react-hot-toast";
 export default function useSendMessage(props) {
   const { context = "user", from = null, to = null } = props || {};
   const dispatch = useDispatch();
-  const stageFiles = useSelector(
-    (store) => store.ui.uploadFiles[`${context}_${to}`] || []
-  );
-  const [
-    replyMessage,
-    { isError: replyErr, isLoading: replying, isSuccess: replySuccess },
-  ] = useReplyMessageMutation();
+  const stageFiles = useSelector((store) => store.ui.uploadFiles[`${context}_${to}`] || []);
+  const [replyMessage, { isError: replyErr, isLoading: replying, isSuccess: replySuccess }] =
+    useReplyMessageMutation();
   const [
     sendChannelMsg,
-    {
-      isLoading: channelSending,
-      isSuccess: channelSuccess,
-      isError: channelError,
-    },
+    { isLoading: channelSending, isSuccess: channelSuccess, isError: channelError }
   ] = useSendChannelMsgMutation();
-  const [
-    sendUserMsg,
-    { isLoading: userSending, isSuccess: userSuccess, isError: userError },
-  ] = useSendMsgMutation();
+  const [sendUserMsg, { isLoading: userSending, isSuccess: userSuccess, isError: userError }] =
+    useSendMsgMutation();
   const sendFn = context == "user" ? sendUserMsg : sendChannelMsg;
-  const sendMessages = async ({
-    type = "text",
-    content,
-    users = [],
-    channels = [],
-  }) => {
+  const sendMessages = async ({ type = "text", content, users = [], channels = [] }) => {
     if (users.length) {
       for await (const uid of users) {
         await sendUserMsg({
           type,
           id: uid,
-          content,
+          content
         });
       }
     }
@@ -51,7 +33,7 @@ export default function useSendMessage(props) {
         await sendChannelMsg({
           type,
           id: cid,
-          content,
+          content
         });
       }
     }
@@ -71,7 +53,7 @@ export default function useSendMessage(props) {
         type,
         content,
         context,
-        from_uid: from,
+        from_uid: from
       });
     } else {
       await sendFn({
@@ -80,7 +62,7 @@ export default function useSendMessage(props) {
         properties: { ...properties },
         type,
         from_uid: from,
-        ...rest,
+        ...rest
       });
     }
   };
@@ -101,6 +83,6 @@ export default function useSendMessage(props) {
     sendMessage,
     isError: channelError || userError || replyErr,
     isSending: userSending || channelSending || replying,
-    isSuccess: channelSuccess || userSuccess || replySuccess,
+    isSuccess: channelSuccess || userSuccess || replySuccess
   };
 }

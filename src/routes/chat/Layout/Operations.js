@@ -44,9 +44,7 @@ export default function Operations({ context, id }) {
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const { canDelete } = useDeleteMessage();
   const { addFavorite } = useFavMessage({});
-  const mids = useSelector(
-    (store) => store.ui.selectMessages[`${context}_${id}`]
-  );
+  const mids = useSelector((store) => store.ui.selectMessages[`${context}_${id}`]);
   const [forwardModalVisible, setForwardModalVisible] = useState(false);
   const dispatch = useDispatch();
   const handleClose = () => {
@@ -86,18 +84,12 @@ export default function Operations({ context, id }) {
         <button className="opt" onClick={handleFav}>
           <IconBookmark />
         </button>
-        <button
-          className="opt"
-          disabled={!canDel}
-          onClick={toggleDeleteModal.bind(null, false)}
-        >
+        <button className="opt" disabled={!canDel} onClick={toggleDeleteModal.bind(null, false)}>
           <IconDelete />
         </button>
         <IconClose className="close" onClick={handleClose} />
       </Styled>
-      {forwardModalVisible && (
-        <ForwardModal mids={mids} closeModal={toggleForwardModal} />
-      )}
+      {forwardModalVisible && <ForwardModal mids={mids} closeModal={toggleForwardModal} />}
       {deleteModalVisible && (
         <DeleteMessageConfirmModal mids={mids} closeModal={toggleDeleteModal} />
       )}

@@ -37,7 +37,7 @@ export default function MetamaskLoginButton({ login }) {
           public_address: address,
           nonce,
           signature,
-          type: "metamask",
+          type: "metamask"
         });
       }
     };
@@ -58,7 +58,7 @@ export default function MetamaskLoginButton({ login }) {
     console.log("get sn");
     const signature = await ethereum.request({
       method: "personal_sign",
-      params: [nonce, address, "hello from rustchat"],
+      params: [nonce, address, "hello from rustchat"]
     });
     return signature;
   };
@@ -68,14 +68,14 @@ export default function MetamaskLoginButton({ login }) {
       setRequesting(true);
       try {
         const tmps = await ethereum.request({
-          method: "eth_requestAccounts",
+          method: "eth_requestAccounts"
         });
         setAccounts(tmps);
       } catch (error) {
         // toast.error(error.message);
         ethereum.request({
           method: "wallet_requestPermissions",
-          params: [{ eth_accounts: {} }],
+          params: [{ eth_accounts: {} }]
         });
         // setRequesting(false);
       }

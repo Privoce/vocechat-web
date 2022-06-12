@@ -87,7 +87,7 @@ export default function StyledSettingContainer({
   navs = [],
   dangers = [],
   nav,
-  children,
+  children
 }) {
   const { pathname } = useLocation();
   return (
@@ -101,10 +101,7 @@ export default function StyledSettingContainer({
             <ul key={title} data-title={title} className="items">
               {items.map(({ name, title }) => {
                 return (
-                  <li
-                    key={name}
-                    className={`item ${name == nav?.name ? "curr" : ""}`}
-                  >
+                  <li key={name} className={`item ${name == nav?.name ? "curr" : ""}`}>
                     <NavLink to={`${pathname}?nav=${name}`}>{title}</NavLink>
                   </li>
                 );

@@ -4,7 +4,7 @@ export const CONFIG = {
   editableProps: {
     spellCheck: false,
     autoFocus: true,
-    placeholder: "Type…",
+    placeholder: "Type…"
   },
   trailingBlock: { type: ELEMENT_PARAGRAPH },
   softBreak: {
@@ -13,11 +13,11 @@ export const CONFIG = {
         {
           hotkey: "shift+enter",
           query: {
-            allow: [ELEMENT_IMAGE, ELEMENT_PARAGRAPH],
-          },
-        },
-      ],
-    },
+            allow: [ELEMENT_IMAGE, ELEMENT_PARAGRAPH]
+          }
+        }
+      ]
+    }
   },
   exitBreak: {
     options: {
@@ -25,9 +25,9 @@ export const CONFIG = {
         {
           hotkey: "mod+enter",
           query: {
-            allow: [ELEMENT_IMAGE, ELEMENT_PARAGRAPH],
-          },
-        },
+            allow: [ELEMENT_IMAGE, ELEMENT_PARAGRAPH]
+          }
+        }
         // {
         //   hotkey: "mod+shift+enter",
         //   before: true,
@@ -40,14 +40,14 @@ export const CONFIG = {
         //     allow: KEYS_HEADING,
         //   },
         // },
-      ],
-    },
+      ]
+    }
   },
   selectOnBackspace: {
     options: {
       query: {
-        allow: [ELEMENT_IMAGE],
-      },
-    },
-  },
+        allow: [ELEMENT_IMAGE]
+      }
+    }
+  }
 };

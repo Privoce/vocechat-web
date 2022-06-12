@@ -11,7 +11,7 @@ export default function SolidLoginButton({ issuers }) {
     getOpenId({
       // issuer: "solidweb.org",
       issuer: issuers[0],
-      redirect_uri: `${location.origin}/#/login`,
+      redirect_uri: `${location.origin}/#/login`
     });
   };
   useEffect(() => {

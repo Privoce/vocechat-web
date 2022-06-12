@@ -40,13 +40,7 @@ export default function LoadMore({ pullUp = null }) {
   }, [ref, pullUp]);
   return (
     <Styled ref={ref}>
-      <Waveform
-        className="loading"
-        size={24}
-        lineWeight={5}
-        speed={1}
-        color="#ccc"
-      />
+      <Waveform className="loading" size={24} lineWeight={5} speed={1} color="#ccc" />
     </Styled>
   );
 }

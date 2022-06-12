@@ -54,32 +54,32 @@ const Styled = styled.div`
 export const FileTypes = {
   doc: {
     title: "Documents",
-    icon: <IconDoc className="icon" />,
+    icon: <IconDoc className="icon" />
   },
   pdf: {
     title: "PDFs",
-    icon: <IconPdf className="icon" />,
+    icon: <IconPdf className="icon" />
   },
   image: {
     title: "Images",
-    icon: <IconImage className="icon" />,
+    icon: <IconImage className="icon" />
   },
   audio: {
     title: "Audio",
-    icon: <IconAudio className="icon" />,
+    icon: <IconAudio className="icon" />
   },
   video: {
     title: "Videos",
-    icon: <IconVideo className="icon" />,
+    icon: <IconVideo className="icon" />
   },
   code: {
     title: "Code Snippets",
-    icon: <IconCode className="icon" />,
+    icon: <IconCode className="icon" />
   },
   unkown: {
     title: "Unkown Files",
-    icon: <IconUnkown className="icon" />,
-  },
+    icon: <IconUnkown className="icon" />
+  }
 };
 export default function Type({ select = "", updateFilter }) {
   // const { input, updateInput, contacts } = useFilteredUsers();
@@ -99,11 +99,7 @@ export default function Type({ select = "", updateFilter }) {
         </li>
         {Object.entries(FileTypes).map(([type, { title, icon }]) => {
           return (
-            <li
-              key={title}
-              className="type"
-              onClick={handleClick.bind(null, type)}
-            >
+            <li key={title} className="type" onClick={handleClick.bind(null, type)}>
               {icon} {title}
               {select == type && <CheckSign className="check" />}
             </li>

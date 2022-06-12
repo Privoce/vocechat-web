@@ -64,20 +64,13 @@ export default function From({ select = "", updateFilter }) {
         <Search embed={true} value={input} updateSearchValue={updateInput} />
       </div>
       <ul className="list">
-        <li
-          className="contact none"
-          onClick={handleClick.bind(null, undefined)}
-        >
+        <li className="contact none" onClick={handleClick.bind(null, undefined)}>
           Anyone
           {!select && <CheckSign className="check" />}
         </li>
         {contacts.map(({ uid }) => {
           return (
-            <li
-              key={uid}
-              className="contact"
-              onClick={handleClick.bind(null, uid)}
-            >
+            <li key={uid} className="contact" onClick={handleClick.bind(null, uid)}>
               <Contact uid={uid} interactive={true} />
               {select == uid && <CheckSign className="check" />}
             </li>

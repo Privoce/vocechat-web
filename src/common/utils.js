@@ -98,7 +98,7 @@ export const getInitialsAvatar = ({
   foreground = "#fff",
   background = "#4c99e9",
   weight = 400,
-  fontFamily = "'Lato', 'Lato-Regular', 'Helvetica Neue'",
+  fontFamily = "'Lato', 'Lato-Regular', 'Helvetica Neue'"
 }) => {
   const canvas = document.createElement("canvas");
   const width = size;
@@ -154,7 +154,7 @@ export const getFileIcon = (type, name = "") => {
     video: /^video/gi,
     code: /(json|javascript|java|rb|c|php|xml|css|html)$/gi,
     doc: /^text/gi,
-    pdf: /\/pdf$/gi,
+    pdf: /\/pdf$/gi
   };
   const _arr = name.split(".");
   const _type = type || _arr[_arr.length - 1];
@@ -187,56 +187,35 @@ export const getFileIcon = (type, name = "") => {
   }
   return icon;
 };
-export const normalizeArchiveData = (
-  data = null,
-  filePath = null,
-  uid = null
-) => {
+export const normalizeArchiveData = (data = null, filePath = null, uid = null) => {
   if (!data || !filePath) return [];
   const { messages, users } = data;
-  const getUrls = (
-    uid,
-    { content, content_type, file_id, thumbnail_id, filePath, avatar }
-  ) => {
+  const getUrls = (uid, { content, content_type, file_id, thumbnail_id, filePath, avatar }) => {
     // uid存在，则favorite，否则archive
     const prefix = uid
       ? `${BASE_URL}/favorite/attachment/${uid}/${filePath}/`
       : `${BASE_URL}/resource/archive/attachment?file_path=${filePath}&attachment_id=`;
     return {
-      transformedContent:
-        content_type == ContentTypes.file ? `${prefix}${file_id}` : content,
-      thumbnail:
-        content_type == ContentTypes.file ? `${prefix}${thumbnail_id}` : "",
+      transformedContent: content_type == ContentTypes.file ? `${prefix}${file_id}` : content,
+      thumbnail: content_type == ContentTypes.file ? `${prefix}${thumbnail_id}` : "",
       download:
         content_type == ContentTypes.file
           ? `${prefix}${file_id}${uid ? "?" : "&"}download=true`
           : "",
-      avatarUrl: avatar !== null ? `${prefix}${avatar}` : "",
+      avatarUrl: avatar !== null ? `${prefix}${avatar}` : ""
     };
   };
   return messages.map(
-    ({
-      source,
-      mid,
-      content,
-      file_id,
-      thumbnail_id,
-      content_type,
-      properties,
-      from_user,
-    }) => {
+    ({ source, mid, content, file_id, thumbnail_id, content_type, properties, from_user }) => {
       let user = { ...(users[from_user] || {}) };
-      const { transformedContent, thumbnail, download, avatarUrl } = getUrls(
-        uid,
-        {
-          content,
-          content_type,
-          filePath,
-          file_id,
-          thumbnail_id,
-          avatar: user.avatar,
-        }
-      );
+      const { transformedContent, thumbnail, download, avatarUrl } = getUrls(uid, {
+        content,
+        content_type,
+        filePath,
+        file_id,
+        thumbnail_id,
+        avatar: user.avatar
+      });
 
       user.avatar = avatarUrl;
 
@@ -249,7 +228,7 @@ export const normalizeArchiveData = (
         content_type,
         properties,
         download,
-        thumbnail,
+        thumbnail
       };
     }
   );

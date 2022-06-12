@@ -6,24 +6,14 @@ export default function useForwardMessage() {
   const [forwarding, setForwarding] = useState(false);
   const [
     createArchive,
-    {
-      isError: createArchiveError,
-      isLoading: creatingArchive,
-      isSuccess: createArchiveSuccess,
-    },
+    { isError: createArchiveError, isLoading: creatingArchive, isSuccess: createArchiveSuccess }
   ] = useCreateArchiveMutation();
   const [
     sendChannelMsg,
-    {
-      isLoading: channelSending,
-      isSuccess: channelSuccess,
-      isError: channelError,
-    },
+    { isLoading: channelSending, isSuccess: channelSuccess, isError: channelError }
   ] = useSendChannelMsgMutation();
-  const [
-    sendUserMsg,
-    { isLoading: userSending, isSuccess: userSuccess, isError: userError },
-  ] = useSendMsgMutation();
+  const [sendUserMsg, { isLoading: userSending, isSuccess: userSuccess, isError: userError }] =
+    useSendMsgMutation();
   const forwardMessage = async ({ mids = [], users = [], channels = [] }) => {
     setForwarding(true);
     const { data: archive_id } = await createArchive(mids);
@@ -32,7 +22,7 @@ export default function useForwardMessage() {
         await sendUserMsg({
           type: "archive",
           id: uid,
-          content: archive_id,
+          content: archive_id
           // from_uid: from,
         });
       }
@@ -42,7 +32,7 @@ export default function useForwardMessage() {
         await sendChannelMsg({
           type: "archive",
           id: cid,
-          content: archive_id,
+          content: archive_id
           // from_uid: from,
         });
       }
@@ -54,6 +44,6 @@ export default function useForwardMessage() {
     forwarding,
     isError: channelError || userError || createArchiveError,
     isSending: userSending || channelSending || creatingArchive,
-    isSuccess: channelSuccess || userSuccess || createArchiveSuccess,
+    isSuccess: channelSuccess || userSuccess || createArchiveSuccess
   };
 }

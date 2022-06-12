@@ -37,7 +37,7 @@ export default function ImageMessage({
   thumbnail,
   download,
   content,
-  properties = {},
+  properties = {}
 }) {
   const [url, setUrl] = useState(thumbnail);
   const { width = 0, height = 0 } = getDefaultSize(properties);
@@ -64,7 +64,7 @@ export default function ImageMessage({
               strokeWidth={50}
               styles={buildStyles({
                 storke: "#000",
-                strokeLinecap: "butt",
+                strokeLinecap: "butt"
               })}
             />
           </div>
@@ -74,7 +74,7 @@ export default function ImageMessage({
         className="img preview"
         style={{
           width: width ? `${width}px` : "",
-          height: height ? `${height}px` : "",
+          height: height ? `${height}px` : ""
         }}
         data-meta={JSON.stringify(properties)}
         data-origin={content}

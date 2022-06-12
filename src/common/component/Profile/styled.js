@@ -86,8 +86,7 @@ const StyledWrapper = styled.div`
     padding: 16px;
     width: 280px;
     background: #ffffff;
-    box-shadow: 0px 20px 25px 20px rgba(31, 41, 55, 0.1),
-      0px 10px 10px rgba(31, 41, 55, 0.04);
+    box-shadow: 0px 20px 25px 20px rgba(31, 41, 55, 0.1), 0px 10px 10px rgba(31, 41, 55, 0.04);
     border-radius: 6px;
     .icons {
       padding-bottom: 2px;

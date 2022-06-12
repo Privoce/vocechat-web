@@ -8,11 +8,7 @@ const Styled = styled.div`
     fill: #d0d5dd;
   }
 `;
-export default function ChannelIcon({
-  personal = false,
-  muted = false,
-  className,
-}) {
+export default function ChannelIcon({ personal = false, muted = false, className }) {
   return (
     <Styled className={`${muted ? "muted" : ""} ${className}`}>
       {personal ? <LockHashIcon /> : <HashIcon />}

@@ -7,7 +7,7 @@ export default function useDraft({ context = "", id = "" }) {
   const { draftMarkdown, draftMixedText } = useSelector((store) => {
     return {
       draftMarkdown: store.ui.draftMarkdown,
-      draftMixedText: store.ui.draftMixedText,
+      draftMixedText: store.ui.draftMixedText
     };
   });
 

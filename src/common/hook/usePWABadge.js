@@ -12,6 +12,6 @@ export default function usePWABadge() {
   }, []);
 
   return {
-    isSupported: badge.isSupported(),
+    isSupported: badge.isSupported()
   };
 }

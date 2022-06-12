@@ -1,24 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  KEY_PWA_INSTALLED,
-  KEY_REFRESH_TOKEN,
-  KEY_TOKEN,
-  KEY_UID,
-  KEY_EXPIRE,
-} from "../config";
+import { KEY_PWA_INSTALLED, KEY_REFRESH_TOKEN, KEY_TOKEN, KEY_UID, KEY_EXPIRE } from "../config";
 const initialState = {
   initialized: true,
   uid: null,
   token: localStorage.getItem(KEY_TOKEN),
   expireTime: localStorage.getItem(KEY_EXPIRE) || +new Date(),
-  refreshToken: localStorage.getItem(KEY_REFRESH_TOKEN),
+  refreshToken: localStorage.getItem(KEY_REFRESH_TOKEN)
 };
 const emptyState = {
   initialized: true,
   uid: null,
   token: null,
   expireTime: +new Date(),
-  refreshToken: null,
+  refreshToken: null
 };
 const authDataSlice = createSlice({
   name: "authData",
@@ -30,7 +24,7 @@ const authDataSlice = createSlice({
         user: { uid },
         token,
         refresh_token,
-        expired_in = 0,
+        expired_in = 0
       } = action.payload;
       state.initialized = initialized;
       state.uid = uid;
@@ -76,14 +70,9 @@ const authDataSlice = createSlice({
       localStorage.setItem(KEY_EXPIRE, et);
       localStorage.setItem(KEY_TOKEN, token);
       localStorage.setItem(KEY_REFRESH_TOKEN, refresh_token);
-    },
-  },
+    }
+  }
 });
-export const {
-  updateInitialized,
-  setAuthData,
-  resetAuthData,
-  setUid,
-  updateToken,
-} = authDataSlice.actions;
+export const { updateInitialized, setAuthData, resetAuthData, setUid, updateToken } =
+  authDataSlice.actions;
 export default authDataSlice.reducer;

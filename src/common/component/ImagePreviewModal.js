@@ -58,11 +58,7 @@ const StyledWrapper = styled.div`
     }
   }
 `;
-export default function ImagePreviewModal({
-  download = true,
-  data,
-  closeModal,
-}) {
+export default function ImagePreviewModal({ download = true, data, closeModal }) {
   const [url, setUrl] = useState(data?.thumbnail);
   const [loading, setLoading] = useState(true);
   const wrapperRef = useRef();

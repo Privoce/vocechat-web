@@ -42,20 +42,20 @@ const Styled = styled.div`
 export const Dates = {
   today: {
     title: "Today",
-    duration: 2222,
+    duration: 2222
   },
   in7d: {
-    title: "Last 7 Days",
+    title: "Last 7 Days"
   },
   in30d: {
-    title: "Last 30 Days",
+    title: "Last 30 Days"
   },
   in3m: {
-    title: "Last 3 months",
+    title: "Last 3 months"
   },
   in12m: {
-    title: "Last 12 months",
-  },
+    title: "Last 12 months"
+  }
 };
 export default function Date({ select = "", updateFilter }) {
   // const { input, updateInput, contacts } = useFilteredUsers();
@@ -75,11 +75,7 @@ export default function Date({ select = "", updateFilter }) {
         </li>
         {Object.entries(Dates).map(([_key, { title }]) => {
           return (
-            <li
-              key={title}
-              className="date"
-              onClick={handleClick.bind(null, _key)}
-            >
+            <li key={title} className="date" onClick={handleClick.bind(null, _key)}>
               {title}
               {select == _key && <CheckSign className="check" />}
             </li>

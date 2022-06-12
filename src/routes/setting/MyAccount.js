@@ -101,21 +101,18 @@ const EditModalInfo = {
   name: {
     label: "Username",
     title: "Change your username",
-    intro: "Enter a new username.",
+    intro: "Enter a new username."
   },
   email: {
     label: "Email",
     title: "Change your email",
-    intro: "Enter a new email.",
-  },
+    intro: "Enter a new email."
+  }
 };
 export default function MyAccount() {
   const [passwordModal, setPasswordModal] = useState(false);
   const [editModal, setEditModal] = useState(null);
-  const [
-    uploadAvatar,
-    { isSuccess: uploadSuccess },
-  ] = useUpdateAvatarMutation();
+  const [uploadAvatar, { isSuccess: uploadSuccess }] = useUpdateAvatarMutation();
   const loginUser = useSelector((store) => {
     return store.contacts.byId[store.authData.uid];
   });
@@ -177,8 +174,7 @@ export default function MyAccount() {
         <div className="danger">
           <h4 className="head">Account Removal</h4>
           <div className="desc">
-            Disabling your account means you can recover it at any time after
-            taking this action.
+            Disabling your account means you can recover it at any time after taking this action.
           </div>
           <button className="btn">Delete Account</button>
         </div>
@@ -191,9 +187,7 @@ export default function MyAccount() {
           closeModal={closeBasicEditModal}
         />
       )}
-      {passwordModal && (
-        <UpdatePasswordModal closeModal={togglePasswordModal} />
-      )}
+      {passwordModal && <UpdatePasswordModal closeModal={togglePasswordModal} />}
     </>
   );
 }

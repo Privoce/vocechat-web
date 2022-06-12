@@ -16,7 +16,7 @@ function MarkdownEditor({
   height = "50vh",
   placeholder,
   sendMarkdown,
-  setEditorInstance,
+  setEditorInstance
 }) {
   const editorRef = useRef(undefined);
   const { uploadFile } = useUploadFile();

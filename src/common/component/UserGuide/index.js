@@ -11,8 +11,7 @@ const Styled = styled.div`
   padding: 24px;
   background: #06aed4;
   border-radius: var(--br);
-  box-shadow: 0px 12px 16px -4px rgba(16, 24, 40, 0.08),
-    0px 4px 6px -2px rgba(16, 24, 40, 0.03);
+  box-shadow: 0px 12px 16px -4px rgba(16, 24, 40, 0.08), 0px 4px 6px -2px rgba(16, 24, 40, 0.03);
   color: #ffffff;
   min-width: 362px;
   .title {
@@ -57,16 +56,9 @@ const OverrideTippyArrowColor = createGlobalStyle`
 }
 `;
 import steps from "./steps";
-export default function UserGuide({
-  step = 1,
-  placement = "right-start",
-  delay = null,
-  children,
-}) {
+export default function UserGuide({ step = 1, placement = "right-start", delay = null, children }) {
   const dispatch = useDispatch();
-  const { visible, step: reduxStep } = useSelector(
-    (store) => store.ui.userGuide
-  );
+  const { visible, step: reduxStep } = useSelector((store) => store.ui.userGuide);
   const currStep = steps[step - 1];
   const isLastStep = steps.length == step;
   //   if (!visible) return children;

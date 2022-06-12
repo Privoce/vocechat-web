@@ -26,26 +26,24 @@ function Message({
   mid = "",
   context = "user",
   updateReadIndex,
-  read = true,
+  read = true
 }) {
-  const {
-    visible: contextMenuVisible,
-    handleContextMenuEvent,
-    hideContextMenu,
-  } = useContextMenu();
+  const { visible: contextMenuVisible, handleContextMenuEvent, hideContextMenu } = useContextMenu();
   const inviewRef = useInView();
   const [edit, setEdit] = useState(false);
   const avatarRef = useRef(null);
   const { getPinInfo } = usePinMessage(context == "channel" ? contextId : null);
-  const { message = {}, reactionMessageData, contactsData } = useSelector(
-    (store) => {
-      return {
-        reactionMessageData: store.reactionMessage,
-        message: store.message[mid] || {},
-        contactsData: store.contacts.byId,
-      };
-    }
-  );
+  const {
+    message = {},
+    reactionMessageData,
+    contactsData
+  } = useSelector((store) => {
+    return {
+      reactionMessageData: store.reactionMessage,
+      message: store.message[mid] || {},
+      contactsData: store.contacts.byId
+    };
+  });
 
   const toggleEditMessage = () => {
     setEdit((prev) => !prev);
@@ -61,7 +59,7 @@ function Message({
     download,
     content_type = "text/plain",
     edited,
-    properties,
+    properties
   } = message;
 
   useEffect(() => {
@@ -79,11 +77,7 @@ function Message({
   // if (!message) return null;
   let timePrefix = null;
   const dayjsTime = dayjs(time);
-  timePrefix = dayjsTime.isToday()
-    ? "Today"
-    : dayjsTime.isYesterday()
-    ? "Yesterday"
-    : null;
+  timePrefix = dayjsTime.isToday() ? "Today" : dayjsTime.isYesterday() ? "Yesterday" : null;
 
   const pinInfo = getPinInfo(mid);
   // return null;
@@ -94,9 +88,9 @@ function Message({
       onContextMenu={handleContextMenuEvent}
       data-msg-mid={mid}
       ref={inviewRef}
-      className={`message ${readOnly ? "readonly" : ""} ${
-        pinInfo ? "pinned" : ""
-      } ${contextMenuVisible ? "contextVisible" : ""} `}
+      className={`message ${readOnly ? "readonly" : ""} ${pinInfo ? "pinned" : ""} ${
+        contextMenuVisible ? "contextVisible" : ""
+      } `}
     >
       <Tippy
         key={_key}
@@ -153,7 +147,7 @@ function Message({
                 content,
                 thumbnail,
                 download,
-                edited,
+                edited
               })
             )}
             {reactions && <Reaction mid={mid} reactions={reactions} />}

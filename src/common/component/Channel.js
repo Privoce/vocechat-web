@@ -47,16 +47,11 @@ const StyledWrapper = styled.div`
     }
   }
 `;
-export default function Channel({
-  interactive = true,
-  id = "",
-  compact = false,
-  avatarSize = 32,
-}) {
+export default function Channel({ interactive = true, id = "", compact = false, avatarSize = 32 }) {
   const { channel, totalMemberCount } = useSelector((store) => {
     return {
       channel: store.channels.byId[id],
-      totalMemberCount: store.contacts.ids.length,
+      totalMemberCount: store.contacts.ids.length
     };
   });
   console.log("channel item", id, channel);
@@ -65,17 +60,14 @@ export default function Channel({
   return (
     <StyledWrapper
       size={avatarSize}
-      className={`${interactive ? "interactive" : ""} ${
-        compact ? "compact" : ""
-      }`}
+      className={`${interactive ? "interactive" : ""} ${compact ? "compact" : ""}`}
     >
       <div className="avatar">
         <Avatar type="channel" url={avatar} name={"#"} alt="avatar" />
       </div>
       {!compact && (
         <div className="name">
-          <span className="txt">{name}</span> (
-          {is_public ? totalMemberCount : members.length})
+          <span className="txt">{name}</span> ({is_public ? totalMemberCount : members.length})
         </div>
       )}
     </StyledWrapper>

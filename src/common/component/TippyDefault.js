@@ -4,7 +4,7 @@ export default function TippyDefault() {
   tippy.setDefaultProps({
     duration: 0,
     delay: [0, 0],
-    plugins: [followCursor],
+    plugins: [followCursor]
   });
   return null;
 }

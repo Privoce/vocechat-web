@@ -23,7 +23,7 @@ export default function FileMessage({
   content = "",
   download = "",
   thumbnail = "",
-  properties = { local_id: 0, name: "", size: 0, content_type: "" },
+  properties = { local_id: 0, name: "", size: 0, content_type: "" }
 }) {
   const [imageSize, setImageSize] = useState(null);
   const [uploadingFile, setUploadingFile] = useState(false);
@@ -31,19 +31,13 @@ export default function FileMessage({
   const {
     sendMessage,
     isSuccess: sendMessageSuccess,
-    isSending,
+    isSending
   } = useSendMessage({
     context,
     from: from_uid,
-    to,
+    to
   });
-  const {
-    stopUploading,
-    data,
-    uploadFile,
-    progress,
-    isSuccess: uploadSuccess,
-  } = useUploadFile();
+  const { stopUploading, data, uploadFile, progress, isSuccess: uploadSuccess } = useUploadFile();
   const fromUser = useSelector((store) => store.contacts.byId[from_uid]);
   const { size, name, content_type } = properties ?? {};
   useEffect(() => {
@@ -75,20 +69,14 @@ export default function FileMessage({
     const propsV2 = imageSize ? { ...props, ...imageSize } : props;
     // 本地文件 并且上传成功
     if (uploadSuccess && isLocalFile(content)) {
-      console.log(
-        "send local file message",
-        uploadSuccess,
-        propsV2,
-        data,
-        content
-      );
+      console.log("send local file message", uploadSuccess, propsV2, data, content);
       // 把已经上传的东西当做消息发出去
       const { path } = data;
       sendMessage({
         ignoreLocal: true,
         type: "file",
         content: { path },
-        properties: propsV2,
+        properties: propsV2
       });
     }
   }, [uploadSuccess, data, properties, content]);
@@ -151,11 +139,7 @@ export default function FileMessage({
         {sending ? (
           <IconClose className="cancel" onClick={handleCancel} />
         ) : (
-          <a
-            className="download"
-            download={name}
-            href={`${content}&download=true`}
-          >
+          <a className="download" download={name} href={`${content}&download=true`}>
             <IconDownload />
           </a>
         )}

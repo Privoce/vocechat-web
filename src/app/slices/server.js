@@ -5,8 +5,8 @@ const initialState = {
   logo: "",
   inviteLink: {
     link: "",
-    expire: 0,
-  },
+    expire: 0
+  }
 };
 const serverSlice = createSlice({
   name: "server",
@@ -19,10 +19,10 @@ const serverSlice = createSlice({
       const {
         inviteLink = {
           link: "",
-          expire: 0,
+          expire: 0
         },
         name = "",
-        description = "",
+        description = ""
       } = action.payload || {};
       return { name, description, inviteLink };
     },
@@ -31,8 +31,8 @@ const serverSlice = createSlice({
       Object.keys(values).forEach((_key) => {
         state[_key] = values[_key];
       });
-    },
-  },
+    }
+  }
 });
 export const { updateInfo, resetServer, fullfillServer } = serverSlice.actions;
 export default serverSlice.reducer;

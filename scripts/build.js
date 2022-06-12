@@ -27,8 +27,7 @@ const printHostingInstructions = require("react-dev-utils/printHostingInstructio
 const FileSizeReporter = require("react-dev-utils/FileSizeReporter");
 const printBuildError = require("react-dev-utils/printBuildError");
 
-const measureFileSizesBeforeBuild =
-  FileSizeReporter.measureFileSizesBeforeBuild;
+const measureFileSizesBeforeBuild = FileSizeReporter.measureFileSizesBeforeBuild;
 const printFileSizesAfterBuild = FileSizeReporter.printFileSizesAfterBuild;
 const useYarn = fs.existsSync(paths.yarnLockFile);
 
@@ -78,9 +77,7 @@ checkBrowsers(paths.appPath, isInteractive)
             " to learn more about each warning."
         );
         console.log(
-          "To ignore, add " +
-            chalk.cyan("// eslint-disable-next-line") +
-            " to the line before.\n"
+          "To ignore, add " + chalk.cyan("// eslint-disable-next-line") + " to the line before.\n"
         );
       } else {
         console.log(chalk.green("Compiled successfully.\n"));
@@ -98,18 +95,9 @@ checkBrowsers(paths.appPath, isInteractive)
       const publicUrl = paths.publicUrlOrPath;
       const publicPath = config.output.publicPath;
       const buildFolder = path.relative(process.cwd(), paths.appBuild);
-      printHostingInstructions(
-        appPackage,
-        publicUrl,
-        publicPath,
-        buildFolder,
-        useYarn
-      );
+      printHostingInstructions(appPackage, publicUrl, publicPath, buildFolder, useYarn);
       // version and md5 files
-      fs.writeFileSync(
-        `${buildFolder}/VERSION`,
-        require("../package.json").version
-      );
+      fs.writeFileSync(`${buildFolder}/VERSION`, require("../package.json").version);
       const hash = md5File.sync(`${buildFolder}/VERSION`);
       fs.writeFileSync(`${buildFolder}/web.rustchat.md5`, hash);
     },
@@ -153,7 +141,7 @@ function build(previousFileSizes) {
 
         messages = formatWebpackMessages({
           errors: [errMessage],
-          warnings: [],
+          warnings: []
         });
       } else {
         messages = formatWebpackMessages(
@@ -170,8 +158,7 @@ function build(previousFileSizes) {
       }
       if (
         process.env.CI &&
-        (typeof process.env.CI !== "string" ||
-          process.env.CI.toLowerCase() !== "false") &&
+        (typeof process.env.CI !== "string" || process.env.CI.toLowerCase() !== "false") &&
         messages.warnings.length
       ) {
         // Ignore sourcemap warnings in CI builds. See #8227 for more info.
@@ -192,7 +179,7 @@ function build(previousFileSizes) {
       const resolveArgs = {
         stats,
         previousFileSizes,
-        warnings: messages.warnings,
+        warnings: messages.warnings
       };
 
       if (writeStatsJson) {
@@ -210,6 +197,6 @@ function build(previousFileSizes) {
 function copyPublicFolder() {
   fs.copySync(paths.appPublic, paths.appBuild, {
     dereference: true,
-    filter: (file) => file !== paths.appHtml,
+    filter: (file) => file !== paths.appHtml
   });
 }

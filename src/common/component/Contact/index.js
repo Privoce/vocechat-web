@@ -17,14 +17,10 @@ export default function Contact({
   popover = false,
   compact = false,
   avatarSize = 32,
-  enableContextMenu = false,
+  enableContextMenu = false
 }) {
   const navigate = useNavigate();
-  const {
-    visible: contextMenuVisible,
-    handleContextMenuEvent,
-    hideContextMenu,
-  } = useContextMenu();
+  const { visible: contextMenuVisible, handleContextMenuEvent, hideContextMenu } = useContextMenu();
   const curr = useSelector((store) => store.contacts.byId[uid]);
   const handleDoubleClick = () => {
     navigate(`/chat/dm/${uid}`);
@@ -50,15 +46,11 @@ export default function Contact({
           onContextMenu={enableContextMenu ? handleContextMenuEvent : null}
           size={avatarSize}
           onDoubleClick={dm ? handleDoubleClick : null}
-          className={`${interactive ? "interactive" : ""} ${
-            compact ? "compact" : ""
-          }`}
+          className={`${interactive ? "interactive" : ""} ${compact ? "compact" : ""}`}
         >
           <div className="avatar">
             <Avatar url={curr.avatar} name={curr.name} alt="avatar" />
-            <div
-              className={`status ${curr.online ? "online" : "offline"}`}
-            ></div>
+            <div className={`status ${curr.online ? "online" : "offline"}`}></div>
           </div>
           {!compact && <span className="name">{curr?.name}</span>}
           {owner && <IconOwner />}

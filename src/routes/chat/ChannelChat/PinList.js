@@ -96,9 +96,7 @@ export default function PinList({ id }) {
       {noPins ? (
         <div className="none">
           <IconSurprise />
-          <div className="tip">
-            This channel doesn’t have any pinned message yet.
-          </div>
+          <div className="tip">This channel doesn’t have any pinned message yet.</div>
         </div>
       ) : (
         <ul className="list">
@@ -115,11 +113,7 @@ export default function PinList({ id }) {
                     <IconForward />
                   </button> */}
                   {canPin && (
-                    <button
-                      className="btn"
-                      data-mid={mid}
-                      onClick={handleUnpin}
-                    >
+                    <button className="btn" data-mid={mid} onClick={handleUnpin}>
                       <IconClose />
                     </button>
                   )}

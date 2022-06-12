@@ -97,15 +97,12 @@ const Styled = styled.div`
   }
 `;
 export default function AddMembers({ cid = null, closeModal }) {
-  const [
-    addMembers,
-    { isLoading: isAdding, isSuccess },
-  ] = useAddMembersMutation();
+  const [addMembers, { isLoading: isAdding, isSuccess }] = useAddMembersMutation();
   const [selects, setSelects] = useState([]);
   const { channel, contactData } = useSelector((store) => {
     return {
       channel: store.channels.byId[cid],
-      contactData: store.contacts.byId,
+      contactData: store.contacts.byId
     };
   });
   useEffect(() => {
@@ -145,11 +142,7 @@ export default function AddMembers({ cid = null, closeModal }) {
             return (
               <li className="select" key={uid}>
                 {contactData[uid].name}
-                <CloseIcon
-                  data-uid={uid}
-                  onClick={toggleCheckMember}
-                  className="close"
-                />
+                <CloseIcon data-uid={uid} onClick={toggleCheckMember} className="close" />
               </li>
             );
           })}
@@ -185,11 +178,7 @@ export default function AddMembers({ cid = null, closeModal }) {
           );
         })}
       </ul>
-      <Button
-        disabled={selects.length == 0 || isAdding}
-        className="btn"
-        onClick={handleAddMembers}
-      >
+      <Button disabled={selects.length == 0 || isAdding} className="btn" onClick={handleAddMembers}>
         {isAdding ? `Adding` : "Add"} to #{channel.name}
       </Button>
     </Styled>

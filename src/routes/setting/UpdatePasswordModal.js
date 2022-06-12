@@ -2,10 +2,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Input from "../../common/component/styled/Input";
-import {
-  useUpdatePasswordMutation,
-  useGetCredentialsQuery,
-} from "../../app/services/auth";
+import { useUpdatePasswordMutation, useGetCredentialsQuery } from "../../app/services/auth";
 import StyledModal from "../../common/component/styled/Modal";
 import Button from "../../common/component/styled/Button";
 const StyledEdit = styled(StyledModal)`
@@ -30,13 +27,10 @@ export default function ProfileBasicEditModal({ closeModal }) {
   const [input, setInput] = useState({
     current: "",
     newPassword: "",
-    confirmPassword: "",
+    confirmPassword: ""
   });
   // const dispatch = useDispatch();
-  const [
-    updatePassword,
-    { isLoading, isSuccess },
-  ] = useUpdatePasswordMutation();
+  const [updatePassword, { isLoading, isSuccess }] = useUpdatePasswordMutation();
   const handleChange = (evt) => {
     const { type } = evt.target.dataset;
     setInput((prev) => {

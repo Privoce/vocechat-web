@@ -4,8 +4,7 @@ import { useLazyGetHistoryMessagesQuery } from "../../app/services/channel";
 import { useLazyGetHistoryMessagesQuery as useLazyGetDMHistoryMsg } from "../../app/services/contact";
 
 const getFeedWithPagination = (config) => {
-  const { pageNumber = 1, pageSize = 40, mids = [], isLast = false } =
-    config || {};
+  const { pageNumber = 1, pageSize = 40, mids = [], isLast = false } = config || {};
   const shadowMids = mids.slice(0);
 
   if (shadowMids.length == 0)
@@ -15,7 +14,7 @@ const getFeedWithPagination = (config) => {
       pageCount: 0,
       pageSize,
       pageNumber: 1,
-      ids: [],
+      ids: []
     };
   shadowMids.sort((a, b) => {
     return Number(a) - Number(b);
@@ -34,7 +33,7 @@ const getFeedWithPagination = (config) => {
     pageCount,
     pageSize,
     pageNumber: computedPageNumber,
-    ids,
+    ids
   };
 };
 let curScrollPos = 0;
@@ -48,16 +47,13 @@ export default function useMessageFeed({ context = "channel", id = null }) {
   const [hasMore, setHasMore] = useState(true);
   const [appends, setAppends] = useState([]);
   const [items, setItems] = useState([]);
-  const loadMoreMsgsFromServer =
-    context == "channel" ? loadMoreChannelMsgs : loadMoreDmMsgs;
+  const loadMoreMsgsFromServer = context == "channel" ? loadMoreChannelMsgs : loadMoreDmMsgs;
   const { mids, messageData, loginUid } = useSelector((store) => {
     return {
       loginUid: store.authData.uid,
       mids:
-        context == "channel"
-          ? store.channelMessage[id] || []
-          : store.userMessage.byId[id] || [],
-      messageData: store.message,
+        context == "channel" ? store.channelMessage[id] || [] : store.userMessage.byId[id] || [],
+      messageData: store.message
     };
   });
   useEffect(() => {
@@ -69,12 +65,9 @@ export default function useMessageFeed({ context = "channel", id = null }) {
   }, [context, id]);
   useEffect(() => {
     if (items.length) {
-      containerRef.current = document.querySelector(
-        `#RUSTCHAT_FEED_${context}_${id}`
-      );
+      containerRef.current = document.querySelector(`#RUSTCHAT_FEED_${context}_${id}`);
       if (containerRef.current) {
-        const newScroll =
-          containerRef.current.scrollHeight - containerRef.current.clientHeight;
+        const newScroll = containerRef.current.scrollHeight - containerRef.current.clientHeight;
         containerRef.current.scrollTop = curScrollPos + (newScroll - oldScroll);
       }
     }
@@ -88,7 +81,7 @@ export default function useMessageFeed({ context = "channel", id = null }) {
       //   初次
       const pageInfo = getFeedWithPagination({
         mids: serverMids,
-        isLast: true,
+        isLast: true
       });
       console.log("pull up 2", pageInfo);
       pageRef.current = pageInfo;
@@ -111,8 +104,7 @@ export default function useMessageFeed({ context = "channel", id = null }) {
         if (container) {
           const msgFromSelf = loginUid == messageData[newestMsgId]?.from_uid;
           const scrollDistance =
-            container.scrollHeight -
-            (container.offsetHeight + container.scrollTop);
+            container.scrollHeight - (container.offsetHeight + container.scrollTop);
           console.log("scrollDistance", msgFromSelf, scrollDistance);
           if (msgFromSelf) {
             container.scrollTop = container.scrollHeight;
@@ -133,7 +125,7 @@ export default function useMessageFeed({ context = "channel", id = null }) {
       const [firstMid] = currPageInfo.ids;
       const { data: newList } = await loadMoreMsgsFromServer({
         mid: firstMid,
-        id,
+        id
       });
       if (newList.length == 0) {
         setHasMore(false);
@@ -145,13 +137,13 @@ export default function useMessageFeed({ context = "channel", id = null }) {
       // 初始化
       pageInfo = getFeedWithPagination({
         mids,
-        isLast: true,
+        isLast: true
       });
     } else {
       const prevPageNumber = currPageInfo.pageNumber - 1;
       pageInfo = getFeedWithPagination({
         mids,
-        pageNumber: prevPageNumber,
+        pageNumber: prevPageNumber
       });
     }
     pageRef.current = pageInfo;
@@ -177,6 +169,6 @@ export default function useMessageFeed({ context = "channel", id = null }) {
     hasMore,
     pullUp,
     pullDown,
-    list: items,
+    list: items
   };
 }

@@ -66,11 +66,7 @@ const Styled = styled.div`
         width: 100%;
         height: 100%;
         content: "";
-        background: linear-gradient(
-          180deg,
-          rgba(255, 255, 255, 0) 63.54%,
-          #e5e7eb 93.09%
-        );
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0) 63.54%, #e5e7eb 93.09%);
       }
     }
     .pic {

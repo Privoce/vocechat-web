@@ -22,13 +22,11 @@ export default function ChannelModal({ personal = false, closeModal }) {
     name: "",
     dsecription: "",
     members: [loginUid],
-    is_public: !personal,
+    is_public: !personal
   });
   const { contacts, input, updateInput } = useFilteredUsers();
-  const [
-    createChannel,
-    { isSuccess, isError, isLoading, data: newChannelId },
-  ] = useCreateChannelMutation();
+  const [createChannel, { isSuccess, isError, isLoading, data: newChannelId }] =
+    useCreateChannelMutation();
 
   const handleToggle = () => {
     const { is_public } = data;
@@ -72,9 +70,7 @@ export default function ChannelModal({ personal = false, closeModal }) {
   const toggleCheckMember = ({ currentTarget }) => {
     const { members } = data;
     const { uid } = currentTarget.dataset;
-    let tmp = members.includes(+uid)
-      ? members.filter((m) => m != uid)
-      : [...members, +uid];
+    let tmp = members.includes(+uid) ? members.filter((m) => m != uid) : [...members, +uid];
     console.log(uid, currentTarget);
     setData((prev) => {
       return { ...prev, members: tmp };
@@ -135,11 +131,7 @@ export default function ChannelModal({ personal = false, closeModal }) {
           <div className="name">
             <span className="label normal">Channel Name</span>
             <div className="input">
-              <input
-                onChange={handleNameInput}
-                value={name}
-                placeholder="new channel"
-              />
+              <input onChange={handleNameInput} value={name} placeholder="new channel" />
               <ChannelIcon personal={!is_public} className="icon" />
             </div>
           </div>
@@ -155,11 +147,7 @@ export default function ChannelModal({ personal = false, closeModal }) {
             <Button onClick={closeModal} className="normal cancel">
               Cancel
             </Button>
-            <Button
-              disabled={isLoading}
-              onClick={handleCreate}
-              className="normal"
-            >
+            <Button disabled={isLoading} onClick={handleCreate} className="normal">
               Create
             </Button>
           </div>

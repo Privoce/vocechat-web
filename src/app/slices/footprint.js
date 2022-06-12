@@ -5,7 +5,7 @@ const initialState = {
   readUsers: {},
   readChannels: {},
   muteUsers: {},
-  muteChannels: {},
+  muteChannels: {}
 };
 const footprintSlice = createSlice({
   name: "footprint",
@@ -21,7 +21,7 @@ const footprintSlice = createSlice({
         readUsers = {},
         readChannels = {},
         muteUsers = {},
-        muteChannels = {},
+        muteChannels = {}
       } = action.payload;
       return {
         usersVersion,
@@ -29,7 +29,7 @@ const footprintSlice = createSlice({
         readUsers,
         readChannels,
         muteUsers,
-        muteChannels,
+        muteChannels
       };
     },
     updateUsersVersion(state, action) {
@@ -94,8 +94,8 @@ const footprintSlice = createSlice({
       reads.forEach(({ gid, mid }) => {
         state.readChannels[gid] = mid;
       });
-    },
-  },
+    }
+  }
 });
 export const {
   resetFootprint,
@@ -104,6 +104,6 @@ export const {
   updateUsersVersion,
   updateReadChannels,
   updateReadUsers,
-  updateMute,
+  updateMute
 } = footprintSlice.actions;
 export default footprintSlice.reducer;

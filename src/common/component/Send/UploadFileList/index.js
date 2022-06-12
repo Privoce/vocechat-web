@@ -13,7 +13,7 @@ export default function UploadFileList({ context = "", id = null }) {
   const [editInfo, setEditInfo] = useState(null);
   const { stageFiles, updateStageFile, removeStageFile } = useUploadFile({
     context,
-    id,
+    id
   });
   const toggleModalVisible = (info) => {
     setEditInfo((prev) => (prev ? null : info));
@@ -50,19 +50,12 @@ export default function UploadFileList({ context = "", id = null }) {
           return (
             <li className="file" key={url}>
               <div className="preview">
-                {type.startsWith("image") ? (
-                  <img src={url} alt="image" />
-                ) : (
-                  getFileIcon(type, name)
-                )}
+                {type.startsWith("image") ? <img src={url} alt="image" /> : getFileIcon(type, name)}
               </div>
               <h4 className="name">{name}</h4>
               <span className="size">{formatBytes(size)}</span>
               <ul className="opts">
-                <li
-                  className="opt edit"
-                  onClick={handleOpenEditModal.bind(null, idx)}
-                >
+                <li className="opt edit" onClick={handleOpenEditModal.bind(null, idx)}>
                   <EditIcon />
                 </li>
                 <li

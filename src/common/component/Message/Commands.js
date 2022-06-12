@@ -62,12 +62,7 @@ const StyledCmds = styled.ul`
     transform: translateX(-100%);
   }
 `;
-export default function Commands({
-  context = "user",
-  contextId = 0,
-  mid = 0,
-  toggleEditMessage,
-}) {
+export default function Commands({ context = "user", contextId = 0, mid = 0, toggleEditMessage }) {
   const {
     canDelete,
     canReply,
@@ -80,11 +75,11 @@ export default function Commands({
     togglePinModal,
     PinModal,
     DeleteModal,
-    ForwardModal,
+    ForwardModal
   } = useMessageOperation({ mid, context, contextId });
   const { setReplying } = useSendMessage({ context, to: contextId });
   const { addFavorite, isFavorited } = useFavMessage({
-    cid: context == "channel" ? contextId : null,
+    cid: context == "channel" ? contextId : null
   });
   const dispatch = useDispatch();
   const [tippyVisible, setTippyVisible] = useState(false);
@@ -126,10 +121,7 @@ export default function Commands({
 
   return (
     <>
-      <StyledCmds
-        ref={cmdsRef}
-        className={`cmds ${tippyVisible ? "visible" : ""}`}
-      >
+      <StyledCmds ref={cmdsRef} className={`cmds ${tippyVisible ? "visible" : ""}`}>
         <Tippy
           onShow={handleTippyVisible.bind(null, true)}
           onHide={handleTippyVisible.bind(null, false)}
@@ -175,25 +167,25 @@ export default function Commands({
                 canPin && {
                   title: pinned ? `Unpin Message` : `Pin Message`,
                   icon: <IconPin className="icon" />,
-                  handler: pinned ? handleUnpin : togglePinModal,
+                  handler: pinned ? handleUnpin : togglePinModal
                 },
                 {
                   title: "Forward",
                   icon: <IconForward className="icon" />,
-                  handler: toggleForwardModal,
+                  handler: toggleForwardModal
                 },
                 {
                   title: "Select",
                   icon: <IconSelect className="icon" />,
-                  handler: handleSelect.bind(null, mid),
+                  handler: handleSelect.bind(null, mid)
                 },
 
                 canDelete && {
                   title: " Delete",
                   danger: true,
                   icon: <IconDelete className="icon" />,
-                  handler: toggleDeleteModal,
-                },
+                  handler: toggleDeleteModal
+                }
               ]}
             />
           }

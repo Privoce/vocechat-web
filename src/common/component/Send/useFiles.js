@@ -8,6 +8,6 @@ export default function useFiles(initialFiles = []) {
   return {
     files,
     setFiles,
-    resetFiles,
+    resetFiles
   };
 }

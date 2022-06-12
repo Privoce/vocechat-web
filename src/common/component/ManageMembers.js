@@ -119,20 +119,12 @@ export default function ManageMembers({ cid = null }) {
     return {
       contacts: store.contacts,
       channels: store.channels,
-      loginUser: store.contacts.byId[store.authData.uid],
+      loginUser: store.contacts.byId[store.authData.uid]
     };
   });
-  const {
-    copyEmail,
-    removeFromChannel,
-    removeUser,
-    canRemove,
-    canRemoveFromChannel,
-  } = useContactOperation({ cid });
-  const [
-    updateContact,
-    { isSuccess: updateSuccess },
-  ] = useUpdateContactMutation();
+  const { copyEmail, removeFromChannel, removeUser, canRemove, canRemoveFromChannel } =
+    useContactOperation({ cid });
+  const [updateContact, { isSuccess: updateSuccess }] = useUpdateContactMutation();
 
   useEffect(() => {
     if (updateSuccess) {
@@ -146,11 +138,7 @@ export default function ManageMembers({ cid = null }) {
     updateContact({ id: uid, is_admin: isAdmin });
   };
   const channel = channels.byId[cid] ?? null;
-  const uids = channel
-    ? channel.is_public
-      ? contacts.ids
-      : channel.members
-    : contacts.ids;
+  const uids = channel ? (channel.is_public ? contacts.ids : channel.members) : contacts.ids;
 
   return (
     <StyledWrapper>
@@ -158,8 +146,7 @@ export default function ManageMembers({ cid = null }) {
       <div className="intro">
         <h4 className="title">Manage Members</h4>
         <p className="desc">
-          Disabling your account means you can recover it at any time after
-          taking this action.
+          Disabling your account means you can recover it at any time after taking this action.
         </p>
       </div>
       <ul className="members">
@@ -194,7 +181,7 @@ export default function ManageMembers({ cid = null }) {
                             onClick={handleToggleRole.bind(null, {
                               ignore: is_admin,
                               uid,
-                              isAdmin: true,
+                              isAdmin: true
                             })}
                           >
                             Admin
@@ -205,7 +192,7 @@ export default function ManageMembers({ cid = null }) {
                             onClick={handleToggleRole.bind(null, {
                               ignore: !is_admin,
                               uid,
-                              isAdmin: false,
+                              isAdmin: false
                             })}
                           >
                             User
@@ -226,10 +213,7 @@ export default function ManageMembers({ cid = null }) {
                     content={
                       <StyledMenu className="menu">
                         {email && (
-                          <li
-                            className="item"
-                            onClick={copyEmail.bind(null, email)}
-                          >
+                          <li className="item" onClick={copyEmail.bind(null, email)}>
                             Copy Email
                           </li>
                         )}
@@ -237,18 +221,12 @@ export default function ManageMembers({ cid = null }) {
                         {/* <li className="item underline">Change Nickname</li> */}
                         {/* <li className="item danger">Ban</li> */}
                         {canRemoveFromChannel && (
-                          <li
-                            className="item danger"
-                            onClick={removeFromChannel.bind(null, uid)}
-                          >
+                          <li className="item danger" onClick={removeFromChannel.bind(null, uid)}>
                             Remove From Channel
                           </li>
                         )}
                         {canRemove && !cid && (
-                          <li
-                            className="item danger"
-                            onClick={removeUser.bind(null, uid)}
-                          >
+                          <li className="item danger" onClick={removeUser.bind(null, uid)}>
                             Remove From Server
                           </li>
                         )}

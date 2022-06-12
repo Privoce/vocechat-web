@@ -23,7 +23,7 @@ import {
   // usePlateEditorRef,
   // ELEMENT_IMAGE,
   // useComboboxControls,
-  MentionCombobox,
+  MentionCombobox
 } from "@udecode/plate";
 import { createComboboxPlugin } from "@udecode/plate-combobox";
 import { ReactEditor } from "slate-react";
@@ -44,7 +44,7 @@ const Plugins = ({
   id = "",
   placeholder = "Write some markdown...",
   sendMessages,
-  members = [],
+  members = []
 }) => {
   // const { getMenuProps, getItemProps } = useComboboxControls();
   const [context, to] = id.split("_");
@@ -57,7 +57,7 @@ const Plugins = ({
   const initialProps = {
     ...CONFIG.editableProps,
     className: "box",
-    placeholder,
+    placeholder
   };
   const plateEditor = getPlateEditorRef(`${TEXT_EDITOR_PREFIX}_${id}`);
   useEffect(() => {
@@ -91,13 +91,7 @@ const Plugins = ({
     (evt) => {
       // 是否在at操作
       const mentionInputs = findMentionInput(plateEditor);
-      if (
-        mentionInputs ||
-        evt.shiftKey ||
-        evt.ctrlKey ||
-        evt.altKey ||
-        evt.isComposing
-      ) {
+      if (mentionInputs || evt.shiftKey || evt.ctrlKey || evt.altKey || evt.isComposing) {
         return true;
       }
       evt.preventDefault();
@@ -107,14 +101,14 @@ const Plugins = ({
       Transforms.delete(plateEditor, {
         at: {
           anchor: Editor.start(plateEditor, []),
-          focus: Editor.end(plateEditor, []),
-        },
+          focus: Editor.end(plateEditor, [])
+        }
       });
     },
     {
       // eventTypes: ["keydown"],
       target: editableRef,
-      when: !cmdKey,
+      when: !cmdKey
     }
   );
   useKey(
@@ -125,7 +119,7 @@ const Plugins = ({
     },
     {
       eventTypes: ["keydown", "keyup"],
-      target: editableRef,
+      target: editableRef
     }
   );
   const pluginArr = [
@@ -133,7 +127,7 @@ const Plugins = ({
     createNodeIdPlugin(),
     createSoftBreakPlugin(CONFIG.softBreak),
     createTrailingBlockPlugin(CONFIG.trailingBlock),
-    createExitBreakPlugin(CONFIG.exitBreak),
+    createExitBreakPlugin(CONFIG.exitBreak)
   ];
   const plugins = createPlugins(
     enableMentions
@@ -145,17 +139,17 @@ const Plugins = ({
                 console.log("mention", item);
                 const {
                   text,
-                  data: { uid },
+                  data: { uid }
                 } = item;
                 return { value: `@${text}`, uid };
               },
-              insertSpaceAfterMention: true,
-            },
-          }),
+              insertSpaceAfterMention: true
+            }
+          })
         ])
       : pluginArr,
     {
-      components,
+      components
     }
   );
 
@@ -179,20 +173,16 @@ const Plugins = ({
         const { value, mentions } = getMixedText(v.children);
         const prev = tmps[tmps.length - 1];
         if (!prev) {
-          tmps.push([
-            { type: "text", content: value, properties: { mentions } },
-          ]);
+          tmps.push([{ type: "text", content: value, properties: { mentions } }]);
         } else {
           if (Array.isArray(prev)) {
             tmps[tmps.length - 1].push({
               type: "text",
               content: value,
-              properties: { mentions },
+              properties: { mentions }
             });
           } else {
-            tmps.push([
-              { type: "text", content: value, properties: { mentions } },
-            ]);
+            tmps.push([{ type: "text", content: value, properties: { mentions } }]);
           }
         }
       }
@@ -202,8 +192,8 @@ const Plugins = ({
               type: "text",
               content: tmp.map((t) => t.content).join("\n"),
               properties: {
-                mentions: tmp.map((t) => t.properties?.mentions || []).flat(),
-              },
+                mentions: tmp.map((t) => t.properties?.mentions || []).flat()
+              }
             }
           : tmp;
       });
@@ -229,13 +219,7 @@ const Plugins = ({
             // component={StyledCombobox}
             onRenderItem={({ item }) => {
               console.log("wtf", item);
-              return (
-                <Contact
-                  key={item.data.uid}
-                  uid={item.data.uid}
-                  interactive={false}
-                />
-              );
+              return <Contact key={item.data.uid} uid={item.data.uid} interactive={false} />;
             }}
             items={members.map((id) => {
               const data = contactData[id];
@@ -246,8 +230,8 @@ const Plugins = ({
                 text: name,
                 data: {
                   uid,
-                  ...rest,
-                },
+                  ...rest
+                }
               };
             })}
           />
@@ -273,7 +257,7 @@ export const useMixedEditor = (key) => {
   };
   return {
     focus,
-    insertText,
+    insertText
   };
 };
 export default Plugins;

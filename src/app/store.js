@@ -36,7 +36,7 @@ const reducer = combineReducers({
   [messageApi.reducerPath]: messageApi.reducer,
   [contactApi.reducerPath]: contactApi.reducer,
   [channelApi.reducerPath]: channelApi.reducer,
-  [serverApi.reducerPath]: serverApi.reducer,
+  [serverApi.reducerPath]: serverApi.reducer
 });
 
 const store = configureStore({
@@ -50,48 +50,41 @@ const store = configureStore({
         serverApi.middleware,
         messageApi.middleware
       )
-      .prepend(listenerMiddleware.middleware),
+      .prepend(listenerMiddleware.middleware)
 });
 let initialized = false;
-setupListeners(
-  store.dispatch,
-  (dispatch, { onOnline, onOffline, onFocus, onFocusLost }) => {
-    const handleFocus = () => dispatch(onFocus());
-    const handleFocusLost = () => dispatch(onFocusLost());
-    const handleOnline = () => dispatch(onOnline());
-    const handleOffline = () => dispatch(onOffline());
-    const handleVisibilityChange = () => {
-      if (window.document.visibilityState === "visible") {
-        handleFocus();
-      } else {
-        handleFocusLost();
-      }
-    };
-
-    if (!initialized) {
-      if (typeof window !== "undefined" && window.addEventListener) {
-        // Handle focus events
-        window.addEventListener(
-          "visibilitychange",
-          handleVisibilityChange,
-          false
-        );
-        window.addEventListener("focus", handleFocus, false);
-
-        // Handle connection events
-        window.addEventListener("online", handleOnline, false);
-        window.addEventListener("offline", handleOffline, false);
-        initialized = true;
-      }
+setupListeners(store.dispatch, (dispatch, { onOnline, onOffline, onFocus, onFocusLost }) => {
+  const handleFocus = () => dispatch(onFocus());
+  const handleFocusLost = () => dispatch(onFocusLost());
+  const handleOnline = () => dispatch(onOnline());
+  const handleOffline = () => dispatch(onOffline());
+  const handleVisibilityChange = () => {
+    if (window.document.visibilityState === "visible") {
+      handleFocus();
+    } else {
+      handleFocusLost();
     }
-    const unsubscribe = () => {
-      window.removeEventListener("focus", handleFocus);
-      window.removeEventListener("visibilitychange", handleVisibilityChange);
-      window.removeEventListener("online", handleOnline);
-      window.removeEventListener("offline", handleOffline);
-      initialized = false;
-    };
-    return unsubscribe;
+  };
+
+  if (!initialized) {
+    if (typeof window !== "undefined" && window.addEventListener) {
+      // Handle focus events
+      window.addEventListener("visibilitychange", handleVisibilityChange, false);
+      window.addEventListener("focus", handleFocus, false);
+
+      // Handle connection events
+      window.addEventListener("online", handleOnline, false);
+      window.addEventListener("offline", handleOffline, false);
+      initialized = true;
+    }
   }
-);
+  const unsubscribe = () => {
+    window.removeEventListener("focus", handleFocus);
+    window.removeEventListener("visibilitychange", handleVisibilityChange);
+    window.removeEventListener("online", handleOnline);
+    window.removeEventListener("offline", handleOffline);
+    initialized = false;
+  };
+  return unsubscribe;
+});
 export default store;

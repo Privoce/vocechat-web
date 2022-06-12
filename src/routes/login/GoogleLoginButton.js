@@ -13,12 +13,12 @@ export default function GoogleLoginButton({ login, clientId }) {
       console.info("google oauth success", tokenId, rest);
       login({
         id_token: tokenId,
-        type: "google",
+        type: "google"
       });
     },
     onFailure: (wtf) => {
       console.error("google login failure", wtf);
-    },
+    }
   });
   const handleGoogleLogin = () => {
     signIn();

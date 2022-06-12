@@ -25,7 +25,7 @@ const useRehydrate = () => {
       message: { replying: {} },
       footprint: {},
       ui: {},
-      server: {},
+      server: {}
     };
     const tables = Object.keys(window.CACHE);
     const results = await Promise.all(

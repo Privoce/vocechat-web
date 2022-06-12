@@ -9,7 +9,7 @@ import {
   ImagePreview,
   PdfPreview,
   CodePreview,
-  DocPreview,
+  DocPreview
 } from "./preview";
 import { getFileIcon, formatBytes } from "../../utils";
 import IconDownload from "../../../assets/icons/download.svg";
@@ -24,7 +24,7 @@ const renderPreview = (data) => {
     video: /^video/gi,
     code: /(json|javascript|java|rb|c|php|xml|css|html)$/gi,
     doc: /^text/gi,
-    pdf: /\/pdf$/gi,
+    pdf: /\/pdf$/gi
   };
   const _arr = name.split(".");
   const _type = file_type || _arr[_arr.length - 1];
@@ -65,7 +65,7 @@ export default function FileBox({
   size,
   created_at,
   from_uid,
-  content,
+  content
 }) {
   const fromUser = useSelector((store) => store.contacts.byId[from_uid]);
   const icon = getFileIcon(file_type, name);
@@ -75,9 +75,9 @@ export default function FileBox({
   const withPreview = preview && previewContent;
   return (
     <Styled
-      className={`file_box ${flex ? "flex" : ""} ${
-        withPreview ? "preview" : ""
-      } ${file_type.startsWith("audio") ? "audio" : ""}`}
+      className={`file_box ${flex ? "flex" : ""} ${withPreview ? "preview" : ""} ${
+        file_type.startsWith("audio") ? "audio" : ""
+      }`}
     >
       <div className="basic">
         {icon}
@@ -91,11 +91,7 @@ export default function FileBox({
             </i>
           </span>
         </div>
-        <a
-          className="download"
-          download={name}
-          href={`${content}&download=true`}
-        >
+        <a className="download" download={name} href={`${content}&download=true`}>
           <IconDownload />
         </a>
       </div>

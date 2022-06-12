@@ -3,10 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 // import { ContentTypes } from "../../app/config";
 import { updateUploadFiles } from "../../app/slices/ui";
 import BASE_URL, { FILE_SLICE_SIZE } from "../../app/config";
-import {
-  usePrepareUploadFileMutation,
-  useUploadFileMutation,
-} from "../../app/services/message";
+import { usePrepareUploadFileMutation, useUploadFileMutation } from "../../app/services/message";
 import toast from "react-hot-toast";
 
 export default function useUploadFile(props = {}) {
@@ -15,7 +12,7 @@ export default function useUploadFile(props = {}) {
   const { stageFiles, replying } = useSelector((store) => {
     return {
       stageFiles: store.ui.uploadFiles[`${context}_${id}`] || [],
-      replying: store.message.replying[`${context}_${id}`],
+      replying: store.message.replying[`${context}_${id}`]
     };
   });
   const [data, setData] = useState(null);
@@ -23,13 +20,11 @@ export default function useUploadFile(props = {}) {
   const canneledRef = useRef(false);
   const sliceUploadedCountRef = useRef(0);
   const totalSliceCountRef = useRef(1);
-  const [
-    prepareUploadFile,
-    { isLoading: isPreparing, isSuccess: isPrepared },
-  ] = usePrepareUploadFileMutation();
+  const [prepareUploadFile, { isLoading: isPreparing, isSuccess: isPrepared }] =
+    usePrepareUploadFileMutation();
   const [
     uploadFileFn,
-    { isLoading: isUploading, isSuccess: isUploaded, isError: uploadFileError },
+    { isLoading: isUploading, isSuccess: isUploaded, isError: uploadFileError }
   ] = useUploadFileMutation();
 
   const uploadChunk = (data) => {
@@ -46,12 +41,12 @@ export default function useUploadFile(props = {}) {
     const {
       name = `rustchat-${+new Date()}.${file.type.split("/")[1]}`,
       type: file_type,
-      size: file_size,
+      size: file_size
     } = file;
     // 拿file id
     const { data: file_id } = await prepareUploadFile({
       content_type: file_type,
-      filename: name,
+      filename: name
     });
     console.log("file id", file_id);
 
@@ -76,17 +71,13 @@ export default function useUploadFile(props = {}) {
         // 退出循环
         if (canneledRef.current) break;
         try {
-          const chunk = file.slice(
-            FILE_SLICE_SIZE * idx,
-            FILE_SLICE_SIZE * (idx + 1),
-            file_type
-          );
+          const chunk = file.slice(FILE_SLICE_SIZE * idx, FILE_SLICE_SIZE * (idx + 1), file_type);
 
           uploadResult = await uploadChunk({
             file_id,
             chunk,
             // 如果是最后一个chunk，标记下
-            is_last: idx == _arr.length - 1,
+            is_last: idx == _arr.length - 1
           });
           sliceUploadedCountRef.current++;
         } catch (error) {
@@ -98,7 +89,7 @@ export default function useUploadFile(props = {}) {
     }
     // setUploadingFile(false);
     const {
-      data: { path, size, hash },
+      data: { path, size, hash }
     } = uploadResult;
     const encodedPath = encodeURIComponent(path);
     const res = {
@@ -111,7 +102,7 @@ export default function useUploadFile(props = {}) {
       thumbnail: file_type.startsWith("image")
         ? `${BASE_URL}/resource/file?file_path=${encodedPath}&thumbnail=true`
         : "",
-      download: `${BASE_URL}/resource/file?file_path=${encodedPath}&download=true`,
+      download: `${BASE_URL}/resource/file?file_path=${encodedPath}&download=true`
     };
     setData(res);
     return res;
@@ -120,9 +111,7 @@ export default function useUploadFile(props = {}) {
     canneledRef.current = true;
   };
   const removeStageFile = (idx) => {
-    dispatch(
-      updateUploadFiles({ context, id, operation: "remove", index: idx })
-    );
+    dispatch(updateUploadFiles({ context, id, operation: "remove", index: idx }));
   };
   const addStageFile = (fileData = {}) => {
     if (replying) {
@@ -141,7 +130,7 @@ export default function useUploadFile(props = {}) {
         id,
         operation: "update",
         index: idx,
-        ...data,
+        ...data
       })
     );
   };
@@ -149,9 +138,7 @@ export default function useUploadFile(props = {}) {
     stopUploading,
     data,
     isUploading: isPreparing || isUploading,
-    progress: Number(
-      (sliceUploadedCountRef.current / totalSliceCountRef.current) * 100
-    ).toFixed(2),
+    progress: Number((sliceUploadedCountRef.current / totalSliceCountRef.current) * 100).toFixed(2),
     uploadFile,
     isError: uploadFileError,
     isSuccess: !!data,
@@ -159,6 +146,6 @@ export default function useUploadFile(props = {}) {
     addStageFile,
     resetStageFiles,
     removeStageFile,
-    updateStageFile,
+    updateStageFile
   };
 }

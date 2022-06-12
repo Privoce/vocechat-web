@@ -45,23 +45,23 @@ export const contactApi = createApi({
         } catch {
           console.log("get contact list error");
         }
-      },
+      }
     }),
     deleteContact: builder.query({
-      query: (uid) => ({ url: `/admin/user/${uid}`, method: "DELETE" }),
+      query: (uid) => ({ url: `/admin/user/${uid}`, method: "DELETE" })
     }),
     updateContact: builder.mutation({
       query: ({ id, ...rest }) => ({
         url: `/admin/user/${id}`,
         body: rest,
-        method: "PUT",
-      }),
+        method: "PUT"
+      })
     }),
     updateMuteSetting: builder.mutation({
       query: (data) => ({
         url: `/user/mute`,
         method: "POST",
-        body: data,
+        body: data
       }),
       async onQueryStarted(data, { dispatch, queryFulfilled }) {
         try {
@@ -70,31 +70,31 @@ export const contactApi = createApi({
         } catch (error) {
           console.log("update mute failed", error);
         }
-      },
+      }
     }),
     updateAvatar: builder.mutation({
       query: (data) => ({
         headers: {
-          "content-type": "image/png",
+          "content-type": "image/png"
         },
         url: `user/avatar`,
         method: "POST",
-        body: data,
-      }),
+        body: data
+      })
     }),
     updateInfo: builder.mutation({
       query: (data) => ({
         url: `user`,
         method: "PUT",
-        body: data,
-      }),
+        body: data
+      })
     }),
     register: builder.mutation({
       query: (data) => ({
         url: `user/register`,
         method: "POST",
-        body: data,
-      }),
+        body: data
+      })
     }),
     sendMsg: builder.mutation({
       query: ({ id, content, type = "text", properties = "" }) => ({
@@ -102,21 +102,21 @@ export const contactApi = createApi({
           "content-type": ContentTypes[type],
           "X-Properties": properties
             ? btoa(unescape(encodeURIComponent(JSON.stringify(properties))))
-            : "",
+            : ""
         },
         url: `user/${id}/send`,
         method: "POST",
-        body: type == "file" ? JSON.stringify(content) : content,
+        body: type == "file" ? JSON.stringify(content) : content
       }),
       async onQueryStarted(param1, param2) {
         await onMessageSendStarted.call(this, param1, param2, "user");
-      },
+      }
     }),
     getHistoryMessages: builder.query({
       query: ({ id, mid = null, limit = 100 }) => ({
         url: mid
           ? `/user/${id}/history?before=${mid}&limit=${limit}`
-          : `/user/${id}/history?limit=${limit}`,
+          : `/user/${id}/history?limit=${limit}`
       }),
       async onQueryStarted(params, { dispatch, getState, queryFulfilled }) {
         const { data: messages } = await queryFulfilled;
@@ -125,9 +125,9 @@ export const contactApi = createApi({
             handleChatMessage(msg, dispatch, getState());
           });
         }
-      },
-    }),
-  }),
+      }
+    })
+  })
 });
 
 export const {
@@ -140,5 +140,5 @@ export const {
   useGetContactsQuery,
   useLazyGetContactsQuery,
   useSendMsgMutation,
-  useRegisterMutation,
+  useRegisterMutation
 } = contactApi;

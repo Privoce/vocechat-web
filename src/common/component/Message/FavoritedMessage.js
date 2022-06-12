@@ -23,20 +23,10 @@ const FavoritedMessage = ({ id }) => {
       const favorite_mids = messages.map(({ from_mid }) => from_mid) || [];
 
       setMsgs(
-        <StyledFav
-          data-favorite-mids={favorite_mids.join(",")}
-          className="favorite"
-        >
+        <StyledFav data-favorite-mids={favorite_mids.join(",")} className="favorite">
           <div className="list">
             {messages.map((msg, idx) => {
-              const {
-                user = {},
-                download,
-                content,
-                content_type,
-                properties,
-                thumbnail,
-              } = msg;
+              const { user = {}, download, content, content_type, properties, thumbnail } = msg;
               return (
                 <StyledMsg className="archive" key={idx}>
                   {user && (
@@ -54,7 +44,7 @@ const FavoritedMessage = ({ id }) => {
                         content,
                         content_type,
                         properties,
-                        thumbnail,
+                        thumbnail
                       })}
                     </div>
                   </div>

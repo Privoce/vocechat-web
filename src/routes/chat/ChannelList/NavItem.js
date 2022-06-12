@@ -29,7 +29,7 @@ const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
     visible: contextMenuVisible,
     offset,
     handleContextMenuEvent,
-    hideContextMenu,
+    hideContextMenu
   } = useContextMenu();
   const {
     channel,
@@ -37,7 +37,7 @@ const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
     messageData,
     readIndex,
     muted,
-    loginUid,
+    loginUid
     //  loginUser,
   } = useSelector((store) => {
     return {
@@ -47,7 +47,7 @@ const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
       messageData: store.message,
       loginUid: store.authData.uid,
       readIndex: store.footprint.readChannels[id],
-      muted: store.footprint.muteChannels[id],
+      muted: store.footprint.muteChannels[id]
     };
   });
   const handleChannelSetting = (evt) => {
@@ -72,8 +72,8 @@ const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
       }
     },
     collect: (monitor) => ({
-      isActive: monitor.canDrop() && monitor.isOver(),
-    }),
+      isActive: monitor.canDrop() && monitor.isOver()
+    })
   }));
   const handleReadAll = () => {
     const lastMid = mids[mids.length - 1];
@@ -91,9 +91,7 @@ const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
     setInviteModalVisible((prev) => !prev);
   };
   const handleMute = () => {
-    const data = muted
-      ? { remove_groups: [id] }
-      : { add_groups: [{ gid: id }] };
+    const data = muted ? { remove_groups: [id] } : { add_groups: [{ gid: id }] };
     muteChannel(data);
   };
   const { is_public, name, owner } = channel;
@@ -101,7 +99,7 @@ const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
     mids,
     messageData,
     readIndex,
-    loginUid,
+    loginUid
   });
   const isMentions = mentions.length !== 0;
   const inviteIconVisible = is_public || owner == loginUid;
@@ -122,11 +120,11 @@ const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
               {
                 title: "Mark As Read",
                 underline: true,
-                handler: handleReadAll,
+                handler: handleReadAll
               },
               {
                 title: muted ? "Unmute" : "Mute",
-                handler: handleMute,
+                handler: handleMute
               },
               // {
               //   title: "Notification Settings",
@@ -134,13 +132,13 @@ const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
               // },
               {
                 title: "Invite People",
-                handler: toggleInviteModalVisible,
+                handler: toggleInviteModalVisible
               },
               {
                 title: "Delete Channel",
                 danger: true,
-                handler: toggleRemoveConfirm.bind(null, id),
-              },
+                handler: toggleRemoveConfirm.bind(null, id)
+              }
             ]}
           />
         }
@@ -150,9 +148,7 @@ const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
           onContextMenu={handleContextMenuEvent}
           ref={drop}
           key={id}
-          className={`link ${isActive ? "drop_over" : ""} ${
-            muted ? "muted" : ""
-          }`}
+          className={`link ${isActive ? "drop_over" : ""} ${muted ? "muted" : ""}`}
           activeclassname="link_active"
           to={`/chat/channel/${id}`}
         >

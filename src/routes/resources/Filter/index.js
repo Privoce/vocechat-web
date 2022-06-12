@@ -47,7 +47,7 @@ export default function Filter({ filter, updateFilter }) {
     channel: false,
     date: false,
     from: false,
-    type: false,
+    type: false
   });
   const toggleFilterVisible = (obj) => {
     setFiltersVisible((prev) => {
@@ -58,7 +58,7 @@ export default function Filter({ filter, updateFilter }) {
     updateFilter(data);
     let _key = Object.keys(data)[0];
     let tmp = {
-      [_key]: false,
+      [_key]: false
     };
     console.log("wtffff", tmp);
     toggleFilterVisible(tmp);
@@ -72,7 +72,7 @@ export default function Filter({ filter, updateFilter }) {
     channel: channelVisible,
     date: dateVisible,
     type: typeVisible,
-    from: fromVisible,
+    from: fromVisible
   } = filtersVisible;
   return (
     <Styled>
@@ -81,20 +81,14 @@ export default function Filter({ filter, updateFilter }) {
         onClickOutside={toggleFilterVisible.bind(null, { from: false })}
         visible={fromVisible}
         placement="bottom-start"
-        content={
-          <FilterFrom select={filter.from} updateFilter={handleUpdateFilter} />
-        }
+        content={<FilterFrom select={filter.from} updateFilter={handleUpdateFilter} />}
       >
         <div
           className={`filter ${from && "selected"}`}
           onClick={toggleFilterVisible.bind(null, { from: true })}
         >
           {from && (
-            <Avatar
-              className="avatar"
-              name={contactMap[from].name}
-              url={contactMap[from].avatar}
-            />
+            <Avatar className="avatar" name={contactMap[from].name} url={contactMap[from].avatar} />
           )}
           <span className="txt">From {from && contactMap[from].name}</span>
           <ArrowDown className="arrow" />
@@ -105,20 +99,13 @@ export default function Filter({ filter, updateFilter }) {
         onClickOutside={toggleFilterVisible.bind(null, { channel: false })}
         visible={channelVisible}
         placement="bottom-start"
-        content={
-          <FilterChannel
-            select={filter.channel}
-            updateFilter={handleUpdateFilter}
-          />
-        }
+        content={<FilterChannel select={filter.channel} updateFilter={handleUpdateFilter} />}
       >
         <div
           className={`filter ${channel && "selected"}`}
           onClick={toggleFilterVisible.bind(null, { channel: true })}
         >
-          <span className="txt">
-            {channel ? `In ${channelMap[channel].name}` : `Channel`}
-          </span>
+          <span className="txt">{channel ? `In ${channelMap[channel].name}` : `Channel`}</span>
           <ArrowDown className="arrow" />
         </div>
       </Tippy>
@@ -127,9 +114,7 @@ export default function Filter({ filter, updateFilter }) {
         onClickOutside={toggleFilterVisible.bind(null, { type: false })}
         visible={typeVisible}
         placement="bottom-start"
-        content={
-          <FilterType select={filter.type} updateFilter={handleUpdateFilter} />
-        }
+        content={<FilterType select={filter.type} updateFilter={handleUpdateFilter} />}
       >
         <div
           className={`filter ${type && "selected"}`}
@@ -144,9 +129,7 @@ export default function Filter({ filter, updateFilter }) {
         onClickOutside={toggleFilterVisible.bind(null, { date: false })}
         visible={dateVisible}
         placement="bottom-start"
-        content={
-          <FilterDate select={filter.date} updateFilter={handleUpdateFilter} />
-        }
+        content={<FilterDate select={filter.date} updateFilter={handleUpdateFilter} />}
       >
         <div
           className={`filter ${date && "selected"}`}

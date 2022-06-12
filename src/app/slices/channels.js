@@ -3,7 +3,7 @@ import BASE_URL from "../config";
 import { getNonNullValues } from "../../common/utils";
 const initialState = {
   ids: [],
-  byId: {},
+  byId: {}
 };
 const channelsSlice = createSlice({
   name: `channels`,
@@ -36,18 +36,14 @@ const channelsSlice = createSlice({
         icon:
           avatar_updated_at == 0
             ? ""
-            : `${BASE_URL}/resource/group_avatar?gid=${gid}&t=${avatar_updated_at}`,
+            : `${BASE_URL}/resource/group_avatar?gid=${gid}&t=${avatar_updated_at}`
       };
     },
     updateChannel(state, action) {
       const ignoreInPublic = ["add_member", "remove_member"];
       const { id, operation, members = [], ...rest } = action.payload;
       const currChannel = state.byId[id];
-      if (
-        !currChannel ||
-        (currChannel.is_public && ignoreInPublic.includes(operation))
-      )
-        return;
+      if (!currChannel || (currChannel.is_public && ignoreInPublic.includes(operation))) return;
       switch (operation) {
         case "remove_member":
           {
@@ -99,8 +95,8 @@ const channelsSlice = createSlice({
         state.ids.splice(idx, 1);
         delete state.byId[gid];
       }
-    },
-  },
+    }
+  }
 });
 export const {
   updatePinMessage,
@@ -108,6 +104,6 @@ export const {
   fullfillChannels,
   addChannel,
   updateChannel,
-  removeChannel,
+  removeChannel
 } = channelsSlice.actions;
 export default channelsSlice.reducer;

@@ -18,25 +18,18 @@ import Contact from "../../../common/component/Contact";
 import { ContentTypes } from "../../../app/config";
 const NavItem = ({ uid, mid, unreads, setFiles }) => {
   const [previewMsg, setPreviewMsg] = useState(null);
-  const {
-    messages: normalizedMessages,
-    normalizeMessage,
-  } = useNormalizeMessage();
+  const { messages: normalizedMessages, normalizeMessage } = useNormalizeMessage();
   const dispatch = useDispatch();
   const pathMatched = useMatch(`/chat/dm/${uid}`);
   const [updateReadIndex] = useReadMessageMutation();
   const { currMsg, currUser } = useSelector((store) => {
     return {
       currUser: store.contacts.byId[uid],
-      currMsg: store.message[mid],
+      currMsg: store.message[mid]
     };
   });
   const navigate = useNavigate();
-  const {
-    visible: contextMenuVisible,
-    handleContextMenuEvent,
-    hideContextMenu,
-  } = useContextMenu();
+  const { visible: contextMenuVisible, handleContextMenuEvent, hideContextMenu } = useContextMenu();
   const [{ isActive }, drop] = useDrop(() => ({
     accept: [NativeTypes.FILE],
     drop({ dataTransfer }) {
@@ -51,8 +44,8 @@ const NavItem = ({ uid, mid, unreads, setFiles }) => {
       }
     },
     collect: (monitor) => ({
-      isActive: monitor.canDrop() && monitor.isOver(),
-    }),
+      isActive: monitor.canDrop() && monitor.isOver()
+    })
   }));
   useEffect(() => {
     if (currMsg) {
@@ -96,13 +89,13 @@ const NavItem = ({ uid, mid, unreads, setFiles }) => {
           items={[
             {
               title: "Mark As Read",
-              handler: handleReadAll,
+              handler: handleReadAll
             },
             {
               title: "Hide Session",
               danger: true,
-              handler: handleRemoveSession,
-            },
+              handler: handleRemoveSession
+            }
           ]}
         />
       }
@@ -118,9 +111,7 @@ const NavItem = ({ uid, mid, unreads, setFiles }) => {
         <div className="details">
           <div className="up">
             <span className="name">{currUser.name}</span>
-            {previewMsg && (
-              <time>{dayjs(previewMsg.created_at).fromNow()}</time>
-            )}
+            {previewMsg && <time>{dayjs(previewMsg.created_at).fromNow()}</time>}
           </div>
 
           <div className="down">

@@ -17,10 +17,7 @@ export default function Notifications() {
   return (
     <StyledWrapper>
       <Label>Notification Setting:</Label>
-      <StyledToggle
-        data-checked={status == "granted"}
-        onClick={handleEnableNotify}
-      />
+      <StyledToggle data-checked={status == "granted"} onClick={handleEnableNotify} />
     </StyledWrapper>
   );
 }

@@ -15,7 +15,7 @@ const Emojis = {
   "🚀": <EmojiRocket className="emoji" />,
   "❤️": <EmojiHeart className="emoji" />,
   "🙁": <EmojiUnhappy className="emoji" />,
-  "🎉": <EmojiCelebrate className="emoji" />,
+  "🎉": <EmojiCelebrate className="emoji" />
 };
 
 export default function ReactionItem({ native = "" }) {

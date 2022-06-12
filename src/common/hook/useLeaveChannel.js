@@ -1,21 +1,13 @@
 // import React from 'react'
 import { useSelector } from "react-redux";
-import {
-  useUpdateChannelMutation,
-  useLazyLeaveChannelQuery,
-} from "../../app/services/channel";
+import { useUpdateChannelMutation, useLazyLeaveChannelQuery } from "../../app/services/channel";
 export default function useLeaveChannel(cid = null) {
   const { channel, loginUid } = useSelector((store) => {
     return { channel: store.channels.byId[cid], loginUid: store.authData.uid };
   });
-  const [
-    update,
-    { isLoading: transfering, isSuccess: transferSuccess },
-  ] = useUpdateChannelMutation();
-  const [
-    leave,
-    { isLoading: leaving, isSuccess: leaveSuccess },
-  ] = useLazyLeaveChannelQuery();
+  const [update, { isLoading: transfering, isSuccess: transferSuccess }] =
+    useUpdateChannelMutation();
+  const [leave, { isLoading: leaving, isSuccess: leaveSuccess }] = useLazyLeaveChannelQuery();
   const transferOwner = (uid = null) => {
     if (!uid) return;
     update({ id: cid, owner: uid });
@@ -34,6 +26,6 @@ export default function useLeaveChannel(cid = null) {
     leaveSuccess,
     isOwner,
     transfering,
-    transferSuccess,
+    transferSuccess
   };
 }

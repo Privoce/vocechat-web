@@ -20,7 +20,7 @@ const renderContent = ({
   content,
   download,
   thumbnail,
-  edited = false,
+  edited = false
 }) => {
   let ctn = null;
   switch (content_type) {
@@ -30,38 +30,23 @@ const renderContent = ({
           <Linkit
             componentDecorator={(decoratedHref, decoratedText, key) => (
               <React.Fragment key={key}>
-                <a
-                  className="link"
-                  target="_blank"
-                  href={decoratedHref}
-                  key={key}
-                  rel="noreferrer"
-                >
+                <a className="link" target="_blank" href={decoratedHref} key={key} rel="noreferrer">
                   {decoratedText}
                 </a>
-                {!decoratedHref.startsWith("mailto") && (
-                  <URLPreview url={decoratedHref} />
-                )}
+                {!decoratedHref.startsWith("mailto") && <URLPreview url={decoratedHref} />}
               </React.Fragment>
             )}
           >
-            {reactStringReplace(
-              content,
-              /(\s{1}@[0-9]+\s{1})/g,
-              (match, idx) => {
-                console.log("match", match);
-                const uid = match.trim().slice(1);
-                return <Mention key={idx} uid={uid} cid={to} />;
-              }
-            )}
+            {reactStringReplace(content, /(\s{1}@[0-9]+\s{1})/g, (match, idx) => {
+              console.log("match", match);
+              const uid = match.trim().slice(1);
+              return <Mention key={idx} uid={uid} cid={to} />;
+            })}
             {/* {content.replace(/\s{1}\@[1-9]+\s{1}/g,)} */}
             {/* {new RegExp(/\s{1}\@[1-9]+\s{1}/g).exec(content)} */}
           </Linkit>
           {edited && (
-            <span
-              className="edited"
-              title={dayjs(edited).format("YYYY-MM-DD h:mm:ss A")}
-            >
+            <span className="edited" title={dayjs(edited).format("YYYY-MM-DD h:mm:ss A")}>
               (edited)
             </span>
           )}

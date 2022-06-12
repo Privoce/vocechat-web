@@ -68,14 +68,8 @@ import Button from "../styled/Button";
 import Input from "../styled/Input";
 export default function InviteByEmail({ cid = null }) {
   const [email, setEmail] = useState("");
-  const {
-    enableSMTP,
-    linkCopied,
-    link,
-    copyLink,
-    generateNewLink,
-    generating,
-  } = useInviteLink(cid);
+  const { enableSMTP, linkCopied, link, copyLink, generateNewLink, generating } =
+    useInviteLink(cid);
   useEffect(() => {
     if (linkCopied) {
       toast.success("Invite Link Copied!");
@@ -104,12 +98,7 @@ export default function InviteByEmail({ cid = null }) {
       <div className="link">
         <label htmlFor="">Or Send invite link to your friends</label>
         <div className="input">
-          <Input
-            readOnly
-            className="invite"
-            placeholder="Generating"
-            value={link}
-          />
+          <Input readOnly className="invite" placeholder="Generating" value={link} />
           <button className="copy" onClick={copyLink}>
             Copy
           </button>

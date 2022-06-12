@@ -12,9 +12,5 @@ export default function MagicLinkLogin() {
     navigate("/send_magic_link");
     // signIn();
   };
-  return (
-    <StyledMagicButton onClick={handleGoogleLogin}>
-      Sign in with Magic Link
-    </StyledMagicButton>
-  );
+  return <StyledMagicButton onClick={handleGoogleLogin}>Sign in with Magic Link</StyledMagicButton>;
 }

@@ -1,6 +1,6 @@
 const nodeTypes = {
   paragraph: "p",
-  image: "img",
+  image: "img"
 };
 
 export default nodeTypes;

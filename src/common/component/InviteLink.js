@@ -38,28 +38,15 @@ const StyledWrapper = styled.div`
   }
 `;
 export default function InviteLink() {
-  const {
-    generating,
-    link,
-    linkCopied,
-    copyLink,
-    generateNewLink,
-  } = useInviteLink();
+  const { generating, link, linkCopied, copyLink, generateNewLink } = useInviteLink();
   const handleNewLink = () => {
     generateNewLink();
   };
   return (
     <StyledWrapper>
-      <span className="tip">
-        Share this link to invite people to this server.
-      </span>
+      <span className="tip">Share this link to invite people to this server.</span>
       <div className="link">
-        <Input
-          readOnly
-          className={"large"}
-          placeholder="Generating"
-          value={link}
-        />
+        <Input readOnly className={"large"} placeholder="Generating" value={link} />
         <Button onClick={copyLink} className="ghost small border_less">
           {linkCopied ? "Copied" : `Copy`}
         </Button>

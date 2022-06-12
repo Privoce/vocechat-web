@@ -11,10 +11,7 @@ import Button from "../../common/component/styled/Button";
 import GoogleLoginButton from "./GoogleLoginButton";
 import MagicLinkLogin from "./MagicLinkLogin";
 import { useLoginMutation } from "../../app/services/auth";
-import {
-  useGetLoginConfigQuery,
-  useGetSMTPStatusQuery,
-} from "../../app/services/server";
+import { useGetLoginConfigQuery, useGetSMTPStatusQuery } from "../../app/services/server";
 import useGoogleAuthConfig from "../../common/hook/useGoogleAuthConfig";
 import GithubLoginButton from "./GithubLoginButton";
 import useGithubAuthConfig from "../../common/hook/useGithubAuthConfig";
@@ -23,13 +20,10 @@ export default function LoginPage() {
   const [login, { isSuccess, isLoading, error }] = useLoginMutation();
   const { clientId } = useGoogleAuthConfig();
   const { config: githubAuthConfig } = useGithubAuthConfig();
-  const {
-    data: loginConfig,
-    isSuccess: loginConfigSuccess,
-  } = useGetLoginConfigQuery();
+  const { data: loginConfig, isSuccess: loginConfigSuccess } = useGetLoginConfigQuery();
   const [input, setInput] = useState({
     email: "",
-    password: "",
+    password: ""
   });
   useEffect(() => {
     const query = new URLSearchParams(location.search);
@@ -45,7 +39,7 @@ export default function LoginPage() {
           if (code) {
             login({
               code: code,
-              type: "github",
+              type: "github"
             });
           }
           break;
@@ -54,7 +48,7 @@ export default function LoginPage() {
             login({
               code,
               state,
-              type: "oidc",
+              type: "oidc"
             });
           }
           break;
@@ -70,7 +64,7 @@ export default function LoginPage() {
         // login
         login({
           token,
-          type: "magiclink",
+          type: "magiclink"
         });
       } else {
         // reg
@@ -111,7 +105,7 @@ export default function LoginPage() {
     console.log("wtf", input);
     login({
       ...input,
-      type: "password",
+      type: "password"
     });
   };
 
@@ -131,25 +125,17 @@ export default function LoginPage() {
     github: enableGithubLogin,
     google: enableGoogleLogin,
     metamask: enableMetamaskLogin,
-    oidc = [],
+    oidc = []
   } = loginConfig;
   const enableMagicLink = enableSMTP && magic_link;
   const googleLogin = enableGoogleLogin && clientId;
   const hasDivider =
-    enableMagicLink ||
-    googleLogin ||
-    enableMetamaskLogin ||
-    oidc.length > 0 ||
-    enableGithubLogin;
+    enableMagicLink || googleLogin || enableMetamaskLogin || oidc.length > 0 || enableGithubLogin;
   return (
     <StyledWrapper>
       <div className="form">
         <div className="tips">
-          <img
-            src={`${BASE_URL}/resource/organization/logo`}
-            alt="logo"
-            className="logo"
-          />
+          <img src={`${BASE_URL}/resource/organization/logo`} alt="logo" className="logo" />
           <h2 className="title">Login to Rustchat</h2>
           <span className="desc">Please enter your details.</span>
         </div>

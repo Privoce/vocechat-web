@@ -70,11 +70,7 @@ export default function Channel({ select = "", updateFilter }) {
         </li>
         {channels.map(({ gid, is_public, name }) => {
           return (
-            <li
-              key={gid}
-              className="channel"
-              onClick={handleClick.bind(null, gid)}
-            >
+            <li key={gid} className="channel" onClick={handleClick.bind(null, gid)}>
               <ChannelIcon personal={!is_public} />
               <span className="name">{name}</span>
               {select == gid && <CheckSign className="check" />}

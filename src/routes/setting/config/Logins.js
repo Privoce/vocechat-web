@@ -15,17 +15,15 @@ export default function Logins() {
     changed: clientIdChanged,
     clientId,
     updateClientId,
-    updateClientIdToServer,
+    updateClientIdToServer
   } = useGoogleAuthConfig();
   const {
     config: githubAuthConfig,
     changed: githubChanged,
     updateGithubAuthConfigToServer,
-    updateGithubAuthConfig,
+    updateGithubAuthConfig
   } = useGithubAuthConfig();
-  const { values, updateConfig, setValues, reset, changed } = useConfig(
-    "login"
-  );
+  const { values, updateConfig, setValues, reset, changed } = useConfig("login");
   const handleUpdate = async () => {
     const { google } = values;
     if (changed) {
@@ -70,8 +68,7 @@ export default function Logins() {
     });
   };
   if (!values) return null;
-  const { google, magic_link, github, metamask, password, oidc = [] } =
-    values ?? {};
+  const { google, magic_link, github, metamask, password, oidc = [] } = values ?? {};
   const valuesChanged = clientIdChanged || changed || githubChanged;
 
   return (
@@ -97,9 +94,7 @@ export default function Logins() {
               <div className="txt">
                 <Label>Magic Link</Label>
               </div>
-              <span className="desc">
-                Allows members login with Magic Link.
-              </span>
+              <span className="desc">Allows members login with Magic Link.</span>
             </div>
             <Toggle
               onClick={handleToggle.bind(null, { magic_link: !magic_link })}
@@ -191,9 +186,7 @@ export default function Logins() {
           </div>
         </div>
       </div>
-      {valuesChanged && (
-        <SaveTip saveHandler={handleUpdate} resetHandler={reset} />
-      )}
+      {valuesChanged && <SaveTip saveHandler={handleUpdate} resetHandler={reset} />}
     </StyledContainer>
   );
 }

@@ -64,11 +64,7 @@ export default function ContactsModal({ closeModal }) {
     <Modal>
       <StyledWrapper ref={wrapperRef}>
         <div className="search">
-          <input
-            value={input}
-            onChange={handleSearch}
-            placeholder="Type Username to search"
-          />
+          <input value={input} onChange={handleSearch} placeholder="Type Username to search" />
         </div>
         {contacts && (
           <ul className="users">

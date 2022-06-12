@@ -28,20 +28,14 @@ const Styled = styled.div`
 `;
 import Modal from "../Modal";
 // type: server,channel
-export default function InviteModal({
-  type = "server",
-  cid = null,
-  title = "",
-  closeModal,
-}) {
+export default function InviteModal({ type = "server", cid = null, title = "", closeModal }) {
   const { channel, server } = useSelector((store) => {
     return {
       channel: store.channels.byId[cid],
-      server: store.server,
+      server: store.server
     };
   });
-  const finalTitle =
-    type == "server" ? server.name : `#${title || channel?.name}`;
+  const finalTitle = type == "server" ? server.name : `#${title || channel?.name}`;
   return (
     <Modal>
       <Styled>
@@ -49,9 +43,7 @@ export default function InviteModal({
           Add friends to {finalTitle}
           <CloseIcon className="close" onClick={closeModal} />
         </h2>
-        {!channel?.is_public && (
-          <AddMembers cid={cid} closeModal={closeModal} />
-        )}
+        {!channel?.is_public && <AddMembers cid={cid} closeModal={closeModal} />}
         <InviteByEmail cid={channel?.is_public ? null : cid} />
       </Styled>
     </Modal>

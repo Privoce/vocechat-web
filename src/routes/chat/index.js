@@ -24,7 +24,7 @@ export default function ChatPage() {
   const [userDropFiles, setUserDropFiles] = useState([]);
   const { sessionUids } = useSelector((store) => {
     return {
-      sessionUids: store.userMessage.ids,
+      sessionUids: store.userMessage.ids
     };
   });
   const [channelModalVisible, setChannelModalVisible] = useState(false);
@@ -41,8 +41,7 @@ export default function ChatPage() {
     const listEle = currentTarget.parentElement.parentElement;
     listEle.classList.toggle("collapse");
   };
-  const tmpUid =
-    sessionUids.findIndex((i) => i == user_id) > -1 ? null : user_id;
+  const tmpUid = sessionUids.findIndex((i) => i == user_id) > -1 ? null : user_id;
   // console.log("temp uid", tmpUid);
   const placeholderVisible = !channel_id && !user_id;
   return (
@@ -50,27 +49,18 @@ export default function ChatPage() {
       {channelModalVisible && (
         <ChannelModal closeModal={toggleChannelModalVisible} personal={true} />
       )}
-      {contactsModalVisible && (
-        <ContactsModal closeModal={toggleContactsModalVisible} />
-      )}
+      {contactsModalVisible && <ContactsModal closeModal={toggleContactsModalVisible} />}
       <StyledWrapper>
         <div className="left">
           <Server />
           <div className="list channels">
             <h3 className="title">
               <span className="txt" onClick={handleToggleExpand}>
-                <AiOutlineCaretDown
-                  className="icon"
-                  size={18}
-                  color="#78787C"
-                />
+                <AiOutlineCaretDown className="icon" size={18} color="#78787C" />
                 CHANNELS
               </span>
               <Tooltip tip="New Channel" placement="bottom">
-                <AddIcon
-                  className="add_icon"
-                  onClick={toggleChannelModalVisible}
-                />
+                <AddIcon className="add_icon" onClick={toggleChannelModalVisible} />
               </Tooltip>
             </h3>
             <nav className="nav">
@@ -80,18 +70,11 @@ export default function ChatPage() {
           <div className="list dms">
             <h3 className="title">
               <span className="txt" onClick={handleToggleExpand}>
-                <AiOutlineCaretDown
-                  className="icon"
-                  size={18}
-                  color="#78787C"
-                />
+                <AiOutlineCaretDown className="icon" size={18} color="#78787C" />
                 DIRECT MESSAGE
               </span>
               <Tooltip tip="New DM" placement="bottom">
-                <AddIcon
-                  className="add_icon"
-                  onClick={toggleContactsModalVisible}
-                />
+                <AddIcon className="add_icon" onClick={toggleContactsModalVisible} />
               </Tooltip>
             </h3>
             <nav className="nav">
@@ -105,9 +88,7 @@ export default function ChatPage() {
         </div>
         <div className={`right ${placeholderVisible ? "placeholder" : ""}`}>
           {placeholderVisible && <BlankPlaceholder />}
-          {channel_id && (
-            <ChannelChat cid={channel_id} dropFiles={channelDropFiles} />
-          )}
+          {channel_id && <ChannelChat cid={channel_id} dropFiles={channelDropFiles} />}
           {user_id && <DMChat uid={user_id} dropFiles={userDropFiles} />}
         </div>
       </StyledWrapper>

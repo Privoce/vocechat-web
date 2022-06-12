@@ -8,7 +8,7 @@ const Avatar = ({ url = "", name = "unkonw name", type = "user", ...rest }) => {
     const tmp = getInitialsAvatar({
       initials: getInitials(name),
       background: type == "channel" ? "#EAECF0" : undefined,
-      foreground: type == "channel" ? "#475467" : undefined,
+      foreground: type == "channel" ? "#475467" : undefined
     });
     setSrc(tmp);
   };
@@ -17,7 +17,7 @@ const Avatar = ({ url = "", name = "unkonw name", type = "user", ...rest }) => {
       const tmp = getInitialsAvatar({
         initials: getInitials(name),
         background: type == "channel" ? "#EAECF0" : undefined,
-        foreground: type == "channel" ? "#475467" : undefined,
+        foreground: type == "channel" ? "#475467" : undefined
       });
       setSrc(tmp);
     } else {

@@ -6,11 +6,11 @@ export default function useDeleteMessage() {
   const { loginUser, messageData } = useSelector((store) => {
     return {
       messageData: store.message,
-      loginUser: store.contacts.byId[store.authData.uid],
+      loginUser: store.contacts.byId[store.authData.uid]
     };
   });
   const [
-    remove,
+    remove
     // { isError, isLoading, isSuccess },
   ] = useLazyDeleteMessageQuery();
   const deleteMessage = async (mids) => {
@@ -40,6 +40,6 @@ export default function useDeleteMessage() {
   return {
     canDelete,
     isDeleting: deleting,
-    deleteMessage,
+    deleteMessage
   };
 }

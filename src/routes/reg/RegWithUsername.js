@@ -8,19 +8,14 @@ import { setAuthData } from "../../app/slices/auth.data";
 
 import Input from "../../common/component/styled/Input";
 import Button from "../../common/component/styled/Button";
-import {
-  useLoginMutation,
-  useCheckInviteTokenValidMutation,
-} from "../../app/services/auth";
+import { useLoginMutation, useCheckInviteTokenValidMutation } from "../../app/services/auth";
 import toast from "react-hot-toast";
 import ExpiredTip from "./ExpiredTip";
 
 export default function RegWithUsername() {
   const { token } = useParams();
-  const [
-    checkTokenInvalid,
-    { data: isTokenValid, isLoading: checkingToken },
-  ] = useCheckInviteTokenValidMutation();
+  const [checkTokenInvalid, { data: isTokenValid, isLoading: checkingToken }] =
+    useCheckInviteTokenValidMutation();
   const [login, { isLoading, error, isSuccess, data }] = useLoginMutation();
   // const navigateTo = useNavigate();
   const dispatch = useDispatch();
@@ -57,7 +52,7 @@ export default function RegWithUsername() {
     login({
       token,
       username,
-      type: "magiclink",
+      type: "magiclink"
     });
     // sendMagicLink(email);
   };
@@ -74,8 +69,8 @@ export default function RegWithUsername() {
       <div className="tips">
         <h2 className="title">What’s your name</h2>
         <span className="desc">
-          Enter a name or handle so people know how you’d like to be called.
-          Your name will only be visible to others in spaces you joined.
+          Enter a name or handle so people know how you’d like to be called. Your name will only be
+          visible to others in spaces you joined.
         </span>
       </div>
       <form onSubmit={handleLogin}>

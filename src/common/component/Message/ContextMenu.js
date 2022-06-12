@@ -20,7 +20,7 @@ export default function MessageContextMenu({
   visible,
   hide,
   editMessage,
-  children,
+  children
 }) {
   const {
     copyContent,
@@ -37,7 +37,7 @@ export default function MessageContextMenu({
     togglePinModal,
     PinModal,
     ForwardModal,
-    DeleteModal,
+    DeleteModal
   } = useMessageOperation({ mid, contextId, context });
   const dispatch = useDispatch();
   const { setReplying } = useSendMessage({ context, to: contextId });
@@ -71,39 +71,39 @@ export default function MessageContextMenu({
               canEdit && {
                 title: "Edit Message",
                 icon: <IconEdit className="icon" />,
-                handler: editMessage,
+                handler: editMessage
               },
               canReply && {
                 title: "Reply",
                 icon: <IconReply className="icon" />,
-                handler: handleReply,
+                handler: handleReply
               },
               canCopy && {
                 title: "Copy",
                 icon: <IconCopy className="icon" />,
-                handler: copyContent,
+                handler: copyContent
               },
               canPin && {
                 title: pinned ? "Unpin" : "Pin",
                 icon: <IconPin className="icon" />,
-                handler: pinned ? unPin.bind(null, mid) : togglePinModal,
+                handler: pinned ? unPin.bind(null, mid) : togglePinModal
               },
               {
                 title: "Forward",
                 icon: <IconForward className="icon" />,
-                handler: toggleForwardModal,
+                handler: toggleForwardModal
               },
               {
                 title: "Select",
                 icon: <IconSelect className="icon" />,
-                handler: handleSelect,
+                handler: handleSelect
               },
               canDelete && {
                 title: "Delete",
                 danger: true,
                 icon: <IconDelete className="icon" />,
-                handler: toggleDeleteModal,
-              },
+                handler: toggleDeleteModal
+              }
             ]}
           />
         }

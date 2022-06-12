@@ -52,16 +52,14 @@ import Input from "../../common/component/styled/Input";
 import Button from "../../common/component/styled/Button";
 import {
   useGetThirdPartySecretQuery,
-  useUpdateThirdPartySecretMutation,
+  useUpdateThirdPartySecretMutation
 } from "../../app/services/server";
 import Tippy from "@tippyjs/react";
 import toast from "react-hot-toast";
 export default function APIConfig() {
   const { data } = useGetThirdPartySecretQuery();
-  const [
-    updateSecret,
-    { data: updatedSecret, isSuccess, isLoading },
-  ] = useUpdateThirdPartySecretMutation();
+  const [updateSecret, { data: updatedSecret, isSuccess, isLoading }] =
+    useUpdateThirdPartySecretMutation();
   console.log("secret", data);
   useEffect(() => {
     if (isSuccess) {
@@ -83,18 +81,13 @@ export default function APIConfig() {
         content={
           <StyledConfirm>
             <div className="tip">
-              Are you sure to update API secret? Previous secret will be
-              invalided
+              Are you sure to update API secret? Previous secret will be invalided
             </div>
             <div className="btns">
               <Button onClick={hideAll} className="cancel small">
                 Cancel
               </Button>
-              <Button
-                disabled={isLoading}
-                className="small danger"
-                onClick={updateSecret}
-              >
+              <Button disabled={isLoading} className="small danger" onClick={updateSecret}>
                 Yes
               </Button>
             </div>
@@ -104,8 +97,8 @@ export default function APIConfig() {
         <Button>Update Secret</Button>
       </Tippy>
       <div className="tip">
-        Tip: The security key agreed between the rustchat server and the
-        third-party app is used to encrypt the communication data.{" "}
+        Tip: The security key agreed between the rustchat server and the third-party app is used to
+        encrypt the communication data.{" "}
       </div>
     </Styled>
   );

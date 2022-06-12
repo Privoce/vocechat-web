@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  fetchEventSource,
-  EventStreamContentType,
-} from "@microsoft/fetch-event-source";
+import { fetchEventSource, EventStreamContentType } from "@microsoft/fetch-event-source";
 import toast from "react-hot-toast";
 import dayjs from "dayjs";
 
@@ -14,18 +11,15 @@ import {
   addChannel,
   removeChannel,
   updateChannel,
-  updatePinMessage,
+  updatePinMessage
 } from "../../../app/slices/channels";
 import {
   updateUsersVersion,
   updateReadChannels,
   updateReadUsers,
-  updateMute,
+  updateMute
 } from "../../../app/slices/footprint";
-import {
-  updateUsersByLogs,
-  updateUsersStatus,
-} from "../../../app/slices/contacts";
+import { updateUsersByLogs, updateUsersStatus } from "../../../app/slices/contacts";
 import { resetAuthData } from "../../../app/slices/auth.data";
 import chatMessageHandler from "./chat.handler";
 import store from "../../../app/store";
@@ -52,7 +46,7 @@ export default function useStreaming() {
   const {
     authData: { uid: loginUid },
     ui: { ready, online },
-    footprint: { afterMid, usersVersion, readUsers, readChannels },
+    footprint: { afterMid, usersVersion, readUsers, readChannels }
   } = useSelector((store) => store);
   const [renewToken] = useRenewMutation();
   const dispatch = useDispatch();
@@ -64,7 +58,7 @@ export default function useStreaming() {
     if (initialized || initializing) return;
     // 如果token快要过期，先renew
     const {
-      authData: { token, expireTime = +new Date(), refreshToken },
+      authData: { token, expireTime = +new Date(), refreshToken }
     } = store.getState();
     let api_token = token;
     const tokenAlmostExpire = dayjs().isAfter(new Date(expireTime - 20 * 1000));
@@ -72,10 +66,10 @@ export default function useStreaming() {
     if (tokenAlmostExpire) {
       const {
         data: { token: newToken },
-        isError,
+        isError
       } = await renewToken({
         token,
-        refreshToken,
+        refreshToken
       });
       if (isError) return;
       api_token = newToken;
@@ -87,25 +81,18 @@ export default function useStreaming() {
       `${BASE_URL}/user/events?${getQueryString({
         "api-key": api_token,
         users_version: usersVersion,
-        after_mid: afterMid,
+        after_mid: afterMid
       })}`,
       {
         openWhenHidden: true,
         signal: controller.signal,
         async onopen(response) {
           initializing = false;
-          if (
-            response.ok &&
-            response.headers.get("content-type") === EventStreamContentType
-          ) {
+          if (response.ok && response.headers.get("content-type") === EventStreamContentType) {
             console.log("sse everything ok");
             initialized = true;
             return; // everything's good
-          } else if (
-            response.status >= 400 &&
-            response.status < 500 &&
-            response.status !== 429
-          ) {
+          } else if (response.status >= 400 && response.status < 500 && response.status !== 429) {
             // 重新登录
             // client-side errors are usually non-retriable:
             console.log("sse debug: open fatal");
@@ -168,9 +155,7 @@ export default function useStreaming() {
                       {
                         const arr = data[key];
                         if (arr && arr.length) {
-                          const _key = key.endsWith("users")
-                            ? "add_users"
-                            : "add_groups";
+                          const _key = key.endsWith("users") ? "add_users" : "add_groups";
                           dispatch(updateMute({ [_key]: arr }));
                         }
                       }
@@ -180,9 +165,7 @@ export default function useStreaming() {
                       {
                         const arr = data[key];
                         if (arr && arr.length) {
-                          const _key = key.endsWith("users")
-                            ? "remove_users"
-                            : "remove_groups";
+                          const _key = key.endsWith("users") ? "remove_users" : "remove_groups";
                           dispatch(updateMute({ [_key]: arr }));
                         }
                       }
@@ -198,8 +181,7 @@ export default function useStreaming() {
             case "users_state_changed":
               {
                 let { type, ...rest } = data;
-                const onlines =
-                  type == "users_state_changed" ? [rest] : rest.users;
+                const onlines = type == "users_state_changed" ? [rest] : rest.users;
                 dispatch(updateUsersStatus(onlines));
               }
               break;
@@ -234,7 +216,7 @@ export default function useStreaming() {
                 dispatch(
                   updateChannel({
                     id: gid,
-                    ...rest,
+                    ...rest
                   })
                 );
               }
@@ -248,7 +230,7 @@ export default function useStreaming() {
                   updateChannel({
                     operation: "add_member",
                     id: gid,
-                    members: uids,
+                    members: uids
                   })
                 );
               }
@@ -263,7 +245,7 @@ export default function useStreaming() {
                     updateChannel({
                       operation: "remove_member",
                       id: gid,
-                      members: uids,
+                      members: uids
                     })
                   );
                 }
@@ -285,7 +267,7 @@ export default function useStreaming() {
                   ready,
                   loginUid,
                   readUsers,
-                  readChannels,
+                  readChannels
                 });
               }
               break;
@@ -321,7 +303,7 @@ export default function useStreaming() {
             // do nothing to automatically retry. You can also
             // return a specific retry interval here.
           }
-        },
+        }
       }
     );
     initializing = false;
@@ -354,6 +336,6 @@ export default function useStreaming() {
   return {
     setStreamingReady,
     startStreaming,
-    stopStreaming,
+    stopStreaming
   };
 }

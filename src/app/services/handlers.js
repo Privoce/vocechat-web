@@ -12,7 +12,7 @@ export const onMessageSendStarted = async (
     type = "text",
     from_uid,
     reply_mid = null,
-    properties = { local_id: +new Date() },
+    properties = { local_id: +new Date() }
   },
   { dispatch, queryFulfilled },
   from = "channel"
@@ -42,11 +42,10 @@ export const onMessageSendStarted = async (
     properties,
     from_uid,
     reply_mid,
-    sending: true,
+    sending: true
   };
   const addContextMessage = from == "channel" ? addChannelMsg : addUserMsg;
-  const removeContextMessage =
-    from == "channel" ? removeChannelMsg : removeUserMsg;
+  const removeContextMessage = from == "channel" ? removeChannelMsg : removeUserMsg;
   if (!ignoreLocal) {
     batch(() => {
       dispatch(addMessage({ mid: ts, ...tmpMsg }));

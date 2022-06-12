@@ -35,7 +35,7 @@ serviceWorkerRegistration.register({
     };
     toast((t) => <NewVersion id={t.id} handleUpdate={handleUpdate} />, {
       duration: Infinity,
-      position: "top-right",
+      position: "top-right"
     });
-  },
+  }
 });

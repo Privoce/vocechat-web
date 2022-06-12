@@ -45,17 +45,8 @@ export default function Loading({ reload = false, fullscreen = false }) {
   };
   return (
     <StyledWrapper className={fullscreen ? "fullscreen" : ""}>
-      <Ring
-        className="loading"
-        size={40}
-        lineWeight={5}
-        speed={2}
-        color="black"
-      />
-      <Button
-        className={`reload danger ${reload ? "visible" : ""}`}
-        onClick={handleReload}
-      >
+      <Ring className="loading" size={40} lineWeight={5} speed={2} color="black" />
+      <Button className={`reload danger ${reload ? "visible" : ""}`} onClick={handleReload}>
         Reload
       </Button>
     </StyledWrapper>

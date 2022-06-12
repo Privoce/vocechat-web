@@ -9,58 +9,43 @@ import {
   useUpdateLoginConfigMutation,
   useUpdateSMTPConfigMutation,
   useUpdateAgoraConfigMutation,
-  useUpdateFirebaseConfigMutation,
+  useUpdateFirebaseConfigMutation
 } from "../../app/services/server";
 export default function useConfig(config = "smtp") {
   const [changed, setChanged] = useState(false);
   const [values, setValues] = useState({});
   const { data: Login, refetch: refetchLogin } = useGetLoginConfigQuery();
-  const [
-    updateLoginConfig,
-    { isSuccess: LoginUpdated },
-  ] = useUpdateLoginConfigMutation();
+  const [updateLoginConfig, { isSuccess: LoginUpdated }] = useUpdateLoginConfigMutation();
   const { data: SMTP, refetch: refetchSMTP } = useGetSMTPConfigQuery();
-  const [
-    updateSMTPConfig,
-    { isSuccess: SMTPUpdated },
-  ] = useUpdateSMTPConfigMutation();
+  const [updateSMTPConfig, { isSuccess: SMTPUpdated }] = useUpdateSMTPConfigMutation();
   const { data: Agora, refetch: refetchAgora } = useGetAgoraConfigQuery();
-  const [
-    updateAgoraConfig,
-    { isSuccess: AgoraUpdated },
-  ] = useUpdateAgoraConfigMutation();
-  const {
-    data: Firebase,
-    refetch: refetchFirebase,
-  } = useGetFirebaseConfigQuery();
-  const [
-    updateFirebaseConfig,
-    { isSuccess: FirebaseUpdated },
-  ] = useUpdateFirebaseConfigMutation();
+  const [updateAgoraConfig, { isSuccess: AgoraUpdated }] = useUpdateAgoraConfigMutation();
+  const { data: Firebase, refetch: refetchFirebase } = useGetFirebaseConfigQuery();
+  const [updateFirebaseConfig, { isSuccess: FirebaseUpdated }] = useUpdateFirebaseConfigMutation();
 
   const datas = {
     login: Login,
     smtp: SMTP,
     agora: Agora,
-    firebase: Firebase,
+    firebase: Firebase
   };
   const updateFns = {
     login: updateLoginConfig,
     smtp: updateSMTPConfig,
     agora: updateAgoraConfig,
-    firebase: updateFirebaseConfig,
+    firebase: updateFirebaseConfig
   };
   const refetchs = {
     smtp: refetchSMTP,
     agora: refetchAgora,
     firebase: refetchFirebase,
-    login: refetchLogin,
+    login: refetchLogin
   };
   const updateds = {
     login: LoginUpdated,
     smtp: SMTPUpdated,
     agora: AgoraUpdated,
-    firebase: FirebaseUpdated,
+    firebase: FirebaseUpdated
   };
   const data = datas[config];
   const updateConfig = updateFns[config];
@@ -102,6 +87,6 @@ export default function useConfig(config = "smtp") {
     updateConfig,
     values,
     setValues,
-    toggleEnable,
+    toggleEnable
   };
 }

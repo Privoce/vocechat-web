@@ -28,11 +28,7 @@ const UserList = styled.ul`
     }
   }
 `;
-export default function TransferOwnerModal({
-  id,
-  closeModal,
-  withLeave = true,
-}) {
+export default function TransferOwnerModal({ id, closeModal, withLeave = true }) {
   const {
     transferOwner,
     otherMembers,
@@ -40,7 +36,7 @@ export default function TransferOwnerModal({
     leaveChannel,
     leaveSuccess,
     transferSuccess,
-    transfering,
+    transfering
   } = useLeaveChannel(id);
 
   const [uid, setUid] = useState(null);
@@ -75,17 +71,10 @@ export default function TransferOwnerModal({
         description={"This cannot be undone."}
         buttons={
           <>
-            <Button
-              onClick={closeModal.bind(null, undefined)}
-              className="cancel"
-            >
+            <Button onClick={closeModal.bind(null, undefined)} className="cancel">
               Cancel
             </Button>
-            <Button
-              disabled={!uid}
-              onClick={handleTransferAndLeave}
-              className="danger"
-            >
+            <Button disabled={!uid} onClick={handleTransferAndLeave} className="danger">
               {operating ? "Assigning" : `Assign and Leave`}
             </Button>
           </>

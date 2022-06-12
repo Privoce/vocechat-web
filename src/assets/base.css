@@ -1,20 +1,20 @@
 ::-webkit-scrollbar-thumb {
-    background: #ddd;
-    border-radius: 4px;
+  background: #ddd;
+  border-radius: 4px;
 }
 ::-webkit-scrollbar {
-    background: transparent;
-    width: 5px;
-    height: 5px;
+  background: transparent;
+  width: 5px;
+  height: 5px;
 }
-:root{
-    /* border radius */
-    --br:8px;
-    --rustchat-navs-bg:#E5E7EB;
-    --rustchat-body-bg:#F5F6F7;
-    --rustchat-chat-bg:#fff;
-    --rustchat-channel-text-color:#1C1C1E;
-    --rustchat-msg-text-color:#374151;
+:root {
+  /* border radius */
+  --br: 8px;
+  --rustchat-navs-bg: #e5e7eb;
+  --rustchat-body-bg: #f5f6f7;
+  --rustchat-chat-bg: #fff;
+  --rustchat-channel-text-color: #1c1c1e;
+  --rustchat-msg-text-color: #374151;
 }
 /* @media (prefers-color-scheme: dark) {
     :root{

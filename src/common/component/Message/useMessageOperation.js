@@ -10,17 +10,15 @@ import usePinMessage from "../../hook/usePinMessage";
 
 export default function useMessageOperation({ mid, context, contextId }) {
   const { copy } = useCopy();
-  const { content_type, properties, currUid, from_uid, content } = useSelector(
-    (store) => {
-      return {
-        content: store.message[mid]?.content,
-        from_uid: store.message[mid]?.from_uid,
-        content_type: store.message[mid]?.content_type,
-        properties: store.message[mid]?.properties,
-        currUid: store.authData.uid,
-      };
-    }
-  );
+  const { content_type, properties, currUid, from_uid, content } = useSelector((store) => {
+    return {
+      content: store.message[mid]?.content,
+      from_uid: store.message[mid]?.from_uid,
+      content_type: store.message[mid]?.content_type,
+      properties: store.message[mid]?.properties,
+      currUid: store.authData.uid
+    };
+  });
   const { canPin, pins, unpinMessage, isUnpinSuccess } = usePinMessage(
     context == "channel" ? contextId : undefined
   );
@@ -71,16 +69,11 @@ export default function useMessageOperation({ mid, context, contextId }) {
     properties?.content_type &&
     properties?.content_type.startsWith("image");
   const enableEdit =
-    currUid == from_uid &&
-    [ContentTypes.text, ContentTypes.markdown].includes(content_type);
+    currUid == from_uid && [ContentTypes.text, ContentTypes.markdown].includes(content_type);
   const canDelete = currUid == from_uid;
-  const canCopy =
-    [ContentTypes.text, ContentTypes.markdown].includes(content_type) ||
-    isImage;
+  const canCopy = [ContentTypes.text, ContentTypes.markdown].includes(content_type) || isImage;
   return {
-    copyContent: isImage
-      ? copyContent.bind(null, true)
-      : copyContent.bind(null, false),
+    copyContent: isImage ? copyContent.bind(null, true) : copyContent.bind(null, false),
     canCopy,
     isImage,
     isMarkdown: content_type == ContentTypes.markdown,
@@ -101,6 +94,6 @@ export default function useMessageOperation({ mid, context, contextId }) {
     ) : null,
     PinModal: pinModalVisible ? (
       <PinMessageModal mid={mid} gid={contextId} closeModal={togglePinModal} />
-    ) : null,
+    ) : null
   };
 }

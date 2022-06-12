@@ -21,7 +21,7 @@ const operations = [
   "message",
   "ui",
   "footprint",
-  "server",
+  "server"
 ];
 
 // Create the middleware instance and methods
@@ -51,7 +51,7 @@ listenerMiddleware.startListening({
           rtkqHandler({
             operation,
             payload,
-            dispatch: listenerApi.dispatch,
+            dispatch: listenerApi.dispatch
           });
         }
         break;
@@ -60,7 +60,7 @@ listenerMiddleware.startListening({
           await channelsHandler({
             operation,
             payload,
-            data: state,
+            data: state
           });
         }
         break;
@@ -69,7 +69,7 @@ listenerMiddleware.startListening({
           await contactsHandler({
             operation,
             payload,
-            data: state,
+            data: state
           });
         }
         break;
@@ -78,7 +78,7 @@ listenerMiddleware.startListening({
           await channelMsgHandler({
             operation,
             payload,
-            data: state,
+            data: state
           });
         }
         break;
@@ -87,7 +87,7 @@ listenerMiddleware.startListening({
           await dmMsgHandler({
             operation,
             payload,
-            data: state,
+            data: state
           });
         }
         break;
@@ -96,7 +96,7 @@ listenerMiddleware.startListening({
           await fileMessageHandler({
             operation,
             // payload,
-            data: state,
+            data: state
           });
         }
         break;
@@ -105,7 +105,7 @@ listenerMiddleware.startListening({
           await messageHandler({
             operation,
             payload,
-            data: state,
+            data: state
           });
         }
         break;
@@ -114,7 +114,7 @@ listenerMiddleware.startListening({
           await reactionHandler({
             operation,
             payload,
-            data: state,
+            data: state
           });
         }
         break;
@@ -123,7 +123,7 @@ listenerMiddleware.startListening({
           await footprintHandler({
             operation,
             payload,
-            data: state,
+            data: state
           });
         }
         break;
@@ -132,7 +132,7 @@ listenerMiddleware.startListening({
           await UIHandler({
             operation,
             payload,
-            data: state,
+            data: state
           });
         }
         break;
@@ -141,7 +141,7 @@ listenerMiddleware.startListening({
           await serverHandler({
             operation,
             payload,
-            data: state,
+            data: state
           });
         }
         break;
@@ -149,7 +149,7 @@ listenerMiddleware.startListening({
       default:
         break;
     }
-  },
+  }
 });
 
 export default listenerMiddleware;

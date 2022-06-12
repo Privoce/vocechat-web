@@ -23,6 +23,6 @@ export default function useFilteredChannels() {
   return {
     input,
     channels: filteredChannels,
-    updateInput,
+    updateInput
   };
 }

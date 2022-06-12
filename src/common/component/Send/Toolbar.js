@@ -47,7 +47,7 @@ export default function Toolbar({
   toggleMode,
   mode,
   to,
-  context,
+  context
 }) {
   const { addStageFile } = useUploadFile({ context, id: to });
   const fileInputRef = useRef(null);

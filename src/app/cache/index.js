@@ -4,44 +4,44 @@ import { KEY_UID, CACHE_VERSION } from "../config";
 const tables = [
   {
     storeName: "channels",
-    description: "store channel list",
+    description: "store channel list"
   },
   {
     storeName: "contacts",
-    description: "store contact list",
+    description: "store contact list"
   },
   {
     storeName: "messageDM",
-    description: "store DM message with IDs",
+    description: "store DM message with IDs"
   },
   {
     storeName: "messageChannel",
-    description: "store channel message with IDs",
+    description: "store channel message with IDs"
   },
   {
     storeName: "message",
-    description: "store message with key-val full data",
+    description: "store message with key-val full data"
   },
   {
     storeName: "messageFile",
-    description: "store file message list refs",
+    description: "store file message list refs"
   },
   {
     storeName: "messageReaction",
-    description: "store message reaction with key-val full data",
+    description: "store message reaction with key-val full data"
   },
   {
     storeName: "footprint",
-    description: "store user visit data",
+    description: "store user visit data"
   },
   {
     storeName: "server",
-    description: "store server data",
+    description: "store server data"
   },
   {
     storeName: "ui",
-    description: "store UI state",
-  },
+    description: "store UI state"
+  }
   // {
   //   storeName: "message",
   //   description: "store message with key-val full data",
@@ -55,7 +55,7 @@ const initCache = () => {
     window.CACHE[storeName] = localforage.createInstance({
       name,
       storeName,
-      description,
+      description
     });
   });
 };

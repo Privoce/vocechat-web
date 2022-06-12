@@ -5,7 +5,7 @@ const initialState = {
   ready: false,
   userGuide: {
     visible: false,
-    step: 1,
+    step: 1
   },
   inputMode: "text",
   menuExpand: false,
@@ -16,8 +16,8 @@ const initialState = {
   draftMixedText: {},
   remeberedNavs: {
     chat: null,
-    contact: null,
-  },
+    contact: null
+  }
 };
 const uiSlice = createSlice({
   name: "ui",
@@ -61,12 +61,7 @@ const uiSlice = createSlice({
     },
 
     updateUploadFiles(state, action) {
-      const {
-        context = "channel",
-        id = null,
-        operation = "add",
-        ...rest
-      } = action.payload;
+      const { context = "channel", id = null, operation = "add", ...rest } = action.payload;
       if (!id || !context) return;
       const _key = `${context}_${id}`;
       let files = state.uploadFiles[_key];
@@ -126,12 +121,7 @@ const uiSlice = createSlice({
       }
     },
     updateSelectMessages(state, action) {
-      const {
-        context = "channel",
-        id = null,
-        operation = "add",
-        data = null,
-      } = action.payload;
+      const { context = "channel", id = null, operation = "add", data = null } = action.payload;
       let currData = state.selectMessages[`${context}_${id}`];
       switch (operation) {
         case "add": {
@@ -151,8 +141,8 @@ const uiSlice = createSlice({
           break;
       }
       state.selectMessages[`${context}_${id}`] = currData;
-    },
-  },
+    }
+  }
 });
 export const {
   fullfillUI,
@@ -166,6 +156,6 @@ export const {
   updateUserGuide,
   updateDraftMarkdown,
   updateDraftMixedText,
-  updateRemeberedNavs,
+  updateRemeberedNavs
 } = uiSlice.actions;
 export default uiSlice.reducer;

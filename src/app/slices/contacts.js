@@ -3,7 +3,7 @@ import { getNonNullValues } from "../../common/utils";
 import BASE_URL from "../config";
 const initialState = {
   ids: [],
-  byId: {},
+  byId: {}
 };
 const contactsSlice = createSlice({
   name: `contacts`,
@@ -39,9 +39,7 @@ const contactsSlice = createSlice({
                 Object.keys(vals).forEach((k) => {
                   state.byId[uid][k] = vals[k];
                   if (k == "avatar_updated_at") {
-                    state.byId[
-                      uid
-                    ].avatar = `${BASE_URL}/resource/avatar?uid=${uid}&t=${vals[k]}`;
+                    state.byId[uid].avatar = `${BASE_URL}/resource/avatar?uid=${uid}&t=${vals[k]}`;
                   }
                 });
               }
@@ -80,13 +78,9 @@ const contactsSlice = createSlice({
           state.byId[uid].online = online;
         }
       });
-    },
-  },
+    }
+  }
 });
-export const {
-  resetContacts,
-  fullfillContacts,
-  updateUsersByLogs,
-  updateUsersStatus,
-} = contactsSlice.actions;
+export const { resetContacts, fullfillContacts, updateUsersByLogs, updateUsersStatus } =
+  contactsSlice.actions;
 export default contactsSlice.reducer;

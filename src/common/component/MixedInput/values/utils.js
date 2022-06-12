@@ -1,13 +1,10 @@
 import {
-  ELEMENT_PARAGRAPH,
+  ELEMENT_PARAGRAPH
   // TElement,
 } from "@udecode/plate";
 //   import { Text } from 'slate'
 
-export const createElement = (
-  text = "",
-  { type = ELEMENT_PARAGRAPH, mark } = {}
-) => {
+export const createElement = (text = "", { type = ELEMENT_PARAGRAPH, mark } = {}) => {
   const leaf = { text };
   if (mark) {
     leaf[mark] = true;
@@ -15,7 +12,7 @@ export const createElement = (
 
   return {
     type,
-    children: [leaf],
+    children: [leaf]
   };
 };
 

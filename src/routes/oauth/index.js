@@ -8,10 +8,7 @@ import toast from "react-hot-toast";
 import { setAuthData } from "../../app/slices/auth.data";
 
 export default function OAuthPage() {
-  const [
-    login,
-    { data, isSuccess, isError, error: loginError },
-  ] = useLoginMutation();
+  const [login, { data, isSuccess, isError, error: loginError }] = useLoginMutation();
   const { token } = useParams();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

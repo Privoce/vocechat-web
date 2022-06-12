@@ -23,6 +23,6 @@ export default function useFilteredUsers() {
   return {
     input,
     contacts: filteredUsers,
-    updateInput,
+    updateInput
   };
 }

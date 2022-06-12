@@ -48,9 +48,7 @@ export default function ServerDropList({ data, memberCount, expand = true }) {
         <img className="logo" src={data.logo} alt="logo" />
         {expand && (
           <div className="info">
-            <h2 className="title animate__animated animate__fadeIn">
-              {data.name}
-            </h2>
+            <h2 className="title animate__animated animate__fadeIn">{data.name}</h2>
             <span className="count">{memberCount} members</span>
           </div>
         )}

@@ -65,39 +65,22 @@ const StyledInput = styled.input`
   }
 `;
 
-export default function Input({
-  type = "text",
-  prefix = "",
-  className,
-  ...rest
-}) {
+export default function Input({ type = "text", prefix = "", className, ...rest }) {
   const [inputType, setInputType] = useState(type);
   const togglePasswordVisible = () => {
     setInputType((prev) => (prev == "password" ? "text" : "password"));
   };
   return type == "password" ? (
     <StyledWrapper className={className}>
-      <StyledInput
-        type={inputType}
-        className={`inner ${className}`}
-        {...rest}
-      />
+      <StyledInput type={inputType} className={`inner ${className}`} {...rest} />
       <div className="view" onClick={togglePasswordVisible}>
-        {inputType == "password" ? (
-          <HiEyeOff color="#78787c" />
-        ) : (
-          <HiEye color="#78787c" />
-        )}
+        {inputType == "password" ? <HiEyeOff color="#78787c" /> : <HiEye color="#78787c" />}
       </div>
     </StyledWrapper>
   ) : prefix ? (
     <StyledWrapper className={className}>
       <span className="prefix">{prefix}</span>
-      <StyledInput
-        className={`inner ${className}`}
-        type={inputType}
-        {...rest}
-      />
+      <StyledInput className={`inner ${className}`} type={inputType} {...rest} />
     </StyledWrapper>
   ) : (
     <StyledInput type={inputType} className={className} {...rest} />

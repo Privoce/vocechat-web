@@ -15,14 +15,9 @@ export default function InvitePage() {
   const [valid, setValid] = useState(false);
   // const [sp] = useSearchParams();
   // const navigateTo = useNavigate();
-  const [
-    register,
-    { data, isLoading, isSuccess, isError, error },
-  ] = useRegisterMutation();
-  const [
-    checkToken,
-    { data: isValid, isLoading: checkLoading, isSuccess: checkSuccess },
-  ] = useCheckInviteTokenValidMutation();
+  const [register, { data, isLoading, isSuccess, isError, error }] = useRegisterMutation();
+  const [checkToken, { data: isValid, isLoading: checkLoading, isSuccess: checkSuccess }] =
+    useCheckInviteTokenValidMutation();
   useEffect(() => {
     // console.log(search);
     const query = new URLSearchParams(location.search);
@@ -45,7 +40,7 @@ export default function InvitePage() {
   const [input, setInput] = useState({
     name: "",
     email: "",
-    password: "",
+    password: ""
   });
 
   const handleReg = (evt) => {
@@ -58,7 +53,7 @@ export default function InvitePage() {
     register({
       ...input,
       magic_token: token,
-      gender: 1,
+      gender: 1
     });
   };
   const handleInput = (evt) => {
@@ -105,7 +100,7 @@ export default function InvitePage() {
         case 409: {
           const tips = {
             email_conflict: "email conflict",
-            name_conflict: "name conflict",
+            name_conflict: "name conflict"
           };
           toast.error(`Register Failed: ${tips[error.data?.reason]}`);
           break;
@@ -126,11 +121,7 @@ export default function InvitePage() {
     <StyledWrapper>
       <div className="form animate__animated animate__fadeInDown animate__faster">
         <div className="tips">
-          <img
-            src={`${BASE_URL}/resource/organization/logo`}
-            alt="logo"
-            className="logo"
-          />
+          <img src={`${BASE_URL}/resource/organization/logo`} alt="logo" className="logo" />
           <h2 className="title">Sign Up to Rustchat</h2>
           <span className="desc">Please enter your details.</span>
         </div>
@@ -170,11 +161,7 @@ export default function InvitePage() {
             onChange={handleSecondPwdInput}
             placeholder="Enter your password again"
           />
-          <button
-            disabled={isLoading || isSuccess}
-            className="btn"
-            type="submit"
-          >
+          <button disabled={isLoading || isSuccess} className="btn" type="submit">
             Sign Up
           </button>
         </form>

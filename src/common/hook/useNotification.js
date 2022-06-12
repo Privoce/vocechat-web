@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";
 const isSafariBrowser = () =>
-  navigator.userAgent.indexOf("Safari") > -1 &&
-  navigator.userAgent.indexOf("Chrome") <= -1;
+  navigator.userAgent.indexOf("Safari") > -1 && navigator.userAgent.indexOf("Chrome") <= -1;
 export default function useNotification() {
   // const navigate = useNavigate();
   // granted default denied  /
@@ -17,18 +16,13 @@ export default function useNotification() {
     };
     document.addEventListener("visibilitychange", visibleChangeHandler);
     if (!isSafariBrowser) {
-      navigator.permissions
-        .query({ name: "notifications" })
-        .then(function (permissionStatus) {
-          console.log(
-            "notifications permission status is ",
-            permissionStatus.state
-          );
-          permissionStatus.onchange = notifyPermissionChangeHandler.bind(
-            null,
-            permissionStatus.state
-          );
-        });
+      navigator.permissions.query({ name: "notifications" }).then(function (permissionStatus) {
+        console.log("notifications permission status is ", permissionStatus.state);
+        permissionStatus.onchange = notifyPermissionChangeHandler.bind(
+          null,
+          permissionStatus.state
+        );
+      });
     }
     return () => {
       document.removeEventListener("visibilitychange", visibleChangeHandler);
@@ -48,7 +42,7 @@ export default function useNotification() {
     const {
       title = "New Message",
       body = "You have one new message",
-      icon = "https://static.nicegoodthings.com/project/ext/webrowse.logo.png",
+      icon = "https://static.nicegoodthings.com/project/ext/webrowse.logo.png"
     } = payload;
     new Notification(title, { body, icon });
     // const n = new Notification(title, { body, icon });

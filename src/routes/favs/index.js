@@ -14,12 +14,12 @@ const Filters = [
   {
     icon: <IconUnkown className="icon" />,
     title: "All Items",
-    filter: "",
+    filter: ""
   },
   {
     icon: <IconImage className="icon" />,
     title: "Images",
-    filter: "image",
+    filter: "image"
   },
   // {
   //   icon: <IconDoc className="icon" />,
@@ -29,13 +29,13 @@ const Filters = [
   {
     icon: <IconVideo className="icon" />,
     title: "Videos",
-    filter: "video",
+    filter: "video"
   },
   {
     icon: <IconAudio className="icon" />,
     title: "Audios",
-    filter: "audio",
-  },
+    filter: "audio"
+  }
 ];
 function FavsPage() {
   const [filter, setFilter] = useState("");
@@ -45,7 +45,7 @@ function FavsPage() {
     return {
       favorites: store.favorites,
       userData: store.contacts.byId,
-      channelData: store.channels.byId,
+      channelData: store.channels.byId
     };
   });
   const handleFilter = (ftr) => {
@@ -64,10 +64,7 @@ function FavsPage() {
                 const msgs = f.messages || [];
                 return msgs.every((m) => {
                   const file_type = m.properties?.content_type;
-                  return (
-                    m.content_type == ContentTypes.file &&
-                    file_type.startsWith("audio")
-                  );
+                  return m.content_type == ContentTypes.file && file_type.startsWith("audio");
                 });
               })
             );
@@ -80,10 +77,7 @@ function FavsPage() {
                 const msgs = f.messages || [];
                 return msgs.every((m) => {
                   const file_type = m.properties?.content_type;
-                  return (
-                    m.content_type == ContentTypes.file &&
-                    file_type.startsWith("video")
-                  );
+                  return m.content_type == ContentTypes.file && file_type.startsWith("video");
                 });
               })
             );
@@ -106,10 +100,7 @@ function FavsPage() {
               const msgs = f.messages || [];
               return msgs.every((m) => {
                 const file_type = m.properties?.content_type;
-                return (
-                  m.content_type == ContentTypes.file &&
-                  file_type.startsWith("image")
-                );
+                return m.content_type == ContentTypes.file && file_type.startsWith("image");
               });
             });
             setFavs(tmps);
@@ -144,8 +135,8 @@ function FavsPage() {
         {favs.map(({ id, created_at, messages }) => {
           const [
             {
-              source: { gid, uid },
-            },
+              source: { gid, uid }
+            }
           ] = messages;
           const tip = gid ? (
             <span className="from channel">

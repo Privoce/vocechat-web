@@ -8,14 +8,7 @@ import SaveTip from "../../../common/component/SaveTip";
 import useConfig from "../../../common/hook/useConfig";
 
 export default function ConfigFirebase() {
-  const {
-    values,
-    toggleEnable,
-    updateConfig,
-    setValues,
-    reset,
-    changed,
-  } = useConfig("firebase");
+  const { values, toggleEnable, updateConfig, setValues, reset, changed } = useConfig("firebase");
   const handleUpdate = () => {
     // const { token_url, description } = values;
     updateConfig(values);
@@ -28,8 +21,7 @@ export default function ConfigFirebase() {
     });
   };
   //   if (!values) return null;
-  const { token_url, project_id, private_key, client_email, enabled = false } =
-    values ?? {};
+  const { token_url, project_id, private_key, client_email, enabled = false } = values ?? {};
   return (
     <StyledContainer>
       <div className="inputs">

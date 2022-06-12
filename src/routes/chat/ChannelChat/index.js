@@ -28,7 +28,7 @@ import {
   // StyledNotification,
   StyledContacts,
   StyledChannelChat,
-  StyledHeader,
+  StyledHeader
 } from "./styled";
 import InviteModal from "../../../common/component/InviteModal";
 import LoadMore from "../LoadMore";
@@ -36,9 +36,14 @@ import LoadMore from "../LoadMore";
 
 export default function ChannelChat({ cid = "", dropFiles = [] }) {
   const { values: agoraConfig } = useConfig("agora");
-  const { list: msgIds, appends, hasMore, pullUp } = useMessageFeed({
+  const {
+    list: msgIds,
+    appends,
+    hasMore,
+    pullUp
+  } = useMessageFeed({
     context: "channel",
-    id: cid,
+    id: cid
   });
   // const scrollObserveRef = useChatScroll([msgIds, appends]);
   const [toolVisible, setToolVisible] = useState("");
@@ -56,7 +61,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
     messageData,
     loginUid,
     loginUser,
-    footprint,
+    footprint
   } = useSelector((store) => {
     return {
       selects: store.ui.selectMessages[`channel_${cid}`],
@@ -66,7 +71,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
       // msgIds: store.channelMessage[cid] || [],
       userIds: store.contacts.ids,
       data: store.channels.byId[cid] || {},
-      messageData: store.message || {},
+      messageData: store.message || {}
     };
   });
   // const ref = useChatScroll(msgIds);
@@ -88,9 +93,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
   };
   if (!data) return null;
   const { name, description, is_public, members = [], owner } = data;
-  const memberIds = is_public
-    ? userIds
-    : members.slice(0).sort((n) => (n == owner ? -1 : 0));
+  const memberIds = is_public ? userIds : members.slice(0).sort((n) => (n == owner ? -1 : 0));
   const addVisible = loginUser?.is_admin || owner == loginUid;
   console.log("channel message list", msgIds);
   const readIndex = footprint.readChannels[cid];
@@ -98,9 +101,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
   const feeds = [...msgIds, ...appends];
   return (
     <>
-      {addMemberModalVisible && (
-        <InviteModal cid={cid} closeModal={toggleAddVisible} />
-      )}
+      {addMemberModalVisible && <InviteModal cid={cid} closeModal={toggleAddVisible} />}
       <Layout
         to={cid}
         context="channel"
@@ -116,11 +117,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
                   </Tooltip>
                 </li>
               )}
-              <Tooltip
-                tip="Pin"
-                placement="left"
-                disabled={toolVisible == "pin"}
-              >
+              <Tooltip tip="Pin" placement="left" disabled={toolVisible == "pin"}>
                 <Tippy
                   onShow={() => {
                     setToolVisible("pin");
@@ -145,11 +142,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
                   </li>
                 </Tippy>
               </Tooltip>
-              <Tooltip
-                tip="Favorite"
-                placement="left"
-                disabled={toolVisible == "favorite"}
-              >
+              <Tooltip tip="Favorite" placement="left" disabled={toolVisible == "favorite"}>
                 <Tippy
                   onShow={() => {
                     setToolVisible("favorite");
@@ -165,9 +158,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
                   content={<FavList cid={cid} />}
                 >
                   <li
-                    className={`tool fav ${
-                      toolVisible == "favorite" ? "active" : ""
-                    } `}
+                    className={`tool fav ${toolVisible == "favorite" ? "active" : ""} `}
                     data-count={pinCount}
                   >
                     <IconFav />
@@ -246,10 +237,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
             <div className="info">
               <h2 className="title">Welcome to #{name} !</h2>
               <p className="desc">This is the start of the #{name} channel. </p>
-              <NavLink
-                to={`/setting/channel/${cid}?f=${pathname}`}
-                className="edit"
-              >
+              <NavLink to={`/setting/channel/${cid}?f=${pathname}`} className="edit">
                 <EditIcon className="icon" />
                 Edit Channel
               </NavLink>
@@ -270,7 +258,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
               prev,
               curr,
               contextId: cid,
-              context: "channel",
+              context: "channel"
             });
           })}
 

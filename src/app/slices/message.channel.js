@@ -15,8 +15,7 @@ const channelMsgSlice = createSlice({
       const { id, mid, local_id = null } = action.payload;
       if (state[id]) {
         const midExsited = state[id].findIndex((id) => id == mid) > -1;
-        const localMsgExsited =
-          state[id].findIndex((id) => id == local_id) > -1;
+        const localMsgExsited = state[id].findIndex((id) => id == local_id) > -1;
         if (midExsited || localMsgExsited) return;
         state[id].push(+mid);
       } else {
@@ -44,14 +43,12 @@ const channelMsgSlice = createSlice({
       }
     },
     removeChannelSession(state, action) {
-      const ids = Array.isArray(action.payload)
-        ? action.payload
-        : [action.payload];
+      const ids = Array.isArray(action.payload) ? action.payload : [action.payload];
       ids.forEach((id) => {
         delete state[id];
       });
-    },
-  },
+    }
+  }
 });
 export const {
   removeChannelSession,
@@ -59,6 +56,6 @@ export const {
   fullfillChannelMsg,
   addChannelMsg,
   removeChannelMsg,
-  replaceChannelMsg,
+  replaceChannelMsg
 } = channelMsgSlice.actions;
 export default channelMsgSlice.reducer;

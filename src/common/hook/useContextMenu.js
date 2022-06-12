@@ -49,6 +49,6 @@ export default function useContextMenu(placement = "right-start") {
     offset,
     visible,
     hideContextMenu,
-    handleContextMenuEvent,
+    handleContextMenuEvent
   };
 }

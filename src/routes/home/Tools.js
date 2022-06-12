@@ -73,29 +73,19 @@ export default function Tools({ expand = true }) {
               alt="logo"
             />
           </div>
-          {expand && (
-            <h2 className="title animate__animated animate__fadeIn">
-              Webrowse
-            </h2>
-          )}
+          {expand && <h2 className="title animate__animated animate__fadeIn">Webrowse</h2>}
         </li>
         <li className="tool">
           <div className="logo">
             <IoLogoGithub size={40} className="icon" />
           </div>
-          {expand && (
-            <h2 className="title animate__animated animate__fadeIn">Github</h2>
-          )}
+          {expand && <h2 className="title animate__animated animate__fadeIn">Github</h2>}
         </li>
         <li className="tool add">
           <div className="logo">
             <RiAddFill className="icon" size={40} color="#4B5563" />
           </div>
-          {expand && (
-            <h2 className="title animate__animated animate__fadeIn">
-              Add new app
-            </h2>
-          )}
+          {expand && <h2 className="title animate__animated animate__fadeIn">Add new app</h2>}
         </li>
       </ul>
     </StyledWrapper>

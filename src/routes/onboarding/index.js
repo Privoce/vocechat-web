@@ -10,26 +10,26 @@ import CompletedStep from "./steps/6-completed";
 import StyledOnboardingPage from "./styled";
 
 export default function OnboardingPage() {
- const [step, setStep] = useState(0);
- const [data, setData] = useState({
-  serverName: ""
- });
- const props = { setStep, data, setData };
+  const [step, setStep] = useState(0);
+  const [data, setData] = useState({
+    serverName: ""
+  });
+  const props = { setStep, data, setData };
 
- return (
-  <>
-   <Helmet>
-    <title>Rustchat Setup</title>
-   </Helmet>
-   <StyledOnboardingPage>
-    {step === 0 && <WelcomeStep {...props} />}
-    {step === 1 && <ServerNameStep {...props} />}
-    {step === 2 && <AdminCredentialsStep {...props} />}
-    {step === 3 && <InviteRuleStep {...props} />}
-    {step === 4 && <InviteLinkStep {...props} />}
-    {step === 5 && <CompletedStep {...props} />}
-    {step === 6 && <Navigate replace to="/" />}
-   </StyledOnboardingPage>
-  </>
- );
+  return (
+    <>
+      <Helmet>
+        <title>Rustchat Setup</title>
+      </Helmet>
+      <StyledOnboardingPage>
+        {step === 0 && <WelcomeStep {...props} />}
+        {step === 1 && <ServerNameStep {...props} />}
+        {step === 2 && <AdminCredentialsStep {...props} />}
+        {step === 3 && <InviteRuleStep {...props} />}
+        {step === 4 && <InviteLinkStep {...props} />}
+        {step === 5 && <CompletedStep {...props} />}
+        {step === 6 && <Navigate replace to="/" />}
+      </StyledOnboardingPage>
+    </>
+  );
 }

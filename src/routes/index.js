@@ -29,7 +29,7 @@ import store from "../app/store";
 const PageRoutes = () => {
   const {
     ui: { online },
-    fileMessages,
+    fileMessages
   } = useSelector((store) => {
     return { ui: store.ui, fileMessages: store.fileMessage };
   });

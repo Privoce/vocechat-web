@@ -8,29 +8,18 @@ import Button from "../styled/Button";
 import StyledWrapper from "./styled";
 import useSendMessage from "../../hook/useSendMessage";
 
-export default function UploadModal({
-  context = "user",
-  sendTo = 0,
-  files = [],
-  closeModal,
-}) {
+export default function UploadModal({ context = "user", sendTo = 0, files = [], closeModal }) {
   const from_uid = useSelector((store) => store.authData.uid);
   const {
     sendMessage,
     isSuccess: sendMessageSuccess,
-    isSending,
+    isSending
   } = useSendMessage({
     context,
     from: from_uid,
-    to: sendTo,
+    to: sendTo
   });
-  const {
-    data,
-    uploadFile,
-    progress,
-    isUploading,
-    isSuccess: uploadSuccess,
-  } = useUploadFile();
+  const { data, uploadFile, progress, isUploading, isSuccess: uploadSuccess } = useUploadFile();
   const handleUpload = () => {
     const file = files[0];
     uploadFile(file);
@@ -42,7 +31,7 @@ export default function UploadModal({
       sendMessage({
         type: "file",
         content: { path },
-        properties: rest,
+        properties: rest
       });
     }
   }, [uploadSuccess, data]);
@@ -65,11 +54,7 @@ export default function UploadModal({
             <Button className="cancel" onClick={closeModal}>
               Cancel
             </Button>
-            <Button
-              className="upload"
-              disabled={sending}
-              onClick={handleUpload}
-            >
+            <Button className="upload" disabled={sending} onClick={handleUpload}>
               {sending ? `Uploading (${progress}%)` : `Upload`}
             </Button>
           </>

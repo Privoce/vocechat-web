@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import {
   useGetChannelQuery,
   useUpdateChannelMutation,
-  useUpdateIconMutation,
+  useUpdateIconMutation
 } from "../../app/services/channel";
 import AvatarUploader from "../../common/component/AvatarUploader";
 import Input from "../../common/component/styled/Input";
@@ -46,7 +46,7 @@ export default function Overview({ id = 0 }) {
   const { loginUser, channel } = useSelector((store) => {
     return {
       loginUser: store.contacts.byId[store.authData.uid],
-      channel: store.channels.byId[id],
+      channel: store.channels.byId[id]
     };
   });
   const { data, refetch } = useGetChannelQuery(id);
@@ -102,12 +102,7 @@ export default function Overview({ id = 0 }) {
   console.log("channel icon", channel);
   return (
     <StyledWrapper>
-      <AvatarUploader
-        type="channel"
-        url={channel?.icon}
-        name={name}
-        uploadImage={updateIcon}
-      />
+      <AvatarUploader type="channel" url={channel?.icon} name={name} uploadImage={updateIcon} />
       <div className="inputs">
         <div className="input">
           <Label htmlFor="name">Channel Name</Label>
@@ -136,9 +131,7 @@ export default function Overview({ id = 0 }) {
           />
         </div>
       </div>
-      {changed && (
-        <SaveTip saveHandler={handleUpdate} resetHandler={handleReset} />
-      )}
+      {changed && <SaveTip saveHandler={handleUpdate} resetHandler={handleReset} />}
       {/* <button onClick={handleUpdate} className="btn">update</button> */}
     </StyledWrapper>
   );

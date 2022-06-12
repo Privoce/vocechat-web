@@ -27,12 +27,12 @@ export default function HomePage() {
     loginUid,
     ui: {
       ready,
-      remeberedNavs: { chat: chatPath, contact: contactPath },
-    },
+      remeberedNavs: { chat: chatPath, contact: contactPath }
+    }
   } = useSelector((store) => {
     return {
       ui: store.ui,
-      loginUid: store.authData.uid,
+      loginUid: store.authData.uid
     };
   });
   const { loading } = usePreload();
@@ -61,10 +61,7 @@ export default function HomePage() {
         <div className={`col left`}>
           <User uid={loginUid} />
           <nav className="link_navs">
-            <NavLink
-              className={`link ${isHomePath ? "active" : ""}`}
-              to={chatNav}
-            >
+            <NavLink className={`link ${isHomePath ? "active" : ""}`} to={chatNav}>
               <Tooltip tip="Chat">
                 <ChatIcon />
               </Tooltip>

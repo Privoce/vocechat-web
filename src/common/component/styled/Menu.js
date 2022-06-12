@@ -5,8 +5,7 @@ const StyledMenu = styled.ul`
   gap: 2px;
   padding: 4px;
   background-color: #fff;
-  box-shadow: 0px 20px 25px 20px rgba(31, 41, 55, 0.1),
-    0px 10px 10px rgba(31, 41, 55, 0.04);
+  box-shadow: 0px 20px 25px 20px rgba(31, 41, 55, 0.1), 0px 10px 10px rgba(31, 41, 55, 0.04);
   border-radius: 12px;
   min-width: 200px;
   .item {

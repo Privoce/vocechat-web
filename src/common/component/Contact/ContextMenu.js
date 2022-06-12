@@ -4,14 +4,7 @@ import Tippy from "@tippyjs/react";
 import useContactOperation from "../../hook/useContactOperation";
 import ContextMenu from "../ContextMenu";
 
-export default function ContactContextMenu({
-  enable = false,
-  uid,
-  cid,
-  visible,
-  hide,
-  children,
-}) {
+export default function ContactContextMenu({ enable = false, uid, cid, visible, hide, children }) {
   const {
     canCall,
     call,
@@ -21,10 +14,10 @@ export default function ContactContextMenu({
     canRemove,
     canRemoveFromChannel,
     removeFromChannel,
-    removeUser,
+    removeUser
   } = useContactOperation({
     uid,
-    cid,
+    cid
   });
   return (
     <>
@@ -43,26 +36,26 @@ export default function ContactContextMenu({
             items={[
               {
                 title: "Message",
-                handler: startChat,
+                handler: startChat
               },
               canCall && {
                 title: "Call",
-                handler: call,
+                handler: call
               },
               canCopyEmail && {
                 title: "Copy Email",
-                handler: copyEmail,
+                handler: copyEmail
               },
               canRemoveFromChannel && {
                 danger: true,
                 title: "Remove From Channel",
-                handler: removeFromChannel,
+                handler: removeFromChannel
               },
               canRemove && {
                 danger: true,
                 title: "Remove From Server",
-                handler: removeUser,
-              },
+                handler: removeUser
+              }
             ]}
           />
         }

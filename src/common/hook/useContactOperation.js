@@ -13,14 +13,8 @@ export default function useContactOperation({ uid, cid }) {
   const [passedUid, setPassedUid] = useState(undefined);
   const { values: agoraConfig } = useConfig("agora");
   const isUserDetailPath = useMatch(`/contacts/${uid}`);
-  const [
-    removeUser,
-    { isSuccess: removeUserSuccess },
-  ] = useLazyDeleteContactQuery();
-  const [
-    removeInChannel,
-    { isSuccess: removeSuccess },
-  ] = useRemoveMembersMutation();
+  const [removeUser, { isSuccess: removeUserSuccess }] = useLazyDeleteContactQuery();
+  const [removeInChannel, { isSuccess: removeSuccess }] = useRemoveMembersMutation();
   const navigateTo = useNavigate();
   const { copy } = useCopy();
   const { user, channel, loginUid, isAdmin } = useSelector((store) => {
@@ -28,7 +22,7 @@ export default function useContactOperation({ uid, cid }) {
       user: store.contacts.byId[uid],
       channel: store.channels.byId[cid],
       loginUid: store.authData.uid,
-      isAdmin: store.contacts.byId[store.authData.uid]?.is_admin,
+      isAdmin: store.contacts.byId[store.authData.uid]?.is_admin
     };
   });
   useEffect(() => {
@@ -81,6 +75,6 @@ export default function useContactOperation({ uid, cid }) {
     canCopyEmail: !!user?.email,
     copyEmail,
     canCall,
-    call,
+    call
   };
 }

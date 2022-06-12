@@ -4,10 +4,8 @@ import { useLazyGetArchiveMessageQuery } from "../../app/services/message";
 export default function useNormalizeMessage() {
   const [filePath, setFilePath] = useState(null);
   const [normalizedMessages, setNormalizedMessages] = useState(null);
-  const [
-    getArchiveMessage,
-    { data, isError, isLoading, isSuccess },
-  ] = useLazyGetArchiveMessageQuery();
+  const [getArchiveMessage, { data, isError, isLoading, isSuccess }] =
+    useLazyGetArchiveMessageQuery();
   useEffect(() => {
     if (data && isSuccess) {
       const msgs = normalizeArchiveData(data, filePath);
@@ -28,6 +26,6 @@ export default function useNormalizeMessage() {
     messages: normalizedMessages,
     isError,
     isLoading,
-    isSuccess,
+    isSuccess
   };
 }

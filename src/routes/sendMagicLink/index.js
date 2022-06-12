@@ -12,10 +12,7 @@ import SentTip from "./SentTip";
 
 export default function SendMagicLinkPage() {
   const [sent, setSent] = useState(false);
-  const [
-    sendMagicLink,
-    { isSuccess, isLoading, error },
-  ] = useSendMagicLinkMutation();
+  const [sendMagicLink, { isSuccess, isLoading, error }] = useSendMagicLinkMutation();
 
   const navigateTo = useNavigate();
   // const dispatch = useDispatch();
@@ -73,11 +70,7 @@ export default function SendMagicLinkPage() {
         ) : (
           <>
             <div className="tips">
-              <img
-                src={`${BASE_URL}/resource/organization/logo`}
-                alt="logo"
-                className="logo"
-              />
+              <img src={`${BASE_URL}/resource/organization/logo`} alt="logo" className="logo" />
               <h2 className="title">Login to Rustchat</h2>
               <span className="desc">Please enter your Email</span>
             </div>

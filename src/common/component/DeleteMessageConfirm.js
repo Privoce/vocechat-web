@@ -25,11 +25,7 @@ export default function DeleteMessageConfirmModal({ closeModal, mids = [] }) {
             <Button className="cancel" onClick={closeModal.bind(null, false)}>
               Cancel
             </Button>
-            <Button
-              disabled={isDeleting}
-              onClick={handleDelete}
-              className="danger"
-            >
+            <Button disabled={isDeleting} onClick={handleDelete} className="danger">
               {isDeleting ? "Deleting" : `Delete`}
             </Button>
           </>

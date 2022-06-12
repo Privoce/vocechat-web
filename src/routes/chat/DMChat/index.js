@@ -20,25 +20,28 @@ import LoadMore from "../LoadMore";
 import { renderMessageFragment } from "../utils";
 import useMessageFeed from "../../../common/hook/useMessageFeed";
 export default function DMChat({ uid = "", dropFiles = [] }) {
-  const { list: msgIds, appends, hasMore, pullUp } = useMessageFeed({
+  const {
+    list: msgIds,
+    appends,
+    hasMore,
+    pullUp
+  } = useMessageFeed({
     context: "user",
-    id: uid,
+    id: uid
   });
   const [updateReadIndex] = useReadMessageMutation();
   const updateReadDebounced = useDebounce(updateReadIndex, 300);
   console.log("dm files", dropFiles);
   // const [mids, setMids] = useState([]);
-  const { currUser, messageData, footprint, loginUid, selects } = useSelector(
-    (store) => {
-      return {
-        selects: store.ui.selectMessages[`user_${uid}`],
-        loginUid: store.authData.uid,
-        footprint: store.footprint,
-        currUser: store.contacts.byId[uid],
-        messageData: store.message,
-      };
-    }
-  );
+  const { currUser, messageData, footprint, loginUid, selects } = useSelector((store) => {
+    return {
+      selects: store.ui.selectMessages[`user_${uid}`],
+      loginUid: store.authData.uid,
+      footprint: store.footprint,
+      currUser: store.contacts.byId[uid],
+      messageData: store.message
+    };
+  });
   // const ref = useChatScroll(msgIds);
 
   if (!currUser) return null;
@@ -111,7 +114,7 @@ export default function DMChat({ uid = "", dropFiles = [] }) {
             prev,
             curr,
             contextId: uid,
-            context: "user",
+            context: "user"
           });
         })}
       </StyledDMChat>

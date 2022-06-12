@@ -5,7 +5,7 @@
     "comments": false,
     "strings": true
   },
-  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "eslint.alwaysShowStatus": true,
   "editor.codeActionsOnSave": {
@@ -13,14 +13,17 @@
   },
   "eslint.validate": ["javascript"],
   "[json]": {
-    "editor.defaultFormatter": "svipas.prettier-plus",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true
   },
   "[jsonc]": {
-    "editor.defaultFormatter": "svipas.prettier-plus"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[javascriptreact]": {
-    "editor.defaultFormatter": "svipas.prettier-plus"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "emmet.triggerExpansionOnTab": true
+  "emmet.triggerExpansionOnTab": true,
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

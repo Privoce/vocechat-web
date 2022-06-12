@@ -21,15 +21,9 @@ const Notification = () => {
       navigateTo(newPath);
     };
     // https only
-    navigator.serviceWorker?.addEventListener(
-      "message",
-      handleServiceworkerMessage
-    );
+    navigator.serviceWorker?.addEventListener("message", handleServiceworkerMessage);
     return () => {
-      navigator.serviceWorker?.removeEventListener(
-        "message",
-        handleServiceworkerMessage
-      );
+      navigator.serviceWorker?.removeEventListener("message", handleServiceworkerMessage);
     };
   }, []);
 

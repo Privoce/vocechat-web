@@ -24,13 +24,9 @@ const favoritesSlice = createSlice({
       if (idx > -1) {
         state[idx].messages = messages;
       }
-    },
-  },
+    }
+  }
 });
-export const {
-  addFavorite,
-  deleteFavorite,
-  fullfillFavorites,
-  populateFavorite,
-} = favoritesSlice.actions;
+export const { addFavorite, deleteFavorite, fullfillFavorites, populateFavorite } =
+  favoritesSlice.actions;
 export default favoritesSlice.reducer;

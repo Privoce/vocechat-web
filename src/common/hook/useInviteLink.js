@@ -2,23 +2,16 @@ import { useState, useEffect } from "react";
 import useCopy from "./useCopy";
 import {
   useLazyCreateInviteLinkQuery as useCreateServerInviteLinkQuery,
-  useGetSMTPStatusQuery,
+  useGetSMTPStatusQuery
 } from "../../app/services/server";
 import { useLazyCreateInviteLinkQuery as useCreateChannelInviteLinkQuery } from "../../app/services/channel";
 export default function useInviteLink(cid = null) {
   const [finalLink, setFinalLink] = useState("");
-  const {
-    data: SMTPEnabled,
-    isSuccess: smtpStatusFetchSuccess,
-  } = useGetSMTPStatusQuery();
-  const [
-    generateChannelInviteLink,
-    { data: channelInviteLink, isLoading: generatingChannelLink },
-  ] = useCreateChannelInviteLinkQuery();
-  const [
-    generateServerInviteLink,
-    { data: serverInviteLink, isLoading: generatingServerLink },
-  ] = useCreateServerInviteLinkQuery();
+  const { data: SMTPEnabled, isSuccess: smtpStatusFetchSuccess } = useGetSMTPStatusQuery();
+  const [generateChannelInviteLink, { data: channelInviteLink, isLoading: generatingChannelLink }] =
+    useCreateChannelInviteLinkQuery();
+  const [generateServerInviteLink, { data: serverInviteLink, isLoading: generatingServerLink }] =
+    useCreateServerInviteLinkQuery();
   const { copied, copy } = useCopy({ enableToast: false });
   const copyLink = () => {
     copy(finalLink);
@@ -46,11 +39,9 @@ export default function useInviteLink(cid = null) {
   return {
     enableSMTP: SMTPEnabled,
     generating: cid ? generatingChannelLink : generatingServerLink,
-    generateNewLink: cid
-      ? generateChannelInviteLink.bind(null, cid)
-      : genServerLink,
+    generateNewLink: cid ? generateChannelInviteLink.bind(null, cid) : genServerLink,
     link: finalLink,
     linkCopied: copied,
-    copyLink,
+    copyLink
   };
 }

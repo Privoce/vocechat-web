@@ -28,7 +28,7 @@ export default function ProfileBasicEditModal({
   value = "",
   title = "Change your username",
   intro = "Enter a new username and your existing password.",
-  closeModal,
+  closeModal
 }) {
   const [input, setInput] = useState(value);
   // const dispatch = useDispatch();
@@ -56,9 +56,7 @@ export default function ProfileBasicEditModal({
             <Button className="cancel" onClick={closeModal}>
               Cancel
             </Button>
-            <Button onClick={handleUpdate}>
-              {isLoading ? "Updating" : `Done`}
-            </Button>
+            <Button onClick={handleUpdate}>{isLoading ? "Updating" : `Done`}</Button>
           </>
         }
       >

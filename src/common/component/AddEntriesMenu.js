@@ -42,9 +42,7 @@ const Styled = styled.ul`
   }
 `;
 export default function AddEntriesMenu() {
-  const currentUser = useSelector(
-    (store) => store.contacts.byId[store.authData.uid]
-  );
+  const currentUser = useSelector((store) => store.contacts.byId[store.authData.uid]);
   const [isPrivate, setIsPrivate] = useState(false);
   const [inviteModalVisible, setInviteModalVisible] = useState(false);
 
@@ -78,10 +76,7 @@ export default function AddEntriesMenu() {
     <>
       <Styled>
         {currentUser?.is_admin && (
-          <li
-            className="item"
-            onClick={handleOpenChannelModal.bind(null, false)}
-          >
+          <li className="item" onClick={handleOpenChannelModal.bind(null, false)}>
             <ChannelIcon className="icon" />
             New Channel
           </li>
@@ -99,15 +94,9 @@ export default function AddEntriesMenu() {
           Invite People
         </li>
       </Styled>
-      {channelModalVisible && (
-        <ChannelModal personal={isPrivate} closeModal={handleCloseModal} />
-      )}
-      {contactsModalVisible && (
-        <ContactsModal closeModal={toggleContactsModalVisible} />
-      )}
-      {inviteModalVisible && (
-        <InviteModal closeModal={toggleInviteModalVisible} />
-      )}
+      {channelModalVisible && <ChannelModal personal={isPrivate} closeModal={handleCloseModal} />}
+      {contactsModalVisible && <ContactsModal closeModal={toggleContactsModalVisible} />}
+      {inviteModalVisible && <InviteModal closeModal={toggleInviteModalVisible} />}
     </>
   );
 }

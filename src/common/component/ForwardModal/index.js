@@ -25,7 +25,7 @@ export default function ForwardModal({ mids, closeModal }) {
   const {
     channels,
     // input: channelInput,
-    updateInput: updateChannelInput,
+    updateInput: updateChannelInput
   } = useFilteredChannels();
   const { contacts, input, updateInput } = useFilteredUsers();
   // const { conactsData, loginUid } = useSelector((store) => {
@@ -34,8 +34,7 @@ export default function ForwardModal({ mids, closeModal }) {
   const toggleCheck = ({ currentTarget }) => {
     const { id, type = "user" } = currentTarget.dataset;
     const ids = type == "user" ? selectedMembers : selectedChannels;
-    const updateState =
-      type == "user" ? setSelectedMembers : setSelectedChannels;
+    const updateState = type == "user" ? setSelectedMembers : setSelectedChannels;
     let tmp = ids.includes(+id) ? ids.filter((m) => m != id) : [...ids, +id];
     console.log(id, currentTarget);
     updateState(tmp);
@@ -47,13 +46,13 @@ export default function ForwardModal({ mids, closeModal }) {
     await forwardMessage({
       mids: mids.map((mid) => +mid),
       users: selectedMembers,
-      channels: selectedChannels,
+      channels: selectedChannels
     });
     if (appendText.trim()) {
       await sendMessages({
         content: appendText,
         users: selectedMembers,
-        channels: selectedChannels,
+        channels: selectedChannels
       });
     }
     toast.success("Forward Message Successfully");
@@ -99,12 +98,7 @@ export default function ForwardModal({ mids, closeModal }) {
                     className="user channel"
                     onClick={toggleCheck}
                   >
-                    <StyledCheckbox
-                      readOnly
-                      checked={checked}
-                      name="cb"
-                      id="cb"
-                    />
+                    <StyledCheckbox readOnly checked={checked} name="cb" id="cb" />
                     <Channel id={gid} interactive={false} />
                   </li>
                 );
@@ -122,12 +116,7 @@ export default function ForwardModal({ mids, closeModal }) {
                     className="user"
                     onClick={toggleCheck}
                   >
-                    <StyledCheckbox
-                      readOnly
-                      checked={checked}
-                      name="cb"
-                      id="cb"
-                    />
+                    <StyledCheckbox readOnly checked={checked} name="cb" id="cb" />
                     <Contact uid={uid} interactive={false} />
                   </li>
                 );
@@ -162,10 +151,7 @@ export default function ForwardModal({ mids, closeModal }) {
                     interactive={false}
                     // avatarSize={40}
                   />
-                  <CloseIcon
-                    className="remove"
-                    onClick={removeSelected.bind(null, uid, "user")}
-                  />
+                  <CloseIcon className="remove" onClick={removeSelected.bind(null, uid, "user")} />
                 </li>
               );
             })}
@@ -185,11 +171,7 @@ export default function ForwardModal({ mids, closeModal }) {
             <Button onClick={closeModal} className="normal cancel">
               Cancel
             </Button>
-            <Button
-              className="normal"
-              disabled={sendButtonDisabled}
-              onClick={handleForward}
-            >
+            <Button className="normal" disabled={sendButtonDisabled} onClick={handleForward}>
               Send To {selectedCount == 0 ? null : `(${selectedCount})`}
             </Button>
           </div>

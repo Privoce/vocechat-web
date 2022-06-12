@@ -10,8 +10,7 @@ const StyledTip = styled.div`
   line-height: 18px;
   color: #1d2939;
   border-radius: var(--br);
-  box-shadow: 0px 12px 16px -4px rgba(16, 24, 40, 0.08),
-    0px 4px 6px -2px rgba(16, 24, 40, 0.03);
+  box-shadow: 0px 12px 16px -4px rgba(16, 24, 40, 0.08), 0px 4px 6px -2px rgba(16, 24, 40, 0.03);
   &::after {
     background-color: inherit;
     position: absolute;

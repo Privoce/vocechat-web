@@ -41,7 +41,7 @@ export default function ReactionPicker({ mid, hidePicker }) {
   const { reactionData, currUid } = useSelector((store) => {
     return {
       reactionData: store.reactionMessage[mid] || {},
-      currUid: store.authData.uid,
+      currUid: store.authData.uid
     };
   });
   // useOutsideClick(wrapperRef, hidePicker);
@@ -55,8 +55,7 @@ export default function ReactionPicker({ mid, hidePicker }) {
       <ul className={`emojis ${isLoading ? "reacting" : ""}`}>
         {Emojis.map((emoji) => {
           let reacted =
-            reactionData[emoji] &&
-            reactionData[emoji].findIndex((id) => id == currUid) > -1;
+            reactionData[emoji] && reactionData[emoji].findIndex((id) => id == currUid) > -1;
 
           return (
             <li

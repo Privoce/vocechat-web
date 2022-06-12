@@ -17,16 +17,13 @@ const checkFilter = (data, filter, channelMessage) => {
     type: typeFilter,
     date: timeFilter,
     from: fromFilter,
-    channel: channelFilter,
+    channel: channelFilter
   } = filter;
   const name = properties ? properties.name : "";
   if (fromFilter && fromFilter != from_uid) {
     selected = false;
   }
-  if (
-    channelFilter &&
-    channelMessage[channelFilter].findIndex((id) => id == mid) == -1
-  ) {
+  if (channelFilter && channelMessage[channelFilter].findIndex((id) => id == mid) == -1) {
     selected = false;
   }
   if (nameFilter) {
@@ -46,7 +43,7 @@ function ResourceManagement({ fileMessages }) {
     return {
       message: store.message,
       channelMessage: store.channelMessage,
-      view: store.ui.fileListView,
+      view: store.ui.fileListView
     };
   });
 
@@ -72,7 +69,7 @@ function ResourceManagement({ fileMessages }) {
         // options
         fitWidth: true,
         gutter,
-        itemSelector: ".file_box",
+        itemSelector: ".file_box"
         // columnWidth: 200
       });
     } else {

@@ -22,8 +22,8 @@ export default function usePreload() {
       isLoading: favoritesLoading,
       isSuccess: favoritesSuccess,
       isError: favoritesError,
-      data: favorites,
-    },
+      data: favorites
+    }
   ] = useLazyGetFavoritesQuery();
   const [
     getContacts,
@@ -31,17 +31,12 @@ export default function usePreload() {
       isLoading: contactsLoading,
       isSuccess: contactsSuccess,
       isError: contactsError,
-      data: contacts,
-    },
+      data: contacts
+    }
   ] = useLazyGetContactsQuery();
   const [
     getServer,
-    {
-      isLoading: serverLoading,
-      isSuccess: serverSuccess,
-      isError: serverError,
-      data: server,
-    },
+    { isLoading: serverLoading, isSuccess: serverSuccess, isError: serverError, data: server }
   ] = useLazyGetServerQuery();
   useEffect(() => {
     initCache();
@@ -64,14 +59,13 @@ export default function usePreload() {
   }, [canStreaming]);
 
   return {
-    loading:
-      contactsLoading || serverLoading || favoritesLoading || !rehydrated,
+    loading: contactsLoading || serverLoading || favoritesLoading || !rehydrated,
     error: contactsError && serverError && favoritesError,
     success: contactsSuccess && serverSuccess && favoritesSuccess,
     data: {
       contacts,
       server,
-      favorites,
-    },
+      favorites
+    }
   };
 }

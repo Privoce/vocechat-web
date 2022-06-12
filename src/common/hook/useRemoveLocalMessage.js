@@ -5,8 +5,7 @@ import { removeChannelMsg } from "../../app/slices/message.channel";
 import { removeUserMsg } from "../../app/slices/message.user";
 export default function useRemoveLocalMessage({ context = "user", id = 0 }) {
   const dispatch = useDispatch();
-  const removeContextMessage =
-    context == "channel" ? removeChannelMsg : removeUserMsg;
+  const removeContextMessage = context == "channel" ? removeChannelMsg : removeUserMsg;
   const removeLocalMessage = (mid) => {
     dispatch(removeContextMessage({ id, mid }));
     dispatch(removeMessage(mid));

@@ -69,11 +69,7 @@ export default function LogoutConfirmModal({ closeModal }) {
           <label htmlFor="clear_cb" className="txt">
             Clear local data
           </label>
-          <Checkbox
-            name="clear_cb"
-            checked={clearLocal}
-            onChange={handleCheck}
-          />
+          <Checkbox name="clear_cb" checked={clearLocal} onChange={handleCheck} />
         </div>
       </StyledConfirm>
     </Modal>

@@ -12,9 +12,7 @@ const reactionMessageSlice = createSlice({
       return action.payload;
     },
     removeReactionMessage(state, action) {
-      const mids = Array.isArray(action.payload)
-        ? action.payload
-        : [action.payload];
+      const mids = Array.isArray(action.payload) ? action.payload : [action.payload];
       mids.forEach((id) => {
         delete state[id];
       });
@@ -48,13 +46,13 @@ const reactionMessageSlice = createSlice({
         state[mid][reaction] = [from_uid];
       }
       state[rid] = true;
-    },
-  },
+    }
+  }
 });
 export const {
   removeReactionMessage,
   resetReactionMessage,
   fullfillReactionMessage,
-  toggleReactionMessage,
+  toggleReactionMessage
 } = reactionMessageSlice.actions;
 export default reactionMessageSlice.reducer;

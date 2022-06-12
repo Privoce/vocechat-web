@@ -7,7 +7,7 @@ export const ContentTypes = {
   file: "rustchat/file",
   formData: "multipart/form-data",
   json: "application/json",
-  archive: "rustchat/archive",
+  archive: "rustchat/archive"
 };
 export const firebaseConfig = {
   apiKey: "AIzaSyDyJ6B1Ouenoha_gdGkBwIkBNStlwhlbO0",
@@ -16,11 +16,11 @@ export const firebaseConfig = {
   storageBucket: "rustchat-develop.appspot.com",
   messagingSenderId: "418687074928",
   appId: "1:418687074928:web:753286adbf239f5af9eab5",
-  measurementId: "G-XV476KEC8P",
+  measurementId: "G-XV476KEC8P"
 };
 export const ChatPrefixs = {
   channel: "#",
-  user: "@",
+  user: "@"
 };
 export const vapidKey = `BGXCn-5YRXSFw38Q9lUKJ5bibL212-yIQn1pCvthGhp6_KwA29FO1Ax_d_7if1vfC2a5wTSVO8AcZrc-Hm1aS0Y`;
 // "840319286941-6ds7lbvk55eq8mjortf68cb2ll65lprt.apps.googleusercontent.com";
@@ -38,6 +38,6 @@ export const KEY_PWA_INSTALLED = "RUSTCHAT_PWA_INSTALLED";
 export const Emojis = ["👍", "❤️", "😄", "👀", "👎", "🎉", "🙁", "🚀"];
 export const Views = {
   item: "item",
-  grid: "grid",
+  grid: "grid"
 };
 export default BASE_URL;

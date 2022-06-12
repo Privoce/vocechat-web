@@ -9,7 +9,7 @@ const useDeviceToken = (vapidKey) => {
     const messaging = getMessaging(initializeApp(firebaseConfig));
 
     getToken(messaging, {
-      vapidKey,
+      vapidKey
     })
       .then((currentToken) => {
         if (currentToken) {
@@ -19,9 +19,7 @@ const useDeviceToken = (vapidKey) => {
           // Perform any other neccessary action with the token
         } else {
           // Show permission request UI
-          console.log(
-            "No registration token available. Request permission to generate one."
-          );
+          console.log("No registration token available. Request permission to generate one.");
         }
       })
       .catch((err) => {

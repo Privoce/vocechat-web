@@ -20,9 +20,7 @@ const fileMessageSlice = createSlice({
       }
     },
     removeFileMessage(state, action) {
-      const mids = Array.isArray(action.payload)
-        ? action.payload
-        : [action.payload];
+      const mids = Array.isArray(action.payload) ? action.payload : [action.payload];
       mids.forEach((id) => {
         // 从file message 列表删掉
         const fidIdx = state.findIndex((fid) => fid == id);
@@ -30,13 +28,9 @@ const fileMessageSlice = createSlice({
           state.splice(fidIdx, 1);
         }
       });
-    },
-  },
+    }
+  }
 });
-export const {
-  removeFileMessage,
-  resetFileMessage,
-  fullfillFileMessage,
-  addFileMessage,
-} = fileMessageSlice.actions;
+export const { removeFileMessage, resetFileMessage, fullfillFileMessage, addFileMessage } =
+  fileMessageSlice.actions;
 export default fileMessageSlice.reducer;

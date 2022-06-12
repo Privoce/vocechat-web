@@ -16,13 +16,11 @@ export default function ContextMenu({ items = [], hideMenu = null }) {
             }
           },
           underline = false,
-          danger = false,
+          danger = false
         } = item;
         return (
           <li
-            className={`item ${underline ? "underline" : ""} ${
-              danger ? "danger" : ""
-            }`}
+            className={`item ${underline ? "underline" : ""} ${danger ? "danger" : ""}`}
             key={title}
             onClick={(evt) => {
               evt.stopPropagation();

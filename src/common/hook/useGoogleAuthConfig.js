@@ -2,18 +2,15 @@ import { useState, useEffect } from "react";
 // import toast from "react-hot-toast";
 import {
   useGetGoogleAuthConfigQuery,
-  useUpdateGoogleAuthConfigMutation,
+  useUpdateGoogleAuthConfigMutation
 } from "../../app/services/server";
 export default function useGoogleAuthConfig() {
   const [changed, setChanged] = useState(false);
   const [clientId, setClientId] = useState("");
   const { data } = useGetGoogleAuthConfigQuery(undefined, {
-    refetchOnMountOrArgChange: true,
+    refetchOnMountOrArgChange: true
   });
-  const [
-    updateGoogleAuthConfig,
-    { isSuccess },
-  ] = useUpdateGoogleAuthConfigMutation();
+  const [updateGoogleAuthConfig, { isSuccess }] = useUpdateGoogleAuthConfigMutation();
   useEffect(() => {
     if (data) {
       setClientId(data.client_id);
@@ -36,6 +33,6 @@ export default function useGoogleAuthConfig() {
     updateClientId: setClientId,
     updateClientIdToServer,
     updateGoogleAuthConfig,
-    isSuccess,
+    isSuccess
   };
 }

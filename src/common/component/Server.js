@@ -57,7 +57,7 @@ export default function Server() {
   const { server, userCount } = useSelector((store) => {
     return {
       userCount: store.contacts.ids.length,
-      server: store.server,
+      server: store.server
     };
   });
   // console.log("server info", server);
@@ -78,12 +78,7 @@ export default function Server() {
         </div>
       </NavLink>
       <Tooltip tip="More" placement="bottom">
-        <Tippy
-          interactive
-          placement="bottom-end"
-          trigger="click"
-          content={<AddEntriesMenu />}
-        >
+        <Tippy interactive placement="bottom-end" trigger="click" content={<AddEntriesMenu />}>
           <img src={addIcon} alt="add icon" className="add" />
         </Tippy>
       </Tooltip>

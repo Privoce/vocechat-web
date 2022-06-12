@@ -21,12 +21,12 @@ export default function Profile({ uid = null, type = "embed", cid = null }) {
     removeFromChannel,
     canRemoveFromChannel,
     canRemove,
-    removeUser,
+    removeUser
   } = useContactOperation({ uid, cid });
 
   const { data } = useSelector((store) => {
     return {
-      data: store.contacts.byId[uid],
+      data: store.contacts.byId[uid]
     };
   });
 
@@ -35,13 +35,12 @@ export default function Profile({ uid = null, type = "embed", cid = null }) {
   const {
     name,
     email,
-    avatar,
+    avatar
     // introduction = "This guy has nothing to introduce",
   } = data;
   const enableCall = type == "card" && canCall;
   const canRemoveFromServer = type == "embed" && canRemove;
-  const hasMore =
-    enableCall || email || canRemoveFromChannel || canRemoveFromServer;
+  const hasMore = enableCall || email || canRemoveFromChannel || canRemoveFromServer;
   return (
     <StyledWrapper className={type}>
       <Avatar className="avatar" url={avatar} name={name} />

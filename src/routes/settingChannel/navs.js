@@ -8,13 +8,13 @@ const useNavs = (channelId) => {
         {
           name: "overview",
           title: "Overview",
-          component: <Overview id={channelId} />,
+          component: <Overview id={channelId} />
         },
         {
           name: "members",
           title: "Members",
-          component: <ManageMembers cid={channelId} />,
-        },
+          component: <ManageMembers cid={channelId} />
+        }
         // {
         //   name: "permissions",
         //   title: "Permissions",
@@ -27,8 +27,8 @@ const useNavs = (channelId) => {
         //   name: "integrations",
         //   title: "Integrations",
         // },
-      ],
-    },
+      ]
+    }
     // {
     //   title: "User Management",
     //   items: [

@@ -20,12 +20,7 @@ import { updateSelectMessages } from "../../app/slices/ui";
 //     }
 //   };
 // }
-export function getUnreadCount({
-  mids = [],
-  messageData = {},
-  loginUid = 0,
-  readIndex = 0,
-}) {
+export function getUnreadCount({ mids = [], messageData = {}, loginUid = 0, readIndex = 0 }) {
   // console.log({ mids, loginUid, readIndex });
   // 先过滤掉空信息和from自己的
   const others = mids.filter((mid) => {
@@ -123,19 +118,10 @@ const StyledWrapper = styled.div`
     }
   }
 `;
-const MessageWrapper = ({
-  selectMode = false,
-  context,
-  id,
-  mid,
-  children,
-  ...rest
-}) => {
+const MessageWrapper = ({ selectMode = false, context, id, mid, children, ...rest }) => {
   const dispatch = useDispatch();
 
-  const selects = useSelector(
-    (store) => store.ui.selectMessages[`${context}_${id}`]
-  );
+  const selects = useSelector((store) => store.ui.selectMessages[`${context}_${id}`]);
   const selected = !!(selects && selects.find((s) => s == mid));
   const toggleSelect = () => {
     const operation = selected ? "remove" : "add";
@@ -146,12 +132,7 @@ const MessageWrapper = ({
       <Checkbox className="check" checked={selected} />
       {/* {React.cloneElement(children, { readOnly: selected })} */}
       {children}
-      {selectMode && (
-        <div
-          className="overlay"
-          onClick={selectMode ? toggleSelect : null}
-        ></div>
-      )}
+      {selectMode && <div className="overlay" onClick={selectMode ? toggleSelect : null}></div>}
     </StyledWrapper>
   );
 };
@@ -163,7 +144,7 @@ export const renderMessageFragment = ({
   prev = null,
   curr = null,
   contextId = 0,
-  context = "user",
+  context = "user"
 }) => {
   if (!curr) return null;
   let { created_at, mid } = curr;

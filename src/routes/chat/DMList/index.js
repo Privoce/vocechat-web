@@ -5,17 +5,15 @@ import { getUnreadCount } from "../utils";
 
 import NavItem from "./NavItem";
 export default function DMList({ uids, setDropFiles }) {
-  const { userMessage, messageData, readUsers, loginUid } = useSelector(
-    (store) => {
-      return {
-        loginUid: store.authData.uid,
-        readUsers: store.footprint.readUsers,
-        contactData: store.contacts.byId,
-        userMessage: store.userMessage.byId,
-        messageData: store.message,
-      };
-    }
-  );
+  const { userMessage, messageData, readUsers, loginUid } = useSelector((store) => {
+    return {
+      loginUid: store.authData.uid,
+      readUsers: store.footprint.readUsers,
+      contactData: store.contacts.byId,
+      userMessage: store.userMessage.byId,
+      messageData: store.message
+    };
+  });
   const sessions = uids.map((uid) => {
     const mids = userMessage[uid] || [];
     if (mids.length == 0) {
@@ -27,7 +25,7 @@ export default function DMList({ uids, setDropFiles }) {
       mids,
       readIndex,
       messageData,
-      loginUid,
+      loginUid
     });
 
     return { lastMid, unreads, uid };
@@ -40,13 +38,7 @@ export default function DMList({ uids, setDropFiles }) {
     })
     .map(({ lastMid, uid, unreads }) => {
       return (
-        <NavItem
-          key={uid}
-          uid={uid}
-          mid={lastMid}
-          unreads={unreads}
-          setFiles={setDropFiles}
-        />
+        <NavItem key={uid} uid={uid} mid={lastMid} unreads={unreads} setFiles={setDropFiles} />
       );
     });
 }

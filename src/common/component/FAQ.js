@@ -13,9 +13,7 @@ export default function FAQ() {
     <Styled>
       <div className="item">Client Version: {process.env.VERSION}</div>
       <div className="item">Server Version: {serverVersion}</div>
-      <div className="item">
-        Build Timestamp: {process.env.REACT_APP_BUILD_TIME}
-      </div>
+      <div className="item">Build Timestamp: {process.env.REACT_APP_BUILD_TIME}</div>
     </Styled>
   );
 }

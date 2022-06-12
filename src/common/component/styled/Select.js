@@ -48,9 +48,7 @@ export default function Select({ options = [], updateSelect = null }) {
           {options.map(({ title, value, selected, underline }) => {
             return (
               <li
-                onClick={
-                  selected ? null : handleSelect.bind(null, { title, value })
-                }
+                onClick={selected ? null : handleSelect.bind(null, { title, value })}
                 className={`item sb ${underline ? "underline" : ""}`}
                 data-disabled={selected}
                 key={value}

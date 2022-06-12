@@ -80,19 +80,16 @@ export default function BlankPlaceholder({ type = "chat" }) {
     setInviteModalVisible((prev) => !prev);
   };
   const chatTip =
-    type == "chat"
-      ? "Create a Channel to Start a Conversation"
-      : "Send a Direct Message";
-  const chatHanlder =
-    type == "chat" ? toggleChannelModalVisible : toggleContactListVisible;
+    type == "chat" ? "Create a Channel to Start a Conversation" : "Send a Direct Message";
+  const chatHanlder = type == "chat" ? toggleChannelModalVisible : toggleContactListVisible;
   return (
     <>
       <Styled>
         <div className="head">
           <h2 className="title">Welcome to {server.name} server</h2>
           <p className="desc">
-            Here are some steps to help you get started. For more, check out our
-            Getting Started guide
+            Here are some steps to help you get started. For more, check out our Getting Started
+            guide
           </p>
         </div>
         <div className="boxes">
@@ -117,12 +114,8 @@ export default function BlankPlaceholder({ type = "chat" }) {
       {createChannelVisible && (
         <ChannelModal personal={true} closeModal={toggleChannelModalVisible} />
       )}
-      {contactListVisible && (
-        <ContactsModal closeModal={toggleContactListVisible} />
-      )}
-      {inviteModalVisible && (
-        <InviteModal closeModal={toggleInviteModalVisible} />
-      )}
+      {contactListVisible && <ContactsModal closeModal={toggleContactListVisible} />}
+      {inviteModalVisible && <InviteModal closeModal={toggleInviteModalVisible} />}
     </>
   );
 }

@@ -17,7 +17,7 @@ export default function Layout({
   contacts = null,
   dropFiles = [],
   context = "channel",
-  to = null,
+  to = null
 }) {
   const { addStageFile } = useUploadFile({ context, id: to });
   const messagesContainer = useRef(undefined);
@@ -26,7 +26,7 @@ export default function Layout({
     return {
       selects: store.ui.selectMessages[`${context}_${to}`],
       channelsData: store.channels.byId,
-      contactsData: store.contacts.byId,
+      contactsData: store.contacts.byId
     };
   });
   const [{ isActive }, drop] = useDrop(
@@ -44,8 +44,8 @@ export default function Layout({
         }
       },
       collect: (monitor) => ({
-        isActive: monitor.canDrop() && monitor.isOver(),
-      }),
+        isActive: monitor.canDrop() && monitor.isOver()
+      })
     }),
     [context, to]
   );
@@ -72,10 +72,7 @@ export default function Layout({
         (evt) => {
           console.log(evt);
           const { target } = evt;
-          if (
-            target.nodeName == "IMG" &&
-            target.classList.contains("preview")
-          ) {
+          if (target.nodeName == "IMG" && target.classList.contains("preview")) {
             const thumbnail = target.src;
             const originUrl = target.dataset.origin || target.src;
             const downloadLink = target.dataset.download || target.src;
@@ -87,13 +84,10 @@ export default function Layout({
       );
     }
   }, []);
-  const name =
-    context == "channel" ? channelsData[to]?.name : contactsData[to]?.name;
+  const name = context == "channel" ? channelsData[to]?.name : contactsData[to]?.name;
   return (
     <>
-      {previewImage && (
-        <ImagePreviewModal data={previewImage} closeModal={closePreviewModal} />
-      )}
+      {previewImage && <ImagePreviewModal data={previewImage} closeModal={closePreviewModal} />}
       <Styled ref={drop}>
         {header}
         <main className="main" ref={messagesContainer}>
@@ -107,21 +101,11 @@ export default function Layout({
           {contacts && <div className="members">{contacts}</div>}
           {aside && <div className="aside">{aside}</div>}
         </main>
-        <div
-          className={`drag_tip ${
-            isActive ? "visible animate__animated animate__fadeIn" : ""
-          }`}
-        >
-          <div
-            className={`box ${
-              isActive ? "animate__animated animate__bounceIn" : ""
-            }`}
-          >
+        <div className={`drag_tip ${isActive ? "visible animate__animated animate__fadeIn" : ""}`}>
+          <div className={`box ${isActive ? "animate__animated animate__bounceIn" : ""}`}>
             <div className="inner">
               <h4 className="head">{`Send to ${ChatPrefixs[context]}${name}`}</h4>
-              <span className="intro">
-                Photos accept jpg, png, max size limit to 10M.
-              </span>
+              <span className="intro">Photos accept jpg, png, max size limit to 10M.</span>
             </div>
           </div>
         </div>

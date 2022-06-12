@@ -9,14 +9,7 @@ export default function PreviewMessage({ mid = 0 }) {
     return { msg: store.message[mid], contactsData: store.contacts.byId };
   });
   if (!msg) return null;
-  const {
-    from_uid,
-    created_at,
-    content_type,
-    content,
-    thumbnail,
-    properties,
-  } = msg;
+  const { from_uid, created_at, content_type, content, thumbnail, properties } = msg;
   const { name, avatar } = contactsData[from_uid];
   return (
     <StyledWrapper className={`preview`}>
@@ -26,9 +19,7 @@ export default function PreviewMessage({ mid = 0 }) {
       <div className="details">
         <div className="up">
           <span className="name">{name}</span>
-          <i className="time">
-            {dayjs(created_at).format("YYYY-MM-DD h:mm:ss A")}
-          </i>
+          <i className="time">{dayjs(created_at).format("YYYY-MM-DD h:mm:ss A")}</i>
         </div>
         <div className={`down`}>
           {renderContent({
@@ -36,7 +27,7 @@ export default function PreviewMessage({ mid = 0 }) {
             content,
             thumbnail,
             from_uid,
-            properties,
+            properties
           })}
         </div>
       </div>

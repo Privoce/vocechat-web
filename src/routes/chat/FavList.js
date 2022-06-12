@@ -97,9 +97,7 @@ export default function FavList({ cid = null, uid = null }) {
       {noFavs ? (
         <div className="none">
           <IconSurprise />
-          <div className="tip">
-            This channel doesn’t have any saved message yet.
-          </div>
+          <div className="tip">This channel doesn’t have any saved message yet.</div>
         </div>
       ) : (
         <ul className="list">

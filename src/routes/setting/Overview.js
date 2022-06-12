@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import {
   useGetServerQuery,
   useUpdateServerMutation,
-  useUpdateLogoMutation,
+  useUpdateLogoMutation
 } from "../../app/services/server";
 import LogoUploader from "../../common/component/AvatarUploader";
 import Input from "../../common/component/styled/Input";
@@ -136,8 +136,8 @@ export default function Overview() {
         {isAdmin && (
           <div className="upload">
             <div className="tip">
-              Minimum size is 128x128, We recommend at least 512x512 for the
-              server. Max size limited to 5M.
+              Minimum size is 128x128, We recommend at least 512x512 for the server. Max size
+              limited to 5M.
             </div>
             {/* <button className="btn">Upload Image</button> */}
           </div>
@@ -170,9 +170,7 @@ export default function Overview() {
           />
         </div>
       </div>
-      {changed && (
-        <SaveTip saveHandler={handleUpdate} resetHandler={handleReset} />
-      )}
+      {changed && <SaveTip saveHandler={handleUpdate} resetHandler={handleReset} />}
       {/* <button onClick={handleUpdate} className="btn">update</button> */}
     </StyledWrapper>
   );

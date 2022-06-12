@@ -18,12 +18,12 @@ import useUploadFile from "../../hook/useUploadFile";
 
 const Modes = {
   text: "text",
-  markdown: "markdown",
+  markdown: "markdown"
 };
 function Send({
   // 发给谁，或者是channel，或者是user
   context = "channel",
-  id = "",
+  id = ""
 }) {
   const { resetStageFiles } = useUploadFile({ context, id });
   const { getDraft, getUpdateDraft } = useDraft({ context, id });
@@ -40,7 +40,7 @@ function Send({
     uploadFiles,
     channelsData,
     contactsData,
-    uids,
+    uids
   } = useSelector((store) => {
     return {
       channelsData: store.channels.byId,
@@ -49,7 +49,7 @@ function Send({
       mode: store.ui.inputMode,
       from_uid: store.authData.uid,
       replying_mid: store.message.replying[`${context}_${id}`],
-      uploadFiles: store.ui.uploadFiles[`${context}_${id}`],
+      uploadFiles: store.ui.uploadFiles[`${context}_${id}`]
     };
   });
   const { sendMessage } = useSendMessage({ context, from: from_uid, to: id });
@@ -83,7 +83,7 @@ function Send({
           type: content_type,
           content,
           from_uid,
-          properties,
+          properties
         });
       }
     }
@@ -101,10 +101,10 @@ function Send({
             content_type: type,
             name,
             size,
-            local_id: ts,
+            local_id: ts
           },
           from_uid,
-          sending: true,
+          sending: true
         };
         addLocalFileMesage(tmpMsg);
       });
@@ -118,7 +118,7 @@ function Send({
       type: "markdown",
       content,
       from_uid,
-      properties: { local_id: +new Date() },
+      properties: { local_id: +new Date() }
     });
   };
   const toggleMode = () => {
@@ -127,24 +127,17 @@ function Send({
   const toggleMarkdownFullscreen = () => {
     setMarkdownFullscreen((prev) => !prev);
   };
-  const name =
-    context == "channel" ? channelsData[id]?.name : contactsData[id]?.name;
+  const name = context == "channel" ? channelsData[id]?.name : contactsData[id]?.name;
   const placeholder = `Send to ${ChatPrefixs[context]}${name} `;
   const members =
-    context == "channel"
-      ? channelsData[id]?.is_public
-        ? uids
-        : channelsData[id]?.members
-      : [];
+    context == "channel" ? (channelsData[id]?.is_public ? uids : channelsData[id]?.members) : [];
   return (
     <StyledSend
       className={`send ${mode} ${markdownFullscreen ? "fullscreen" : ""} ${
         replying_mid ? "reply" : ""
       } ${context}`}
     >
-      {replying_mid && (
-        <Replying context={context} mid={replying_mid} id={id} />
-      )}
+      {replying_mid && <Replying context={context} mid={replying_mid} id={id} />}
       {mode == Modes.text && <UploadFileList context={context} id={id} />}
 
       <div className={`send_box ${mode}`}>

@@ -16,20 +16,20 @@ const navs = [
       {
         name: "overview",
         title: "Overview",
-        component: <Overview />,
+        component: <Overview />
       },
       {
         name: "members",
         title: "Members",
         component: <ManageMembers />,
-        admin: true,
-      },
+        admin: true
+      }
       // {
       //   name: "notification",
       //   title: "Notification",
       //   component: <Notifications />,
       // },
-    ],
+    ]
   },
   {
     title: "User",
@@ -37,9 +37,9 @@ const navs = [
       {
         name: "my_account",
         title: "My Account",
-        component: <MyAccount />,
-      },
-    ],
+        component: <MyAccount />
+      }
+    ]
   },
   {
     title: "Configuration",
@@ -47,30 +47,30 @@ const navs = [
       {
         name: "firebase",
         title: "Firebase",
-        component: <ConfigFirebase />,
+        component: <ConfigFirebase />
       },
       {
         name: "agora",
         title: "Agora",
-        component: <ConfigAgora />,
+        component: <ConfigAgora />
       },
       {
         name: "smtp",
         title: "SMTP",
-        component: <ConfigSMTP />,
+        component: <ConfigSMTP />
       },
       {
         name: "social_login",
         title: "Login Methods",
-        component: <Logins />,
+        component: <Logins />
       },
       {
         name: "api",
         title: "Third-party APP",
-        component: <APIConfig />,
-      },
+        component: <APIConfig />
+      }
     ],
-    admin: true,
+    admin: true
   },
   {
     title: "About",
@@ -78,20 +78,20 @@ const navs = [
       {
         name: "faq",
         title: "FAQ",
-        component: <FAQ />,
+        component: <FAQ />
       },
       {
         name: "terms",
         title: "Terms & Privacy",
-        component: "Terms & Privacy",
+        component: "Terms & Privacy"
       },
       {
         name: "feedback",
         title: "Feedback",
-        component: "feedback",
-      },
-    ],
-  },
+        component: "feedback"
+      }
+    ]
+  }
 ];
 const useNavs = () => {
   const loginUser = useSelector((store) => {

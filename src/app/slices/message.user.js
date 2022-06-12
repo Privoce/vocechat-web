@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   ids: [],
-  byId: {},
+  byId: {}
 };
 const userMsgSlice = createSlice({
   name: "userMessage",
@@ -18,8 +18,7 @@ const userMsgSlice = createSlice({
       const { id, mid, local_id } = action.payload;
       if (state.byId[id]) {
         const midExsited = state.byId[id].findIndex((id) => id == mid) > -1;
-        const localMsgExsited =
-          state.byId[id].findIndex((id) => id == local_id) > -1;
+        const localMsgExsited = state.byId[id].findIndex((id) => id == local_id) > -1;
         if (midExsited || localMsgExsited) return;
 
         state.byId[id].push(+mid);
@@ -53,15 +52,13 @@ const userMsgSlice = createSlice({
       }
     },
     removeUserSession(state, action) {
-      const ids = Array.isArray(action.payload)
-        ? action.payload
-        : [action.payload];
+      const ids = Array.isArray(action.payload) ? action.payload : [action.payload];
       state.ids = state.ids.filter((id) => ids.findIndex((i) => i == id) == -1);
       // ids.forEach((id) => {
       //   delete state.byId[id];
       // });
-    },
-  },
+    }
+  }
 });
 export const {
   removeUserSession,
@@ -69,6 +66,6 @@ export const {
   fullfillUserMsg,
   addUserMsg,
   removeUserMsg,
-  replaceUserMsg,
+  replaceUserMsg
 } = userMsgSlice.actions;
 export default userMsgSlice.reducer;

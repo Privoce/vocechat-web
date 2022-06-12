@@ -7,14 +7,7 @@ import Toggle from "../../../common/component/styled/Toggle";
 import SaveTip from "../../../common/component/SaveTip";
 import useConfig from "../../../common/hook/useConfig";
 export default function ConfigAgora() {
-  const {
-    changed,
-    reset,
-    values,
-    setValues,
-    toggleEnable,
-    updateConfig,
-  } = useConfig("agora");
+  const { changed, reset, values, setValues, toggleEnable, updateConfig } = useConfig("agora");
   const handleUpdate = () => {
     // const { token_url, description } = values;
     updateConfig(values);
@@ -34,7 +27,7 @@ export default function ConfigAgora() {
     app_certificate,
     rtm_key,
     rtm_secret,
-    enabled = false,
+    enabled = false
   } = values ?? {};
   return (
     <StyledContainer>

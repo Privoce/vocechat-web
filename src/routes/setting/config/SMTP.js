@@ -20,14 +20,7 @@ import toast from "react-hot-toast";
 export default function ConfigSMTP() {
   const [testEmail, setTestEmail] = useState("");
   const [sendTestEmail, { isSuccess, isError }] = useSendTestEmailMutation();
-  const {
-    reset,
-    updateConfig,
-    values,
-    setValues,
-    changed,
-    toggleEnable,
-  } = useConfig("smtp");
+  const { reset, updateConfig, values, setValues, changed, toggleEnable } = useConfig("smtp");
 
   const handleUpdate = () => {
     // const { token_url, description } = values;
@@ -49,7 +42,7 @@ export default function ConfigSMTP() {
     sendTestEmail({
       to: testEmail,
       subject: "test title",
-      content: "test content",
+      content: "test content"
     });
   };
   useEffect(() => {
@@ -62,8 +55,7 @@ export default function ConfigSMTP() {
   }, [isSuccess, isError]);
 
   //   if (!values) return null;
-  const { host, port, from, username, password, enabled = false } =
-    values ?? {};
+  const { host, port, from, username, password, enabled = false } = values ?? {};
   console.log("values", values);
   return (
     <StyledContainer>

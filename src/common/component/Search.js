@@ -44,12 +44,7 @@ export default function Search() {
         <input placeholder="Search..." className="input" />
       </div>
       <Tooltip tip="More" placement="bottom">
-        <Tippy
-          interactive
-          placement="bottom-end"
-          trigger="click"
-          content={<AddEntriesMenu />}
-        >
+        <Tippy interactive placement="bottom-end" trigger="click" content={<AddEntriesMenu />}>
           <img src={addIcon} alt="add icon" className="add" />
         </Tippy>
       </Tooltip>

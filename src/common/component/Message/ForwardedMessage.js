@@ -56,7 +56,7 @@ const ForwardedMessage = ({ context, to, from_uid, id }) => {
                 content,
                 content_type,
                 properties,
-                thumbnail,
+                thumbnail
               } = msg;
               return (
                 <StyledMsg className="archive" key={idx}>
@@ -78,7 +78,7 @@ const ForwardedMessage = ({ context, to, from_uid, id }) => {
                         content,
                         content_type,
                         properties,
-                        thumbnail,
+                        thumbnail
                       })}
                     </div>
                   </div>

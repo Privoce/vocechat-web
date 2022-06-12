@@ -57,11 +57,7 @@ const Styled = styled.div`
         width: 100%;
         height: 100%;
         content: "";
-        background: linear-gradient(
-          180deg,
-          rgba(255, 255, 255, 0) 63.54%,
-          #f3f4f6 93.09%
-        );
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0) 63.54%, #f3f4f6 93.09%);
       }
     }
     .icon {
@@ -87,15 +83,11 @@ const renderContent = (data) => {
   let res = null;
   switch (content_type) {
     case ContentTypes.text:
-      res = reactStringReplace(
-        content,
-        /(\s{1}@[0-9]+\s{1})/g,
-        (match, idx) => {
-          console.log("match", match);
-          const uid = match.trim().slice(1);
-          return <Mention popover={false} key={idx} uid={uid} />;
-        }
-      );
+      res = reactStringReplace(content, /(\s{1}@[0-9]+\s{1})/g, (match, idx) => {
+        console.log("match", match);
+        const uid = match.trim().slice(1);
+        return <Mention popover={false} key={idx} uid={uid} />;
+      });
       break;
     case ContentTypes.markdown:
       res = (

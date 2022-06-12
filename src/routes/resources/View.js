@@ -43,18 +43,10 @@ export default function View({ view = Views.item }) {
   };
   return (
     <Styled className={view}>
-      <li
-        className="view item"
-        data-view={Views.item}
-        onClick={handleChangeView}
-      >
+      <li className="view item" data-view={Views.item} onClick={handleChangeView}>
         <IconList />
       </li>
-      <li
-        className="view grid"
-        data-view={Views.grid}
-        onClick={handleChangeView}
-      >
+      <li className="view grid" data-view={Views.grid} onClick={handleChangeView}>
         <IconGrid />
       </li>
     </Styled>

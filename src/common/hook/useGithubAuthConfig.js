@@ -2,13 +2,13 @@ import { useState, useEffect } from "react";
 // import toast from "react-hot-toast";
 import {
   useGetGithubAuthConfigQuery,
-  useUpdateGithubAuthConfigMutation,
+  useUpdateGithubAuthConfigMutation
 } from "../../app/services/server";
 export default function useGithubAuthConfig() {
   const [changed, setChanged] = useState(false);
   const [config, setConfig] = useState({});
   const { data } = useGetGithubAuthConfigQuery(undefined, {
-    refetchOnMountOrArgChange: true,
+    refetchOnMountOrArgChange: true
   });
   const [updateAuthConfig, { isSuccess }] = useUpdateGithubAuthConfigMutation();
   useEffect(() => {
@@ -18,9 +18,7 @@ export default function useGithubAuthConfig() {
   }, [data]);
 
   useEffect(() => {
-    setChanged(
-      isSuccess ? false : JSON.stringify(data) !== JSON.stringify(config)
-    );
+    setChanged(isSuccess ? false : JSON.stringify(data) !== JSON.stringify(config));
   }, [data, config, isSuccess]);
   const updateGithubAuthConfig = (obj) => {
     setConfig((prev) => {
@@ -35,6 +33,6 @@ export default function useGithubAuthConfig() {
     changed,
     updateGithubAuthConfig,
     updateGithubAuthConfigToServer,
-    isSuccess,
+    isSuccess
   };
 }

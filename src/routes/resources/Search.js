@@ -23,11 +23,7 @@ const Styled = styled.div`
     background-position: 8px center;
   }
 `;
-export default function Search({
-  value = "",
-  updateSearchValue = null,
-  embed = false,
-}) {
+export default function Search({ value = "", updateSearchValue = null, embed = false }) {
   const handleChange = (evt) => {
     if (updateSearchValue) {
       updateSearchValue(evt.target.value);
@@ -35,12 +31,7 @@ export default function Search({
   };
   return (
     <Styled className={embed ? "embed" : ""}>
-      <input
-        value={value}
-        onChange={handleChange}
-        className="search"
-        placeholder="Search..."
-      />
+      <input value={value} onChange={handleChange} className="search" placeholder="Search..." />
     </Styled>
   );
 }

@@ -1,16 +1,13 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import {
-  useLazyRemoveFavoriteQuery,
-  useFavoriteMessageMutation,
-} from "../../app/services/message";
+import { useLazyRemoveFavoriteQuery, useFavoriteMessageMutation } from "../../app/services/message";
 export default function useFavMessage({ cid = null, uid = null }) {
   const [removeFav] = useLazyRemoveFavoriteQuery();
   const [addFav] = useFavoriteMessageMutation();
   const [favorites, setFavorites] = useState([]);
   const { favs = [] } = useSelector((store) => {
     return {
-      favs: store.favorites,
+      favs: store.favorites
     };
   });
   const addFavorite = async (mid = []) => {
@@ -56,6 +53,6 @@ export default function useFavMessage({ cid = null, uid = null }) {
     isFavorited,
     addFavorite,
     removeFavorite,
-    favorites,
+    favorites
   };
 }

@@ -12,7 +12,7 @@ export default function ChannelSetting() {
     return {
       loginUid: store.authData.uid,
       isAdmin: store.contacts.byId[store.authData.uid]?.is_admin,
-      channel: store.channels.byId[cid],
+      channel: store.channels.byId[cid]
     };
   });
   const navigate = useNavigate();
@@ -52,22 +52,18 @@ export default function ChannelSetting() {
         dangers={[
           canLeave && {
             title: "Leave Channel",
-            handler: toggleLeaveConfrim,
+            handler: toggleLeaveConfrim
           },
           canDelete && {
             title: "Delete Channel",
-            handler: toggleDeleteConfrim,
-          },
+            handler: toggleDeleteConfrim
+          }
         ]}
       >
         {currNav.component}
       </StyledSettingContainer>
-      {deleteConfirm && (
-        <DeleteConfirmModal closeModal={toggleDeleteConfrim} id={cid} />
-      )}
-      {leaveConfirm && (
-        <LeaveChannel closeModal={toggleLeaveConfrim} id={cid} />
-      )}
+      {deleteConfirm && <DeleteConfirmModal closeModal={toggleDeleteConfrim} id={cid} />}
+      {leaveConfirm && <LeaveChannel closeModal={toggleLeaveConfrim} id={cid} />}
     </>
   );
 }

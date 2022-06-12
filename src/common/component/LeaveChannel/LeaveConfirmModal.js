@@ -30,10 +30,7 @@ export default function LeaveConfirmModal({ id, closeModal, handleNextStep }) {
         }
         buttons={
           <>
-            <Button
-              onClick={closeModal.bind(null, undefined)}
-              className="cancel"
-            >
+            <Button onClick={closeModal.bind(null, undefined)} className="cancel">
               Cancel
             </Button>
             {isOwner ? (

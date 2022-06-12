@@ -2,12 +2,12 @@ import {
   createBasicElementsPlugin,
   createImagePlugin,
   createParagraphPlugin,
-  createSelectOnBackspacePlugin,
+  createSelectOnBackspacePlugin
 } from "@udecode/plate";
 import { CONFIG } from "./config";
 
 const basicElements = [
-  createParagraphPlugin(), // paragraph element
+  createParagraphPlugin() // paragraph element
 ];
 
 export const PLUGINS = {
@@ -16,6 +16,6 @@ export const PLUGINS = {
   image: [
     createBasicElementsPlugin(),
     createImagePlugin(),
-    createSelectOnBackspacePlugin(CONFIG.selectOnBackspace),
-  ],
+    createSelectOnBackspacePlugin(CONFIG.selectOnBackspace)
+  ]
 };
