@@ -20,10 +20,10 @@ export default function SolidLoginButton({ issuer }) {
       location.href = url;
     }
   }, [data, isSuccess]);
-
+  console.log(issuer);
   return (
     <StyledSocialButton disabled={isLoading} onClick={handleSolidLogin}>
-      <img src={issuer.favicon} className="icon" alt="icon" />
+      {Boolean(issuer.favicon) && <img src={issuer.favicon} className="icon" alt="icon" />}
       Login with {issuer.domain}
     </StyledSocialButton>
   );
