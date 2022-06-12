@@ -12,23 +12,50 @@ import {
 import { useLoginMutation } from "../../../app/services/auth";
 import { updateInitialized } from "../../../app/slices/auth.data";
 
-const StyledAdminCredentialsStep = styled.div`
+const StyledWrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  > .input:not(:nth-last-child(2)) {
-    margin-bottom: 20px;
+  > .primaryText {
+    text-align: center;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 30px;
+    margin-bottom: 8px;
+  }
+
+  > .secondaryText {
+    text-align: center;
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 24px;
+  }
+
+  > .input {
+    width: 360px;
+    height: 44px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    border: 1px solid #d0d5dd;
+    border-radius: 8px;
+    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
+
+    &:not(:nth-last-child(2)) {
+      margin-bottom: 20px;
+    }
   }
 
   > .button {
+    width: 360px;
     margin-top: 24px;
   }
 `;
 
-export default function AdminCredentialsStep({ data, setStep }) {
+export default function AdminAccount({ serverName, nextStep }) {
   const dispatch = useDispatch();
 
   const [createAdmin, { isLoading: isSigningUp, error: signUpError }] = useCreateAdminMutation();
@@ -60,7 +87,7 @@ export default function AdminCredentialsStep({ data, setStep }) {
         // Set server name
         updateServer({
           ...serverData,
-          name: data.serverName
+          name: serverName
         });
       }, 0);
     }
@@ -69,12 +96,12 @@ export default function AdminCredentialsStep({ data, setStep }) {
   // After updated server
   useEffect(() => {
     if (isUpdatedServer) {
-      setStep((prev) => prev + 1);
+      nextStep();
     }
   }, [isUpdatedServer]);
 
   return (
-    <StyledAdminCredentialsStep>
+    <StyledWrapper>
       <span className="primaryText">Now let’s set up your admin account</span>
       <span className="secondaryText">You are the 1st user and admin of your space!</span>
       <StyledInput
@@ -126,6 +153,6 @@ export default function AdminCredentialsStep({ data, setStep }) {
       >
         {!(isSigningUp || isLoggingIn || isUpdatingServer) ? "Sign Up" : "..."}
       </StyledButton>
-    </StyledAdminCredentialsStep>
+    </StyledWrapper>
   );
 }
