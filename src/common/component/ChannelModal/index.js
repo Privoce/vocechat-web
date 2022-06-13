@@ -7,7 +7,7 @@ import Button from "../styled/Button";
 import ChannelIcon from "../ChannelIcon";
 import Contact from "../Contact";
 import StyledWrapper from "./styled";
-import StyledToggle from "../../component/styled/Toggle";
+// import StyledToggle from "../../component/styled/Toggle";
 import StyledCheckbox from "../../component/styled/Checkbox";
 import useFilteredUsers from "../../hook/useFilteredUsers";
 
@@ -28,12 +28,12 @@ export default function ChannelModal({ personal = false, closeModal }) {
   const [createChannel, { isSuccess, isError, isLoading, data: newChannelId }] =
     useCreateChannelMutation();
 
-  const handleToggle = () => {
-    const { is_public } = data;
-    setData((prev) => {
-      return { ...prev, is_public: !is_public };
-    });
-  };
+  // const handleToggle = () => {
+  //   const { is_public } = data;
+  //   setData((prev) => {
+  //     return { ...prev, is_public: !is_public };
+  //   });
+  // };
   const handleCreate = () => {
     if (!data.name) {
       toast("please input channel name");
@@ -125,7 +125,7 @@ export default function ChannelModal({ personal = false, closeModal }) {
           <h3 className="title">Create New Channel</h3>
           <p className="desc normal">
             {!is_public
-              ? "This is a private channel, only select members will bee able to join."
+              ? "This is a private channel, only select members will be able to join."
               : "This is a public channel, everyone in this team can see it."}
           </p>
           <div className="name">
@@ -135,14 +135,14 @@ export default function ChannelModal({ personal = false, closeModal }) {
               <ChannelIcon personal={!is_public} className="icon" />
             </div>
           </div>
-          <div className="private">
+          {/* <div className="private">
             <span className="txt normal">Private Channel</span>
             <StyledToggle
               data-checked={!is_public}
               data-disabled={!loginUser?.is_admin}
               onClick={handleToggle}
             />
-          </div>
+          </div> */}
           <div className="btns">
             <Button onClick={closeModal} className="normal cancel">
               Cancel

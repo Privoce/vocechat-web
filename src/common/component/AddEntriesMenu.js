@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { hideAll } from "tippy.js";
 import IconInvite from "../../assets/icons/add.person.svg";
@@ -42,7 +42,7 @@ const Styled = styled.ul`
   }
 `;
 export default function AddEntriesMenu() {
-  const currentUser = useSelector((store) => store.contacts.byId[store.authData.uid]);
+  // const currentUser = useSelector((store) => store.contacts.byId[store.authData.uid]);
   const [isPrivate, setIsPrivate] = useState(false);
   const [inviteModalVisible, setInviteModalVisible] = useState(false);
 
@@ -75,12 +75,13 @@ export default function AddEntriesMenu() {
   return (
     <>
       <Styled>
-        {currentUser?.is_admin && (
+        {/* temp remove public channel */}
+        {/* {currentUser?.is_admin && (
           <li className="item" onClick={handleOpenChannelModal.bind(null, false)}>
             <ChannelIcon className="icon" />
             New Channel
           </li>
-        )}
+        )} */}
         <li className="item" onClick={handleOpenChannelModal.bind(null, true)}>
           <ChannelIcon personal={true} className="icon" />
           New Private Channel

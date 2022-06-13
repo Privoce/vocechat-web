@@ -57,6 +57,7 @@ const StyledWrapper = styled.div`
     box-sizing: border-box;
     &.private {
       width: 344px;
+      justify-content: space-evenly;
       .desc {
         text-align: center;
       }

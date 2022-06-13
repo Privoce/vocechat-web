@@ -26,6 +26,8 @@ const StyledToggle = styled.div`
     }
   }
   &[data-disabled="true"] {
+    cursor: not-allowed;
+    background-color: #ccc;
     pointer-events: none;
   }
 `;
