@@ -40,9 +40,17 @@ const StyledWrapper = styled.div`
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
+    padding: 10px 14px;
     border: 1px solid #d0d5dd;
     border-radius: 8px;
     box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
+
+    > .inner {
+      padding: 0;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+    }
 
     &:not(:nth-last-child(2)) {
       margin-bottom: 20px;
