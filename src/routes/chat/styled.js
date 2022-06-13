@@ -107,8 +107,6 @@ const StyledWrapper = styled.div`
                 text-overflow: ellipsis;
               }
               > .badge {
-                /* letter-spacing: -1px; */
-                /* padding: 2px; */
                 color: #fff;
                 height: 20px;
                 min-width: 20px;
