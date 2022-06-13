@@ -495,7 +495,7 @@
   &:disabled {
     opacity: 0.4;
   }
-`;function r(e){return(0,a.jsx)(l,{readOnly:!0,...e,type:"checkbox"})}},8648:(e,t,n)=>{n.d(t,{Z:()=>c});var i=n(7313),a=n(4901),l=n(9184),r=n(6417);const s=l.ZP.div`
+`;function r(e){return(0,a.jsx)(l,{readOnly:!0,...e,type:"checkbox"})}},8648:(e,t,n)=>{n.d(t,{Z:()=>c});var i=n(7313),a=n(887),l=n(9184),r=n(6417);const s=l.ZP.div`
   width: 100%;
   position: relative;
   display: flex;

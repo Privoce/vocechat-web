@@ -1,4 +1,4 @@
-"use strict";(globalThis.webpackChunkrustchat_web=globalThis.webpackChunkrustchat_web||[]).push([[809],{8648:(e,t,n)=>{n.d(t,{Z:()=>l});var o=n(7313),i=n(4901),s=n(9184),r=n(6417);const a=s.ZP.div`
+"use strict";(globalThis.webpackChunkrustchat_web=globalThis.webpackChunkrustchat_web||[]).push([[809],{8648:(e,t,n)=>{n.d(t,{Z:()=>l});var o=n(7313),i=n(887),s=n(9184),r=n(6417);const a=s.ZP.div`
   width: 100%;
   position: relative;
   display: flex;
