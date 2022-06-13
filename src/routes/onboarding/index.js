@@ -1,3 +1,4 @@
+import React from "react";
 import { Helmet } from "react-helmet";
 import WelcomePage from "./steps/welcomePage";
 import ServerName from "./steps/serverName";
@@ -21,7 +22,7 @@ function Navigator({ step, setStep }) {
         } ${clickable ? "clickable" : ""}`;
         const arrowCls = `arrow ${indexToRender >= index ? "disabled" : ""}`;
         return (
-          <>
+          <React.Fragment key={indexToRender}>
             <span
               className={nodeCls}
               onClick={() => {
@@ -33,7 +34,7 @@ function Navigator({ step, setStep }) {
               {stepToRender.label}
             </span>
             {indexToRender !== steps.length - 1 && <span className={arrowCls}>→</span>}
-          </>
+          </React.Fragment>
         );
       })}
     </div>
