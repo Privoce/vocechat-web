@@ -1,5 +1,7 @@
 import React from "react";
 import { Helmet } from "react-helmet";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
 import WelcomePage from "./steps/welcomePage";
 import ServerName from "./steps/serverName";
 import AdminAccount from "./steps/adminAccount";
@@ -51,12 +53,30 @@ export default function OnboardingPage() {
       </Helmet>
       <StyledOnboardingPage>
         <Navigator {...serverSetup} />
-        {serverSetup.step === "welcomePage" && <WelcomePage {...serverSetup} />}
-        {serverSetup.step === "serverName" && <ServerName {...serverSetup} />}
-        {serverSetup.step === "adminAccount" && <AdminAccount {...serverSetup} />}
-        {serverSetup.step === "whoCanSignUp" && <WhoCanSignUp {...serverSetup} />}
-        {serverSetup.step === "inviteLink" && <InviteLink {...serverSetup} />}
-        {serverSetup.step === "donePage" && <DonePage {...serverSetup} />}
+        <Swiper
+          spaceBetween={50}
+          allowTouchMove={false}
+          onSwiper={(swiper) => serverSetup.setSwiper(swiper)}
+        >
+          <SwiperSlide>
+            <WelcomePage {...serverSetup} />
+          </SwiperSlide>
+          <SwiperSlide>
+            <ServerName {...serverSetup} />
+          </SwiperSlide>
+          <SwiperSlide>
+            <AdminAccount {...serverSetup} />
+          </SwiperSlide>
+          <SwiperSlide>
+            <WhoCanSignUp {...serverSetup} />
+          </SwiperSlide>
+          <SwiperSlide>
+            <InviteLink {...serverSetup} />
+          </SwiperSlide>
+          <SwiperSlide>
+            <DonePage {...serverSetup} />
+          </SwiperSlide>
+        </Swiper>
       </StyledOnboardingPage>
     </>
   );

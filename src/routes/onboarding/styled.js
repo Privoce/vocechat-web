@@ -11,6 +11,7 @@ const StyledOnboardingPage = styled.div`
     display: flex;
     justify-content: center;
     gap: 8px;
+    z-index: 10;
 
     > .node,
     > .arrow {
@@ -19,6 +20,7 @@ const StyledOnboardingPage = styled.div`
       line-height: 28px;
       color: #101828;
       cursor: default;
+      transition: all 150ms ease-in-out;
 
       &.disabled {
         color: #d0d5dd;
@@ -36,6 +38,10 @@ const StyledOnboardingPage = styled.div`
         }
       }
     }
+  }
+
+  > .swiper {
+    height: 100%;
   }
 `;
 
