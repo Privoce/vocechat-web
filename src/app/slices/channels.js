@@ -18,8 +18,11 @@ const channelsSlice = createSlice({
       state.ids = chs.map(({ gid }) => +gid);
       state.byId = Object.fromEntries(
         chs.map((c) => {
-          const { gid } = c;
-          c.icon = `${BASE_URL}/resource/group_avatar?gid=${gid}`;
+          const { gid, avatar_updated_at } = c;
+          c.icon =
+            avatar_updated_at == 0
+              ? ""
+              : `${BASE_URL}/resource/group_avatar?gid=${gid}&t=${avatar_updated_at}`;
           return [gid, c];
         })
       );

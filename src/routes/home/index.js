@@ -61,7 +61,12 @@ export default function HomePage() {
         <div className={`col left`}>
           <User uid={loginUid} />
           <nav className="link_navs">
-            <NavLink className={`link ${isHomePath ? "active" : ""}`} to={chatNav}>
+            <NavLink
+              className={({ isActive }) => {
+                return `link ${isHomePath || isActive ? "active" : ""}`;
+              }}
+              to={chatNav}
+            >
               <Tooltip tip="Chat">
                 <ChatIcon />
               </Tooltip>
