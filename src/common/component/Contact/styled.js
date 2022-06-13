@@ -8,9 +8,7 @@ const StyledWrapper = styled.div`
   padding: 8px;
   border-radius: 8px;
   user-select: none;
-  &.compact {
-    padding: 0;
-  }
+
   &.interactive {
     &:hover,
     &.active {
@@ -31,9 +29,9 @@ const StyledWrapper = styled.div`
     .status {
       position: absolute;
       bottom: -2px;
-      right: -4px;
-      width: 10px;
-      height: 10px;
+      right: -6px;
+      width: 12px;
+      height: 12px;
       box-sizing: content-box;
       border-radius: 50%;
       border: 2px solid #fff;
@@ -54,6 +52,14 @@ const StyledWrapper = styled.div`
     font-size: 14px;
     line-height: 20px;
     color: #52525b;
+  }
+  /* session nav */
+  &.compact {
+    padding: 0;
+    .avatar .status {
+      width: 15px;
+      height: 15px;
+    }
   }
 `;
 export default StyledWrapper;

@@ -10,7 +10,7 @@ import AddEntriesMenu from "./AddEntriesMenu";
 const StyledWrapper = styled.div`
   min-height: 56px;
   position: relative;
-  padding: 6px 12px;
+  padding: 10px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
