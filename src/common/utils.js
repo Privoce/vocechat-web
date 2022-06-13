@@ -9,9 +9,22 @@ import IconImage from "../assets/icons/file.image.svg";
 export const isImage = (file_type = "", size = 0) => {
   return file_type.startsWith("image") && size <= FILE_IMAGE_SIZE;
 };
+const deepSortObject = (obj) => {
+  return Object.fromEntries(
+    Object.entries(obj)
+      .map((entry) => [
+        entry[0],
+        typeof entry[1] === "object" ? deepSortObject(entry[1]) : entry[1]
+      ])
+      .sort()
+  );
+};
 export const isObjectEqual = (obj1, obj2) => {
-  let o1 = JSON.stringify(obj1 ?? {});
-  let o2 = JSON.stringify(obj2 ?? {});
+  // Check for reference equal
+  if (obj1 === obj2) return true;
+  // Check for deep equal
+  let o1 = JSON.stringify(deepSortObject(obj1 ?? {}));
+  let o2 = JSON.stringify(deepSortObject(obj2 ?? {}));
   return o1 === o2;
 };
 export const isTreatAsImage = (file) => {
