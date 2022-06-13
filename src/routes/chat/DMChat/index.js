@@ -8,9 +8,6 @@ import Tooltip from "../../../common/component/Tooltip";
 import FavIcon from "../../../assets/icons/bookmark.svg";
 // import searchIcon from "../../../assets/icons/search.svg?url";
 import IconHeadphone from "../../../assets/icons/headphone.svg";
-
-import boardosIcon from "../../../assets/icons/app.boardos.svg?url";
-import webrowseIcon from "../../../assets/icons/app.webrowse.svg?url";
 // import useChatScroll from "../../../common/hook/useChatScroll";
 import { useReadMessageMutation } from "../../../app/services/message";
 import Contact from "../../../common/component/Contact";
@@ -32,7 +29,6 @@ export default function DMChat({ uid = "", dropFiles = [] }) {
   const [updateReadIndex] = useReadMessageMutation();
   const updateReadDebounced = useDebounce(updateReadIndex, 300);
   console.log("dm files", dropFiles);
-  // const [mids, setMids] = useState([]);
   const { currUser, messageData, footprint, loginUid, selects } = useSelector((store) => {
     return {
       selects: store.ui.selectMessages[`user_${uid}`],
@@ -45,7 +41,6 @@ export default function DMChat({ uid = "", dropFiles = [] }) {
   // const ref = useChatScroll(msgIds);
 
   if (!currUser) return null;
-  // console.log("user msgs", msgs);
   const readIndex = footprint.readUsers[uid];
   const feeds = [...msgIds, ...appends];
   return (
@@ -80,19 +75,8 @@ export default function DMChat({ uid = "", dropFiles = [] }) {
               <FavIcon />
             </li> */}
           </ul>
-          <hr className="divider" />
-          <ul className="apps">
-            <li className="app">
-              <Tooltip tip="Webrowse" placement="left">
-                <img src={webrowseIcon} alt="app icon" />
-              </Tooltip>
-            </li>
-            <li className="app">
-              <Tooltip tip="BoardOS" placement="left">
-                <img src={boardosIcon} alt="app icon" />
-              </Tooltip>
-            </li>
-          </ul>
+          {/* <hr className="divider" /> */}
+          {/* Third Apps */}
         </>
       }
       header={

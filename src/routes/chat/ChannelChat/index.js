@@ -21,8 +21,7 @@ import IconPeople from "../../../assets/icons/people.svg";
 import IconPin from "../../../assets/icons/pin.svg";
 // import searchIcon from "../../../assets/icons/search.svg?url";
 import IconHeadphone from "../../../assets/icons/headphone.svg";
-import boardosIcon from "../../../assets/icons/app.boardos.svg?url";
-import webrowseIcon from "../../../assets/icons/app.webrowse.svg?url";
+
 import addIcon from "../../../assets/icons/add.svg?url";
 import {
   // StyledNotification,
@@ -174,19 +173,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
                 </Tooltip>
               </li>
             </ul>
-            <hr className="divider" />
-            <ul className="apps">
-              <li className="app">
-                <Tooltip tip="Webrowse" placement="left">
-                  <img src={webrowseIcon} alt="app icon" />
-                </Tooltip>
-              </li>
-              <li className="app">
-                <Tooltip tip="BoardOS" placement="left">
-                  <img src={boardosIcon} alt="app icon" />
-                </Tooltip>
-              </li>
-            </ul>
+            {/* <hr className="divider" /> */}
           </>
         }
         header={
