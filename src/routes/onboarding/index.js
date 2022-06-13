@@ -1,20 +1,50 @@
-import { useState } from "react";
-import { Navigate } from "react-router-dom";
+import React from "react";
 import { Helmet } from "react-helmet";
-import WelcomeStep from "./steps/1-welcome";
-import ServerNameStep from "./steps/2-serverName";
-import AdminCredentialsStep from "./steps/3-adminCredentials";
-import InviteRuleStep from "./steps/4-inviteRule";
-import InviteLinkStep from "./steps/5-inviteLink";
-import CompletedStep from "./steps/6-completed";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import WelcomePage from "./steps/welcomePage";
+import ServerName from "./steps/serverName";
+import AdminAccount from "./steps/adminAccount";
+import WhoCanSignUp from "./steps/whoCanSignUp";
+import InviteLink from "./steps/inviteLink";
+import DonePage from "./steps/donePage";
+import useServerSetup, { steps } from "./useServerSetup";
 import StyledOnboardingPage from "./styled";
 
+function Navigator({ step, setStep }) {
+  const index = steps.map((value) => value.name).indexOf(step);
+  const canJumpTo = steps.find((value) => value.name === step).canJumpTo || [];
+
+  return (
+    <div className="navigator">
+      {steps.map((stepToRender, indexToRender) => {
+        const clickable = canJumpTo.includes(stepToRender.name);
+        const nodeCls = `node ${indexToRender === index ? "emphasized" : ""} ${
+          indexToRender > index ? "disabled" : ""
+        } ${clickable ? "clickable" : ""}`;
+        const arrowCls = `arrow ${indexToRender >= index ? "disabled" : ""}`;
+        return (
+          <React.Fragment key={indexToRender}>
+            <span
+              className={nodeCls}
+              onClick={() => {
+                if (clickable) {
+                  setStep(stepToRender.name);
+                }
+              }}
+            >
+              {stepToRender.label}
+            </span>
+            {indexToRender !== steps.length - 1 && <span className={arrowCls}>→</span>}
+          </React.Fragment>
+        );
+      })}
+    </div>
+  );
+}
+
 export default function OnboardingPage() {
-  const [step, setStep] = useState(0);
-  const [data, setData] = useState({
-    serverName: ""
-  });
-  const props = { setStep, data, setData };
+  const serverSetup = useServerSetup();
 
   return (
     <>
@@ -22,13 +52,31 @@ export default function OnboardingPage() {
         <title>Rustchat Setup</title>
       </Helmet>
       <StyledOnboardingPage>
-        {step === 0 && <WelcomeStep {...props} />}
-        {step === 1 && <ServerNameStep {...props} />}
-        {step === 2 && <AdminCredentialsStep {...props} />}
-        {step === 3 && <InviteRuleStep {...props} />}
-        {step === 4 && <InviteLinkStep {...props} />}
-        {step === 5 && <CompletedStep {...props} />}
-        {step === 6 && <Navigate replace to="/" />}
+        <Navigator {...serverSetup} />
+        <Swiper
+          spaceBetween={50}
+          allowTouchMove={false}
+          onSwiper={(swiper) => serverSetup.setSwiper(swiper)}
+        >
+          <SwiperSlide>
+            <WelcomePage {...serverSetup} />
+          </SwiperSlide>
+          <SwiperSlide>
+            <ServerName {...serverSetup} />
+          </SwiperSlide>
+          <SwiperSlide>
+            <AdminAccount {...serverSetup} />
+          </SwiperSlide>
+          <SwiperSlide>
+            <WhoCanSignUp {...serverSetup} />
+          </SwiperSlide>
+          <SwiperSlide>
+            <InviteLink {...serverSetup} />
+          </SwiperSlide>
+          <SwiperSlide>
+            <DonePage {...serverSetup} />
+          </SwiperSlide>
+        </Swiper>
       </StyledOnboardingPage>
     </>
   );

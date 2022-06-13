@@ -5,11 +5,12 @@ import BASE_URL from "../../app/config";
 // import web3 from "web3";
 import StyledWrapper from "./styled";
 import MetamaskLoginButton from "./MetamaskLoginButton";
-import SolidLoginButton from "./SolidLoginButton";
+import OidcLoginButton from "./OidcLoginButton";
 import Input from "../../common/component/styled/Input";
 import Button from "../../common/component/styled/Button";
 import GoogleLoginButton from "./GoogleLoginButton";
 import MagicLinkLogin from "./MagicLinkLogin";
+import SignUpLink from "./SignUpLink";
 import { useLoginMutation } from "../../app/services/auth";
 import { useGetLoginConfigQuery, useGetSMTPStatusQuery } from "../../app/services/server";
 import useGoogleAuthConfig from "../../common/hook/useGoogleAuthConfig";
@@ -125,7 +126,8 @@ export default function LoginPage() {
     github: enableGithubLogin,
     google: enableGoogleLogin,
     metamask: enableMetamaskLogin,
-    oidc = []
+    oidc = [],
+    who_can_sign_up: whoCanSignUp
   } = loginConfig;
   const enableMagicLink = enableSMTP && magic_link;
   const googleLogin = enableGoogleLogin && clientId;
@@ -168,7 +170,8 @@ export default function LoginPage() {
         {googleLogin && <GoogleLoginButton login={login} clientId={clientId} />}
         {enableGithubLogin && <GithubLoginButton config={githubAuthConfig} />}
         {enableMetamaskLogin && <MetamaskLoginButton login={login} />}
-        {oidc.length > 0 && <SolidLoginButton issuers={oidc} />}
+        {oidc.length > 0 && <OidcLoginButton issuers={oidc} />}
+        {whoCanSignUp === "EveryOne" && <SignUpLink />}
       </div>
     </StyledWrapper>
   );

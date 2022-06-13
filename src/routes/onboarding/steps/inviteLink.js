@@ -3,14 +3,25 @@ import StyledInput from "../../../common/component/styled/Input";
 import StyledButton from "../../../common/component/styled/Button";
 import useInviteLink from "../../../common/hook/useInviteLink";
 
-const StyledInviteLinkStep = styled.div`
+const StyledWrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
+  > .primaryText {
+    text-align: center;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 30px;
+    margin-bottom: 8px;
+  }
+
   > .secondaryText {
+    text-align: center;
+    font-size: 14px;
+    line-height: 20px;
     margin-bottom: 40px;
   }
 
@@ -47,15 +58,26 @@ const StyledInviteLinkStep = styled.div`
       font-size: 14px;
       line-height: 20px;
       color: #22ccee;
+      transition: color 150ms ease-in-out;
+
+      &:hover {
+        color: #088ab2;
+      }
     }
+  }
+
+  > .button {
+    width: 124px;
+    height: 44px;
+    margin-top: 24px;
   }
 `;
 
-export default function InviteLinkStep({ setStep }) {
+export default function InviteLink({ nextStep }) {
   const { link, linkCopied, copyLink } = useInviteLink();
 
   return (
-    <StyledInviteLinkStep>
+    <StyledWrapper>
       <span className="primaryText">Last step: invite others!</span>
       <span className="secondaryText">Now let’s invite others!</span>
       <span className="tip">Send invitation link to your future community members:</span>
@@ -65,12 +87,9 @@ export default function InviteLinkStep({ setStep }) {
           {linkCopied ? "Copied" : `Copy`}
         </StyledButton>
       </div>
-      <StyledButton
-        className="button border_less ghost"
-        onClick={() => setStep((prev) => prev + 1)}
-      >
-        Skip
+      <StyledButton className="button" onClick={nextStep}>
+        Done
       </StyledButton>
-    </StyledInviteLinkStep>
+    </StyledWrapper>
   );
 }

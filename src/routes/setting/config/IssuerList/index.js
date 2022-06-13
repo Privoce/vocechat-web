@@ -8,13 +8,16 @@ import Styled from "./styled";
 // import IconPlus from "../../../../assets/icons/plus.circle.svg";
 import IconMinus from "../../../../assets/icons/minus.circle.svg";
 
-export default function IssuerList({ issuers = [] }) {
-  const [select, setSelect] = useState(undefined);
+export default function IssuerList({ issuers = [], onChange }) {
+  const [select, setSelect] = useState({});
   const [newDomain, setNewDomain] = useState("");
   const handleNewDomain = (evt) => {
     setNewDomain(evt.target.value);
   };
-  const disableBtn = !(newDomain || !!select?.value);
+  const disableBtn =
+    (!newDomain && !select?.value) ||
+    !select?.title ||
+    issuers.some((issuer) => issuer.domain === newDomain);
   return (
     <Styled>
       <ul className="issuers">
@@ -22,9 +25,14 @@ export default function IssuerList({ issuers = [] }) {
           return (
             <li key={domain} className="issuer">
               <div className="left">
-                <IconMinus className="remove" />
+                <IconMinus
+                  className="remove"
+                  onClick={() => {
+                    onChange(issuers.filter((issuer) => issuer.domain !== domain));
+                  }}
+                />
                 <div className="data">
-                  <img src={favicon} alt="logo" className="icon" />
+                  {Boolean(favicon) && <img src={favicon} alt="logo" className="icon" />}
                   <Input
                     readOnly
                     value={domain}
@@ -35,7 +43,17 @@ export default function IssuerList({ issuers = [] }) {
                 </div>
               </div>
               <div className="right">
-                <Toggle data-checked={enable} />
+                <Toggle
+                  data-checked={enable}
+                  onClick={() => {
+                    onChange(
+                      issuers.map((issuer) => ({
+                        ...issuer,
+                        enable: issuer.domain === domain ? !enable : issuer.enable
+                      }))
+                    );
+                  }}
+                />
               </div>
             </li>
           );
@@ -43,7 +61,14 @@ export default function IssuerList({ issuers = [] }) {
 
         <li className="issuer add">
           <div className="left">
-            <Select options={options} updateSelect={setSelect} />
+            <Select
+              options={options.map((option) => ({
+                ...option,
+                selected: issuers.some((issuer) => issuer.domain === option.value)
+              }))}
+              current={select}
+              updateSelect={setSelect}
+            />
             <div className="data">
               <Input
                 onChange={handleNewDomain}
@@ -56,7 +81,23 @@ export default function IssuerList({ issuers = [] }) {
             </div>
           </div>
           <div className="right">
-            <Button disabled={disableBtn}>Add</Button>
+            <Button
+              disabled={disableBtn}
+              onClick={() => {
+                const { icon, value } = options.find((option) => option.value === select.value);
+                onChange(
+                  issuers.concat({
+                    enable: true,
+                    favicon: icon || "",
+                    domain: value || newDomain
+                  })
+                );
+                setSelect({});
+                setNewDomain("");
+              }}
+            >
+              Add
+            </Button>
           </div>
         </li>
       </ul>
