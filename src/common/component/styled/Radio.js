@@ -1,6 +1,5 @@
-import { useRef, useState } from "react";
+import { useState, useId } from "react";
 import styled from "styled-components";
-import { nanoid } from "@reduxjs/toolkit";
 
 const StyledForm = styled.form`
   > .option {
@@ -12,7 +11,6 @@ const StyledForm = styled.form`
       display: none;
 
       & + .box {
-        width: 512px;
         background: #ffffff;
         border: 1px solid #d0d5dd;
         box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
@@ -64,9 +62,20 @@ const StyledForm = styled.form`
   }
 `;
 
-export default function Radio({ options, value = undefined, onChange = undefined }) {
-  const [innerValue, setInnerValue] = useState(0);
-  const id = useRef(nanoid());
+const VALUE_NOT_SET = {};
+const VALUES_NOT_SET = {};
+
+export default function Radio({
+  options,
+  values = VALUES_NOT_SET,
+  value = VALUE_NOT_SET,
+  defaultValue = undefined,
+  onChange = undefined
+}) {
+  const id = useId();
+
+  const [fallbackValue, setFallbackValue] = useState(defaultValue);
+  const _value = value !== VALUE_NOT_SET ? value : fallbackValue;
 
   return (
     <StyledForm>
@@ -74,15 +83,22 @@ export default function Radio({ options, value = undefined, onChange = undefined
         <div className="option" key={index}>
           <input
             type="radio"
-            checked={(value !== undefined ? value : innerValue) === index}
+            checked={(values !== VALUES_NOT_SET ? values.indexOf(_value) : _value) === index}
             onChange={() => {
-              value === undefined && setInnerValue(index);
-              onChange !== null && onChange(index);
+              const valueToSet = values === VALUES_NOT_SET ? index : values[index];
+              // Set fallback value if not in controlled mode
+              if (value === VALUE_NOT_SET) {
+                setFallbackValue(valueToSet);
+              }
+              // Invoke `onChange` handler if defined
+              if (onChange) {
+                onChange(valueToSet);
+              }
             }}
-            id={`${id.current}-${index}`}
+            id={`${id}-${index}`}
           />
           <div className="box">
-            <label htmlFor={`${id.current}-${index}`}>{item}</label>
+            <label htmlFor={`${id}-${index}`}>{item}</label>
           </div>
         </div>
       ))}

@@ -18,14 +18,13 @@ const Styled = styled.div`
         flex: 1;
         display: flex;
         align-items: center;
-        gap: 16px;
         justify-content: space-between;
         .remove {
           cursor: pointer;
         }
         .data {
           display: flex;
-          align-items: flex-end;
+          align-items: center;
           gap: 16px;
           justify-content: space-between;
           > .icon {

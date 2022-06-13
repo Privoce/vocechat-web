@@ -182,7 +182,15 @@ export default function Logins() {
             </div>
           </div>
           <div className="row">
-            <IssuerList issuers={oidc} />
+            <IssuerList
+              issuers={oidc}
+              onChange={(newOidc) => {
+                setValues((prev) => ({
+                  ...prev,
+                  oidc: newOidc
+                }));
+              }}
+            />
           </div>
         </div>
       </div>

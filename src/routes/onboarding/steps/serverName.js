@@ -3,25 +3,51 @@ import toast from "react-hot-toast";
 import StyledInput from "../../../common/component/styled/Input";
 import StyledButton from "../../../common/component/styled/Button";
 
-const StyledSpaceNameStep = styled.div`
+const StyledWrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
+  > .primaryText {
+    text-align: center;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 30px;
+    margin-bottom: 8px;
+  }
+
   > .secondaryText {
+    width: 360px;
+    text-align: center;
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 24px;
     color: #667085;
   }
 
+  > .input {
+    width: 360px;
+    height: 44px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 10px 14px;
+    border: 1px solid #d0d5dd;
+    border-radius: 8px;
+    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
+  }
+
   > .button {
+    width: 360px;
     margin-top: 24px;
   }
 `;
 
-export default function ServerNameStep({ setStep, data, setData }) {
+export default function ServerName({ serverName, setServerName, nextStep }) {
   return (
-    <StyledSpaceNameStep>
+    <StyledWrapper>
       <span className="primaryText">Create a new server</span>
       <span className="secondaryText">
         Servers are shared environments where teams can work on projects and chat.
@@ -29,27 +55,22 @@ export default function ServerNameStep({ setStep, data, setData }) {
       <StyledInput
         className="input"
         placeholder="Enter server name"
-        value={data.serverName}
-        onChange={(e) =>
-          setData({
-            ...data,
-            serverName: e.target.value
-          })
-        }
+        value={serverName}
+        onChange={(e) => setServerName(e.target.value)}
       />
       <StyledButton
         className="button"
         onClick={() => {
           // Verification for space name
-          if (data.serverName === "") {
+          if (serverName === "") {
             toast.error("Please enter server name!");
             return;
           }
-          setStep((prev) => prev + 1);
+          nextStep();
         }}
       >
         Create Server
       </StyledButton>
-    </StyledSpaceNameStep>
+    </StyledWrapper>
   );
 }
