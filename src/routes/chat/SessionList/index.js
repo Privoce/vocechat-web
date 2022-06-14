@@ -7,7 +7,7 @@ import InviteModal from "../../../common/component/InviteModal";
 export default function SessionList({ tempSession = null }) {
   const [deleteId, setDeleteId] = useState(null);
   const [inviteChannelId, setInviteChannelId] = useState(null);
-  const [sessions, setSessions] = useState(tempSession ? [tempSession] : []);
+  const [sessions, setSessions] = useState([]);
   const { channelIDs, DMs, readChannels, readUsers, channelMessage, userMessage, loginUid } =
     useSelector((store) => {
       return {
@@ -37,16 +37,20 @@ export default function SessionList({ tempSession = null }) {
       const mid = [...mids].pop();
       return { key: `user_${id}`, type: "user", id, mid };
     });
-
-    setSessions((prevs) => {
-      return [
-        ...prevs,
-        ...[...cSessions, ...uSessions].sort((a, b) => {
-          return b.mid - a.mid;
-        })
-      ];
+    const tmps = [...cSessions, ...uSessions].sort((a, b) => {
+      return b.mid - a.mid;
     });
-  }, [channelIDs, DMs, channelMessage, readChannels, readUsers, loginUid, userMessage]);
+    setSessions(tempSession ? [tempSession, ...tmps] : tmps);
+  }, [
+    channelIDs,
+    DMs,
+    channelMessage,
+    readChannels,
+    readUsers,
+    loginUid,
+    userMessage,
+    tempSession
+  ]);
   return (
     <>
       <Styled>

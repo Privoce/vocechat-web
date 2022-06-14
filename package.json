@@ -134,6 +134,6 @@
     "md5-file": "^5.0.0",
     "patch-package": "^6.4.7",
     "postinstall-postinstall": "^2.1.0",
-    "prettier": "^2.6.2"
+    "prettier": "^2.7.0"
   }
 }
