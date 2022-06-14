@@ -4,9 +4,8 @@ import styled from "styled-components";
 import StyledModal from "../../common/component/styled/Modal";
 import Modal from "../../common/component/Modal";
 import { StyledSocialButton } from "./styled";
-import solidSvg from "../../assets/icons/solid.svg?url";
 import StyledButton from "../../common/component/styled/Button";
-import SolidLoginButton from "./SolidLoginButton";
+import OidcLoginEntry from "./OidcLoginEntry";
 
 const StyledOicdLoginModal = styled(StyledModal)`
   text-align: center;
@@ -38,7 +37,6 @@ export default function OidcLoginButton({ issuers }) {
           setModal(true);
         }}
       >
-        <img src={solidSvg} className="icon" alt="solid icon" />
         Sign in with OIDC
       </StyledSocialButton>
       {modal && (
@@ -47,7 +45,7 @@ export default function OidcLoginButton({ issuers }) {
             {issuers
               .filter((issuer) => issuer.enable)
               .map((issuer, index) => (
-                <SolidLoginButton issuer={issuer} key={index} />
+                <OidcLoginEntry issuer={issuer} key={index} />
               ))}
             <StyledButton
               className="border_less ghost buttonCancel"

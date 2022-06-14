@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useGetOpenidMutation } from "../../app/services/auth";
 import { StyledSocialButton } from "./styled";
 
-export default function SolidLoginButton({ issuer }) {
+export default function OidcLoginEntry({ issuer }) {
   const [getOpenId, { data, isLoading, isSuccess }] = useGetOpenidMutation();
 
   const handleSolidLogin = () => {
