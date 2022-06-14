@@ -54,6 +54,10 @@ const Styled = styled.ul`
             font-size: 12px;
             line-height: 18px;
             color: #78787c;
+            white-space: nowrap;
+            overflow: hidden;
+            max-width: 80px;
+            text-overflow: ellipsis;
           }
         }
         .down {

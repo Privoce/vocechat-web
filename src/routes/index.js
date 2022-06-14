@@ -4,14 +4,14 @@ import { Provider, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 // import Welcome from './Welcome'
 import NotFoundPage from "./404";
-const HomePage = lazy(() => import("./home"));
+// const HomePage = lazy(() => import("./home"));
 const RegBasePage = lazy(() => import("./reg"));
+const ChatPage = lazy(() => import("./chat"));
 const RegWithUsernamePage = lazy(() => import("./reg/RegWithUsername"));
 const SendMagicLinkPage = lazy(() => import("./sendMagicLink"));
 const RegPage = lazy(() => import("./reg/Register"));
 const LoginPage = lazy(() => import("./login"));
 const OAuthPage = lazy(() => import("./oauth"));
-const ChatPage = lazy(() => import("./chat"));
 const ContactsPage = lazy(() => import("./contacts"));
 const FavoritesPage = lazy(() => import("./favs"));
 const OnboardingPage = lazy(() => import("./onboarding"));
@@ -22,6 +22,8 @@ const ResourceManagement = lazy(() => import("./resources"));
 import RequireAuth from "../common/component/RequireAuth";
 import RequireNoAuth from "../common/component/RequireNoAuth";
 import Meta from "../common/component/Meta";
+import HomePage from "./home";
+// import ChatPage from "./chat";
 import Loading from "../common/component/Loading";
 
 import store from "../app/store";
@@ -91,9 +93,11 @@ const PageRoutes = () => {
           <Route
             path="/"
             element={
+              // <Suspense fallback={<Loading />}>
               <RequireAuth>
                 <HomePage />
               </RequireAuth>
+              // </Suspense>
             }
           >
             <Route path="setting">

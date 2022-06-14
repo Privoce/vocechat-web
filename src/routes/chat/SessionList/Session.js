@@ -95,7 +95,9 @@ export default function Session({
               <span className="name">
                 {name} {!is_public && <IconLock />}
               </span>
-              <span className="time">{dayjs(previewMsg.created_at).fromNow()}</span>
+              <span className="time">
+                {previewMsg.created_at ? dayjs(previewMsg.created_at).fromNow() : null}
+              </span>
             </div>
             <div className="down">
               <span className="msg">{renderPreviewMessage(previewMsg)}</span>
