@@ -2,33 +2,35 @@ import { useEffect, useState } from "react";
 import { isObjectEqual } from "../utils";
 import toast from "react-hot-toast";
 import {
-  useGetAgoraConfigQuery,
-  useGetFirebaseConfigQuery,
-  useGetSMTPConfigQuery,
-  useGetLoginConfigQuery,
   useUpdateLoginConfigMutation,
   useUpdateSMTPConfigMutation,
   useUpdateAgoraConfigMutation,
-  useUpdateFirebaseConfigMutation
+  useUpdateFirebaseConfigMutation,
+  useLazyGetFirebaseConfigQuery,
+  useLazyGetAgoraConfigQuery,
+  useLazyGetSMTPConfigQuery,
+  useLazyGetLoginConfigQuery
 } from "../../app/services/server";
+// config: smtp agora login firebase
+let originalValue = null;
 export default function useConfig(config = "smtp") {
   const [changed, setChanged] = useState(false);
   const [values, setValues] = useState({});
-  const { data: Login, refetch: refetchLogin } = useGetLoginConfigQuery();
   const [updateLoginConfig, { isSuccess: LoginUpdated }] = useUpdateLoginConfigMutation();
-  const { data: SMTP, refetch: refetchSMTP } = useGetSMTPConfigQuery();
   const [updateSMTPConfig, { isSuccess: SMTPUpdated }] = useUpdateSMTPConfigMutation();
-  const { data: Agora, refetch: refetchAgora } = useGetAgoraConfigQuery();
+  const [getAgoraConfig, { data: agoraConfig }] = useLazyGetAgoraConfigQuery();
   const [updateAgoraConfig, { isSuccess: AgoraUpdated }] = useUpdateAgoraConfigMutation();
-  const { data: Firebase, refetch: refetchFirebase } = useGetFirebaseConfigQuery();
+  const [getLoginConfig, { data: loginConfig }] = useLazyGetLoginConfigQuery();
+  const [getSMTPConfig, { data: smtpConfig }] = useLazyGetSMTPConfigQuery();
+  const [getFirebaseConfig, { data: firebaseConfig }] = useLazyGetFirebaseConfigQuery();
   const [updateFirebaseConfig, { isSuccess: FirebaseUpdated }] = useUpdateFirebaseConfigMutation();
 
-  const datas = {
-    login: Login,
-    smtp: SMTP,
-    agora: Agora,
-    firebase: Firebase
-  };
+  // const datas = {
+  //   login: {},
+  //   smtp: {},
+  //   agora: {},
+  //   firebase: {}
+  // };
   const updateFns = {
     login: updateLoginConfig,
     smtp: updateSMTPConfig,
@@ -36,10 +38,10 @@ export default function useConfig(config = "smtp") {
     firebase: updateFirebaseConfig
   };
   const refetchs = {
-    smtp: refetchSMTP,
-    agora: refetchAgora,
-    firebase: refetchFirebase,
-    login: refetchLogin
+    smtp: getSMTPConfig,
+    agora: getAgoraConfig,
+    firebase: getFirebaseConfig,
+    login: getLoginConfig
   };
   const updateds = {
     login: LoginUpdated,
@@ -47,12 +49,12 @@ export default function useConfig(config = "smtp") {
     agora: AgoraUpdated,
     firebase: FirebaseUpdated
   };
-  const data = datas[config];
+  // const data = datas[config];
   const updateConfig = updateFns[config];
   const refetch = refetchs[config];
   const updated = updateds[config];
   const reset = () => {
-    setValues(data ?? {});
+    setValues(originalValue);
   };
 
   const toggleEnable = () => {
@@ -60,6 +62,27 @@ export default function useConfig(config = "smtp") {
       return { ...prev, enabled: !prev.enabled };
     });
   };
+
+  useEffect(() => {
+    switch (config) {
+      case "firebase":
+        getFirebaseConfig();
+        break;
+      case "agora":
+        getAgoraConfig();
+        break;
+      case "smtp":
+        getSMTPConfig();
+        break;
+      case "login":
+        getLoginConfig();
+        break;
+
+      default:
+        break;
+    }
+  }, [config]);
+
   useEffect(() => {
     if (updated) {
       toast.success("Configuration Updated!");
@@ -67,24 +90,24 @@ export default function useConfig(config = "smtp") {
     }
   }, [updated]);
   useEffect(() => {
-    console.log("wtf", data);
-    // if (data) {
-    setValues(data ?? {});
-    // }
-  }, [data]);
+    const _config = smtpConfig || firebaseConfig || loginConfig || agoraConfig;
+    if (_config) {
+      originalValue = _config;
+      setValues(_config);
+    }
+  }, [smtpConfig, firebaseConfig, loginConfig, agoraConfig]);
   useEffect(() => {
-    // if (data && values) {
-    if (!isObjectEqual(data, values)) {
+    if (!isObjectEqual(originalValue, values)) {
       setChanged(true);
     } else {
       setChanged(false);
     }
-    // }
-  }, [data, values]);
+  }, [values]);
   return {
     reset,
     changed,
     updateConfig,
+    agoraConfig,
     values,
     setValues,
     toggleEnable
