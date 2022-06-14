@@ -148,16 +148,19 @@ export default function useMessageFeed({ context = "channel", id = null }) {
     }
     pageRef.current = pageInfo;
     listRef.current = [...pageInfo.ids, ...listRef.current];
-    setTimeout(() => {
-      setItems(listRef.current);
-      console.log("pull up", currPageInfo, listRef.current);
-      setHasMore(pageInfo.pageNumber !== 1);
-      const container = containerRef.current;
-      if (container) {
-        curScrollPos = container.scrollTop;
-        oldScroll = container.scrollHeight - container.clientHeight;
-      }
-    }, 800);
+    setTimeout(
+      () => {
+        setItems(listRef.current);
+        console.log("pull up", currPageInfo, listRef.current);
+        setHasMore(pageInfo.pageNumber !== 1);
+        const container = containerRef.current;
+        if (container) {
+          curScrollPos = container.scrollTop;
+          oldScroll = container.scrollHeight - container.clientHeight;
+        }
+      },
+      currPageInfo.isLast ? 10 : 800
+    );
   };
   const pullDown = () => {
     // 向下加载

@@ -6,9 +6,10 @@ import { useUpdateMuteSettingMutation } from "../../../app/services/contact";
 import { useReadMessageMutation } from "../../../app/services/message";
 import { removeUserSession } from "../../../app/slices/message.user";
 import ContextMenu from "../../../common/component/ContextMenu";
+import useContactOperation from "../../../common/hook/useContactOperation";
 
 export default function SessionContextMenu({
-  context,
+  context = "user",
   id,
   visible,
   mid,
@@ -17,6 +18,7 @@ export default function SessionContextMenu({
   setInviteChannelId,
   children
 }) {
+  const { canCopyEmail, copyEmail } = useContactOperation({ uid: context == "user" ? id : null });
   const [muteChannel] = useUpdateMuteSettingMutation();
   const [updateReadIndex] = useReadMessageMutation();
   const pathMatched = useMatch(`/chat/dm/${id}`);
@@ -35,7 +37,7 @@ export default function SessionContextMenu({
     // console.log("last mid", mids, lastMid);
     if (mid) {
       const param =
-        context == "dm" ? { users: [{ uid: +id, mid }] } : { groups: [{ gid: +id, mid }] };
+        context == "user" ? { users: [{ uid: +id, mid }] } : { groups: [{ gid: +id, mid }] };
       updateReadIndex(param);
     }
   };
@@ -50,11 +52,15 @@ export default function SessionContextMenu({
     muteChannel(data);
   };
   const items =
-    context == "dm"
+    context == "user"
       ? [
           {
             title: "Mark As Read",
             handler: handleReadAll
+          },
+          canCopyEmail && {
+            title: "Copy Email",
+            handler: copyEmail
           },
           {
             title: "Hide Session",

@@ -5,63 +5,80 @@ import { useDrop } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
 import relativeTime from "dayjs/plugin/relativeTime";
 import ContextMenu from "./ContextMenu";
-import { renderPreviewMessage } from "../utils";
+import getUnreadCount, { renderPreviewMessage } from "../utils";
 import Contact from "../../../common/component/Contact";
 import iconChannel from "../../../assets/icons/channel.svg?url";
 import IconLock from "../../../assets/icons/lock.svg";
 import useContextMenu from "../../../common/hook/useContextMenu";
 import { useNavigate, NavLink } from "react-router-dom";
+import useUploadFile from "../../../common/hook/useUploadFile";
 dayjs.extend(relativeTime);
 export default function Session({
-  type = "dm",
+  type = "user",
   id,
   mid,
-  setFiles,
   setDeleteChannelId,
   setInviteChannelId
 }) {
   const navigate = useNavigate();
-  const [{ isActive }, drop] = useDrop(() => ({
-    accept: [NativeTypes.FILE],
-    drop({ dataTransfer }) {
-      if (dataTransfer.files.length) {
-        // console.log(files, rest);
-        setFiles([...dataTransfer.files]);
-        navigate(type == "dm" ? `/chat/dm/${id}` : `/chat/channel/${id}`);
-        // 重置
-        setTimeout(() => {
-          setFiles([]);
-        }, 300);
-      }
-    },
-    collect: (monitor) => ({
-      isActive: monitor.canDrop() && monitor.isOver()
-    })
-  }));
+  const { addStageFile } = useUploadFile({ context: type, id });
+  const [{ isActive }, drop] = useDrop(
+    () => ({
+      accept: [NativeTypes.FILE],
+      drop({ files }) {
+        if (files.length) {
+          // console.log(files, rest);
+          const filesData = files.map((file) => {
+            const { size, type, name } = file;
+            const url = URL.createObjectURL(file);
+            return { size, type, name, url };
+          });
+          addStageFile(filesData);
+          navigate(type == "user" ? `/chat/dm/${id}` : `/chat/channel/${id}`);
+        }
+      },
+      collect: (monitor) => ({
+        isActive: monitor.canDrop() && monitor.isOver()
+      })
+    }),
+    [type, id]
+  );
   const { visible: contextMenuVisible, handleContextMenuEvent, hideContextMenu } = useContextMenu();
   const [data, setData] = useState(null);
-  const { messageData, contactData, channelData } = useSelector((store) => {
-    return {
-      messageData: store.message,
-      contactData: store.contacts.byId,
-      channelData: store.channels.byId
-    };
-  });
+  const { messageData, contactData, channelData, readIndex, loginUid, mids } = useSelector(
+    (store) => {
+      return {
+        mids: type == "user" ? store.userMessage.byId[id] : store.channelMessage[id],
+        loginUid: store.authData.uid,
+        readIndex:
+          type == "user" ? store.footprint.readUsers[id] : store.footprint.readChannels[id],
+        messageData: store.message,
+        contactData: store.contacts.byId,
+        channelData: store.channels.byId
+      };
+    }
+  );
   const handleImageError = (evt) => {
     evt.target.classList.add("channel_default");
     evt.target.src = iconChannel;
   };
   useEffect(() => {
-    const tmp = type == "dm" ? contactData[id] : channelData[id];
+    const tmp = type == "user" ? contactData[id] : channelData[id];
     if (!tmp) return;
     const { name, icon, avatar, is_public = true } = tmp;
     const session =
-      type == "dm" ? { name, icon: avatar, mid, is_public } : { name, icon, mid, is_public };
+      type == "user" ? { name, icon: avatar, mid, is_public } : { name, icon, mid, is_public };
     setData(session);
   }, [id, mid, type, contactData, channelData]);
   if (!data) return null;
   const previewMsg = messageData[mid] || {};
   const { name, icon, is_public } = data;
+  const { unreads = 0 } = getUnreadCount({
+    mids,
+    readIndex,
+    messageData,
+    loginUid
+  });
   return (
     <li className="session">
       <ContextMenu
@@ -76,11 +93,11 @@ export default function Session({
         <NavLink
           ref={drop}
           className={`nav ${isActive ? "drop_over" : ""}`}
-          to={type == "dm" ? `/chat/dm/${id}` : `/chat/channel/${id}`}
+          to={type == "user" ? `/chat/dm/${id}` : `/chat/channel/${id}`}
           onContextMenu={handleContextMenuEvent}
         >
           <div className="icon">
-            {type == "dm" ? (
+            {type == "user" ? (
               <Contact avatarSize={40} compact interactive={false} className="avatar" uid={id} />
             ) : (
               <img
@@ -101,6 +118,11 @@ export default function Session({
             </div>
             <div className="down">
               <span className="msg">{renderPreviewMessage(previewMsg)}</span>
+              {unreads > 0 && (
+                <i className={`badge ${unreads > 99 ? "dot" : ""}`}>
+                  {unreads > 99 ? null : unreads}
+                </i>
+              )}
             </div>
           </div>
         </NavLink>

@@ -32,10 +32,10 @@ export default function SessionList() {
     const uSessions = DMs.map((id) => {
       const mids = userMessage[id];
       if (!mids || mids.length == 0) {
-        return { mid: null, unreads: 0, id, type: "dm" };
+        return { mid: null, unreads: 0, id, type: "user" };
       }
       const mid = [...mids].pop();
-      return { key: `dm_${id}`, type: "dm", id, mid };
+      return { key: `user_${id}`, type: "user", id, mid };
     });
 
     setSessions(

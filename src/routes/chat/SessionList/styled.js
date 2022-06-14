@@ -17,6 +17,9 @@ const Styled = styled.ul`
       &:hover {
         background: rgba(116, 127, 141, 0.2);
       }
+      &.drop_over {
+        box-shadow: inset 0 0 0 2px #52edff;
+      }
       .icon {
         flex: 1;
         background-color: #eee;
@@ -63,7 +66,8 @@ const Styled = styled.ul`
         .down {
           display: flex;
           align-items: center;
-          .msg {
+          justify-content: space-between;
+          > .msg {
             font-weight: 400;
             font-size: 12px;
             line-height: 18px;
@@ -72,6 +76,28 @@ const Styled = styled.ul`
             overflow: hidden;
             width: 140px;
             text-overflow: ellipsis;
+          }
+          > .badge {
+            color: #fff;
+            height: 20px;
+            min-width: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            background: #1fe1f9;
+            font-weight: 900;
+            font-size: 10px;
+            line-height: 10px;
+            &.dot {
+              min-width: unset;
+              width: 6px;
+              height: 6px;
+              padding: 0;
+            }
+            &.mute {
+              background: #bfbfbf;
+            }
           }
         }
       }
