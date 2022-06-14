@@ -4,10 +4,10 @@ import Styled from "./styled";
 import Session from "./Session";
 import DeleteChannelConfirmModal from "../../settingChannel/DeleteConfirmModal";
 import InviteModal from "../../../common/component/InviteModal";
-export default function SessionList() {
+export default function SessionList({ tempSession = null }) {
   const [deleteId, setDeleteId] = useState(null);
   const [inviteChannelId, setInviteChannelId] = useState(null);
-  const [sessions, setSessions] = useState([]);
+  const [sessions, setSessions] = useState(tempSession ? [tempSession] : []);
   const { channelIDs, DMs, readChannels, readUsers, channelMessage, userMessage, loginUid } =
     useSelector((store) => {
       return {
@@ -38,11 +38,14 @@ export default function SessionList() {
       return { key: `user_${id}`, type: "user", id, mid };
     });
 
-    setSessions(
-      [...cSessions, ...uSessions].sort((a, b) => {
-        return b.mid - a.mid;
-      })
-    );
+    setSessions((prevs) => {
+      return [
+        ...prevs,
+        ...[...cSessions, ...uSessions].sort((a, b) => {
+          return b.mid - a.mid;
+        })
+      ];
+    });
   }, [channelIDs, DMs, channelMessage, readChannels, readUsers, loginUid, userMessage]);
   return (
     <>

@@ -40,8 +40,8 @@ export default function HomePage() {
   if (loading || !ready) {
     return <Loading reload={true} fullscreen={true} />;
   }
-  const isSettingPage = isHomePath || pathname.startsWith("/setting");
-  const isChattingPage = pathname.startsWith("/chat");
+  const isSettingPage = pathname.startsWith("/setting");
+  const isChattingPage = isHomePath || pathname.startsWith("/chat");
   if (isSettingPage) {
     return (
       <>
