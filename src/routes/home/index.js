@@ -40,7 +40,8 @@ export default function HomePage() {
   if (loading || !ready) {
     return <Loading reload={true} fullscreen={true} />;
   }
-  const isSettingPage = pathname.startsWith("/setting");
+  const isSettingPage = isHomePath || pathname.startsWith("/setting");
+  const isChattingPage = pathname.startsWith("/chat");
   if (isSettingPage) {
     return (
       <>
@@ -62,8 +63,8 @@ export default function HomePage() {
           <User uid={loginUid} />
           <nav className="link_navs">
             <NavLink
-              className={({ isActive }) => {
-                return `link ${isHomePath || isActive ? "active" : ""}`;
+              className={() => {
+                return `link ${isChattingPage ? "active" : ""}`;
               }}
               to={chatNav}
             >
