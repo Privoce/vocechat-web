@@ -10,10 +10,11 @@ const Styled = styled.span`
     cursor: pointer;
   }
 `;
-export default function Mention({ uid, popover = true, cid }) {
+export default function Mention({ uid, popover = true, cid, textOnly = false }) {
   const contactsData = useSelector((store) => store.contacts.byId);
   const user = contactsData[uid];
   if (!user) return null;
+  if (textOnly) return `@${user.name}`;
   return (
     <Tippy
       disabled={!popover}

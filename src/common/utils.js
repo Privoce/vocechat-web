@@ -123,10 +123,10 @@ export const getInitialsAvatar = ({
   context.rect(0, 0, canvas.width, canvas.height);
   context.fillStyle = background;
   context.fill();
-  // 两个字符，自动缩放40
-  context.font = `${weight} ${
-    ((initial_size || height) - (initials.length == 2 ? 40 : 0)) / 2
-  }px ${fontFamily}`;
+  // 多于两个字符，自动缩放
+  const subtract =
+    initials.length > 3 ? 50 : initials.length > 2 ? 40 : initials.length == 2 ? 30 : 0;
+  context.font = `${weight} ${((initial_size || height) - subtract) / 2}px ${fontFamily}`;
   context.textAlign = "center";
 
   context.textBaseline = "middle";

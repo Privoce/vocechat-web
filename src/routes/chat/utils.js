@@ -8,6 +8,8 @@ import Checkbox from "../../common/component/styled/Checkbox";
 import Divider from "../../common/component/Divider";
 import Message from "../../common/component/Message";
 import { updateSelectMessages } from "../../app/slices/ui";
+import Mention from "../../common/component/Message/Mention";
+import reactStringReplace from "react-string-replace";
 // function debounce(callback, wait = 2000, immediate = false) {
 //   let timeout = null;
 //   return function () {
@@ -55,7 +57,11 @@ export const renderPreviewMessage = (message = null) => {
   switch (content_type) {
     case ContentTypes.text:
       {
-        res = content;
+        res = reactStringReplace(content, /(\s{1}@[0-9]+\s{1})/g, (match, idx) => {
+          console.log("match", match);
+          const uid = match.trim().slice(1);
+          return <Mention key={idx} uid={uid} textOnly={true} />;
+        });
       }
       break;
     case ContentTypes.markdown:

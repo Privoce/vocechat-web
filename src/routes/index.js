@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import NotFoundPage from "./404";
 // const HomePage = lazy(() => import("./home"));
 const RegBasePage = lazy(() => import("./reg"));
-const ChatPage = lazy(() => import("./chat"));
+// const ChatPage = lazy(() => import("./chat"));
 const RegWithUsernamePage = lazy(() => import("./reg/RegWithUsername"));
 const SendMagicLinkPage = lazy(() => import("./sendMagicLink"));
 const RegPage = lazy(() => import("./reg/Register"));
@@ -23,7 +23,7 @@ import RequireAuth from "../common/component/RequireAuth";
 import RequireNoAuth from "../common/component/RequireNoAuth";
 import Meta from "../common/component/Meta";
 import HomePage from "./home";
-// import ChatPage from "./chat";
+import ChatPage from "./chat";
 import Loading from "../common/component/Loading";
 
 import store from "../app/store";
@@ -114,9 +114,9 @@ const PageRoutes = () => {
             <Route
               index
               element={
-                <Suspense fallback={<Loading />}>
-                  <ChatPage />
-                </Suspense>
+                // <Suspense fallback={<Loading />}>
+                <ChatPage />
+                // </Suspense>
               }
             />
             <Route path="chat">
@@ -124,17 +124,17 @@ const PageRoutes = () => {
               <Route
                 path="channel/:channel_id"
                 element={
-                  <Suspense fallback={<Loading />}>
-                    <ChatPage />
-                  </Suspense>
+                  // <Suspense fallback={<Loading />}>
+                  <ChatPage />
+                  // </Suspense>
                 }
               />
               <Route
                 path="dm/:user_id"
                 element={
-                  <Suspense fallback={<Loading />}>
-                    <ChatPage />
-                  </Suspense>
+                  // <Suspense fallback={<Loading />}>
+                  <ChatPage />
+                  // </Suspense>
                 }
               />
             </Route>

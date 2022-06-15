@@ -30,7 +30,7 @@ export default function ChatPage() {
   const tmpSession =
     sessionUids.findIndex((i) => i == user_id) > -1
       ? null
-      : { mid: null, unreads: 0, id: user_id, type: "user" };
+      : { key: `user_${user_id}`, mid: null, unreads: 0, id: user_id, type: "user" };
   // console.log("temp uid", tmpUid);
   const placeholderVisible = !channel_id && !user_id;
   return (

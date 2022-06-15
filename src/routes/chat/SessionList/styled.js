@@ -21,7 +21,7 @@ const Styled = styled.ul`
         box-shadow: inset 0 0 0 2px #52edff;
       }
       .icon {
-        flex: 1;
+        display: flex;
         background-color: #eee;
         border-radius: 50%;
         img {
@@ -99,6 +99,16 @@ const Styled = styled.ul`
               background: #bfbfbf;
             }
           }
+        }
+      }
+      &.muted {
+        .up .name,
+        .up .time,
+        .down .msg {
+          color: #d0d5dd;
+        }
+        .down .badge {
+          background: #bfbfbf;
         }
       }
     }

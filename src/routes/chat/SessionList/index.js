@@ -24,7 +24,7 @@ export default function SessionList({ tempSession = null }) {
     const cSessions = channelIDs.map((id) => {
       const mids = channelMessage[id];
       if (!mids || mids.length == 0) {
-        return { mid: null, unreads: 0, id, type: "channel" };
+        return { key: `channel_${id}`, mid: null, unreads: 0, id, type: "channel" };
       }
       const mid = [...mids].pop();
       return { key: `channel_${id}`, id, mid, type: "channel" };
@@ -32,7 +32,7 @@ export default function SessionList({ tempSession = null }) {
     const uSessions = DMs.map((id) => {
       const mids = userMessage[id];
       if (!mids || mids.length == 0) {
-        return { mid: null, unreads: 0, id, type: "user" };
+        return { key: `user_${id}`, mid: null, unreads: 0, id, type: "user" };
       }
       const mid = [...mids].pop();
       return { key: `user_${id}`, type: "user", id, mid };

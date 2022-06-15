@@ -7,6 +7,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import ContextMenu from "./ContextMenu";
 import getUnreadCount, { renderPreviewMessage } from "../utils";
 import Contact from "../../../common/component/Contact";
+import Avatar from "../../../common/component/Avatar";
 import iconChannel from "../../../assets/icons/channel.svg?url";
 import IconLock from "../../../assets/icons/lock.svg";
 import useContextMenu from "../../../common/hook/useContextMenu";
@@ -45,7 +46,7 @@ export default function Session({
   );
   const { visible: contextMenuVisible, handleContextMenuEvent, hideContextMenu } = useContextMenu();
   const [data, setData] = useState(null);
-  const { messageData, contactData, channelData, readIndex, loginUid, mids } = useSelector(
+  const { messageData, contactData, channelData, readIndex, loginUid, mids, muted } = useSelector(
     (store) => {
       return {
         mids: type == "user" ? store.userMessage.byId[id] : store.channelMessage[id],
@@ -54,7 +55,8 @@ export default function Session({
           type == "user" ? store.footprint.readUsers[id] : store.footprint.readChannels[id],
         messageData: store.message,
         contactData: store.contacts.byId,
-        channelData: store.channels.byId
+        channelData: store.channels.byId,
+        muted: type == "user" ? store.footprint.muteUsers[id] : store.footprint.muteChannels[id]
       };
     }
   );
@@ -92,7 +94,7 @@ export default function Session({
       >
         <NavLink
           ref={drop}
-          className={`nav ${isActive ? "drop_over" : ""}`}
+          className={`nav ${isActive ? "drop_over" : ""} ${muted ? "muted" : ""}`}
           to={type == "user" ? `/chat/dm/${id}` : `/chat/channel/${id}`}
           onContextMenu={handleContextMenuEvent}
         >
@@ -100,11 +102,12 @@ export default function Session({
             {type == "user" ? (
               <Contact avatarSize={40} compact interactive={false} className="avatar" uid={id} />
             ) : (
-              <img
-                className={`${icon ? "" : "channel_default"}`}
-                onError={handleImageError}
-                src={icon || iconChannel}
-              />
+              <Avatar className="icon" type="channel" name={name} url={icon} />
+              // <img
+              //   className={`${icon ? "" : "channel_default"}`}
+              //   onError={handleImageError}
+              //   src={icon || iconChannel}
+              // />
             )}
           </div>
           <div className="details">
