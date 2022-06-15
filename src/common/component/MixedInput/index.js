@@ -219,11 +219,15 @@ const Plugins = ({
             // component={StyledCombobox}
             onRenderItem={({ item }) => {
               console.log("wtf", item);
+              if (!item || !item.data) return null;
               return <Contact key={item.data.uid} uid={item.data.uid} interactive={false} />;
             }}
             items={members.map((id) => {
               const data = contactData[id];
-              if (!data) return null;
+              if (!data) {
+                // console.log("wtffe", id, contactData);
+                return { key: id };
+              }
               const { uid, name, ...rest } = data;
               return {
                 key: uid,
