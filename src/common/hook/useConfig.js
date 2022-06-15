@@ -97,6 +97,8 @@ export default function useConfig(config = "smtp") {
     }
   }, [smtpConfig, firebaseConfig, loginConfig, agoraConfig]);
   useEffect(() => {
+    // 空对象
+    if (Object.keys(values).length == 0) return;
     if (!isObjectEqual(originalValue, values)) {
       setChanged(true);
     } else {
