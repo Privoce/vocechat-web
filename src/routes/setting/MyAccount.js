@@ -171,13 +171,16 @@ export default function MyAccount() {
             </button>
           </div>
         </div>
-        <div className="danger">
-          <h4 className="head">Account Removal</h4>
-          <div className="desc">
-            Disabling your account means you can recover it at any time after taking this action.
+        {/* uid 1 是初始账户，不能删 */}
+        {uid != 1 && (
+          <div className="danger">
+            <h4 className="head">Account Removal</h4>
+            <div className="desc">
+              Disabling your account means you can recover it at any time after taking this action.
+            </div>
+            <button className="btn">Delete Account</button>
           </div>
-          <button className="btn">Delete Account</button>
-        </div>
+        )}
       </StyledWrapper>
       {editModal && (
         <ProfileBasicEditModal
