@@ -1,6 +1,8 @@
-// import React from 'react'
+import { FC } from "react";
 import toast from "react-hot-toast";
 import styled from "styled-components";
+import Button from "./styled/Button";
+
 const Styled = styled.span`
   display: flex;
   align-items: center;
@@ -15,8 +17,13 @@ const Styled = styled.span`
     display: flex;
   }
 `;
-import Button from "./styled/Button";
-export default function NewVersion({ id, handleUpdate }) {
+
+interface Props {
+  id: string;
+  handleUpdate: () => void;
+}
+
+const Index: FC<Props> = ({ id, handleUpdate }) => {
   return (
     <Styled>
       <strong>New Version</strong> Available
@@ -30,4 +37,6 @@ export default function NewVersion({ id, handleUpdate }) {
       </div>
     </Styled>
   );
-}
+};
+
+export default Index;
