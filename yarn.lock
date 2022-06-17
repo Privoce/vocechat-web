@@ -489,7 +489,7 @@
 
 "@babel/plugin-proposal-private-property-in-object@^7.17.12":
   version "7.17.12"
-  resolved "https://mirrors.tencent.com/npm/@babel%2fplugin-proposal-private-property-in-object/-/plugin-proposal-private-property-in-object-7.17.12.tgz#b02efb7f106d544667d91ae97405a9fd8c93952d"
+  resolved "https://registry.npmmirror.com/@babel/plugin-proposal-private-property-in-object/-/plugin-proposal-private-property-in-object-7.17.12.tgz#b02efb7f106d544667d91ae97405a9fd8c93952d"
   integrity sha512-/6BtVi57CJfrtDNKfK5b66ydK2J5pXUKBKSPD2G1whamMuEnZWgoOIfO8Vf9F/DoD4izBLD/Au4NMQfruzzykg==
   dependencies:
     "@babel/helper-annotate-as-pure" "^7.16.7"
@@ -4408,7 +4408,7 @@ babel-plugin-macros@^3.1.0:
 
 babel-plugin-named-asset-import@^0.3.8:
   version "0.3.8"
-  resolved "http://mirrors.cloud.tencent.com/npm/babel-plugin-named-asset-import/-/babel-plugin-named-asset-import-0.3.8.tgz#6b7fa43c59229685368683c28bc9734f24524cc2"
+  resolved "https://registry.npmmirror.com/babel-plugin-named-asset-import/-/babel-plugin-named-asset-import-0.3.8.tgz#6b7fa43c59229685368683c28bc9734f24524cc2"
   integrity sha512-WXiAc++qo7XcJ1ZnTYGtLxmBCVbddAml3CEXgWaBzNzLNoxtQ8AiGEFDMOhot9XjTCQbvP5E77Fj9Gk924f00Q==
 
 babel-plugin-polyfill-corejs2@^0.3.0, babel-plugin-polyfill-corejs2@^0.3.1:
@@ -4484,7 +4484,7 @@ babel-preset-jest@^27.5.1:
 
 babel-preset-react-app@^10.0.1:
   version "10.0.1"
-  resolved "http://mirrors.cloud.tencent.com/npm/babel-preset-react-app/-/babel-preset-react-app-10.0.1.tgz#ed6005a20a24f2c88521809fa9aea99903751584"
+  resolved "https://registry.npmmirror.com/babel-preset-react-app/-/babel-preset-react-app-10.0.1.tgz#ed6005a20a24f2c88521809fa9aea99903751584"
   integrity sha512-b0D9IZ1WhhCWkrTXyFuIIgqGzSkRIH5D5AmB0bXbzYAB1OBAwHcUeyWW2LorutLWF5btNo/N7r/cIdmvvKJlYg==
   dependencies:
     "@babel/core" "^7.16.0"
