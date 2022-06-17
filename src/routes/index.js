@@ -67,7 +67,7 @@ const PageRoutes = () => {
             }
           />
           <Route
-            path="/reg"
+            path="/register"
             element={
               <RequireNoAuth>
                 <RegBasePage />

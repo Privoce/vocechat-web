@@ -1,8 +1,8 @@
 /* eslint-disable no-undef */
-import { useState, useEffect } from "react";
+import { useState } from "react";
 // import { useDispatch } from "react-redux";
 // import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
+// import toast from "react-hot-toast";
 import Input from "../../common/component/styled/Input";
 import Button from "../../common/component/styled/Button";
 // import { useSendMagicLinkMutation } from "../../app/services/auth";

@@ -71,12 +71,14 @@ export const channelApi = createApi({
       }
     }),
     createInviteLink: builder.query({
-      query: (gid) => ({
+      query: (gid = "") => ({
         headers: {
           "content-type": "text/plain",
           accept: "text/plain"
         },
-        url: `/group/${gid}/create_invite_link`,
+        url: gid
+          ? `/group/create_reg_magic_link?expired_in=3600&max_times=1&gid=${gid}`
+          : `/group/create_reg_magic_link?expired_in=3600&max_times=1`,
         responseHandler: (response) => response.text()
       }),
       transformResponse: (link) => {
