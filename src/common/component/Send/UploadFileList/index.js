@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import Styled from "./styled";
 import { useMixedEditor } from "../../MixedInput";
 import EditFileDetailsModal from "./EditFileDetails";
-
 import { getFileIcon, formatBytes } from "../../../utils";
 import useUploadFile from "../../../hook/useUploadFile";
 import EditIcon from "../../../../assets/icons/edit.svg";

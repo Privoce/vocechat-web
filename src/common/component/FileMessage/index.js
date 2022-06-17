@@ -11,10 +11,12 @@ import Progress from "./Progress";
 import { getFileIcon, formatBytes, isImage, getImageSize } from "../../utils";
 import IconDownload from "../../../assets/icons/download.svg";
 import IconClose from "../../../assets/icons/close.circle.svg";
+
 dayjs.extend(relativeTime);
 const isLocalFile = (content) => {
   return content && typeof content == "string" && content.startsWith("blob:");
 };
+
 export default function FileMessage({
   context = "",
   to = null,

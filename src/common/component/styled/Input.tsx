@@ -1,6 +1,12 @@
-import { useState } from "react";
-import { HiEye, HiEyeOff } from "react-icons/hi";
-import styled from "styled-components";
+import {
+  useState,
+  FC,
+  DetailedHTMLProps,
+  InputHTMLAttributes
+} from 'react';
+import { HiEye, HiEyeOff } from 'react-icons/hi';
+import styled from 'styled-components';
+
 const StyledWrapper = styled.div`
   width: 100%;
   position: relative;
@@ -9,6 +15,7 @@ const StyledWrapper = styled.div`
   border-radius: 4px;
   border: 1px solid #e5e7eb;
   box-shadow: 0px 1px 2px rgba(31, 41, 55, 0.08);
+
   .prefix {
     padding: 8px 16px;
     font-weight: 400;
@@ -18,6 +25,7 @@ const StyledWrapper = styled.div`
     background: #f3f4f6;
     border-right: 1px solid #e5e7eb;
   }
+
   .view {
     position: absolute;
     top: 50%;
@@ -26,6 +34,7 @@ const StyledWrapper = styled.div`
     cursor: pointer;
   }
 `;
+
 const StyledInput = styled.input`
   width: 100%;
   background: #ffffff;
@@ -36,45 +45,56 @@ const StyledInput = styled.input`
   color: #333;
   padding: 8px;
   outline: none;
+
   &:not(.inner) {
     border-radius: 4px;
     border: 1px solid #e5e7eb;
     box-shadow: 0px 1px 2px rgba(31, 41, 55, 0.08);
   }
+
   &.large {
     font-weight: 400;
     font-size: 14px;
     line-height: 20px;
     padding: 11px 8px;
   }
+
   &.none {
     outline: none;
     border: none;
     background: none;
     box-shadow: none;
   }
+
   &:disabled {
     color: #78787c;
     background-color: #f9fafb;
   }
+
   &::placeholder {
     color: #d1d5db;
   }
+
   &[type="password"] {
     padding-right: 30px;
   }
 `;
 
-export default function Input({ type = "text", prefix = "", className, ...rest }) {
+interface Props extends DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
+  prefix?: string;
+}
+
+const Input: FC<Props> = ({ type = 'text', prefix = '', className, ...rest }) => {
   const [inputType, setInputType] = useState(type);
   const togglePasswordVisible = () => {
-    setInputType((prev) => (prev == "password" ? "text" : "password"));
+    setInputType((prev) => (prev == 'password' ? 'text' : 'password'));
   };
-  return type == "password" ? (
+
+  return type == 'password' ? (
     <StyledWrapper className={className}>
       <StyledInput type={inputType} className={`inner ${className}`} {...rest} />
       <div className="view" onClick={togglePasswordVisible}>
-        {inputType == "password" ? <HiEyeOff color="#78787c" /> : <HiEye color="#78787c" />}
+        {inputType == 'password' ? <HiEyeOff color="#78787c"/> : <HiEye color="#78787c"/>}
       </div>
     </StyledWrapper>
   ) : prefix ? (
@@ -85,6 +105,6 @@ export default function Input({ type = "text", prefix = "", className, ...rest }
   ) : (
     <StyledInput type={inputType} className={className} {...rest} />
   );
-}
+};
 
-// export default StyledInput;
+export default Input;

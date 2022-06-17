@@ -1,15 +1,14 @@
 /* eslint-disable no-undef */
-import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
 // import { useNavigate } from "react-router-dom";
 // import toast from "react-hot-toast";
+import { useState, useEffect, ChangeEvent, FormEvent } from "react";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import toast from "react-hot-toast";
 import { setAuthData } from "../../app/slices/auth.data";
-
 import Input from "../../common/component/styled/Input";
 import Button from "../../common/component/styled/Button";
 import { useLoginMutation, useCheckInviteTokenValidMutation } from "../../app/services/auth";
-import toast from "react-hot-toast";
 import ExpiredTip from "./ExpiredTip";
 
 export default function RegWithUsername() {
@@ -20,6 +19,7 @@ export default function RegWithUsername() {
   // const navigateTo = useNavigate();
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
+
   useEffect(() => {
     if (token) {
       checkTokenInvalid(token);
@@ -27,16 +27,16 @@ export default function RegWithUsername() {
   }, [token]);
 
   useEffect(() => {
-    console.log("errr", error);
+    console.log("error", error);
     switch (error?.status) {
       case 401:
         toast.error("Invalided Token");
         break;
-
       default:
         break;
     }
   }, [error]);
+
   useEffect(() => {
     if (isSuccess && data) {
       // 更新本地认证信息
@@ -47,7 +47,7 @@ export default function RegWithUsername() {
     }
   }, [isSuccess, data]);
 
-  const handleLogin = (evt) => {
+  const handleLogin = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     login({
       token,
@@ -57,13 +57,15 @@ export default function RegWithUsername() {
     // sendMagicLink(email);
   };
 
-  const handleInput = (evt) => {
+  const handleInput = (evt: ChangeEvent<HTMLInputElement>) => {
     const { value } = evt.target;
     setUsername(value);
   };
+
   if (!token) return "no token";
   if (checkingToken) return "checking Magic Link...";
   if (!isTokenValid) return <ExpiredTip />;
+
   return (
     <>
       <div className="tips">

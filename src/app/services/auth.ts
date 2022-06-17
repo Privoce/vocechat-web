@@ -3,6 +3,7 @@ import { nanoid } from "@reduxjs/toolkit";
 import baseQuery from "./base.query";
 import { setAuthData, updateToken, resetAuthData, updateInitialized } from "../slices/auth.data";
 import BASE_URL, { KEY_DEVICE_KEY } from "../config";
+
 const getDeviceId = () => {
   let d = localStorage.getItem(KEY_DEVICE_KEY);
   if (!d) {
@@ -11,6 +12,7 @@ const getDeviceId = () => {
   }
   return d;
 };
+
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery,
