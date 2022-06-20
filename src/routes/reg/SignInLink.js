@@ -1,10 +1,9 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
-const StyledSignUpLink = styled.p`
+const StyledSignInLink = styled.p`
   text-align: center;
   margin: 24px 0 8px;
-
   > span {
     font-weight: 400;
     font-size: 14px;
@@ -21,15 +20,15 @@ const StyledSignUpLink = styled.p`
     cursor: pointer;
   }
 `;
-export default function MagicLinkLogin() {
+export default function SignInLink() {
   const navigate = useNavigate();
-  const handleSignUp = () => {
-    navigate("/register");
+  const handleSignIn = () => {
+    navigate("/login");
   };
   return (
-    <StyledSignUpLink>
-      <span>Don’t have an account?</span>
-      <a onClick={handleSignUp}>Sign up</a>
-    </StyledSignUpLink>
+    <StyledSignInLink>
+      <span>Have an account?</span>
+      <a onClick={handleSignIn}>Sign In</a>
+    </StyledSignInLink>
   );
 }

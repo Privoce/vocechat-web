@@ -3,8 +3,8 @@ import StyledWrapper from "./styled";
 import { Navigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import BASE_URL from "../../app/config";
-import { useRegisterMutation } from "../../app/services/contact";
-import { useCheckInviteTokenValidMutation } from "../../app/services/auth";
+import { useRegisterMutation } from "../../app/services/auth";
+import { useCheckMagicTokenValidMutation } from "../../app/services/auth";
 import { useSelector } from "react-redux";
 
 export default function InvitePage() {
@@ -17,7 +17,7 @@ export default function InvitePage() {
   // const navigateTo = useNavigate();
   const [register, { data, isLoading, isSuccess, isError, error }] = useRegisterMutation();
   const [checkToken, { data: isValid, isLoading: checkLoading, isSuccess: checkSuccess }] =
-    useCheckInviteTokenValidMutation();
+    useCheckMagicTokenValidMutation();
   useEffect(() => {
     // console.log(search);
     const query = new URLSearchParams(location.search);

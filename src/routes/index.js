@@ -75,9 +75,9 @@ const PageRoutes = () => {
             }
           >
             <Route index element={<RegPage />} />
-            <Route path="magiclink">
+            <Route path="set_name">
               <Route index element={<RegWithUsernamePage />} />
-              <Route path=":token" element={<RegWithUsernamePage />} />
+              <Route path=":from" element={<RegWithUsernamePage />} />
             </Route>
           </Route>
           <Route

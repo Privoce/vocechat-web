@@ -45,6 +45,13 @@ export const authApi = createApi({
         }
       }
     }),
+    register: builder.mutation({
+      query: (data) => ({
+        url: `user/register`,
+        method: "POST",
+        body: data
+      })
+    }),
     // 更新token
     renew: builder.mutation({
       query: ({ token, refreshToken }) => ({
@@ -87,9 +94,9 @@ export const authApi = createApi({
       })
     }),
 
-    checkInviteTokenValid: builder.mutation({
+    checkMagicTokenValid: builder.mutation({
       query: (token) => ({
-        url: "user/check_invite_magic_token",
+        url: "user/check_magic_token",
         method: "POST",
         body: { magic_token: token }
       })
@@ -101,11 +108,23 @@ export const authApi = createApi({
         body: { old_password, new_password }
       })
     }),
-    sendMagicLink: builder.mutation({
+    sendLoginMagicLink: builder.mutation({
       query: (email) => ({
-        url: "token/send_magic_link",
+        headers: {
+          // "content-type": "text/plain",
+          accept: "text/plain"
+        },
+        url: `user/send_login_magic_link?email=${encodeURIComponent(email)}`,
         method: "POST",
-        body: { email }
+        responseHandler: (response) => response.text()
+        // body: { email }
+      })
+    }),
+    sendRegMagicLink: builder.mutation({
+      query: (data) => ({
+        url: `user/send_reg_magic_link`,
+        method: "POST",
+        body: data
       })
     }),
     getMetamaskNonce: builder.query({
@@ -147,7 +166,8 @@ export const authApi = createApi({
 
 export const {
   useGetInitializedQuery,
-  useSendMagicLinkMutation,
+  useSendLoginMagicLinkMutation,
+  useSendRegMagicLinkMutation,
   useGetCredentialsQuery,
   useUpdateDeviceTokenMutation,
   useGetOpenidMutation,
@@ -155,6 +175,7 @@ export const {
   useLazyGetMetamaskNonceQuery,
   useLoginMutation,
   useLazyLogoutQuery,
-  useCheckInviteTokenValidMutation,
-  useUpdatePasswordMutation
+  useCheckMagicTokenValidMutation,
+  useUpdatePasswordMutation,
+  useRegisterMutation
 } = authApi;

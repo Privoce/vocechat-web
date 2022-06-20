@@ -6,8 +6,9 @@ import BASE_URL, { tokenHeader } from "../config";
 const whiteList = [
   "login",
   "register",
-  "sendMagicLink",
-  "checkInviteTokenValid",
+  "sendLoginMagicLink",
+  "sendRegMagicLink",
+  "checkMagicTokenValid",
   "getGoogleAuthConfig",
   "getGithubAuthConfig",
   "getSMTPStatus",
