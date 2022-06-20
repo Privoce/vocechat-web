@@ -1,12 +1,17 @@
 import { useState, useEffect } from "react";
-// import { useDispatch } from "react-redux";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-// import toast from "react-hot-toast";
+import BASE_URL from "../../app/config";
 import Input from "../../common/component/styled/Input";
 import Button from "../../common/component/styled/Button";
 import { useSendRegMagicLinkMutation } from "../../app/services/auth";
 import EmailNextTip from "./EmailNextStepTip";
-// import { useSendLoginMagicLinkMutation } from "../../app/services/auth";
+import SignInLink from "./SignInLink";
+import { useGetLoginConfigQuery } from "../../app/services/server";
+import useGithubAuthConfig from "../../common/hook/useGithubAuthConfig";
+import useGoogleAuthConfig from "../../common/hook/useGoogleAuthConfig";
+import GoogleLoginButton from "../../common/component/GoogleLoginButton";
+import GithubLoginButton from "../../common/component/GithubLoginButton";
 
 export default function Reg() {
   const [sendRegMagicLink, { isLoading, data, isSuccess }] = useSendRegMagicLinkMutation();
@@ -45,7 +50,12 @@ export default function Reg() {
     });
     // sendMagicLink(email);
   };
-
+  const handleCompare = () => {
+    const { password, confirmPassword } = input;
+    if (password !== confirmPassword) {
+      toast.error("Not Same Password!");
+    }
+  };
   const handleInput = (evt) => {
     const { type } = evt.target.dataset;
     const { value } = evt.target;
@@ -55,32 +65,65 @@ export default function Reg() {
       return { ...prev };
     });
   };
-  const { email, password } = input;
+  const { clientId } = useGoogleAuthConfig();
+  const { config: githubAuthConfig } = useGithubAuthConfig();
+  const { data: loginConfig, isSuccess: loginConfigSuccess } = useGetLoginConfigQuery();
+  if (!loginConfigSuccess) return null;
+  const {
+    github: enableGithubLogin,
+    google: enableGoogleLogin,
+    who_can_sign_up: whoCanSignUp
+  } = loginConfig;
+  const googleLogin = enableGoogleLogin && clientId;
+  // 没有开放注册
+  if (whoCanSignUp !== "EveryOne") return `Open Register is Closed!`;
+  const { email, password, confirmPassword } = input;
   if (data?.mail_is_sent) return <EmailNextTip />;
   return (
-    <form onSubmit={handleReg}>
-      <Input
-        className="large"
-        name="email"
-        value={email}
-        required
-        placeholder="Enter your email"
-        data-type="email"
-        onChange={handleInput}
-      />
-      <Input
-        className="large"
-        type="password"
-        value={password}
-        name="password"
-        required
-        data-type="password"
-        onChange={handleInput}
-        placeholder="Enter your password"
-      />
-      <Button type="submit" disabled={isLoading}>
-        {isLoading ? "Signing Up" : `Sign Up`}
-      </Button>
-    </form>
+    <>
+      <div className="tips">
+        <img src={`${BASE_URL}/resource/organization/logo`} alt="logo" className="logo" />
+        <h2 className="title">Sign Up to Rustchat</h2>
+        <span className="desc">Please enter your details.</span>
+      </div>
+
+      <form onSubmit={handleReg}>
+        <Input
+          className="large"
+          name="email"
+          value={email}
+          required
+          placeholder="Enter email"
+          data-type="email"
+          onChange={handleInput}
+        />
+        <Input
+          className="large"
+          type="password"
+          value={password}
+          name="password"
+          required
+          data-type="password"
+          onChange={handleInput}
+          placeholder="Enter password"
+        />
+        <Input
+          onBlur={handleCompare}
+          type="password"
+          name={"confirmPassword"}
+          value={confirmPassword}
+          data-type="confirmPassword"
+          onChange={handleInput}
+          placeholder="Confirm Password"
+        ></Input>
+        <Button type="submit" disabled={isLoading}>
+          {isLoading ? "Signing Up" : `Sign Up`}
+        </Button>
+      </form>
+      <hr className="or" />
+      {googleLogin && <GoogleLoginButton clientId={clientId} />}
+      {enableGithubLogin && <GithubLoginButton config={githubAuthConfig} />}
+      <SignInLink />
+    </>
   );
 }
