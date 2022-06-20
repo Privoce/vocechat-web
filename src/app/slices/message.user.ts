@@ -1,8 +1,16 @@
-import { createSlice } from "@reduxjs/toolkit";
-const initialState = {
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+export interface State {
+  ids: string[];
+  // todo: check object type
+  byId: { [id: number]: any; };
+}
+
+const initialState: State = {
   ids: [],
   byId: {}
 };
+
 const userMsgSlice = createSlice({
   name: "userMessage",
   initialState,
@@ -10,7 +18,7 @@ const userMsgSlice = createSlice({
     resetUserMsg() {
       return initialState;
     },
-    fullfillUserMsg(state, action) {
+    fullfillUserMsg(state, action: PayloadAction<{ [id: string]: any; }>) {
       state.ids = Object.keys(action.payload);
       state.byId = action.payload;
     },

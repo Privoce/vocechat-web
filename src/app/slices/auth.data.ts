@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { KEY_EXPIRE, KEY_PWA_INSTALLED, KEY_REFRESH_TOKEN, KEY_TOKEN, KEY_UID } from '../config';
+import { AuthData, AuthToken } from '../../types/auth';
 
 interface State {
   initialized: boolean;
@@ -24,30 +25,6 @@ const emptyState: State = {
   expireTime: +new Date(),
   refreshToken: null
 };
-
-interface AuthToken {
-  // common
-  server_id: string;
-  token: string;
-  refresh_token: string;
-  expired_in: number;
-}
-
-interface User {
-  uid: number;
-  email: string;
-  name: string;
-  gender: number;
-  language: string;
-  is_admin: boolean;
-  avatar_updated_at: number;
-  create_by: string;
-}
-
-interface AuthData extends AuthToken {
-  initialized?: boolean;
-  user: User;
-}
 
 const authDataSlice = createSlice({
   name: 'authData',

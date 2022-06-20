@@ -1,6 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const initialState = [];
+const initialState: number[] = [];
+
 const fileMessageSlice = createSlice({
   name: "fileMessage",
   initialState,
@@ -8,10 +9,10 @@ const fileMessageSlice = createSlice({
     resetFileMessage() {
       return initialState;
     },
-    fullfillFileMessage(state, action) {
+    fullfillFileMessage(state, action: PayloadAction<number[]>) {
       return action.payload || [];
     },
-    addFileMessage(state, action) {
+    addFileMessage(state, action: PayloadAction<number>) {
       const mid = action.payload;
       // 加入file message 列表
       const fidIdx = state.findIndex((fid) => fid == mid);
@@ -19,7 +20,7 @@ const fileMessageSlice = createSlice({
         state.unshift(+mid);
       }
     },
-    removeFileMessage(state, action) {
+    removeFileMessage(state, action: PayloadAction<number | number[]>) {
       const mids = Array.isArray(action.payload) ? action.payload : [action.payload];
       mids.forEach((id) => {
         // 从file message 列表删掉
@@ -31,6 +32,8 @@ const fileMessageSlice = createSlice({
     }
   }
 });
+
 export const { removeFileMessage, resetFileMessage, fullfillFileMessage, addFileMessage } =
   fileMessageSlice.actions;
+
 export default fileMessageSlice.reducer;

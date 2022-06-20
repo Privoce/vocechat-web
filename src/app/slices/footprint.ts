@@ -1,5 +1,15 @@
-import { createSlice } from "@reduxjs/toolkit";
-const initialState = {
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+export interface State {
+  usersVersion: number;
+  afterMid: number;
+  readUsers: {};
+  readChannels: {};
+  muteUsers: {};
+  muteChannels: {};
+}
+
+const initialState: State = {
   usersVersion: 0,
   afterMid: 0,
   readUsers: {},
@@ -7,6 +17,7 @@ const initialState = {
   muteUsers: {},
   muteChannels: {}
 };
+
 const footprintSlice = createSlice({
   name: "footprint",
   initialState,
@@ -32,13 +43,11 @@ const footprintSlice = createSlice({
         muteChannels
       };
     },
-    updateUsersVersion(state, action) {
-      const usersVersion = action.payload;
-      state.usersVersion = usersVersion;
+    updateUsersVersion(state, action: PayloadAction<number>) {
+      state.usersVersion = action.payload;
     },
-    updateAfterMid(state, action) {
-      const afterMid = action.payload;
-      state.afterMid = afterMid;
+    updateAfterMid(state, action: PayloadAction<number>) {
+      state.afterMid = action.payload;
     },
     updateMute(state, action) {
       const payload = action.payload || {};
@@ -97,6 +106,7 @@ const footprintSlice = createSlice({
     }
   }
 });
+
 export const {
   resetFootprint,
   fullfillFootprint,
@@ -106,4 +116,5 @@ export const {
   updateReadUsers,
   updateMute
 } = footprintSlice.actions;
+
 export default footprintSlice.reducer;

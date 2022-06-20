@@ -3,6 +3,7 @@ import { nanoid } from "@reduxjs/toolkit";
 import baseQuery from "./base.query";
 import { setAuthData, updateToken, resetAuthData, updateInitialized } from "../slices/auth.data";
 import BASE_URL, { KEY_DEVICE_KEY } from "../config";
+import { AuthData } from '../../types/auth';
 
 const getDeviceId = () => {
   let d = localStorage.getItem(KEY_DEVICE_KEY);
@@ -27,7 +28,7 @@ export const authApi = createApi({
           device_token: "test"
         }
       }),
-      transformResponse: (data) => {
+      transformResponse: (data: AuthData) => {
         const { avatar_updated_at } = data.user;
         data.user.avatar =
           avatar_updated_at == 0
@@ -116,12 +117,10 @@ export const authApi = createApi({
       })
     }),
     getCredentials: builder.query({
-      query: () => ({
-        url: `/token/credentials`
-      })
+      query: () => ({ url: "/token/credentials" })
     }),
     logout: builder.query({
-      query: () => ({ url: `token/logout` }),
+      query: () => ({ url: "token/logout" }),
       async onQueryStarted(params, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
@@ -132,9 +131,7 @@ export const authApi = createApi({
       }
     }),
     getInitialized: builder.query({
-      query: () => ({
-        url: `/admin/system/initialized`
-      }),
+      query: () => ({ url: "/admin/system/initialized" }),
       async onQueryStarted(params, { dispatch, queryFulfilled }) {
         try {
           const { data: isInitialized } = await queryFulfilled;

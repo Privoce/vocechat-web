@@ -1,5 +1,12 @@
-import { createSlice } from "@reduxjs/toolkit";
-const initialState = {};
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { ChannelMessage } from '../../types/channel';
+import { EntityId } from '../../types/common';
+
+export interface State {
+  [gid: number]: number[] | undefined;
+}
+
+const initialState: State = {};
 
 const channelMsgSlice = createSlice({
   name: "channelMessage",
@@ -8,41 +15,41 @@ const channelMsgSlice = createSlice({
     resetChannelMsg() {
       return initialState;
     },
-    fullfillChannelMsg(state, action) {
+    fullfillChannelMsg(state, action: PayloadAction<State>) {
       return action.payload;
     },
     addChannelMsg(state, action) {
       const { id, mid, local_id = null } = action.payload;
       if (state[id]) {
-        const midExsited = state[id].findIndex((id) => id == mid) > -1;
-        const localMsgExsited = state[id].findIndex((id) => id == local_id) > -1;
+        const midExsited = state[id]!.findIndex((id) => id == mid) > -1;
+        const localMsgExsited = state[id]!.findIndex((id) => id == local_id) > -1;
         if (midExsited || localMsgExsited) return;
-        state[id].push(+mid);
+        state[id]!.push(+mid);
       } else {
         state[id] = [+mid];
       }
     },
-    removeChannelMsg(state, action) {
+    removeChannelMsg(state, action: PayloadAction<ChannelMessage & EntityId>) {
       const { id, mid } = action.payload;
       if (state[id]) {
-        const idx = state[id].findIndex((i) => i == mid);
+        const idx = state[id]!.findIndex((i) => i == mid);
         if (idx > -1) {
           // 存在 则再删除
-          state[id].splice(idx, 1);
+          state[id]!.splice(idx, 1);
         }
       }
     },
     replaceChannelMsg(state, action) {
       const { id, localMid, serverMid } = action.payload;
       if (state[id]) {
-        const localIdx = state[id].findIndex((i) => i == localMid);
+        const localIdx = state[id]!.findIndex((i) => i == localMid);
         if (localIdx > -1 && serverMid) {
           // 存在 则再删除
-          state[id].splice(localIdx, 1, serverMid);
+          state[id]!.splice(localIdx, 1, serverMid);
         }
       }
     },
-    removeChannelSession(state, action) {
+    removeChannelSession(state, action: PayloadAction<number | number[]>) {
       const ids = Array.isArray(action.payload) ? action.payload : [action.payload];
       ids.forEach((id) => {
         delete state[id];
@@ -50,6 +57,7 @@ const channelMsgSlice = createSlice({
     }
   }
 });
+
 export const {
   removeChannelSession,
   resetChannelMsg,
@@ -58,4 +66,5 @@ export const {
   removeChannelMsg,
   replaceChannelMsg
 } = channelMsgSlice.actions;
+
 export default channelMsgSlice.reducer;

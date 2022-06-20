@@ -1,6 +1,28 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Views } from "../config";
-const initialState = {
+
+export interface State {
+  online: boolean;
+  ready: boolean;
+  userGuide: {
+    visible: boolean;
+    step: number;
+  };
+  inputMode: "text";
+  menuExpand: boolean;
+  // todo
+  fileListView: string;
+  uploadFiles: { [key: string]: any };
+  selectMessages: { [key: string]: any };
+  draftMarkdown: { [key: string]: any };
+  draftMixedText: { [key: string]: any };
+  remeberedNavs: {
+    chat: null | string;
+    contact: null | string;
+  };
+}
+
+const initialState: State = {
   online: true,
   ready: false,
   userGuide: {
@@ -14,11 +36,13 @@ const initialState = {
   selectMessages: {},
   draftMarkdown: {},
   draftMixedText: {},
+  // todo: typo
   remeberedNavs: {
     chat: null,
     contact: null
   }
 };
+
 const uiSlice = createSlice({
   name: "ui",
   initialState,
@@ -41,7 +65,7 @@ const uiSlice = createSlice({
     updateFileListView(state, action) {
       state.fileListView = action.payload;
     },
-    updateRemeberedNavs(state, action) {
+    updateRemeberedNavs(state, action: PayloadAction<{ key?: string; path: string | null }>) {
       const { key = "chat", path = null } = action.payload || {};
       state.remeberedNavs[key] = path;
     },
@@ -59,7 +83,6 @@ const uiSlice = createSlice({
         state.userGuide[key] = obj[key];
       });
     },
-
     updateUploadFiles(state, action) {
       const { context = "channel", id = null, operation = "add", ...rest } = action.payload;
       if (!id || !context) return;
@@ -144,6 +167,7 @@ const uiSlice = createSlice({
     }
   }
 });
+
 export const {
   fullfillUI,
   setReady,
@@ -158,4 +182,5 @@ export const {
   updateDraftMixedText,
   updateRemeberedNavs
 } = uiSlice.actions;
+
 export default uiSlice.reducer;

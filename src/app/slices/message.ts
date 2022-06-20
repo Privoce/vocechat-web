@@ -1,9 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import BASE_URL, { ContentTypes } from "../config";
 import { isImage } from "../../common/utils";
-const initialState = {
+
+export interface State {
+  replying: {};
+}
+
+const initialState: State = {
   replying: {}
 };
+
 const messageSlice = createSlice({
   name: "message",
   initialState,
@@ -66,6 +72,7 @@ const messageSlice = createSlice({
     }
   }
 });
+
 export const {
   resetMessage,
   fullfillMessage,
@@ -76,4 +83,5 @@ export const {
   addReplyingMessage,
   removeReplyingMessage
 } = messageSlice.actions;
+
 export default messageSlice.reducer;

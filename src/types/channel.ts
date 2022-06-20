@@ -3,6 +3,11 @@ export interface ChannelMember {
 
 }
 
+// todo: check message fields
+export interface ChannelMessage {
+  mid: number;
+}
+
 export type ContentType =
   'text/plain' |
   'text/markdown' |
@@ -22,7 +27,7 @@ export interface PinnedMessage {
 
 export interface Channel {
   gid: number;
-  icon: string; // added by frontend
+  // icon: string; // todo: check
   owner: number;
   name: string;
   description: string;

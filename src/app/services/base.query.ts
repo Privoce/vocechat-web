@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 import dayjs from "dayjs";
 import { updateToken, resetAuthData } from "../slices/auth.data";
 import BASE_URL, { tokenHeader } from "../config";
+
 const whiteList = [
   "login",
   "register",
@@ -20,6 +21,7 @@ const whiteList = [
   "getInitialized",
   "createAdmin"
 ];
+
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
   prepareHeaders: (headers, { getState, endpoint }) => {
@@ -31,6 +33,7 @@ const baseQuery = fetchBaseQuery({
     return headers;
   }
 });
+
 let waitingForRenew = null;
 const baseQueryWithTokenCheck = async (args, api, extraOptions) => {
   if (waitingForRenew) {
