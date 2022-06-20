@@ -89,13 +89,7 @@ export const contactApi = createApi({
         body: data
       })
     }),
-    register: builder.mutation({
-      query: (data) => ({
-        url: `user/register`,
-        method: "POST",
-        body: data
-      })
-    }),
+
     sendMsg: builder.mutation({
       query: ({ id, content, type = "text", properties = "" }) => ({
         headers: {
@@ -139,6 +133,5 @@ export const {
   useUpdateAvatarMutation,
   useGetContactsQuery,
   useLazyGetContactsQuery,
-  useSendMsgMutation,
-  useRegisterMutation
+  useSendMsgMutation
 } = contactApi;

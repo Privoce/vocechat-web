@@ -64,7 +64,7 @@ const PageRoutes = () => {
             }
           />
           <Route
-            path="/reg"
+            path="/register"
             element={
               <RequireNoAuth>
                 <RegBasePage />
@@ -72,9 +72,9 @@ const PageRoutes = () => {
             }
           >
             <Route index element={<RegPage />} />
-            <Route path="magiclink">
+            <Route path="set_name">
               <Route index element={<RegWithUsernamePage />} />
-              <Route path=":token" element={<RegWithUsernamePage />} />
+              <Route path=":from" element={<RegWithUsernamePage />} />
             </Route>
           </Route>
           <Route

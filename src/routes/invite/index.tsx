@@ -1,36 +1,33 @@
-import { useState, useEffect, ChangeEvent, FormEvent } from "react";
+import { useState, useEffect } from "react";
+import StyledWrapper from "./styled";
 import { Navigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import StyledWrapper from "./styled";
 import BASE_URL from "../../app/config";
-import { useRegisterMutation } from "../../app/services/contact";
-import { useCheckInviteTokenValidMutation } from "../../app/services/auth";
-import { useAppSelector } from "../../app/store";
+import { useRegisterMutation } from "../../app/services/auth";
+import { useCheckMagicTokenValidMutation } from "../../app/services/auth";
+import { useSelector } from "react-redux";
 
 export default function InvitePage() {
-  const { token: loginToken } = useAppSelector((store) => store.authData);
+  const { token: loginToken } = useSelector((store) => store.authData);
   const [secondPwd, setSecondPwd] = useState("");
   const [samePwd, setSamePwd] = useState(true);
-  const [token, setToken] = useState<string | null>("");
+  const [token, setToken] = useState("");
   const [valid, setValid] = useState(false);
   // const [sp] = useSearchParams();
   // const navigateTo = useNavigate();
   const [register, { data, isLoading, isSuccess, isError, error }] = useRegisterMutation();
   const [checkToken, { data: isValid, isLoading: checkLoading, isSuccess: checkSuccess }] =
-    useCheckInviteTokenValidMutation();
-
+    useCheckMagicTokenValidMutation();
   useEffect(() => {
     // console.log(search);
     const query = new URLSearchParams(location.search);
     setToken(query.get("token"));
   }, []);
-
   useEffect(() => {
     if (token) {
       checkToken(token);
     }
   }, [token]);
-
   useEffect(() => {
     if (checkSuccess) {
       console.log({ isValid });
@@ -40,9 +37,13 @@ export default function InvitePage() {
     }
   }, [checkSuccess, isValid]);
 
-  const [input, setInput] = useState({ name: "", email: "", password: "" });
+  const [input, setInput] = useState({
+    name: "",
+    email: "",
+    password: ""
+  });
 
-  const handleReg = (evt: FormEvent<HTMLFormElement>) => {
+  const handleReg = (evt) => {
     evt.preventDefault();
     if (!samePwd) {
       toast.error("two passwords not same");
@@ -55,8 +56,7 @@ export default function InvitePage() {
       gender: 1
     });
   };
-
-  const handleInput = (evt: ChangeEvent<HTMLInputElement>) => {
+  const handleInput = (evt) => {
     const { type } = evt.target.dataset;
     const { value } = evt.target;
     console.log(type, value);
@@ -65,18 +65,15 @@ export default function InvitePage() {
       return { ...prev };
     });
   };
-
-  const handleSecondPwdInput = (evt: ChangeEvent<HTMLInputElement>) => {
+  const handleSecondPwdInput = (evt) => {
     const { value } = evt.target;
     setSecondPwd(value);
   };
-
   const handlePwdCheck = () => {
     if (secondPwd) {
       setSamePwd(secondPwd == input.password);
     }
   };
-
   useEffect(() => {
     if (!samePwd) {
       toast.error("two passwords not same");
@@ -120,7 +117,6 @@ export default function InvitePage() {
   if (!token) return "token not found";
   if (checkLoading) return "checking token valid";
   if (!valid) return "invite token expires or invalid";
-
   return (
     <StyledWrapper>
       <div className="form animate__animated animate__fadeInDown animate__faster">

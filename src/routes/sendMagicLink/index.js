@@ -7,12 +7,12 @@ import BASE_URL from "../../app/config";
 import StyledWrapper from "./styled";
 import Input from "../../common/component/styled/Input";
 import Button from "../../common/component/styled/Button";
-import { useSendMagicLinkMutation } from "../../app/services/auth";
+import { useSendLoginMagicLinkMutation } from "../../app/services/auth";
 import SentTip from "./SentTip";
 
 export default function SendMagicLinkPage() {
   const [sent, setSent] = useState(false);
-  const [sendMagicLink, { isSuccess, isLoading, error }] = useSendMagicLinkMutation();
+  const [sendMagicLink, { isSuccess, isLoading, error }] = useSendLoginMagicLinkMutation();
 
   const navigateTo = useNavigate();
   // const dispatch = useDispatch();
@@ -32,13 +32,13 @@ export default function SendMagicLinkPage() {
           toast.error(error.data);
           break;
         case 401:
-          toast.error("username or password incorrect");
+          toast.error("Username or Password Incorrect");
           break;
         case 404:
-          toast.error("account not exsit");
+          toast.error("Account not exsit");
           break;
         default:
-          toast.error("something error");
+          toast.error("Something Error");
           break;
       }
       return;
