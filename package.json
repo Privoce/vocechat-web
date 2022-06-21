@@ -1,6 +1,6 @@
 {
   "name": "rustchat-web",
-  "version": "0.2.14",
+  "version": "0.3.0",
   "private": true,
   "homepage": "https://privoce.rustchat.com",
   "dependencies": {
