@@ -132,6 +132,11 @@ export const authApi = createApi({
         url: `/token/metamask/nonce?public_address=${address}`
       })
     }),
+    checkEmail: builder.query({
+      query: (email) => ({
+        url: `/user/check_email?email=${encodeURIComponent(email)}`
+      })
+    }),
     getCredentials: builder.query({
       query: () => ({
         url: `/token/credentials`
@@ -165,6 +170,7 @@ export const authApi = createApi({
 });
 
 export const {
+  useLazyCheckEmailQuery,
   useGetInitializedQuery,
   useSendLoginMagicLinkMutation,
   useSendRegMagicLinkMutation,

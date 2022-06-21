@@ -8,6 +8,7 @@ const whiteList = [
   "register",
   "sendLoginMagicLink",
   "sendRegMagicLink",
+  "checkEmail",
   "checkMagicTokenValid",
   "getGoogleAuthConfig",
   "getGithubAuthConfig",
