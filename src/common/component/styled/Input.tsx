@@ -35,6 +35,7 @@ const StyledWrapper = styled.div`
   }
 `;
 
+// todo: check ime problem
 const StyledInput = styled.input`
   width: 100%;
   background: #ffffff;

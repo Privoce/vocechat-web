@@ -2852,6 +2852,13 @@
   dependencies:
     "@types/node" "*"
 
+"@types/emoji-mart@^3.0.9":
+  version "3.0.9"
+  resolved "https://registry.npmmirror.com/@types/emoji-mart/-/emoji-mart-3.0.9.tgz#2f7ef5d9ec194f28029c46c81a5fc1e5b0efa73c"
+  integrity sha512-qdBo/2Y8MXaJ/2spKjDZocuq79GpnOhkwMHnK2GnVFa8WYFgfA+ei6sil3aeWQPCreOKIx9ogPpR5+7MaOqYAA==
+  dependencies:
+    "@types/react" "*"
+
 "@types/escape-html@^1.0.0":
   version "1.0.2"
   resolved "http://mirrors.cloud.tencent.com/npm/@types%2fescape-html/-/escape-html-1.0.2.tgz#072b7b13784fb3cee9c2450c22f36405983f5e3c"
@@ -2977,6 +2984,13 @@
     jest-matcher-utils "^27.0.0"
     pretty-format "^27.0.0"
 
+"@types/jquery@*":
+  version "3.5.14"
+  resolved "https://registry.npmmirror.com/@types/jquery/-/jquery-3.5.14.tgz#ac8e11ee591e94d4d58da602cb3a5a8320dee577"
+  integrity sha512-X1gtMRMbziVQkErhTQmSe2jFwwENA/Zr+PprCkF63vFq+Yt5PZ4AlKqgmeNlwgn7dhsXEK888eIW2520EpC+xg==
+  dependencies:
+    "@types/sizzle" "*"
+
 "@types/js-cookie@^2.2.6":
   version "2.2.7"
   resolved "http://mirrors.cloud.tencent.com/npm/@types%2fjs-cookie/-/js-cookie-2.2.7.tgz#226a9e31680835a6188e887f3988e60c04d3f6a3"
@@ -3001,6 +3015,13 @@
   version "4.0.2"
   resolved "http://mirrors.cloud.tencent.com/npm/@types%2flong/-/long-4.0.2.tgz#b74129719fc8d11c01868010082d483b7545591a"
   integrity sha512-MqTGEo5bj5t157U6fA/BiDynNkn0YknVdh48CMPkTSpFTVmvao5UQmm7uEF6xBEo7qIMAlY/JSleYaE6VOdpaA==
+
+"@types/masonry-layout@^4.2.5":
+  version "4.2.5"
+  resolved "https://registry.npmmirror.com/@types/masonry-layout/-/masonry-layout-4.2.5.tgz#1d6180ec07ad21df7f85d20ac6e99b061854d00f"
+  integrity sha512-/DSIDMDsXlS+7JfzywA2zm9x+veO/z1QDcjKLS4OhDZH7sFdreKJbNFKb7jYA3NrY3bRvFGCamp5+DeIArLzow==
+  dependencies:
+    "@types/jquery" "*"
 
 "@types/mdast@^3.0.0":
   version "3.0.10"
@@ -3071,6 +3092,20 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-helmet@^6.1.5":
+  version "6.1.5"
+  resolved "https://registry.npmmirror.com/@types/react-helmet/-/react-helmet-6.1.5.tgz#35f89a6b1646ee2bc342a33a9a6c8777933f9083"
+  integrity sha512-/ICuy7OHZxR0YCAZLNg9r7I9aijWUWvxaPR6uTuyxe8tAj5RL4Sw1+R6NhXUtOsarkGYPmaHdBDvuXh2DIN/uA==
+  dependencies:
+    "@types/react" "*"
+
+"@types/react-linkify@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.npmmirror.com/@types/react-linkify/-/react-linkify-1.0.1.tgz#4ece351faef22bfde1280b6d9ace5e88683a74d4"
+  integrity sha512-qPxYwjB41ezoKdLXs0MrQ1FnhF3apyyxf3J7WVQQCBu/GyZQAW7Y3TY4317jdh0450QJ4fLqj0rnhIJvFZOamQ==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react@*":
   version "18.0.9"
   resolved "http://mirrors.tencent.com/npm/@types%2freact/-/react-18.0.9.tgz#d6712a38bd6cd83469603e7359511126f122e878"
@@ -3120,6 +3155,11 @@
   dependencies:
     "@types/mime" "^1"
     "@types/node" "*"
+
+"@types/sizzle@*":
+  version "2.3.3"
+  resolved "https://registry.npmmirror.com/@types/sizzle/-/sizzle-2.3.3.tgz#ff5e2f1902969d305225a047c8a0fd5c915cebef"
+  integrity sha512-JYM8x9EGF163bEyhdJBpR2QX1R5naCJHC8ucJylJ3w9/CVBaskdQ8WqBf8MmQrd1kRvp/a4TS8HJ+bxzR7ZJYQ==
 
 "@types/sockjs@^0.3.33":
   version "0.3.33"
