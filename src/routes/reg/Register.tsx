@@ -90,8 +90,9 @@ export default function Reg() {
     who_can_sign_up: whoCanSignUp
   } = loginConfig;
   const googleLogin = enableGoogleLogin && clientId;
-  // 没有开放注册
-  if (whoCanSignUp !== "EveryOne") return `Open Register is Closed!`;
+  // magic token 没有并且没有开放注册
+  if (whoCanSignUp !== "EveryOne" && !magicToken)
+    return `Sign up method is updated to Invitation Link Only`;
   const { email, password, confirmPassword } = input;
   if (data?.mail_is_sent) return <EmailNextTip />;
   const isLoading = signingUp || checkingEmail;
