@@ -185,7 +185,7 @@ export class AgoraClient {
  }
  // private function
  _initCallbacks() {
-  // rtc
+  // 私有方法，调整音频状态返回的时间，以 ms 为单位
   AgoraRTC.setParameter("AUDIO_VOLUME_INDICATION_INTERVAL", 400);
   this.rtc.client.enableAudioVolumeIndicator();
   this._log(this.rtc.client);
@@ -323,6 +323,7 @@ export class AgoraClient {
    await this._initDevice();
   };
  }
+ // 初始化麦克风设备并展示在 UI 上
  async _initDefaultMicrophone() {
   const microphone = await AgoraRTC.getMicrophones();
   const microphones = microphone.map((item) => {
@@ -331,6 +332,7 @@ export class AgoraClient {
   store.dispatch(setDevice({ deviceId: microphones[0].deviceId, type: "microphone" }));
   this.setDevice(microphones[0].deviceId, "microphone");
  }
+ // 初始化摄像头设备并展示在 UI 上
  async _initDefaultCamera() {
   const camera = await AgoraRTC.getCameras();
 
