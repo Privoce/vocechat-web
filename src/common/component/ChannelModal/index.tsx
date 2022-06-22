@@ -14,13 +14,13 @@ import { useCreateChannelMutation } from "../../../app/services/channel";
 import { useAppSelector } from "../../../app/store";
 
 export default function ChannelModal({ personal = false, closeModal }) {
-  const { conactsData, loginUid } = useAppSelector((store) => {
-    return { conactsData: store.contacts.byId, loginUid: store.authData.uid };
+  const { contactsData, loginUid } = useAppSelector((store) => {
+    return { contactsData: store.contacts.byId, loginUid: store.authData.uid };
   });
   const navigateTo = useNavigate();
   const [data, setData] = useState({
     name: "",
-    dsecription: "",
+    description: "",
     members: [loginUid],
     is_public: !personal
   });
@@ -71,14 +71,12 @@ export default function ChannelModal({ personal = false, closeModal }) {
     const { members } = data;
     const { uid } = currentTarget.dataset;
     let tmp = members.includes(+uid) ? members.filter((m) => m != uid) : [...members, +uid];
-    console.log(uid, currentTarget);
     setData((prev) => {
       return { ...prev, members: tmp };
     });
-    console.log({ data });
   };
-  console.log("contacts", contacts);
-  const loginUser = conactsData[loginUid];
+
+  const loginUser = contactsData[loginUid];
   if (!loginUser) return null;
   const { name, members, is_public } = data;
   return (
@@ -98,7 +96,6 @@ export default function ChannelModal({ personal = false, closeModal }) {
                 {contacts.map((u) => {
                   const { uid } = u;
                   const checked = members.includes(uid);
-                  console.log({ checked });
                   return (
                     <li
                       key={uid}
