@@ -1,12 +1,12 @@
 {
   "files": {
     "main.css": "/static/css/main.a826c9c0.css",
-    "main.js": "/static/js/main.a4030a33.js",
+    "main.js": "/static/js/main.351838ed.js",
     "static/js/964.3704d01f.chunk.js": "/static/js/964.3704d01f.chunk.js",
     "static/js/300.ceccf3eb.chunk.js": "/static/js/300.ceccf3eb.chunk.js",
     "static/js/85.e43e859a.chunk.js": "/static/js/85.e43e859a.chunk.js",
-    "static/js/310.78b839e5.chunk.js": "/static/js/310.78b839e5.chunk.js",
-    "static/js/969.eee1ba6b.chunk.js": "/static/js/969.eee1ba6b.chunk.js",
+    "static/js/866.42507fc3.chunk.js": "/static/js/866.42507fc3.chunk.js",
+    "static/js/981.e0570b6e.chunk.js": "/static/js/981.e0570b6e.chunk.js",
     "static/js/902.fa077b51.chunk.js": "/static/js/902.fa077b51.chunk.js",
     "static/js/876.f2a0b625.chunk.js": "/static/js/876.f2a0b625.chunk.js",
     "static/js/923.1b51fa48.chunk.js": "/static/js/923.1b51fa48.chunk.js",
@@ -15,7 +15,7 @@
     "static/js/728.9d0bc481.chunk.js": "/static/js/728.9d0bc481.chunk.js",
     "static/js/106.4e3739e4.chunk.js": "/static/js/106.4e3739e4.chunk.js",
     "static/css/557.298f31c6.chunk.css": "/static/css/557.298f31c6.chunk.css",
-    "static/js/557.8d8a88de.chunk.js": "/static/js/557.8d8a88de.chunk.js",
+    "static/js/557.056eb72f.chunk.js": "/static/js/557.056eb72f.chunk.js",
     "static/js/888.b37fc96e.chunk.js": "/static/js/888.b37fc96e.chunk.js",
     "static/js/338.a5b8959c.chunk.js": "/static/js/338.a5b8959c.chunk.js",
     "static/js/512.94ff89b9.chunk.js": "/static/js/512.94ff89b9.chunk.js",
@@ -31,7 +31,6 @@
     "static/media/sound.on.svg?url": "/static/media/sound.on.b52a5b656fded2ead800.svg",
     "static/media/add.emoji.svg?url": "/static/media/add.emoji.b1d5ed1b1206ddc32d02.svg",
     "static/media/reaction.svg?url": "/static/media/reaction.dfc99cbb32dd13e55782.svg",
-    "static/media/google.svg?url": "/static/media/google.db7474a481e12799b961.svg",
     "static/media/mic.on.svg?url": "/static/media/mic.on.ce4d7bc6e790710d7c3b.svg",
     "static/media/reply.svg?url": "/static/media/reply.5d4e2e3c5d8cf0c084f0.svg",
     "static/media/search.svg?url": "/static/media/search.6ee4d07d418f350e5389.svg",
@@ -45,6 +44,6 @@
   },
   "entrypoints": [
     "static/css/main.a826c9c0.css",
-    "static/js/main.a4030a33.js"
+    "static/js/main.351838ed.js"
   ]
 }
