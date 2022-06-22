@@ -1,4 +1,4 @@
-"use strict";(globalThis.webpackChunkrustchat_web=globalThis.webpackChunkrustchat_web||[]).push([[125],{1125:(e,n,i)=>{i.r(n),i.d(n,{default:()=>f});var s=i(7313),t=i(3709),a=i(7890),o=i(1690),c=i(3067),r=i(1296),l=i(1864),d=i(3657),u=i(9184),h=i(6417);const g=u.ZP.div`
+"use strict";(globalThis.webpackChunkrustchat_web=globalThis.webpackChunkrustchat_web||[]).push([[300],{5300:(e,n,i)=>{i.r(n),i.d(n,{default:()=>f});var s=i(7313),t=i(3709),a=i(7890),o=i(1057),c=i(4050),r=i(1140),l=i(2509),d=i(3657),u=i(9184),h=i(6417);const g=u.ZP.div`
   display: flex;
   flex-direction: column;
   align-items: center;

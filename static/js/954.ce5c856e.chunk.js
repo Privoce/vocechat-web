@@ -1,4 +1,4 @@
-"use strict";(globalThis.webpackChunkrustchat_web=globalThis.webpackChunkrustchat_web||[]).push([[564],{5874:(e,t,n)=>{n.d(t,{Z:()=>c});var i=n(7313),s=n(9184),a=n(6417);const o=s.ZP.form`
+"use strict";(globalThis.webpackChunkrustchat_web=globalThis.webpackChunkrustchat_web||[]).push([[954],{643:(e,t,n)=>{n.d(t,{Z:()=>c});var i=n(7313),s=n(9184),a=n(6417);const o=s.ZP.form`
   > .option {
     &:not(:last-child) {
       margin-bottom: 8px;
@@ -57,7 +57,7 @@
       }
     }
   }
-`,r={},l={};function c(e){let{options:t,values:n=l,value:s=r,defaultValue:c,onChange:p}=e;const d=(0,i.useId)(),[x,h]=(0,i.useState)(c),m=s!==r?s:x;return(0,a.jsx)(o,{children:t.map(((e,t)=>(0,a.jsxs)("div",{className:"option",children:[(0,a.jsx)("input",{type:"radio",checked:(n!==l?n.indexOf(m):m)===t,onChange:()=>{const e=n===l?t:n[t];s===r&&h(e),p&&p(e)},id:`${d}-${t}`}),(0,a.jsx)("div",{className:"box",children:(0,a.jsx)("label",{htmlFor:`${d}-${t}`,children:e})})]},t)))})}},3787:(e,t,n)=>{n.r(t),n.d(t,{default:()=>_});var i=n(7313),s=n(182),a=n(3918),o=(n(296),n(9184)),r=n(1296);const l=n.p+"static/media/play.ec27369d1d14e509155a.svg";var c=n(6417);const p=o.ZP.div`
+`,r={},l={};function c(e){let{options:t,values:n=l,value:s=r,defaultValue:c,onChange:p}=e;const d=(0,i.useId)(),[x,h]=(0,i.useState)(c),m=s!==r?s:x;return(0,a.jsx)(o,{children:t.map(((e,t)=>(0,a.jsxs)("div",{className:"option",children:[(0,a.jsx)("input",{type:"radio",checked:(n!==l?n.indexOf(m):m)===t,onChange:()=>{const e=n===l?t:n[t];s===r&&h(e),p&&p(e)},id:`${d}-${t}`}),(0,a.jsx)("div",{className:"box",children:(0,a.jsx)("label",{htmlFor:`${d}-${t}`,children:e})})]},t)))})}},1359:(e,t,n)=>{n.r(t),n.d(t,{default:()=>_});var i=n(7313),s=n(182),a=n(3918),o=(n(296),n(9184)),r=n(1140);const l=n.p+"static/media/play.ec27369d1d14e509155a.svg";var c=n(6417);const p=o.ZP.div`
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -96,7 +96,7 @@
       line-height: 20px;
     }
   }
-`;function d(e){let{nextStep:t}=e;return(0,c.jsxs)(p,{children:[(0,c.jsx)("span",{className:"primaryText",children:"Welcome to your Rustchat!"}),(0,c.jsx)("span",{className:"secondaryText",children:"Everything in this space is owned by you. Let\u2019s set up your space!"}),(0,c.jsxs)(r.Z,{className:"startButton",onClick:t,children:[(0,c.jsx)("img",{src:l,alt:"play icon"}),(0,c.jsx)("span",{children:"Start"})]})]})}var x=n(3657),h=n(3067);const m=o.ZP.div`
+`;function d(e){let{nextStep:t}=e;return(0,c.jsxs)(p,{children:[(0,c.jsx)("span",{className:"primaryText",children:"Welcome to your Rustchat!"}),(0,c.jsx)("span",{className:"secondaryText",children:"Everything in this space is owned by you. Let\u2019s set up your space!"}),(0,c.jsxs)(r.Z,{className:"startButton",onClick:t,children:[(0,c.jsx)("img",{src:l,alt:"play icon"}),(0,c.jsx)("span",{children:"Start"})]})]})}var x=n(3657),h=n(4050);const m=o.ZP.div`
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -136,7 +136,7 @@
     width: 360px;
     margin-top: 24px;
   }
-`;function g(e){let{serverName:t,setServerName:n,nextStep:i}=e;return(0,c.jsxs)(m,{children:[(0,c.jsx)("span",{className:"primaryText",children:"Create a new server"}),(0,c.jsx)("span",{className:"secondaryText",children:"Servers are shared environments where teams can work on projects and chat."}),(0,c.jsx)(h.Z,{className:"input",placeholder:"Enter server name",value:t,onChange:e=>n(e.target.value)}),(0,c.jsx)(r.Z,{className:"button",onClick:()=>{""!==t?i():x.ZP.error("Please enter server name!")},children:"Create Server"})]})}var u=n(3709),f=n(4695),b=n(1864),w=n(1690);const y=o.ZP.div`
+`;function g(e){let{serverName:t,setServerName:n,nextStep:i}=e;return(0,c.jsxs)(m,{children:[(0,c.jsx)("span",{className:"primaryText",children:"Create a new server"}),(0,c.jsx)("span",{className:"secondaryText",children:"Servers are shared environments where teams can work on projects and chat."}),(0,c.jsx)(h.Z,{className:"input",placeholder:"Enter server name",value:t,onChange:e=>n(e.target.value)}),(0,c.jsx)(r.Z,{className:"button",onClick:()=>{""!==t?i():x.ZP.error("Please enter server name!")},children:"Create Server"})]})}var u=n(3709),f=n(2378),b=n(2509),w=n(1057);const y=o.ZP.div`
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -185,7 +185,7 @@
     width: 360px;
     margin-top: 24px;
   }
-`;function v(e){let{serverName:t,nextStep:n}=e;const s=(0,u.I0)(),[a,{isLoading:o,error:l}]=(0,f.QK)(),[p,{isLoading:d,isSuccess:m,error:g}]=(0,b.YA)(),{data:v}=(0,f.z3)(),[j,{isLoading:N,isSuccess:S}]=(0,f.e2)(),[k,T]=(0,i.useState)(""),[C,Z]=(0,i.useState)(""),[z,P]=(0,i.useState)("");return(0,i.useEffect)((()=>{void 0!==l&&x.ZP.error(`Failed to sign up: ${l.data}`)}),[l]),(0,i.useEffect)((()=>{void 0!==g&&x.ZP.error(`Login failed: ${g.data}`)}),[g]),(0,i.useEffect)((()=>{m&&(s((0,w.R4)(!0)),setTimeout((()=>{j({...v,name:t})}),0))}),[m]),(0,i.useEffect)((()=>{S&&n()}),[S]),(0,c.jsxs)(y,{children:[(0,c.jsx)("span",{className:"primaryText",children:"Now let\u2019s set up your admin account"}),(0,c.jsx)("span",{className:"secondaryText",children:"You are the 1st user and admin of your space!"}),(0,c.jsx)(h.Z,{className:"input",placeholder:"Enter your email",value:k,onChange:e=>T(e.target.value)}),(0,c.jsx)(h.Z,{className:"input",type:"password",placeholder:"Enter your password",value:C,onChange:e=>Z(e.target.value)}),(0,c.jsx)(h.Z,{className:"input",type:"password",placeholder:"Confirm your password",value:z,onChange:e=>P(e.target.value)}),(0,c.jsx)(r.Z,{className:"button",onClick:async()=>{""!==k?""!==C?C===z?(await a({email:k,name:"Admin",password:C,gender:0}),await p({email:k,password:C,type:"password"})):x.ZP.error("Two passwords do not match!"):x.ZP.error("Please enter admin password!"):x.ZP.error("Please enter admin email!")},children:o||d||N?"...":"Sign Up"})]})}var j=n(5874);const N=o.ZP.div`
+`;function v(e){let{serverName:t,nextStep:n}=e;const s=(0,u.I0)(),[a,{isLoading:o,error:l}]=(0,f.QK)(),[p,{isLoading:d,isSuccess:m,error:g}]=(0,b.YA)(),{data:v}=(0,f.z3)(),[j,{isLoading:N,isSuccess:S}]=(0,f.e2)(),[k,T]=(0,i.useState)(""),[C,Z]=(0,i.useState)(""),[z,P]=(0,i.useState)("");return(0,i.useEffect)((()=>{void 0!==l&&x.ZP.error(`Failed to sign up: ${l.data}`)}),[l]),(0,i.useEffect)((()=>{void 0!==g&&x.ZP.error(`Login failed: ${g.data}`)}),[g]),(0,i.useEffect)((()=>{m&&(s((0,w.R4)(!0)),setTimeout((()=>{j({...v,name:t})}),0))}),[m]),(0,i.useEffect)((()=>{S&&n()}),[S]),(0,c.jsxs)(y,{children:[(0,c.jsx)("span",{className:"primaryText",children:"Now let\u2019s set up your admin account"}),(0,c.jsx)("span",{className:"secondaryText",children:"You are the 1st user and admin of your space!"}),(0,c.jsx)(h.Z,{className:"input",placeholder:"Enter your email",value:k,onChange:e=>T(e.target.value)}),(0,c.jsx)(h.Z,{className:"input",type:"password",placeholder:"Enter your password",value:C,onChange:e=>Z(e.target.value)}),(0,c.jsx)(h.Z,{className:"input",type:"password",placeholder:"Confirm your password",value:z,onChange:e=>P(e.target.value)}),(0,c.jsx)(r.Z,{className:"button",onClick:async()=>{""!==k?""!==C?C===z?(await a({email:k,name:"Admin",password:C,gender:0}),await p({email:k,password:C,type:"password"})):x.ZP.error("Two passwords do not match!"):x.ZP.error("Please enter admin password!"):x.ZP.error("Please enter admin email!")},children:o||d||N?"...":"Sign Up"})]})}var j=n(643);const N=o.ZP.div`
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -216,7 +216,7 @@
     height: 44px;
     margin-top: 24px;
   }
-`;function S(e){let{nextStep:t}=e;const{data:n}=(0,f.ww)(),[s,{isSuccess:a,error:o}]=(0,f.QP)(),[l,p]=(0,i.useState)(void 0);return(0,i.useEffect)((()=>{n&&p(n.who_can_sign_up)}),[n]),(0,i.useEffect)((()=>{void 0!==o&&x.ZP.error(`Failed to update sign up rule: ${o.data}`)}),[o]),(0,i.useEffect)((()=>{a&&t()}),[a]),(0,c.jsxs)(N,{children:[(0,c.jsx)("span",{className:"primaryText",children:"Last step: invite others!"}),(0,c.jsx)("span",{className:"secondaryText",children:"Firstly, who can sign up to this server?"}),(0,c.jsx)(j.Z,{options:["Everyone","Invitation link only"],values:["EveryOne","InvitationOnly"],value:l,onChange:p}),(0,c.jsx)(r.Z,{className:"button",disabled:!l,onClick:()=>{void 0!==n&&s({...n,who_can_sign_up:l})},children:"Confirm"})]})}var k=n(5120);const T=o.ZP.div`
+`;function S(e){let{nextStep:t}=e;const{data:n}=(0,f.ww)(),[s,{isSuccess:a,error:o}]=(0,f.QP)(),[l,p]=(0,i.useState)(void 0);return(0,i.useEffect)((()=>{n&&p(n.who_can_sign_up)}),[n]),(0,i.useEffect)((()=>{void 0!==o&&x.ZP.error(`Failed to update sign up rule: ${o.data}`)}),[o]),(0,i.useEffect)((()=>{a&&t()}),[a]),(0,c.jsxs)(N,{children:[(0,c.jsx)("span",{className:"primaryText",children:"Last step: invite others!"}),(0,c.jsx)("span",{className:"secondaryText",children:"Firstly, who can sign up to this server?"}),(0,c.jsx)(j.Z,{options:["Everyone","Invitation link only"],values:["EveryOne","InvitationOnly"],value:l,onChange:p}),(0,c.jsx)(r.Z,{className:"button",disabled:!l,onClick:()=>{void 0!==n&&s({...n,who_can_sign_up:l})},children:"Confirm"})]})}var k=n(3165);const T=o.ZP.div`
   height: 100%;
   display: flex;
   flex-direction: column;

@@ -1,4 +1,4 @@
-"use strict";(globalThis.webpackChunkrustchat_web=globalThis.webpackChunkrustchat_web||[]).push([[547],{3547:(e,t,o)=>{o.r(t),o.d(t,{default:()=>p});var i=o(7890);const r=o(9184).ZP.div`
+"use strict";(globalThis.webpackChunkrustchat_web=globalThis.webpackChunkrustchat_web||[]).push([[964],{1964:(e,t,o)=>{o.r(t),o.d(t,{default:()=>p});var i=o(7890);const r=o(9184).ZP.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -6,7 +6,7 @@
   .form {
     max-width: 440px;
     padding: 36px 40px 32px 40px;
-    box-shadow: 0px 4px 8px -2px rgba(16, 24, 40, 0.1), 0px 2px 4px -2px rgba(16, 24, 40, 0.06);
+    box-shadow: 0 4px 8px -2px rgba(16, 24, 40, 0.1), 0px 2px 4px -2px rgba(16, 24, 40, 0.06);
     border-radius: 12px;
     .tips {
       display: flex;
