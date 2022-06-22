@@ -38,14 +38,6 @@ export default function LoginPage() {
     const exists = query.get("exists");
     if (oauth) {
       switch (oauth) {
-        case "github":
-          if (code) {
-            login({
-              code: code,
-              type: "github"
-            });
-          }
-          break;
         case "oidc":
           if (code && state) {
             login({

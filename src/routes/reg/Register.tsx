@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 // import { useNavigate } from "react-router-dom";
-import BASE_URL from "../../app/config";
+import BASE_URL, { KEY_LOCAL_MAGIC_TOKEN } from "../../app/config";
 import Input from "../../common/component/styled/Input";
 import Button from "../../common/component/styled/Button";
 import { useLazyCheckEmailQuery, useSendRegMagicLinkMutation } from "../../app/services/auth";
@@ -30,6 +30,8 @@ export default function Reg() {
     // const githubCode = query.get("gcode");
     const token = query.get("magic_token");
     if (token) {
+      //本地存一下 magic token 后续oauth流程用到
+      localStorage.setItem(KEY_LOCAL_MAGIC_TOKEN, token);
       setMagicToken(token);
     }
   }, []);

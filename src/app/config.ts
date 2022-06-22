@@ -35,6 +35,7 @@ export const KEY_DEVICE_KEY = "RUSTCHAT_DEVICE_KEY";
 export const KEY_USERS_VERSION = "RUSTCHAT_USERS_VERSION";
 export const KEY_AFTER_MID = "RUSTCHAT_AFTER_MID";
 export const KEY_PWA_INSTALLED = "RUSTCHAT_PWA_INSTALLED";
+export const KEY_LOCAL_MAGIC_TOKEN = "RUSTCHAT_LOCAL_MAGIC_TOKEN";
 export const Emojis = ["👍", "❤️", "😄", "👀", "👎", "🎉", "🙁", "🚀"];
 export const Views = {
   item: "item",
