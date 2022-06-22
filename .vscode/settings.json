@@ -26,5 +26,5 @@
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "cSpell.words": ["btns", "rustchat"]
+  "cSpell.words": ["btns", "oidc", "rustchat"]
 }
