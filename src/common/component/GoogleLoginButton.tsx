@@ -24,9 +24,10 @@ const StyledSocialButton = styled(Button)`
 
 interface Props {
   clientId: string;
+  type?: "login" | "register";
 }
 
-const GoogleLoginButton: FC<Props> = ({ clientId }) => {
+const GoogleLoginButton: FC<Props> = ({ type = "login", clientId }) => {
   const [login, { isSuccess, isLoading }] = useLoginMutation();
 
   const { signIn, loaded } = useGoogleLogin({
@@ -60,7 +61,7 @@ const GoogleLoginButton: FC<Props> = ({ clientId }) => {
   return (
     <StyledSocialButton disabled={!loaded || isLoading} onClick={handleGoogleLogin}>
       <img className="icon" src={googleSvg} alt="google icon" />
-      {loaded ? `Sign in with Google` : `Initailizing`}
+      {loaded ? `${type === "login" ? "Sign in" : "Sign up"} with Google` : `Initializing`}
     </StyledSocialButton>
   );
 };

@@ -1,6 +1,4 @@
 import { Outlet } from "react-router-dom";
-// import { useMatch } from "react-router-dom";
-
 import StyledWrapper from "./styled";
 
 export default function RegContainer() {

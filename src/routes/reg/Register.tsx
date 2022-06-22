@@ -139,8 +139,10 @@ export default function Reg() {
         </Button>
       </form>
       <hr className="or" />
-      {googleLogin && <GoogleLoginButton clientId={clientId} />}
-      {enableGithubLogin && <GithubLoginButton config={githubAuthConfig} />}
+      {googleLogin && <GoogleLoginButton type="register" clientId={clientId} />}
+      {enableGithubLogin && (
+        <GithubLoginButton type="register" client_id={githubAuthConfig?.client_id} />
+      )}
       <SignInLink />
     </>
   );

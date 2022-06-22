@@ -84,13 +84,18 @@ export default function LoginPage() {
           toast.error(error.data);
           break;
         case 401:
-          toast.error("username or password incorrect");
+          toast.error("Username or Password incorrect");
           break;
         case 404:
-          toast.error("account not exsit");
+          toast.error("Account not exist");
+          break;
+        case 410:
+          toast.error(
+            "No associated account found, please contact admin for an invitation link to join."
+          );
           break;
         default:
-          toast.error("something error");
+          toast.error("Something Error");
           break;
       }
       return;
@@ -173,7 +178,7 @@ export default function LoginPage() {
         {hasDivider && <hr className="or" />}
         {enableMagicLink && <MagicLinkLogin />}
         {googleLogin && <GoogleLoginButton clientId={clientId} />}
-        {enableGithubLogin && <GithubLoginButton config={githubAuthConfig} />}
+        {enableGithubLogin && <GithubLoginButton client_id={githubAuthConfig?.client_id} />}
         {enableMetamaskLogin && <MetamaskLoginButton login={login} />}
         {oidc.length > 0 && <OidcLoginButton issuers={oidc} />}
         {whoCanSignUp === "EveryOne" && <SignUpLink />}
