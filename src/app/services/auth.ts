@@ -2,8 +2,8 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { nanoid } from "@reduxjs/toolkit";
 import baseQuery from "./base.query";
 import { setAuthData, updateToken, resetAuthData, updateInitialized } from "../slices/auth.data";
-import BASE_URL, { KEY_DEVICE_KEY } from "../config";
-import { AuthData } from '../../types/auth';
+import BASE_URL, { KEY_DEVICE_KEY, KEY_LOCAL_MAGIC_TOKEN } from "../config";
+import { AuthData } from "../../types/auth";
 
 const getDeviceId = () => {
   let d = localStorage.getItem(KEY_DEVICE_KEY);
@@ -43,6 +43,8 @@ export const authApi = createApi({
             console.log("login resp", data);
             dispatch(setAuthData(data));
           }
+          // 从localstorage 去掉 magic token
+          localStorage.removeItem(KEY_LOCAL_MAGIC_TOKEN);
         } catch {
           console.log("login error");
         }
@@ -119,7 +121,7 @@ export const authApi = createApi({
         },
         url: `user/send_login_magic_link?email=${encodeURIComponent(email)}`,
         method: "POST",
-        responseHandler: (response) => response.text()
+        responseHandler: (response: Response) => response.text()
         // body: { email }
       })
     }),
