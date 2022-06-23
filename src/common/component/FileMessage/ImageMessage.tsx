@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, FC } from "react";
 import styled from "styled-components";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
@@ -33,17 +33,25 @@ const Styled = styled.div`
   }
 `;
 
-export default function ImageMessage({
+interface Props {
+  uploading: boolean;
+  progress: number;
+  thumbnail: string;
+  download: string;
+  content: string;
+  properties: { width: number; height: number };
+}
+
+const ImageMessage: FC<Props> = ({
   uploading,
   progress,
   thumbnail,
   download,
   content,
-  properties = {}
-}) {
+  properties
+}) => {
   const [url, setUrl] = useState(thumbnail);
   const { width = 0, height = 0 } = getDefaultSize(properties);
-  console.log("image props", properties, width, height);
   useEffect(() => {
     const newUrl = thumbnail;
     const img = new Image();
@@ -64,10 +72,7 @@ export default function ImageMessage({
             <CircularProgressbar
               value={progress}
               strokeWidth={50}
-              styles={buildStyles({
-                storke: "#000",
-                strokeLinecap: "butt"
-              })}
+              styles={buildStyles({ strokeLinecap: "butt" })}
             />
           </div>
         </div>
@@ -85,4 +90,6 @@ export default function ImageMessage({
       />
     </Styled>
   );
-}
+};
+
+export default ImageMessage;

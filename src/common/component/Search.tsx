@@ -34,11 +34,10 @@ const StyledWrapper = styled.div`
 `;
 
 export default function Search() {
-  console.log("searching");
   return (
     <StyledWrapper>
       <div className="search">
-        <img src={searchIcon} />
+        <img src={searchIcon} alt="search icon" />
         <input placeholder="Search..." className="input" />
       </div>
       <Tooltip tip="More" placement="bottom">

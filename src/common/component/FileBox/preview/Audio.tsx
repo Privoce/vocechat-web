@@ -1,4 +1,4 @@
-import { ReactEventHandler, useState } from "react";
+import { FC, ReactEventHandler, useState } from "react";
 import styled from "styled-components";
 
 const Styled = styled.div`
@@ -17,7 +17,11 @@ const Styled = styled.div`
   }
 `;
 
-export default function Audio({ url = "" }) {
+interface Props {
+  url: string;
+}
+
+const Audio: FC<Props> = ({ url }) => {
   const [err, setErr] = useState(false);
 
   const handleError: ReactEventHandler<HTMLAudioElement> = (err) => {
@@ -35,4 +39,6 @@ export default function Audio({ url = "" }) {
       )}
     </Styled>
   );
-}
+};
+
+export default Audio;

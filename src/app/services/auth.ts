@@ -3,7 +3,7 @@ import { nanoid } from "@reduxjs/toolkit";
 import baseQuery from "./base.query";
 import { setAuthData, updateToken, resetAuthData, updateInitialized } from "../slices/auth.data";
 import BASE_URL, { KEY_DEVICE_KEY } from "../config";
-import { AuthData } from '../../types/auth';
+import { AuthData } from "../../types/auth";
 
 const getDeviceId = () => {
   let d = localStorage.getItem(KEY_DEVICE_KEY);
@@ -18,7 +18,7 @@ export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery,
   endpoints: (builder) => ({
-    login: builder.mutation({
+    login: builder.mutation<AuthData, string>({
       query: (credentials) => ({
         url: "token/login",
         method: "POST",
@@ -30,17 +30,21 @@ export const authApi = createApi({
       }),
       transformResponse: (data: AuthData) => {
         const { avatar_updated_at } = data.user;
-        data.user.avatar =
-          avatar_updated_at == 0
-            ? ""
-            : `${BASE_URL}/resource/avatar?uid=${data.user.uid}&t=${avatar_updated_at}`;
-        return data;
+        return {
+          ...data,
+          user: {
+            ...data.user,
+            avatar:
+              avatar_updated_at == 0
+                ? ""
+                : `${BASE_URL}/resource/avatar?uid=${data.user.uid}&t=${avatar_updated_at}`
+          }
+        };
       },
       async onQueryStarted(params, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
           if (data) {
-            console.log("login resp", data);
             dispatch(setAuthData(data));
           }
         } catch {
@@ -119,7 +123,7 @@ export const authApi = createApi({
         },
         url: `user/send_login_magic_link?email=${encodeURIComponent(email)}`,
         method: "POST",
-        responseHandler: (response) => response.text()
+        responseHandler: (response: Response) => response.text()
         // body: { email }
       })
     }),

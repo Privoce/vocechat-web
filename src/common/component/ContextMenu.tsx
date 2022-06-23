@@ -1,7 +1,7 @@
 import { FC, MouseEvent } from "react";
 import StyledMenu from "./styled/Menu";
 
-interface Item {
+export interface Item {
   title: string;
   icon: string;
   handler: (e: MouseEvent) => void;

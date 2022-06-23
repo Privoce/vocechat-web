@@ -1,5 +1,4 @@
-// import { useState, useEffect } from "react";
-// import { useGoogleLogin } from "react-google-login";
+import { FC } from "react";
 import IconGithub from "../../assets/icons/github.svg";
 import styled from "styled-components";
 import Button from "./styled/Button";
@@ -14,16 +13,23 @@ const StyledSocialButton = styled(Button)`
   color: #344054;
   border: 1px solid #d0d5dd;
   background: none !important;
+
   .icon {
     width: 24px;
     height: 24px;
   }
 `;
 
-export default function GithubLoginButton({ config = {} }) {
+interface Props {
+  config: {
+    client_id: string;
+  };
+}
+
+const GithubLoginButton: FC<Props> = ({ config }) => {
   const { client_id } = config;
   const handleGithubLogin = () => {
-    location.href = `http://github.com/login/oauth/authorize?client_id=${client_id}`;
+    location.href = `https://github.com/login/oauth/authorize?client_id=${client_id}`;
     // console.log("github login");
   };
   // console.log("google login ", loaded);
@@ -31,7 +37,9 @@ export default function GithubLoginButton({ config = {} }) {
     <StyledSocialButton onClick={handleGithubLogin}>
       <IconGithub className="icon" />
       Sign in with Github
-      {/* {loaded ? `Sign in with Github` : `Initailizing`} */}
+      {/* {loaded ? `Sign in with Github` : `Initializing`} */}
     </StyledSocialButton>
   );
-}
+};
+
+export default GithubLoginButton;

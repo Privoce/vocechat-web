@@ -9,7 +9,6 @@ const Styled = styled.div`
 
 export default function FAQ() {
   const { data: serverVersion } = useGetServerVersionQuery();
-  console.log("build time", serverVersion);
   return (
     <Styled>
       <div className="item">Client Version: {process.env.VERSION}</div>
