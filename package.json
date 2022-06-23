@@ -43,6 +43,7 @@
     "linkify-plugin-mention": "^3.0.4",
     "linkifyjs": "^3.0.5",
     "localforage": "^1.10.0",
+    "lodash": "^4.17.21",
     "masonry-layout": "^4.2.2",
     "mini-css-extract-plugin": "^2.6.0",
     "pwa-badge": "^1.1.1",
