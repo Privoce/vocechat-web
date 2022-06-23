@@ -70,16 +70,10 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (error) {
-      console.log(error);
+      console.log("login err", error);
       switch (error.status) {
-        case "PARSING_ERROR":
-          toast.error(error.data);
-          break;
         case 401:
           toast.error("Username or Password incorrect");
-          break;
-        case 404:
-          toast.error("Account not exist");
           break;
         case 410:
           toast.error(

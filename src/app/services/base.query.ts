@@ -77,6 +77,18 @@ const baseQueryWithTokenCheck = async (args, api, extraOptions) => {
           toast.error(`${api.endpoint}: Failed to fetch`);
         }
         break;
+      case 401:
+        {
+          if (api.endpoint !== "login") {
+            api.dispatch(resetAuthData());
+            location.href = "/#/login";
+            toast.error("API Not Authenticated");
+          }
+        }
+        break;
+      case 403:
+        toast.error("Request Not Allowed");
+        break;
       case 404:
         {
           toast.error("Request Not Found");
@@ -87,22 +99,7 @@ const baseQueryWithTokenCheck = async (args, api, extraOptions) => {
           toast.error(result.error.data || "Server Error");
         }
         break;
-      case 401:
-        {
-          if (api.endpoint !== "login") {
-            api.dispatch(resetAuthData());
-            location.href = "/#/login";
-            toast.error("API Not Authenticated");
-          }
-          // toast.error("token expired, please login again");
-          // } else {
-          // return;
-          // }
-        }
-        break;
-      case 403:
-        toast.error("Request Not Allowed");
-        break;
+
       default:
         break;
     }

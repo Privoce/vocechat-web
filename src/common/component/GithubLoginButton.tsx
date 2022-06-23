@@ -31,7 +31,7 @@ type Props = {
 export default function GithubLoginButton({ type = "login", client_id }: Props) {
   //拿本地存的magic token
   const magic_token = localStorage.getItem(KEY_LOCAL_MAGIC_TOKEN);
-  const [login, { isLoading, isSuccess }] = useLoginMutation();
+  const [login, { isLoading, isSuccess, error }] = useLoginMutation();
   useEffect(() => {
     const query = new URLSearchParams(location.search);
     const isGithub = query.get("oauth") === "github";
@@ -50,6 +50,21 @@ export default function GithubLoginButton({ type = "login", client_id }: Props) 
       // navigateTo("/");
     }
   }, [isSuccess]);
+  useEffect(() => {
+    if (error) {
+      switch (error.status) {
+        case 410:
+          toast.error(
+            "No associated account found, please contact admin for an invitation link to join."
+          );
+          break;
+        default:
+          toast.error("Something Error");
+          break;
+      }
+      return;
+    }
+  }, [error]);
   const handleGithubLogin = () => {
     location.href = `http://github.com/login/oauth/authorize?client_id=${client_id}`;
     // console.log("github login");

@@ -5,9 +5,9 @@ export const ContentTypes = {
   text: "text/plain",
   markdown: "text/markdown",
   file: "rustchat/file",
+  archive: "rustchat/archive",
   formData: "multipart/form-data",
-  json: "application/json",
-  archive: "rustchat/archive"
+  json: "application/json"
 };
 export const firebaseConfig = {
   apiKey: "AIzaSyDyJ6B1Ouenoha_gdGkBwIkBNStlwhlbO0",

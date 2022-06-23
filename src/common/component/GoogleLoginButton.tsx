@@ -29,7 +29,7 @@ interface Props {
 }
 
 const GoogleLoginButton: FC<Props> = ({ type = "login", clientId }) => {
-  const [login, { isSuccess, isLoading }] = useLoginMutation();
+  const [login, { isSuccess, isLoading, error }] = useLoginMutation();
   //拿本地存的magic token
   const magic_token = localStorage.getItem(KEY_LOCAL_MAGIC_TOKEN);
   const { signIn, loaded } = useGoogleLogin({
@@ -56,6 +56,21 @@ const GoogleLoginButton: FC<Props> = ({ type = "login", clientId }) => {
       // navigateTo("/");
     }
   }, [isSuccess]);
+  useEffect(() => {
+    if (error) {
+      switch (error.status) {
+        case 410:
+          toast.error(
+            "No associated account found, please contact admin for an invitation link to join."
+          );
+          break;
+        default:
+          toast.error("Something Error");
+          break;
+      }
+      return;
+    }
+  }, [error]);
   const handleGoogleLogin = () => {
     signIn();
   };
