@@ -189,6 +189,20 @@ export const serverApi = createApi({
       query: () => ({
         url: `/admin/system/initialized`
       })
+    }),
+    createUser: builder.mutation({
+      query: (data: { username: string; email: string; password: string }) => ({
+        url: `/admin/user`,
+        method: "POST",
+        body: {
+          email: data.email,
+          password: data.password,
+          name: data.username,
+          gender: 0,
+          is_admin: false,
+          language: "en-US"
+        }
+      })
     })
   })
 });
@@ -223,5 +237,6 @@ export const {
   useGetThirdPartySecretQuery,
   useUpdateThirdPartySecretMutation,
   useCreateAdminMutation,
-  useGetInitializedQuery
+  useGetInitializedQuery,
+  useCreateUserMutation
 } = serverApi;

@@ -13,21 +13,27 @@ import IconArrowDown from "../../assets/icons/arrow.down.mini.svg";
 import IconCheck from "../../assets/icons/check.sign.svg";
 import useContactOperation from "../hook/useContactOperation";
 import { useAppSelector } from "../../app/store";
+import Button from "./styled/Button";
+import Input from "./styled/Input";
+import useAddUserManually from "../hook/useAddUserManually";
 
 const StyledWrapper = styled.section`
   display: flex;
   flex-direction: column;
   width: 100%;
+
   .intro {
     display: flex;
     flex-direction: column;
     margin-bottom: 40px;
+
     .title {
       font-weight: bold;
       font-size: 16px;
       line-height: 24px;
       color: #374151;
     }
+
     .desc {
       font-weight: normal;
       font-size: 12px;
@@ -35,12 +41,13 @@ const StyledWrapper = styled.section`
       color: #616161;
     }
   }
+
   .members {
     display: flex;
     flex-direction: column;
     gap: 4px;
     width: 512px;
-    margin-bottom: 176px;
+
     .member {
       width: 100%;
       display: flex;
@@ -48,15 +55,19 @@ const StyledWrapper = styled.section`
       align-items: center;
       padding: 8px 12px;
       border-radius: var(--br);
+
       &:hover {
         background: #f9fafb;
       }
+
       .left {
         display: flex;
         gap: 8px;
+
         .info {
           display: flex;
           flex-direction: column;
+
           .name {
             font-weight: bold;
             font-size: 14px;
@@ -66,6 +77,7 @@ const StyledWrapper = styled.section`
             align-items: center;
             gap: 4px;
           }
+
           .email {
             font-weight: normal;
             font-size: 12px;
@@ -74,10 +86,12 @@ const StyledWrapper = styled.section`
           }
         }
       }
+
       .right {
         display: flex;
         align-items: center;
         gap: 28px;
+
         .role {
           font-weight: 500;
           font-size: 12px;
@@ -87,30 +101,61 @@ const StyledWrapper = styled.section`
           display: flex;
           align-items: center;
           gap: 4px;
+
           > .icon {
             cursor: pointer;
           }
+
           /* override */
+
           .menu {
             min-width: 120px;
+
             .item .icon {
               width: 16px;
               height: 12px;
             }
           }
         }
+
         .opts {
           position: relative;
           width: 24px;
           height: 24px;
+
           .dots {
             cursor: pointer;
           }
+
           .menu {
             position: absolute;
           }
         }
       }
+    }
+  }
+
+  .inputs {
+    display: inline-flex;
+    gap: 9.45px;
+    width: 512px;
+    margin: 40px 0 13px;
+
+    input:nth-child(2) {
+      width: 220px;
+      flex-shrink: 0;
+    }
+  }
+
+  .buttons {
+    margin-top: 24px;
+
+    .add-manually {
+      width: 120px;
+    }
+
+    .cancel-add-manually {
+      margin-left: 12px;
     }
   }
 `;
@@ -126,6 +171,20 @@ export default function ManageMembers({ cid = null }) {
   const { copyEmail, removeFromChannel, removeUser, canRemove, canRemoveFromChannel } =
     useContactOperation({ cid });
   const [updateContact, { isSuccess: updateSuccess }] = useUpdateContactMutation();
+  const {
+    isAdding,
+    setIsAdding,
+    username,
+    setUsername,
+    email,
+    setEmail,
+    password,
+    setPassword,
+    canCreate,
+    createUser,
+    generatePassword,
+    clearInputs
+  } = useAddUserManually();
 
   useEffect(() => {
     if (updateSuccess) {
@@ -244,6 +303,56 @@ export default function ManageMembers({ cid = null }) {
           );
         })}
       </ul>
+      {isAdding && (
+        <div className="inputs">
+          <Input
+            placeholder="Username"
+            autoFocus
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <Input placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <Input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+      )}
+      {loginUser?.is_admin && (
+        <div className="buttons">
+          <Button
+            className={`${isAdding ? "" : "ghost"} add-manually`}
+            onClick={() => {
+              if (!isAdding) {
+                setIsAdding(true);
+                generatePassword();
+              } else {
+                createUser({
+                  username,
+                  email,
+                  password
+                });
+              }
+            }}
+            disabled={isAdding && !canCreate}
+          >
+            Add Manually
+          </Button>
+          {isAdding && (
+            <Button
+              className="ghost border_less cancel-add-manually"
+              onClick={() => {
+                setIsAdding(false);
+                clearInputs();
+              }}
+            >
+              Cancel
+            </Button>
+          )}
+        </div>
+      )}
     </StyledWrapper>
   );
 }
