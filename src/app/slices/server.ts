@@ -1,5 +1,16 @@
-import { createSlice } from "@reduxjs/toolkit";
-const initialState = {
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+interface State {
+  name: string;
+  description: string;
+  logo: string;
+  inviteLink: {
+    link: string;
+    expire: number;
+  };
+}
+
+const initialState: State = {
   name: "",
   description: "",
   logo: "",
@@ -8,6 +19,7 @@ const initialState = {
     expire: 0
   }
 };
+
 const serverSlice = createSlice({
   name: "server",
   initialState,
@@ -15,24 +27,28 @@ const serverSlice = createSlice({
     resetServer() {
       return initialState;
     },
-    fullfillServer(state, action) {
+    fullfillServer(state, action: PayloadAction<State>) {
       const {
         inviteLink = {
           link: "",
           expire: 0
         },
+        logo = "", // todo: check missed logo property
         name = "",
         description = ""
       } = action.payload || {};
-      return { name, description, inviteLink };
+      return { name, logo, description, inviteLink };
     },
-    updateInfo(state, action) {
+    updateInfo(state, action: PayloadAction<Partial<State>>) {
       const values = action.payload || {};
-      Object.keys(values).forEach((_key) => {
-        state[_key] = values[_key];
-      });
+      // todo: check and remove old logic
+      // Object.keys(values).forEach((_key) => {
+      //   state[_key] = values[_key];
+      // });
+      state = { ...state, ...values };
     }
   }
 });
+
 export const { updateInfo, resetServer, fullfillServer } = serverSlice.actions;
 export default serverSlice.reducer;

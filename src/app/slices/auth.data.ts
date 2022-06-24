@@ -1,26 +1,29 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { KEY_EXPIRE, KEY_PWA_INSTALLED, KEY_REFRESH_TOKEN, KEY_TOKEN, KEY_UID } from "../config";
-import { AuthData, AuthToken } from "../../types/auth";
+import { AuthData, AuthToken, User } from "../../types/auth";
 
 interface State {
   initialized: boolean;
   uid: string | null;
+  user: User | null;
   token: string | null;
-  expireTime: string | number; // todo
+  expireTime: number;
   refreshToken: string | null;
 }
 
 const initialState: State = {
   initialized: true,
   uid: null,
+  user: null,
   token: localStorage.getItem(KEY_TOKEN),
-  expireTime: localStorage.getItem(KEY_EXPIRE) || +new Date(),
+  expireTime: Number(localStorage.getItem(KEY_EXPIRE) || +new Date()),
   refreshToken: localStorage.getItem(KEY_REFRESH_TOKEN)
 };
 
 const emptyState: State = {
   initialized: true,
   uid: null,
+  user: null,
   token: null,
   expireTime: +new Date(),
   refreshToken: null
@@ -30,20 +33,20 @@ const authDataSlice = createSlice({
   name: "authData",
   initialState,
   reducers: {
-    setAuthData(state, action: PayloadAction<AuthData>) {
+    setAuthData(state, { payload }: PayloadAction<AuthData>) {
       const {
         initialized = true,
         user: { uid },
         token,
         refresh_token,
         expired_in = 0
-      } = action.payload;
+      } = payload;
       state.initialized = initialized;
       state.uid = `${uid}`;
+      state.user = payload.user;
       state.token = token;
       state.refreshToken = refresh_token;
       // 当前时间往后推expire时长
-      console.log("expire", expired_in);
       const expireTime = +new Date() + Number(expired_in) * 1000;
       state.expireTime = expireTime;
       // set local data
@@ -53,7 +56,6 @@ const authDataSlice = createSlice({
       localStorage.setItem(KEY_UID, `${uid}`);
     },
     resetAuthData() {
-      console.log("clear auth data");
       // remove local data
       localStorage.removeItem(KEY_EXPIRE);
       localStorage.removeItem(KEY_TOKEN);

@@ -1,3 +1,4 @@
+import { FC, ReactElement } from "react";
 import EmojiThumbUp from "../../assets/icons/emoji.thumb.up.svg";
 import EmojiThumbDown from "../../assets/icons/emoji.thumb.down.svg";
 import EmojiSmile from "../../assets/icons/emoji.smile.svg";
@@ -7,7 +8,18 @@ import EmojiHeart from "../../assets/icons/emoji.heart.svg";
 import EmojiRocket from "../../assets/icons/emoji.rocket.svg";
 import EmojiLook from "../../assets/icons/emoji.look.svg";
 
-const Emojis = {
+interface Emojis {
+  "👍": ReactElement;
+  "👎": ReactElement;
+  "😄": ReactElement;
+  "👀": ReactElement;
+  "🚀": ReactElement;
+  "❤️": ReactElement;
+  "🙁": ReactElement;
+  "🎉": ReactElement;
+}
+
+const emojis: Emojis = {
   "👍": <EmojiThumbUp className="emoji" />,
   "👎": <EmojiThumbDown className="emoji" />,
   "😄": <EmojiSmile className="emoji" />,
@@ -18,8 +30,13 @@ const Emojis = {
   "🎉": <EmojiCelebrate className="emoji" />
 };
 
-export default function ReactionItem({ native = "" }) {
-  if (!native || !Emojis[native]) return null;
-
-  return Emojis[native];
+interface Props {
+  native?: keyof Emojis;
 }
+
+const ReactionItem: FC<Props> = ({ native }) => {
+  if (!native) return null;
+  return emojis[native] ?? null;
+};
+
+export default ReactionItem;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import styled from "styled-components";
 
 const Styled = styled.div`
@@ -10,11 +10,16 @@ const Styled = styled.div`
   }
 `;
 
-export default function Video({ url = "" }) {
-  if (!url) return null;
+interface Props {
+  url: string;
+}
+
+const Video: FC<Props> = ({ url }) => {
   return (
     <Styled>
       <video controls src={url} />
     </Styled>
   );
-}
+};
+
+export default Video;
