@@ -1,5 +1,6 @@
 /scripts
 /node_modules
 /build
+/.idea
 /.vscode
 /public
