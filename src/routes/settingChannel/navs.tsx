@@ -1,7 +1,8 @@
 import Overview from "./Overview";
 import ManageMembers from "../../common/component/ManageMembers";
-const useNavs = (channelId) => {
-  const navs = [
+
+const useNavs = (channelId: number) => {
+  return [
     {
       title: "General",
       items: [
@@ -36,7 +37,6 @@ const useNavs = (channelId) => {
     //   ],
     // },
   ];
-  return navs;
 };
 
 export default useNavs;

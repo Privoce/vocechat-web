@@ -1,10 +1,17 @@
-import { useState, useEffect, memo } from "react";
+import { useState, useEffect, memo, SyntheticEvent, FC } from "react";
 import { getInitials, getInitialsAvatar } from "../utils";
 
-const Avatar = ({ url = "", name = "unkonw name", type = "user", ...rest }) => {
+interface Props {
+  url?: string;
+  name?: string;
+  type?: "user" | "channel";
+}
+
+const Avatar: FC<Props> = ({ url = "", name = "unknown name", type = "user", ...rest }) => {
   // console.log("avatar url", url);
   const [src, setSrc] = useState("");
-  const handleError = (err) => {
+
+  const handleError = (err: SyntheticEvent<HTMLImageElement>) => {
     console.log("load avatar error", err);
     const tmp = getInitialsAvatar({
       initials: getInitials(name),
@@ -13,6 +20,7 @@ const Avatar = ({ url = "", name = "unkonw name", type = "user", ...rest }) => {
     });
     setSrc(tmp);
   };
+
   useEffect(() => {
     if (!url) {
       const tmp = getInitialsAvatar({
@@ -26,6 +34,7 @@ const Avatar = ({ url = "", name = "unkonw name", type = "user", ...rest }) => {
     }
   }, [url, name]);
   if (!src) return null;
+
   return <img src={src} onError={handleError} {...rest} />;
 };
 

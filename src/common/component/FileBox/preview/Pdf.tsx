@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { FC } from "react";
 
 const Styled = styled.div`
   padding: 8px;
@@ -10,14 +11,17 @@ const Styled = styled.div`
   }
 `;
 
-export default function Pdf({ url = "" }) {
+interface Props {
+  url: string;
+}
+
+const Pdf: FC<Props> = ({ url }) => {
   // const [content, setContent] = useState("");
   // const [pageNumber, setPageNumber] = useState(1);
   // const [numPages, setNumPages] = useState(null);
   // const onDocumentLoadSuccess = ({ numPages }) => {
   //   setNumPages(numPages);
   // };
-  if (!url) return null;
   return (
     <Styled>
       <embed src={url} type="application/pdf" />
@@ -26,4 +30,6 @@ export default function Pdf({ url = "" }) {
       </Document> */}
     </Styled>
   );
-}
+};
+
+export default Pdf;

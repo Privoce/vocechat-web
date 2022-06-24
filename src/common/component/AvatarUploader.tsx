@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, FC, useState } from "react";
 import styled from "styled-components";
 import Avatar from "./Avatar";
 import uploadIcon from "../../assets/icons/upload.image.svg?url";
@@ -61,21 +61,31 @@ const StyledWrapper = styled.div`
   }
 `;
 
-export default function AvatarUploader({
+interface Props {
+  url?: string;
+  name?: string;
+  type?: "user";
+  disabled?: boolean;
+  uploadImage: (file: File) => Promise<any>;
+}
+
+const AvatarUploader: FC<Props> = ({
   url = "",
   name = "",
   type = "user",
   uploadImage,
   disabled = false
-}) {
+}) => {
   const [uploading, setUploading] = useState(false);
-  const handleUpload = async (evt) => {
+  const handleUpload = async (evt: ChangeEvent<HTMLInputElement>) => {
     if (uploading) return;
-    const [file] = evt.target.files;
+    if (!evt.target.files) return;
+    const [file] = Array.from(evt.target.files);
     setUploading(true);
     await uploadImage(file);
     setUploading(false);
   };
+
   return (
     <StyledWrapper>
       <div className="avatar">
@@ -87,6 +97,7 @@ export default function AvatarUploader({
               multiple={false}
               onChange={handleUpload}
               type="file"
+              // todo: xss
               accept="image/*"
               name="avatar"
               id="avatar"
@@ -97,4 +108,6 @@ export default function AvatarUploader({
       {!disabled && <img src={uploadIcon} alt="icon" className="icon" />}
     </StyledWrapper>
   );
-}
+};
+
+export default AvatarUploader;

@@ -1,7 +1,6 @@
-// import React from 'react'
+import { FC, ReactElement } from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { useSelector } from "react-redux";
 import Styled from "./styled";
 import {
   VideoPreview,
@@ -13,13 +12,20 @@ import {
 } from "./preview";
 import { getFileIcon, formatBytes } from "../../utils";
 import IconDownload from "../../../assets/icons/download.svg";
+import { useAppSelector } from "../../../app/store";
 
-// todo
+// todo: move to root file
 dayjs.extend(relativeTime);
 
-const renderPreview = (data) => {
+interface Data {
+  file_type: string;
+  name: string;
+  content: string;
+}
+
+const renderPreview = (data: Data) => {
   const { file_type, name, content } = data;
-  let preview = null;
+  let preview: null | ReactElement = null;
 
   const checks = {
     image: /^image/gi,
@@ -60,20 +66,31 @@ const renderPreview = (data) => {
   }
   return preview;
 };
-export default function FileBox({
-  preview = false,
+
+interface Props {
+  preview?: boolean;
+  flex: boolean;
+  file_type: string;
+  name: string;
+  size: number;
+  created_at: number;
+  from_uid: number;
+  content: string;
+}
+
+const FileBox: FC<Props> = ({
+  preview,
   flex,
-  file_type = "",
+  file_type,
   name,
   size,
   created_at,
   from_uid,
   content
-}) {
-  const fromUser = useSelector((store) => store.contacts.byId[from_uid]);
+}) => {
+  const fromUser = useAppSelector((store) => store.contacts.byId[from_uid]);
   const icon = getFileIcon(file_type, name);
   if (!content || !fromUser || !name) return null;
-  console.log("file content", content, name, flex);
   const previewContent = renderPreview({ file_type, content, name });
   const withPreview = preview && previewContent;
   return (
@@ -101,4 +118,6 @@ export default function FileBox({
       {withPreview && <div className="preview">{previewContent}</div>}
     </Styled>
   );
-}
+};
+
+export default FileBox;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import styled from "styled-components";
 
 const Styled = styled.div`
@@ -11,11 +11,18 @@ const Styled = styled.div`
   }
 `;
 
-export default function Image({ url = "" }) {
+interface Props {
+  url: string;
+  alt?: string;
+}
+
+const Image: FC<Props> = ({ url, alt }) => {
   if (!url) return null;
   return (
     <Styled>
-      <img src={url} />
+      <img src={url} alt={alt} />
     </Styled>
   );
-}
+};
+
+export default Image;

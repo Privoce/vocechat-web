@@ -1,14 +1,34 @@
-// import second from 'first'
+import toast from "react-hot-toast";
 import { removeReplyingMessage, addReplyingMessage } from "../../app/slices/message";
 import { useSendChannelMsgMutation } from "../../app/services/channel";
 import { useSendMsgMutation } from "../../app/services/contact";
 import { useReplyMessageMutation } from "../../app/services/message";
-import { useDispatch, useSelector } from "react-redux";
-import toast from "react-hot-toast";
-export default function useSendMessage(props) {
+import { useAppDispatch, useAppSelector } from "../../app/store";
+
+interface Props {
+  context: "user" | "channel";
+  from: number;
+  to: number;
+}
+
+interface SendMessagesDTO {
+  type: "text";
+  content: string;
+  users: number[];
+  channels: number[];
+}
+
+interface SendMessageDTO {
+  type: "text";
+  content: string;
+  properties: object;
+  reply_mid?: number;
+}
+
+export default function useSendMessage(props?: Props) {
   const { context = "user", from = null, to = null } = props || {};
-  const dispatch = useDispatch();
-  const stageFiles = useSelector((store) => store.ui.uploadFiles[`${context}_${to}`] || []);
+  const dispatch = useAppDispatch();
+  const stageFiles = useAppSelector((store) => store.ui.uploadFiles[`${context}_${to}`] || []);
   const [replyMessage, { isError: replyErr, isLoading: replying, isSuccess: replySuccess }] =
     useReplyMessageMutation();
   const [
@@ -18,7 +38,12 @@ export default function useSendMessage(props) {
   const [sendUserMsg, { isLoading: userSending, isSuccess: userSuccess, isError: userError }] =
     useSendMsgMutation();
   const sendFn = context == "user" ? sendUserMsg : sendChannelMsg;
-  const sendMessages = async ({ type = "text", content, users = [], channels = [] }) => {
+  const sendMessages = async ({
+    type = "text",
+    content,
+    users = [],
+    channels = []
+  }: SendMessagesDTO) => {
     if (users.length) {
       for await (const uid of users) {
         await sendUserMsg({
@@ -42,9 +67,9 @@ export default function useSendMessage(props) {
     type = "text",
     content,
     properties = {},
-    reply_mid = null,
+    reply_mid,
     ...rest
-  }) => {
+  }: SendMessageDTO) => {
     if (reply_mid) {
       removeReplying();
       await replyMessage({
@@ -66,7 +91,7 @@ export default function useSendMessage(props) {
       });
     }
   };
-  const setReplying = (mid) => {
+  const setReplying = (mid: number) => {
     if (stageFiles.length !== 0) {
       toast.error("Only text is supported when replying a message");
       return;

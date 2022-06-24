@@ -3,7 +3,7 @@ import { nanoid } from "@reduxjs/toolkit";
 import baseQuery from "./base.query";
 import { setAuthData, updateToken, resetAuthData, updateInitialized } from "../slices/auth.data";
 import BASE_URL, { KEY_DEVICE_KEY, KEY_LOCAL_MAGIC_TOKEN } from "../config";
-import { AuthData } from "../../types/auth";
+import { AuthData, LoginCredential } from "../../types/auth";
 
 const getDeviceId = () => {
   let d = localStorage.getItem(KEY_DEVICE_KEY);
@@ -18,29 +18,30 @@ export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery,
   endpoints: (builder) => ({
-    login: builder.mutation({
-      query: (credentials) => ({
+    login: builder.mutation<AuthData, LoginCredential>({
+      query: (credential) => ({
         url: "token/login",
         method: "POST",
         body: {
-          credential: credentials,
+          credential,
           device: getDeviceId(),
           device_token: "test"
         }
       }),
       transformResponse: (data: AuthData) => {
         const { avatar_updated_at } = data.user;
-        data.user.avatar =
-          avatar_updated_at == 0
-            ? ""
-            : `${BASE_URL}/resource/avatar?uid=${data.user.uid}&t=${avatar_updated_at}`;
-        return data;
+        return {
+          ...data,
+          avatar:
+            avatar_updated_at == 0
+              ? ""
+              : `${BASE_URL}/resource/avatar?uid=${data.user.uid}&t=${avatar_updated_at}`
+        };
       },
       async onQueryStarted(params, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
           if (data) {
-            console.log("login resp", data);
             dispatch(setAuthData(data));
           }
           // 从localstorage 去掉 magic token
@@ -156,7 +157,7 @@ export const authApi = createApi({
         }
       }
     }),
-    getInitialized: builder.query({
+    getInitialized: builder.query<boolean, void>({
       query: () => ({ url: "/admin/system/initialized" }),
       async onQueryStarted(params, { dispatch, queryFulfilled }) {
         try {

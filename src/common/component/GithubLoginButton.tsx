@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, FC } from "react";
 import IconGithub from "../../assets/icons/github.svg";
 import styled from "styled-components";
 import { KEY_LOCAL_MAGIC_TOKEN } from "../../app/config";
@@ -17,6 +17,7 @@ const StyledSocialButton = styled(Button)`
   color: #344054;
   border: 1px solid #d0d5dd;
   background: none !important;
+
   .icon {
     width: 24px;
     height: 24px;
@@ -28,7 +29,7 @@ type Props = {
   type?: "login" | "register";
 };
 
-export default function GithubLoginButton({ type = "login", client_id }: Props) {
+const GithubLoginButton: FC<Props> = ({ type = "login", client_id }) => {
   //拿本地存的magic token
   const magic_token = localStorage.getItem(KEY_LOCAL_MAGIC_TOKEN);
   const [login, { isLoading, isSuccess, error }] = useLoginMutation();
@@ -66,7 +67,7 @@ export default function GithubLoginButton({ type = "login", client_id }: Props) 
     }
   }, [error]);
   const handleGithubLogin = () => {
-    location.href = `http://github.com/login/oauth/authorize?client_id=${client_id}`;
+    location.href = `https://github.com/login/oauth/authorize?client_id=${client_id}`;
     // console.log("github login");
   };
   // console.log("google login ", loaded);
@@ -76,4 +77,5 @@ export default function GithubLoginButton({ type = "login", client_id }: Props) 
       {` ${type === "login" ? "Sign in" : "Sign up"} with Github`}
     </StyledSocialButton>
   );
-}
+};
+export default GithubLoginButton;

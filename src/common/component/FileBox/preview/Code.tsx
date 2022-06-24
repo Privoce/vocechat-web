@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, FC } from "react";
 import styled from "styled-components";
 
 const Styled = styled.div`
@@ -12,7 +12,11 @@ const Styled = styled.div`
   color: #eee;
 `;
 
-export default function Code({ url = "" }) {
+interface Props {
+  url: string;
+}
+
+const Code: FC<Props> = ({ url }) => {
   const [content, setContent] = useState("");
   useEffect(() => {
     const getContent = async (url: string) => {
@@ -26,4 +30,6 @@ export default function Code({ url = "" }) {
   if (!content) return null;
 
   return <Styled>{content}</Styled>;
-}
+};
+
+export default Code;

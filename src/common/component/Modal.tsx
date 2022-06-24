@@ -1,11 +1,19 @@
-import { useEffect, useState } from "react";
+import { FC, ReactNode, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
-export default function Modal({ id = "root-modal", mask = true, children }) {
-  const [wrapper, setWrapper] = useState(null);
-  // let eleRef = useRef(null);
+interface Props {
+  id?: string;
+  mask?: boolean;
+  children?: ReactNode;
+}
+
+// todo: check memory leak
+const Modal: FC<Props> = ({ id = "root-modal", mask = true, children }) => {
+  const [wrapper, setWrapper] = useState<HTMLDivElement | null>(null);
+
   useEffect(() => {
     const modalRoot = document.getElementById(id);
+    if (!modalRoot) return;
     if (mask) {
       modalRoot.classList.add("mask");
     }
@@ -17,7 +25,9 @@ export default function Modal({ id = "root-modal", mask = true, children }) {
       modalRoot.removeChild(wrapper);
     };
   }, [id, mask]);
+
   if (!wrapper) return null;
-  console.log("create portal");
   return createPortal(children, wrapper);
-}
+};
+
+export default Modal;

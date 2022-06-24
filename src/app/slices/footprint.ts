@@ -1,12 +1,13 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { MuteChannel, MuteUser } from "../../types/sse";
 
 export interface State {
   usersVersion: number;
   afterMid: number;
-  readUsers: {};
-  readChannels: {};
-  muteUsers: {};
-  muteChannels: {};
+  readUsers: { [uid: number]: number };
+  readChannels: { [gid: number]: number };
+  muteUsers: { [uid: number]: { expired_at: number } | undefined };
+  muteChannels: { [gid: number]: { expired_at: number } | undefined };
 }
 
 const initialState: State = {
@@ -17,6 +18,13 @@ const initialState: State = {
   muteUsers: {},
   muteChannels: {}
 };
+
+interface UpdateMutePayload {
+  remove_users: number[];
+  remove_groups: number[];
+  add_users: MuteUser[];
+  add_groups: MuteChannel[];
+}
 
 const footprintSlice = createSlice({
   name: "footprint",
@@ -49,55 +57,51 @@ const footprintSlice = createSlice({
     updateAfterMid(state, action: PayloadAction<number>) {
       state.afterMid = action.payload;
     },
-    updateMute(state, action) {
+    updateMute(state, action: PayloadAction<UpdateMutePayload>) {
       const payload = action.payload || {};
       Object.keys(payload).forEach((key) => {
         switch (key) {
-          case "remove_users":
-            {
-              const uids = payload.remove_users;
-              uids.forEach((id) => {
-                delete state.muteUsers[id];
-              });
-            }
+          case "remove_users": {
+            const uids = payload.remove_users;
+            uids.forEach((id) => {
+              delete state.muteUsers[id];
+            });
             break;
-          case "remove_groups":
-            {
-              const gids = payload.remove_groups;
-              gids.forEach((id) => {
-                delete state.muteChannels[id];
-              });
-            }
+          }
+          case "remove_groups": {
+            const gids = payload.remove_groups;
+            gids.forEach((id) => {
+              delete state.muteChannels[id];
+            });
             break;
-          case "add_users":
-            {
-              const mutes = payload.add_users;
-              mutes.forEach(({ uid, expired_in = null }) => {
-                state.muteUsers[uid] = { expired_in };
-              });
-            }
+          }
+          case "add_users": {
+            const mutes = payload.add_users;
+            mutes.forEach(({ uid, expired_at }) => {
+              state.muteUsers[uid] = { expired_at };
+            });
             break;
-          case "add_groups":
-            {
-              const mutes = payload.add_groups;
-              mutes.forEach(({ gid, expired_in = null }) => {
-                state.muteChannels[gid] = { expired_in };
-              });
-            }
+          }
+          case "add_groups": {
+            const mutes = payload.add_groups;
+            mutes.forEach(({ gid, expired_at }) => {
+              state.muteChannels[gid] = { expired_at };
+            });
             break;
+          }
           default:
             break;
         }
       });
     },
-    updateReadUsers(state, action) {
+    updateReadUsers(state, action: PayloadAction<{ uid: number; mid: number }[]>) {
       const reads = action.payload || [];
       if (reads.length == 0) return;
       reads.forEach(({ uid, mid }) => {
         state.readUsers[uid] = mid;
       });
     },
-    updateReadChannels(state, action) {
+    updateReadChannels(state, action: PayloadAction<{ gid: number; mid: number }[]>) {
       const reads = action.payload || [];
       if (reads.length == 0) return;
       reads.forEach(({ gid, mid }) => {

@@ -11,8 +11,7 @@ interface Props {
 }
 
 const DeleteMessageConfirmModal: FC<Props> = ({ closeModal, mids = [] }) => {
-  // const dispatch = useDispatch();
-  const mid_arr = mids ? (Array.isArray(mids) ? mids : [mids]) : [];
+  const mid_arr: number[] = mids ? (Array.isArray(mids) ? mids : [mids]) : [];
   const [ids] = useState(mid_arr);
   const { deleteMessage, isDeleting } = useDeleteMessage();
   const handleDelete = async () => {
@@ -40,7 +39,7 @@ const DeleteMessageConfirmModal: FC<Props> = ({ closeModal, mids = [] }) => {
           ids.length > 1 ? "these messages" : "this message"
         }?`}
       >
-        {ids.length == 1 && <PreviewMessage mid={ids[0]} />}
+        {ids.length === 1 && <PreviewMessage mid={ids[0]} />}
       </StyledModal>
     </Modal>
   );
