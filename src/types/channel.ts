@@ -1,18 +1,8 @@
+export interface ChannelMember {}
 
-export interface ChannelMember {
+export interface Message {}
 
-}
-
-// todo: check message fields
-export interface ChannelMessage {
-  mid: number;
-}
-
-export type ContentType =
-  'text/plain' |
-  'text/markdown' |
-  'rustchat/file' |
-  'rustchat/archive';
+export type ContentType = "text/plain" | "text/markdown" | "rustchat/file" | "rustchat/archive";
 
 export interface PinnedMessage {
   mid: number;
@@ -38,7 +28,7 @@ export interface Channel {
 }
 
 export interface UpdateChannelDTO {
-  operation: 'add_member' | 'remove_member';
+  operation: "add_member" | "remove_member";
   members?: number[];
 
   // type = 'group_changed'

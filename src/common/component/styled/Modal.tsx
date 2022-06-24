@@ -1,4 +1,4 @@
-import { FC, ReactElement } from "react";
+import { FC, ReactNode } from "react";
 import styled from "styled-components";
 
 const Styled = styled.div`
@@ -43,18 +43,12 @@ const Styled = styled.div`
 interface Props {
   title?: string;
   description?: string;
-  buttons: ReactElement[] | ReactElement;
-  children?: ReactElement;
+  buttons?: ReactNode;
+  children?: ReactNode;
   className?: string;
 }
 
-const StyledModal: FC<Props> = ({
-  title = "",
-  description = "",
-  buttons = null,
-  children,
-  ...props
-}) => {
+const StyledModal: FC<Props> = ({ title = "", description = "", buttons, children, ...props }) => {
   return (
     <Styled {...props}>
       {title && <h3 className="title">{title}</h3>}

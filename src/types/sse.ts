@@ -1,24 +1,24 @@
-import { User } from './auth';
-import { Channel, ContentType } from './channel';
+import { User } from "./auth";
+import { Channel, ContentType } from "./channel";
 
 export interface ReadyEvent {
-  type: 'ready';
+  type: "ready";
 }
 
 export interface UsersSnapshotEvent {
-  type: 'users_snapshot';
+  type: "users_snapshot";
   users: User[];
   version: number;
 }
 
 // todo: check if create_by field exists
-export interface UserLog extends Omit<User, 'create_by'> {
+export interface UserLog extends Omit<User, "create_by"> {
   log_id: number;
-  action: 'create' | 'update' | 'delete';
+  action: "create" | "update" | "delete";
 }
 
 export interface UsersLogEvent {
-  type: 'users_log';
+  type: "users_log";
   logs: UserLog[];
 }
 
@@ -28,87 +28,126 @@ export interface UserState {
 }
 
 export interface UsersStateEvent {
-  type: 'users_state';
+  type: "users_state";
   users: UserState[];
 }
 
-interface UsersStateChangedEvent extends UserState{
-  type: 'users_state_changed';
+interface UsersStateChangedEvent extends UserState {
+  type: "users_state_changed";
 }
 
-interface UserSettingsEvent {
-  type: 'user_settings';
-  mute_users?: { uid: number; expired_at: number; }[];
-  mute_groups?: { gid: number; expired_at: number; }[];
-  read_index_users?: { uid: number; mid: number; }[];
-  read_index_groups?: { gid: number; mid: number; }[];
-  burn_after_reading_users?: { uid: number; expires_in: number; }[];
-  burn_after_reading_groups?: { gid: number; expires_in: number; }[];
+export interface MuteUser {
+  uid: number;
+  expired_at: number;
 }
 
-interface UserSettingsChangedEvent {
-  type: 'user_settings_changed';
+export interface MuteChannel {
+  gid: number;
+  expired_at: number;
+}
+
+export interface UserSettingsEvent {
+  type: "user_settings";
+  mute_users?: MuteUser[];
+  mute_groups?: MuteChannel[];
+  read_index_users?: { uid: number; mid: number }[];
+  read_index_groups?: { gid: number; mid: number }[];
+  burn_after_reading_users?: { uid: number; expires_in: number }[];
+  burn_after_reading_groups?: { gid: number; expires_in: number }[];
+}
+
+export interface UserSettingsChangedEvent {
+  type: "user_settings_changed";
   from_device?: string;
-  add_mute_users?: { uid: number; expired_at: number; }[];
+  add_mute_users?: MuteUser[];
   remove_mute_users?: number[];
-  add_mute_groups?: { gid: number; expired_at: number; }[];
+  add_mute_groups?: MuteChannel[];
   remove_mute_groups?: number[];
-  read_index_users?: { uid: number; mid: number; }[];
-  read_index_groups?: { gid: number; mid: number; }[];
-  burn_after_reading_users?: { uid: number; expires_in: number; }[];
-  burn_after_reading_groups?: { gid: number; expires_in: number; }[];
+  read_index_users?: { uid: number; mid: number }[];
+  read_index_groups?: { gid: number; mid: number }[];
+  burn_after_reading_users?: { uid: number; expires_in: number }[];
+  burn_after_reading_groups?: { gid: number; expires_in: number }[];
 }
 
-interface RelatedGroupsEvent {
-  type: 'related_groups';
+export interface RelatedGroupsEvent {
+  type: "related_groups";
   groups: Channel[];
 }
 
-interface ChatEvent {
-  type: 'chat';
+export interface NormalMessage {
+  type: "normal";
+  properties: {};
+  content_type: ContentType;
+  content: string;
+  expires_in: number;
+}
+
+export interface EditReactionDetail {
+  properties: {};
+  content_type: ContentType;
+  content: string;
+  type: "edit";
+}
+export interface LikeReactionDetail {
+  action: string;
+  type: "like";
+}
+export interface DeleteReactionDetail {
+  type: "delete";
+}
+export interface ReactionMessage {
+  type: "reaction";
+  mid: number; // original message id
+  detail: EditReactionDetail | LikeReactionDetail | DeleteReactionDetail;
+}
+
+export interface ReplyMessage {
+  type: "reply";
+  mid: number; // original message id
+  properties: {};
+  content_type: ContentType;
+  content: string;
+}
+
+export interface ChatEvent {
+  type: "chat";
   mid: number;
   from_uid: number;
   created_at: number;
   target: { uid: number };
-  detail: {
-    properties: {};
-    content: string;
-    content_type: ContentType;
-    expires_in: number;
-    type: 'normal';
-  };
+  detail: NormalMessage | ReactionMessage | ReplyMessage;
 }
 
 interface KickEvent {
-  type: 'kick';
+  type: "kick";
   reason: string;
 }
 
 interface UserJoinedGroupEvent {
-  type: 'user_joined_group';
+  type: "user_joined_group";
   gid: number;
   uid: number[];
 }
 
 interface UserLeavedGroupEvent {
-  type: 'user_leaved_group';
+  type: "user_leaved_group";
   gid: number;
   uid: number[];
 }
 
 interface JoinedGroupEvent {
-  type: 'joined_group';
+  type: "joined_group";
   group: Channel;
 }
 
 interface KickFromGroupEvent {
-  type: 'kick_from_group';
+  type: "kick_from_group";
   gid: number;
   reason: string;
 }
 
 interface GroupChangedEvent {
-  type: 'group_changed';
+  type: "group_changed";
   gid: number;
   name: string;
   description: string;
@@ -117,7 +156,7 @@ interface GroupChangedEvent {
 }
 
 interface PinnedMessageUpdatedEvent {
-  type: 'pinned_message_updated';
+  type: "pinned_message_updated";
   gid: number;
   mid: number;
   msg: {
@@ -127,28 +166,29 @@ interface PinnedMessageUpdatedEvent {
     properties: {};
     content: string;
     content_type: ContentType;
-  }
+  };
 }
 
 interface HeartbeatEvent {
-  type: 'heartbeat';
+  type: "heartbeat";
   time: number;
 }
 
-export type ServerEvent = ReadyEvent |
-  UsersSnapshotEvent |
-  UsersLogEvent |
-  UsersStateEvent |
-  UsersStateChangedEvent |
-  UserSettingsEvent |
-  UserSettingsChangedEvent |
-  RelatedGroupsEvent |
-  ChatEvent |
-  KickEvent |
-  UserJoinedGroupEvent |
-  UserLeavedGroupEvent |
-  JoinedGroupEvent |
-  KickFromGroupEvent |
-  GroupChangedEvent |
-  PinnedMessageUpdatedEvent |
-  HeartbeatEvent;
+export type ServerEvent =
+  | ReadyEvent
+  | UsersSnapshotEvent
+  | UsersLogEvent
+  | UsersStateEvent
+  | UsersStateChangedEvent
+  | UserSettingsEvent
+  | UserSettingsChangedEvent
+  | RelatedGroupsEvent
+  | ChatEvent
+  | KickEvent
+  | UserJoinedGroupEvent
+  | UserLeavedGroupEvent
+  | JoinedGroupEvent
+  | KickFromGroupEvent
+  | GroupChangedEvent
+  | PinnedMessageUpdatedEvent
+  | HeartbeatEvent;

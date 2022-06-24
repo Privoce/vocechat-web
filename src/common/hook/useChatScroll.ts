@@ -1,9 +1,8 @@
 import { useRef, useEffect } from "react";
 // import { useDebounce } from "rooks";
 
-function useChatScroll(deps = []) {
-  // todo: ref should be initialized to null
-  const ref = useRef();
+function useChatScroll<T extends HTMLElement>() {
+  const ref = useRef<T>(null);
   // useEffect(() => {
   //   console.log("chat scroll", ref);
   //   if (ref.current) {

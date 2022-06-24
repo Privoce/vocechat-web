@@ -1,4 +1,3 @@
-
 export interface AuthToken {
   // common
   server_id: string;
@@ -7,11 +6,9 @@ export interface AuthToken {
   expired_in: number;
 }
 
-// todo: check gender values
 export type Gender = 0 | 1;
 
 export interface User {
-  // avatar: string; // todo: check transform data in redux slice
   uid: number;
   email: string;
   name: string;

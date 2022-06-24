@@ -1,10 +1,11 @@
+import { FC, ReactElement } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import Tippy from "@tippyjs/react";
-import { roundArrow } from "tippy.js";
+import { Placement, roundArrow } from "tippy.js";
 import "tippy.js/dist/svg-arrow.css";
 import { updateUserGuide } from "../../../app/slices/ui";
 import steps from "./steps";
-import { useAppDispatch, useAppSelector } from "../../../app/store";
+import { useAppDispatch } from "../../../app/store";
 
 const Styled = styled.div`
   display: flex;
@@ -57,15 +58,21 @@ const OverrideTippyArrowColor = createGlobalStyle`
 }
 `;
 
-export default function UserGuide({ step = 1, placement = "right-start", delay = null, children }) {
+interface Props {
+  step?: number;
+  placement: Placement;
+  delay?: number | [number | null, number | null];
+  children: ReactElement;
+}
+
+const UserGuide: FC<Props> = ({ step = 1, placement = "right-start", delay, children }) => {
   const dispatch = useAppDispatch();
-  const { visible, step: reduxStep } = useAppSelector((store) => store.ui.userGuide);
   const currStep = steps[step - 1];
   const isLastStep = steps.length == step;
   //   if (!visible) return children;
   if (!currStep) return null;
   const { title, description } = currStep;
-  const defaultDuration = [300, 250];
+  const defaultDuration: [number, number] = [300, 250];
   const handleSkip = () => {
     // to do
     dispatch(updateUserGuide({ visible: false }));
@@ -104,4 +111,6 @@ export default function UserGuide({ step = 1, placement = "right-start", delay =
       </Tippy>
     </>
   );
-}
+};
+
+export default UserGuide;

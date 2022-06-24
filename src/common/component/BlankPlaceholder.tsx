@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import ChannelModal from "./ChannelModal";
@@ -67,7 +67,11 @@ const Styled = styled.div`
   }
 `;
 
-export default function BlankPlaceholder({ type = "chat" }) {
+interface Props {
+  type?: "chat";
+}
+
+const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
   const server = useAppSelector((store) => store.server);
   const [inviteModalVisible, setInviteModalVisible] = useState(false);
   const [createChannelVisible, setCreateChannelVisible] = useState(false);
@@ -83,7 +87,8 @@ export default function BlankPlaceholder({ type = "chat" }) {
   };
   const chatTip =
     type == "chat" ? "Create a Channel to Start a Conversation" : "Send a Direct Message";
-  const chatHanlder = type == "chat" ? toggleChannelModalVisible : toggleContactListVisible;
+  const chatHandler = type == "chat" ? toggleChannelModalVisible : toggleContactListVisible;
+
   return (
     <>
       <Styled>
@@ -99,7 +104,7 @@ export default function BlankPlaceholder({ type = "chat" }) {
             <IconInvite className="icon" />
             <div className="txt">Invite your friends or teammates</div>
           </div>
-          <div className="box" onClick={chatHanlder}>
+          <div className="box" onClick={chatHandler}>
             <IconChat className="icon" />
             <div className="txt">{chatTip}</div>
           </div>
@@ -109,7 +114,7 @@ export default function BlankPlaceholder({ type = "chat" }) {
           </a>
           <NavLink to={"#"} className="box">
             <IconAsk className="icon" />
-            <div className="txt">Got quesions? Visit our help center </div>
+            <div className="txt">Got questions? Visit our help center </div>
           </NavLink>
         </div>
       </Styled>
@@ -120,4 +125,6 @@ export default function BlankPlaceholder({ type = "chat" }) {
       {inviteModalVisible && <InviteModal closeModal={toggleInviteModalVisible} />}
     </>
   );
-}
+};
+
+export default BlankPlaceholder;
