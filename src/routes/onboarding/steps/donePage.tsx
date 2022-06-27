@@ -63,7 +63,7 @@ export default function DonePage({ serverName }) {
   return (
     <StyledWrapper>
       <span className="primaryText">Welcome to {serverName}</span>
-      <span className="secondaryText">Proudly presented by Rustchat</span>
+      <span className="secondaryText">Proudly presented by VoceChat</span>
       <span className="tip">
         More settings, including domain resolution, privileges, securities, and invites are
         available in <span className="strong">Settings</span>

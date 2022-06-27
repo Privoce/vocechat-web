@@ -2,7 +2,7 @@ export interface ChannelMember {}
 
 export interface Message {}
 
-export type ContentType = "text/plain" | "text/markdown" | "rustchat/file" | "rustchat/archive";
+export type ContentType = "text/plain" | "text/markdown" | "vocechat/file" | "vocechat/archive";
 
 export interface PinnedMessage {
   mid: number;

@@ -99,8 +99,8 @@ export default function APIConfig() {
         <Button>Update Secret</Button>
       </Tippy>
       <div className="tip">
-        Tip: The security key agreed between the rustchat server and the third-party app is used to
-        encrypt the communication data.{" "}
+        Tip: The security key agreed between the server and the third-party app is used to encrypt
+        the communication data.{" "}
       </div>
     </Styled>
   );

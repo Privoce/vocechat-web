@@ -46,7 +46,7 @@ const StyledWrapper = styled.div`
 export default function WelcomePage({ nextStep }) {
   return (
     <StyledWrapper>
-      <span className="primaryText">Welcome to your Rustchat!</span>
+      <span className="primaryText">Welcome to your VoceChat!</span>
       <span className="secondaryText">
         Everything in this space is owned by you. Let’s set up your space!
       </span>

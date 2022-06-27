@@ -134,7 +134,7 @@ export default function LoginPage() {
       <div className="form">
         <div className="tips">
           <img src={`${BASE_URL}/resource/organization/logo`} alt="logo" className="logo" />
-          <h2 className="title">Login to Rustchat</h2>
+          <h2 className="title">Login to VoceChat</h2>
           <span className="desc">Please enter your details.</span>
         </div>
         <form onSubmit={handleLogin}>

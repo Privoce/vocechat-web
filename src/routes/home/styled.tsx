@@ -3,7 +3,7 @@ const StyledWrapper = styled.div`
   display: flex;
   width: 100vw;
   height: 100vh;
-  background-color: var(--rustchat-navs-bg);
+  background-color: var(---navs-bg);
   > .col {
     height: 100%;
     display: flex;

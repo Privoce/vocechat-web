@@ -215,7 +215,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
       >
         <StyledChannelChat
           // ref={scrollObserveRef}
-          id={`RUSTCHAT_FEED_channel_${cid}`}
+          id={`VOCECHAT_FEED_channel_${cid}`}
         >
           {/* <div className="anchor"></div> */}
           {hasMore ? (
