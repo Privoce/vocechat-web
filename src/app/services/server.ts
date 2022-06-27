@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import BASE_URL from "../config";
-import { updateInfo } from "../slices/server";
+import { updateInfo, StoredServer } from "../slices/server";
 import baseQuery from "./base.query";
 import { RootState } from "../store";
 import { User } from "../../types/auth";
@@ -9,7 +9,6 @@ import {
   GoogleAuthConfig,
   LoginConfig,
   Server,
-  StoredServer,
   TestEmailDTO,
   NewAdminDTO,
   SMTPConfig,

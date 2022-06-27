@@ -3,9 +3,6 @@ export interface Server {
   name: string;
   description: string;
 }
-export interface StoredServer extends Server {
-  logo: string;
-}
 export interface GithubAuthConfig {
   client_id: string;
   client_secret: string;
