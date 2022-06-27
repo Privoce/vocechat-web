@@ -12,20 +12,20 @@
 :root {
   /* border radius */
   --br: 8px;
-  --rustchat-navs-bg: #e5e7eb;
-  --rustchat-body-bg: #f5f6f7;
-  --rustchat-chat-bg: #fff;
-  --rustchat-channel-text-color: #1c1c1e;
-  --rustchat-msg-text-color: #374151;
+  ---navs-bg: #e5e7eb;
+  ---body-bg: #f5f6f7;
+  ---chat-bg: #fff;
+  ---channel-text-color: #1c1c1e;
+  ---msg-text-color: #374151;
 }
 
 /* @media (prefers-color-scheme: dark) {
     :root{
         --br:8px;
-        --rustchat-navs-bg:#121926;
-        --rustchat-body-bg:#1F2A37;
-        --rustchat-chat-bg:#384250;
-        --rustchat-channel-text-color:#fff;
-        --rustchat-msg-text-color:#fff;
+        ---navs-bg:#121926;
+        ---body-bg:#1F2A37;
+        ---chat-bg:#384250;
+        ---channel-text-color:#fff;
+        ---msg-text-color:#fff;
     }
   } */

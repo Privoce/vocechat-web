@@ -58,7 +58,7 @@ export default function MetamaskLoginButton({ login }) {
     console.log("get sn");
     const signature = await ethereum.request({
       method: "personal_sign",
-      params: [nonce, address, "hello from rustchat"]
+      params: [nonce, address, "hello from "]
     });
     return signature;
   };

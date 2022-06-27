@@ -49,7 +49,7 @@ export default function OnboardingPage() {
   return (
     <>
       <Helmet>
-        <title>Rustchat Setup</title>
+        <title>VoceChat Setup</title>
       </Helmet>
       <StyledOnboardingPage>
         <Navigator {...serverSetup} />
