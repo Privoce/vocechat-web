@@ -1,8 +1,8 @@
 ## Refs
 
-- preview demo: https://privoce.rustchat.com/
+- preview demo: https://privoce.voce.chat/
 - design: https://www.figma.com/file/EHnNr53kNmDWgUT86It6CH/UI
-- backend APIs: https://dev.rustchat.com/api/swagger
+- backend APIs: https://dev.voce.chat/api/swagger
 - text editor: https://plate.udecode.io/docs/installation
 - markdown editor: https://nhn.github.io/tui.editor/latest/
 - redux: [@reduxjs/toolkit](https://redux-toolkit.js.org/introduction/getting-started)

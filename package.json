@@ -1,8 +1,8 @@
 {
-  "name": "rustchat-web",
-  "version": "0.3.0",
+  "name": "vocechat-web",
+  "version": "0.2.14",
   "private": true,
-  "homepage": "https://privoce.rustchat.com",
+  "homepage": "https://privoce.voce.chat",
   "dependencies": {
     "@emoji-mart/data": "^1.0.2",
     "@metamask/onboarding": "^1.0.1",

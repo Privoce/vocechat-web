@@ -49,13 +49,13 @@ importScripts(
 
 // Initialize the Firebase app in the service worker by passing the generated config
 const firebaseConfig = {
-  apiKey: "AIzaSyDyJ6B1Ouenoha_gdGkBwIkBNStlwhlbO0",
-  authDomain: "rustchat-develop.firebaseapp.com",
-  projectId: "rustchat-develop",
-  storageBucket: "rustchat-develop.appspot.com",
-  messagingSenderId: "418687074928",
-  appId: "1:418687074928:web:753286adbf239f5af9eab5",
-  measurementId: "G-XV476KEC8P"
+  apiKey: "AIzaSyCc3VuCJZgzQLIH2wrYdQzsUOc1DuZiIOA",
+  authDomain: "vocechatdev.firebaseapp.com",
+  projectId: "vocechatdev",
+  storageBucket: "vocechatdev.appspot.com",
+  messagingSenderId: "526613312184",
+  appId: "1:526613312184:web:d13c92582baf470d487a4d",
+  measurementId: "G-82RQ3YSCP7"
 };
 
 firebase.initializeApp(firebaseConfig);

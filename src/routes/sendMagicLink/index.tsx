@@ -71,7 +71,7 @@ export default function SendMagicLinkPage() {
           <>
             <div className="tips">
               <img src={`${BASE_URL}/resource/organization/logo`} alt="logo" className="logo" />
-              <h2 className="title">Login to Rustchat</h2>
+              <h2 className="title">Login to VoceChat</h2>
               <span className="desc">Please enter your Email</span>
             </div>
             <form onSubmit={handleLogin}>

@@ -65,7 +65,7 @@ export default function useMessageFeed({ context = "channel", id = null }) {
   }, [context, id]);
   useEffect(() => {
     if (items.length) {
-      containerRef.current = document.querySelector(`#RUSTCHAT_FEED_${context}_${id}`);
+      containerRef.current = document.querySelector(`#VOCECHAT_FEED_${context}_${id}`);
       if (containerRef.current) {
         const newScroll = containerRef.current.scrollHeight - containerRef.current.clientHeight;
         containerRef.current.scrollTop = curScrollPos + (newScroll - oldScroll);
