@@ -1,11 +1,10 @@
-import { useState, MouseEvent } from "react";
-// import toast from "react-hot-toast";
+import { useState, MouseEvent, FC, ChangeEvent } from "react";
+import toast from "react-hot-toast";
 import Modal from "../Modal";
 import Button from "../styled/Button";
 import Input from "../styled/Input";
 import Channel from "../Channel";
 import Contact from "../Contact";
-// import Channel from "../Channel";
 import Reply from "../Message/Reply";
 import StyledWrapper from "./styled";
 import useForwardMessage from "../../hook/useForwardMessage";
@@ -14,14 +13,18 @@ import useFilteredChannels from "../../hook/useFilteredChannels";
 import useFilteredUsers from "../../hook/useFilteredUsers";
 import CloseIcon from "../../../assets/icons/close.circle.svg";
 import StyledCheckbox from "../styled/Checkbox";
-import toast from "react-hot-toast";
 
-export default function ForwardModal({ mids, closeModal }) {
+interface Props {
+  mids: number[];
+  closeModal: () => void;
+}
+
+const ForwardModal: FC<Props> = ({ mids, closeModal }) => {
   const [appendText, setAppendText] = useState("");
   const { sendMessages } = useSendMessage();
   const { forwardMessage, forwarding } = useForwardMessage();
-  const [selectedMembers, setSelectedMembers] = useState([]);
-  const [selectedChannels, setSelectedChannels] = useState([]);
+  const [selectedMembers, setSelectedMembers] = useState<number[]>([]);
+  const [selectedChannels, setSelectedChannels] = useState<number[]>([]);
   const {
     channels,
     // input: channelInput,
@@ -31,17 +34,20 @@ export default function ForwardModal({ mids, closeModal }) {
   // const { conactsData, loginUid } = useSelector((store) => {
   //   return { conactsData: store.contacts.byId, loginUid: store.authData.uid };
   // });
+
   const toggleCheck = ({ currentTarget }: MouseEvent<HTMLLIElement>) => {
     const { id, type = "user" } = currentTarget.dataset;
-    const ids = type == "user" ? selectedMembers : selectedChannels;
+    const ids: number[] = type == "user" ? selectedMembers : selectedChannels;
     const updateState = type == "user" ? setSelectedMembers : setSelectedChannels;
-    let tmp = ids.includes(+id) ? ids.filter((m) => m != id) : [...ids, +id];
-    console.log(id, currentTarget);
+    const id_num = Number(id);
+    let tmp = ids.includes(id_num) ? ids.filter((m) => m !== id_num) : [...ids, id_num];
     updateState(tmp);
   };
-  const updateAppendText = (evt) => {
+
+  const updateAppendText = (evt: ChangeEvent<HTMLInputElement>) => {
     setAppendText(evt.target.value);
   };
+
   const handleForward = async () => {
     await forwardMessage({
       mids: mids.map((mid) => +mid),
@@ -58,21 +64,25 @@ export default function ForwardModal({ mids, closeModal }) {
     toast.success("Forward Message Successfully");
     closeModal();
   };
-  const removeSelected = (id, from = "user") => {
+
+  const removeSelected = (id: number, from = "user") => {
     if (from == "user") {
       setSelectedMembers(selectedMembers.filter((m) => m != id));
     } else {
       setSelectedChannels(selectedChannels.filter((cid) => cid != id));
     }
   };
-  const handleSearchChange = (evt) => {
+
+  const handleSearchChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const newVal = evt.target.value;
     updateChannelInput(newVal);
     updateInput(newVal);
   };
+
   let selectedCount = selectedMembers.length + selectedChannels.length;
   const sendButtonDisabled =
     (selectedChannels.length == 0 && selectedMembers.length == 0) || forwarding;
+
   return (
     <Modal>
       <StyledWrapper>
@@ -89,7 +99,6 @@ export default function ForwardModal({ mids, closeModal }) {
               channels.map((c) => {
                 const { gid } = c;
                 const checked = selectedChannels.includes(gid);
-                console.log({ checked });
                 return (
                   <li
                     key={gid}
@@ -107,7 +116,6 @@ export default function ForwardModal({ mids, closeModal }) {
               contacts.map((u) => {
                 const { uid } = u;
                 const checked = selectedMembers.includes(uid);
-                console.log({ checked });
                 return (
                   <li
                     key={uid}
@@ -179,4 +187,6 @@ export default function ForwardModal({ mids, closeModal }) {
       </StyledWrapper>
     </Modal>
   );
-}
+};
+
+export default ForwardModal;

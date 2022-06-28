@@ -8,6 +8,7 @@ import { fullfillContacts } from "../slices/contacts";
 import BASE_URL, { ContentTypes } from "../config";
 import { onMessageSendStarted } from "./handlers";
 import handleChatMessage from "../../common/hook/useStreaming/chat.handler";
+import { User } from "../../types/auth";
 
 export const contactApi = createApi({
   reducerPath: "contactApi",
@@ -15,14 +16,15 @@ export const contactApi = createApi({
   endpoints: (builder) => ({
     getContacts: builder.query({
       query: () => ({ url: `user` }),
-      transformResponse: (data) => {
+      transformResponse: (data: User[]) => {
         return data.map((user) => {
-          const avatar =
-            user.avatar_updated_at == 0
-              ? ""
-              : `${BASE_URL}/resource/avatar?uid=${user.uid}&t=${user.avatar_updated_at}`;
-          user.avatar = avatar;
-          return user;
+          return {
+            ...user,
+            avatar:
+              user.avatar_updated_at == 0
+                ? ""
+                : `${BASE_URL}/resource/avatar?uid=${user.uid}&t=${user.avatar_updated_at}`
+          };
         });
       },
       async onQueryStarted(data, { dispatch, queryFulfilled }) {

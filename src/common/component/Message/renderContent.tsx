@@ -5,7 +5,7 @@ import reactStringReplace from "react-string-replace";
 import { ContentTypes } from "../../../app/config";
 import Mention from "./Mention";
 import ForwardedMessage from "./ForwardedMessage";
-import MrakdownRender from "../MrakdownRender";
+import MarkdownRender from "../MarkdownRender";
 import FileMessage from "../FileMessage";
 import URLPreview from "./URLPreview";
 
@@ -54,7 +54,7 @@ const renderContent = ({
       break;
     case ContentTypes.markdown:
       {
-        ctn = <MrakdownRender content={content} />;
+        ctn = <MarkdownRender content={content} />;
       }
       break;
     case ContentTypes.file:

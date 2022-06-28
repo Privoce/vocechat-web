@@ -1,7 +1,7 @@
 import React, { MouseEvent, FC } from "react";
 import styled from "styled-components";
 import reactStringReplace from "react-string-replace";
-import MrakdownRender from "../MrakdownRender";
+import MarkdownRender from "../MarkdownRender";
 import Mention from "./Mention";
 import { ContentTypes } from "../../../app/config";
 import { getFileIcon, isImage } from "../../utils";
@@ -122,7 +122,7 @@ const renderContent = (data) => {
     case ContentTypes.markdown:
       res = (
         <div className="md">
-          <MrakdownRender content={content} />
+          <MarkdownRender content={content} />
         </div>
       );
       break;

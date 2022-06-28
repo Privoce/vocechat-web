@@ -6,7 +6,7 @@ import ContextMenu from "../ContextMenu";
 interface Props {
   enable?: boolean;
   uid: number;
-  cid: number;
+  cid?: number;
   visible: boolean;
   hide: () => void;
   children: ReactElement;

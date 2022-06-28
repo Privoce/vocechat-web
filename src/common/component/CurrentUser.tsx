@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { useSelector } from "react-redux";
 import soundIcon from "../../assets/icons/sound.on.svg?url";
 import micIcon from "../../assets/icons/mic.on.svg?url";
 import Avatar from "./Avatar";

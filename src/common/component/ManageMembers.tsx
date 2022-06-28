@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
 import styled from "styled-components";
 import Tippy from "@tippyjs/react";
 import { hideAll } from "tippy.js";
@@ -115,7 +115,11 @@ const StyledWrapper = styled.section`
   }
 `;
 
-export default function ManageMembers({ cid = null }) {
+interface Props {
+  cid?: number;
+}
+
+const ManageMembers: FC<Props> = ({ cid = null }) => {
   const { contacts, channels, loginUser } = useAppSelector((store) => {
     return {
       contacts: store.contacts,
@@ -246,4 +250,6 @@ export default function ManageMembers({ cid = null }) {
       </ul>
     </StyledWrapper>
   );
-}
+};
+
+export default ManageMembers;

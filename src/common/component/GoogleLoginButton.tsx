@@ -60,7 +60,7 @@ const GoogleLoginButton: FC<Props> = ({ clientId }) => {
   return (
     <StyledSocialButton disabled={!loaded || isLoading} onClick={handleGoogleLogin}>
       <img className="icon" src={googleSvg} alt="google icon" />
-      {loaded ? `Sign in with Google` : `Initailizing`}
+      {loaded ? "Sign in with Google" : "Initializing"}
     </StyledSocialButton>
   );
 };

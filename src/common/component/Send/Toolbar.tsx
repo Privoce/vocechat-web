@@ -51,19 +51,21 @@ export default function Toolbar({
   to,
   context
 }) {
-  // todo: check code logic
   const { addStageFile } = useUploadFile({ context, id: to });
   const fileInputRef = useRef<HTMLInputElement>(null);
   const handleUpload = (evt: ChangeEvent<HTMLInputElement>) => {
-    const files = [...evt.target.files];
-    console.log("files", files);
+    if (!evt.target.files) return;
+    const files = Array.from(evt.target.files);
     const filesData = files.map((file) => {
       const { size, type, name } = file;
       const url = URL.createObjectURL(file);
       return { size, type, name, url };
     });
     addStageFile(filesData);
+    // todo: check code logic
+    // @ts-ignore
     fileInputRef.current.value = null;
+    // @ts-ignore
     fileInputRef.current.value = "";
     // setFiles([...evt.target.files]);
   };

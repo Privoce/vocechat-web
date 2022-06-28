@@ -5,7 +5,8 @@ import BASE_URL, { FILE_SLICE_SIZE } from "../../app/config";
 import { usePrepareUploadFileMutation, useUploadFileMutation } from "../../app/services/message";
 import { useAppDispatch, useAppSelector } from "../../app/store";
 
-export default function useUploadFile(props = {}) {
+// todo: check props type
+export default function useUploadFile(props: { context: string; id: string } | object = {}) {
   const { context = "", id = "" } = props;
   const dispatch = useAppDispatch();
   const { stageFiles, replying } = useAppSelector((store) => {
@@ -16,7 +17,7 @@ export default function useUploadFile(props = {}) {
   });
   const [data, setData] = useState(null);
   // const [uploadingFile, setUploadingFile] = useState(false);
-  const canneledRef = useRef(false);
+  const canceledRef = useRef(false);
   const sliceUploadedCountRef = useRef(0);
   const totalSliceCountRef = useRef(1);
   const [prepareUploadFile, { isLoading: isPreparing, isSuccess: isPrepared }] =
@@ -26,16 +27,18 @@ export default function useUploadFile(props = {}) {
     { isLoading: isUploading, isSuccess: isUploaded, isError: uploadFileError }
   ] = useUploadFileMutation();
 
-  const uploadChunk = (data) => {
+  const uploadChunk = (data: { file_id: string; chunk: File; is_last: boolean }) => {
     const { file_id, chunk, is_last } = data;
     const formData = new FormData();
     formData.append("file_id", file_id);
     formData.append("chunk_data", chunk);
-    formData.append("chunk_is_last", is_last);
+    formData.append("chunk_is_last", `${is_last}`);
+    // old code
+    // formData.append("chunk_is_last", is_last);
     return uploadFileFn(formData);
   };
 
-  const uploadFile = async (file) => {
+  const uploadFile = async (file?: File) => {
     if (!file) return;
     setData(null);
     const {
@@ -51,7 +54,7 @@ export default function useUploadFile(props = {}) {
     console.log("file id", file_id);
 
     let uploadResult = null;
-    canneledRef.current = false;
+    canceledRef.current = false;
     totalSliceCountRef.current = 1;
     sliceUploadedCountRef.current = 0;
     // setUploadingFile(true);
@@ -69,7 +72,7 @@ export default function useUploadFile(props = {}) {
 
       for await (const [idx] of _arr.entries()) {
         // 退出循环
-        if (canneledRef.current) break;
+        if (canceledRef.current) break;
         try {
           const chunk = file.slice(FILE_SLICE_SIZE * idx, FILE_SLICE_SIZE * (idx + 1), file_type);
 
@@ -109,7 +112,7 @@ export default function useUploadFile(props = {}) {
   };
 
   const stopUploading = () => {
-    canneledRef.current = true;
+    canceledRef.current = true;
   };
 
   const removeStageFile = (idx) => {

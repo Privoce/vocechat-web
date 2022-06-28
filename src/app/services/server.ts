@@ -5,11 +5,18 @@ import baseQuery from "./base.query";
 
 const defaultExpireDuration = 7 * 24 * 60 * 60;
 
+// todo: doc
+interface GetServerResponse {}
+interface GetThirdPartySecretResponse {}
+interface UpdateThirdPartySecretResponse {}
+// interface GetServerVersionResponse {}
+interface GetLoginConfigResponse {}
+
 export const serverApi = createApi({
   reducerPath: "serverApi",
   baseQuery,
   endpoints: (builder) => ({
-    getServer: builder.query({
+    getServer: builder.query<GetServerResponse, void>({
       query: () => ({ url: `admin/system/organization` }),
       transformResponse: (data) => {
         data.logo = `${BASE_URL}/resource/organization/logo?t=${+new Date()}`;
@@ -24,7 +31,7 @@ export const serverApi = createApi({
         }
       }
     }),
-    getThirdPartySecret: builder.query({
+    getThirdPartySecret: builder.query<GetThirdPartySecretResponse, void>({
       query: () => ({
         // headers: {
         //   "content-type": "text/plain",
@@ -35,7 +42,7 @@ export const serverApi = createApi({
       }),
       keepUnusedDataFor: 0
     }),
-    updateThirdPartySecret: builder.mutation({
+    updateThirdPartySecret: builder.mutation<UpdateThirdPartySecretResponse, void>({
       query: () => ({
         url: `/admin/system/third_party_secret`,
         method: "POST",
@@ -45,14 +52,11 @@ export const serverApi = createApi({
     getMetrics: builder.query({
       query: () => ({ url: `/admin/system/metrics` })
     }),
-    getServerVersion: builder.query({
+    getServerVersion: builder.query<string, void>({
       query: () => ({
-        headers: {
-          // "content-type": "text/plain",
-          accept: "text/plain"
-        },
+        headers: { accept: "text/plain" },
         url: `/admin/system/version`,
-        responseHandler: (response) => response.text()
+        responseHandler: (response: Response) => response.text()
       })
     }),
     getFirebaseConfig: builder.query({
@@ -115,7 +119,7 @@ export const serverApi = createApi({
         body: data
       })
     }),
-    getLoginConfig: builder.query({
+    getLoginConfig: builder.query<GetLoginConfigResponse, void>({
       query: () => ({ url: `admin/login/config` })
     }),
     updateLoginConfig: builder.mutation({

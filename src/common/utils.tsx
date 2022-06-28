@@ -11,7 +11,7 @@ export const isImage = (file_type = "", size = 0) => {
   return file_type.startsWith("image") && size <= FILE_IMAGE_SIZE;
 };
 
-const deepSortObject = (obj) => {
+const deepSortObject = (obj: object): any => {
   return Object.fromEntries(
     Object.entries(obj)
       .map((entry) => [
@@ -22,7 +22,7 @@ const deepSortObject = (obj) => {
   );
 };
 
-export const isObjectEqual = (obj1, obj2) => {
+export const isObjectEqual = (obj1: any, obj2: any) => {
   // Check for reference equal
   if (obj1 === obj2) return true;
   // Check for deep equal
@@ -30,7 +30,8 @@ export const isObjectEqual = (obj1, obj2) => {
   let o2 = JSON.stringify(deepSortObject(obj2 ?? {}));
   return o1 === o2;
 };
-export const isTreatAsImage = (file) => {
+
+export const isTreatAsImage = (file: File | null) => {
   let isImage = false;
   if (!file) return isImage;
   const { type, size } = file;
@@ -41,8 +42,8 @@ export const isTreatAsImage = (file) => {
   return isImage;
 };
 
-export const getNonNullValues = (obj, whiteList = ["log_id"]) => {
-  const tmp = {};
+export const getNonNullValues = (obj: any, whiteList = ["log_id"]): any => {
+  const tmp: any = {};
   Object.keys(obj).forEach((k) => {
     if (!whiteList.includes(k) && obj[k] !== null) {
       tmp[k] = obj[k];
@@ -50,14 +51,20 @@ export const getNonNullValues = (obj, whiteList = ["log_id"]) => {
   });
   return tmp;
 };
-export function getDefaultSize(size = null, min = 480) {
+
+interface Size {
+  width: number;
+  height: number;
+}
+
+export function getDefaultSize(size: Size | null = null, min: number = 480) {
   if (!size) return { width: 0, height: 0 };
   const { width: oWidth, height: oHeight } = size;
   if (oWidth == oHeight) {
     const tmp = min > oWidth ? oWidth : min;
     return { width: tmp, height: tmp };
   }
-  const isVertical = oWidth > oHeight ? false : true;
+  const isVertical = oWidth <= oHeight;
   let dWidth = 0;
   let dHeight = 0;
   if (isVertical) {
@@ -69,7 +76,8 @@ export function getDefaultSize(size = null, min = 480) {
   }
   return { width: dWidth, height: dHeight };
 }
-export function formatBytes(bytes, decimals = 2) {
+
+export function formatBytes(bytes: number, decimals = 2) {
   if (bytes === 0) return "0 Bytes";
 
   const k = 1000;
@@ -80,9 +88,16 @@ export function formatBytes(bytes, decimals = 2) {
 
   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
 }
-export const getImageSize = (url) => {
-  const size = { width: 0, height: 0 };
-  if (!url) return size;
+
+export interface ImageSize {
+  width: number;
+  height: number;
+}
+
+export const getImageSize = (url: string): Promise<ImageSize> => {
+  const size: ImageSize = { width: 0, height: 0 };
+  // todo: check inactive code
+  // if (!url) return size;
   return new Promise((resolve) => {
     const img = new Image();
     img.src = url;
@@ -96,13 +111,15 @@ export const getImageSize = (url) => {
     };
   });
 };
-export const getInitials = (name) => {
+
+export const getInitials = (name: string) => {
   const arr = name.split(" ").filter((n) => !!n);
   return arr
     .map((t) => t[0])
     .join("")
     .toUpperCase();
 };
+
 export const getInitialsAvatar = ({
   initials = "UK",
   initial_size = 0,
@@ -121,7 +138,7 @@ export const getInitialsAvatar = ({
   canvas.style.width = `${width}px`;
   canvas.style.height = `${height}px`;
 
-  const context = canvas.getContext("2d");
+  const context = canvas.getContext("2d")!;
   context.scale(devicePixelRatio, devicePixelRatio);
   context.rect(0, 0, canvas.width, canvas.height);
   context.fillStyle = background;
@@ -139,12 +156,8 @@ export const getInitialsAvatar = ({
   /* istanbul ignore next */
   return canvas.toDataURL("image/png");
 };
-/**
- * @param {File|Blob} - file to slice
- * @param {Number} - chunksAmount
- * @return {Array} - an array of Blobs
- **/
-export function sliceFile(file, chunksAmount) {
+
+export function sliceFile(file: File | null, chunksAmount: number) {
   if (!file) return null;
   let byteIndex = 0;
   let chunks = [];
@@ -157,7 +170,8 @@ export function sliceFile(file, chunksAmount) {
 
   return chunks;
 }
-export const getFileIcon = (type, name = "") => {
+
+export const getFileIcon = (type: string, name: string = "") => {
   let icon = null;
 
   const checks = {
@@ -199,10 +213,18 @@ export const getFileIcon = (type, name = "") => {
   }
   return icon;
 };
-export const normalizeArchiveData = (data = null, filePath = null, uid = null) => {
+
+export const normalizeArchiveData = (
+  data = null,
+  filePath: string | null = null,
+  uid: number | null = null
+) => {
   if (!data || !filePath) return [];
   const { messages, users } = data;
-  const getUrls = (uid, { content, content_type, file_id, thumbnail_id, filePath, avatar }) => {
+  const getUrls = (
+    uid: number,
+    { content, content_type, file_id, thumbnail_id, filePath, avatar }
+  ) => {
     // uid存在，则favorite，否则archive
     const prefix = uid
       ? `${BASE_URL}/favorite/attachment/${uid}/${filePath}/`
