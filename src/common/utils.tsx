@@ -2,7 +2,7 @@ import BASE_URL, { FILE_IMAGE_SIZE, ContentTypes } from "../app/config";
 import IconPdf from "../assets/icons/file.pdf.svg";
 import IconAudio from "../assets/icons/file.audio.svg";
 import IconVideo from "../assets/icons/file.video.svg";
-import IconUnkown from "../assets/icons/file.unkown.svg";
+import IconUnknown from "../assets/icons/file.unkown.svg";
 import IconDoc from "../assets/icons/file.doc.svg";
 import IconCode from "../assets/icons/file.code.svg";
 import IconImage from "../assets/icons/file.image.svg";
@@ -175,7 +175,7 @@ export const getFileIcon = (type, name = "") => {
       break;
 
     default:
-      icon = <IconUnkown className="icon" />;
+      icon = <IconUnknown className="icon" />;
       break;
   }
   return icon;
