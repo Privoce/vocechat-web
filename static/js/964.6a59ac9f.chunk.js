@@ -1,4 +1,4 @@
-"use strict";(globalThis.webpackChunkrustchat_web=globalThis.webpackChunkrustchat_web||[]).push([[964],{1964:(e,t,o)=>{o.r(t),o.d(t,{default:()=>p});var i=o(7890);const r=o(9184).ZP.div`
+"use strict";(globalThis.webpackChunkvocechat_web=globalThis.webpackChunkvocechat_web||[]).push([[964],{1964:(e,o,t)=>{t.r(o),t.d(o,{default:()=>p});var i=t(7890);const r=t(9184).ZP.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -63,4 +63,4 @@
       color: #667085;
     }
   }
-`;var n=o(6417);function p(){return(0,n.jsx)(r,{children:(0,n.jsx)("div",{className:"form",children:(0,n.jsx)(i.j3,{})})})}}}]);
+`;var n=t(6417);function p(){return(0,n.jsx)(r,{children:(0,n.jsx)("div",{className:"form",children:(0,n.jsx)(i.j3,{})})})}}}]);

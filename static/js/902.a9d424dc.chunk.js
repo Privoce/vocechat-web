@@ -1,4 +1,4 @@
-"use strict";(globalThis.webpackChunkrustchat_web=globalThis.webpackChunkrustchat_web||[]).push([[902],{6902:(e,o,t)=>{t.r(o),t.d(o,{default:()=>a});var i=t(7313),r=t(3709);const n=t(9184).ZP.div`
+"use strict";(globalThis.webpackChunkvocechat_web=globalThis.webpackChunkvocechat_web||[]).push([[902],{6902:(e,o,t)=>{t.r(o),t.d(o,{default:()=>a});var i=t(7313),r=t(3709);const n=t(9184).ZP.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -69,4 +69,4 @@
       }
     }
   }
-`;var p=t(7890),d=t(2509),s=t(3657),x=t(1057),l=t(6417);function a(){const[e,{data:o,isSuccess:t,isError:a,error:f}]=(0,d.YA)(),{token:c}=(0,p.UO)(),[g,h]=(0,i.useState)(!0),[u,b]=(0,i.useState)(null),m=(0,r.I0)(),w=(0,p.s0)();return(0,i.useEffect)((()=>{setTimeout((()=>{c?e({key:c,type:"thirdparty"}):b("Token Not Found")}),1500)}),[c]),(0,i.useEffect)((()=>{a&&b(f)}),[a,f]),(0,i.useEffect)((()=>{t&&o&&(h(!1),s.ZP.success("Login Successfully"),m((0,x.A3)(o)),w("/"))}),[t,o]),(0,l.jsxs)(n,{children:[g?"loading":"",u]})}}}]);
+`;var p=t(7890),d=t(2509),x=t(3657),s=t(1057),l=t(6417);function a(){const[e,{data:o,isSuccess:t,isError:a,error:f}]=(0,d.YA)(),{token:c}=(0,p.UO)(),[g,h]=(0,i.useState)(!0),[u,b]=(0,i.useState)(null),m=(0,r.I0)(),w=(0,p.s0)();return(0,i.useEffect)((()=>{setTimeout((()=>{c?e({key:c,type:"thirdparty"}):b("Token Not Found")}),1500)}),[c]),(0,i.useEffect)((()=>{a&&b(f)}),[a,f]),(0,i.useEffect)((()=>{t&&o&&(h(!1),x.ZP.success("Login Successfully"),m((0,s.A3)(o)),w("/"))}),[t,o]),(0,l.jsxs)(n,{children:[g?"loading":"",u]})}}}]);
