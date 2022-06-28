@@ -11,15 +11,13 @@ export const isImage = (file_type = "", size = 0) => {
   return file_type.startsWith("image") && size <= FILE_IMAGE_SIZE;
 };
 
-export const isTreatAsImage = (file) => {
-  let isImage = false;
-  if (!file) return isImage;
+export const isTreatAsImage = (file: File) => {
   const { type, size } = file;
   if (type.startsWith("image")) {
     // 10MB
     return size < 1000 * 1000;
   }
-  return isImage;
+  return false;
 };
 
 export const getNonNullValues = (obj, whiteList = ["log_id"]) => {
