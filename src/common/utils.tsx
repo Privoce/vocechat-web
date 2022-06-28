@@ -14,8 +14,7 @@ export const isImage = (file_type = "", size = 0) => {
 export const isTreatAsImage = (file: File) => {
   const { type, size } = file;
   if (type.startsWith("image")) {
-    // 10MB
-    return size < 1000 * 1000;
+    return size < 1024 * 1024; // 10MB
   }
   return false;
 };
