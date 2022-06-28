@@ -35,7 +35,7 @@ const checkFilter = (data, filter, channelMessage) => {
   return selected;
 };
 
-let msnry = null;
+let msnry: typeof Masonry | null;
 function ResourceManagement({ fileMessages }) {
   const listContainerRef = useRef(null);
   const [filter, setFilter] = useState({});

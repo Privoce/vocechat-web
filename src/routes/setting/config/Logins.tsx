@@ -107,7 +107,7 @@ export default function Logins() {
             <div className="title">
               <div className="txt">
                 <Label>Google</Label>
-                <Tooltip link="https://doc.rustchat.com/en-us/login-google.html" />
+                <Tooltip link="https://doc.voce.chat/en-us/login-google.html" />
               </div>
               <span className="desc">Allows members login with Google.</span>
             </div>
@@ -130,7 +130,7 @@ export default function Logins() {
             <div className="title">
               <div className="txt">
                 <Label>Github</Label>
-                <Tooltip link="https://doc.rustchat.com/en-us/login-github.html" />
+                <Tooltip link="https://doc.voce.chat/en-us/login-github.html" />
               </div>
               <span className="desc">Allows members login with Github.</span>
             </div>
@@ -161,7 +161,7 @@ export default function Logins() {
             <div className="title">
               <div className="txt">
                 <Label>Metamask</Label>
-                <Tooltip link="https://doc.rustchat.com/en-us/login-metamask.html" />
+                <Tooltip link="https://doc.voce.chat/en-us/login-metamask.html" />
               </div>
               <span className="desc">Allows members login with Metamask.</span>
             </div>
@@ -176,7 +176,7 @@ export default function Logins() {
             <div className="title">
               <div className="txt">
                 <Label htmlFor="desc">OIDC</Label>
-                <Tooltip link="https://doc.rustchat.com/en-us/login-webid.html" />
+                <Tooltip link="https://doc.voce.chat/en-us/login-webid.html" />
               </div>
               <span className="desc">Save my login details for next time.</span>
             </div>

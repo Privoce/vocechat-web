@@ -10,7 +10,7 @@ export default function usePrompt() {
   };
 
   return {
-    setCanneled: setPrompt,
+    setCanceled: setPrompt,
     prompted: !!localStorage.getItem(KEY_PWA_INSTALLED),
     resetPrompt
   };

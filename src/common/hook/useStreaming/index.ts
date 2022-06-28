@@ -219,7 +219,7 @@ export default function useStreaming() {
                 const { gid, ...rest } = data;
                 dispatch(
                   updateChannel({
-                    id: gid,
+                    gid,
                     ...rest
                   })
                 );
@@ -233,7 +233,7 @@ export default function useStreaming() {
                 dispatch(
                   updateChannel({
                     operation: "add_member",
-                    id: gid,
+                    gid,
                     members: uids
                   })
                 );
@@ -242,13 +242,13 @@ export default function useStreaming() {
             case "user_leaved_group":
               {
                 const { gid, uid: uids } = data;
-                if (uids.findIndex((id) => id == loginUid) > -1) {
+                if (uids.findIndex((uid) => uid == loginUid) > -1) {
                   dispatch(removeChannel(gid));
                 } else {
                   dispatch(
                     updateChannel({
                       operation: "remove_member",
-                      id: gid,
+                      gid,
                       members: uids
                     })
                   );

@@ -1,16 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Server } from "../../types/server";
 
-interface State {
-  name: string;
-  description: string;
+export interface StoredServer extends Server {
   logo: string;
-  inviteLink: {
+  inviteLink?: {
     link: string;
     expire: number;
   };
 }
-
-const initialState: State = {
+const initialState: StoredServer = {
   name: "",
   description: "",
   logo: "",
@@ -27,7 +25,7 @@ const serverSlice = createSlice({
     resetServer() {
       return initialState;
     },
-    fullfillServer(state, action: PayloadAction<State>) {
+    fullfillServer(state, action: PayloadAction<StoredServer>) {
       const {
         inviteLink = {
           link: "",
@@ -39,7 +37,7 @@ const serverSlice = createSlice({
       } = action.payload || {};
       return { name, logo, description, inviteLink };
     },
-    updateInfo(state, action: PayloadAction<Partial<State>>) {
+    updateInfo(state, action: PayloadAction<Partial<StoredServer>>) {
       const values = action.payload || {};
       // todo: check and remove old logic
       // Object.keys(values).forEach((_key) => {

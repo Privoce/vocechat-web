@@ -99,7 +99,7 @@ checkBrowsers(paths.appPath, isInteractive)
       // version and md5 files
       fs.writeFileSync(`${buildFolder}/VERSION`, require("../package.json").version);
       const hash = md5File.sync(`${buildFolder}/VERSION`);
-      fs.writeFileSync(`${buildFolder}/web.rustchat.md5`, hash);
+      fs.writeFileSync(`${buildFolder}/web..md5`, hash);
     },
     (err) => {
       const tscCompileOnError = process.env.TSC_COMPILE_ON_ERROR === "true";

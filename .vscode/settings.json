@@ -25,5 +25,6 @@
   "emmet.triggerExpansionOnTab": true,
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "cSpell.words": ["btns", "oidc", "vocechat"]
 }

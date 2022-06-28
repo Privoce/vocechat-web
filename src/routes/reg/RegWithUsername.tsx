@@ -14,10 +14,14 @@ import { useRegisterMutation } from "../../app/services/auth";
 export default function RegWithUsername() {
   const [checkTokenInvalid, { data: isTokenValid, isLoading: checkingToken }] =
     useCheckMagicTokenValidMutation();
-  const [login, { isLoading: loginLoading, error, isSuccess: loginSuccess, data: loginData }] =
-    useLoginMutation();
-  const [register, { isLoading: regLoading, isSuccess: regSuccess, data: regData }] =
-    useRegisterMutation();
+  const [
+    login,
+    { isLoading: loginLoading, error: loginError, isSuccess: loginSuccess, data: loginData }
+  ] = useLoginMutation();
+  const [
+    register,
+    { isLoading: regLoading, isSuccess: regSuccess, data: regData, error: regError }
+  ] = useRegisterMutation();
   // const navigateTo = useNavigate();
   const { from = "reg" } = useParams();
   const dispatch = useDispatch();
@@ -32,8 +36,7 @@ export default function RegWithUsername() {
   }, [token]);
 
   useEffect(() => {
-    console.log("errr", error);
-    switch (error?.status) {
+    switch (loginError?.status) {
       case 401:
         toast.error("Invalided Token");
         break;
@@ -41,7 +44,17 @@ export default function RegWithUsername() {
       default:
         break;
     }
-  }, [error]);
+  }, [loginError]);
+  useEffect(() => {
+    switch (regError?.status) {
+      case 409:
+        toast.error("Something Conflicted!");
+        break;
+
+      default:
+        break;
+    }
+  }, [regError]);
   useEffect(() => {
     const isSuccess = loginSuccess || regSuccess;
     const data = loginData || regData;
@@ -74,6 +87,7 @@ export default function RegWithUsername() {
     const { value } = evt.target;
     setUsername(value);
   };
+  console.log("ffff", from);
   if (!token) return "No Token";
   if (checkingToken) return "Checking Magic Link...";
   if (!isTokenValid) return <ExpiredTip />;

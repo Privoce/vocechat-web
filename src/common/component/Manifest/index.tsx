@@ -3,7 +3,7 @@ import Prompt from "./Prompt";
 import usePrompt from "./usePrompt";
 
 export default function Manifest() {
-  const { setCanneled, prompted } = usePrompt();
+  const { setCanceled: setCanceled, prompted } = usePrompt();
   const deferredPromptRef = useRef(null);
   const [popup, setPopup] = useState(false);
   // const { data, isSuccess } = useGetServerQuery();
@@ -57,7 +57,7 @@ export default function Manifest() {
     deferredPromptRef.current = null;
   };
   const handleClose = async () => {
-    setCanneled();
+    setCanceled();
     setPopup(false);
   };
   if (!popup || prompted) return null;

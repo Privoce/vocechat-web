@@ -2,7 +2,8 @@ import { FC, useEffect } from "react";
 import { useGoogleLogin } from "react-google-login";
 import toast from "react-hot-toast";
 import styled from "styled-components";
-import googleSvg from "../../assets/icons/google.svg?url";
+import { KEY_LOCAL_MAGIC_TOKEN } from "../../app/config";
+import IconGoogle from "../../assets/icons/google.svg";
 import Button from "./styled/Button";
 import { useLoginMutation } from "../../app/services/auth";
 
@@ -24,11 +25,13 @@ const StyledSocialButton = styled(Button)`
 
 interface Props {
   clientId: string;
+  type?: "login" | "register";
 }
 
-const GoogleLoginButton: FC<Props> = ({ clientId }) => {
-  const [login, { isSuccess, isLoading }] = useLoginMutation();
-
+const GoogleLoginButton: FC<Props> = ({ type = "login", clientId }) => {
+  const [login, { isSuccess, isLoading, error }] = useLoginMutation();
+  //拿本地存的magic token
+  const magic_token = localStorage.getItem(KEY_LOCAL_MAGIC_TOKEN);
   const { signIn, loaded } = useGoogleLogin({
     onScriptLoadFailure: (wtf) => {
       console.error("google login script load failure", wtf);
@@ -37,6 +40,7 @@ const GoogleLoginButton: FC<Props> = ({ clientId }) => {
     onSuccess: ({ tokenId, ...rest }) => {
       console.info("google oauth success", tokenId, rest);
       login({
+        magic_token,
         id_token: tokenId,
         type: "google"
       });
@@ -52,6 +56,21 @@ const GoogleLoginButton: FC<Props> = ({ clientId }) => {
       // navigateTo("/");
     }
   }, [isSuccess]);
+  useEffect(() => {
+    if (error) {
+      switch (error.status) {
+        case 410:
+          toast.error(
+            "No associated account found, please contact admin for an invitation link to join."
+          );
+          break;
+        default:
+          toast.error("Something Error");
+          break;
+      }
+      return;
+    }
+  }, [error]);
   const handleGoogleLogin = () => {
     signIn();
   };
@@ -59,8 +78,8 @@ const GoogleLoginButton: FC<Props> = ({ clientId }) => {
   // console.log("google login ", loaded);
   return (
     <StyledSocialButton disabled={!loaded || isLoading} onClick={handleGoogleLogin}>
-      <img className="icon" src={googleSvg} alt="google icon" />
-      {loaded ? "Sign in with Google" : "Initializing"}
+      <IconGoogle className="icon" alt="google icon" />
+      {loaded ? `${type === "login" ? "Sign in" : "Sign up"} with Google` : `Initializing`}
     </StyledSocialButton>
   );
 };

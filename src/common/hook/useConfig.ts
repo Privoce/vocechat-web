@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { isObjectEqual } from "../utils";
+import { isEqual } from "lodash";
 import {
   useUpdateLoginConfigMutation,
   useUpdateSMTPConfigMutation,
@@ -101,7 +101,7 @@ export default function useConfig(config = "smtp") {
   useEffect(() => {
     // 空对象
     if (Object.keys(values).length == 0) return;
-    if (!isObjectEqual(originalValue, values)) {
+    if (!isEqual(originalValue, values)) {
       setChanged(true);
     } else {
       setChanged(false);

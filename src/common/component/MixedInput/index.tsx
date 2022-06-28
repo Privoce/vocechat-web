@@ -31,7 +31,7 @@ import useUploadFile from "../../hook/useUploadFile";
 import Styled from "./styled";
 import { CONFIG } from "./config";
 import Contact from "../Contact";
-export const TEXT_EDITOR_PREFIX = "rustchat_text_editor";
+export const TEXT_EDITOR_PREFIX = "_text_editor";
 
 let components = createPlateUI({
   // [ELEMENT_IMAGE]: ImageElement,

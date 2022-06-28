@@ -9,6 +9,7 @@ const whiteList = [
   "register",
   "sendLoginMagicLink",
   "sendRegMagicLink",
+  "checkEmail",
   "checkMagicTokenValid",
   "getGoogleAuthConfig",
   "getGithubAuthConfig",
@@ -76,16 +77,6 @@ const baseQueryWithTokenCheck = async (args, api, extraOptions) => {
           toast.error(`${api.endpoint}: Failed to fetch`);
         }
         break;
-      case 404:
-        {
-          toast.error("Request Not Found");
-        }
-        break;
-      case 500:
-        {
-          toast.error(result.error.data || "server error");
-        }
-        break;
       case 401:
         {
           if (api.endpoint !== "login") {
@@ -93,15 +84,22 @@ const baseQueryWithTokenCheck = async (args, api, extraOptions) => {
             location.href = "/#/login";
             toast.error("API Not Authenticated");
           }
-          // toast.error("token expired, please login again");
-          // } else {
-          // return;
-          // }
         }
         break;
       case 403:
         toast.error("Request Not Allowed");
         break;
+      case 404:
+        {
+          toast.error("Request Not Found");
+        }
+        break;
+      case 500:
+        {
+          toast.error(result.error.data || "Server Error");
+        }
+        break;
+
       default:
         break;
     }

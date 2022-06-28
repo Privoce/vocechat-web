@@ -85,7 +85,7 @@ export default function DMChat({ uid = "", dropFiles = [] }) {
         </StyledHeader>
       }
     >
-      <StyledDMChat id={`RUSTCHAT_FEED_user_${uid}`}>
+      <StyledDMChat id={`VOCECHAT_FEED_user_${uid}`}>
         {hasMore ? <LoadMore pullUp={pullUp} /> : null}
         {[...feeds].map((mid, idx) => {
           const curr = messageData[mid];

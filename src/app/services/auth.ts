@@ -2,8 +2,8 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { nanoid } from "@reduxjs/toolkit";
 import baseQuery from "./base.query";
 import { setAuthData, updateToken, resetAuthData, updateInitialized } from "../slices/auth.data";
-import BASE_URL, { KEY_DEVICE_KEY } from "../config";
-import { AuthData } from "../../types/auth";
+import BASE_URL, { KEY_DEVICE_KEY, KEY_LOCAL_MAGIC_TOKEN } from "../config";
+import { AuthData, LoginCredential } from "../../types/auth";
 
 const getDeviceId = () => {
   let d = localStorage.getItem(KEY_DEVICE_KEY);
@@ -18,12 +18,12 @@ export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery,
   endpoints: (builder) => ({
-    login: builder.mutation<AuthData, string>({
-      query: (credentials) => ({
+    login: builder.mutation<AuthData, LoginCredential>({
+      query: (credential) => ({
         url: "token/login",
         method: "POST",
         body: {
-          credential: credentials,
+          credential,
           device: getDeviceId(),
           device_token: "test"
         }
@@ -32,13 +32,10 @@ export const authApi = createApi({
         const { avatar_updated_at } = data.user;
         return {
           ...data,
-          user: {
-            ...data.user,
-            avatar:
-              avatar_updated_at == 0
-                ? ""
-                : `${BASE_URL}/resource/avatar?uid=${data.user.uid}&t=${avatar_updated_at}`
-          }
+          avatar:
+            avatar_updated_at == 0
+              ? ""
+              : `${BASE_URL}/resource/avatar?uid=${data.user.uid}&t=${avatar_updated_at}`
         };
       },
       async onQueryStarted(params, { dispatch, queryFulfilled }) {
@@ -47,6 +44,8 @@ export const authApi = createApi({
           if (data) {
             dispatch(setAuthData(data));
           }
+          // 从localstorage 去掉 magic token
+          localStorage.removeItem(KEY_LOCAL_MAGIC_TOKEN);
         } catch {
           console.log("login error");
         }
@@ -139,6 +138,11 @@ export const authApi = createApi({
         url: `/token/metamask/nonce?public_address=${address}`
       })
     }),
+    checkEmail: builder.query({
+      query: (email) => ({
+        url: `/user/check_email?email=${encodeURIComponent(email)}`
+      })
+    }),
     getCredentials: builder.query({
       query: () => ({ url: "/token/credentials" })
     }),
@@ -153,7 +157,7 @@ export const authApi = createApi({
         }
       }
     }),
-    getInitialized: builder.query({
+    getInitialized: builder.query<boolean, void>({
       query: () => ({ url: "/admin/system/initialized" }),
       async onQueryStarted(params, { dispatch, queryFulfilled }) {
         try {
@@ -168,6 +172,7 @@ export const authApi = createApi({
 });
 
 export const {
+  useLazyCheckEmailQuery,
   useGetInitializedQuery,
   useSendLoginMagicLinkMutation,
   useSendRegMagicLinkMutation,

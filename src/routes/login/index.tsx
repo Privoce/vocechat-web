@@ -38,14 +38,6 @@ export default function LoginPage() {
     const exists = query.get("exists");
     if (oauth) {
       switch (oauth) {
-        case "github":
-          if (code) {
-            login({
-              code: code,
-              type: "github"
-            });
-          }
-          break;
         case "oidc":
           if (code && state) {
             login({
@@ -78,19 +70,18 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (error) {
-      console.log(error);
+      console.log("login err", error);
       switch (error.status) {
-        case "PARSING_ERROR":
-          toast.error(error.data);
-          break;
         case 401:
-          toast.error("username or password incorrect");
+          toast.error("Username or Password incorrect");
           break;
-        case 404:
-          toast.error("account not exsit");
+        case 410:
+          toast.error(
+            "No associated account found, please contact admin for an invitation link to join."
+          );
           break;
         default:
-          toast.error("something error");
+          toast.error("Something Error");
           break;
       }
       return;
@@ -143,7 +134,7 @@ export default function LoginPage() {
       <div className="form">
         <div className="tips">
           <img src={`${BASE_URL}/resource/organization/logo`} alt="logo" className="logo" />
-          <h2 className="title">Login to Rustchat</h2>
+          <h2 className="title">Login to VoceChat</h2>
           <span className="desc">Please enter your details.</span>
         </div>
         <form onSubmit={handleLogin}>
@@ -173,7 +164,7 @@ export default function LoginPage() {
         {hasDivider && <hr className="or" />}
         {enableMagicLink && <MagicLinkLogin />}
         {googleLogin && <GoogleLoginButton clientId={clientId} />}
-        {enableGithubLogin && <GithubLoginButton config={githubAuthConfig} />}
+        {enableGithubLogin && <GithubLoginButton client_id={githubAuthConfig?.client_id} />}
         {enableMetamaskLogin && <MetamaskLoginButton login={login} />}
         {oidc.length > 0 && <OidcLoginButton issuers={oidc} />}
         {whoCanSignUp === "EveryOne" && <SignUpLink />}

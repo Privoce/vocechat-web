@@ -122,7 +122,7 @@ export default function InvitePage() {
       <div className="form animate__animated animate__fadeInDown animate__faster">
         <div className="tips">
           <img src={`${BASE_URL}/resource/organization/logo`} alt="logo" className="logo" />
-          <h2 className="title">Sign Up to Rustchat</h2>
+          <h2 className="title">Sign Up to VoceChat</h2>
           <span className="desc">Please enter your details.</span>
         </div>
         <form onSubmit={handleReg}>
