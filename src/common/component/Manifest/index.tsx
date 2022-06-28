@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, SyntheticEvent } from "react";
 import Prompt from "./Prompt";
 import usePrompt from "./usePrompt";
 
@@ -6,9 +6,8 @@ export default function Manifest() {
   const { setCanceled: setCanceled, prompted } = usePrompt();
   const deferredPromptRef = useRef(null);
   const [popup, setPopup] = useState(false);
-  // const { data, isSuccess } = useGetServerQuery();
   useEffect(() => {
-    const handleInstallPromotion = (e) => {
+    const handleInstallPromotion = (e: SyntheticEvent) => {
       // Prevent the mini-infobar from appearing on mobile
       e.preventDefault();
       // Stash the event so it can be triggered later.
@@ -36,10 +35,10 @@ export default function Manifest() {
     //   }
 
     // }
-    window.addEventListener("beforeinstallprompt", handleInstallPromotion);
+    window.addEventListener("beforeinstallprompt", handleInstallPromotion, true);
     window.addEventListener("appinstalled", handleInstalled);
     return () => {
-      window.removeEventListener("beforeinstallprompt", handleInstallPromotion);
+      window.removeEventListener("beforeinstallprompt", handleInstallPromotion, true);
       window.removeEventListener("appinstalled", handleInstalled);
     };
   }, []);

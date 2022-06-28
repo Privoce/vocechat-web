@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import BASE_URL from "../config";
-import { updateInfo, StoredServer } from "../slices/server";
+import { updateInfo } from "../slices/server";
 import baseQuery from "./base.query";
 import { RootState } from "../store";
 import { User } from "../../types/auth";
@@ -21,16 +21,13 @@ export const serverApi = createApi({
   reducerPath: "serverApi",
   baseQuery,
   endpoints: (builder) => ({
-    getServer: builder.query<StoredServer, void>({
+    getServer: builder.query<Server, void>({
       query: () => ({ url: `admin/system/organization` }),
-      transformResponse: (data: Server) => {
-        const logo = `${BASE_URL}/resource/organization/logo?t=${+new Date()}`;
-        return { ...data, logo };
-      },
       async onQueryStarted(data, { dispatch, queryFulfilled }) {
         try {
           const { data: server } = await queryFulfilled;
-          dispatch(updateInfo(server));
+          const logo = `${BASE_URL}/resource/organization/logo?t=${+new Date()}`;
+          dispatch(updateInfo({ ...server, logo }));
         } catch {
           console.log("get server info error");
         }
