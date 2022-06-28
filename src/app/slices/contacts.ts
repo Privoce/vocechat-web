@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getNonNullValues } from "../../common/utils";
+import { isNull, omitBy } from "lodash";
 import BASE_URL from "../config";
 import { User } from "../../types/auth";
 import { UserLog, UserState } from "../../types/sse";
@@ -46,9 +46,10 @@ const contactsSlice = createSlice({
       changeLogs.forEach(({ action, uid, ...rest }) => {
         switch (action) {
           case "update": {
-            const vals = getNonNullValues(rest);
+            const vals = omitBy(rest, isNull);
             if (state.byId[uid]) {
               Object.keys(vals).forEach((k) => {
+                // @ts-ignore
                 state.byId[uid]![k] = vals[k];
                 if (k == "avatar_updated_at") {
                   state.byId[uid]!.avatar = `${BASE_URL}/resource/avatar?uid=${uid}&t=${vals[k]}`;

@@ -20,15 +20,6 @@ export const isTreatAsImage = (file: File) => {
   return false;
 };
 
-export const getNonNullValues = (obj, whiteList = ["log_id"]) => {
-  const tmp = {};
-  Object.keys(obj).forEach((k) => {
-    if (!whiteList.includes(k) && obj[k] !== null) {
-      tmp[k] = obj[k];
-    }
-  });
-  return tmp;
-};
 export function getDefaultSize(size = null, min = 480) {
   if (!size) return { width: 0, height: 0 };
   const { width: oWidth, height: oHeight } = size;
@@ -48,6 +39,7 @@ export function getDefaultSize(size = null, min = 480) {
   }
   return { width: dWidth, height: dHeight };
 }
+
 export function formatBytes(bytes, decimals = 2) {
   if (bytes === 0) return "0 Bytes";
 
