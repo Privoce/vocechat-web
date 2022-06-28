@@ -36,7 +36,7 @@ export function getDefaultSize(size = null, min = 480) {
     const tmp = min > oWidth ? oWidth : min;
     return { width: tmp, height: tmp };
   }
-  const isVertical = oWidth > oHeight ? false : true;
+  const isVertical = oWidth <= oHeight;
   let dWidth = 0;
   let dHeight = 0;
   if (isVertical) {
