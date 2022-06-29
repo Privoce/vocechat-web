@@ -17,18 +17,17 @@ export default function useContactOperation({ uid, cid }: { uid: number; cid: nu
   const [removeInChannel, { isSuccess: removeSuccess }] = useRemoveMembersMutation();
   const navigateTo = useNavigate();
   const { copy } = useCopy();
-  const { user, channel, loginUid, isAdmin } = useAppSelector((store) => {
+  const { user, channel, loginUser, isAdmin } = useAppSelector((store) => {
     return {
       user: store.contacts.byId[uid],
       channel: store.channels.byId[cid],
-      loginUid: store.authData.uid,
-      isAdmin: store.contacts.byId[store.authData.uid]?.is_admin
+      loginUser: store.authData.user
     };
   });
 
   useEffect(() => {
-    setPassedUid(uid ?? loginUid);
-  }, [uid, loginUid]);
+    setPassedUid(uid ?? loginUser.uid);
+  }, [uid, loginUser]);
 
   useEffect(() => {
     if (removeSuccess || removeUserSuccess) {
@@ -68,7 +67,7 @@ export default function useContactOperation({ uid, cid }: { uid: number; cid: nu
     toast.success("Cooming Soon...");
     hideAll();
   };
-
+  const loginUid = loginUser?.uid;
   const canRemoveFromChannel =
     cid && !channel?.is_public && (isAdmin || channel?.owner == loginUid);
   const canCall = agoraConfig.enabled && loginUid != uid;

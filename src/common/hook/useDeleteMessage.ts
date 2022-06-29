@@ -7,7 +7,7 @@ export default function useDeleteMessage() {
   const { loginUser, messageData } = useAppSelector((store) => {
     return {
       messageData: store.message,
-      loginUser: store.contacts.byId[store.authData.uid]
+      loginUser: store.authData.user
     };
   });
   const [

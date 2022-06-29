@@ -1,9 +1,19 @@
 import { useEffect, useState, useRef } from "react";
-import { useSelector } from "react-redux";
 import { useLazyGetHistoryMessagesQuery } from "../../app/services/channel";
 import { useLazyGetHistoryMessagesQuery as useLazyGetDMHistoryMsg } from "../../app/services/contact";
-
-const getFeedWithPagination = (config) => {
+import { useAppSelector } from "../../app/store";
+export interface PageInfo {
+  isFirst: boolean;
+  isLast: boolean;
+  pageCount: number;
+  pageSize: number;
+  pageNumber: number;
+  ids: number[];
+}
+interface Config extends Partial<PageInfo> {
+  mids: number[];
+}
+const getFeedWithPagination = (config: Config): PageInfo => {
   const { pageNumber = 1, pageSize = 40, mids = [], isLast = false } = config || {};
   const shadowMids = mids.slice(0);
 
@@ -41,16 +51,16 @@ let oldScroll = 0;
 export default function useMessageFeed({ context = "channel", id = null }) {
   const [loadMoreChannelMsgs] = useLazyGetHistoryMessagesQuery();
   const [loadMoreDmMsgs] = useLazyGetDMHistoryMsg();
-  const listRef = useRef([]);
-  const pageRef = useRef(null);
-  const containerRef = useRef(null);
+  const listRef = useRef<number[]>([]);
+  const pageRef = useRef<object | null>(null);
+  const containerRef = useRef<HTMLElement | null>(null);
   const [hasMore, setHasMore] = useState(true);
   const [appends, setAppends] = useState([]);
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState<number[]>([]);
   const loadMoreMsgsFromServer = context == "channel" ? loadMoreChannelMsgs : loadMoreDmMsgs;
-  const { mids, messageData, loginUid } = useSelector((store) => {
+  const { mids, messageData, loginUid } = useAppSelector((store) => {
     return {
-      loginUid: store.authData.uid,
+      loginUid: store.authData.user?.uid,
       mids:
         context == "channel" ? store.channelMessage[id] || [] : store.userMessage.byId[id] || [],
       messageData: store.message
@@ -58,7 +68,7 @@ export default function useMessageFeed({ context = "channel", id = null }) {
   });
   useEffect(() => {
     listRef.current = [];
-    pageRef.current = [];
+    pageRef.current = null;
     setItems([]);
     setHasMore(true);
     setAppends([]);
@@ -91,10 +101,10 @@ export default function useMessageFeed({ context = "channel", id = null }) {
     } else {
       //   追加
       const [lastMid] = listRef.current.slice(-1);
-      const sorteds = mids.slice(0).sort((a, b) => {
+      const sorteds = mids.slice(0).sort((a: number, b: number) => {
         return Number(a) - Number(b);
       });
-      const appends = sorteds.filter((s) => s > lastMid);
+      const appends = sorteds.filter((s: number) => s > lastMid);
       console.log("appends", appends, sorteds, lastMid, mids);
       if (appends.length) {
         setAppends(appends);

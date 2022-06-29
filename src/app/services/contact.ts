@@ -2,7 +2,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 // import toast from "react-hot-toast";
 import { KEY_UID } from "../config";
 import baseQuery from "./base.query";
-import { resetAuthData, setUid } from "../slices/auth.data";
+import { resetAuthData } from "../slices/auth.data";
 import { updateMute } from "../slices/footprint";
 import { fullfillContacts } from "../slices/contacts";
 import BASE_URL, { ContentTypes } from "../config";
@@ -39,7 +39,6 @@ export const contactApi = createApi({
             const markedContacts = contacts.map((u) => {
               return u.uid == matchedUser.uid ? { ...u, online: true } : u;
             });
-            dispatch(setUid(matchedUser.uid));
             dispatch(fullfillContacts(markedContacts));
           }
         } catch {

@@ -13,7 +13,7 @@ import { useAppSelector } from "../../app/store";
 export default function usePreload() {
   const { rehydrate, rehydrated } = useRehydrate();
   const { loginUid, token } = useAppSelector((store) => {
-    return { loginUid: store.authData.uid, token: store.authData.token };
+    return { loginUid: store.authData.user?.uid, token: store.authData.token };
   });
   const { setStreamingReady } = useStreaming();
   const [
@@ -54,6 +54,8 @@ export default function usePreload() {
     }
   }, [rehydrated]);
   const canStreaming = loginUid && rehydrated && !!token;
+  console.log("ttt", loginUid, rehydrated, token);
+
   useEffect(() => {
     setStreamingReady(canStreaming);
   }, [canStreaming]);

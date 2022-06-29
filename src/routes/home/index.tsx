@@ -1,7 +1,6 @@
 // import React from 'react';
 // import { useEffect } from "react";
 import { Outlet, NavLink, useLocation, useMatch } from "react-router-dom";
-import { useSelector } from "react-redux";
 import StyledWrapper from "./styled";
 import User from "./User";
 // import Tools from "./Tools";
@@ -17,6 +16,7 @@ import ChatIcon from "../../assets/icons/chat.svg";
 import ContactIcon from "../../assets/icons/contact.svg";
 import FavIcon from "../../assets/icons/bookmark.svg";
 import FolderIcon from "../../assets/icons/folder.svg";
+import { useAppSelector } from "../../app/store";
 // const routes = ["/setting", "/setting/channel/:cid"];
 export default function HomePage() {
   usePWABadge();
@@ -29,10 +29,10 @@ export default function HomePage() {
       ready,
       remeberedNavs: { chat: chatPath, contact: contactPath }
     }
-  } = useSelector((store) => {
+  } = useAppSelector((store) => {
     return {
       ui: store.ui,
-      loginUid: store.authData.uid
+      loginUid: store.authData.user?.uid
     };
   });
   const { loading } = usePreload();

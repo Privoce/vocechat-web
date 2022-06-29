@@ -46,7 +46,7 @@ const StyledWrapper = styled.div`
 export default function Overview({ id = 0 }) {
   const { loginUser, channel } = useAppSelector((store) => {
     return {
-      loginUser: store.contacts.byId[store.authData.uid],
+      loginUser: store.authData.user,
       channel: store.channels.byId[id]
     };
   });

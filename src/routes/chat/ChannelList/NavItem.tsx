@@ -29,21 +29,12 @@ const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
     handleContextMenuEvent,
     hideContextMenu
   } = useContextMenu();
-  const {
-    channel,
-    mids,
-    messageData,
-    readIndex,
-    muted,
-    loginUid
-    //  loginUser,
-  } = useSelector((store) => {
+  const { channel, mids, messageData, readIndex, muted, loginUid } = useSelector((store) => {
     return {
-      // loginUser: store.contacts.byId[store.authData.uid],
       channel: store.channels.byId[id],
       mids: store.channelMessage[id],
       messageData: store.message,
-      loginUid: store.authData.uid,
+      loginUid: store.authData.user?.uid,
       readIndex: store.footprint.readChannels[id],
       muted: store.footprint.muteChannels[id]
     };

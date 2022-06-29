@@ -114,13 +114,12 @@ const StyledWrapper = styled.section`
     }
   }
 `;
-
-export default function ManageMembers({ cid = null }) {
+export default function ManageMembers({ cid = 0 }) {
   const { contacts, channels, loginUser } = useAppSelector((store) => {
     return {
       contacts: store.contacts,
       channels: store.channels,
-      loginUser: store.contacts.byId[store.authData.uid]
+      loginUser: store.authData.user
     };
   });
   const { copyEmail, removeFromChannel, removeUser, canRemove, canRemoveFromChannel } =

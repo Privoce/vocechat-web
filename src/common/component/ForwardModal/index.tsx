@@ -28,9 +28,6 @@ export default function ForwardModal({ mids, closeModal }) {
     updateInput: updateChannelInput
   } = useFilteredChannels();
   const { contacts, input, updateInput } = useFilteredUsers();
-  // const { conactsData, loginUid } = useSelector((store) => {
-  //   return { conactsData: store.contacts.byId, loginUid: store.authData.uid };
-  // });
   const toggleCheck = ({ currentTarget }: MouseEvent<HTMLLIElement>) => {
     const { id, type = "user" } = currentTarget.dataset;
     const ids = type == "user" ? selectedMembers : selectedChannels;

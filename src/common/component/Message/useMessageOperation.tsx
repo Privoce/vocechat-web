@@ -22,7 +22,7 @@ export default function useMessageOperation({ mid, context, contextId }: Params)
       from_uid: store.message[mid]?.from_uid,
       content_type: store.message[mid]?.content_type,
       properties: store.message[mid]?.properties,
-      currUid: store.authData.uid
+      currUid: store.authData.user?.uid
     };
   });
   const { canPin, pins, unpinMessage, isUnpinSuccess } = usePinMessage(

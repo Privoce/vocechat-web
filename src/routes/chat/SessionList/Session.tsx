@@ -55,7 +55,7 @@ export default function Session({
     (store) => {
       return {
         mids: type == "user" ? store.userMessage.byId[id] : store.channelMessage[id],
-        loginUid: store.authData.uid,
+        loginUid: store.authData.user?.uid,
         readIndex:
           type == "user" ? store.footprint.readUsers[id] : store.footprint.readChannels[id],
         messageData: store.message,

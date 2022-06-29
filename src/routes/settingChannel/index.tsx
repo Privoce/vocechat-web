@@ -10,10 +10,9 @@ let from: string | null = null;
 
 export default function ChannelSetting() {
   const { cid } = useParams();
-  const { isAdmin, loginUid, channel } = useAppSelector((store) => {
+  const { loginUser, channel } = useAppSelector((store) => {
     return {
-      loginUid: store.authData.uid,
-      isAdmin: store.contacts.byId[store.authData.uid]?.is_admin,
+      loginUser: store.authData.user,
       channel: store.channels.byId[cid]
     };
   });
@@ -41,7 +40,7 @@ export default function ChannelSetting() {
   };
   if (!cid) return null;
   const currNav = flatenNavs.find((n) => n.name == navKey) || flatenNavs[0];
-  const canDelete = isAdmin || channel?.owner == loginUid;
+  const canDelete = loginUser.isAdmin || channel?.owner == loginUser.uid;
   const canLeave = !channel?.is_public;
 
   return (

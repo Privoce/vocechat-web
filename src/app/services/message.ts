@@ -132,7 +132,7 @@ export const messageApi = createApi({
       async onQueryStarted(id, { dispatch, queryFulfilled, getState }) {
         try {
           const { data } = await queryFulfilled;
-          const loginUid = getState().authData.uid;
+          const loginUid = getState().authData.user.uid;
           const messages = normalizeArchiveData(data, id, loginUid);
           dispatch(populateFavorite({ id, messages }));
         } catch (err) {

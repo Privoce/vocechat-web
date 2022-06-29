@@ -41,7 +41,6 @@ const Styled = styled.ul`
   }
 `;
 export default function AddEntriesMenu() {
-  // const currentUser = useSelector((store) => store.contacts.byId[store.authData.uid]);
   const [isPrivate, setIsPrivate] = useState(false);
   const [inviteModalVisible, setInviteModalVisible] = useState(false);
 

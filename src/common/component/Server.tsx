@@ -60,7 +60,7 @@ export default function Server() {
       server: store.server
     };
   });
-  // console.log("server info", server);
+  console.log("server info", server);
   const { name, description, logo } = server;
 
   return (
@@ -68,7 +68,7 @@ export default function Server() {
       <NavLink to={`/setting?f=${pathname}`}>
         <div className="server">
           <div className="logo">
-            <img alt="logo" src={logo} />
+            <img alt={`${name} logo`} src={logo} />
           </div>
           <div className="info">
             <h3 className="name" title={description}>

@@ -15,7 +15,7 @@ import { useAppSelector } from "../../../app/store";
 
 export default function ChannelModal({ personal = false, closeModal }) {
   const { contactsData, loginUid } = useAppSelector((store) => {
-    return { contactsData: store.contacts.byId, loginUid: store.authData.uid };
+    return { contactsData: store.contacts.byId, loginUid: store.authData.user?.uid };
   });
   const navigateTo = useNavigate();
   const [data, setData] = useState({

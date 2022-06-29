@@ -7,7 +7,7 @@ export default function usePinMessage(cid: number) {
   const { channel, loginUser } = useAppSelector((store) => {
     return {
       channel: store.channels.byId[cid],
-      loginUser: store.contacts.byId[store.authData.uid]
+      loginUser: store.authData.user
     };
   });
   const [pin, { isError, isLoading, isSuccess }] = usePinMessageMutation();

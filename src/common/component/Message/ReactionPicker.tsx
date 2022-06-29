@@ -41,7 +41,7 @@ export default function ReactionPicker({ mid, hidePicker }) {
   const { reactionData, currUid } = useAppSelector((store) => {
     return {
       reactionData: store.reactionMessage[mid] || {},
-      currUid: store.authData.uid
+      currUid: store.authData.user?.uid
     };
   });
   // useOutsideClick(wrapperRef, hidePicker);

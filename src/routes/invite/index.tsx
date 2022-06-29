@@ -13,8 +13,6 @@ export default function InvitePage() {
   const [samePwd, setSamePwd] = useState(true);
   const [token, setToken] = useState("");
   const [valid, setValid] = useState(false);
-  // const [sp] = useSearchParams();
-  // const navigateTo = useNavigate();
   const [register, { data, isLoading, isSuccess, isError, error }] = useRegisterMutation();
   const [checkToken, { data: isValid, isLoading: checkLoading, isSuccess: checkSuccess }] =
     useCheckMagicTokenValidMutation();

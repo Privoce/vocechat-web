@@ -65,7 +65,7 @@ const StyledWrapper = styled.div`
 export default function CurrentUser() {
   const { values: agoraConfig } = useConfig("agora");
   const currUser = useAppSelector((store) => {
-    return store.contacts.byId[store.authData.uid];
+    return store.authData.user;
   });
 
   if (!currUser) return null;
