@@ -1,20 +1,25 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { KEY_EXPIRE, KEY_PWA_INSTALLED, KEY_REFRESH_TOKEN, KEY_TOKEN, KEY_UID } from "../config";
+import {
+  KEY_EXPIRE,
+  KEY_PWA_INSTALLED,
+  KEY_LOGIN_USER,
+  KEY_REFRESH_TOKEN,
+  KEY_TOKEN,
+  KEY_UID
+} from "../config";
 import { AuthData, AuthToken, User } from "../../types/auth";
 
 interface State {
   initialized: boolean;
-  uid: string | null;
-  user: User | null;
+  user: User | undefined;
   token: string | null;
   expireTime: number;
   refreshToken: string | null;
 }
-
+const loginUser = localStorage.getItem(KEY_LOGIN_USER) || "";
 const initialState: State = {
   initialized: true,
-  uid: null,
-  user: null,
+  user: loginUser ? JSON.parse(loginUser) : undefined,
   token: localStorage.getItem(KEY_TOKEN),
   expireTime: Number(localStorage.getItem(KEY_EXPIRE) || +new Date()),
   refreshToken: localStorage.getItem(KEY_REFRESH_TOKEN)
@@ -22,8 +27,7 @@ const initialState: State = {
 
 const emptyState: State = {
   initialized: true,
-  uid: null,
-  user: null,
+  user: undefined,
   token: null,
   expireTime: +new Date(),
   refreshToken: null
@@ -34,22 +38,17 @@ const authDataSlice = createSlice({
   initialState,
   reducers: {
     setAuthData(state, { payload }: PayloadAction<AuthData>) {
-      const {
-        initialized = true,
-        user: { uid },
-        token,
-        refresh_token,
-        expired_in = 0
-      } = payload;
+      const { initialized = true, user, token, refresh_token, expired_in = 0 } = payload;
+      const { uid } = user;
       state.initialized = initialized;
-      state.uid = `${uid}`;
-      state.user = payload.user;
+      state.user = user;
       state.token = token;
       state.refreshToken = refresh_token;
       // 当前时间往后推expire时长
       const expireTime = +new Date() + Number(expired_in) * 1000;
       state.expireTime = expireTime;
       // set local data
+      localStorage.setItem(KEY_LOGIN_USER, JSON.stringify(user));
       localStorage.setItem(KEY_EXPIRE, `${expireTime}`);
       localStorage.setItem(KEY_TOKEN, token);
       localStorage.setItem(KEY_REFRESH_TOKEN, refresh_token);
@@ -65,16 +64,11 @@ const authDataSlice = createSlice({
 
       return emptyState;
     },
-    setUid(state, action: PayloadAction<string>) {
-      state.uid = action.payload;
-      console.log("set uid original");
-    },
     updateInitialized(state, action: PayloadAction<boolean>) {
       state.initialized = action.payload;
     },
     updateToken(state, action: PayloadAction<AuthToken>) {
       const { token, refresh_token, expired_in } = action.payload;
-      console.log("refresh token");
       state.token = token;
       const et = +new Date() + Number(expired_in) * 1000;
       state.expireTime = et;
@@ -86,6 +80,5 @@ const authDataSlice = createSlice({
   }
 });
 
-export const { updateInitialized, setAuthData, resetAuthData, setUid, updateToken } =
-  authDataSlice.actions;
+export const { updateInitialized, setAuthData, resetAuthData, updateToken } = authDataSlice.actions;
 export default authDataSlice.reducer;

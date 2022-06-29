@@ -12,7 +12,7 @@ export default function SessionList({ tempSession = null }) {
   const { channelIDs, DMs, readChannels, readUsers, channelMessage, userMessage, loginUid } =
     useAppSelector((store) => {
       return {
-        loginUid: store.authData.uid,
+        loginUid: store.authData.user?.uid,
         channelIDs: store.channels.ids,
         DMs: store.userMessage.ids,
         userMessage: store.userMessage.byId,

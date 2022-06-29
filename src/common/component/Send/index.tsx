@@ -47,7 +47,7 @@ function Send({
       uids: store.contacts.ids,
       contactsData: store.contacts.byId,
       mode: store.ui.inputMode,
-      from_uid: store.authData.uid,
+      from_uid: store.authData.user?.uid,
       replying_mid: store.message.replying[`${context}_${id}`],
       uploadFiles: store.ui.uploadFiles[`${context}_${id}`]
     };

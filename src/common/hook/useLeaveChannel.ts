@@ -3,7 +3,7 @@ import { useAppSelector } from "../../app/store";
 
 export default function useLeaveChannel(cid: number) {
   const { channel, loginUid } = useAppSelector((store) => {
-    return { channel: store.channels.byId[cid], loginUid: store.authData.uid };
+    return { channel: store.channels.byId[cid], loginUid: store.authData.user?.uid };
   });
   const [update, { isLoading: transfering, isSuccess: transferSuccess }] =
     useUpdateChannelMutation();

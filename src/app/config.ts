@@ -1,6 +1,6 @@
 // const BASE_URL = `${location.origin}/api`;
-const BASE_URL = `https://dev.rustchat.com/api`;
-export const CACHE_VERSION = `0.3.0`;
+const BASE_URL = `https://dev.voce.chat/api`;
+export const CACHE_VERSION = `0.3.1`;
 export const ContentTypes = {
   text: "text/plain",
   markdown: "text/markdown",
@@ -27,6 +27,7 @@ export const vapidKey = `BGXCn-5YRXSFw38Q9lUKJ5bibL212-yIQn1pCvthGhp6_KwA29FO1Ax
 export const tokenHeader = "X-API-Key";
 export const FILE_SLICE_SIZE = 1000 * 200 * 8; //200kb
 export const FILE_IMAGE_SIZE = 1000 * 10000 * 8; //10mb
+export const KEY_LOGIN_USER = "VOCECHAT_LOGIN_USER";
 export const KEY_TOKEN = "VOCECHAT_TOKEN";
 export const KEY_EXPIRE = "VOCECHAT_TOKEN_EXPIRE";
 export const KEY_REFRESH_TOKEN = "VOCECHAT_REFRESH_TOKEN";

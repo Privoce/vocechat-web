@@ -1,5 +1,5 @@
-import { FC, useEffect } from "react";
-import { useGoogleLogin } from "react-google-login";
+import { FC, useEffect, useState } from "react";
+import { useGoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import toast from "react-hot-toast";
 import styled from "styled-components";
 import { KEY_LOCAL_MAGIC_TOKEN } from "../../app/config";
@@ -24,31 +24,30 @@ const StyledSocialButton = styled(Button)`
 `;
 
 interface Props {
-  clientId: string;
+  loadError?: boolean;
+  loaded?: boolean;
+  clientId?: string;
   type?: "login" | "register";
 }
 
-const GoogleLoginButton: FC<Props> = ({ type = "login", clientId }) => {
+const GoogleLogin: FC<Props> = ({ type = "login", loaded, loadError }) => {
   const [login, { isSuccess, isLoading, error }] = useLoginMutation();
-  // 拿本地存的magic token
+  //拿本地存的magic token
   const magic_token = localStorage.getItem(KEY_LOCAL_MAGIC_TOKEN);
-  const { signIn, loaded } = useGoogleLogin({
-    onScriptLoadFailure: (wtf) => {
-      console.error("google login script load failure", wtf);
-    },
-    clientId,
+  const googleLogin = useGoogleLogin({
+    // flow: "auth-code",
     onSuccess: (res) => {
       if ("code" in res) {
         console.error(`google login failed: ${res.code}`);
       } else {
-        login({ magic_token, id_token: res.tokenId, type: "google" });
+        login({
+          magic_token,
+          id_token: res.access_token,
+          type: "google"
+        });
       }
-    },
-    onFailure: (wtf) => {
-      console.error("google login failure", wtf);
     }
   });
-
   useEffect(() => {
     if (isSuccess) {
       toast.success("Login Successfully");
@@ -70,16 +69,37 @@ const GoogleLoginButton: FC<Props> = ({ type = "login", clientId }) => {
       return;
     }
   }, [error]);
-
   const handleGoogleLogin = () => {
-    signIn();
+    googleLogin();
   };
 
   return (
     <StyledSocialButton disabled={!loaded || isLoading} onClick={handleGoogleLogin}>
       <IconGoogle className="icon" />
-      {loaded ? `${type === "login" ? "Sign in" : "Sign up"} with Google` : `Initializing`}
+      {loadError
+        ? "Script Load Error!"
+        : loaded
+        ? `${type === "login" ? "Sign in" : "Sign up"} with Google`
+        : `Initializing`}
     </StyledSocialButton>
+  );
+};
+
+const GoogleLoginButton: FC<Props> = ({ type = "login", clientId }) => {
+  const [scriptLoaded, setScriptLoaded] = useState(false);
+  const [hasError, setHasError] = useState(false);
+  return (
+    <GoogleOAuthProvider
+      onScriptLoadError={() => {
+        setHasError(true);
+      }}
+      onScriptLoadSuccess={() => {
+        setScriptLoaded(true);
+      }}
+      clientId={clientId}
+    >
+      <GoogleLogin type={type} loaded={scriptLoaded} loadError={hasError} />
+    </GoogleOAuthProvider>
   );
 };
 

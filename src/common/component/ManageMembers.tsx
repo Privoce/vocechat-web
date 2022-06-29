@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
 import Tippy from "@tippyjs/react";
 import { hideAll } from "tippy.js";
@@ -114,17 +114,12 @@ const StyledWrapper = styled.section`
     }
   }
 `;
-
-interface Props {
-  cid?: number;
-}
-
-const ManageMembers: FC<Props> = ({ cid = null }) => {
+export default function ManageMembers({ cid = 0 }) {
   const { contacts, channels, loginUser } = useAppSelector((store) => {
     return {
       contacts: store.contacts,
       channels: store.channels,
-      loginUser: store.contacts.byId[store.authData.uid]
+      loginUser: store.authData.user
     };
   });
   const { copyEmail, removeFromChannel, removeUser, canRemove, canRemoveFromChannel } =
@@ -250,6 +245,4 @@ const ManageMembers: FC<Props> = ({ cid = null }) => {
       </ul>
     </StyledWrapper>
   );
-};
-
-export default ManageMembers;
+}

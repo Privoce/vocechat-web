@@ -1,5 +1,4 @@
 // import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import { useDebounce } from "rooks";
 import Tippy from "@tippyjs/react";
 import FavList from "../FavList";
@@ -15,6 +14,7 @@ import { StyledHeader, StyledDMChat } from "./styled";
 import LoadMore from "../LoadMore";
 import { renderMessageFragment } from "../utils";
 import useMessageFeed from "../../../common/hook/useMessageFeed";
+import { useAppSelector } from "../../../app/store";
 
 export default function DMChat({ uid = "", dropFiles = [] }) {
   const {
@@ -29,10 +29,10 @@ export default function DMChat({ uid = "", dropFiles = [] }) {
   const [updateReadIndex] = useReadMessageMutation();
   const updateReadDebounced = useDebounce(updateReadIndex, 300);
   console.log("dm files", dropFiles);
-  const { currUser, messageData, footprint, loginUid, selects } = useSelector((store) => {
+  const { currUser, messageData, footprint, loginUid, selects } = useAppSelector((store) => {
     return {
       selects: store.ui.selectMessages[`user_${uid}`],
-      loginUid: store.authData.uid,
+      loginUid: store.authData.user?.uid,
       footprint: store.footprint,
       currUser: store.contacts.byId[uid],
       messageData: store.message

@@ -1,4 +1,4 @@
-import { useState, useEffect, ChangeEvent } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import toast from "react-hot-toast";
 import {
@@ -43,44 +43,37 @@ const StyledWrapper = styled.div`
     }
   }
 `;
-
-interface ChannelFormData {
-  name: string;
-  description: string;
-}
-
 export default function Overview({ id = 0 }) {
   const { loginUser, channel } = useAppSelector((store) => {
-    const { uid } = store.authData;
     return {
-      loginUser: uid ? store.contacts.byId[Number(uid)] : undefined,
+      loginUser: store.authData.user,
       channel: store.channels.byId[id]
     };
   });
   const { data, refetch } = useGetChannelQuery(id);
   const [changed, setChanged] = useState(false);
-  const [values, setValues] = useState<ChannelFormData>({ name: "", description: "" });
+  const [values, setValues] = useState(null);
   const [updateChannelIcon] = useUpdateIconMutation();
   const [updateChannel, { isSuccess: updated }] = useUpdateChannelMutation();
-
   const handleUpdate = () => {
     const { name, description } = values;
     updateChannel({ id, name, description });
   };
 
-  const handleChange = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (evt) => {
     const newValue = evt.target.value;
-    const { type } = evt.target.dataset as { type: keyof ChannelFormData };
+    const { type } = evt.target.dataset;
     setValues((prev) => {
       return { ...prev, [type]: newValue };
     });
   };
 
-  const updateIcon = (image: File) => {
+  const updateIcon = (image) => {
     updateChannelIcon({ gid: id, image });
   };
 
   const handleReset = () => {
+    console.log("reset", data);
     setValues(data);
   };
 
@@ -107,7 +100,6 @@ export default function Overview({ id = 0 }) {
       toast.success("Channel updated!");
       refetch();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updated]);
 
   if (!values || !id) return null;

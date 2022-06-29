@@ -9,6 +9,7 @@ import ReactionPicker from "./ReactionPicker";
 import Tooltip from "../Tooltip";
 import { useReactMessageMutation } from "../../../app/services/message";
 import addEmojiIcon from "../../../assets/icons/add.emoji.svg?url";
+import { useAppSelector } from "../../../app/store";
 
 const StyledWrapper = styled.span`
   position: relative;
@@ -129,9 +130,9 @@ const ReactionDetails = ({ uids = [], emoji, index }) => {
 };
 export default function Reaction({ mid, reactions = null }) {
   const [reactWithEmoji] = useReactMessageMutation();
-  const { currUid } = useSelector((store) => {
+  const { currUid } = useAppSelector((store) => {
     return {
-      currUid: store.authData.uid
+      currUid: store.authData.user?.uid
     };
   });
   const handleReact = (emoji) => {

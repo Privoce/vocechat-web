@@ -39,11 +39,14 @@ const serverSlice = createSlice({
     },
     updateInfo(state, action: PayloadAction<Partial<StoredServer>>) {
       const values = action.payload || {};
+      const tmp = { ...state, ...values };
+      console.log("ssss", tmp);
+
       // todo: check and remove old logic
       // Object.keys(values).forEach((_key) => {
       //   state[_key] = values[_key];
       // });
-      state = { ...state, ...values };
+      return { ...state, ...values };
     }
   }
 });

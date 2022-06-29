@@ -58,15 +58,13 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
     userIds,
     data,
     messageData,
-    loginUid,
     loginUser,
     footprint
   } = useSelector((store) => {
     return {
       selects: store.ui.selectMessages[`channel_${cid}`],
       footprint: store.footprint,
-      loginUser: store.contacts.byId[store.authData.uid],
-      loginUid: store.authData.uid,
+      loginUser: store.authData.user,
       // msgIds: store.channelMessage[cid] || [],
       userIds: store.contacts.ids,
       data: store.channels.byId[cid] || {},
@@ -93,7 +91,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
   if (!data) return null;
   const { name, description, is_public, members = [], owner } = data;
   const memberIds = is_public ? userIds : members.slice(0).sort((n) => (n == owner ? -1 : 0));
-  const addVisible = loginUser?.is_admin || owner == loginUid;
+  const addVisible = loginUser?.is_admin || owner == loginUser.uid;
   console.log("channel message list", msgIds);
   const readIndex = footprint.readChannels[cid];
   const pinCount = data?.pinned_messages?.length || 0;
@@ -236,7 +234,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
             if (!curr) return null;
             const isFirst = idx == 0;
             const prev = isFirst ? null : messageData[feeds[idx - 1]];
-            const read = curr?.from_uid == loginUid || mid <= readIndex;
+            const read = curr?.from_uid == loginUser.uid || mid <= readIndex;
             return renderMessageFragment({
               selectMode: !!selects,
               updateReadIndex: updateReadDebounced,

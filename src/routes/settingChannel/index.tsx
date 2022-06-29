@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import LeaveChannel from "../../common/component/LeaveChannel";
-import StyledSettingContainer, { Danger } from "../../common/component/StyledSettingContainer";
+import StyledSettingContainer from "../../common/component/StyledSettingContainer";
 import DeleteConfirmModal from "./DeleteConfirmModal";
 import useNavs from "./navs";
 import { useAppSelector } from "../../app/store";
@@ -9,54 +9,39 @@ import { useAppSelector } from "../../app/store";
 let from: string | null = null;
 
 export default function ChannelSetting() {
-  const { cid } = useParams<{ cid: string }>();
-  const cidNum = Number(cid);
-  const { isAdmin, loginUid, channel } = useAppSelector((store) => {
+  const { cid } = useParams();
+  const { loginUser, channel } = useAppSelector((store) => {
     return {
-      loginUid: store.authData.uid,
-      isAdmin: store.authData.uid
-        ? store.contacts.byId[Number(store.authData.uid)]?.is_admin
-        : false,
-      channel: store.channels.byId[cidNum]
+      loginUser: store.authData.user,
+      channel: store.channels.byId[cid]
     };
   });
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const navs = useNavs(cidNum);
-  const flattenNaves = navs.map(({ items }) => items).flat();
+  const navs = useNavs(cid);
+  const flatenNavs = navs
+    .map(({ items }) => {
+      return items;
+    })
+    .flat();
   const navKey = searchParams.get("nav");
   from = from ?? (searchParams.get("f") || "/");
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const [leaveConfirm, setLeaveConfirm] = useState(false);
   const close = () => {
-    // todo: check usage
-    navigate(from!);
+    navigate(from);
     from = null;
   };
-  const toggleDeleteConfirm = () => {
+  const toggleDeleteConfrim = () => {
     setDeleteConfirm((prev) => !prev);
   };
-  const toggleLeaveConfirm = () => {
+  const toggleLeaveConfrim = () => {
     setLeaveConfirm((prev) => !prev);
   };
   if (!cid) return null;
-  const currNav = flattenNaves.find((n) => n.name == navKey) || flattenNaves[0];
-  const canDelete = isAdmin || channel?.owner === Number(loginUid);
+  const currNav = flatenNavs.find((n) => n.name == navKey) || flatenNavs[0];
+  const canDelete = loginUser.isAdmin || channel?.owner == loginUser.uid;
   const canLeave = !channel?.is_public;
-  const dangers: Danger[] = [];
-
-  if (canLeave) {
-    dangers.push({
-      title: "Leave Channel",
-      handler: toggleLeaveConfirm
-    });
-  }
-  if (canDelete) {
-    dangers.push({
-      title: "Delete Channel",
-      handler: toggleDeleteConfirm
-    });
-  }
 
   return (
     <>
@@ -65,12 +50,21 @@ export default function ChannelSetting() {
         closeModal={close}
         title="Channel Setting"
         navs={navs}
-        dangers={dangers}
+        dangers={[
+          canLeave && {
+            title: "Leave Channel",
+            handler: toggleLeaveConfrim
+          },
+          canDelete && {
+            title: "Delete Channel",
+            handler: toggleDeleteConfrim
+          }
+        ]}
       >
         {currNav.component}
       </StyledSettingContainer>
-      {deleteConfirm && <DeleteConfirmModal closeModal={toggleDeleteConfirm} id={Number(cid)} />}
-      {leaveConfirm && <LeaveChannel closeModal={toggleLeaveConfirm} id={cidNum} />}
+      {deleteConfirm && <DeleteConfirmModal closeModal={toggleDeleteConfrim} id={cid} />}
+      {leaveConfirm && <LeaveChannel closeModal={toggleLeaveConfrim} id={cid} />}
     </>
   );
 }

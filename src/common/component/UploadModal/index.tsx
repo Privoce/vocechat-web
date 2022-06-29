@@ -8,7 +8,7 @@ import useSendMessage from "../../hook/useSendMessage";
 import { useAppSelector } from "../../../app/store";
 
 export default function UploadModal({ context = "user", sendTo = 0, files = [], closeModal }) {
-  const from_uid = useAppSelector((store) => store.authData.uid);
+  const from_uid = useAppSelector((store) => store.authData.user?.uid);
   const {
     sendMessage,
     isSuccess: sendMessageSuccess,

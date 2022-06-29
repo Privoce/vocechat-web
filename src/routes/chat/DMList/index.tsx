@@ -11,7 +11,7 @@ interface Props {
 const DMList: FC<Props> = ({ uids, setDropFiles }) => {
   const { userMessage, messageData, readUsers, loginUid } = useAppSelector((store) => {
     return {
-      loginUid: store.authData.uid,
+      loginUid: store.authData.user?.uid,
       readUsers: store.footprint.readUsers,
       contactData: store.contacts.byId,
       userMessage: store.userMessage.byId,

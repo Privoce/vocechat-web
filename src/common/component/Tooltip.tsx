@@ -42,7 +42,7 @@ const StyledTip = styled.div`
 
 interface Props {
   tip: string;
-  placement: Placement;
+  placement?: Placement;
   delay?: number | [number | null, number | null];
   children: ReactElement;
 }

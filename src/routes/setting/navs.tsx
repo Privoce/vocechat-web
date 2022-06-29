@@ -96,7 +96,7 @@ const navs = [
 
 const useNavs = () => {
   const loginUser = useAppSelector((store) => {
-    return store.contacts.byId[store.authData.uid];
+    return store.authData.user;
   });
   return navs.filter((nav) => {
     if (loginUser?.is_admin) {
