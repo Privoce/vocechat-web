@@ -98,11 +98,11 @@ const Styled = styled.div`
 `;
 
 interface Props {
-  cid: null | number;
+  cid?: number;
   closeModal: () => void;
 }
 
-const AddMembers: FC<Props> = ({ cid = null, closeModal }) => {
+const AddMembers: FC<Props> = ({ cid, closeModal }) => {
   const [addMembers, { isLoading: isAdding, isSuccess }] = useAddMembersMutation();
   const [selects, setSelects] = useState([]);
   const { channel, contactData } = useAppSelector((store) => {

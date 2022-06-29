@@ -1,4 +1,4 @@
-import { useEffect, useState, ChangeEvent } from "react";
+import { useEffect, useState, ChangeEvent, FC } from "react";
 import toast from "react-hot-toast";
 import styled from "styled-components";
 import useInviteLink from "../../hook/useInviteLink";
@@ -68,7 +68,11 @@ const Styled = styled.div`
   }
 `;
 
-export default function InviteByEmail({ cid = null }) {
+interface Props {
+  cid?: number;
+}
+
+const InviteByEmail: FC<Props> = ({ cid }) => {
   const [email, setEmail] = useState("");
   const { enableSMTP, linkCopied, link, copyLink, generateNewLink, generating } =
     useInviteLink(cid);
@@ -110,10 +114,12 @@ export default function InviteByEmail({ cid = null }) {
       </div>
       <div className="tip">
         Invite link expires in 7 days.{" "}
-        <button disabled={generating} className="new" onClick={generateNewLink}>
+        <button disabled={generating} className="new" onClick={() => generateNewLink()}>
           Generate New Link
         </button>
       </div>
     </Styled>
   );
-}
+};
+
+export default InviteByEmail;
