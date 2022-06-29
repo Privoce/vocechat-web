@@ -1,12 +1,12 @@
-// import React from "react";
-import { useEffect, useState } from "react";
+import { ChangeEvent, FC, useEffect, useState } from "react";
 import styled from "styled-components";
-// import { useNavigate } from "react-router-dom";
-
+import toast from "react-hot-toast";
+import Modal from "../../common/component/Modal";
 import StyledModal from "../../common/component/styled/Modal";
 import Button from "../../common/component/styled/Button";
 import Checkbox from "../../common/component/styled/Checkbox";
 import useLogout from "../../common/hook/useLogout";
+
 const StyledConfirm = styled(StyledModal)`
   .clear {
     font-weight: normal;
@@ -26,21 +26,25 @@ const StyledConfirm = styled(StyledModal)`
     }
   }
 `;
-import Modal from "../../common/component/Modal";
-import toast from "react-hot-toast";
-export default function LogoutConfirmModal({ closeModal }) {
+
+interface Props {
+  closeModal: () => void;
+}
+
+const LogoutConfirmModal: FC<Props> = ({ closeModal }) => {
   const [clearLocal, setClearLocal] = useState(false);
   const { logout, exited, exiting, clearLocalData } = useLogout();
   const handleLogout = () => {
     logout();
   };
-  const handleCheck = (evt) => {
+
+  const handleCheck = (evt: ChangeEvent<HTMLInputElement>) => {
     setClearLocal(evt.target.checked);
   };
+
   useEffect(() => {
     if (exited) {
       if (clearLocal) {
-        console.log("clear all store");
         clearLocalData();
       }
       toast.success("Logout Successfully");
@@ -50,6 +54,7 @@ export default function LogoutConfirmModal({ closeModal }) {
       // location.reload();
     }
   }, [exited, clearLocal]);
+
   return (
     <Modal id="modal-modal">
       <StyledConfirm
@@ -59,7 +64,7 @@ export default function LogoutConfirmModal({ closeModal }) {
           <>
             <Button onClick={closeModal}>Cancel</Button>
             <Button onClick={handleLogout} className="danger">
-              {exiting ? "Logging out" : `Log Out`}
+              {exiting ? "Logging out" : "Log Out"}
             </Button>
           </>
         }
@@ -74,4 +79,6 @@ export default function LogoutConfirmModal({ closeModal }) {
       </StyledConfirm>
     </Modal>
   );
-}
+};
+
+export default LogoutConfirmModal;

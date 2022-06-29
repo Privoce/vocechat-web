@@ -10,17 +10,11 @@ import StyledCheckbox from "../styled/Checkbox";
 import useFilteredUsers from "../../hook/useFilteredUsers";
 import { useCreateChannelMutation } from "../../../app/services/channel";
 import { useAppSelector } from "../../../app/store";
+import { CreateChannelDTO } from "../../../types/channel";
 
 interface Props {
   personal?: boolean;
   closeModal: () => void;
-}
-
-interface CreateChannelDTO {
-  name: string;
-  description: string;
-  members?: number[];
-  is_public: boolean;
 }
 
 const ChannelModal: FC<Props> = ({ personal = false, closeModal }) => {
@@ -31,7 +25,7 @@ const ChannelModal: FC<Props> = ({ personal = false, closeModal }) => {
   const [data, setData] = useState<CreateChannelDTO>({
     name: "",
     description: "",
-    members: [loginUid],
+    members: loginUid ? [Number(loginUid)] : [],
     is_public: !personal
   });
 
@@ -82,13 +76,15 @@ const ChannelModal: FC<Props> = ({ personal = false, closeModal }) => {
   };
 
   const toggleCheckMember = ({ currentTarget }: MouseEvent<HTMLLIElement>) => {
-    const { members } = data;
+    const members = data.members ?? [];
     const { uid } = currentTarget.dataset;
-    let tmp = members.includes(+uid) ? members.filter((m) => m != uid) : [...members, +uid];
+    const uidNum = Number(uid);
+    let tmp = members.includes(uidNum) ? members.filter((m) => m != uidNum) : [...members, uidNum];
     setData((prev) => ({ ...prev, members: tmp }));
   };
 
-  const loginUser = contactsData[loginUid];
+  if (!loginUid) return null;
+  const loginUser = contactsData[Number(loginUid)];
   if (!loginUser) return null;
   const { name, members, is_public } = data;
 
@@ -108,13 +104,13 @@ const ChannelModal: FC<Props> = ({ personal = false, closeModal }) => {
               <ul className="users">
                 {contacts.map((u) => {
                   const { uid } = u;
-                  const checked = members.includes(uid);
+                  const checked = members ? members.includes(uid) : false;
                   return (
                     <li
                       key={uid}
                       data-uid={uid}
                       className="user"
-                      onClick={loginUid == uid ? null : toggleCheckMember}
+                      onClick={loginUid == uid ? undefined : toggleCheckMember}
                     >
                       <StyledCheckbox
                         disabled={loginUid == uid}

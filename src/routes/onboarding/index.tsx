@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { Helmet } from "react-helmet";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -11,9 +11,14 @@ import DonePage from "./steps/donePage";
 import useServerSetup, { steps } from "./useServerSetup";
 import StyledOnboardingPage from "./styled";
 
-function Navigator({ step, setStep }) {
+interface Props {
+  step: string;
+  setStep: (step: string) => void;
+}
+
+const Navigator: FC<Props> = ({ step, setStep }) => {
   const index = steps.map((value) => value.name).indexOf(step);
-  const canJumpTo = steps.find((value) => value.name === step).canJumpTo || [];
+  const canJumpTo = steps.find((value) => value.name === step)?.canJumpTo || [];
 
   return (
     <div className="navigator">
@@ -41,7 +46,7 @@ function Navigator({ step, setStep }) {
       })}
     </div>
   );
-}
+};
 
 export default function OnboardingPage() {
   const serverSetup = useServerSetup();

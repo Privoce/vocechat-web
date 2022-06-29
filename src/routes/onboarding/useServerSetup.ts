@@ -1,7 +1,14 @@
 import { useCallback, useState } from "react";
+import { Swiper } from "swiper/types";
 
 // `name` for in-code usage, `label` for display
-const steps = [
+export interface Step {
+  name: string;
+  label: string;
+  canJumpTo?: string[];
+}
+
+const steps: Step[] = [
   {
     name: "welcomePage",
     label: "Welcome Page"
@@ -31,12 +38,12 @@ const steps = [
 ];
 
 export default function useServerSetup() {
-  const [swiper, setSwiper] = useState(null);
+  const [swiper, setSwiper] = useState<Swiper | null>(null);
 
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState<number>(0);
   const step = steps[index].name;
   const setStep = useCallback(
-    (name) => {
+    (name: string) => {
       const newIndex = steps.map((step) => step.name).indexOf(name);
       setIndex(newIndex);
       if (swiper !== null) {

@@ -1,15 +1,25 @@
-import { ChangeEvent, useState } from "react";
-import Select from "../../../../common/component/styled/Select";
+import { ChangeEvent, FC, useState } from "react";
+import Select, { Option } from "../../../../common/component/styled/Select";
 import Button from "../../../../common/component/styled/Button";
 import Input from "../../../../common/component/styled/Input";
 import Toggle from "../../../../common/component/styled/Toggle";
 import options from "./items.json";
 import Styled from "./styled";
-// import IconPlus from "../../../../assets/icons/plus.circle.svg";
 import IconMinus from "../../../../assets/icons/minus.circle.svg";
 
-export default function IssuerList({ issuers = [], onChange }) {
-  const [select, setSelect] = useState({});
+interface Issuer {
+  domain: string;
+  enable: boolean;
+  favicon: string;
+}
+
+interface Props {
+  issuers: Issuer[];
+  onChange: (issuers: Issuer[]) => void;
+}
+
+const IssuerList: FC<Props> = ({ issuers = [], onChange }) => {
+  const [select, setSelect] = useState<Partial<Option> | null>(null);
   const [newDomain, setNewDomain] = useState("");
 
   const handleNewDomain = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -87,7 +97,9 @@ export default function IssuerList({ issuers = [], onChange }) {
             <Button
               disabled={disableBtn}
               onClick={() => {
-                const { icon, value } = options.find((option) => option.value === select.value);
+                const found = options.find((option) => option.value === select?.value);
+                if (!found) return;
+                const { icon, value } = found;
                 onChange(
                   issuers.concat({
                     enable: true,
@@ -95,7 +107,7 @@ export default function IssuerList({ issuers = [], onChange }) {
                     domain: value || newDomain
                   })
                 );
-                setSelect({});
+                setSelect(null);
                 setNewDomain("");
               }}
             >
@@ -107,4 +119,6 @@ export default function IssuerList({ issuers = [], onChange }) {
       {/* <IconPlus className="add" /> */}
     </Styled>
   );
-}
+};
+
+export default IssuerList;

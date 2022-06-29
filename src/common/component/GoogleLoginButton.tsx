@@ -30,20 +30,19 @@ interface Props {
 
 const GoogleLoginButton: FC<Props> = ({ type = "login", clientId }) => {
   const [login, { isSuccess, isLoading, error }] = useLoginMutation();
-  //拿本地存的magic token
+  // 拿本地存的magic token
   const magic_token = localStorage.getItem(KEY_LOCAL_MAGIC_TOKEN);
   const { signIn, loaded } = useGoogleLogin({
     onScriptLoadFailure: (wtf) => {
       console.error("google login script load failure", wtf);
     },
     clientId,
-    onSuccess: ({ tokenId, ...rest }) => {
-      console.info("google oauth success", tokenId, rest);
-      login({
-        magic_token,
-        id_token: tokenId,
-        type: "google"
-      });
+    onSuccess: (res) => {
+      if ("code" in res) {
+        console.error(`google login failed: ${res.code}`);
+      } else {
+        login({ magic_token, id_token: res.tokenId, type: "google" });
+      }
     },
     onFailure: (wtf) => {
       console.error("google login failure", wtf);
@@ -57,7 +56,7 @@ const GoogleLoginButton: FC<Props> = ({ type = "login", clientId }) => {
     }
   }, [isSuccess]);
   useEffect(() => {
-    if (error) {
+    if (error && "status" in error) {
       switch (error.status) {
         case 410:
           toast.error(
@@ -71,14 +70,14 @@ const GoogleLoginButton: FC<Props> = ({ type = "login", clientId }) => {
       return;
     }
   }, [error]);
+
   const handleGoogleLogin = () => {
     signIn();
   };
 
-  // console.log("google login ", loaded);
   return (
     <StyledSocialButton disabled={!loaded || isLoading} onClick={handleGoogleLogin}>
-      <IconGoogle className="icon" alt="google icon" />
+      <IconGoogle className="icon" />
       {loaded ? `${type === "login" ? "Sign in" : "Sign up"} with Google` : `Initializing`}
     </StyledSocialButton>
   );

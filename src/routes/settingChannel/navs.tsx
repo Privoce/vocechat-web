@@ -1,7 +1,20 @@
 import Overview from "./Overview";
 import ManageMembers from "../../common/component/ManageMembers";
+import { ReactNode } from "react";
 
-const useNavs = (channelId: number) => {
+export interface NavItem {
+  name: string;
+  title: string;
+  component: ReactNode;
+}
+
+export interface Nav {
+  name?: string;
+  title: string;
+  items: NavItem[];
+}
+
+const useNavs = (cid: number): Nav[] => {
   return [
     {
       title: "General",
@@ -9,12 +22,12 @@ const useNavs = (channelId: number) => {
         {
           name: "overview",
           title: "Overview",
-          component: <Overview id={channelId} />
+          component: <Overview id={cid} />
         },
         {
           name: "members",
           title: "Members",
-          component: <ManageMembers cid={channelId} />
+          component: <ManageMembers cid={cid} />
         }
         // {
         //   name: "permissions",

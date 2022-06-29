@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import styled from "styled-components";
 import toast from "react-hot-toast";
 import {
@@ -43,37 +43,44 @@ const StyledWrapper = styled.div`
     }
   }
 `;
+
+interface ChannelFormData {
+  name: string;
+  description: string;
+}
+
 export default function Overview({ id = 0 }) {
   const { loginUser, channel } = useAppSelector((store) => {
+    const { uid } = store.authData;
     return {
-      loginUser: store.contacts.byId[store.authData.uid],
+      loginUser: uid ? store.contacts.byId[Number(uid)] : undefined,
       channel: store.channels.byId[id]
     };
   });
   const { data, refetch } = useGetChannelQuery(id);
   const [changed, setChanged] = useState(false);
-  const [values, setValues] = useState(null);
+  const [values, setValues] = useState<ChannelFormData>({ name: "", description: "" });
   const [updateChannelIcon] = useUpdateIconMutation();
   const [updateChannel, { isSuccess: updated }] = useUpdateChannelMutation();
+
   const handleUpdate = () => {
     const { name, description } = values;
     updateChannel({ id, name, description });
   };
 
-  const handleChange = (evt) => {
+  const handleChange = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const newValue = evt.target.value;
-    const { type } = evt.target.dataset;
+    const { type } = evt.target.dataset as { type: keyof ChannelFormData };
     setValues((prev) => {
       return { ...prev, [type]: newValue };
     });
   };
 
-  const updateIcon = (image) => {
+  const updateIcon = (image: File) => {
     updateChannelIcon({ gid: id, image });
   };
 
   const handleReset = () => {
-    console.log("reset", data);
     setValues(data);
   };
 
@@ -100,6 +107,7 @@ export default function Overview({ id = 0 }) {
       toast.success("Channel updated!");
       refetch();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updated]);
 
   if (!values || !id) return null;

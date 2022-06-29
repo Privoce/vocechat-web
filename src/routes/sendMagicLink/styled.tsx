@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 const StyledWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -8,7 +9,7 @@ const StyledWrapper = styled.div`
     max-width: 440px;
     padding: 32px 40px 32px 40px;
     /* border: 1px solid #eee; */
-    box-shadow: 0px 4px 8px -2px rgba(16, 24, 40, 0.1), 0px 2px 4px -2px rgba(16, 24, 40, 0.06);
+    box-shadow: 0 4px 8px -2px rgba(16, 24, 40, 0.1), 0px 2px 4px -2px rgba(16, 24, 40, 0.06);
     border-radius: 12px;
     .tips {
       display: flex;

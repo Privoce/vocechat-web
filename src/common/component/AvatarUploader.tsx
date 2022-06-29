@@ -64,9 +64,9 @@ const StyledWrapper = styled.div`
 interface Props {
   url?: string;
   name?: string;
-  type?: "user";
+  type?: "user" | "channel";
   disabled?: boolean;
-  uploadImage: (file: File) => Promise<any>;
+  uploadImage: (file: File) => void;
 }
 
 const AvatarUploader: FC<Props> = ({

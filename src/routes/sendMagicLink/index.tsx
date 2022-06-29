@@ -22,8 +22,7 @@ export default function SendMagicLinkPage() {
   }, [isSuccess]);
 
   useEffect(() => {
-    if (error) {
-      console.log(error);
+    if (error && "status" in error) {
       switch (error.status) {
         case "PARSING_ERROR":
           toast.error(error.data);
@@ -32,7 +31,7 @@ export default function SendMagicLinkPage() {
           toast.error("Username or Password Incorrect");
           break;
         case 404:
-          toast.error("Account not exsit");
+          toast.error("Account not exist");
           break;
         default:
           toast.error("Something Error");
@@ -53,7 +52,6 @@ export default function SendMagicLinkPage() {
 
   const handleInput = (evt: ChangeEvent<HTMLInputElement>) => {
     const { value } = evt.target;
-    console.log(value);
     setEmail(value);
   };
 

@@ -9,24 +9,23 @@ let from: string | null = null;
 export default function Setting() {
   const [searchParams] = useSearchParams();
   const navs = useNavs();
-  const flatenNavs = navs
-    .map(({ items }) => {
-      return items;
-    })
-    .flat();
+  const flattenNaves = navs.map(({ items }) => items).flat();
   const navKey = searchParams.get("nav");
   from = from ?? (searchParams.get("f") || "/");
   const [logoutConfirm, setLogoutConfirm] = useState(false);
-  const navgateTo = useNavigate();
+  const navigateTo = useNavigate();
   const close = () => {
     // dispatch(toggleSetting());
-    navgateTo(from);
+    // todo: check usage
+    navigateTo(from!);
     from = null;
   };
-  const toggleLogoutConfrim = () => {
+
+  const toggleLogoutConfirm = () => {
     setLogoutConfirm((prev) => !prev);
   };
-  const currNav = flatenNavs.find((n) => n.name == navKey) || flatenNavs[0];
+
+  const currNav = flattenNaves.find((n) => n.name == navKey) || flattenNaves[0];
 
   return (
     <>
@@ -35,11 +34,11 @@ export default function Setting() {
         closeModal={close}
         title="Settings"
         navs={navs}
-        dangers={[{ title: "Log Out", handler: toggleLogoutConfrim }]}
+        dangers={[{ title: "Log Out", handler: toggleLogoutConfirm }]}
       >
         {currNav.component}
       </StyledSettingContainer>
-      {logoutConfirm && <LogoutConfirmModal closeModal={toggleLogoutConfrim} />}
+      {logoutConfirm && <LogoutConfirmModal closeModal={toggleLogoutConfirm} />}
     </>
   );
 }

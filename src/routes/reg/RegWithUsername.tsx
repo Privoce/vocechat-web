@@ -1,17 +1,15 @@
-/* eslint-disable no-undef */
-import { useState, useEffect } from "react";
+import { useState, useEffect, FC, FormEvent, ChangeEvent } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import toast from "react-hot-toast";
 import { setAuthData } from "../../app/slices/auth.data";
-
 import Input from "../../common/component/styled/Input";
 import Button from "../../common/component/styled/Button";
 import { useLoginMutation, useCheckMagicTokenValidMutation } from "../../app/services/auth";
-import toast from "react-hot-toast";
 import ExpiredTip from "./ExpiredTip";
 import { useRegisterMutation } from "../../app/services/auth";
 
-export default function RegWithUsername() {
+const RegWithUsername: FC = () => {
   const [checkTokenInvalid, { data: isTokenValid, isLoading: checkingToken }] =
     useCheckMagicTokenValidMutation();
   const [
@@ -28,7 +26,8 @@ export default function RegWithUsername() {
   const [username, setUsername] = useState("");
   const query = new URLSearchParams(location.search);
   // const githubCode = query.get("gcode");
-  const token = query.get("magic_token");
+  // todo: check if query param exists
+  const token = query.get("magic_token") as string;
   useEffect(() => {
     if (token) {
       checkTokenInvalid(token);
@@ -36,25 +35,29 @@ export default function RegWithUsername() {
   }, [token]);
 
   useEffect(() => {
-    switch (loginError?.status) {
-      case 401:
-        toast.error("Invalided Token");
-        break;
-
-      default:
-        break;
+    if (loginError && "status" in loginError) {
+      switch (loginError.status) {
+        case 401:
+          toast.error("Invalided Token");
+          break;
+        default:
+          break;
+      }
     }
   }, [loginError]);
-  useEffect(() => {
-    switch (regError?.status) {
-      case 409:
-        toast.error("Something Conflicted!");
-        break;
 
-      default:
-        break;
+  useEffect(() => {
+    if (regError && "status" in regError) {
+      switch (regError.status) {
+        case 409:
+          toast.error("Something Conflicted!");
+          break;
+        default:
+          break;
+      }
     }
   }, [regError]);
+
   useEffect(() => {
     const isSuccess = loginSuccess || regSuccess;
     const data = loginData || regData;
@@ -67,7 +70,7 @@ export default function RegWithUsername() {
     }
   }, [loginSuccess, regSuccess, loginData, regData]);
 
-  const handleAuth = (evt) => {
+  const handleAuth = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     if (from == "reg") {
       register({
@@ -83,13 +86,12 @@ export default function RegWithUsername() {
     }
   };
 
-  const handleInput = (evt) => {
-    const { value } = evt.target;
-    setUsername(value);
+  const handleInput = (evt: ChangeEvent<HTMLInputElement>) => {
+    setUsername(evt.target.value);
   };
-  console.log("ffff", from);
-  if (!token) return "No Token";
-  if (checkingToken) return "Checking Magic Link...";
+
+  if (!token) return <>"No Token"</>;
+  if (checkingToken) return <>"Checking Magic Link..."</>;
   if (!isTokenValid) return <ExpiredTip />;
   const isLoading = loginLoading || regLoading;
   const isSuccess = loginSuccess || regSuccess;
@@ -112,9 +114,12 @@ export default function RegWithUsername() {
           onChange={handleInput}
         />
         <Button type="submit" disabled={isLoading || !username || isSuccess}>
+          {/* todo typo */}
           {isLoading ? "Logining" : `Continue`}
         </Button>
       </form>
     </>
   );
-}
+};
+
+export default RegWithUsername;

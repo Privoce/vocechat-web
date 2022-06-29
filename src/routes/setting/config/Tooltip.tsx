@@ -1,8 +1,9 @@
 import Tippy from "@tippyjs/react";
 import { roundArrow } from "tippy.js";
 import "tippy.js/dist/svg-arrow.css";
-// import React from 'react'
 import styled from "styled-components";
+import IconQuestion from "../../../assets/icons/question.svg";
+
 const StyledContent = styled.div`
   padding: 8px 12px;
   background: #101828;
@@ -15,7 +16,7 @@ const StyledContent = styled.div`
     color: #55c7ec;
   }
 `;
-import IconQuestion from "../../../assets/icons/question.svg";
+
 export default function Tooltip({ link = "#" }) {
   return (
     <Tippy
