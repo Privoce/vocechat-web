@@ -1,26 +1,25 @@
 {
   "files": {
     "main.css": "/static/css/main.dd95f4e2.css",
-    "main.js": "/static/js/main.fcb6ad68.js",
+    "main.js": "/static/js/main.a3e752e5.js",
     "static/js/964.6a59ac9f.chunk.js": "/static/js/964.6a59ac9f.chunk.js",
     "static/js/300.5fc0ae31.chunk.js": "/static/js/300.5fc0ae31.chunk.js",
     "static/js/85.3085d4f8.chunk.js": "/static/js/85.3085d4f8.chunk.js",
-    "static/js/866.0bf72564.chunk.js": "/static/js/866.0bf72564.chunk.js",
-    "static/js/981.282a2caa.chunk.js": "/static/js/981.282a2caa.chunk.js",
+    "static/js/866.16608bfa.chunk.js": "/static/js/866.16608bfa.chunk.js",
+    "static/js/981.4f7ef012.chunk.js": "/static/js/981.4f7ef012.chunk.js",
     "static/js/902.a9d424dc.chunk.js": "/static/js/902.a9d424dc.chunk.js",
     "static/js/876.7b523718.chunk.js": "/static/js/876.7b523718.chunk.js",
     "static/js/923.85ddcc89.chunk.js": "/static/js/923.85ddcc89.chunk.js",
     "static/css/954.9779d5d1.chunk.css": "/static/css/954.9779d5d1.chunk.css",
     "static/js/954.5169a037.chunk.js": "/static/js/954.5169a037.chunk.js",
     "static/js/728.6e906479.chunk.js": "/static/js/728.6e906479.chunk.js",
-    "static/js/106.9c4e5b33.chunk.js": "/static/js/106.9c4e5b33.chunk.js",
+    "static/js/106.a6addfd1.chunk.js": "/static/js/106.a6addfd1.chunk.js",
     "static/css/557.298f31c6.chunk.css": "/static/css/557.298f31c6.chunk.css",
-    "static/js/557.f1c06e1b.chunk.js": "/static/js/557.f1c06e1b.chunk.js",
+    "static/js/557.d4641b13.chunk.js": "/static/js/557.d4641b13.chunk.js",
     "static/js/888.45fabbd0.chunk.js": "/static/js/888.45fabbd0.chunk.js",
-    "static/js/338.ecfab311.chunk.js": "/static/js/338.ecfab311.chunk.js",
     "static/js/512.a9ce6646.chunk.js": "/static/js/512.a9ce6646.chunk.js",
     "static/js/952.f83d1bfd.chunk.js": "/static/js/952.f83d1bfd.chunk.js",
-    "static/js/499.c77f76f8.chunk.js": "/static/js/499.c77f76f8.chunk.js",
+    "static/js/840.f8a64986.chunk.js": "/static/js/840.f8a64986.chunk.js",
     "service-worker.js": "/service-worker.js",
     "static/media/metamask.svg?url": "/static/media/metamask.f04d5fb63394197766d0.svg",
     "index.html": "/index.html",
@@ -44,6 +43,6 @@
   },
   "entrypoints": [
     "static/css/main.dd95f4e2.css",
-    "static/js/main.fcb6ad68.js"
+    "static/js/main.a3e752e5.js"
   ]
 }
