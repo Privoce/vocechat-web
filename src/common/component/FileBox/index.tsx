@@ -59,10 +59,6 @@ const renderPreview = (data: Data) => {
     case checks.video.test(_type):
       preview = <VideoPreview url={content} />;
       break;
-
-    // default:
-    //   icon = <IconUnkown className="icon" />;
-    // break;
   }
   return preview;
 };

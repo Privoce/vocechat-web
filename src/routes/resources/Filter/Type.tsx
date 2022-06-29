@@ -2,7 +2,7 @@ import styled from "styled-components";
 import IconPdf from "../../../assets/icons/file.pdf.svg";
 import IconAudio from "../../../assets/icons/file.audio.svg";
 import IconVideo from "../../../assets/icons/file.video.svg";
-import IconUnkown from "../../../assets/icons/file.unkown.svg";
+import IconUnknown from "../../../assets/icons/file.unknown.svg";
 import IconDoc from "../../../assets/icons/file.doc.svg";
 import IconCode from "../../../assets/icons/file.code.svg";
 import IconImage from "../../../assets/icons/file.image.svg";
@@ -12,7 +12,6 @@ const Styled = styled.div`
   padding: 12px;
   background: #ffffff;
   min-width: 200px;
-  /* max-height: 230px; */
   overflow: auto;
   box-shadow: 0 24px 48px -12px rgba(16, 24, 40, 0.18);
   border-radius: 8px;
@@ -73,9 +72,9 @@ export const FileTypes = {
     title: "Code Snippets",
     icon: <IconCode className="icon" />
   },
-  unkown: {
-    title: "Unkown Files",
-    icon: <IconUnkown className="icon" />
+  unknown: {
+    title: "Unknown Files",
+    icon: <IconUnknown className="icon" />
   }
 };
 export default function Type({ select = "", updateFilter }) {

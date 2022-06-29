@@ -5,14 +5,14 @@ import FavoritedMessage from "../../common/component/Message/FavoritedMessage";
 import dayjs from "dayjs";
 import IconAudio from "../../assets/icons/file.audio.svg";
 import IconVideo from "../../assets/icons/file.video.svg";
-import IconUnkown from "../../assets/icons/file.unkown.svg";
+import IconUnknown from "../../assets/icons/file.unknown.svg";
 // import IconDoc from "../../assets/icons/file.doc.svg";
 import IconImage from "../../assets/icons/file.image.svg";
 import IconChannel from "../../assets/icons/channel.svg";
 import { ContentTypes } from "../../app/config";
 const Filters = [
   {
-    icon: <IconUnkown className="icon" />,
+    icon: <IconUnknown className="icon" />,
     title: "All Items",
     filter: ""
   },
