@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import toast from "react-hot-toast";
 import {
-  useGetServerQuery,
   useUpdateServerMutation,
   useUpdateLogoMutation,
   useUpdateLoginConfigMutation,
@@ -99,13 +98,12 @@ const StyledWrapper = styled.div`
 `;
 
 export default function Overview() {
-  const loginUser = useAppSelector((store) => {
-    return store.contacts.byId[store.authData.uid];
+  const { loginUser, server } = useAppSelector((store) => {
+    return { loginUser: store.authData.user, server: store.server };
   });
   const [changed, setChanged] = useState(false);
-  const [serverValues, setServerValues] = useState(null);
+  const [serverValues, setServerValues] = useState<typeof server>(server);
   const [loginConfigValues, setLoginConfigValues] = useState(null);
-  const { data: server, refetch: refetchServer } = useGetServerQuery();
   const { data: loginConfig, refetch: refetchLoginConfig } = useGetLoginConfigQuery();
   const [updateServer, { isSuccess: serverUpdated }] = useUpdateServerMutation();
   const [uploadLogo, { isSuccess: uploadSuccess }] = useUpdateLogoMutation();
@@ -113,10 +111,12 @@ export default function Overview() {
   const handleUpdate = () => {
     const { name, description } = serverValues;
     updateServer({ name, description });
-    updateLoginConfig({
-      ...loginConfig,
-      who_can_sign_up: loginConfigValues.who_can_sign_up
-    });
+    if (loginUser?.is_admin) {
+      updateLoginConfig({
+        ...loginConfig,
+        who_can_sign_up: loginConfigValues.who_can_sign_up
+      });
+    }
   };
   const handleChange = (evt) => {
     const newValue = evt.target.value;
@@ -133,7 +133,6 @@ export default function Overview() {
   useEffect(() => {
     if (uploadSuccess) {
       toast.success("Update logo successfully!");
-      refetchServer();
     }
   }, [uploadSuccess]);
   useEffect(() => {
@@ -162,7 +161,6 @@ export default function Overview() {
   useEffect(() => {
     if (serverUpdated && loginConfigUpdated) {
       toast.success("Configuration updated!");
-      refetchServer();
       refetchLoginConfig();
     }
   }, [serverUpdated, loginConfigUpdated]);
@@ -171,6 +169,7 @@ export default function Overview() {
   const { name, description, logo } = serverValues;
   const { who_can_sign_up: whoCanSignUp } = loginConfigValues;
   const isAdmin = loginUser?.is_admin;
+
   return (
     <StyledWrapper>
       <div className="logo">
