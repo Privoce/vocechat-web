@@ -5,7 +5,7 @@ import FavList from "../FavList";
 import Tooltip from "../../../common/component/Tooltip";
 import FavIcon from "../../../assets/icons/bookmark.svg";
 // import searchIcon from "../../../assets/icons/search.svg?url";
-import IconHeadphone from "../../../assets/icons/headphone.svg";
+// import IconHeadphone from "../../../assets/icons/headphone.svg";
 // import useChatScroll from "../../../common/hook/useChatScroll";
 import { useReadMessageMutation } from "../../../app/services/message";
 import Contact from "../../../common/component/Contact";
@@ -16,7 +16,7 @@ import { renderMessageFragment } from "../utils";
 import useMessageFeed from "../../../common/hook/useMessageFeed";
 import { useAppSelector } from "../../../app/store";
 
-export default function DMChat({ uid = "", dropFiles = [] }) {
+export default function DMChat({ uid = 0, dropFiles = [] }) {
   const {
     list: msgIds,
     appends,
@@ -51,10 +51,10 @@ export default function DMChat({ uid = "", dropFiles = [] }) {
       aside={
         <>
           <ul className="tools">
-            <li className="tool">
+            {/*<li className="tool">
               <IconHeadphone />
             </li>
-            {/* <li className="tool">
+             <li className="tool">
               <img src={alertIcon} alt="opt icon" />
             </li> */}
             <Tooltip tip="Saved Items" placement="left">

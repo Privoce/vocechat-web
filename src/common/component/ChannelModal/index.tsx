@@ -7,6 +7,7 @@ import ChannelIcon from "../ChannelIcon";
 import Contact from "../Contact";
 import StyledWrapper from "./styled";
 import StyledCheckbox from "../styled/Checkbox";
+import StyledToggle from "../../component/styled/Toggle";
 import useFilteredUsers from "../../hook/useFilteredUsers";
 import { useCreateChannelMutation } from "../../../app/services/channel";
 import { useAppSelector } from "../../../app/store";
@@ -33,12 +34,12 @@ const ChannelModal: FC<Props> = ({ personal = false, closeModal }) => {
   const [createChannel, { isSuccess, isError, isLoading, data: newChannelId }] =
     useCreateChannelMutation();
 
-  // const handleToggle = () => {
-  //   const { is_public } = data;
-  //   setData((prev) => {
-  //     return { ...prev, is_public: !is_public };
-  //   });
-  // };
+  const handleToggle = () => {
+    const { is_public } = data;
+    setData((prev) => {
+      return { ...prev, is_public: !is_public };
+    });
+  };
   const handleCreate = () => {
     // todo: add field validation (maxLength, text format, trim)
     if (!data.name) {
@@ -141,14 +142,14 @@ const ChannelModal: FC<Props> = ({ personal = false, closeModal }) => {
               <ChannelIcon personal={!is_public} className="icon" />
             </div>
           </div>
-          {/* <div className="private">
+          <div className="private">
             <span className="txt normal">Private Channel</span>
             <StyledToggle
               data-checked={!is_public}
               data-disabled={!loginUser?.is_admin}
               onClick={handleToggle}
             />
-          </div> */}
+          </div>
           <div className="btns">
             <Button onClick={closeModal} className="normal cancel">
               Cancel

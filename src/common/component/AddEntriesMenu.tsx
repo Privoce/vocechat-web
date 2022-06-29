@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { hideAll } from "tippy.js";
+import { useAppSelector } from "../../app/store";
 import IconInvite from "../../assets/icons/add.person.svg";
 import IconMention from "../../assets/icons/mention.svg";
 import ChannelIcon from "./ChannelIcon";
@@ -41,6 +42,7 @@ const Styled = styled.ul`
   }
 `;
 export default function AddEntriesMenu() {
+  const currentUser = useAppSelector((store) => store.authData.user);
   const [isPrivate, setIsPrivate] = useState(false);
   const [inviteModalVisible, setInviteModalVisible] = useState(false);
 
@@ -74,12 +76,12 @@ export default function AddEntriesMenu() {
     <>
       <Styled>
         {/* temp remove public channel */}
-        {/* {currentUser?.is_admin && (
+        {currentUser?.is_admin && (
           <li className="item" onClick={handleOpenChannelModal.bind(null, false)}>
             <ChannelIcon className="icon" />
             New Channel
           </li>
-        )} */}
+        )}
         <li className="item" onClick={handleOpenChannelModal.bind(null, true)}>
           <ChannelIcon personal={true} className="icon" />
           New Private Channel
