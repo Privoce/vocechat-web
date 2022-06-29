@@ -27,9 +27,15 @@ interface Props {
   closeModal: () => void;
 }
 
+interface BaseForm {
+  current: string;
+  newPassword: string;
+  confirmPassword: string;
+}
+
 const ProfileBasicEditModal: FC<Props> = ({ closeModal }) => {
   const { data } = useGetCredentialsQuery();
-  const [input, setInput] = useState({
+  const [input, setInput] = useState<BaseForm>({
     current: "",
     newPassword: "",
     confirmPassword: ""
@@ -37,7 +43,7 @@ const ProfileBasicEditModal: FC<Props> = ({ closeModal }) => {
   // const dispatch = useDispatch();
   const [updatePassword, { isLoading, isSuccess }] = useUpdatePasswordMutation();
   const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    const { type } = evt.target.dataset;
+    const { type } = evt.target.dataset as { type: keyof BaseForm };
     setInput((prev) => {
       return { ...prev, [type]: evt.target.value };
     });

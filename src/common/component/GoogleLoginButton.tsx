@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { useGoogleLogin, GoogleOAuthProvider, GoogleOAuthProviderProps } from "@react-oauth/google";
+import { useGoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import toast from "react-hot-toast";
 import styled from "styled-components";
 import { KEY_LOCAL_MAGIC_TOKEN } from "../../app/config";
@@ -36,12 +36,16 @@ const GoogleLogin: FC<Props> = ({ type = "login", loaded, loadError }) => {
   const magic_token = localStorage.getItem(KEY_LOCAL_MAGIC_TOKEN);
   const googleLogin = useGoogleLogin({
     // flow: "auth-code",
-    onSuccess: ({ access_token }) => {
-      login({
-        magic_token,
-        id_token: access_token,
-        type: "google"
-      });
+    onSuccess: (res) => {
+      if ("code" in res) {
+        console.error(`google login failed: ${res.code}`);
+      } else {
+        login({
+          magic_token,
+          id_token: res.access_token,
+          type: "google"
+        });
+      }
     }
   });
   useEffect(() => {
@@ -51,7 +55,7 @@ const GoogleLogin: FC<Props> = ({ type = "login", loaded, loadError }) => {
     }
   }, [isSuccess]);
   useEffect(() => {
-    if (error) {
+    if (error && "status" in error) {
       switch (error.status) {
         case 410:
           toast.error(
@@ -68,10 +72,10 @@ const GoogleLogin: FC<Props> = ({ type = "login", loaded, loadError }) => {
   const handleGoogleLogin = () => {
     googleLogin();
   };
-  // console.log("google login ", loaded);
+
   return (
     <StyledSocialButton disabled={!loaded || isLoading} onClick={handleGoogleLogin}>
-      <IconGoogle className="icon" alt="google icon" />
+      <IconGoogle className="icon" />
       {loadError
         ? "Script Load Error!"
         : loaded
@@ -80,6 +84,7 @@ const GoogleLogin: FC<Props> = ({ type = "login", loaded, loadError }) => {
     </StyledSocialButton>
   );
 };
+
 const GoogleLoginButton: FC<Props> = ({ type = "login", clientId }) => {
   const [scriptLoaded, setScriptLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
@@ -97,4 +102,5 @@ const GoogleLoginButton: FC<Props> = ({ type = "login", clientId }) => {
     </GoogleOAuthProvider>
   );
 };
+
 export default GoogleLoginButton;

@@ -1,11 +1,12 @@
 import { User } from "./auth";
+
 export interface Server {
   name: string;
   description: string;
 }
 export interface GithubAuthConfig {
   client_id: string;
-  client_secret: string;
+  client_secret: string; // todo: check security problem!
 }
 export interface FirebaseConfig {
   enabled: boolean;
@@ -56,6 +57,6 @@ export interface LoginConfig {
   metamask: boolean;
   third_party: boolean;
 }
-export interface NewAdminDTO extends Pick<User, "email" | "name" | "gender"> {
+export interface CreateAdminDTO extends Pick<User, "email" | "name" | "gender"> {
   password: string;
 }

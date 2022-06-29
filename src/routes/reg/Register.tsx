@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import toast from "react-hot-toast";
-// import { useNavigate } from "react-router-dom";
 import BASE_URL, { KEY_LOCAL_MAGIC_TOKEN } from "../../app/config";
 import Input from "../../common/component/styled/Input";
 import Button from "../../common/component/styled/Button";
@@ -13,13 +12,19 @@ import useGoogleAuthConfig from "../../common/hook/useGoogleAuthConfig";
 import GoogleLoginButton from "../../common/component/GoogleLoginButton";
 import GithubLoginButton from "../../common/component/GithubLoginButton";
 
+interface AuthForm {
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
 export default function Reg() {
   const [sendRegMagicLink, { isLoading: signingUp, data, isSuccess }] =
     useSendRegMagicLinkMutation();
   const [checkEmail, { isLoading: checkingEmail }] = useLazyCheckEmailQuery();
   // const navigateTo = useNavigate();
   const [magicToken, setMagicToken] = useState("");
-  const [input, setInput] = useState({
+  const [input, setInput] = useState<AuthForm>({
     email: "",
     password: "",
     confirmPassword: ""
@@ -47,7 +52,7 @@ export default function Reg() {
     }
   }, [isSuccess, data]);
 
-  const handleReg = async (evt) => {
+  const handleReg = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     const { email, password, confirmPassword } = input;
     if (password !== confirmPassword) {
@@ -55,7 +60,6 @@ export default function Reg() {
       return;
     }
     const { data: canReg } = await checkEmail(email);
-    console.log("can reg", canReg);
     if (canReg) {
       sendRegMagicLink({
         magic_token: magicToken,
@@ -67,21 +71,23 @@ export default function Reg() {
     }
     // sendMagicLink(email);
   };
+
   const handleCompare = () => {
     const { password, confirmPassword } = input;
     if (password !== confirmPassword) {
       toast.error("Not Same Password!");
     }
   };
-  const handleInput = (evt) => {
-    const { type } = evt.target.dataset;
+
+  const handleInput = (evt: ChangeEvent<HTMLInputElement>) => {
+    const { type } = evt.target.dataset as { type: keyof AuthForm };
     const { value } = evt.target;
-    // console.log(type, value);
     setInput((prev) => {
       prev[type] = value;
       return { ...prev };
     });
   };
+
   const { clientId } = useGoogleAuthConfig();
   const { config: githubAuthConfig } = useGithubAuthConfig();
   const { data: loginConfig, isSuccess: loginConfigSuccess } = useGetLoginConfigQuery();
@@ -94,10 +100,11 @@ export default function Reg() {
   const googleLogin = enableGoogleLogin && clientId;
   // magic token 没有并且没有开放注册
   if (whoCanSignUp !== "EveryOne" && !magicToken)
-    return `Sign up method is updated to Invitation Link Only`;
+    return <>Sign up method is updated to Invitation Link Only</>;
   const { email, password, confirmPassword } = input;
   if (data?.mail_is_sent) return <EmailNextTip />;
   const isLoading = signingUp || checkingEmail;
+
   return (
     <>
       <div className="tips">

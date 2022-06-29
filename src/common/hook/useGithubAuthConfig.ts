@@ -4,6 +4,10 @@ import {
   useUpdateGithubAuthConfigMutation
 } from "../../app/services/server";
 
+interface GithubAuthConfig {
+  client_id: string;
+}
+
 export default function useGithubAuthConfig() {
   const [changed, setChanged] = useState(false);
   const [config, setConfig] = useState({});

@@ -13,7 +13,7 @@ import { useAppSelector } from "../../../app/store";
 interface Props {
   uid: number;
   type: string;
-  cid: number;
+  cid?: number;
 }
 
 const Profile: FC<Props> = ({ uid = null, type = "embed", cid = null }) => {

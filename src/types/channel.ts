@@ -27,6 +27,13 @@ export interface Channel {
   pinned_messages: PinnedMessage[];
 }
 
+export interface CreateChannelDTO {
+  name: string;
+  description: string;
+  members?: number[];
+  is_public: boolean;
+}
+
 export interface UpdateChannelDTO {
   operation: "add_member" | "remove_member";
   members?: number[];

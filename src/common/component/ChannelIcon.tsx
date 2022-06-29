@@ -6,7 +6,7 @@ import LockHashIcon from "../../assets/icons/channel.private.svg";
 interface Props {
   personal?: boolean;
   muted?: boolean;
-  className: string;
+  className?: string;
 }
 
 const Styled = styled.div`
@@ -16,7 +16,7 @@ const Styled = styled.div`
   }
 `;
 
-const ChannelIcon: FC<Props> = ({ personal = false, muted = false, className }) => {
+const ChannelIcon: FC<Props> = ({ personal = false, muted = false, className = "" }) => {
   return (
     <Styled className={`${muted ? "muted" : ""} ${className}`}>
       {personal ? <LockHashIcon /> : <HashIcon />}

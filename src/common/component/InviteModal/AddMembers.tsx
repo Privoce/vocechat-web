@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, FC, MouseEvent, ChangeEvent } from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import Button from "../styled/Button";
 import Input from "../styled/Input";
@@ -9,6 +8,7 @@ import StyledCheckbox from "../styled/Checkbox";
 import { useAddMembersMutation } from "../../../app/services/channel";
 import CloseIcon from "../../../assets/icons/close.svg";
 import useFilteredUsers from "../../hook/useFilteredUsers";
+import { useAppSelector } from "../../../app/store";
 
 const Styled = styled.div`
   padding-top: 16px;
@@ -21,7 +21,7 @@ const Styled = styled.div`
     margin-bottom: 12px;
     background: #ffffff;
     border: 1px solid #e5e7eb;
-    box-shadow: 0px 1px 2px rgba(31, 41, 55, 0.08);
+    box-shadow: 0 1px 2px rgba(31, 41, 55, 0.08);
     border-radius: 4px;
     .selects {
       display: flex;
@@ -96,10 +96,16 @@ const Styled = styled.div`
     line-height: 20px;
   }
 `;
-export default function AddMembers({ cid = null, closeModal }) {
+
+interface Props {
+  cid: null | number;
+  closeModal: () => void;
+}
+
+const AddMembers: FC<Props> = ({ cid = null, closeModal }) => {
   const [addMembers, { isLoading: isAdding, isSuccess }] = useAddMembersMutation();
   const [selects, setSelects] = useState([]);
-  const { channel, contactData } = useSelector((store) => {
+  const { channel, contactData } = useAppSelector((store) => {
     return {
       channel: store.channels.byId[cid],
       contactData: store.contacts.byId
@@ -116,7 +122,8 @@ export default function AddMembers({ cid = null, closeModal }) {
     addMembers({ id: cid, members: selects });
   };
   const { input, updateInput, contacts = [] } = useFilteredUsers();
-  const toggleCheckMember = ({ currentTarget }) => {
+
+  const toggleCheckMember = ({ currentTarget }: MouseEvent<SVGSVGElement | HTMLLIElement>) => {
     const { uid } = currentTarget.dataset;
     if (selects.includes(+uid)) {
       setSelects((prevs) => {
@@ -126,13 +133,15 @@ export default function AddMembers({ cid = null, closeModal }) {
       setSelects([...selects, +uid]);
     }
   };
-  const handleFilterInput = (evt) => {
+
+  const handleFilterInput = (evt: ChangeEvent<HTMLInputElement>) => {
     updateInput(evt.target.value);
   };
+
   if (!channel) return null;
   const { members: uids } = channel;
   const contactIds = contacts.map(({ uid }) => uid);
-  console.log("selects", selects);
+
   return (
     <Styled>
       <div className="filter">
@@ -164,7 +173,7 @@ export default function AddMembers({ cid = null, closeModal }) {
               key={uid}
               data-uid={uid}
               className="user"
-              onClick={added ? null : toggleCheckMember}
+              onClick={added ? undefined : toggleCheckMember}
             >
               <StyledCheckbox
                 disabled={added}
@@ -183,4 +192,6 @@ export default function AddMembers({ cid = null, closeModal }) {
       </Button>
     </Styled>
   );
-}
+};
+
+export default AddMembers;

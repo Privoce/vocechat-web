@@ -1,18 +1,21 @@
-import { FC, ReactElement } from "react";
+import { FC, ReactNode } from "react";
 import styled from "styled-components";
 import { useLocation, NavLink } from "react-router-dom";
 import backIcon from "../../assets/icons/arrow.left.svg?url";
+import { Nav } from "../../routes/settingChannel/navs";
 
 const StyledWrapper = styled.div`
   width: 100vw;
   height: 100vh;
   display: flex;
+
   > .left {
     max-height: 100vh;
     overflow: scroll;
     padding: 32px 16px;
     min-width: 212px;
     background-color: #f5f6f7;
+
     > .title {
       cursor: pointer;
       font-weight: bold;
@@ -21,16 +24,16 @@ const StyledWrapper = styled.div`
       color: #1c1c1e;
       margin-bottom: 32px;
       padding-left: 24px;
-      background: url(${backIcon});
       background-size: 16px;
-      background-repeat: no-repeat;
-      background-position: left;
+      background: url(${backIcon}) no-repeat left;
     }
+
     > .items {
       display: flex;
       flex-direction: column;
       gap: 2px;
       margin-bottom: 36px;
+
       &:before {
         padding-left: 12px;
         content: attr(data-title);
@@ -40,31 +43,37 @@ const StyledWrapper = styled.div`
         color: #6b7280;
         margin-bottom: 2px;
       }
+
       .item {
         font-weight: 500;
         font-size: 14px;
         line-height: 20px;
         color: #44494f;
         border-radius: 4px;
+
         &:hover,
         &.curr {
           background: #e7e5e4;
         }
+
         > a {
           display: block;
           padding: 4px 12px;
         }
       }
+
       &.danger .item {
         cursor: pointer;
         padding: 4px 12px;
         color: #ef4444;
+
         &:hover {
           background: none;
         }
       }
     }
   }
+
   > .right {
     background-color: #fff;
     width: 100%;
@@ -72,6 +81,7 @@ const StyledWrapper = styled.div`
     /* max-height: -webkit-fill-available; */
     overflow: auto;
     padding: 32px;
+
     > .title {
       font-weight: bold;
       font-size: 20px;
@@ -82,21 +92,18 @@ const StyledWrapper = styled.div`
   }
 `;
 
-interface Nav {
-  name?: string;
+export interface Danger {
   title: string;
-  // todo
-  items: [];
-  component: ReactElement;
+  handler: () => void;
 }
 
 interface Props {
   closeModal: () => void;
   title?: string;
   navs: Nav[];
-  dangers: [];
-  nav: Nav;
-  children: ReactElement;
+  dangers: Danger[];
+  nav: { title: string; name?: string; component?: ReactNode };
+  children: ReactNode;
 }
 
 const StyledSettingContainer: FC<Props> = ({

@@ -10,8 +10,8 @@ import useContextMenu from "../../hook/useContextMenu";
 import { useAppSelector } from "../../../app/store";
 
 interface Props {
-  cid: number;
   uid: number;
+  cid?: number;
   owner?: number;
   dm?: boolean;
   interactive?: boolean;

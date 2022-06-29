@@ -11,6 +11,10 @@ import { useLazyLogoutQuery } from "../../app/services/auth";
 export default function useLogout() {
   const dispatch = useDispatch();
   const [logout, { isLoading, isSuccess }] = useLazyLogoutQuery();
+  // todo: remove batch
+  // If you're using React 18, you do not need to use the batch API. React 18 automatically
+  // batches all state updates, no matter where they're queued.
+  // ref: https://react-redux.js.org/api/batch
   const clearLocalData = () => {
     batch(() => {
       dispatch(resetFootprint());

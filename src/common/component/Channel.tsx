@@ -1,3 +1,4 @@
+import { FC } from "react";
 import styled from "styled-components";
 import Avatar from "./Avatar";
 import { useAppSelector } from "../../app/store";
@@ -46,14 +47,21 @@ const StyledWrapper = styled.div`
   }
 `;
 
-export default function Channel({ interactive = true, id = "", compact = false, avatarSize = 32 }) {
+interface Props {
+  interactive?: boolean;
+  id: number;
+  compact?: boolean;
+  avatarSize?: number;
+}
+
+const Channel: FC<Props> = ({ interactive = true, id, compact = false, avatarSize = 32 }) => {
   const { channel, totalMemberCount } = useAppSelector((store) => {
     return {
       channel: store.channels.byId[id],
       totalMemberCount: store.contacts.ids.length
     };
   });
-  console.log("channel item", id, channel);
+
   if (!channel) return null;
   const { name, members = [], is_public, avatar } = channel;
   return (
@@ -71,4 +79,6 @@ export default function Channel({ interactive = true, id = "", compact = false, 
       )}
     </StyledWrapper>
   );
-}
+};
+
+export default Channel;

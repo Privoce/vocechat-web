@@ -19,7 +19,6 @@ export default function useInviteLink(cid: string | null = "") {
 
   useEffect(() => {
     const _link = channelInviteLink;
-    console.log("fetching", channelInviteLink);
     if (_link && smtpStatusFetchSuccess) {
       // const tmpURL = new URL(_link);
       // tmpURL.searchParams.set("code", SMTPEnabled);
@@ -29,6 +28,7 @@ export default function useInviteLink(cid: string | null = "") {
   const genServerLink = () => {
     generateChannelInviteLink();
   };
+
   return {
     enableSMTP: SMTPEnabled,
     generating: generatingChannelLink,

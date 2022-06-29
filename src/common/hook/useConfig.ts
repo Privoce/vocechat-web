@@ -17,7 +17,7 @@ let originalValue: null | object = null;
 
 export default function useConfig(config = "smtp") {
   const [changed, setChanged] = useState(false);
-  const [values, setValues] = useState({});
+  const [values, setValues] = useState<object>({});
   const [updateLoginConfig, { isSuccess: LoginUpdated }] = useUpdateLoginConfigMutation();
   const [updateSMTPConfig, { isSuccess: SMTPUpdated }] = useUpdateSMTPConfigMutation();
   const [getAgoraConfig, { data: agoraConfig }] = useLazyGetAgoraConfigQuery();

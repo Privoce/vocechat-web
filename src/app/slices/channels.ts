@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { isNull, omitBy } from "lodash";
 import BASE_URL from "../config";
-import { getNonNullValues } from "../../common/utils";
 import { Channel, UpdateChannelDTO, UpdatePinnedMessageDTO } from "../../types/channel";
 
 interface StoredChannel extends Channel {
@@ -70,7 +70,8 @@ const channelsSlice = createSlice({
           break;
         }
         default:
-          state.byId[gid] = { ...state.byId[gid]!, ...getNonNullValues(rest) };
+          // old code: state.byId[gid] = { ...state.byId[gid]!, ...getNonNullValues(rest) };
+          state.byId[gid] = { ...state.byId[gid]!, ...omitBy(rest, isNull) };
           break;
       }
     },

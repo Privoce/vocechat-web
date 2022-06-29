@@ -10,11 +10,12 @@ import {
   LoginConfig,
   Server,
   TestEmailDTO,
-  NewAdminDTO,
+  CreateAdminDTO,
   SMTPConfig,
   AgoraConfig,
   GithubAuthConfig
 } from "../../types/server";
+
 const defaultExpireDuration = 7 * 24 * 60 * 60;
 
 export const serverApi = createApi({
@@ -166,7 +167,7 @@ export const serverApi = createApi({
     }),
     updateServer: builder.mutation<void, Server>({
       query: (data) => ({
-        url: `admin/system/organization`,
+        url: "admin/system/organization",
         method: "POST",
         body: data
       }),
@@ -181,9 +182,9 @@ export const serverApi = createApi({
         }
       }
     }),
-    createAdmin: builder.mutation<User, NewAdminDTO>({
+    createAdmin: builder.mutation<User, CreateAdminDTO>({
       query: (data) => ({
-        url: `/admin/system/create_admin`,
+        url: "/admin/system/create_admin",
         method: "POST",
         body: data
       })

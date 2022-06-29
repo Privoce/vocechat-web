@@ -4,12 +4,13 @@ import AddMembers from "./AddMembers";
 import CloseIcon from "../../../assets/icons/close.svg";
 import Modal from "../Modal";
 import { useAppSelector } from "../../../app/store";
+import { FC } from "react";
 
 const Styled = styled.div`
   display: flex;
   flex-direction: column;
   background: #fff;
-  box-shadow: 0px 25px 50px rgba(31, 41, 55, 0.25);
+  box-shadow: 0 25px 50px rgba(31, 41, 55, 0.25);
   border-radius: var(--br);
   padding: 16px;
   min-width: 408px;
@@ -29,7 +30,15 @@ const Styled = styled.div`
 `;
 
 // type: server,channel
-export default function InviteModal({ type = "server", cid = null, title = "", closeModal }) {
+
+interface Props {
+  type?: "server" | "channel";
+  cid?: null | number;
+  title?: string;
+  closeModal: () => void;
+}
+
+const InviteModal: FC<Props> = ({ type = "server", cid = null, title = "", closeModal }) => {
   const { channel, server } = useAppSelector((store) => {
     return {
       channel: store.channels.byId[cid],
@@ -49,4 +58,6 @@ export default function InviteModal({ type = "server", cid = null, title = "", c
       </Styled>
     </Modal>
   );
-}
+};
+
+export default InviteModal;

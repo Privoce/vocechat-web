@@ -2,7 +2,7 @@ import reactStringReplace from "react-string-replace";
 import styled from "styled-components";
 import Mention from "../Message/Mention";
 import { ContentTypes } from "../../../app/config";
-import MrakdownRender from "../MrakdownRender";
+import MarkdownRender from "../MarkdownRender";
 import closeIcon from "../../../assets/icons/close.circle.svg?url";
 import pictureIcon from "../../../assets/icons/picture.svg?url";
 import { getFileIcon, isImage } from "../../utils";
@@ -91,7 +91,7 @@ const renderContent = (data) => {
     case ContentTypes.markdown:
       res = (
         <div className="md">
-          <MrakdownRender content={content} />
+          <MarkdownRender content={content} />
         </div>
       );
       break;

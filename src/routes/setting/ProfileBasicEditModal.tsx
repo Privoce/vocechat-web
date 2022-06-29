@@ -1,5 +1,4 @@
-// import React from "react";
-import { useEffect, useState } from "react";
+import { ChangeEvent, FC, useEffect, useState } from "react";
 import styled from "styled-components";
 import toast from "react-hot-toast";
 import Input from "../../common/component/styled/Input";
@@ -24,18 +23,27 @@ const StyledEdit = styled(StyledModal)`
   }
 `;
 
-export default function ProfileBasicEditModal({
+interface Props {
+  label?: string;
+  valueKey?: string;
+  value?: string;
+  title?: string;
+  intro?: string;
+  closeModal: () => void;
+}
+
+const ProfileBasicEditModal: FC<Props> = ({
   label = "Username",
   valueKey = "name",
   value = "",
   title = "Change your username",
   intro = "Enter a new username and your existing password.",
   closeModal
-}) {
+}) => {
   const [input, setInput] = useState(value);
   // const dispatch = useDispatch();
   const [update, { isLoading, isSuccess }] = useUpdateInfoMutation();
-  const handleChange = (evt) => {
+  const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setInput(evt.target.value);
   };
   const handleUpdate = () => {
@@ -69,4 +77,6 @@ export default function ProfileBasicEditModal({
       </StyledEdit>
     </Modal>
   );
-}
+};
+
+export default ProfileBasicEditModal;

@@ -22,6 +22,7 @@ import { updateUsersByLogs, updateUsersStatus } from "../../../app/slices/contac
 import { resetAuthData } from "../../../app/slices/auth.data";
 import chatMessageHandler from "./chat.handler";
 import store, { useAppDispatch, useAppSelector } from "../../../app/store";
+import { ServerEvent } from "../../../types/sse";
 
 class RetriableError extends Error {}
 
@@ -115,7 +116,7 @@ export default function useStreaming() {
             console.log("sse debug: error message fatal");
             throw new FatalError(evt.data);
           }
-          const data = JSON.parse(evt.data);
+          const data: ServerEvent = JSON.parse(evt.data);
           const { type } = data;
           switch (type) {
             case "heartbeat":

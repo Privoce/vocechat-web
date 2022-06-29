@@ -1,3 +1,4 @@
+import { ChangeEvent, FC } from "react";
 import styled from "styled-components";
 import iconSearch from "../../assets/icons/search.svg?url";
 
@@ -24,8 +25,14 @@ const Styled = styled.div`
   }
 `;
 
-export default function Search({ value = "", updateSearchValue = null, embed = false }) {
-  const handleChange = (evt) => {
+interface Props {
+  value?: string;
+  updateSearchValue?: (value: string) => void;
+  embed?: boolean;
+}
+
+const Search: FC<Props> = ({ value = "", updateSearchValue = null, embed = false }) => {
+  const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
     if (updateSearchValue) {
       updateSearchValue(evt.target.value);
     }
@@ -36,4 +43,6 @@ export default function Search({ value = "", updateSearchValue = null, embed = f
       <input value={value} onChange={handleChange} className="search" placeholder="Search..." />
     </Styled>
   );
-}
+};
+
+export default Search;

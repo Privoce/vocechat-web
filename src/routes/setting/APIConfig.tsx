@@ -86,10 +86,10 @@ export default function APIConfig() {
               Are you sure to update API secret? Previous secret will be invalided
             </div>
             <div className="btns">
-              <Button onClick={hideAll} className="cancel small">
+              <Button onClick={() => hideAll()} className="cancel small">
                 Cancel
               </Button>
-              <Button disabled={isLoading} className="small danger" onClick={updateSecret}>
+              <Button disabled={isLoading} className="small danger" onClick={() => updateSecret()}>
                 Yes
               </Button>
             </div>

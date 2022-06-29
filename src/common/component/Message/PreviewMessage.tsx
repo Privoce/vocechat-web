@@ -3,8 +3,13 @@ import renderContent from "./renderContent";
 import Avatar from "../Avatar";
 import StyledWrapper from "./styled";
 import { useAppSelector } from "../../../app/store";
+import { FC } from "react";
 
-export default function PreviewMessage({ mid = 0 }) {
+interface Props {
+  mid?: number;
+}
+
+const PreviewMessage: FC<Props> = ({ mid = 0 }) => {
   const { msg, contactsData } = useAppSelector((store) => {
     return { msg: store.message[mid], contactsData: store.contacts.byId };
   });
@@ -33,4 +38,6 @@ export default function PreviewMessage({ mid = 0 }) {
       </div>
     </StyledWrapper>
   );
-}
+};
+
+export default PreviewMessage;

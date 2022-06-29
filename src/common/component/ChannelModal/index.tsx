@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, FC, MouseEvent, ChangeEvent } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import Modal from "../Modal";
@@ -6,24 +6,29 @@ import Button from "../styled/Button";
 import ChannelIcon from "../ChannelIcon";
 import Contact from "../Contact";
 import StyledWrapper from "./styled";
-// import StyledToggle from "../../component/styled/Toggle";
 import StyledCheckbox from "../styled/Checkbox";
 import useFilteredUsers from "../../hook/useFilteredUsers";
-
 import { useCreateChannelMutation } from "../../../app/services/channel";
 import { useAppSelector } from "../../../app/store";
+import { CreateChannelDTO } from "../../../types/channel";
 
-export default function ChannelModal({ personal = false, closeModal }) {
+interface Props {
+  personal?: boolean;
+  closeModal: () => void;
+}
+
+const ChannelModal: FC<Props> = ({ personal = false, closeModal }) => {
   const { contactsData, loginUid } = useAppSelector((store) => {
     return { contactsData: store.contacts.byId, loginUid: store.authData.user?.uid };
   });
   const navigateTo = useNavigate();
-  const [data, setData] = useState({
+  const [data, setData] = useState<CreateChannelDTO>({
     name: "",
     description: "",
-    members: [loginUid],
+    members: loginUid ? [Number(loginUid)] : [],
     is_public: !personal
   });
+
   const { contacts, input, updateInput } = useFilteredUsers();
   const [createChannel, { isSuccess, isError, isLoading, data: newChannelId }] =
     useCreateChannelMutation();
@@ -35,6 +40,7 @@ export default function ChannelModal({ personal = false, closeModal }) {
   //   });
   // };
   const handleCreate = () => {
+    // todo: add field validation (maxLength, text format, trim)
     if (!data.name) {
       toast("please input channel name");
       return;
@@ -46,11 +52,13 @@ export default function ChannelModal({ personal = false, closeModal }) {
     createChannel(data);
   };
 
+  // todo: delete the following code and use common error handler instead
   useEffect(() => {
     if (isError) {
       toast.error("create new channel failed");
     }
   }, [isError]);
+
   useEffect(() => {
     if (isSuccess) {
       toast.success("create new channel success");
@@ -59,26 +67,27 @@ export default function ChannelModal({ personal = false, closeModal }) {
     }
   }, [isSuccess, newChannelId]);
 
-  const handleNameInput = (evt) => {
-    setData((prev) => {
-      return { ...prev, name: evt.target.value };
-    });
-  };
-  const handleInputChange = (evt) => {
-    updateInput(evt.target.value);
-  };
-  const toggleCheckMember = ({ currentTarget }) => {
-    const { members } = data;
-    const { uid } = currentTarget.dataset;
-    let tmp = members.includes(+uid) ? members.filter((m) => m != uid) : [...members, +uid];
-    setData((prev) => {
-      return { ...prev, members: tmp };
-    });
+  const handleNameInput = (evt: ChangeEvent<HTMLInputElement>) => {
+    setData((prev) => ({ ...prev, name: evt.target.value }));
   };
 
-  const loginUser = contactsData[loginUid];
+  const handleInputChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    updateInput(evt.target.value);
+  };
+
+  const toggleCheckMember = ({ currentTarget }: MouseEvent<HTMLLIElement>) => {
+    const members = data.members ?? [];
+    const { uid } = currentTarget.dataset;
+    const uidNum = Number(uid);
+    let tmp = members.includes(uidNum) ? members.filter((m) => m != uidNum) : [...members, uidNum];
+    setData((prev) => ({ ...prev, members: tmp }));
+  };
+
+  if (!loginUid) return null;
+  const loginUser = contactsData[Number(loginUid)];
   if (!loginUser) return null;
   const { name, members, is_public } = data;
+
   return (
     <Modal>
       <StyledWrapper>
@@ -95,13 +104,13 @@ export default function ChannelModal({ personal = false, closeModal }) {
               <ul className="users">
                 {contacts.map((u) => {
                   const { uid } = u;
-                  const checked = members.includes(uid);
+                  const checked = members ? members.includes(uid) : false;
                   return (
                     <li
                       key={uid}
                       data-uid={uid}
                       className="user"
-                      onClick={loginUid == uid ? null : toggleCheckMember}
+                      onClick={loginUid == uid ? undefined : toggleCheckMember}
                     >
                       <StyledCheckbox
                         disabled={loginUid == uid}
@@ -152,4 +161,6 @@ export default function ChannelModal({ personal = false, closeModal }) {
       </StyledWrapper>
     </Modal>
   );
-}
+};
+
+export default ChannelModal;

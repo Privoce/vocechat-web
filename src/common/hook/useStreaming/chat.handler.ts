@@ -6,8 +6,10 @@ import { addFileMessage, removeFileMessage } from "../../../app/slices/message.f
 import { addUserMsg, removeUserMsg } from "../../../app/slices/message.user";
 import { updateAfterMid } from "../../../app/slices/footprint";
 import { ContentTypes } from "../../../app/config";
+import { ChatEvent } from "../../../types/sse";
+import { AppDispatch, RootState } from "../../../app/store";
 
-const handler = (data, dispatch, currState) => {
+const handler = (data: ChatEvent, dispatch: AppDispatch, currState: RootState) => {
   const {
     mid,
     from_uid,
@@ -45,37 +47,30 @@ const handler = (data, dispatch, currState) => {
   // 此处有点绕
   const id = to == "user" ? (self ? target.uid : from_uid) : target.gid;
   const readIndex = (to == "user" ? readUsers[id] : readChannels[id]) || 0;
-  const read = self ? true : mid < readIndex ? true : false;
+  const read = self ? true : mid < readIndex;
   switch (type) {
-    case "normal":
-      {
-        batch(() => {
-          dispatch(
-            addMessage({
-              mid,
-              // 如果是自己发的消息，就是已读
-              read,
-              ...common
-            })
-          );
-          // 未推送完  or  不是自己发的消息
-          console.log("curr state", ready, loginUid, common.from_uid);
-          // if (!ready || loginUid != common.from_uid) {
-          dispatch(
-            appendMessage({
-              id,
-              mid,
-              local_id: properties ? properties.local_id : null
-            })
-          );
-          // 加到file message 列表
-          if (content_type == ContentTypes.file) {
-            dispatch(addFileMessage(mid));
-          }
-          // }
-        });
-      }
+    case "normal": {
+      batch(() => {
+        // 如果是自己发的消息，就是已读
+        dispatch(addMessage({ mid, read, ...common }));
+        // 未推送完  or  不是自己发的消息
+        console.log("curr state", ready, loginUid, common.from_uid);
+        // if (!ready || loginUid != common.from_uid) {
+        dispatch(
+          appendMessage({
+            id,
+            mid,
+            local_id: properties ? properties.local_id : null
+          })
+        );
+        // 加到file message 列表
+        if (content_type == ContentTypes.file) {
+          dispatch(addFileMessage(mid));
+        }
+        // }
+      });
       break;
+    }
     case "reply":
       {
         batch(() => {

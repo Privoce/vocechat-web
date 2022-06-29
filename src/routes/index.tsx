@@ -1,6 +1,6 @@
 import { Suspense, useEffect, lazy } from "react";
 import { Route, Routes, HashRouter } from "react-router-dom";
-import { Provider, useSelector } from "react-redux";
+import { Provider } from "react-redux";
 import toast from "react-hot-toast";
 import NotFoundPage from "./404";
 // import Welcome from './Welcome'
@@ -25,16 +25,19 @@ import Meta from "../common/component/Meta";
 import HomePage from "./home";
 import ChatPage from "./chat";
 import Loading from "../common/component/Loading";
-import store from "../app/store";
+import store, { useAppSelector } from "../app/store";
 
 const PageRoutes = () => {
-  const { ui: { online }, fileMessages } = useSelector((store) => {
+  const {
+    ui: { online },
+    fileMessages
+  } = useAppSelector((store) => {
     return { ui: store.ui, fileMessages: store.fileMessage };
   });
 
   // 掉线检测
   useEffect(() => {
-    let toastId = '0';
+    let toastId = "0";
     if (!online) {
       toast.error("Network Offline!", { duration: Infinity });
     } else {

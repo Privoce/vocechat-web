@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 import styled from "styled-components";
 import Tippy from "@tippyjs/react";
 import IconSelect from "../../../assets/icons/check.sign.svg";
@@ -26,21 +26,34 @@ const Styled = styled.div`
   }
 `;
 
-const CURRENT_NOT_SET = {};
+export interface Option {
+  icon?: string;
+  title: string;
+  value: string;
+  selected: boolean;
+  underline?: boolean;
+}
 
-export default function Select({ options = [], updateSelect = null, current = CURRENT_NOT_SET }) {
+interface Props {
+  options: Option[];
+  updateSelect: null | ((option: Partial<Option>) => void);
+  current: null | Partial<Option>;
+}
+
+const Select: FC<Props> = ({ options = [], updateSelect = null, current = null }) => {
   const [optionsVisible, setOptionsVisible] = useState(false);
-  const [curr, setCurr] = useState(undefined);
+  const [curr, setCurr] = useState<Partial<Option> | null>(null);
   const toggleVisible = () => {
     setOptionsVisible((prev) => !prev);
   };
-  const handleSelect = (data) => {
+  const handleSelect = (data: Partial<Option>) => {
     setCurr(data);
     toggleVisible();
     if (updateSelect) {
       updateSelect(data);
     }
   };
+
   return (
     <Tippy
       visible={optionsVisible}
@@ -52,7 +65,7 @@ export default function Select({ options = [], updateSelect = null, current = CU
           {options.map(({ title, value, selected, underline }) => {
             return (
               <li
-                onClick={selected ? null : handleSelect.bind(null, { title, value })}
+                onClick={selected ? undefined : handleSelect.bind(null, { title, value })}
                 className={`item sb ${underline ? "underline" : ""}`}
                 data-disabled={selected}
                 key={value}
@@ -66,11 +79,11 @@ export default function Select({ options = [], updateSelect = null, current = CU
       }
     >
       <Styled onClick={toggleVisible}>
-        <span className="txt">
-          {(current !== CURRENT_NOT_SET ? current : curr)?.title || `Select`}
-        </span>
+        <span className="txt">{(current !== null ? current : curr)?.title || "Select"}</span>
         <IconArrow className="icon" />
       </Styled>
     </Tippy>
   );
-}
+};
+
+export default Select;

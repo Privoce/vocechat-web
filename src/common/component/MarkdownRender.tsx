@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, FC } from "react";
+import { useEffect, useState, useRef, FC, MouseEvent } from "react";
 import "prismjs/themes/prism.css";
 import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css";
 import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight-all.js";
@@ -11,7 +11,7 @@ import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight/d
 
 import { Viewer } from "@toast-ui/react-editor";
 import styled from "styled-components";
-import ImagePreviewModal from "./ImagePreviewModal";
+import ImagePreviewModal, { PreviewImageData } from "./ImagePreviewModal";
 
 const Styled = styled.div`
   * {
@@ -28,9 +28,9 @@ interface Props {
   content: string;
 }
 
-const MrakdownRender: FC<Props> = ({ content }) => {
+const MarkdownRender: FC<Props> = ({ content }) => {
   const mdContainer = useRef<HTMLDivElement>(null);
-  const [previewImage, setPreviewImage] = useState(null);
+  const [previewImage, setPreviewImage] = useState<PreviewImageData | null>(null);
 
   useEffect(() => {
     const container = mdContainer?.current;
@@ -77,4 +77,4 @@ const MrakdownRender: FC<Props> = ({ content }) => {
   );
 };
 
-export default MrakdownRender;
+export default MarkdownRender;

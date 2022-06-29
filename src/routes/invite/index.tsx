@@ -1,77 +1,82 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, FormEvent, ChangeEvent, FC } from "react";
 import StyledWrapper from "./styled";
 import { Navigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import BASE_URL from "../../app/config";
 import { useRegisterMutation } from "../../app/services/auth";
 import { useCheckMagicTokenValidMutation } from "../../app/services/auth";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../app/store";
 
-export default function InvitePage() {
-  const { token: loginToken } = useSelector((store) => store.authData);
+interface AuthForm {
+  name: string;
+  email: string;
+  password: string;
+}
+
+const InvitePage: FC = () => {
+  const { token: loginToken } = useAppSelector((store) => store.authData);
   const [secondPwd, setSecondPwd] = useState("");
   const [samePwd, setSamePwd] = useState(true);
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState<string | null>("");
   const [valid, setValid] = useState(false);
   const [register, { data, isLoading, isSuccess, isError, error }] = useRegisterMutation();
   const [checkToken, { data: isValid, isLoading: checkLoading, isSuccess: checkSuccess }] =
     useCheckMagicTokenValidMutation();
+
   useEffect(() => {
-    // console.log(search);
     const query = new URLSearchParams(location.search);
     setToken(query.get("token"));
   }, []);
+
   useEffect(() => {
     if (token) {
       checkToken(token);
     }
   }, [token]);
+
   useEffect(() => {
     if (checkSuccess) {
-      console.log({ isValid });
       setValid(isValid);
     } else {
       setValid(false);
     }
   }, [checkSuccess, isValid]);
 
-  const [input, setInput] = useState({
-    name: "",
-    email: "",
-    password: ""
-  });
+  const [input, setInput] = useState<AuthForm>({ name: "", email: "", password: "" });
 
-  const handleReg = (evt) => {
+  const handleReg = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     if (!samePwd) {
       toast.error("two passwords not same");
       return;
     }
-    console.log("wtf", input);
     register({
       ...input,
       magic_token: token,
       gender: 1
     });
   };
-  const handleInput = (evt) => {
-    const { type } = evt.target.dataset;
+
+  const handleInput = (evt: ChangeEvent<HTMLInputElement>) => {
+    const { type } = evt.target.dataset as { type: keyof AuthForm };
     const { value } = evt.target;
-    console.log(type, value);
     setInput((prev) => {
       prev[type] = value;
       return { ...prev };
     });
   };
-  const handleSecondPwdInput = (evt) => {
+
+  const handleSecondPwdInput = (evt: ChangeEvent<HTMLInputElement>) => {
     const { value } = evt.target;
     setSecondPwd(value);
   };
+
   const handlePwdCheck = () => {
     if (secondPwd) {
       setSamePwd(secondPwd == input.password);
     }
   };
+
   useEffect(() => {
     if (!samePwd) {
       toast.error("two passwords not same");
@@ -86,8 +91,7 @@ export default function InvitePage() {
         location.href = `/#/login`;
         // navigateTo("/login",);
       }, 500);
-    } else if (isError) {
-      console.log("register failed", error);
+    } else if (isError && error && "data" in error) {
       switch (error.status) {
         case 400:
           toast.error("Register Failed: please check inputs");
@@ -100,6 +104,8 @@ export default function InvitePage() {
             email_conflict: "email conflict",
             name_conflict: "name conflict"
           };
+          // todo
+          // @ts-ignore
           toast.error(`Register Failed: ${tips[error.data?.reason]}`);
           break;
         }
@@ -112,9 +118,10 @@ export default function InvitePage() {
 
   const { email, password, name } = input;
   if (loginToken) return <Navigate replace to="/" />;
-  if (!token) return "token not found";
-  if (checkLoading) return "checking token valid";
-  if (!valid) return "invite token expires or invalid";
+  if (!token) return <>token not found</>;
+  if (checkLoading) return <>checking token valid</>;
+  if (!valid) return <>invite token expires or invalid</>;
+
   return (
     <StyledWrapper>
       <div className="form animate__animated animate__fadeInDown animate__faster">
@@ -166,4 +173,6 @@ export default function InvitePage() {
       </div>
     </StyledWrapper>
   );
-}
+};
+
+export default InvitePage;

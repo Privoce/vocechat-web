@@ -51,7 +51,7 @@ export const authApi = createApi({
         }
       }
     }),
-    register: builder.mutation({
+    register: builder.mutation<any, any>({
       query: (data) => ({
         url: `user/register`,
         method: "POST",
@@ -143,10 +143,12 @@ export const authApi = createApi({
         url: `/user/check_email?email=${encodeURIComponent(email)}`
       })
     }),
-    getCredentials: builder.query({
+    // todo: check return type
+    getCredentials: builder.query<any, void>({
       query: () => ({ url: "/token/credentials" })
     }),
-    logout: builder.query({
+    // todo: check return type
+    logout: builder.query<any, void>({
       query: () => ({ url: "token/logout" }),
       async onQueryStarted(params, { dispatch, queryFulfilled }) {
         try {

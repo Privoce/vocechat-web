@@ -2,7 +2,7 @@ import BASE_URL, { FILE_IMAGE_SIZE, ContentTypes } from "../app/config";
 import IconPdf from "../assets/icons/file.pdf.svg";
 import IconAudio from "../assets/icons/file.audio.svg";
 import IconVideo from "../assets/icons/file.video.svg";
-import IconUnkown from "../assets/icons/file.unkown.svg";
+import IconUnknown from "../assets/icons/file.unkown.svg";
 import IconDoc from "../assets/icons/file.doc.svg";
 import IconCode from "../assets/icons/file.code.svg";
 import IconImage from "../assets/icons/file.image.svg";
@@ -11,26 +11,14 @@ export const isImage = (file_type = "", size = 0) => {
   return file_type.startsWith("image") && size <= FILE_IMAGE_SIZE;
 };
 
-export const isTreatAsImage = (file) => {
-  let isImage = false;
-  if (!file) return isImage;
+export const isTreatAsImage = (file: File) => {
   const { type, size } = file;
   if (type.startsWith("image")) {
-    // 10MB
-    return size < 1000 * 1000;
+    return size < 1024 * 1024; // 10MB
   }
-  return isImage;
+  return false;
 };
 
-export const getNonNullValues = (obj, whiteList = ["log_id"]) => {
-  const tmp = {};
-  Object.keys(obj).forEach((k) => {
-    if (!whiteList.includes(k) && obj[k] !== null) {
-      tmp[k] = obj[k];
-    }
-  });
-  return tmp;
-};
 export function getDefaultSize(size = null, min = 480) {
   if (!size) return { width: 0, height: 0 };
   const { width: oWidth, height: oHeight } = size;
@@ -38,7 +26,7 @@ export function getDefaultSize(size = null, min = 480) {
     const tmp = min > oWidth ? oWidth : min;
     return { width: tmp, height: tmp };
   }
-  const isVertical = oWidth > oHeight ? false : true;
+  const isVertical = oWidth <= oHeight;
   let dWidth = 0;
   let dHeight = 0;
   if (isVertical) {
@@ -50,6 +38,7 @@ export function getDefaultSize(size = null, min = 480) {
   }
   return { width: dWidth, height: dHeight };
 }
+
 export function formatBytes(bytes, decimals = 2) {
   if (bytes === 0) return "0 Bytes";
 
@@ -175,7 +164,7 @@ export const getFileIcon = (type, name = "") => {
       break;
 
     default:
-      icon = <IconUnkown className="icon" />;
+      icon = <IconUnknown className="icon" />;
       break;
   }
   return icon;
