@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { useGoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
+import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import toast from "react-hot-toast";
 import styled from "styled-components";
 import { KEY_LOCAL_MAGIC_TOKEN } from "../../app/config";
@@ -8,6 +8,7 @@ import Button from "./styled/Button";
 import { useLoginMutation } from "../../app/services/auth";
 
 const StyledSocialButton = styled(Button)`
+  position: relative;
   width: 100%;
   margin-bottom: 16px;
   display: flex;
@@ -21,6 +22,14 @@ const StyledSocialButton = styled(Button)`
     width: 24px;
     height: 24px;
   }
+  .invisible {
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    iframe {
+      width: 100% !important;
+    }
+  }
 `;
 
 interface Props {
@@ -30,24 +39,10 @@ interface Props {
   type?: "login" | "register";
 }
 
-const GoogleLogin: FC<Props> = ({ type = "login", loaded, loadError }) => {
+const GoogleLoginInner: FC<Props> = ({ type = "login", loaded, loadError }) => {
   const [login, { isSuccess, isLoading, error }] = useLoginMutation();
   //拿本地存的magic token
   const magic_token = localStorage.getItem(KEY_LOCAL_MAGIC_TOKEN);
-  const googleLogin = useGoogleLogin({
-    // flow: "auth-code",
-    onSuccess: (res) => {
-      if ("code" in res) {
-        console.error(`google login failed: ${res.code}`);
-      } else {
-        login({
-          magic_token,
-          id_token: res.access_token,
-          type: "google"
-        });
-      }
-    }
-  });
   useEffect(() => {
     if (isSuccess) {
       toast.success("Login Successfully");
@@ -69,12 +64,20 @@ const GoogleLogin: FC<Props> = ({ type = "login", loaded, loadError }) => {
       return;
     }
   }, [error]);
-  const handleGoogleLogin = () => {
-    googleLogin();
-  };
 
   return (
-    <StyledSocialButton disabled={!loaded || isLoading} onClick={handleGoogleLogin}>
+    <StyledSocialButton disabled={!loaded || isLoading} onClick={null}>
+      <div className="invisible">
+        <GoogleLogin
+          onSuccess={(res) => {
+            login({
+              magic_token,
+              id_token: res.credential,
+              type: "google"
+            });
+          }}
+        />
+      </div>
       <IconGoogle className="icon" />
       {loadError
         ? "Script Load Error!"
@@ -98,7 +101,7 @@ const GoogleLoginButton: FC<Props> = ({ type = "login", clientId }) => {
       }}
       clientId={clientId}
     >
-      <GoogleLogin type={type} loaded={scriptLoaded} loadError={hasError} />
+      <GoogleLoginInner type={type} loaded={scriptLoaded} loadError={hasError} />
     </GoogleOAuthProvider>
   );
 };
