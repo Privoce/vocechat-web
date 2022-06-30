@@ -11,12 +11,12 @@ import useContactOperation from "../../hook/useContactOperation";
 import { useAppSelector } from "../../../app/store";
 
 interface Props {
-  uid: number;
+  uid?: number;
   type: string;
   cid?: number;
 }
 
-const Profile: FC<Props> = ({ uid = null, type = "embed", cid = null }) => {
+const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
   const {
     canCall,
     call,
@@ -45,6 +45,8 @@ const Profile: FC<Props> = ({ uid = null, type = "embed", cid = null }) => {
   const enableCall = type == "card" && canCall;
   const canRemoveFromServer = type == "embed" && canRemove;
   const hasMore = enableCall || email || canRemoveFromChannel || canRemoveFromServer;
+  console.log("ccc", canRemove, cid, uid);
+
   return (
     <StyledWrapper className={type}>
       <Avatar className="avatar" url={avatar} name={name} />

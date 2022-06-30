@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, FC } from "react";
 import toast from "react-hot-toast";
 // import { ContentTypes } from "../../../app/config";
 import { useNavigate, useMatch } from "react-router-dom";
@@ -8,8 +8,11 @@ import { useLazyDeleteContactQuery } from "../../app/services/contact";
 import useConfig from "./useConfig";
 import useCopy from "./useCopy";
 import { useAppSelector } from "../../app/store";
-
-export default function useContactOperation({ uid, cid }: { uid: number; cid: number }) {
+interface Props {
+  uid?: number;
+  cid?: number;
+}
+const useContactOperation: FC<Props> = ({ uid, cid }) => {
   const [passedUid, setPassedUid] = useState(undefined);
   const { values: agoraConfig } = useConfig("agora");
   const isUserDetailPath = useMatch(`/contacts/${uid}`);
@@ -17,7 +20,7 @@ export default function useContactOperation({ uid, cid }: { uid: number; cid: nu
   const [removeInChannel, { isSuccess: removeSuccess }] = useRemoveMembersMutation();
   const navigateTo = useNavigate();
   const { copy } = useCopy();
-  const { user, channel, loginUser, isAdmin } = useAppSelector((store) => {
+  const { user, channel, loginUser } = useAppSelector((store) => {
     return {
       user: store.contacts.byId[uid],
       channel: store.channels.byId[cid],
@@ -67,6 +70,7 @@ export default function useContactOperation({ uid, cid }: { uid: number; cid: nu
     toast.success("Cooming Soon...");
     hideAll();
   };
+  const isAdmin = loginUser?.is_admin;
   const loginUid = loginUser?.uid;
   const canRemoveFromChannel =
     cid && !channel?.is_public && (isAdmin || channel?.owner == loginUid);
@@ -84,4 +88,5 @@ export default function useContactOperation({ uid, cid }: { uid: number; cid: nu
     canCall,
     call
   };
-}
+};
+export default useContactOperation;

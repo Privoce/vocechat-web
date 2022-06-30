@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, FC } from "react";
 import styled from "styled-components";
 import Tippy from "@tippyjs/react";
 import { hideAll } from "tippy.js";
@@ -114,7 +114,11 @@ const StyledWrapper = styled.section`
     }
   }
 `;
-export default function ManageMembers({ cid = 0 }) {
+
+interface Props {
+  cid?: number;
+}
+const ManageMembers: FC<Props> = ({ cid }) => {
   const { contacts, channels, loginUser } = useAppSelector((store) => {
     return {
       contacts: store.contacts,
@@ -122,8 +126,7 @@ export default function ManageMembers({ cid = 0 }) {
       loginUser: store.authData.user
     };
   });
-  const { copyEmail, removeFromChannel, removeUser, canRemove, canRemoveFromChannel } =
-    useContactOperation({ cid });
+  const { copyEmail, removeFromChannel, removeUser } = useContactOperation({ cid });
   const [updateContact, { isSuccess: updateSuccess }] = useUpdateContactMutation();
 
   useEffect(() => {
@@ -155,6 +158,9 @@ export default function ManageMembers({ cid = 0 }) {
           const owner = channel && channel.owner == uid;
           const switchRoleVisible = loginUser.is_admin && loginUser.uid !== uid;
           const dotsVisible = email || loginUser?.is_admin;
+          const canRemove = loginUser?.is_admin && loginUser?.uid != uid;
+          const canRemoveFromChannel =
+            channel && channel.owner == loginUser?.uid && loginUser?.uid != uid;
           return (
             <li key={uid} className="member">
               <div className="left">
@@ -217,15 +223,12 @@ export default function ManageMembers({ cid = 0 }) {
                             Copy Email
                           </li>
                         )}
-                        {/* <li className="item underline">Mute</li> */}
-                        {/* <li className="item underline">Change Nickname</li> */}
-                        {/* <li className="item danger">Ban</li> */}
                         {canRemoveFromChannel && (
                           <li className="item danger" onClick={removeFromChannel.bind(null, uid)}>
                             Remove From Channel
                           </li>
                         )}
-                        {canRemove && !cid && (
+                        {canRemove && (
                           <li className="item danger" onClick={removeUser.bind(null, uid)}>
                             Remove From Server
                           </li>
@@ -245,4 +248,5 @@ export default function ManageMembers({ cid = 0 }) {
       </ul>
     </StyledWrapper>
   );
-}
+};
+export default ManageMembers;
