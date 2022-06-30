@@ -33,12 +33,12 @@ const Styled = styled.div`
 
 interface Props {
   type?: "server" | "channel";
-  cid?: null | number;
+  cid?: number;
   title?: string;
   closeModal: () => void;
 }
 
-const InviteModal: FC<Props> = ({ type = "server", cid = null, title = "", closeModal }) => {
+const InviteModal: FC<Props> = ({ type = "server", cid, title = "", closeModal }) => {
   const { channel, server } = useAppSelector((store) => {
     return {
       channel: store.channels.byId[cid],
@@ -54,7 +54,7 @@ const InviteModal: FC<Props> = ({ type = "server", cid = null, title = "", close
           <CloseIcon className="close" onClick={closeModal} />
         </h2>
         {!channel?.is_public && <AddMembers cid={cid} closeModal={closeModal} />}
-        <InviteByEmail cid={channel?.is_public ? null : cid} />
+        <InviteByEmail cid={channel?.is_public ? undefined : cid} />
       </Styled>
     </Modal>
   );
