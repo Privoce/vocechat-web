@@ -47,12 +47,13 @@ let inter: number | null = null;
 export default function useStreaming() {
   const [readyPullData, setReadyPullData] = useState(false);
   const {
-    authData: { uid: loginUid },
+    authData,
     ui: { ready, online },
     footprint: { afterMid, usersVersion, readUsers, readChannels }
   } = useAppSelector((store) => store);
   const [renewToken] = useRenewMutation();
   const dispatch = useAppDispatch();
+  const loginUid = authData.user?.uid;
   let initialized = false;
   let initializing = false;
   let controller = new AbortController();

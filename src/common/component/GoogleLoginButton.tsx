@@ -91,6 +91,7 @@ const GoogleLoginInner: FC<Props> = ({ type = "login", loaded, loadError }) => {
 const GoogleLoginButton: FC<Props> = ({ type = "login", clientId }) => {
   const [scriptLoaded, setScriptLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
+  if (!clientId) return null;
   return (
     <GoogleOAuthProvider
       onScriptLoadError={() => {
