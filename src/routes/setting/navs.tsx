@@ -24,11 +24,6 @@ const navs = [
         component: <ManageMembers />,
         admin: true
       }
-      // {
-      //   name: "notification",
-      //   title: "Notification",
-      //   component: <Notifications />,
-      // },
     ]
   },
   {
