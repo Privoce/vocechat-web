@@ -6,7 +6,7 @@ import IconInvite from "../../assets/icons/add.person.svg";
 import IconMention from "../../assets/icons/mention.svg";
 import ChannelIcon from "./ChannelIcon";
 import ChannelModal from "./ChannelModal";
-import ContactsModal from "./UsersModal";
+import UsersModal from "./UsersModal";
 import InviteModal from "./InviteModal";
 
 const Styled = styled.ul`
@@ -47,7 +47,7 @@ export default function AddEntriesMenu() {
   const [inviteModalVisible, setInviteModalVisible] = useState(false);
 
   const [channelModalVisible, setChannelModalVisible] = useState(false);
-  const [usersModalVisible, setContactsModalVisible] = useState(false);
+  const [usersModalVisible, setUsersModalVisible] = useState(false);
   const toggleInviteModalVisible = () => {
     setInviteModalVisible((prev) => {
       if (!prev) {
@@ -56,8 +56,8 @@ export default function AddEntriesMenu() {
       return !prev;
     });
   };
-  const toggleContactsModalVisible = () => {
-    setContactsModalVisible((prevVisible) => {
+  const toggleUsersModalVisible = () => {
+    setUsersModalVisible((prevVisible) => {
       if (!prevVisible) {
         hideAll();
       }
@@ -86,7 +86,7 @@ export default function AddEntriesMenu() {
           <ChannelIcon personal={true} className="icon" />
           New Private Channel
         </li>
-        <li className="item" onClick={toggleContactsModalVisible}>
+        <li className="item" onClick={toggleUsersModalVisible}>
           <IconMention className="icon" />
           New Message
         </li>
@@ -96,7 +96,7 @@ export default function AddEntriesMenu() {
         </li>
       </Styled>
       {channelModalVisible && <ChannelModal personal={isPrivate} closeModal={handleCloseModal} />}
-      {usersModalVisible && <ContactsModal closeModal={toggleContactsModalVisible} />}
+      {usersModalVisible && <UsersModal closeModal={toggleUsersModalVisible} />}
       {inviteModalVisible && <InviteModal closeModal={toggleInviteModalVisible} />}
     </>
   );

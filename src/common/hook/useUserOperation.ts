@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { useNavigate, useMatch } from "react-router-dom";
 import { hideAll } from "tippy.js";
 import { useRemoveMembersMutation } from "../../app/services/channel";
-import { useLazyDeleteContactQuery } from "../../app/services/user";
+import { useLazyDeleteUserQuery } from "../../app/services/user";
 import useConfig from "./useConfig";
 import useCopy from "./useCopy";
 import { useAppSelector } from "../../app/store";
@@ -12,11 +12,11 @@ interface Props {
   uid?: number;
   cid?: number;
 }
-const useContactOperation: FC<Props> = ({ uid, cid }) => {
+const useUserOperation: FC<Props> = ({ uid, cid }) => {
   const [passedUid, setPassedUid] = useState(undefined);
   const { values: agoraConfig } = useConfig("agora");
   const isUserDetailPath = useMatch(`/users/${uid}`);
-  const [removeUser, { isSuccess: removeUserSuccess }] = useLazyDeleteContactQuery();
+  const [removeUser, { isSuccess: removeUserSuccess }] = useLazyDeleteUserQuery();
   const [removeInChannel, { isSuccess: removeSuccess }] = useRemoveMembersMutation();
   const navigateTo = useNavigate();
   const { copy } = useCopy();
@@ -89,4 +89,4 @@ const useContactOperation: FC<Props> = ({ uid, cid }) => {
     call
   };
 };
-export default useContactOperation;
+export default useUserOperation;

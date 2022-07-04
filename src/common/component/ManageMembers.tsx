@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Tippy from "@tippyjs/react";
 import { hideAll } from "tippy.js";
 import toast from "react-hot-toast";
-import { useUpdateContactMutation } from "../../app/services/user";
+import { useUpdateUserMutation } from "../../app/services/user";
 import User from "./User";
 import StyledMenu from "./styled/Menu";
 import InviteLink from "./InviteLink";
@@ -11,7 +11,7 @@ import moreIcon from "../../assets/icons/more.svg?url";
 import IconOwner from "../../assets/icons/owner.svg";
 import IconArrowDown from "../../assets/icons/arrow.down.mini.svg";
 import IconCheck from "../../assets/icons/check.sign.svg";
-import useContactOperation from "../hook/useContactOperation";
+import useUserOperation from "../hook/useUserOperation";
 import { useAppSelector } from "../../app/store";
 
 const StyledWrapper = styled.section`
@@ -126,8 +126,8 @@ const ManageMembers: FC<Props> = ({ cid }) => {
       loginUser: store.authData.user
     };
   });
-  const { copyEmail, removeFromChannel, removeUser } = useContactOperation({ cid });
-  const [updateContact, { isSuccess: updateSuccess }] = useUpdateContactMutation();
+  const { copyEmail, removeFromChannel, removeUser } = useUserOperation({ cid });
+  const [updateUser, { isSuccess: updateSuccess }] = useUpdateUserMutation();
 
   useEffect(() => {
     if (updateSuccess) {
@@ -138,7 +138,7 @@ const ManageMembers: FC<Props> = ({ cid }) => {
   const handleToggleRole = ({ ignore = false, uid = null, isAdmin = true }) => {
     hideAll();
     if (ignore) return;
-    updateContact({ id: uid, is_admin: isAdmin });
+    updateUser({ id: uid, is_admin: isAdmin });
   };
   const channel = channels.byId[cid] ?? null;
   const uids = channel ? (channel.is_public ? users.ids : channel.members) : users.ids;

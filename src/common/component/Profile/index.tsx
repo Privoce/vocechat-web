@@ -7,7 +7,7 @@ import IconMore from "../../../assets/icons/more.svg";
 import Avatar from "../Avatar";
 import StyledWrapper from "./styled";
 import StyledMenu from "../styled/Menu";
-import useContactOperation from "../../hook/useContactOperation";
+import useUserOperation from "../../hook/useUserOperation";
 import { useAppSelector } from "../../../app/store";
 
 interface Props {
@@ -26,7 +26,7 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
     canRemoveFromChannel,
     canRemove,
     removeUser
-  } = useContactOperation({ uid, cid });
+  } = useUserOperation({ uid, cid });
 
   const { data } = useAppSelector((store) => {
     return {

@@ -10,7 +10,6 @@ const Styled = styled.span`
   strong {
     white-space: nowrap;
     font-weight: bold;
-    /* padding-right: 5px; */
   }
   .btns {
     gap: 5px;

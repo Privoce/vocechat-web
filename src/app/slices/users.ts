@@ -23,10 +23,10 @@ const usersSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
-    resetContacts() {
+    resetUsers() {
       return initialState;
     },
-    fullfillContacts(state, action: PayloadAction<StoredUser[]>) {
+    fullfillUsers(state, action: PayloadAction<StoredUser[]>) {
       const users = action.payload || [];
       state.ids = users.map(({ uid }) => uid);
       state.byId = Object.fromEntries(
@@ -36,7 +36,7 @@ const usersSlice = createSlice({
         })
       );
     },
-    removeContact(state, action: PayloadAction<number>) {
+    removeUser(state, action: PayloadAction<number>) {
       const uid = action.payload;
       state.ids = state.ids.filter((i) => i != uid);
       delete state.byId[uid];
@@ -99,6 +99,6 @@ const usersSlice = createSlice({
   }
 });
 
-export const { resetContacts, fullfillContacts, updateUsersByLogs, updateUsersStatus } =
+export const { resetUsers, fullfillUsers, updateUsersByLogs, updateUsersStatus } =
   usersSlice.actions;
 export default usersSlice.reducer;

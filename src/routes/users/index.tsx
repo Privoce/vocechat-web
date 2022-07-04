@@ -9,7 +9,7 @@ import Profile from "../../common/component/Profile";
 import StyledWrapper from "./styled";
 import BlankPlaceholder from "../../common/component/BlankPlaceholder";
 
-export default function ContactsPage() {
+export default function UsersPage() {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
 

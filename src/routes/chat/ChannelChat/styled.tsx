@@ -47,7 +47,7 @@ export const StyledNotification = styled.div`
     outline: none;
   }
 `;
-export const StyledContacts = styled.div`
+export const StyledUsers = styled.div`
   display: flex;
   flex-direction: column;
   gap: 5px;

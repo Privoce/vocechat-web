@@ -7,7 +7,7 @@ import IconChat from "../../assets/icons/placeholder.chat.svg";
 import IconAsk from "../../assets/icons/placeholder.question.svg";
 import IconInvite from "../../assets/icons/placeholder.invite.svg";
 import IconDownload from "../../assets/icons/placeholder.download.svg";
-import ContactsModal from "./UsersModal";
+import UsersModal from "./UsersModal";
 import { useAppSelector } from "../../app/store";
 
 const Styled = styled.div`
@@ -75,19 +75,19 @@ const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
   const server = useAppSelector((store) => store.server);
   const [inviteModalVisible, setInviteModalVisible] = useState(false);
   const [createChannelVisible, setCreateChannelVisible] = useState(false);
-  const [userListVisible, setContactListVisible] = useState(false);
+  const [userListVisible, setUserListVisible] = useState(false);
   const toggleChannelModalVisible = () => {
     setCreateChannelVisible((prev) => !prev);
   };
-  const toggleContactListVisible = () => {
-    setContactListVisible((prev) => !prev);
+  const toggleUserListVisible = () => {
+    setUserListVisible((prev) => !prev);
   };
   const toggleInviteModalVisible = () => {
     setInviteModalVisible((prev) => !prev);
   };
   const chatTip =
     type == "chat" ? "Create a Channel to Start a Conversation" : "Send a Direct Message";
-  const chatHandler = type == "chat" ? toggleChannelModalVisible : toggleContactListVisible;
+  const chatHandler = type == "chat" ? toggleChannelModalVisible : toggleUserListVisible;
 
   return (
     <>
@@ -121,7 +121,7 @@ const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
       {createChannelVisible && (
         <ChannelModal personal={true} closeModal={toggleChannelModalVisible} />
       )}
-      {userListVisible && <ContactsModal closeModal={toggleContactListVisible} />}
+      {userListVisible && <UsersModal closeModal={toggleUserListVisible} />}
       {inviteModalVisible && <InviteModal closeModal={toggleInviteModalVisible} />}
     </>
   );

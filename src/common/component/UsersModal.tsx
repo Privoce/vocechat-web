@@ -55,7 +55,7 @@ interface Props {
   closeModal: () => void;
 }
 
-const ContactsModal: FC<Props> = ({ closeModal }) => {
+const UsersModal: FC<Props> = ({ closeModal }) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const { users, updateInput, input } = useFilteredUsers();
   useOutsideClick(wrapperRef, closeModal);
@@ -89,4 +89,4 @@ const ContactsModal: FC<Props> = ({ closeModal }) => {
   );
 };
 
-export default ContactsModal;
+export default UsersModal;

@@ -25,7 +25,7 @@ import IconHeadphone from "../../../assets/icons/headphone.svg";
 import addIcon from "../../../assets/icons/add.svg?url";
 import {
   // StyledNotification,
-  StyledContacts,
+  StyledUsers,
   StyledChannelChat,
   StyledHeader
 } from "./styled";
@@ -186,7 +186,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
         users={
           membersVisible ? (
             <>
-              <StyledContacts>
+              <StyledUsers>
                 {addVisible && (
                   <div className="add" onClick={toggleAddVisible}>
                     <img className="icon" src={addIcon} />
@@ -206,7 +206,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
                     />
                   );
                 })}
-              </StyledContacts>
+              </StyledUsers>
             </>
           ) : null
         }

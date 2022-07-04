@@ -15,7 +15,7 @@ import Tooltip from "../../common/component/Tooltip";
 import ChannelChat from "./ChannelChat";
 import DMChat from "./DMChat";
 import ChannelList from "./ChannelList";
-import ContactsModal from "../../common/component/UsersModal";
+import UsersModal from "../../common/component/UsersModal";
 import ChannelModal from "../../common/component/ChannelModal";
 import DMList from "./DMList";
 
@@ -28,10 +28,10 @@ export default function ChatPage() {
     };
   });
   const [channelModalVisible, setChannelModalVisible] = useState(false);
-  const [usersModalVisible, setContactsModalVisible] = useState(false);
+  const [usersModalVisible, setUsersModalVisible] = useState(false);
   const { channel_id, user_id } = useParams();
-  const toggleContactsModalVisible = () => {
-    setContactsModalVisible((prev) => !prev);
+  const toggleUsersModalVisible = () => {
+    setUsersModalVisible((prev) => !prev);
   };
   const toggleChannelModalVisible = () => {
     setChannelModalVisible((prev) => !prev);
@@ -49,7 +49,7 @@ export default function ChatPage() {
       {channelModalVisible && (
         <ChannelModal closeModal={toggleChannelModalVisible} personal={true} />
       )}
-      {usersModalVisible && <ContactsModal closeModal={toggleContactsModalVisible} />}
+      {usersModalVisible && <UsersModal closeModal={toggleUsersModalVisible} />}
       <StyledWrapper>
         <div className="left">
           <Server />
@@ -74,7 +74,7 @@ export default function ChatPage() {
                 DIRECT MESSAGE
               </span>
               <Tooltip tip="New DM" placement="bottom">
-                <AddIcon className="add_icon" onClick={toggleContactsModalVisible} />
+                <AddIcon className="add_icon" onClick={toggleUsersModalVisible} />
               </Tooltip>
             </h3>
             <nav className="nav">

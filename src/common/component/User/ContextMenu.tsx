@@ -1,6 +1,6 @@
 import { FC, ReactElement } from "react";
 import Tippy from "@tippyjs/react";
-import useContactOperation from "../../hook/useContactOperation";
+import useUserOperation from "../../hook/useUserOperation";
 import ContextMenu from "../ContextMenu";
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
   children: ReactElement;
 }
 
-const ContactContextMenu: FC<Props> = ({ enable = false, uid, cid, visible, hide, children }) => {
+const UserContextMenu: FC<Props> = ({ enable = false, uid, cid, visible, hide, children }) => {
   const {
     canCall,
     call,
@@ -23,7 +23,7 @@ const ContactContextMenu: FC<Props> = ({ enable = false, uid, cid, visible, hide
     canRemoveFromChannel,
     removeFromChannel,
     removeUser
-  } = useContactOperation({
+  } = useUserOperation({
     uid,
     cid
   });
@@ -72,4 +72,4 @@ const ContactContextMenu: FC<Props> = ({ enable = false, uid, cid, visible, hide
   );
 };
 
-export default ContactContextMenu;
+export default UserContextMenu;

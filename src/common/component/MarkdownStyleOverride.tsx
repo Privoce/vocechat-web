@@ -1,19 +1,16 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 const MarkdownOverrides = createGlobalStyle`
   [class^='toastui-editor-'] {
     .toastui-editor-md-container {
       border-bottom: none;
-
       .toastui-editor-md-preview {
         padding-right: 0;
         padding-left: 8px;
       }
-
       .toastui-editor-md-splitter {
         background-color: #D0D5DD;
       }
-
       .ProseMirror {
         height: 100%;
       }
@@ -23,7 +20,6 @@ const MarkdownOverrides = createGlobalStyle`
       margin: 0;
       padding: 0;
     }
-
     .ProseMirror, p, .toastui-editor.md-mode {
       font-weight: 400;
       font-size: 14px;
@@ -77,27 +73,18 @@ const MarkdownOverrides = createGlobalStyle`
       white-space: nowrap;
       margin-top: 0;
       margin-bottom: 10px;
-      /* display: flex;
-      flex-direction:column;
-      margin-left: 20px; */
-
       > li:before {
         margin-top: 8px;
         margin-left: -14px;
         background-color: #475467;
       }
-
-      /* list-style-type: disc; */
-
     }
-
     ul,
     ol {
       font-weight: 400;
       font-size: 14px;
       line-height: 20px;
       color: #475467;
-      /* list-style-position: inside; */
     }
 
     h1,

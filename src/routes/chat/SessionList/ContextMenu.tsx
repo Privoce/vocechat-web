@@ -5,7 +5,7 @@ import { useUpdateMuteSettingMutation } from "../../../app/services/user";
 import { useReadMessageMutation } from "../../../app/services/message";
 import { removeUserSession } from "../../../app/slices/message.user";
 import ContextMenu from "../../../common/component/ContextMenu";
-import useContactOperation from "../../../common/hook/useContactOperation";
+import useUserOperation from "../../../common/hook/useUserOperation";
 
 export default function SessionContextMenu({
   context = "user",
@@ -17,7 +17,7 @@ export default function SessionContextMenu({
   setInviteChannelId,
   children
 }) {
-  const { canCopyEmail, copyEmail } = useContactOperation({ uid: context == "user" ? id : null });
+  const { canCopyEmail, copyEmail } = useUserOperation({ uid: context == "user" ? id : null });
   const [muteChannel] = useUpdateMuteSettingMutation();
   const [updateReadIndex] = useReadMessageMutation();
   const pathMatched = useMatch(`/chat/dm/${id}`);

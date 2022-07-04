@@ -4,7 +4,7 @@ import { KEY_UID } from "../config";
 import baseQuery from "./base.query";
 import { resetAuthData } from "../slices/auth.data";
 import { updateMute } from "../slices/footprint";
-import { fullfillContacts } from "../slices/users";
+import { fullfillUsers } from "../slices/users";
 import BASE_URL, { ContentTypes } from "../config";
 import { onMessageSendStarted } from "./handlers";
 import handleChatMessage from "../../common/hook/useStreaming/chat.handler";
@@ -14,7 +14,7 @@ export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery,
   endpoints: (builder) => ({
-    getContacts: builder.query({
+    getUsers: builder.query({
       query: () => ({ url: `user` }),
       transformResponse: (data: User[]) => {
         return data.map((user) => {
@@ -38,20 +38,20 @@ export const userApi = createApi({
             console.log("no matched user, redirect to login");
             dispatch(resetAuthData());
           } else {
-            const markedContacts = users.map((u) => {
+            const markedUsers = users.map((u) => {
               return u.uid == matchedUser.uid ? { ...u, online: true } : u;
             });
-            dispatch(fullfillContacts(markedContacts));
+            dispatch(fullfillUsers(markedUsers));
           }
         } catch {
           console.log("get user list error");
         }
       }
     }),
-    deleteContact: builder.query({
+    deleteUser: builder.query({
       query: (uid) => ({ url: `/admin/user/${uid}`, method: "DELETE" })
     }),
-    updateContact: builder.mutation({
+    updateUser: builder.mutation({
       query: ({ id, ...rest }) => ({
         url: `/admin/user/${id}`,
         body: rest,
@@ -127,12 +127,12 @@ export const userApi = createApi({
 
 export const {
   useLazyGetHistoryMessagesQuery,
-  useUpdateContactMutation,
+  useUpdateUserMutation,
   useUpdateMuteSettingMutation,
-  useLazyDeleteContactQuery,
+  useLazyDeleteUserQuery,
   useUpdateInfoMutation,
   useUpdateAvatarMutation,
-  useGetContactsQuery,
-  useLazyGetContactsQuery,
+  useGetUsersQuery,
+  useLazyGetUsersQuery,
   useSendMsgMutation
 } = userApi;

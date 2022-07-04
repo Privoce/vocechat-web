@@ -13,7 +13,7 @@ import Notification from "../../common/component/Notification";
 import Manifest from "../../common/component/Manifest";
 
 import ChatIcon from "../../assets/icons/chat.svg";
-import ContactIcon from "../../assets/icons/user.svg";
+import UserIcon from "../../assets/icons/user.svg";
 import FavIcon from "../../assets/icons/bookmark.svg";
 import FolderIcon from "../../assets/icons/folder.svg";
 import { useAppSelector } from "../../app/store";
@@ -74,7 +74,7 @@ export default function HomePage() {
             </NavLink>
             <NavLink className="link" to={userNav}>
               <Tooltip tip="Members">
-                <ContactIcon />
+                <UserIcon />
               </Tooltip>
             </NavLink>
             <NavLink className="link" to={"/favs"}>

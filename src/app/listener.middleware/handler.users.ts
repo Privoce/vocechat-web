@@ -7,7 +7,7 @@ export default async function handler({ operation, data, payload }) {
     return;
   }
   switch (operation) {
-    case "fullfillContacts":
+    case "fullfillUsers":
       {
         const users = payload;
         await Promise.all(
@@ -38,13 +38,13 @@ export default async function handler({ operation, data, payload }) {
         );
       }
       break;
-    case "addContact":
+    case "addUser":
       {
         const { uid } = payload;
         await table.setItem(uid + "", payload);
       }
       break;
-    case "removeContact":
+    case "removeUser":
       {
         const id = payload;
         await table.removeItem(id + "");

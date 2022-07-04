@@ -9,20 +9,20 @@ import Server from "../../common/component/Server";
 import CurrentUser from "../../common/component/CurrentUser";
 import ChannelChat from "./ChannelChat";
 import DMChat from "./DMChat";
-import ContactsModal from "../../common/component/UsersModal";
+import UsersModal from "../../common/component/UsersModal";
 import ChannelModal from "../../common/component/ChannelModal";
 import SessionList from "./SessionList";
 export default function ChatPage() {
   const [channelModalVisible, setChannelModalVisible] = useState(false);
-  const [usersModalVisible, setContactsModalVisible] = useState(false);
+  const [usersModalVisible, setUsersModalVisible] = useState(false);
   const { channel_id, user_id } = useParams();
   const { sessionUids } = useSelector((store) => {
     return {
       sessionUids: store.userMessage.ids
     };
   });
-  const toggleContactsModalVisible = () => {
-    setContactsModalVisible((prev) => !prev);
+  const toggleUsersModalVisible = () => {
+    setUsersModalVisible((prev) => !prev);
   };
   const toggleChannelModalVisible = () => {
     setChannelModalVisible((prev) => !prev);
@@ -38,7 +38,7 @@ export default function ChatPage() {
       {channelModalVisible && (
         <ChannelModal closeModal={toggleChannelModalVisible} personal={true} />
       )}
-      {usersModalVisible && <ContactsModal closeModal={toggleContactsModalVisible} />}
+      {usersModalVisible && <UsersModal closeModal={toggleUsersModalVisible} />}
       <StyledWrapper>
         <div className="left">
           <Server />

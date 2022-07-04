@@ -12,7 +12,7 @@ const SendMagicLinkPage = lazy(() => import("./sendMagicLink"));
 const RegPage = lazy(() => import("./reg/Register"));
 const LoginPage = lazy(() => import("./login"));
 const OAuthPage = lazy(() => import("./oauth"));
-const ContactsPage = lazy(() => import("./users"));
+const UsersPage = lazy(() => import("./users"));
 const FavoritesPage = lazy(() => import("./favs"));
 const OnboardingPage = lazy(() => import("./onboarding"));
 const InvitePage = lazy(() => import("./invite"));
@@ -143,7 +143,7 @@ const PageRoutes = () => {
                 index
                 element={
                   <Suspense fallback={<Loading />}>
-                    <ContactsPage />
+                    <UsersPage />
                   </Suspense>
                 }
               />
@@ -151,7 +151,7 @@ const PageRoutes = () => {
                 path=":user_id"
                 element={
                   <Suspense fallback={<Loading />}>
-                    <ContactsPage />
+                    <UsersPage />
                   </Suspense>
                 }
               />
