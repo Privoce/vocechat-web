@@ -63,14 +63,14 @@ const Channel: FC<Props> = ({ interactive = true, id, compact = false, avatarSiz
   });
 
   if (!channel) return null;
-  const { name, members = [], is_public, avatar } = channel;
+  const { name, members = [], is_public, icon } = channel;
   return (
     <StyledWrapper
       size={avatarSize}
       className={`${interactive ? "interactive" : ""} ${compact ? "compact" : ""}`}
     >
       <div className="avatar">
-        <Avatar type="channel" url={avatar} name={"#"} alt="avatar" />
+        <Avatar type="channel" url={icon} name={"#"} alt="avatar" />
       </div>
       {!compact && (
         <div className="name">

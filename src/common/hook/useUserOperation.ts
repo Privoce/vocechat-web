@@ -8,12 +8,12 @@ import { useLazyDeleteUserQuery } from "../../app/services/user";
 import useConfig from "./useConfig";
 import useCopy from "./useCopy";
 import { useAppSelector } from "../../app/store";
-interface Props {
+interface IProps {
   uid?: number;
   cid?: number;
 }
-const useUserOperation: FC<Props> = ({ uid, cid }) => {
-  const [passedUid, setPassedUid] = useState(undefined);
+const useUserOperation = ({ uid, cid }: IProps) => {
+  const [passedUid, setPassedUid] = useState<number | undefined>(undefined);
   const { values: agoraConfig } = useConfig("agora");
   const isUserDetailPath = useMatch(`/users/${uid}`);
   const [removeUser, { isSuccess: removeUserSuccess }] = useLazyDeleteUserQuery();
@@ -29,7 +29,7 @@ const useUserOperation: FC<Props> = ({ uid, cid }) => {
   });
 
   useEffect(() => {
-    setPassedUid(uid ?? loginUser.uid);
+    setPassedUid(uid ?? loginUser?.uid);
   }, [uid, loginUser]);
 
   useEffect(() => {
@@ -41,21 +41,23 @@ const useUserOperation: FC<Props> = ({ uid, cid }) => {
     }
   }, [removeSuccess, removeUserSuccess, isUserDetailPath]);
 
-  const handleRemoveFromChannel = (id) => {
+  const handleRemoveFromChannel = (id: number) => {
+    if (!cid) return;
     const isNumber = !Number.isNaN(+id);
     const finalId = isNumber ? id || passedUid : passedUid;
+    if (!finalId) return;
     removeInChannel({ id: +cid, members: [+finalId] });
     hideAll();
   };
 
-  const handleRemove = (id) => {
+  const handleRemove = (id: number) => {
     const isNumber = !Number.isNaN(+id);
     const finalId = isNumber ? id || passedUid : passedUid;
     removeUser(finalId);
     hideAll();
   };
 
-  const copyEmail = (email) => {
+  const copyEmail = (email: string) => {
     const isString = typeof email == "string";
     const finalEmail = isString ? email || user?.email : user?.email;
     copy(finalEmail);
@@ -67,15 +69,15 @@ const useUserOperation: FC<Props> = ({ uid, cid }) => {
   };
 
   const call = () => {
-    toast.success("Cooming Soon...");
+    toast.success("Coming Soon...");
     hideAll();
   };
   const isAdmin = loginUser?.is_admin;
   const loginUid = loginUser?.uid;
   const canRemoveFromChannel =
     cid && !channel?.is_public && (isAdmin || channel?.owner == loginUid);
-  const canCall = agoraConfig.enabled && loginUid != uid;
-  const canRemove = isAdmin && loginUid != uid && !cid;
+  const canCall: boolean = agoraConfig.enabled && loginUid != uid;
+  const canRemove: boolean = isAdmin && loginUid != uid && !cid;
 
   return {
     canRemove,

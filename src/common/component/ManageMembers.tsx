@@ -140,7 +140,7 @@ const ManageMembers: FC<Props> = ({ cid }) => {
     if (ignore) return;
     updateUser({ id: uid, is_admin: isAdmin });
   };
-  const channel = channels.byId[cid] ?? null;
+  const channel = cid ? channels.byId[cid] : null;
   const uids = channel ? (channel.is_public ? users.ids : channel.members) : users.ids;
 
   return (

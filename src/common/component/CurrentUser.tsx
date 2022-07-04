@@ -70,7 +70,6 @@ export default function CurrentUser() {
   if (!currUser) return null;
   const { uid, name, avatar } = currUser;
   return (
-    // <UserGuide step={1}>
     <StyledWrapper>
       <div className="profile">
         <Avatar url={avatar} name={name} alt="user avatar" className="avatar" />
@@ -86,6 +85,5 @@ export default function CurrentUser() {
         </div>
       )}
     </StyledWrapper>
-    // </UserGuide>
   );
 }

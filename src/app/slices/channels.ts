@@ -4,7 +4,7 @@ import BASE_URL from "../config";
 import { Channel, UpdateChannelDTO, UpdatePinnedMessageDTO } from "../../types/channel";
 
 interface StoredChannel extends Channel {
-  icon: string;
+  icon?: string;
 }
 
 interface State {

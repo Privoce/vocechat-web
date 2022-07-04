@@ -18,7 +18,6 @@ const StyledWrapper = styled.div`
   transition: all 0.5s ease;
   width: 100vw;
   height: 100vh;
-  /* background-color: rgba(1, 1, 1, 0.9); */
   animation: ${AniFadeIn} 0.3s ease-in-out forwards;
   display: flex;
   align-items: center;
@@ -45,9 +44,6 @@ const StyledWrapper = styled.div`
       img {
         max-width: 70vw;
         max-height: 80vh;
-        /* width: 100%;
-        height: 100%;
-        object-fit: contain; */
       }
     }
 
@@ -121,7 +117,6 @@ const ImagePreviewModal: FC<Props> = ({ download = true, data, closeModal }) => 
         <div className={`box ${loading ? "loading" : ""}`} ref={wrapperRef}>
           <div className="image">
             <img
-              // onLoadedMetadata={handleMetaDataLoaded}
               src={url}
               alt="preview"
               className={`animate__animated animate__fadeIn animate__faster`}

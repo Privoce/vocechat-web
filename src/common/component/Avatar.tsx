@@ -2,6 +2,8 @@ import { useState, useEffect, memo, SyntheticEvent, FC } from "react";
 import { getInitials, getInitialsAvatar } from "../utils";
 
 interface Props {
+  className?: string;
+  alt?: string;
   url?: string;
   name?: string;
   type?: "user" | "channel";

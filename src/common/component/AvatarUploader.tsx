@@ -15,7 +15,6 @@ const StyledWrapper = styled.div`
     height: 100%;
     border-radius: 50%;
     background-color: #eee;
-    /* border: 1px solid #eee; */
     img {
       object-fit: cover;
       width: 100%;

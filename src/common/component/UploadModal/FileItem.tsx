@@ -1,19 +1,26 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { formatBytes, isTreatAsImage, getFileIcon } from "../../utils";
 
 export default function FileItem({ file = null }) {
-  const [icon, setIcon] = useState(null);
+  const [icon, setIcon] = useState<React.ReactElement | null>(null);
   useEffect(() => {
+    let localUrl = "";
     if (file) {
       const { type, name } = file;
       if (isTreatAsImage(file)) {
-        // todo: memory leak, use revokeObjectURL before component didMount
-        setIcon(<img src={URL.createObjectURL(file)} alt="thumb" className="thumb" />);
+        //  use revokeObjectURL before component didMount
+        localUrl = URL.createObjectURL(file);
+        setIcon(<img src={localUrl} alt="thumb" className="thumb" />);
         return;
       }
       console.log("file type", type, name);
       setIcon(getFileIcon(type, name));
     }
+    return () => {
+      if (localUrl) {
+        URL.revokeObjectURL(localUrl);
+      }
+    };
   }, [file]);
   console.log("current file", file);
   if (!file) return null;

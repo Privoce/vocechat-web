@@ -8,7 +8,6 @@ const StyledWrapper = styled.div`
   padding: 8px;
   border-radius: 8px;
   user-select: none;
-
   &.interactive {
     &:hover,
     &.active {
@@ -47,7 +46,6 @@ const StyledWrapper = styled.div`
     }
   }
   .name {
-    /* user-select: text; */
     font-weight: 600;
     font-size: 14px;
     line-height: 20px;

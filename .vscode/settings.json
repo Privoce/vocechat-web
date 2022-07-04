@@ -26,5 +26,7 @@
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "cSpell.words": ["btns", "oidc", "tippyjs", "vocechat"]
+  "cSpell.words": ["btns", "oidc", "tippyjs", "vocechat"],
+  "reactSnippets.settings.prettierEnabled": true,
+  "reactSnippets.settings.importReactOnTop": false
 }

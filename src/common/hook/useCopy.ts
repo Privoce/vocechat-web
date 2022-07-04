@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { copyImageToClipboard } from "copy-image-clipboard";
 import toast from "react-hot-toast";
 
-const useCopy = (config) => {
+const useCopy = (config: { enableToast: boolean } | void) => {
   const { enableToast = true } = config || {};
 
   const [copied, setCopied] = useState(false);
@@ -12,26 +12,27 @@ const useCopy = (config) => {
     }
   }, [copied]);
 
-  const copyToClipboard = (str) => {
+  const copyToClipboard = (str: string) => {
     const el = document.createElement("textarea");
     el.value = str;
     el.setAttribute("readonly", "");
     el.style.position = "absolute";
     el.style.left = "-9999px";
     document.body.appendChild(el);
-    const selected =
-      document.getSelection().rangeCount > 0 ? document.getSelection().getRangeAt(0) : false;
+    const selection = document.getSelection();
+    if (!selection) return false;
+    const selected = selection.rangeCount > 0 ? selection.getRangeAt(0) : false;
     el.select();
     const success = document.execCommand("copy");
     document.body.removeChild(el);
     if (selected) {
-      document.getSelection().removeAllRanges();
-      document.getSelection().addRange(selected);
+      selection.removeAllRanges();
+      selection.addRange(selected);
     }
     return success;
   };
 
-  const copy = (text, isImage = false) => {
+  const copy = (text: string, isImage = false) => {
     let inter = 0;
     console.log("copy", text, isImage);
     if (!copied) {

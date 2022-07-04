@@ -1,6 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { EntityId } from "../../types/common";
-import { ChatEvent } from "../../types/sse";
 
 export interface State {
   [gid: number]: number[] | undefined;
@@ -18,7 +16,7 @@ const channelMsgSlice = createSlice({
     fullfillChannelMsg(state, action: PayloadAction<State>) {
       return action.payload;
     },
-    addChannelMsg(state, action: PayloadAction<ChatEvent>) {
+    addChannelMsg(state, action: PayloadAction<{ id: number; mid: number; local_id?: any }>) {
       const { id, mid, local_id = null } = action.payload;
       if (state[id]) {
         const midExsited = state[id]!.findIndex((id) => id == mid) > -1;
@@ -29,7 +27,7 @@ const channelMsgSlice = createSlice({
         state[id] = [+mid];
       }
     },
-    removeChannelMsg(state, action: PayloadAction<ChannelMessage & EntityId>) {
+    removeChannelMsg(state, action: PayloadAction<{ id: number; mid: number }>) {
       const { id, mid } = action.payload;
       if (state[id]) {
         const idx = state[id]!.findIndex((i) => i == mid);

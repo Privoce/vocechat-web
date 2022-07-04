@@ -23,7 +23,6 @@ const DeleteMessageConfirmModal: FC<Props> = ({ closeModal, mids = [] }) => {
   return (
     <Modal>
       <StyledModal
-        // className="animate__animated animate__fadeInDown animate__faster"
         buttons={
           <>
             <Button className="cancel" onClick={closeModal.bind(null, false)}>

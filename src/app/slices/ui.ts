@@ -4,10 +4,6 @@ import { Views } from "../config";
 export interface State {
   online: boolean;
   ready: boolean;
-  userGuide: {
-    visible: boolean;
-    step: number;
-  };
   inputMode: "text";
   menuExpand: boolean;
   // todo
@@ -25,10 +21,6 @@ export interface State {
 const initialState: State = {
   online: true,
   ready: false,
-  userGuide: {
-    visible: false,
-    step: 1
-  },
   inputMode: "text",
   menuExpand: false,
   fileListView: Views.grid,
@@ -76,12 +68,6 @@ const uiSlice = createSlice({
     updateDraftMixedText(state, action) {
       const { key, value } = action.payload;
       state.draftMixedText[key] = value;
-    },
-    updateUserGuide(state, action) {
-      const obj = action.payload || {};
-      Object.keys(obj).forEach((key) => {
-        state.userGuide[key] = obj[key];
-      });
     },
     updateUploadFiles(state, action) {
       const { context = "channel", id = null, operation = "add", ...rest } = action.payload;
@@ -177,7 +163,6 @@ export const {
   updateFileListView,
   updateUploadFiles,
   updateSelectMessages,
-  updateUserGuide,
   updateDraftMarkdown,
   updateDraftMixedText,
   updateRemeberedNavs
