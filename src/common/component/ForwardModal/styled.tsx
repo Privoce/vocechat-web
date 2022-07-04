@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 const StyledWrapper = styled.div`
   display: flex;
-  /* max-width: 604px; */
   max-height: 514px;
   min-height: 400px;
   background: #fff;
@@ -12,7 +11,6 @@ const StyledWrapper = styled.div`
   overflow: hidden;
   .left {
     width: 276px;
-    /* height: 100%; */
     box-shadow: inset -1px 0px 0px rgba(0, 0, 0, 0.1);
     overflow-y: scroll;
     .search {
@@ -36,15 +34,12 @@ const StyledWrapper = styled.div`
     .users {
       display: flex;
       flex-direction: column;
-      /* height: 260px; */
       padding-bottom: 20px;
-      /* overflow-y: scroll; */
       .user {
         cursor: pointer;
         display: flex;
         align-items: center;
         padding: 0 16px;
-        /* margin: 0 4px; */
         width: -webkit-fill-available;
         border-radius: 4px;
         &:hover {
@@ -60,8 +55,6 @@ const StyledWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    /* height: 100%; */
-    /* justify-content: space-between; */
     padding: 16px;
     box-sizing: border-box;
     .title {

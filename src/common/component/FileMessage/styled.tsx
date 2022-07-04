@@ -7,9 +7,8 @@ const Styled = styled.div`
   border-radius: 6px;
   width: 370px;
   height: 66px;
-  /* height: fit-content; */
   &.sending {
-    /* opacity: 0.9; */
+    opacity: 0.9;
   }
   * {
     user-select: text;

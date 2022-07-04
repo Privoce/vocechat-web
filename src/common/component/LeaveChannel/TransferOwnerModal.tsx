@@ -44,13 +44,13 @@ const TransferOwnerModal: FC<Props> = ({ id, closeModal, withLeave = true }) => 
     leaveChannel,
     leaveSuccess,
     transferSuccess,
-    transfering
+    transferring
   } = useLeaveChannel(id);
 
-  const [uid, setUid] = useState(null);
+  const [uid, setUid] = useState<number | null>(null);
   const navigateTo = useNavigate();
 
-  const handleSelectUser = (uid) => {
+  const handleSelectUser = (uid: number) => {
     setUid(uid);
   };
   const handleTransferAndLeave = async () => {
@@ -70,7 +70,7 @@ const TransferOwnerModal: FC<Props> = ({ id, closeModal, withLeave = true }) => 
   }, [leaveSuccess, transferSuccess, withLeave]);
 
   if (!id) return null;
-  const operating = leaving || transfering;
+  const operating = leaving || transferring;
   return (
     <Modal id="modal-modal">
       <StyledModal
@@ -90,7 +90,6 @@ const TransferOwnerModal: FC<Props> = ({ id, closeModal, withLeave = true }) => 
       >
         <UserList>
           {otherMembers.map((id) => {
-            // const { uid } = u;
             return (
               <li
                 key={id}

@@ -30,8 +30,6 @@ const Styled = styled.div`
       gap: 5px;
       width: 100%;
       overflow: scroll;
-
-      /* white-space: nowrap; */
       &::-webkit-scrollbar {
         width: 0; /* Remove scrollbar space */
         height: 0; /* Remove scrollbar space */
@@ -57,7 +55,6 @@ const Styled = styled.div`
             fill: #fff;
             fill-opacity: 1;
           }
-          /* filter: invert(1); */
         }
       }
       .input {
@@ -68,7 +65,6 @@ const Styled = styled.div`
   .users {
     display: flex;
     flex-direction: column;
-    /* height: 260px; */
     padding-bottom: 20px;
     max-height: 364px;
     overflow: scroll;
@@ -77,7 +73,6 @@ const Styled = styled.div`
       display: flex;
       align-items: center;
       padding: 4px 8px;
-      /* margin: 0 4px; */
       width: -webkit-fill-available;
       border-radius: 8px;
       &:hover {
@@ -104,10 +99,10 @@ interface Props {
 
 const AddMembers: FC<Props> = ({ cid, closeModal }) => {
   const [addMembers, { isLoading: isAdding, isSuccess }] = useAddMembersMutation();
-  const [selects, setSelects] = useState([]);
+  const [selects, setSelects] = useState<number[]>([]);
   const { channel, userData } = useAppSelector((store) => {
     return {
-      channel: store.channels.byId[cid],
+      channel: cid ? store.channels.byId[cid] : null,
       userData: store.users.byId
     };
   });
@@ -124,8 +119,8 @@ const AddMembers: FC<Props> = ({ cid, closeModal }) => {
   const { input, updateInput, users = [] } = useFilteredUsers();
 
   const toggleCheckMember = ({ currentTarget }: MouseEvent<SVGSVGElement | HTMLLIElement>) => {
-    const { uid } = currentTarget.dataset;
-    if (selects.includes(+uid)) {
+    const uid = Number(currentTarget.dataset.uid);
+    if (selects.includes(uid)) {
       setSelects((prevs) => {
         return prevs.filter((id) => id != uid);
       });
@@ -150,7 +145,7 @@ const AddMembers: FC<Props> = ({ cid, closeModal }) => {
           {selects.map((uid) => {
             return (
               <li className="select" key={uid}>
-                {userData[uid].name}
+                {userData[uid]?.name}
                 <CloseIcon data-uid={uid} onClick={toggleCheckMember} className="close" />
               </li>
             );

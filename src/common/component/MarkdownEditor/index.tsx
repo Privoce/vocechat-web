@@ -18,7 +18,7 @@ function MarkdownEditor({
   sendMarkdown,
   setEditorInstance
 }) {
-  const editorRef = useRef(undefined);
+  const editorRef = useRef<Editor | undefined>(undefined);
   const { uploadFile } = useUploadFile();
   // const [pHolder, setPHolder] = useState(placeholder);
   useEffect(() => {
@@ -46,11 +46,12 @@ function MarkdownEditor({
   }, []);
 
   const send = () => {
-    const edtr = editorRef.current.getInstance();
-    const md = edtr.getMarkdown().trim();
+    if (!editorRef.current) return;
+    const editor = editorRef.current.getInstance();
+    const md = editor.getMarkdown().trim();
     if (md) {
-      sendMarkdown(edtr.getMarkdown());
-      edtr.reset();
+      sendMarkdown(editor.getMarkdown());
+      editor.reset();
     }
   };
   return (
@@ -59,11 +60,9 @@ function MarkdownEditor({
         initialValue={initialValue}
         plugins={[codeSyntaxHighlight]}
         placeholder={placeholder}
-        // onChange={handleChange}
         ref={editorRef}
         toolbarItems={[]}
         hideModeSwitch={true}
-        // initialValue="hello world!"
         previewStyle="vertical"
         height={height}
         initialEditType="markdown"
@@ -76,6 +75,3 @@ function MarkdownEditor({
   );
 }
 export default MarkdownEditor;
-// export default memo(MarkdownEditor, (prevs, nexts) => {
-//   return prevs.placeholder == nexts.placeholder;
-// });

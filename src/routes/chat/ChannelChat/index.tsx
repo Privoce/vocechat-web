@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import PinList from "./PinList";
 import FavList from "../FavList";
 import { useReadMessageMutation } from "../../../app/services/message";
-import { updateRemeberedNavs } from "../../../app/slices/ui";
+import { updateRememberedNavs } from "../../../app/slices/ui";
 import useMessageFeed from "../../../common/hook/useMessageFeed";
 import useConfig from "../../../common/hook/useConfig";
 import ChannelIcon from "../../../common/component/ChannelIcon";
@@ -76,9 +76,9 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
   //   dispatch(readMessage(msgIds));
   // };
   useEffect(() => {
-    dispatch(updateRemeberedNavs());
+    dispatch(updateRememberedNavs());
     return () => {
-      dispatch(updateRemeberedNavs({ path: pathname }));
+      dispatch(updateRememberedNavs({ path: pathname }));
     };
   }, [pathname]);
 

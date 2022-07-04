@@ -113,7 +113,7 @@ const renderContent = (data) => {
             (match, idx) => {
               console.log("match", match);
               const uid = match.trim().slice(1);
-              return <Mention key={idx} uid={uid} popover={false} />;
+              return <Mention key={idx} uid={+uid} popover={false} />;
             }
           )}
         </span>

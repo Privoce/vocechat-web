@@ -6,7 +6,7 @@ export default function usePrompt() {
     localStorage.removeItem(KEY_PWA_INSTALLED);
   };
   const setPrompt = () => {
-    localStorage.setItem(KEY_PWA_INSTALLED, true);
+    localStorage.setItem(KEY_PWA_INSTALLED, "true");
   };
 
   return {

@@ -12,7 +12,7 @@ export interface State {
   selectMessages: { [key: string]: any };
   draftMarkdown: { [key: string]: any };
   draftMixedText: { [key: string]: any };
-  remeberedNavs: {
+  rememberedNavs: {
     chat: null | string;
     user: null | string;
   };
@@ -29,7 +29,7 @@ const initialState: State = {
   draftMarkdown: {},
   draftMixedText: {},
   // todo: typo
-  remeberedNavs: {
+  rememberedNavs: {
     chat: null,
     user: null
   }
@@ -57,9 +57,9 @@ const uiSlice = createSlice({
     updateFileListView(state, action) {
       state.fileListView = action.payload;
     },
-    updateRemeberedNavs(state, action: PayloadAction<{ key?: string; path: string | null }>) {
+    updateRememberedNavs(state, action: PayloadAction<{ key?: string; path: string | null }>) {
       const { key = "chat", path = null } = action.payload || {};
-      state.remeberedNavs[key] = path;
+      state.rememberedNavs[key] = path;
     },
     updateDraftMarkdown(state, action) {
       const { key, value } = action.payload;
@@ -165,7 +165,7 @@ export const {
   updateSelectMessages,
   updateDraftMarkdown,
   updateDraftMixedText,
-  updateRemeberedNavs
+  updateRememberedNavs
 } = uiSlice.actions;
 
 export default uiSlice.reducer;

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { NavLink, useParams, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { updateRemeberedNavs } from "../../app/slices/ui";
+import { updateRememberedNavs } from "../../app/slices/ui";
 import Search from "../../common/component/Search";
 import User from "../../common/component/User";
 import Profile from "../../common/component/Profile";
@@ -16,9 +16,9 @@ export default function UsersPage() {
   const { user_id } = useParams();
   const userIds = useSelector((store) => store.users.ids);
   useEffect(() => {
-    dispatch(updateRemeberedNavs({ key: "user" }));
+    dispatch(updateRememberedNavs({ key: "user" }));
     return () => {
-      dispatch(updateRemeberedNavs({ key: "user", path: pathname }));
+      dispatch(updateRememberedNavs({ key: "user", path: pathname }));
     };
   }, [pathname]);
 

@@ -3,7 +3,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import baseQuery from "./base.query";
 import BASE_URL, { ContentTypes } from "../config";
 import { updateChannel, removeChannel } from "../slices/channels";
-import { updateRemeberedNavs } from "../slices/ui";
+import { updateRememberedNavs } from "../slices/ui";
 import { removeMessage } from "../slices/message";
 import { removeChannelSession } from "../slices/message.channel";
 import { removeReactionMessage } from "../slices/message.reaction";
@@ -72,8 +72,8 @@ export const channelApi = createApi({
         }
       }
     }),
-    createInviteLink: builder.query({
-      query: (gid = "") => ({
+    createInviteLink: builder.query<string, number | void>({
+      query: (gid) => ({
         headers: {
           "content-type": "text/plain",
           accept: "text/plain"
@@ -98,7 +98,7 @@ export const channelApi = createApi({
         const {
           channelMessage,
           ui: {
-            remeberedNavs: { chat: remeberedPath }
+            rememberedNavs: { chat: remeberedPath }
           }
         } = getState() as RootState;
         try {
@@ -106,7 +106,7 @@ export const channelApi = createApi({
           // 删掉该channel下的所有消息&reaction
           const mids = channelMessage[id];
           if (remeberedPath == `/chat/channel/${id}`) {
-            dispatch(updateRemeberedNavs({ path: null }));
+            dispatch(updateRememberedNavs({ path: null }));
           }
           if (mids) {
             dispatch(removeChannelSession(id));

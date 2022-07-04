@@ -5,10 +5,10 @@ export default function useLeaveChannel(cid: number) {
   const { channel, loginUid } = useAppSelector((store) => {
     return { channel: store.channels.byId[cid], loginUid: store.authData.user?.uid };
   });
-  const [update, { isLoading: transfering, isSuccess: transferSuccess }] =
+  const [update, { isLoading: transferring, isSuccess: transferSuccess }] =
     useUpdateChannelMutation();
   const [leave, { isLoading: leaving, isSuccess: leaveSuccess }] = useLazyLeaveChannelQuery();
-  const transferOwner = (uid = null) => {
+  const transferOwner = (uid: number) => {
     if (!uid) return;
     update({ id: cid, owner: uid });
   };
@@ -16,8 +16,8 @@ export default function useLeaveChannel(cid: number) {
     if (!cid) return;
     leave(cid);
   };
-  const isOwner = loginUid == channel.owner;
-  const otherMembers = channel.members.filter((m) => m != loginUid);
+  const isOwner = loginUid == channel?.owner;
+  const otherMembers = channel?.members.filter((m) => m != loginUid) || [];
   return {
     otherMembers,
     transferOwner,
@@ -25,7 +25,7 @@ export default function useLeaveChannel(cid: number) {
     leaving,
     leaveSuccess,
     isOwner,
-    transfering,
+    transferring,
     transferSuccess
   };
 }

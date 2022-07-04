@@ -29,26 +29,8 @@ const useNavs = (cid: number): Nav[] => {
           title: "Members",
           component: <ManageMembers cid={cid} />
         }
-        // {
-        //   name: "permissions",
-        //   title: "Permissions",
-        // },
-        // {
-        //   name: "invites",
-        //   title: "Invites",
-        // },
-        // {
-        //   name: "integrations",
-        //   title: "Integrations",
-        // },
       ]
     }
-    // {
-    //   title: "User Management",
-    //   items: [
-
-    //   ],
-    // },
   ];
 };
 

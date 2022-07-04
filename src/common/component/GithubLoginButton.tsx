@@ -17,7 +17,6 @@ const StyledSocialButton = styled(Button)`
   color: #344054;
   border: 1px solid #d0d5dd;
   background: none !important;
-
   .icon {
     width: 24px;
     height: 24px;
@@ -48,12 +47,11 @@ const GithubLoginButton: FC<Props> = ({ type = "login", client_id }) => {
   useEffect(() => {
     if (isSuccess) {
       toast.success("Login Successfully");
-      // navigateTo("/");
     }
   }, [isSuccess]);
   useEffect(() => {
     if (error) {
-      switch (error.status) {
+      switch (error?.status) {
         case 410:
           toast.error(
             "No associated account found, please user admin for an invitation link to join."
@@ -68,9 +66,7 @@ const GithubLoginButton: FC<Props> = ({ type = "login", client_id }) => {
   }, [error]);
   const handleGithubLogin = () => {
     location.href = `https://github.com/login/oauth/authorize?client_id=${client_id}`;
-    // console.log("github login");
   };
-  // console.log("google login ", loaded);
   return (
     <StyledSocialButton onClick={handleGithubLogin} disabled={isLoading}>
       <IconGithub className="icon" />

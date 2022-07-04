@@ -2,7 +2,6 @@ import { FC } from "react";
 import styled from "styled-components";
 import Modal from "../Modal";
 import IconClose from "../../../assets/icons/close.svg";
-// import { ReactComponent as IconClose } from "../../../assets/icons/close.svg";
 import Button from "../styled/Button";
 
 const Styled = styled.div`

@@ -127,7 +127,7 @@ export function sliceFile(file, chunksAmount) {
 
   return chunks;
 }
-export const getFileIcon = (type, name = "") => {
+export const getFileIcon = (type: string, name = "") => {
   let icon = null;
 
   const checks = {
@@ -198,10 +198,7 @@ export const normalizeArchiveData = (data = null, filePath = null, uid = null) =
         thumbnail_id,
         avatar: user.avatar
       });
-
       user.avatar = avatarUrl;
-
-      // console.log("user data", transformedContent, user);
       return {
         source,
         from_mid: mid,

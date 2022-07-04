@@ -144,7 +144,9 @@ export default function useUploadFile(props: { context: string; id: string } | o
     stopUploading,
     data,
     isUploading: isPreparing || isUploading,
-    progress: Number((sliceUploadedCountRef.current / totalSliceCountRef.current) * 100).toFixed(2),
+    progress: +Number((sliceUploadedCountRef.current / totalSliceCountRef.current) * 100).toFixed(
+      2
+    ),
     uploadFile,
     isError: uploadFileError,
     isSuccess: !!data,

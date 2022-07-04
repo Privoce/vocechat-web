@@ -1,4 +1,4 @@
-import { useState, MouseEvent } from "react";
+import { useState, MouseEvent, ChangeEvent } from "react";
 // import toast from "react-hot-toast";
 import Modal from "../Modal";
 import Button from "../styled/Button";
@@ -20,8 +20,8 @@ export default function ForwardModal({ mids, closeModal }) {
   const [appendText, setAppendText] = useState("");
   const { sendMessages } = useSendMessage();
   const { forwardMessage, forwarding } = useForwardMessage();
-  const [selectedMembers, setSelectedMembers] = useState([]);
-  const [selectedChannels, setSelectedChannels] = useState([]);
+  const [selectedMembers, setSelectedMembers] = useState<number[]>([]);
+  const [selectedChannels, setSelectedChannels] = useState<number[]>([]);
   const {
     channels,
     // input: channelInput,
@@ -29,14 +29,14 @@ export default function ForwardModal({ mids, closeModal }) {
   } = useFilteredChannels();
   const { users, input, updateInput } = useFilteredUsers();
   const toggleCheck = ({ currentTarget }: MouseEvent<HTMLLIElement>) => {
-    const { id, type = "user" } = currentTarget.dataset;
+    const { id = 0, type = "user" } = currentTarget.dataset;
     const ids = type == "user" ? selectedMembers : selectedChannels;
     const updateState = type == "user" ? setSelectedMembers : setSelectedChannels;
     let tmp = ids.includes(+id) ? ids.filter((m) => m != id) : [...ids, +id];
     console.log(id, currentTarget);
     updateState(tmp);
   };
-  const updateAppendText = (evt) => {
+  const updateAppendText = (evt: ChangeEvent<HTMLInputElement>) => {
     setAppendText(evt.target.value);
   };
   const handleForward = async () => {
@@ -55,14 +55,14 @@ export default function ForwardModal({ mids, closeModal }) {
     toast.success("Forward Message Successfully");
     closeModal();
   };
-  const removeSelected = (id, from = "user") => {
+  const removeSelected = (id: number, from = "user") => {
     if (from == "user") {
       setSelectedMembers(selectedMembers.filter((m) => m != id));
     } else {
       setSelectedChannels(selectedChannels.filter((cid) => cid != id));
     }
   };
-  const handleSearchChange = (evt) => {
+  const handleSearchChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const newVal = evt.target.value;
     updateChannelInput(newVal);
     updateInput(newVal);

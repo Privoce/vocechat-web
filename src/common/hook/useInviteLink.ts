@@ -3,7 +3,7 @@ import useCopy from "./useCopy";
 import { useGetSMTPStatusQuery } from "../../app/services/server";
 import { useLazyCreateInviteLinkQuery as useCreateChannelInviteLinkQuery } from "../../app/services/channel";
 
-export default function useInviteLink(cid: string | null = "") {
+export default function useInviteLink(cid?: number) {
   const [finalLink, setFinalLink] = useState("");
   const { data: SMTPEnabled, isSuccess: smtpStatusFetchSuccess } = useGetSMTPStatusQuery();
   const [generateChannelInviteLink, { data: channelInviteLink, isLoading: generatingChannelLink }] =
@@ -20,8 +20,6 @@ export default function useInviteLink(cid: string | null = "") {
   useEffect(() => {
     const _link = channelInviteLink;
     if (_link && smtpStatusFetchSuccess) {
-      // const tmpURL = new URL(_link);
-      // tmpURL.searchParams.set("code", SMTPEnabled);
       setFinalLink(_link);
     }
   }, [channelInviteLink, smtpStatusFetchSuccess]);

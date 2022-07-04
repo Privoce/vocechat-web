@@ -27,7 +27,7 @@ export default function HomePage() {
     loginUid,
     ui: {
       ready,
-      remeberedNavs: { chat: chatPath, user: userPath }
+      rememberedNavs: { chat: chatPath, user: userPath }
     }
   } = useAppSelector((store) => {
     return {

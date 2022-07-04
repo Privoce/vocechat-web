@@ -14,7 +14,6 @@ const StyledWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  /* margin-bottom: 10px; */
   .server {
     display: flex;
     align-items: center;

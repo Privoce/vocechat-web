@@ -138,7 +138,6 @@ export default function Overview({ id = 0 }) {
         </div>
       </div>
       {changed && <SaveTip saveHandler={handleUpdate} resetHandler={handleReset} />}
-      {/* <button onClick={handleUpdate} className="btn">update</button> */}
     </StyledWrapper>
   );
 }

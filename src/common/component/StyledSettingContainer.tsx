@@ -78,7 +78,6 @@ const StyledWrapper = styled.div`
     background-color: #fff;
     width: 100%;
     max-height: 100%;
-    /* max-height: -webkit-fill-available; */
     overflow: auto;
     padding: 32px;
 

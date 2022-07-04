@@ -41,7 +41,7 @@ interface Props {
 const InviteModal: FC<Props> = ({ type = "server", cid, title = "", closeModal }) => {
   const { channel, server } = useAppSelector((store) => {
     return {
-      channel: store.channels.byId[cid],
+      channel: cid ? store.channels.byId[cid] : undefined,
       server: store.server
     };
   });

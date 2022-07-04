@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 import Tippy from "@tippyjs/react";
 import styled from "styled-components";
 import Profile from "../Profile";
@@ -15,7 +15,7 @@ const Styled = styled.span`
 interface Props {
   uid: number;
   popover?: boolean;
-  cid: number;
+  cid?: number;
   textOnly?: boolean;
 }
 
