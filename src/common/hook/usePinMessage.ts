@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { usePinMessageMutation, useUnpinMessageMutation } from "../../app/services/message";
 import { useAppSelector } from "../../app/store";
+import { PinnedMessage } from "../../types/channel";
 
 export default function usePinMessage(cid: number) {
-  const [pins, setPins] = useState([]);
+  const [pins, setPins] = useState<PinnedMessage[]>([]);
   const { channel, loginUser } = useAppSelector((store) => {
     return {
       channel: store.channels.byId[cid],
@@ -13,15 +14,15 @@ export default function usePinMessage(cid: number) {
   const [pin, { isError, isLoading, isSuccess }] = usePinMessageMutation();
   const [unpin, { isError: isUnpinError, isLoading: isUnpining, isSuccess: isUnpinSuccess }] =
     useUnpinMessageMutation();
-  const pinMessage = (mid) => {
+  const pinMessage = (mid: number) => {
     if (!mid || !cid) return;
     pin({ mid, gid: +cid });
   };
-  const unpinMessage = (mid) => {
+  const unpinMessage = (mid: number) => {
     if (!mid || !cid) return;
     unpin({ mid, gid: +cid });
   };
-  const getPinInfo = (mid) => {
+  const getPinInfo = (mid: number) => {
     if (!cid || !channel) return;
     const pins = channel.pinned_messages;
     if (!pins || pins.length == 0) return;
@@ -38,7 +39,7 @@ export default function usePinMessage(cid: number) {
     getPinInfo,
     channel,
     pins,
-    canPin: loginUser.is_admin || channel?.owner == loginUser.uid,
+    canPin: loginUser?.is_admin || channel?.owner == loginUser?.uid,
     pinMessage,
     unpinMessage,
     isError,

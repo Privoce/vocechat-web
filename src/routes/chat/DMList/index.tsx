@@ -13,7 +13,7 @@ const DMList: FC<Props> = ({ uids, setDropFiles }) => {
     return {
       loginUid: store.authData.user?.uid,
       readUsers: store.footprint.readUsers,
-      contactData: store.contacts.byId,
+      userData: store.users.byId,
       userMessage: store.userMessage.byId,
       messageData: store.message
     };

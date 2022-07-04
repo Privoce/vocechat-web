@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Search from "../Search";
 import CheckSign from "../../../assets/icons/check.sign.svg";
-import Contact from "../../../common/component/Contact";
+import User from "../../../common/component/User";
 import useFilteredUsers from "../../../common/hook/useFilteredUsers";
 
 const Styled = styled.div`
@@ -28,7 +28,7 @@ const Styled = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
-    .contact {
+    .user {
       position: relative;
       cursor: pointer;
       &.none {
@@ -49,11 +49,11 @@ const Styled = styled.div`
 `;
 
 export default function From({ select = "", updateFilter }) {
-  const { input, updateInput, contacts } = useFilteredUsers();
-  // const contacts=useSelector(store=>store.contacts);
+  const { input, updateInput, users } = useFilteredUsers();
+  // const users=useSelector(store=>store.users);
 
-  // const uid=contacts.ids;
-  // const dataMap=contacts.byId;
+  // const uid=users.ids;
+  // const dataMap=users.byId;
   const handleClick = (uid) => {
     updateFilter({ from: uid });
   };
@@ -64,14 +64,14 @@ export default function From({ select = "", updateFilter }) {
         <Search embed={true} value={input} updateSearchValue={updateInput} />
       </div>
       <ul className="list">
-        <li className="contact none" onClick={handleClick.bind(null, undefined)}>
+        <li className="user none" onClick={handleClick.bind(null, undefined)}>
           Anyone
           {!select && <CheckSign className="check" />}
         </li>
-        {contacts.map(({ uid }) => {
+        {users.map(({ uid }) => {
           return (
-            <li key={uid} className="contact" onClick={handleClick.bind(null, uid)}>
-              <Contact uid={uid} interactive={true} />
+            <li key={uid} className="user" onClick={handleClick.bind(null, uid)}>
+              <User uid={uid} interactive={true} />
               {select == uid && <CheckSign className="check" />}
             </li>
           );

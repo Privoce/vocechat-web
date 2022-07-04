@@ -12,7 +12,7 @@ const SendMagicLinkPage = lazy(() => import("./sendMagicLink"));
 const RegPage = lazy(() => import("./reg/Register"));
 const LoginPage = lazy(() => import("./login"));
 const OAuthPage = lazy(() => import("./oauth"));
-const ContactsPage = lazy(() => import("./contacts"));
+const ContactsPage = lazy(() => import("./users"));
 const FavoritesPage = lazy(() => import("./favs"));
 const OnboardingPage = lazy(() => import("./onboarding"));
 const InvitePage = lazy(() => import("./invite"));
@@ -138,7 +138,7 @@ const PageRoutes = () => {
                 }
               />
             </Route>
-            <Route path="contacts">
+            <Route path="users">
               <Route
                 index
                 element={

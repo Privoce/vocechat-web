@@ -11,7 +11,16 @@ import { onMessageSendStarted } from "./handlers";
 import { normalizeArchiveData } from "../../common/utils";
 // import { updateMessage } from "../slices/message";
 import baseQuery from "./base.query";
-
+import { OG } from "../../types/common";
+type UploadFileResponse = {
+  path: string;
+  size: number;
+  hash: string;
+  image_properties: {
+    width: number;
+    height: number;
+  };
+};
 export const messageApi = createApi({
   reducerPath: "messageApi",
   baseQuery,
@@ -25,25 +34,22 @@ export const messageApi = createApi({
         method: "PUT",
         body: content
       })
-      // async onQueryStarted({mid,content},{dispatch}){
-      //   dispatch()
-      // }
     }),
-    reactMessage: builder.mutation({
+    reactMessage: builder.mutation<number, { mid: number; action: string }>({
       query: ({ mid, action }) => ({
         url: `/message/${mid}/like`,
         method: "PUT",
         body: { action }
       })
     }),
-    deleteMessage: builder.query({
+    deleteMessage: builder.query<number, number>({
       query: (mid) => ({
         url: `/message/${mid}`,
         method: "DELETE"
       })
     }),
-    prepareUploadFile: builder.mutation({
-      query: (meta = {}) => ({
+    prepareUploadFile: builder.mutation<string, { content_type: string; filename: string }>({
+      query: (meta = { content_type: "", filename: "" }) => ({
         url: `/resource/file/prepare`,
         method: "POST",
         body: meta
@@ -56,21 +62,18 @@ export const messageApi = createApi({
         body: { mid_list: mids }
       })
     }),
-    uploadFile: builder.mutation({
+    uploadFile: builder.mutation<UploadFileResponse | {}, FormData>({
       query: (formData) => ({
-        // headers: {
-        //   "content-type": ContentTypes.formData,
-        // },
         url: `/resource/file/upload`,
         method: "POST",
         body: formData
       }),
-      transformResponse: (data) => {
+      transformResponse: (data: UploadFileResponse | null) => {
         console.log("upload file response", data);
         return data ? data : {};
       }
     }),
-    getOGInfo: builder.query({
+    getOGInfo: builder.query<OG, string>({
       query: (url) => ({
         url: `/resource/open_graphic_parse?url=${encodeURIComponent(url)}`
       })
@@ -80,14 +83,14 @@ export const messageApi = createApi({
         url: `/resource/archive?file_path=${encodeURIComponent(file_path)}`
       })
     }),
-    pinMessage: builder.mutation({
+    pinMessage: builder.mutation<void, { gid: number; mid: number }>({
       query: ({ gid, mid }) => ({
         url: `/group/${gid}/pin`,
         method: "POST",
         body: { mid }
       })
     }),
-    unpinMessage: builder.mutation({
+    unpinMessage: builder.mutation<void, { gid: number; mid: number }>({
       query: ({ gid, mid }) => ({
         url: `/group/${gid}/unpin`,
         method: "POST",
@@ -111,7 +114,7 @@ export const messageApi = createApi({
         }
       }
     }),
-    removeFavorite: builder.query({
+    removeFavorite: builder.query<void, number>({
       query: (id) => ({
         url: `/favorite/${id}`,
         method: "DELETE"
@@ -170,7 +173,10 @@ export const messageApi = createApi({
         await onMessageSendStarted.call(this, param1, param2, param1.context);
       }
     }),
-    readMessage: builder.mutation({
+    readMessage: builder.mutation<
+      void,
+      { users?: [{ uid: number; mid: number }]; groups?: [{ gid: number; mid: number }] }
+    >({
       query: (data) => ({
         url: `/user/read-index`,
         method: "POST",

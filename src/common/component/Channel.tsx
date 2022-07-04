@@ -58,7 +58,7 @@ const Channel: FC<Props> = ({ interactive = true, id, compact = false, avatarSiz
   const { channel, totalMemberCount } = useAppSelector((store) => {
     return {
       channel: store.channels.byId[id],
-      totalMemberCount: store.contacts.ids.length
+      totalMemberCount: store.users.ids.length
     };
   });
 

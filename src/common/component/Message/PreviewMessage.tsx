@@ -10,12 +10,12 @@ interface Props {
 }
 
 const PreviewMessage: FC<Props> = ({ mid = 0 }) => {
-  const { msg, contactsData } = useAppSelector((store) => {
-    return { msg: store.message[mid], contactsData: store.contacts.byId };
+  const { msg, usersData } = useAppSelector((store) => {
+    return { msg: store.message[mid], usersData: store.users.byId };
   });
   if (!msg) return null;
   const { from_uid, created_at, content_type, content, thumbnail, properties } = msg;
-  const { name, avatar } = contactsData[from_uid];
+  const { name, avatar } = usersData[from_uid];
   return (
     <StyledWrapper className={`preview`}>
       <div className="avatar">

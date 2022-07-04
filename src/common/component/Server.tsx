@@ -56,7 +56,7 @@ export default function Server() {
   const { pathname } = useLocation();
   const { server, userCount } = useAppSelector((store) => {
     return {
-      userCount: store.contacts.ids.length,
+      userCount: store.users.ids.length,
       server: store.server
     };
   });

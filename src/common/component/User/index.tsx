@@ -21,7 +21,7 @@ interface Props {
   enableContextMenu?: boolean;
 }
 
-const Contact: FC<Props> = ({
+const User: FC<Props> = ({
   cid,
   uid,
   owner = false,
@@ -34,7 +34,7 @@ const Contact: FC<Props> = ({
 }) => {
   const navigate = useNavigate();
   const { visible: contextMenuVisible, handleContextMenuEvent, hideContextMenu } = useContextMenu();
-  const curr = useAppSelector((store) => store.contacts.byId[uid]);
+  const curr = useAppSelector((store) => store.users.byId[uid]);
   const handleDoubleClick = () => {
     navigate(`/chat/dm/${uid}`);
   };
@@ -73,4 +73,4 @@ const Contact: FC<Props> = ({
   );
 };
 
-export default Contact;
+export default User;

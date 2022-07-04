@@ -30,7 +30,7 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
 
   const { data } = useAppSelector((store) => {
     return {
-      data: store.contacts.byId[uid]
+      data: store.users.byId[uid]
     };
   });
 

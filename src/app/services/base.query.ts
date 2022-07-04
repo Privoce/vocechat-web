@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 import dayjs from "dayjs";
 import { updateToken, resetAuthData } from "../slices/auth.data";
 import BASE_URL, { tokenHeader } from "../config";
+import { RootState } from "../store";
 
 const whiteList = [
   "login",
@@ -28,7 +29,7 @@ const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
   prepareHeaders: (headers, { getState, endpoint }) => {
     console.log("req", endpoint);
-    const { token } = getState().authData;
+    const { token } = (getState() as RootState).authData;
     if (token && !whiteList.includes(endpoint)) {
       headers.set(tokenHeader, token);
     }

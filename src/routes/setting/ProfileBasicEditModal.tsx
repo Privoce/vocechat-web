@@ -2,7 +2,7 @@ import { ChangeEvent, FC, useEffect, useState } from "react";
 import styled from "styled-components";
 import toast from "react-hot-toast";
 import Input from "../../common/component/styled/Input";
-import { useUpdateInfoMutation } from "../../app/services/contact";
+import { useUpdateInfoMutation } from "../../app/services/user";
 import StyledModal from "../../common/component/styled/Modal";
 import Button from "../../common/component/styled/Button";
 import Modal from "../../common/component/Modal";

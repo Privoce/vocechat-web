@@ -1,8 +1,7 @@
+import { ContentType } from "./message";
 export interface ChannelMember {}
 
 export interface Message {}
-
-export type ContentType = "text/plain" | "text/markdown" | "vocechat/file" | "vocechat/archive";
 
 export interface PinnedMessage {
   mid: number;
@@ -17,10 +16,10 @@ export interface PinnedMessage {
 
 export interface Channel {
   gid: number;
-  // icon: string; // todo: check
   owner: number;
   name: string;
   description: string;
+  icon?: string;
   members: number[];
   is_public: boolean;
   avatar_updated_at: number;
@@ -37,8 +36,6 @@ export interface CreateChannelDTO {
 export interface UpdateChannelDTO {
   operation: "add_member" | "remove_member";
   members?: number[];
-
-  // type = 'group_changed'
   gid: number; // todo check
   name?: string;
   description?: string;

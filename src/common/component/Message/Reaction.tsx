@@ -106,9 +106,9 @@ const StyledDetails = styled.div`
   }
 `;
 const ReactionDetails = ({ uids = [], emoji, index }) => {
-  const contactsData = useSelector((store) => store.contacts.byId);
+  const usersData = useSelector((store) => store.users.byId);
   const names = uids.map((id) => {
-    return contactsData[id]?.name;
+    return usersData[id]?.name;
   });
   const emojiData = getEmojiDataFromNative(emoji, "apple", AppleEmojiData);
   const prefixDesc =

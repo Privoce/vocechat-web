@@ -1,17 +1,17 @@
 import clearTable from "./clear.handler";
 
 export default async function handler({ operation, data, payload }) {
-  const table = window.CACHE["contacts"];
+  const table = window.CACHE["users"];
   if (operation.startsWith("reset")) {
-    clearTable("contacts");
+    clearTable("users");
     return;
   }
   switch (operation) {
     case "fullfillContacts":
       {
-        const contacts = payload;
+        const users = payload;
         await Promise.all(
-          contacts.map(({ uid, ...rest }) => {
+          users.map(({ uid, ...rest }) => {
             return table.setItem(uid + "", { uid, ...rest });
           })
         );

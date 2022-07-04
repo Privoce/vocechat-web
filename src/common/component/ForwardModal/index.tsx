@@ -4,7 +4,7 @@ import Modal from "../Modal";
 import Button from "../styled/Button";
 import Input from "../styled/Input";
 import Channel from "../Channel";
-import Contact from "../Contact";
+import User from "../User";
 // import Channel from "../Channel";
 import Reply from "../Message/Reply";
 import StyledWrapper from "./styled";
@@ -27,7 +27,7 @@ export default function ForwardModal({ mids, closeModal }) {
     // input: channelInput,
     updateInput: updateChannelInput
   } = useFilteredChannels();
-  const { contacts, input, updateInput } = useFilteredUsers();
+  const { users, input, updateInput } = useFilteredUsers();
   const toggleCheck = ({ currentTarget }: MouseEvent<HTMLLIElement>) => {
     const { id, type = "user" } = currentTarget.dataset;
     const ids = type == "user" ? selectedMembers : selectedChannels;
@@ -100,8 +100,8 @@ export default function ForwardModal({ mids, closeModal }) {
                   </li>
                 );
               })}
-            {contacts &&
-              contacts.map((u) => {
+            {users &&
+              users.map((u) => {
                 const { uid } = u;
                 const checked = selectedMembers.includes(uid);
                 console.log({ checked });
@@ -114,7 +114,7 @@ export default function ForwardModal({ mids, closeModal }) {
                     onClick={toggleCheck}
                   >
                     <StyledCheckbox readOnly checked={checked} name="cb" id="cb" />
-                    <Contact uid={uid} interactive={false} />
+                    <User uid={uid} interactive={false} />
                   </li>
                 );
               })}
@@ -142,7 +142,7 @@ export default function ForwardModal({ mids, closeModal }) {
             {selectedMembers.map((uid) => {
               return (
                 <li key={uid} className="item">
-                  <Contact
+                  <User
                     key={uid}
                     uid={uid}
                     interactive={false}

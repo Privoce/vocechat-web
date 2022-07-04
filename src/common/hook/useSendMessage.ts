@@ -1,7 +1,7 @@
 import toast from "react-hot-toast";
 import { removeReplyingMessage, addReplyingMessage } from "../../app/slices/message";
 import { useSendChannelMsgMutation } from "../../app/services/channel";
-import { useSendMsgMutation } from "../../app/services/contact";
+import { useSendMsgMutation } from "../../app/services/user";
 import { useReplyMessageMutation } from "../../app/services/message";
 import { useAppDispatch, useAppSelector } from "../../app/store";
 

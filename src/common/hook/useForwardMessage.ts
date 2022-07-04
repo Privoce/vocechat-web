@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSendChannelMsgMutation } from "../../app/services/channel";
-import { useSendMsgMutation } from "../../app/services/contact";
+import { useSendMsgMutation } from "../../app/services/user";
 import { useCreateArchiveMutation } from "../../app/services/message";
 
 export default function useForwardMessage() {

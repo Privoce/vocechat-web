@@ -13,7 +13,7 @@ interface Props {
   children: ReactElement;
   header: ReactElement;
   aside: ReactElement | null;
-  contacts: ReactElement | null;
+  users: ReactElement | null;
   dropFiles: [];
   context: string;
   to: number | null;
@@ -23,7 +23,7 @@ const Layout: FC<Props> = ({
   children,
   header,
   aside = null,
-  contacts = null,
+  users = null,
   dropFiles = [],
   context = "channel",
   to = null
@@ -31,11 +31,11 @@ const Layout: FC<Props> = ({
   const { addStageFile } = useUploadFile({ context, id: to });
   const messagesContainer = useRef<HTMLDivElement>(null);
   const [previewImage, setPreviewImage] = useState(null);
-  const { selects, channelsData, contactsData } = useAppSelector((store) => {
+  const { selects, channelsData, usersData } = useAppSelector((store) => {
     return {
       selects: store.ui.selectMessages[`${context}_${to}`],
       channelsData: store.channels.byId,
-      contactsData: store.contacts.byId
+      usersData: store.users.byId
     };
   });
   const [{ isActive }, drop] = useDrop(
@@ -95,7 +95,7 @@ const Layout: FC<Props> = ({
       );
     }
   }, []);
-  const name = context == "channel" ? channelsData[to]?.name : contactsData[to]?.name;
+  const name = context == "channel" ? channelsData[to]?.name : usersData[to]?.name;
 
   return (
     <>
@@ -110,7 +110,7 @@ const Layout: FC<Props> = ({
               {selects && <Operations context={context} id={to} />}
             </div>
           </div>
-          {contacts && <div className="members">{contacts}</div>}
+          {users && <div className="members">{users}</div>}
           {aside && <div className="aside">{aside}</div>}
         </main>
         <div className={`drag_tip ${isActive ? "visible animate__animated animate__fadeIn" : ""}`}>

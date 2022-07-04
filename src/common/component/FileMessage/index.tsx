@@ -60,7 +60,7 @@ const FileMessage: FC<Props> = ({
     to
   });
   const { stopUploading, data, uploadFile, progress, isSuccess: uploadSuccess } = useUploadFile();
-  const fromUser = useAppSelector((store) => store.contacts.byId[from_uid]);
+  const fromUser = useAppSelector((store) => store.users.byId[from_uid]);
   const { size, name, content_type } = properties ?? {};
   useEffect(() => {
     const handleUpSend = async ({

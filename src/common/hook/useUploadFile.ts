@@ -20,12 +20,9 @@ export default function useUploadFile(props: { context: string; id: string } | o
   const canceledRef = useRef(false);
   const sliceUploadedCountRef = useRef(0);
   const totalSliceCountRef = useRef(1);
-  const [prepareUploadFile, { isLoading: isPreparing, isSuccess: isPrepared }] =
-    usePrepareUploadFileMutation();
-  const [
-    uploadFileFn,
-    { isLoading: isUploading, isSuccess: isUploaded, isError: uploadFileError }
-  ] = useUploadFileMutation();
+  const [prepareUploadFile, { isLoading: isPreparing }] = usePrepareUploadFileMutation();
+  const [uploadFileFn, { isLoading: isUploading, isError: uploadFileError }] =
+    useUploadFileMutation();
 
   const uploadChunk = (data: { file_id: string; chunk: File; is_last: boolean }) => {
     const { file_id, chunk, is_last } = data;

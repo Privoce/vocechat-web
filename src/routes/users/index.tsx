@@ -3,7 +3,7 @@ import { NavLink, useParams, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { updateRemeberedNavs } from "../../app/slices/ui";
 import Search from "../../common/component/Search";
-import Contact from "../../common/component/Contact";
+import User from "../../common/component/User";
 import Profile from "../../common/component/Profile";
 
 import StyledWrapper from "./styled";
@@ -14,26 +14,26 @@ export default function ContactsPage() {
   const { pathname } = useLocation();
 
   const { user_id } = useParams();
-  const contactIds = useSelector((store) => store.contacts.ids);
+  const userIds = useSelector((store) => store.users.ids);
   useEffect(() => {
-    dispatch(updateRemeberedNavs({ key: "contact" }));
+    dispatch(updateRemeberedNavs({ key: "user" }));
     return () => {
-      dispatch(updateRemeberedNavs({ key: "contact", path: pathname }));
+      dispatch(updateRemeberedNavs({ key: "user", path: pathname }));
     };
   }, [pathname]);
 
-  console.log({ contactIds, user_id });
-  if (!contactIds) return null;
+  console.log({ userIds, user_id });
+  if (!userIds) return null;
   return (
     <StyledWrapper>
       <div className="left">
         <Search />
         <div className="list">
           <nav className="nav">
-            {contactIds.map((uid) => {
+            {userIds.map((uid) => {
               return (
-                <NavLink key={uid} className="session" to={`/contacts/${uid}`}>
-                  <Contact uid={uid} enableContextMenu={true} />
+                <NavLink key={uid} className="session" to={`/users/${uid}`}>
+                  <User uid={uid} enableContextMenu={true} />
                 </NavLink>
               );
             })}
@@ -47,7 +47,7 @@ export default function ContactsPage() {
         </div>
       ) : (
         <div className="right placeholder">
-          <BlankPlaceholder type="contact" />
+          <BlankPlaceholder type="user" />
         </div>
       )}
     </StyledWrapper>

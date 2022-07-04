@@ -7,7 +7,7 @@ import IconChat from "../../assets/icons/placeholder.chat.svg";
 import IconAsk from "../../assets/icons/placeholder.question.svg";
 import IconInvite from "../../assets/icons/placeholder.invite.svg";
 import IconDownload from "../../assets/icons/placeholder.download.svg";
-import ContactsModal from "./ContactsModal";
+import ContactsModal from "./UsersModal";
 import { useAppSelector } from "../../app/store";
 
 const Styled = styled.div`
@@ -75,7 +75,7 @@ const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
   const server = useAppSelector((store) => store.server);
   const [inviteModalVisible, setInviteModalVisible] = useState(false);
   const [createChannelVisible, setCreateChannelVisible] = useState(false);
-  const [contactListVisible, setContactListVisible] = useState(false);
+  const [userListVisible, setContactListVisible] = useState(false);
   const toggleChannelModalVisible = () => {
     setCreateChannelVisible((prev) => !prev);
   };
@@ -121,7 +121,7 @@ const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
       {createChannelVisible && (
         <ChannelModal personal={true} closeModal={toggleChannelModalVisible} />
       )}
-      {contactListVisible && <ContactsModal closeModal={toggleContactListVisible} />}
+      {userListVisible && <ContactsModal closeModal={toggleContactListVisible} />}
       {inviteModalVisible && <InviteModal closeModal={toggleInviteModalVisible} />}
     </>
   );

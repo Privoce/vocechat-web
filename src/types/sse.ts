@@ -1,5 +1,6 @@
 import { User } from "./auth";
-import { Channel, ContentType } from "./channel";
+import { Channel } from "./channel";
+import { ContentType } from "./message";
 
 export interface ReadyEvent {
   type: "ready";
@@ -75,6 +76,7 @@ export interface RelatedGroupsEvent {
 }
 
 export interface NormalMessage {
+  mid: number;
   type: "normal";
   properties: {};
   content_type: ContentType;

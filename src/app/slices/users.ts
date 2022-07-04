@@ -19,18 +19,18 @@ const initialState: State = {
   byId: {}
 };
 
-const contactsSlice = createSlice({
-  name: "contacts",
+const usersSlice = createSlice({
+  name: "users",
   initialState,
   reducers: {
     resetContacts() {
       return initialState;
     },
     fullfillContacts(state, action: PayloadAction<StoredUser[]>) {
-      const contacts = action.payload || [];
-      state.ids = contacts.map(({ uid }) => uid);
+      const users = action.payload || [];
+      state.ids = users.map(({ uid }) => uid);
       state.byId = Object.fromEntries(
-        contacts.map((c) => {
+        users.map((c) => {
           const { uid } = c;
           return [uid, c];
         })
@@ -100,5 +100,5 @@ const contactsSlice = createSlice({
 });
 
 export const { resetContacts, fullfillContacts, updateUsersByLogs, updateUsersStatus } =
-  contactsSlice.actions;
-export default contactsSlice.reducer;
+  usersSlice.actions;
+export default usersSlice.reducer;

@@ -38,12 +38,12 @@ function Message({
   const {
     message = {},
     reactionMessageData,
-    contactsData
+    usersData
   } = useSelector((store) => {
     return {
       reactionMessageData: store.reactionMessage,
       message: store.message[mid] || {},
-      contactsData: store.contacts.byId
+      usersData: store.users.byId
     };
   });
 
@@ -75,7 +75,7 @@ function Message({
   }, [mid, read]);
 
   const reactions = reactionMessageData[mid];
-  const currUser = contactsData[fromUid] || {};
+  const currUser = usersData[fromUid] || {};
   // if (!message) return null;
   let timePrefix = null;
   const dayjsTime = dayjs(time);
@@ -115,10 +115,7 @@ function Message({
         visible={contextMenuVisible}
         hide={hideContextMenu}
       >
-        <div
-          className="details"
-          data-pin-tip={`pinned by ${contactsData[pinInfo?.created_by]?.name}`}
-        >
+        <div className="details" data-pin-tip={`pinned by ${usersData[pinInfo?.created_by]?.name}`}>
           <div className="up">
             <span className="name">{currUser.name}</span>
             <Tooltip

@@ -18,7 +18,7 @@ import {
   updateReadUsers,
   updateMute
 } from "../../../app/slices/footprint";
-import { updateUsersByLogs, updateUsersStatus } from "../../../app/slices/contacts";
+import { updateUsersByLogs, updateUsersStatus } from "../../../app/slices/users";
 import { resetAuthData } from "../../../app/slices/auth.data";
 import chatMessageHandler from "./chat.handler";
 import store, { useAppDispatch, useAppSelector } from "../../../app/store";

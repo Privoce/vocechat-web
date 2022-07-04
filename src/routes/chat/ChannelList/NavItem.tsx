@@ -11,7 +11,7 @@ import Tooltip from "../../../common/component/Tooltip";
 import IconSetting from "../../../assets/icons/setting.svg";
 import IconInvite from "../../../assets/icons/invite.from.channel.svg";
 import { useReadMessageMutation } from "../../../app/services/message";
-import { useUpdateMuteSettingMutation } from "../../../app/services/contact";
+import { useUpdateMuteSettingMutation } from "../../../app/services/user";
 import StyledLink from "./styled";
 import ChannelIcon from "../../../common/component/ChannelIcon";
 import { getUnreadCount } from "../utils";

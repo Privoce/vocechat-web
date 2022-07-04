@@ -11,7 +11,7 @@ import useMessageFeed from "../../../common/hook/useMessageFeed";
 import useConfig from "../../../common/hook/useConfig";
 import ChannelIcon from "../../../common/component/ChannelIcon";
 import Tooltip from "../../../common/component/Tooltip";
-import Contact from "../../../common/component/Contact";
+import User from "../../../common/component/User";
 import Layout from "../Layout";
 import { renderMessageFragment } from "../utils";
 import EditIcon from "../../../assets/icons/edit.svg";
@@ -66,7 +66,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
       footprint: store.footprint,
       loginUser: store.authData.user,
       // msgIds: store.channelMessage[cid] || [],
-      userIds: store.contacts.ids,
+      userIds: store.users.ids,
       data: store.channels.byId[cid] || {},
       messageData: store.message || {}
     };
@@ -183,7 +183,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
             </div>
           </StyledHeader>
         }
-        contacts={
+        users={
           membersVisible ? (
             <>
               <StyledContacts>
@@ -195,7 +195,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
                 )}
                 {memberIds.map((uid) => {
                   return (
-                    <Contact
+                    <User
                       enableContextMenu={true}
                       cid={cid}
                       owner={owner == uid}

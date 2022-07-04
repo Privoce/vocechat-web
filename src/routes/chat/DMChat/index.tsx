@@ -8,7 +8,7 @@ import FavIcon from "../../../assets/icons/bookmark.svg";
 // import IconHeadphone from "../../../assets/icons/headphone.svg";
 // import useChatScroll from "../../../common/hook/useChatScroll";
 import { useReadMessageMutation } from "../../../app/services/message";
-import Contact from "../../../common/component/Contact";
+import User from "../../../common/component/User";
 import Layout from "../Layout";
 import { StyledHeader, StyledDMChat } from "./styled";
 import LoadMore from "../LoadMore";
@@ -34,7 +34,7 @@ export default function DMChat({ uid = 0, dropFiles = [] }) {
       selects: store.ui.selectMessages[`user_${uid}`],
       loginUid: store.authData.user?.uid,
       footprint: store.footprint,
-      currUser: store.contacts.byId[uid],
+      currUser: store.users.byId[uid],
       messageData: store.message
     };
   });
@@ -81,7 +81,7 @@ export default function DMChat({ uid = 0, dropFiles = [] }) {
       }
       header={
         <StyledHeader className="head">
-          <Contact interactive={false} uid={currUser.uid} />
+          <User interactive={false} uid={currUser.uid} />
         </StyledHeader>
       }
     >

@@ -24,7 +24,7 @@ interface Props {
 
 const User: FC<Props> = ({ uid }) => {
   const { pathname } = useLocation();
-  const user = useAppSelector((store) => store.contacts.byId[uid]);
+  const user = useAppSelector((store) => store.users.byId[uid]);
   if (!user) return null;
 
   return (

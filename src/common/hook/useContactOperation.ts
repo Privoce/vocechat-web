@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { useNavigate, useMatch } from "react-router-dom";
 import { hideAll } from "tippy.js";
 import { useRemoveMembersMutation } from "../../app/services/channel";
-import { useLazyDeleteContactQuery } from "../../app/services/contact";
+import { useLazyDeleteContactQuery } from "../../app/services/user";
 import useConfig from "./useConfig";
 import useCopy from "./useCopy";
 import { useAppSelector } from "../../app/store";
@@ -15,14 +15,14 @@ interface Props {
 const useContactOperation: FC<Props> = ({ uid, cid }) => {
   const [passedUid, setPassedUid] = useState(undefined);
   const { values: agoraConfig } = useConfig("agora");
-  const isUserDetailPath = useMatch(`/contacts/${uid}`);
+  const isUserDetailPath = useMatch(`/users/${uid}`);
   const [removeUser, { isSuccess: removeUserSuccess }] = useLazyDeleteContactQuery();
   const [removeInChannel, { isSuccess: removeSuccess }] = useRemoveMembersMutation();
   const navigateTo = useNavigate();
   const { copy } = useCopy();
   const { user, channel, loginUser } = useAppSelector((store) => {
     return {
-      user: store.contacts.byId[uid],
+      user: store.users.byId[uid],
       channel: store.channels.byId[cid],
       loginUser: store.authData.user
     };
@@ -36,7 +36,7 @@ const useContactOperation: FC<Props> = ({ uid, cid }) => {
     if (removeSuccess || removeUserSuccess) {
       toast.success("Remove Successfully");
       if (removeUserSuccess && isUserDetailPath) {
-        navigateTo(`/contacts`);
+        navigateTo(`/users`);
       }
     }
   }, [removeSuccess, removeUserSuccess, isUserDetailPath]);

@@ -1,7 +1,7 @@
 import { createListenerMiddleware } from "@reduxjs/toolkit";
 import rtkqHandler from "./handler.rtkq";
 import channelsHandler from "./handler.channels";
-import contactsHandler from "./handler.contacts";
+import usersHandler from "./handler.users";
 import channelMsgHandler from "./handler.channel.msg";
 import dmMsgHandler from "./handler.dm.msg";
 import serverHandler from "./handler.server";
@@ -15,7 +15,7 @@ const operations = [
   "__rtkq",
   "channels",
   "channelMessage",
-  "contacts",
+  "users",
   "userMessage",
   "reactionMessage",
   "fileMessage",
@@ -65,9 +65,9 @@ listenerMiddleware.startListening({
           });
         }
         break;
-      case "contacts":
+      case "users":
         {
-          await contactsHandler({
+          await usersHandler({
             operation,
             payload,
             data: state

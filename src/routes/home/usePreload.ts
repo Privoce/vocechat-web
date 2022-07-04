@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import initCache, { useRehydrate } from "../../app/cache";
 import { useLazyGetFavoritesQuery } from "../../app/services/message";
-import { useLazyGetContactsQuery } from "../../app/services/contact";
+import { useLazyGetContactsQuery } from "../../app/services/user";
 import { useLazyGetServerQuery } from "../../app/services/server";
 import useStreaming from "../../common/hook/useStreaming";
 import { useAppSelector } from "../../app/store";
@@ -27,12 +27,7 @@ export default function usePreload() {
   ] = useLazyGetFavoritesQuery();
   const [
     getContacts,
-    {
-      isLoading: contactsLoading,
-      isSuccess: contactsSuccess,
-      isError: contactsError,
-      data: contacts
-    }
+    { isLoading: usersLoading, isSuccess: usersSuccess, isError: usersError, data: users }
   ] = useLazyGetContactsQuery();
   const [
     getServer,
@@ -61,11 +56,11 @@ export default function usePreload() {
   }, [canStreaming]);
 
   return {
-    loading: contactsLoading || serverLoading || favoritesLoading || !rehydrated,
-    error: contactsError && serverError && favoritesError,
-    success: contactsSuccess && serverSuccess && favoritesSuccess,
+    loading: usersLoading || serverLoading || favoritesLoading || !rehydrated,
+    error: usersError && serverError && favoritesError,
+    success: usersSuccess && serverSuccess && favoritesSuccess,
     data: {
-      contacts,
+      users,
       server,
       favorites
     }

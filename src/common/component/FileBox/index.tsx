@@ -84,7 +84,7 @@ const FileBox: FC<Props> = ({
   from_uid,
   content
 }) => {
-  const fromUser = useAppSelector((store) => store.contacts.byId[from_uid]);
+  const fromUser = useAppSelector((store) => store.users.byId[from_uid]);
   const icon = getFileIcon(file_type, name);
   if (!content || !fromUser || !name) return null;
   const previewContent = renderPreview({ file_type, content, name });

@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import { useOutsideClick } from "rooks";
 import useFilteredUsers from "../hook/useFilteredUsers";
 
-import Contact from "./Contact";
+import User from "./User";
 import Modal from "./Modal";
 
 const StyledWrapper = styled.div`
@@ -16,7 +16,6 @@ const StyledWrapper = styled.div`
   box-shadow: 0 25px 50px rgba(31, 41, 55, 0.25);
   border-radius: 8px;
   transition: all 0.5s ease;
-  /* overflow-y: scroll; */
   .search {
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
     padding: 8px;
@@ -58,7 +57,7 @@ interface Props {
 
 const ContactsModal: FC<Props> = ({ closeModal }) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const { contacts, updateInput, input } = useFilteredUsers();
+  const { users, updateInput, input } = useFilteredUsers();
   useOutsideClick(wrapperRef, closeModal);
 
   const handleSearch = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -71,14 +70,14 @@ const ContactsModal: FC<Props> = ({ closeModal }) => {
         <div className="search">
           <input value={input} onChange={handleSearch} placeholder="Type Username to search" />
         </div>
-        {contacts && (
+        {users && (
           <ul className="users">
-            {contacts.map((u) => {
+            {users.map((u) => {
               const { uid } = u;
               return (
                 <li key={uid} className="user">
                   <NavLink onClick={closeModal} to={`/chat/dm/${uid}`}>
-                    <Contact uid={uid} interactive={false} />
+                    <User uid={uid} interactive={false} />
                   </NavLink>
                 </li>
               );

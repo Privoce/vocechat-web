@@ -1,7 +1,7 @@
 import { useEffect, useState, MouseEvent } from "react";
 import styled from "styled-components";
 import toast from "react-hot-toast";
-import { useUpdateAvatarMutation } from "../../app/services/contact";
+import { useUpdateAvatarMutation } from "../../app/services/user";
 import AvatarUploader from "../../common/component/AvatarUploader";
 import ProfileBasicEditModal from "./ProfileBasicEditModal";
 import UpdatePasswordModal from "./UpdatePasswordModal";

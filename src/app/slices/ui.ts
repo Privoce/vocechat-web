@@ -18,7 +18,7 @@ export interface State {
   draftMixedText: { [key: string]: any };
   remeberedNavs: {
     chat: null | string;
-    contact: null | string;
+    user: null | string;
   };
 }
 
@@ -39,7 +39,7 @@ const initialState: State = {
   // todo: typo
   remeberedNavs: {
     chat: null,
-    contact: null
+    user: null
   }
 };
 

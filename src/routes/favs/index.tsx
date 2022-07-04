@@ -44,7 +44,7 @@ function FavsPage() {
     console.log("favs", store.favorites);
     return {
       favorites: store.favorites,
-      userData: store.contacts.byId,
+      userData: store.users.byId,
       channelData: store.channels.byId
     };
   });

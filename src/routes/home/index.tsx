@@ -13,7 +13,7 @@ import Notification from "../../common/component/Notification";
 import Manifest from "../../common/component/Manifest";
 
 import ChatIcon from "../../assets/icons/chat.svg";
-import ContactIcon from "../../assets/icons/contact.svg";
+import ContactIcon from "../../assets/icons/user.svg";
 import FavIcon from "../../assets/icons/bookmark.svg";
 import FolderIcon from "../../assets/icons/folder.svg";
 import { useAppSelector } from "../../app/store";
@@ -27,7 +27,7 @@ export default function HomePage() {
     loginUid,
     ui: {
       ready,
-      remeberedNavs: { chat: chatPath, contact: contactPath }
+      remeberedNavs: { chat: chatPath, user: userPath }
     }
   } = useAppSelector((store) => {
     return {
@@ -52,7 +52,7 @@ export default function HomePage() {
   }
   // 有点绕
   const chatNav = isChatHomePath ? "/chat" : chatPath || "/chat";
-  const contactNav = contactPath || "/contacts";
+  const userNav = userPath || "/users";
 
   return (
     <>
@@ -72,7 +72,7 @@ export default function HomePage() {
                 <ChatIcon />
               </Tooltip>
             </NavLink>
-            <NavLink className="link" to={contactNav}>
+            <NavLink className="link" to={userNav}>
               <Tooltip tip="Members">
                 <ContactIcon />
               </Tooltip>

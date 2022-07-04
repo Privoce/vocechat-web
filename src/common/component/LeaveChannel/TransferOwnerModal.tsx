@@ -6,7 +6,7 @@ import Modal from "../Modal";
 import useLeaveChannel from "../../hook/useLeaveChannel";
 import StyledModal from "../styled/Modal";
 import Button from "../styled/Button";
-import Contact from "../Contact";
+import User from "../User";
 
 const UserList = styled.ul`
   display: flex;
@@ -97,7 +97,7 @@ const TransferOwnerModal: FC<Props> = ({ id, closeModal, withLeave = true }) => 
                 className={`user ${uid == id ? "selected" : ""}`}
                 onClick={handleSelectUser.bind(null, id)}
               >
-                <Contact uid={id} interactive={false} />
+                <User uid={id} interactive={false} />
               </li>
             );
           })}

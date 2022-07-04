@@ -78,11 +78,11 @@ export const FileTypes = {
   }
 };
 export default function Type({ select = "", updateFilter }) {
-  // const { input, updateInput, contacts } = useFilteredUsers();
-  // const contacts=useSelector(store=>store.contacts);
+  // const { input, updateInput, users } = useFilteredUsers();
+  // const users=useSelector(store=>store.users);
 
-  // const uid=contacts.ids;
-  // const dataMap=contacts.byId;
+  // const uid=users.ids;
+  // const dataMap=users.byId;
   const handleClick = (type) => {
     updateFilter({ type });
   };

@@ -122,15 +122,15 @@ const renderContent = (data) => {
 
 export default function Replying({ context, id, mid }) {
   const { removeReplying } = useSendMessage({ to: id, context });
-  const { msg, contactsData } = useAppSelector((store) => {
-    return { contactsData: store.contacts.byId, msg: store.message[mid] };
+  const { msg, usersData } = useAppSelector((store) => {
+    return { usersData: store.users.byId, msg: store.message[mid] };
   });
   const removeReply = () => {
     removeReplying();
   };
   if (!msg) return null;
   const { from_uid } = msg;
-  const user = contactsData[from_uid];
+  const user = usersData[from_uid];
   return (
     <Styled className="reply">
       <div className="prefix">

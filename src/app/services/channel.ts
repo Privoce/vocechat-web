@@ -9,19 +9,20 @@ import { removeChannelSession } from "../slices/message.channel";
 import { removeReactionMessage } from "../slices/message.reaction";
 import { onMessageSendStarted } from "./handlers";
 import handleChatMessage from "../../common/hook/useStreaming/chat.handler";
-
+import { Channel, CreateChannelDTO } from "../../types/channel";
+import { RootState } from "../store";
 export const channelApi = createApi({
   reducerPath: "channelApi",
   baseQuery,
   refetchOnFocus: true,
   endpoints: (builder) => ({
-    getChannels: builder.query({
+    getChannels: builder.query<Channel[], void>({
       query: () => ({ url: `group` })
     }),
-    getChannel: builder.query({
+    getChannel: builder.query<Channel, number>({
       query: (id) => ({ url: `group/${id}` })
     }),
-    leaveChannel: builder.query({
+    leaveChannel: builder.query<void, number>({
       query: (id) => ({ url: `group/${id}/leave` }),
       async onQueryStarted(gid, { dispatch, queryFulfilled }) {
         try {
@@ -32,7 +33,7 @@ export const channelApi = createApi({
         }
       }
     }),
-    createChannel: builder.mutation({
+    createChannel: builder.mutation<number, CreateChannelDTO>({
       query: (data) => ({
         url: "group",
         method: "POST",
@@ -66,7 +67,7 @@ export const channelApi = createApi({
         const { data: messages } = await queryFulfilled;
         if (messages?.length) {
           messages.forEach((msg) => {
-            handleChatMessage(msg, dispatch, getState());
+            handleChatMessage(msg, dispatch, getState() as RootState);
           });
         }
       }
@@ -80,15 +81,15 @@ export const channelApi = createApi({
         url: gid
           ? `/group/create_reg_magic_link?expired_in=3600&max_times=1&gid=${gid}`
           : `/group/create_reg_magic_link?expired_in=3600&max_times=1`,
-        responseHandler: (response) => response.text()
+        responseHandler: (response: Response) => response.text()
       }),
-      transformResponse: (link) => {
+      transformResponse: (link: string) => {
         // 替换掉域名
         const invite = new URL(link);
         return `${location.origin}${invite.pathname}${invite.search}${invite.hash}`;
       }
     }),
-    removeChannel: builder.query({
+    removeChannel: builder.query<void, number>({
       query: (id) => ({
         url: `group/${id}`,
         method: "DELETE"
@@ -99,7 +100,7 @@ export const channelApi = createApi({
           ui: {
             remeberedNavs: { chat: remeberedPath }
           }
-        } = getState();
+        } = getState() as RootState;
         try {
           await queryFulfilled;
           // 删掉该channel下的所有消息&reaction
@@ -161,7 +162,7 @@ export const channelApi = createApi({
           await queryFulfilled;
           dispatch(
             updateChannel({
-              id: gid,
+              gid,
               icon: `${BASE_URL}/resource/group_avatar?gid=${gid}&t=${+new Date()}`
             })
           );

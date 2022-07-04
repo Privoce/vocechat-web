@@ -3,7 +3,7 @@ import styled from "styled-components";
 import toast from "react-hot-toast";
 import Button from "../styled/Button";
 import Input from "../styled/Input";
-import Contact from "../Contact";
+import User from "../User";
 import StyledCheckbox from "../styled/Checkbox";
 import { useAddMembersMutation } from "../../../app/services/channel";
 import CloseIcon from "../../../assets/icons/close.svg";
@@ -105,10 +105,10 @@ interface Props {
 const AddMembers: FC<Props> = ({ cid, closeModal }) => {
   const [addMembers, { isLoading: isAdding, isSuccess }] = useAddMembersMutation();
   const [selects, setSelects] = useState([]);
-  const { channel, contactData } = useAppSelector((store) => {
+  const { channel, userData } = useAppSelector((store) => {
     return {
       channel: store.channels.byId[cid],
-      contactData: store.contacts.byId
+      userData: store.users.byId
     };
   });
   useEffect(() => {
@@ -121,7 +121,7 @@ const AddMembers: FC<Props> = ({ cid, closeModal }) => {
   const handleAddMembers = () => {
     addMembers({ id: cid, members: selects });
   };
-  const { input, updateInput, contacts = [] } = useFilteredUsers();
+  const { input, updateInput, users = [] } = useFilteredUsers();
 
   const toggleCheckMember = ({ currentTarget }: MouseEvent<SVGSVGElement | HTMLLIElement>) => {
     const { uid } = currentTarget.dataset;
@@ -140,7 +140,7 @@ const AddMembers: FC<Props> = ({ cid, closeModal }) => {
 
   if (!channel) return null;
   const { members: uids } = channel;
-  const contactIds = contacts.map(({ uid }) => uid);
+  const userIds = users.map(({ uid }) => uid);
 
   return (
     <Styled>
@@ -150,7 +150,7 @@ const AddMembers: FC<Props> = ({ cid, closeModal }) => {
           {selects.map((uid) => {
             return (
               <li className="select" key={uid}>
-                {contactData[uid].name}
+                {userData[uid].name}
                 <CloseIcon data-uid={uid} onClick={toggleCheckMember} className="close" />
               </li>
             );
@@ -166,7 +166,7 @@ const AddMembers: FC<Props> = ({ cid, closeModal }) => {
         {/* )} */}
       </div>
       <ul className="users">
-        {contactIds.map((uid) => {
+        {userIds.map((uid) => {
           const added = uids.includes(uid);
           return (
             <li
@@ -182,7 +182,7 @@ const AddMembers: FC<Props> = ({ cid, closeModal }) => {
                 name="cb"
                 id="cb"
               />
-              <Contact uid={uid} interactive={false} />
+              <User uid={uid} interactive={false} />
             </li>
           );
         })}

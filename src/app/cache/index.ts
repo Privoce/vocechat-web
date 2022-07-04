@@ -8,8 +8,8 @@ const tables = [
     description: "store channel list"
   },
   {
-    storeName: "contacts",
-    description: "store contact list"
+    storeName: "users",
+    description: "store user list"
   },
   {
     storeName: "messageDM",

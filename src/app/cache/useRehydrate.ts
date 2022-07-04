@@ -6,7 +6,7 @@ import { fullfillMessage } from "../slices/message";
 import { fullfillChannelMsg } from "../slices/message.channel";
 import { fullfillUserMsg } from "../slices/message.user";
 import { fullfillChannels } from "../slices/channels";
-import { fullfillContacts } from "../slices/contacts";
+import { fullfillContacts } from "../slices/users";
 import { fullfillFootprint } from "../slices/footprint";
 import { fullfillFileMessage } from "../slices/message.file";
 import { fullfillUI } from "../slices/ui";
@@ -17,7 +17,7 @@ const useRehydrate = () => {
   const rehydrate = async () => {
     const rehydrateData = {
       channels: [],
-      contacts: [],
+      users: [],
       fileMessage: {},
       channelMessage: {},
       userMessage: {},
@@ -38,9 +38,9 @@ const useRehydrate = () => {
                 rehydrateData.channels.push(data);
               }
               break;
-            case "contacts":
+            case "users":
               if (data) {
-                rehydrateData.contacts.push(data);
+                rehydrateData.users.push(data);
               }
               break;
             case "footprint":
@@ -75,7 +75,7 @@ const useRehydrate = () => {
       })
     );
     batch(() => {
-      dispatch(fullfillContacts(rehydrateData.contacts));
+      dispatch(fullfillContacts(rehydrateData.users));
       dispatch(fullfillServer(rehydrateData.server));
       console.log("fullfill channels from indexedDB");
       dispatch(fullfillChannels(rehydrateData.channels));

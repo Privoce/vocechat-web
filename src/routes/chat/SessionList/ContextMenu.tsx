@@ -1,7 +1,7 @@
 import Tippy from "@tippyjs/react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation, useMatch } from "react-router-dom";
-import { useUpdateMuteSettingMutation } from "../../../app/services/contact";
+import { useUpdateMuteSettingMutation } from "../../../app/services/user";
 import { useReadMessageMutation } from "../../../app/services/message";
 import { removeUserSession } from "../../../app/slices/message.user";
 import ContextMenu from "../../../common/component/ContextMenu";

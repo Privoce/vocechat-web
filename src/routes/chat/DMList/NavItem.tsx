@@ -14,7 +14,7 @@ import useContextMenu from "../../../common/hook/useContextMenu";
 import ContextMenu from "../../../common/component/ContextMenu";
 dayjs.extend(relativeTime);
 import { renderPreviewMessage } from "../utils";
-import Contact from "../../../common/component/Contact";
+import User from "../../../common/component/User";
 import { ContentTypes } from "../../../app/config";
 const NavItem = ({ uid, mid, unreads, setFiles }) => {
   const [previewMsg, setPreviewMsg] = useState(null);
@@ -24,7 +24,7 @@ const NavItem = ({ uid, mid, unreads, setFiles }) => {
   const [updateReadIndex] = useReadMessageMutation();
   const { currMsg, currUser } = useSelector((store) => {
     return {
-      currUser: store.contacts.byId[uid],
+      currUser: store.users.byId[uid],
       currMsg: store.message[mid]
     };
   });
@@ -107,7 +107,7 @@ const NavItem = ({ uid, mid, unreads, setFiles }) => {
         to={`/chat/dm/${uid}`}
         onContextMenu={handleContextMenuEvent}
       >
-        <Contact compact interactive={false} className="avatar" uid={uid} />
+        <User compact interactive={false} className="avatar" uid={uid} />
         <div className="details">
           <div className="up">
             <span className="name">{currUser.name}</span>

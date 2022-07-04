@@ -156,7 +156,7 @@ interface ReplyProps {
 
 const Reply: FC<ReplyProps> = ({ mid, interactive = true }) => {
   const { data, users } = useAppSelector((store) => {
-    return { data: store.message[mid], users: store.contacts.byId };
+    return { data: store.message[mid], users: store.users.byId };
   });
   const handleClick = (evt: MouseEvent<HTMLDivElement>) => {
     const { mid } = evt.currentTarget.dataset;

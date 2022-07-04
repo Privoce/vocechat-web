@@ -65,8 +65,8 @@ export default function Filter({ filter, updateFilter }) {
     };
     toggleFilterVisible(tmp);
   };
-  const { contactMap, channelMap } = useAppSelector((store) => {
-    return { contactMap: store.contacts.byId, channelMap: store.channels.byId };
+  const { userMap, channelMap } = useAppSelector((store) => {
+    return { userMap: store.users.byId, channelMap: store.channels.byId };
   });
 
   const { from, channel, type, date } = filter;
@@ -91,9 +91,9 @@ export default function Filter({ filter, updateFilter }) {
           onClick={toggleFilterVisible.bind(null, { from: true })}
         >
           {from && (
-            <Avatar className="avatar" name={contactMap[from].name} url={contactMap[from].avatar} />
+            <Avatar className="avatar" name={userMap[from].name} url={userMap[from].avatar} />
           )}
-          <span className="txt">From {from && contactMap[from].name}</span>
+          <span className="txt">From {from && userMap[from].name}</span>
           <ArrowDown className="arrow" />
         </div>
       </Tippy>

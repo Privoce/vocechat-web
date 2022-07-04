@@ -20,8 +20,8 @@ interface Props {
 }
 
 const Mention: FC<Props> = ({ uid, popover = true, cid, textOnly = false }) => {
-  const contactsData = useAppSelector((store) => store.contacts.byId);
-  const user = contactsData[uid];
+  const usersData = useAppSelector((store) => store.users.byId);
+  const user = usersData[uid];
   if (!user) return null;
   if (textOnly) return `@${user.name}`;
   return (

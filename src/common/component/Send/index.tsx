@@ -39,13 +39,13 @@ function Send({
     mode,
     uploadFiles,
     channelsData,
-    contactsData,
+    usersData,
     uids
   } = useAppSelector((store) => {
     return {
       channelsData: store.channels.byId,
-      uids: store.contacts.ids,
-      contactsData: store.contacts.byId,
+      uids: store.users.ids,
+      usersData: store.users.byId,
       mode: store.ui.inputMode,
       from_uid: store.authData.user?.uid,
       replying_mid: store.message.replying[`${context}_${id}`],
@@ -127,7 +127,7 @@ function Send({
   const toggleMarkdownFullscreen = () => {
     setMarkdownFullscreen((prev) => !prev);
   };
-  const name = context == "channel" ? channelsData[id]?.name : contactsData[id]?.name;
+  const name = context == "channel" ? channelsData[id]?.name : usersData[id]?.name;
   const placeholder = `Send to ${ChatPrefixs[context]}${name} `;
   const members =
     context == "channel" ? (channelsData[id]?.is_public ? uids : channelsData[id]?.members) : [];

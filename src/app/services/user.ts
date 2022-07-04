@@ -4,14 +4,14 @@ import { KEY_UID } from "../config";
 import baseQuery from "./base.query";
 import { resetAuthData } from "../slices/auth.data";
 import { updateMute } from "../slices/footprint";
-import { fullfillContacts } from "../slices/contacts";
+import { fullfillContacts } from "../slices/users";
 import BASE_URL, { ContentTypes } from "../config";
 import { onMessageSendStarted } from "./handlers";
 import handleChatMessage from "../../common/hook/useStreaming/chat.handler";
 import { User } from "../../types/auth";
 
-export const contactApi = createApi({
-  reducerPath: "contactApi",
+export const userApi = createApi({
+  reducerPath: "userApi",
   baseQuery,
   endpoints: (builder) => ({
     getContacts: builder.query({
@@ -30,21 +30,21 @@ export const contactApi = createApi({
       async onQueryStarted(data, { dispatch, queryFulfilled }) {
         const local_uid = localStorage.getItem(KEY_UID);
         try {
-          const { data: contacts } = await queryFulfilled;
-          const matchedUser = contacts.find((c) => c.uid == local_uid);
-          console.log("wtf", contacts, matchedUser);
+          const { data: users } = await queryFulfilled;
+          const matchedUser = users.find((c) => c.uid == local_uid);
+          console.log("wtf", users, matchedUser);
           if (!matchedUser) {
             // 用户已注销或被禁用
             console.log("no matched user, redirect to login");
             dispatch(resetAuthData());
           } else {
-            const markedContacts = contacts.map((u) => {
+            const markedContacts = users.map((u) => {
               return u.uid == matchedUser.uid ? { ...u, online: true } : u;
             });
             dispatch(fullfillContacts(markedContacts));
           }
         } catch {
-          console.log("get contact list error");
+          console.log("get user list error");
         }
       }
     }),
@@ -135,4 +135,4 @@ export const {
   useGetContactsQuery,
   useLazyGetContactsQuery,
   useSendMsgMutation
-} = contactApi;
+} = userApi;

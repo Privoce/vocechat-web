@@ -6,7 +6,7 @@ import { NativeTypes } from "react-dnd-html5-backend";
 import relativeTime from "dayjs/plugin/relativeTime";
 import ContextMenu from "./ContextMenu";
 import getUnreadCount, { renderPreviewMessage } from "../utils";
-import Contact from "../../../common/component/Contact";
+import User from "../../../common/component/User";
 import Avatar from "../../../common/component/Avatar";
 import iconChannel from "../../../assets/icons/channel.svg?url";
 import IconLock from "../../../assets/icons/lock.svg";
@@ -51,7 +51,7 @@ export default function Session({
 
   const { visible: contextMenuVisible, handleContextMenuEvent, hideContextMenu } = useContextMenu();
   const [data, setData] = useState(null);
-  const { messageData, contactData, channelData, readIndex, loginUid, mids, muted } = useSelector(
+  const { messageData, userData, channelData, readIndex, loginUid, mids, muted } = useSelector(
     (store) => {
       return {
         mids: type == "user" ? store.userMessage.byId[id] : store.channelMessage[id],
@@ -59,7 +59,7 @@ export default function Session({
         readIndex:
           type == "user" ? store.footprint.readUsers[id] : store.footprint.readChannels[id],
         messageData: store.message,
-        contactData: store.contacts.byId,
+        userData: store.users.byId,
         channelData: store.channels.byId,
         muted: type == "user" ? store.footprint.muteUsers[id] : store.footprint.muteChannels[id]
       };
@@ -72,13 +72,13 @@ export default function Session({
   };
 
   useEffect(() => {
-    const tmp = type == "user" ? contactData[id] : channelData[id];
+    const tmp = type == "user" ? userData[id] : channelData[id];
     if (!tmp) return;
     const { name, icon, avatar, is_public = true } = tmp;
     const session =
       type == "user" ? { name, icon: avatar, mid, is_public } : { name, icon, mid, is_public };
     setData(session);
-  }, [id, mid, type, contactData, channelData]);
+  }, [id, mid, type, userData, channelData]);
   if (!data) return null;
   const previewMsg = messageData[mid] || {};
   const { name, icon, is_public } = data;
@@ -108,7 +108,7 @@ export default function Session({
         >
           <div className="icon">
             {type == "user" ? (
-              <Contact avatarSize={40} compact interactive={false} className="avatar" uid={id} />
+              <User avatarSize={40} compact interactive={false} className="avatar" uid={id} />
             ) : (
               <Avatar className="icon" type="channel" name={name} url={icon} />
               // <img

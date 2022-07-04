@@ -3,8 +3,8 @@ import styled from "styled-components";
 import Tippy from "@tippyjs/react";
 import { hideAll } from "tippy.js";
 import toast from "react-hot-toast";
-import { useUpdateContactMutation } from "../../app/services/contact";
-import Contact from "./Contact";
+import { useUpdateContactMutation } from "../../app/services/user";
+import User from "./User";
 import StyledMenu from "./styled/Menu";
 import InviteLink from "./InviteLink";
 import moreIcon from "../../assets/icons/more.svg?url";
@@ -119,9 +119,9 @@ interface Props {
   cid?: number;
 }
 const ManageMembers: FC<Props> = ({ cid }) => {
-  const { contacts, channels, loginUser } = useAppSelector((store) => {
+  const { users, channels, loginUser } = useAppSelector((store) => {
     return {
-      contacts: store.contacts,
+      users: store.users,
       channels: store.channels,
       loginUser: store.authData.user
     };
@@ -141,7 +141,7 @@ const ManageMembers: FC<Props> = ({ cid }) => {
     updateContact({ id: uid, is_admin: isAdmin });
   };
   const channel = channels.byId[cid] ?? null;
-  const uids = channel ? (channel.is_public ? contacts.ids : channel.members) : contacts.ids;
+  const uids = channel ? (channel.is_public ? users.ids : channel.members) : users.ids;
 
   return (
     <StyledWrapper>
@@ -154,7 +154,7 @@ const ManageMembers: FC<Props> = ({ cid }) => {
       </div>
       <ul className="members">
         {uids.map((uid) => {
-          const { name, email, is_admin } = contacts.byId[uid];
+          const { name, email, is_admin } = users.byId[uid];
           const owner = channel && channel.owner == uid;
           const switchRoleVisible = loginUser.is_admin && loginUser.uid !== uid;
           const dotsVisible = email || loginUser?.is_admin;
@@ -164,7 +164,7 @@ const ManageMembers: FC<Props> = ({ cid }) => {
           return (
             <li key={uid} className="member">
               <div className="left">
-                <Contact compact uid={uid} interactive={false} />
+                <User compact uid={uid} interactive={false} />
                 <div className="info">
                   <span className="name">
                     {name} {owner && <IconOwner />}

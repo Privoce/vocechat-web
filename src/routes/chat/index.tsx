@@ -9,12 +9,12 @@ import Server from "../../common/component/Server";
 import CurrentUser from "../../common/component/CurrentUser";
 import ChannelChat from "./ChannelChat";
 import DMChat from "./DMChat";
-import ContactsModal from "../../common/component/ContactsModal";
+import ContactsModal from "../../common/component/UsersModal";
 import ChannelModal from "../../common/component/ChannelModal";
 import SessionList from "./SessionList";
 export default function ChatPage() {
   const [channelModalVisible, setChannelModalVisible] = useState(false);
-  const [contactsModalVisible, setContactsModalVisible] = useState(false);
+  const [usersModalVisible, setContactsModalVisible] = useState(false);
   const { channel_id, user_id } = useParams();
   const { sessionUids } = useSelector((store) => {
     return {
@@ -38,7 +38,7 @@ export default function ChatPage() {
       {channelModalVisible && (
         <ChannelModal closeModal={toggleChannelModalVisible} personal={true} />
       )}
-      {contactsModalVisible && <ContactsModal closeModal={toggleContactsModalVisible} />}
+      {usersModalVisible && <ContactsModal closeModal={toggleContactsModalVisible} />}
       <StyledWrapper>
         <div className="left">
           <Server />

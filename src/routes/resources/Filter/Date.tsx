@@ -58,11 +58,11 @@ export const Dates = {
 };
 
 export default function Date({ select = "", updateFilter }) {
-  // const { input, updateInput, contacts } = useFilteredUsers();
-  // const contacts=useSelector(store=>store.contacts);
+  // const { input, updateInput, users } = useFilteredUsers();
+  // const users=useSelector(store=>store.users);
 
-  // const uid=contacts.ids;
-  // const dataMap=contacts.byId;
+  // const uid=users.ids;
+  // const dataMap=users.byId;
   const handleClick = (dur) => {
     updateFilter({ date: dur });
   };

@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { useLazyGetHistoryMessagesQuery } from "../../app/services/channel";
-import { useLazyGetHistoryMessagesQuery as useLazyGetDMHistoryMsg } from "../../app/services/contact";
+import { useLazyGetHistoryMessagesQuery as useLazyGetDMHistoryMsg } from "../../app/services/user";
 import { useAppSelector } from "../../app/store";
 export interface PageInfo {
   isFirst: boolean;

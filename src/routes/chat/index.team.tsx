@@ -10,12 +10,12 @@ import AddIcon from "../../assets/icons/add.svg";
 import BlankPlaceholder from "../../common/component/BlankPlaceholder";
 import Server from "../../common/component/Server";
 import Tooltip from "../../common/component/Tooltip";
-// import Contact from "../../common/component/Contact";
+// import User from "../../common/component/User";
 // import CurrentUser from "../../common/component/CurrentUser";
 import ChannelChat from "./ChannelChat";
 import DMChat from "./DMChat";
 import ChannelList from "./ChannelList";
-import ContactsModal from "../../common/component/ContactsModal";
+import ContactsModal from "../../common/component/UsersModal";
 import ChannelModal from "../../common/component/ChannelModal";
 import DMList from "./DMList";
 
@@ -28,7 +28,7 @@ export default function ChatPage() {
     };
   });
   const [channelModalVisible, setChannelModalVisible] = useState(false);
-  const [contactsModalVisible, setContactsModalVisible] = useState(false);
+  const [usersModalVisible, setContactsModalVisible] = useState(false);
   const { channel_id, user_id } = useParams();
   const toggleContactsModalVisible = () => {
     setContactsModalVisible((prev) => !prev);
@@ -49,7 +49,7 @@ export default function ChatPage() {
       {channelModalVisible && (
         <ChannelModal closeModal={toggleChannelModalVisible} personal={true} />
       )}
-      {contactsModalVisible && <ContactsModal closeModal={toggleContactsModalVisible} />}
+      {usersModalVisible && <ContactsModal closeModal={toggleContactsModalVisible} />}
       <StyledWrapper>
         <div className="left">
           <Server />

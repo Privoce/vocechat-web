@@ -30,7 +30,7 @@ import { ReactEditor } from "slate-react";
 import useUploadFile from "../../hook/useUploadFile";
 import Styled from "./styled";
 import { CONFIG } from "./config";
-import Contact from "../Contact";
+import User from "../User";
 export const TEXT_EDITOR_PREFIX = "_text_editor";
 
 let components = createPlateUI({
@@ -50,7 +50,7 @@ const Plugins = ({
   const [context, to] = id.split("_");
   const { addStageFile } = useUploadFile({ context, id: to });
   const enableMentions = members.length > 0;
-  const contactData = useSelector((store) => store.contacts.byId);
+  const userData = useSelector((store) => store.users.byId);
   const [msgs, setMsgs] = useState([]);
   const [cmdKey, setCmdKey] = useState(false);
   const editableRef = useRef(null);
@@ -220,12 +220,12 @@ const Plugins = ({
             onRenderItem={({ item }) => {
               console.log("wtf", item);
               if (!item || !item.data) return null;
-              return <Contact key={item.data.uid} uid={item.data.uid} interactive={false} />;
+              return <User key={item.data.uid} uid={item.data.uid} interactive={false} />;
             }}
             items={members.map((id) => {
-              const data = contactData[id];
+              const data = userData[id];
               if (!data) {
-                // console.log("wtffe", id, contactData);
+                // console.log("wtffe", id, userData);
                 return { key: id };
               }
               const { uid, name, ...rest } = data;

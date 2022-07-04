@@ -1,7 +1,7 @@
 import { useDispatch, batch } from "react-redux";
 import { resetFootprint } from "../../app/slices/footprint";
 import { resetChannels } from "../../app/slices/channels";
-import { resetContacts } from "../../app/slices/contacts";
+import { resetContacts } from "../../app/slices/users";
 import { resetChannelMsg } from "../../app/slices/message.channel";
 import { resetUserMsg } from "../../app/slices/message.user";
 import { resetReactionMessage } from "../../app/slices/message.reaction";

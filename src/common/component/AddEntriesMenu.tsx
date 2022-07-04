@@ -6,7 +6,7 @@ import IconInvite from "../../assets/icons/add.person.svg";
 import IconMention from "../../assets/icons/mention.svg";
 import ChannelIcon from "./ChannelIcon";
 import ChannelModal from "./ChannelModal";
-import ContactsModal from "./ContactsModal";
+import ContactsModal from "./UsersModal";
 import InviteModal from "./InviteModal";
 
 const Styled = styled.ul`
@@ -47,7 +47,7 @@ export default function AddEntriesMenu() {
   const [inviteModalVisible, setInviteModalVisible] = useState(false);
 
   const [channelModalVisible, setChannelModalVisible] = useState(false);
-  const [contactsModalVisible, setContactsModalVisible] = useState(false);
+  const [usersModalVisible, setContactsModalVisible] = useState(false);
   const toggleInviteModalVisible = () => {
     setInviteModalVisible((prev) => {
       if (!prev) {
@@ -96,7 +96,7 @@ export default function AddEntriesMenu() {
         </li>
       </Styled>
       {channelModalVisible && <ChannelModal personal={isPrivate} closeModal={handleCloseModal} />}
-      {contactsModalVisible && <ContactsModal closeModal={toggleContactsModalVisible} />}
+      {usersModalVisible && <ContactsModal closeModal={toggleContactsModalVisible} />}
       {inviteModalVisible && <InviteModal closeModal={toggleInviteModalVisible} />}
     </>
   );
