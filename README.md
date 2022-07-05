@@ -1,3 +1,15 @@
+# Web Client of voce.chat
+
+<p align="center">
+<img src="./public/android-chrome-192x192.png" width="50%" height="50%">
+</p>
+
+![GitHub issues](https://img.shields.io/github/issues-raw/Privoce/vocechat-web) ![GitHub](https://img.shields.io/github/license/privoce/vocechat-web) ![GitHub top language](https://img.shields.io/github/languages/top/privoce/vocechat-web)
+
+- Powered by React & Redux Toolkit
+- Typescript supported
+- PWA supported
+
 ## Refs
 
 - preview demo: https://privoce.voce.chat/
