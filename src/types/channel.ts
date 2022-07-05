@@ -1,3 +1,4 @@
+//call `group` in backend
 import { ContentType } from "./message";
 export interface ChannelMember {}
 

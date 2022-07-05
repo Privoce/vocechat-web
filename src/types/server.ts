@@ -1,3 +1,4 @@
+// call `organization` in backend
 import { User } from "./auth";
 
 export interface Server {

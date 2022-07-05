@@ -11,6 +11,7 @@ import { onMessageSendStarted } from "./handlers";
 import handleChatMessage from "../../common/hook/useStreaming/chat.handler";
 import { Channel, CreateChannelDTO } from "../../types/channel";
 import { RootState } from "../store";
+import { ContentTypeKey } from "../../types/message";
 export const channelApi = createApi({
   reducerPath: "channelApi",
   baseQuery,
@@ -118,8 +119,18 @@ export const channelApi = createApi({
         }
       }
     }),
-    sendChannelMsg: builder.mutation({
-      query: ({ id, content, type = "text", properties = "" }) => ({
+    sendChannelMsg: builder.mutation<
+      number,
+      {
+        id: number;
+        content: string | object;
+        type: ContentTypeKey;
+        properties?: object;
+        from_uid: number;
+        ignoreLocal: boolean;
+      }
+    >({
+      query: ({ id, content, type = "text", properties = {} }) => ({
         headers: {
           "content-type": ContentTypes[type],
           "X-Properties": properties
