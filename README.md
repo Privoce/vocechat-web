@@ -1,7 +1,7 @@
 # Web Client of voce.chat
 
 <p align="center">
-<img src="./public/android-chrome-192x192.png" width="50%" height="50%">
+<img src="./public/android-chrome-192x192.png" width="100" height="100">
 </p>
 
 ![GitHub issues](https://img.shields.io/github/issues-raw/Privoce/vocechat-web) ![GitHub](https://img.shields.io/github/license/privoce/vocechat-web) ![GitHub top language](https://img.shields.io/github/languages/top/privoce/vocechat-web)
