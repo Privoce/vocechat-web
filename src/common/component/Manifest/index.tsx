@@ -1,13 +1,14 @@
-import { useEffect, useState, useRef, SyntheticEvent } from "react";
+import { useEffect, useState, useRef, FC } from "react";
+import { BeforeInstallPromptEvent } from "../../../types/global";
 import Prompt from "./Prompt";
 import usePrompt from "./usePrompt";
-
-export default function Manifest() {
+interface IProps {}
+const Manifest: FC<IProps> = () => {
   const { setCanceled: setCanceled, prompted } = usePrompt();
-  const deferredPromptRef = useRef(null);
+  const deferredPromptRef = useRef<null | BeforeInstallPromptEvent>(null);
   const [popup, setPopup] = useState(false);
   useEffect(() => {
-    const handleInstallPromotion = (e: SyntheticEvent) => {
+    const handleInstallPromotion = (e: BeforeInstallPromptEvent) => {
       // Prevent the mini-infobar from appearing on mobile
       e.preventDefault();
       // Stash the event so it can be triggered later.
@@ -21,20 +22,6 @@ export default function Manifest() {
       deferredPromptRef.current = null;
       setPopup(false);
     };
-    // if (isSuccess && data) {
-    //   console.log("server", data);
-    //   manifest.name = `${data.name}'s Chat`;
-    //   // const stringManifest = JSON.stringify(manifest);
-    //   // const blob = new Blob([stringManifest], { type: "application/json" });
-    //   // const manifestURL = URL.createObjectURL(blob);
-    //   let content = encodeURIComponent(JSON.stringify(manifest));
-    //   let manifestURL = "data:application/manifest+json," + content;
-    //   const manifestEle = document.querySelector("#my-manifest-placeholder");
-    //   if (manifestEle) {
-    //     manifestEle.setAttribute("href", manifestURL);
-    //   }
-
-    // }
     window.addEventListener("beforeinstallprompt", handleInstallPromotion, true);
     window.addEventListener("appinstalled", handleInstalled);
     return () => {
@@ -61,4 +48,5 @@ export default function Manifest() {
   };
   if (!popup || prompted) return null;
   return <Prompt handleInstall={handleInstall} closePrompt={handleClose} />;
-}
+};
+export default Manifest;

@@ -2,6 +2,7 @@ import styled from "styled-components";
 import useInviteLink from "../hook/useInviteLink";
 import Input from "./styled/Input";
 import Button from "./styled/Button";
+import { FC } from "react";
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -37,8 +38,8 @@ const StyledWrapper = styled.div`
     margin-bottom: 20px;
   }
 `;
-
-export default function InviteLink() {
+type Props = {};
+const InviteLink: FC<Props> = () => {
   const { generating, link, linkCopied, copyLink, generateNewLink } = useInviteLink();
   const handleNewLink = () => {
     generateNewLink();
@@ -59,4 +60,6 @@ export default function InviteLink() {
       </Button>
     </StyledWrapper>
   );
-}
+};
+
+export default InviteLink;

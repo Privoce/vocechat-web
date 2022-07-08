@@ -135,7 +135,15 @@ const ManageMembers: FC<Props> = ({ cid }) => {
     }
   }, [updateSuccess]);
 
-  const handleToggleRole = ({ ignore = false, uid = null, isAdmin = true }) => {
+  const handleToggleRole = ({
+    ignore = false,
+    uid,
+    isAdmin = true
+  }: {
+    ignore: boolean;
+    uid: number;
+    isAdmin: boolean;
+  }) => {
     hideAll();
     if (ignore) return;
     updateUser({ id: uid, is_admin: isAdmin });
@@ -154,7 +162,9 @@ const ManageMembers: FC<Props> = ({ cid }) => {
       </div>
       <ul className="members">
         {uids.map((uid) => {
-          const { name, email, is_admin } = users.byId[uid];
+          const currUser = users.byId[uid];
+          if (!currUser) return null;
+          const { name, email, is_admin } = currUser;
           const owner = channel && channel.owner == uid;
           const switchRoleVisible = loginUser.is_admin && loginUser.uid !== uid;
           const dotsVisible = email || loginUser?.is_admin;

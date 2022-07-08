@@ -11,8 +11,8 @@ import useUserOperation from "../../hook/useUserOperation";
 import { useAppSelector } from "../../../app/store";
 
 interface Props {
-  uid?: number;
-  type: string;
+  uid: number;
+  type?: "embed" | "card";
   cid?: number;
 }
 

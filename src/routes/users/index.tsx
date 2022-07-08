@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { NavLink, useParams, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateRememberedNavs } from "../../app/slices/ui";
 import Search from "../../common/component/Search";
 import User from "../../common/component/User";
@@ -8,13 +8,14 @@ import Profile from "../../common/component/Profile";
 
 import StyledWrapper from "./styled";
 import BlankPlaceholder from "../../common/component/BlankPlaceholder";
+import { useAppSelector } from "../../app/store";
 
 export default function UsersPage() {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
 
   const { user_id } = useParams();
-  const userIds = useSelector((store) => store.users.ids);
+  const userIds = useAppSelector((store) => store.users.ids);
   useEffect(() => {
     dispatch(updateRememberedNavs({ key: "user" }));
     return () => {
@@ -30,7 +31,7 @@ export default function UsersPage() {
         <Search />
         <div className="list">
           <nav className="nav">
-            {userIds.map((uid) => {
+            {userIds.map((uid: number) => {
               return (
                 <NavLink key={uid} className="session" to={`/users/${uid}`}>
                   <User uid={uid} enableContextMenu={true} />
@@ -43,7 +44,7 @@ export default function UsersPage() {
       </div>
       {user_id ? (
         <div className="right">
-          <Profile uid={user_id} />
+          <Profile uid={+user_id} />
         </div>
       ) : (
         <div className="right placeholder">

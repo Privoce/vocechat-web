@@ -1,3 +1,4 @@
+import { FC } from "react";
 import styled from "styled-components";
 import { useGetServerVersionQuery } from "../../app/services/server";
 
@@ -6,8 +7,8 @@ const Styled = styled.div`
   flex-direction: column;
   gap: 12px;
 `;
-
-export default function FAQ() {
+type Props = {};
+const FAQ: FC<Props> = () => {
   const { data: serverVersion } = useGetServerVersionQuery();
   return (
     <Styled>
@@ -16,4 +17,5 @@ export default function FAQ() {
       <div className="item">Build Timestamp: {process.env.REACT_APP_BUILD_TIME}</div>
     </Styled>
   );
-}
+};
+export default FAQ;

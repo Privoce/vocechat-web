@@ -25,18 +25,6 @@ export const onMessageSendStarted = async (
   console.log("handlers data", content, type, properties, ignoreLocal, id);
   const isImage = properties.content_type?.startsWith("image");
   const ts = properties.local_id || +new Date();
-  // let imageData = null;
-  // if (type == "image") {
-  //   if (typeof content == "string" && content.startsWith("data:image")) {
-  //     // base64
-  //     // const resp = await fetch(content);
-  //     // const blob = await resp.blob();
-  //     // imageData = new File([blob], "tmp.png", { type: "image/png" });
-  //     imageData = content;
-  //   } else {
-  //     imageData = URL.createObjectURL(content);
-  //   }
-  // }
   const tmpMsg = {
     content: isImage ? content.path : content,
     content_type: ContentTypes[type],

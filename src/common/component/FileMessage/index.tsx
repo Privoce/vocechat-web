@@ -25,7 +25,7 @@ interface Props {
   context: "user" | "channel";
   to: number;
   created_at: number;
-  from_uid?: number;
+  from_uid: number;
   content: string;
   download: string;
   thumbnail: string;
@@ -41,7 +41,7 @@ const FileMessage: FC<Props> = ({
   context,
   to,
   created_at,
-  from_uid = null,
+  from_uid,
   content = "",
   download = "",
   thumbnail = "",

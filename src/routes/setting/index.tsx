@@ -4,7 +4,7 @@ import StyledSettingContainer from "../../common/component/StyledSettingContaine
 import useNavs from "./navs";
 import LogoutConfirmModal from "./LogoutConfirmModal";
 
-let from: string | null = null;
+let from: string = "";
 
 export default function Setting() {
   const [searchParams] = useSearchParams();
@@ -15,10 +15,9 @@ export default function Setting() {
   const [logoutConfirm, setLogoutConfirm] = useState(false);
   const navigateTo = useNavigate();
   const close = () => {
-    // dispatch(toggleSetting());
     // todo: check usage
     navigateTo(from!);
-    from = null;
+    from = "";
   };
 
   const toggleLogoutConfirm = () => {

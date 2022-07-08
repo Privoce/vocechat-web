@@ -1,8 +1,9 @@
+import { FC } from "react";
 import { Helmet } from "react-helmet";
 import BASE_URL from "../../app/config";
 import { useGetServerQuery } from "../../app/services/server";
-
-export default function Meta() {
+type Props = {};
+const Meta: FC<Props> = () => {
   const { data, isSuccess } = useGetServerQuery();
 
   return (
@@ -11,4 +12,5 @@ export default function Meta() {
       {isSuccess && <title>{data.name} Web App</title>}
     </Helmet>
   );
-}
+};
+export default Meta;

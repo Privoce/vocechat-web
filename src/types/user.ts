@@ -2,7 +2,7 @@ export type Gender = 0 | 1;
 
 export interface User {
   uid: number;
-  email: string;
+  email?: string;
   name: string;
   gender: Gender;
   language: string;
@@ -25,9 +25,7 @@ export interface UserForAdmin extends User {
   status: UserStatus;
   online_devices: UserDevice[];
 }
-export interface UserForAdminDTO
-  extends Pick<
-    UserForAdmin,
-    "email" | "password" | "name" | "gender" | "is_admin" | "language" | "status"
-  > {}
+export interface UserForAdminDTO extends Partial<UserForAdmin> {
+  id?: number;
+}
 export interface UserDTO extends Pick<User, "name" | "gender" | "language"> {}

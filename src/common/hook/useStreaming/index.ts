@@ -74,7 +74,7 @@ export default function useStreaming() {
         isError
       } = await renewToken({
         token,
-        refreshToken
+        refresh_token: refreshToken
       });
       if (isError) return;
       api_token = newToken;

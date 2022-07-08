@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, FC } from "react";
 import useSendMessage from "../../hook/useSendMessage";
 import useAddLocalFileMessage from "../../hook/useAddLocalFileMessage";
 import { updateInputMode } from "../../../app/slices/ui";
@@ -20,11 +20,15 @@ const Modes = {
   text: "text",
   markdown: "markdown"
 };
-function Send({
+interface IProps {
+  context?: "channel" | "user";
+  id: number;
+}
+const Send: FC<IProps> = ({
   // 发给谁，或者是channel，或者是user
   context = "channel",
-  id = ""
-}) {
+  id
+}) => {
   const { resetStageFiles } = useUploadFile({ context, id });
   const { getDraft, getUpdateDraft } = useDraft({ context, id });
   const editor = useMixedEditor(`${context}_${id}`);
@@ -111,7 +115,7 @@ function Send({
       resetStageFiles();
     }
   };
-  const sendMarkdown = async (content) => {
+  const sendMarkdown = async (content: string) => {
     sendMessage({
       id,
       reply_mid: replying_mid,
@@ -173,7 +177,7 @@ function Send({
       </div>
     </StyledSend>
   );
-}
+};
 
 export default Send;
 // export default memo(Send, (prevs, nexts) => {

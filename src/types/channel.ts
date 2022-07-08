@@ -34,8 +34,12 @@ export interface CreateChannelDTO {
   is_public: boolean;
 }
 
+export interface ChannelDTO extends Pick<Channel, "owner" | "description" | "name"> {
+  id: number;
+}
+
 export interface UpdateChannelDTO {
-  operation: "add_member" | "remove_member";
+  operation?: "add_member" | "remove_member";
   members?: number[];
   gid: number; // todo check
   name?: string;
@@ -43,8 +47,6 @@ export interface UpdateChannelDTO {
   owner?: number;
   avatar_updated_at?: number;
   type?: string;
-  // type = 'user_joined_group' | 'user_leaved_group'
-  // gid
   uid?: number[];
   icon?: string;
 }

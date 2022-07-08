@@ -6,20 +6,20 @@ import DeleteConfirmModal from "./DeleteConfirmModal";
 import useNavs from "./navs";
 import { useAppSelector } from "../../app/store";
 
-let from: string | null = null;
+let from: string = "";
 
 export default function ChannelSetting() {
-  const { cid } = useParams();
+  const { cid = 0 } = useParams();
   const { loginUser, channel } = useAppSelector((store) => {
     return {
       loginUser: store.authData.user,
-      channel: store.channels.byId[cid]
+      channel: cid ? store.channels.byId[+cid] : undefined
     };
   });
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const navs = useNavs(cid);
-  const flatenNavs = navs
+  const navs = useNavs(+cid);
+  const flattenNavs = navs
     .map(({ items }) => {
       return items;
     })
@@ -30,16 +30,16 @@ export default function ChannelSetting() {
   const [leaveConfirm, setLeaveConfirm] = useState(false);
   const close = () => {
     navigate(from);
-    from = null;
+    from = "";
   };
-  const toggleDeleteConfrim = () => {
+  const toggleDeleteConfirm = () => {
     setDeleteConfirm((prev) => !prev);
   };
-  const toggleLeaveConfrim = () => {
+  const toggleLeaveConfirm = () => {
     setLeaveConfirm((prev) => !prev);
   };
   if (!cid) return null;
-  const currNav = flatenNavs.find((n) => n.name == navKey) || flatenNavs[0];
+  const currNav = flattenNavs.find((n) => n.name == navKey) || flattenNavs[0];
   const canDelete = loginUser.isAdmin || channel?.owner == loginUser.uid;
   const canLeave = !channel?.is_public;
 
@@ -53,18 +53,18 @@ export default function ChannelSetting() {
         dangers={[
           canLeave && {
             title: "Leave Channel",
-            handler: toggleLeaveConfrim
+            handler: toggleLeaveConfirm
           },
           canDelete && {
             title: "Delete Channel",
-            handler: toggleDeleteConfrim
+            handler: toggleDeleteConfirm
           }
         ]}
       >
         {currNav.component}
       </StyledSettingContainer>
-      {deleteConfirm && <DeleteConfirmModal closeModal={toggleDeleteConfrim} id={cid} />}
-      {leaveConfirm && <LeaveChannel closeModal={toggleLeaveConfrim} id={cid} />}
+      {deleteConfirm && <DeleteConfirmModal closeModal={toggleDeleteConfirm} id={+cid} />}
+      {leaveConfirm && <LeaveChannel closeModal={toggleLeaveConfirm} id={+cid} />}
     </>
   );
 }

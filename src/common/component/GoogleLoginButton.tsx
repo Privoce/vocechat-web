@@ -66,13 +66,13 @@ const GoogleLoginInner: FC<Props> = ({ type = "login", loaded, loadError }) => {
   }, [error]);
 
   return (
-    <StyledSocialButton disabled={!loaded || isLoading} onClick={null}>
+    <StyledSocialButton disabled={!loaded || isLoading}>
       <div className="invisible">
         <GoogleLogin
           onSuccess={(res) => {
             login({
               magic_token,
-              id_token: res.credential,
+              id_token: res.credential || "",
               type: "google"
             });
           }}

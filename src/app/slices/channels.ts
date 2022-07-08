@@ -53,7 +53,7 @@ const channelsSlice = createSlice({
     },
     updateChannel(state, action: PayloadAction<UpdateChannelDTO>) {
       const ignoreInPublic = ["add_member", "remove_member"];
-      const { gid, operation, members = [], ...rest } = action.payload;
+      const { gid, operation = "", members = [], ...rest } = action.payload;
       const currChannel = state.byId[gid];
       if (!currChannel || (currChannel.is_public && ignoreInPublic.includes(operation))) return;
       switch (operation) {

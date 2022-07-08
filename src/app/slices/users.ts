@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { isNull, omitBy } from "lodash";
 import BASE_URL from "../config";
-import { User } from "../../types/auth";
+import { User } from "../../types/user";
 import { UserLog, UserState } from "../../types/sse";
 
 export interface StoredUser extends User {

@@ -66,10 +66,10 @@ const StyledWrapper = styled.div`
 
 export interface PreviewImageData {
   originUrl: string;
-  thumbnail: string;
-  downloadLink: string;
-  name: string;
-  type: string;
+  thumbnail?: string;
+  downloadLink?: string;
+  name?: string;
+  type?: string;
 }
 
 interface Props {

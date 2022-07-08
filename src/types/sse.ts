@@ -1,4 +1,4 @@
-import { User } from "./auth";
+import { User } from "./user";
 import { Channel } from "./channel";
 import { ContentType } from "./message";
 
@@ -110,13 +110,18 @@ export interface ReplyMessage {
   content_type: ContentType;
   content: string;
 }
-
+type MessageTargetUser = {
+  uid: number;
+};
+type MessageTargetChannel = {
+  gid: number;
+};
 export interface ChatEvent {
   type: "chat";
   mid: number;
   from_uid: number;
   created_at: number;
-  target: { uid: number };
+  target: MessageTargetChannel | MessageTargetUser;
   detail: NormalMessage | ReactionMessage | ReplyMessage;
 }
 

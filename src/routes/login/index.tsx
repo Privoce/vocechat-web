@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import { useState, useEffect } from "react";
+import { useState, useEffect, FormEvent, ChangeEvent } from "react";
 import toast from "react-hot-toast";
 import BASE_URL from "../../app/config";
 // import web3 from "web3";
@@ -16,6 +16,7 @@ import useGoogleAuthConfig from "../../common/hook/useGoogleAuthConfig";
 import useGithubAuthConfig from "../../common/hook/useGithubAuthConfig";
 import GoogleLoginButton from "../../common/component/GoogleLoginButton";
 import GithubLoginButton from "../../common/component/GithubLoginButton";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 
 export default function LoginPage() {
   const { data: enableSMTP } = useGetSMTPStatusQuery();
@@ -53,7 +54,6 @@ export default function LoginPage() {
     }
     // magic link
     if (magic_token && typeof exists !== "undefined") {
-      // console.log("tokken", token, exists);
       const isLogin = exists == "true";
       if (isLogin) {
         // login
@@ -71,7 +71,7 @@ export default function LoginPage() {
   useEffect(() => {
     if (error) {
       console.log("login err", error);
-      switch (error.status) {
+      switch ((error as FetchBaseQueryError).status) {
         case 401:
           toast.error("Username or Password incorrect");
           break;
@@ -94,7 +94,7 @@ export default function LoginPage() {
     }
   }, [isSuccess]);
 
-  const handleLogin = (evt) => {
+  const handleLogin = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     console.log("wtf", input);
     login({
@@ -103,10 +103,10 @@ export default function LoginPage() {
     });
   };
 
-  const handleInput = (evt) => {
-    const { type } = evt.target.dataset;
+  const handleInput = (evt: ChangeEvent<HTMLInputElement>) => {
+    const { type } = evt.target.dataset as { type?: "email" | "password" };
     const { value } = evt.target;
-    // console.log(type, value);
+    if (!type) return;
     setInput((prev) => {
       prev[type] = value;
       return { ...prev };

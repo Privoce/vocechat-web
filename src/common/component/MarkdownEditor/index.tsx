@@ -27,7 +27,7 @@ function MarkdownEditor({
       const editorInstance = editor.getInstance();
       editorInstance.removeHook("addImageBlobHook");
       editorInstance.addHook("addImageBlobHook", async (blob, callback) => {
-        const { thumbnail = "" } = await uploadFile(blob);
+        const { thumbnail = "" } = (await uploadFile(blob)) || {};
         callback(thumbnail);
       });
       setEditorInstance(editorInstance);

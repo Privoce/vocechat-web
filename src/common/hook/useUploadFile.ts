@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, FC } from "react";
 import toast from "react-hot-toast";
 import { updateUploadFiles } from "../../app/slices/ui";
 import BASE_URL, { FILE_SLICE_SIZE } from "../../app/config";
@@ -6,8 +6,12 @@ import { usePrepareUploadFileMutation, useUploadFileMutation } from "../../app/s
 import { useAppDispatch, useAppSelector } from "../../app/store";
 
 // todo: check props type
-export default function useUploadFile(props: { context: string; id: string } | object = {}) {
-  const { context = "", id = "" } = props;
+interface IProps {
+  context: "channel" | "user";
+  id: number;
+}
+const useUploadFile = (props: IProps) => {
+  const { context, id } = props;
   const dispatch = useAppDispatch();
   const { stageFiles, replying } = useAppSelector((store) => {
     return {
@@ -112,7 +116,7 @@ export default function useUploadFile(props: { context: string; id: string } | o
     canceledRef.current = true;
   };
 
-  const removeStageFile = (idx) => {
+  const removeStageFile = (idx: number) => {
     dispatch(updateUploadFiles({ context, id, operation: "remove", index: idx }));
   };
 
@@ -128,7 +132,7 @@ export default function useUploadFile(props: { context: string; id: string } | o
     dispatch(updateUploadFiles({ context, id, operation: "reset" }));
   };
 
-  const updateStageFile = (idx, data = {}) => {
+  const updateStageFile = (idx: number, data = {}) => {
     dispatch(
       updateUploadFiles({
         context,
@@ -156,4 +160,5 @@ export default function useUploadFile(props: { context: string; id: string } | o
     removeStageFile,
     updateStageFile
   };
-}
+};
+export default useUploadFile;

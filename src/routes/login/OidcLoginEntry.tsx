@@ -1,27 +1,24 @@
-/* eslint-disable no-undef */
-import { useEffect } from "react";
+import { useEffect, FC } from "react";
 import { useGetOpenidMutation } from "../../app/services/auth";
+import { OIDCConfig } from "../../types/auth";
 import { StyledSocialButton } from "./styled";
 
-export default function OidcLoginEntry({ issuer }) {
+const OidcLoginEntry: FC<{ issuer: OIDCConfig }> = ({ issuer }) => {
   const [getOpenId, { data, isLoading, isSuccess }] = useGetOpenidMutation();
 
   const handleSolidLogin = () => {
     getOpenId({
-      // issuer: "solidweb.org",
-      issuer,
+      issuer: issuer.domain,
       redirect_uri: `${location.origin}/#/login`
     });
   };
 
   useEffect(() => {
-    if (isSuccess) {
-      console.log("wtf", data);
+    if (isSuccess && data) {
       const { url } = data;
       location.href = url;
     }
   }, [data, isSuccess]);
-  console.log(issuer);
 
   return (
     <StyledSocialButton disabled={isLoading} onClick={handleSolidLogin}>
@@ -29,4 +26,5 @@ export default function OidcLoginEntry({ issuer }) {
       Login with {issuer.domain}
     </StyledSocialButton>
   );
-}
+};
+export default OidcLoginEntry;

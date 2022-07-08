@@ -1,7 +1,7 @@
 // import React from "react";
 // import { useSelector } from "react-redux";
 import styled from "styled-components";
-import FavoritedMessage from "../../common/component/Message/FavoritedMessage";
+import FavoredMessage from "../../common/component/Message/FavoredMessage";
 import IconSurprise from "../../assets/icons/emoji.suprise.svg";
 // import IconForward from "../../../assets/icons/forward.svg";
 import IconRemove from "../../assets/icons/close.svg";
@@ -107,7 +107,7 @@ export default function FavList({ cid = null, uid = null }) {
             console.log("favv", id);
             return (
               <li key={id} className="fav">
-                <FavoritedMessage id={id} />
+                <FavoredMessage id={id} />
                 <div className="opts">
                   {/* <button
                     className="btn"

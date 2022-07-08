@@ -59,7 +59,7 @@ const uiSlice = createSlice({
     },
     updateRememberedNavs(
       state,
-      action: PayloadAction<{ key?: "chat" | "user"; path: string | null } | undefined>
+      action: PayloadAction<{ key?: "chat" | "user"; path?: string | null } | undefined>
     ) {
       const { key = "chat", path = null } = action.payload || {};
       state.rememberedNavs[key] = path;

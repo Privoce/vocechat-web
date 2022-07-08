@@ -1,3 +1,8 @@
+export interface Archive {
+  users: ArchiveUser[];
+  messages: ArchiveMessage[];
+  num_attachments: number;
+}
 export interface ArchiveUser {
   name: string;
   avatar?: number;
@@ -13,10 +18,9 @@ export interface ArchiveMessage {
   file_id?: number;
   thumbnail_id?: number;
 }
-export interface Archive {
-  users: ArchiveUser[];
-  messages: ArchiveMessage[];
-  num_attachments: number;
+export interface FavoriteArchive {
+  id: string;
+  created_at: number;
 }
 // 上传文件API响应
 export interface UploadResponse {

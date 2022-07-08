@@ -3,7 +3,13 @@ import { nanoid } from "@reduxjs/toolkit";
 import baseQuery from "./base.query";
 import { setAuthData, updateToken, resetAuthData, updateInitialized } from "../slices/auth.data";
 import BASE_URL, { KEY_DEVICE_KEY, KEY_LOCAL_MAGIC_TOKEN } from "../config";
-import { AuthData, LoginCredential } from "../../types/auth";
+import {
+  AuthData,
+  CredentialResponse,
+  LoginCredential,
+  RenewTokenDTO,
+  RenewTokenResponse
+} from "../../types/auth";
 
 const getDeviceId = () => {
   let d = localStorage.getItem(KEY_DEVICE_KEY);
@@ -59,14 +65,11 @@ export const authApi = createApi({
       })
     }),
     // 更新token
-    renew: builder.mutation({
-      query: ({ token, refreshToken }) => ({
+    renew: builder.mutation<RenewTokenResponse, RenewTokenDTO>({
+      query: (data) => ({
         url: "/token/renew",
         method: "POST",
-        body: {
-          token,
-          refresh_token: refreshToken
-        }
+        body: data
       }),
       async onQueryStarted(params, { dispatch, queryFulfilled }) {
         try {
@@ -79,7 +82,7 @@ export const authApi = createApi({
       }
     }),
     // 更新 device token
-    updateDeviceToken: builder.mutation({
+    updateDeviceToken: builder.mutation<void, { device_token: string }>({
       query: (device_token) => ({
         url: "/token/device_token",
         method: "PUT",
@@ -89,66 +92,69 @@ export const authApi = createApi({
       })
     }),
     //   获取openid
-    getOpenid: builder.mutation({
-      query: ({ issuer, redirect_uri }) => ({
+    getOpenid: builder.mutation<{ url: string }, { issuer: string; redirect_uri: string }>({
+      query: (data) => ({
         url: "/token/openid/authorize",
         method: "POST",
-        body: {
-          issuer,
-          redirect_uri
-        }
+        body: data
       })
     }),
 
-    checkMagicTokenValid: builder.mutation({
+    checkMagicTokenValid: builder.mutation<boolean, string>({
       query: (token) => ({
         url: "user/check_magic_token",
         method: "POST",
         body: { magic_token: token }
       })
     }),
-    updatePassword: builder.mutation({
-      query: ({ old_password, new_password }) => ({
+    updatePassword: builder.mutation<void, { old_password: string; new_password: string }>({
+      query: (data) => ({
         url: "user/change_password",
         method: "POST",
-        body: { old_password, new_password }
+        body: data
       })
     }),
-    sendLoginMagicLink: builder.mutation({
+    sendLoginMagicLink: builder.mutation<string, string>({
       query: (email) => ({
         headers: {
-          // "content-type": "text/plain",
           accept: "text/plain"
         },
         url: `user/send_login_magic_link?email=${encodeURIComponent(email)}`,
         method: "POST",
         responseHandler: (response: Response) => response.text()
-        // body: { email }
       })
     }),
-    sendRegMagicLink: builder.mutation({
+    sendRegMagicLink: builder.mutation<
+      {
+        new_magic_token: "string";
+        mail_is_sent: boolean;
+      },
+      {
+        magic_token: "string";
+        email: "string";
+        password: "string";
+      }
+    >({
       query: (data) => ({
         url: `user/send_reg_magic_link`,
         method: "POST",
         body: data
       })
     }),
-    getMetamaskNonce: builder.query({
+    getMetamaskNonce: builder.query<string, string>({
       query: (address) => ({
         url: `/token/metamask/nonce?public_address=${address}`
       })
     }),
-    checkEmail: builder.query({
+    checkEmail: builder.query<boolean, string>({
       query: (email) => ({
         url: `/user/check_email?email=${encodeURIComponent(email)}`
       })
     }),
-    // todo: check return type
-    getCredentials: builder.query<any, void>({
+    getCredentials: builder.query<CredentialResponse, void>({
       query: () => ({ url: "/token/credentials" })
     }),
-    // todo: check return type
-    logout: builder.query<any, void>({
+    logout: builder.query<void, void>({
       query: () => ({ url: "token/logout" }),
       async onQueryStarted(params, { dispatch, queryFulfilled }) {
         try {

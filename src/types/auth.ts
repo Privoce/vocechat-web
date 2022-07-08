@@ -6,6 +6,9 @@ export interface AuthToken {
   refresh_token: string;
   expired_in: number;
 }
+export interface RenewTokenDTO extends Pick<AuthToken, "token" | "refresh_token"> {}
+export interface RenewTokenResponse
+  extends Pick<AuthToken, "token" | "refresh_token" | "expired_in"> {}
 
 export interface AuthData extends AuthToken {
   initialized?: boolean;
@@ -57,3 +60,15 @@ export type LoginCredential =
   | GoogleCredential
   | ThirdPartyCredential
   | MagicLinkCredential;
+
+export type CredentialResponse = {
+  password: boolean;
+  google: string;
+  metamask: string;
+  oidc: string[];
+};
+export interface OIDCConfig {
+  enable: boolean;
+  favicon: string;
+  domain: string;
+}

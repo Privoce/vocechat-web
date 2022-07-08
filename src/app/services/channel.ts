@@ -9,9 +9,10 @@ import { removeChannelSession } from "../slices/message.channel";
 import { removeReactionMessage } from "../slices/message.reaction";
 import { onMessageSendStarted } from "./handlers";
 import handleChatMessage from "../../common/hook/useStreaming/chat.handler";
-import { Channel, CreateChannelDTO } from "../../types/channel";
+import { Channel, ChannelDTO, CreateChannelDTO } from "../../types/channel";
 import { RootState } from "../store";
-import { ContentTypeKey } from "../../types/message";
+import { ContentTypeKey, ChatMessage } from "../../types/message";
+
 export const channelApi = createApi({
   reducerPath: "channelApi",
   baseQuery,
@@ -41,7 +42,7 @@ export const channelApi = createApi({
         body: data
       })
     }),
-    updateChannel: builder.mutation({
+    updateChannel: builder.mutation<void, ChannelDTO>({
       query: ({ id, ...data }) => ({
         url: `group/${id}`,
         method: "PUT",
@@ -49,7 +50,7 @@ export const channelApi = createApi({
       }),
       async onQueryStarted({ id, name, description }, { dispatch, queryFulfilled }) {
         // id: who send to ,from_uid: who sent
-        const patchResult = dispatch(updateChannel({ id, name, description }));
+        const patchResult = dispatch(updateChannel({ gid: id, name, description }));
         try {
           await queryFulfilled;
         } catch {
@@ -58,7 +59,7 @@ export const channelApi = createApi({
         }
       }
     }),
-    getHistoryMessages: builder.query({
+    getHistoryMessages: builder.query<ChatMessage[], { id: number; mid?: number; limit: number }>({
       query: ({ id, mid = null, limit = 100 }) => ({
         url: mid
           ? `/group/${id}/history?before=${mid}&limit=${limit}`
@@ -145,21 +146,21 @@ export const channelApi = createApi({
         await onMessageSendStarted.call(this, param1, param2, "channel");
       }
     }),
-    addMembers: builder.mutation({
+    addMembers: builder.mutation<void, { id: number; members: number[] }>({
       query: ({ id, members }) => ({
         url: `group/${id}/members/add`,
         method: "POST",
         body: members
       })
     }),
-    removeMembers: builder.mutation({
+    removeMembers: builder.mutation<void, { id: number; members: number[] }>({
       query: ({ id, members }) => ({
         url: `group/${id}/members/remove`,
         method: "POST",
         body: members
       })
     }),
-    updateIcon: builder.mutation({
+    updateIcon: builder.mutation<void, { gid: number; image: File }>({
       query: ({ gid, image }) => ({
         headers: {
           "content-type": "image/png"

@@ -4,23 +4,16 @@ import { updateReadChannels, updateReadUsers } from "../slices/footprint";
 import { fillFavorites, populateFavorite, addFavorite, deleteFavorite } from "../slices/favorites";
 import { onMessageSendStarted } from "./handlers";
 import { normalizeArchiveData } from "../../common/utils";
-// import { updateMessage } from "../slices/message";
 import baseQuery from "./base.query";
-import { OG } from "../../types/common";
-type UploadFileResponse = {
-  path: string;
-  size: number;
-  hash: string;
-  image_properties: {
-    width: number;
-    height: number;
-  };
-};
+import { Archive, FavoriteArchive, OG } from "../../types/resource";
+import { ContentTypeKey, UploadFileResponse } from "../../types/message";
+import { RootState } from "../store";
+
 export const messageApi = createApi({
   reducerPath: "messageApi",
   baseQuery,
   endpoints: (builder) => ({
-    editMessage: builder.mutation({
+    editMessage: builder.mutation<number, { mid: number; content: string; type: ContentTypeKey }>({
       query: ({ mid, content, type = "text" }) => ({
         headers: {
           "content-type": ContentTypes[type]
@@ -50,7 +43,7 @@ export const messageApi = createApi({
         body: meta
       })
     }),
-    createArchive: builder.mutation({
+    createArchive: builder.mutation<string, number[]>({
       query: (mids = []) => ({
         url: `/resource/archive`,
         method: "POST",
@@ -73,7 +66,7 @@ export const messageApi = createApi({
         url: `/resource/open_graphic_parse?url=${encodeURIComponent(url)}`
       })
     }),
-    getArchiveMessage: builder.query({
+    getArchiveMessage: builder.query<Archive, string>({
       query: (file_path) => ({
         url: `/resource/archive?file_path=${encodeURIComponent(file_path)}`
       })
@@ -92,7 +85,7 @@ export const messageApi = createApi({
         body: { mid }
       })
     }),
-    favoriteMessage: builder.mutation({
+    favoriteMessage: builder.mutation<FavoriteArchive, number[]>({
       query: (mids) => ({
         url: `/favorite`,
         method: "POST",
@@ -123,14 +116,14 @@ export const messageApi = createApi({
         }
       }
     }),
-    getFavoriteDetails: builder.query({
+    getFavoriteDetails: builder.query<Archive, number>({
       query: (id) => ({
         url: `/favorite/${id}`
       }),
       async onQueryStarted(id, { dispatch, queryFulfilled, getState }) {
         try {
           const { data } = await queryFulfilled;
-          const loginUid = getState().authData.user.uid;
+          const loginUid = (getState() as RootState).authData.user.uid;
           const messages = normalizeArchiveData(data, id, loginUid);
           dispatch(populateFavorite({ id, messages }));
         } catch (err) {
@@ -138,7 +131,7 @@ export const messageApi = createApi({
         }
       }
     }),
-    getFavorites: builder.query({
+    getFavorites: builder.query<FavoriteArchive[], void>({
       query: () => ({
         url: `/favorite`
       }),
@@ -155,7 +148,10 @@ export const messageApi = createApi({
         }
       }
     }),
-    replyMessage: builder.mutation({
+    replyMessage: builder.mutation<
+      number,
+      { reply_mid: number; content: string; type: ContentTypeKey }
+    >({
       query: ({ reply_mid, content, type = "text" }) => ({
         headers: {
           "content-type": ContentTypes[type]

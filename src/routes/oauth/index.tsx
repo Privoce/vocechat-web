@@ -8,10 +8,10 @@ import toast from "react-hot-toast";
 import { setAuthData } from "../../app/slices/auth.data";
 
 export default function OAuthPage() {
-  const [login, { data, isSuccess, isError, error: loginError }] = useLoginMutation();
+  const [login, { data, isSuccess, isError }] = useLoginMutation();
   const { token } = useParams();
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const dispatch = useDispatch();
   const navigateTo = useNavigate();
   useEffect(() => {
@@ -28,9 +28,9 @@ export default function OAuthPage() {
   }, [token]);
   useEffect(() => {
     if (isError) {
-      setError(loginError);
+      setError("Something Error");
     }
-  }, [isError, loginError]);
+  }, [isError]);
 
   useEffect(() => {
     if (isSuccess && data) {

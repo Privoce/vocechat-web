@@ -68,7 +68,7 @@ const Styled = styled.div`
 `;
 
 interface Props {
-  type?: "chat";
+  type?: "chat" | "user";
 }
 
 const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {

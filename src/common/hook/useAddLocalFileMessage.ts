@@ -5,16 +5,16 @@ import { addChannelMsg } from "../../app/slices/message.channel";
 import { addUserMsg } from "../../app/slices/message.user";
 
 interface IProps {
-  context: "channel" | "uesr";
+  context: "channel" | "user";
   to: number;
 }
 
 export default function useAddLocalFileMessage({ context, to }: IProps) {
   const dispatch = useDispatch();
   const addContextMessage = context == "channel" ? addChannelMsg : addUserMsg;
-  const addLocalFileMesage = (data) => {
+  const addLocalFileMessage = (data) => {
     dispatch(addMessage(data));
     dispatch(addContextMessage({ id: to, mid: data.mid }));
   };
-  return addLocalFileMesage;
+  return addLocalFileMessage;
 }

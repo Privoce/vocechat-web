@@ -9,13 +9,14 @@ import BASE_URL, { ContentTypes } from "../config";
 import { onMessageSendStarted } from "./handlers";
 import handleChatMessage from "../../common/hook/useStreaming/chat.handler";
 import { User, UserDTO, UserForAdmin, UserForAdminDTO } from "../../types/user";
-import { ContentType, MuteDTO } from "../../types/message";
+import { ChatMessage, ContentTypeKey, MuteDTO } from "../../types/message";
+import { RootState } from "../store";
 
 export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery,
   endpoints: (builder) => ({
-    getUsers: builder.query({
+    getUsers: builder.query<User[], void>({
       query: () => ({ url: `user` }),
       transformResponse: (data: User[]) => {
         return data.map((user) => {
@@ -74,7 +75,7 @@ export const userApi = createApi({
         }
       }
     }),
-    updateAvatar: builder.mutation({
+    updateAvatar: builder.mutation<void, File>({
       query: (data) => ({
         headers: {
           "content-type": "image/png"
@@ -92,7 +93,10 @@ export const userApi = createApi({
       })
     }),
 
-    sendMsg: builder.mutation({
+    sendMsg: builder.mutation<
+      number,
+      { id: number; content: string; type: ContentTypeKey; properties?: object }
+    >({
       query: ({ id, content, type = "text", properties = "" }) => ({
         headers: {
           "content-type": ContentTypes[type],
@@ -108,7 +112,7 @@ export const userApi = createApi({
         await onMessageSendStarted.call(this, param1, param2, "user");
       }
     }),
-    getHistoryMessages: builder.query({
+    getHistoryMessages: builder.query<ChatMessage[], { id: number; mid?: number; limit: number }>({
       query: ({ id, mid = null, limit = 100 }) => ({
         url: mid
           ? `/user/${id}/history?before=${mid}&limit=${limit}`
@@ -118,7 +122,7 @@ export const userApi = createApi({
         const { data: messages } = await queryFulfilled;
         if (messages?.length) {
           messages.forEach((msg) => {
-            handleChatMessage(msg, dispatch, getState());
+            handleChatMessage(msg, dispatch, getState() as RootState);
           });
         }
       }

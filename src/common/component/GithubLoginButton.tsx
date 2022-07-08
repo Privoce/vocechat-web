@@ -6,6 +6,7 @@ import { KEY_LOCAL_MAGIC_TOKEN } from "../../app/config";
 import Button from "./styled/Button";
 import { useLoginMutation } from "../../app/services/auth";
 import toast from "react-hot-toast";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 
 const StyledSocialButton = styled(Button)`
   width: 100%;
@@ -51,7 +52,8 @@ const GithubLoginButton: FC<Props> = ({ type = "login", client_id }) => {
   }, [isSuccess]);
   useEffect(() => {
     if (error) {
-      switch (error?.status) {
+      // todo: why?
+      switch ((error as FetchBaseQueryError).status) {
         case 410:
           toast.error(
             "No associated account found, please user admin for an invitation link to join."

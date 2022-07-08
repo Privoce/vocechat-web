@@ -1,4 +1,4 @@
-import { useState, MouseEvent, ChangeEvent } from "react";
+import { useState, MouseEvent, ChangeEvent, FC } from "react";
 // import toast from "react-hot-toast";
 import Modal from "../Modal";
 import Button from "../styled/Button";
@@ -15,8 +15,12 @@ import useFilteredUsers from "../../hook/useFilteredUsers";
 import CloseIcon from "../../../assets/icons/close.circle.svg";
 import StyledCheckbox from "../styled/Checkbox";
 import toast from "react-hot-toast";
+interface IProps {
+  mids: number[];
+  closeModal: () => void;
+}
 
-export default function ForwardModal({ mids, closeModal }) {
+const ForwardModal: FC<IProps> = ({ mids, closeModal }) => {
   const [appendText, setAppendText] = useState("");
   const { sendMessages } = useSendMessage();
   const { forwardMessage, forwarding } = useForwardMessage();
@@ -176,4 +180,5 @@ export default function ForwardModal({ mids, closeModal }) {
       </StyledWrapper>
     </Modal>
   );
-}
+};
+export default ForwardModal;

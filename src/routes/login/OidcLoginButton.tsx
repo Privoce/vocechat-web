@@ -1,13 +1,14 @@
 /* eslint-disable no-undef */
-import { useState } from "react";
+import { FC, useState } from "react";
 import styled from "styled-components";
 import StyledModal from "../../common/component/styled/Modal";
 import Modal from "../../common/component/Modal";
 import { StyledSocialButton } from "./styled";
 import StyledButton from "../../common/component/styled/Button";
 import OidcLoginEntry from "./OidcLoginEntry";
+import { OIDCConfig } from "../../types/auth";
 
-const StyledOicdLoginModal = styled(StyledModal)`
+const StyledOidcLoginModal = styled(StyledModal)`
   text-align: center;
   padding: 32px 32px 16px;
 
@@ -21,13 +22,15 @@ const StyledOicdLoginModal = styled(StyledModal)`
       height: 24px;
     }
 
-    &Cancel {
+    &.buttonCancel {
       color: #8f8f8f;
     }
   }
 `;
-
-export default function OidcLoginButton({ issuers }) {
+interface IProps {
+  issuers?: OIDCConfig[];
+}
+const OidcLoginButton: FC<IProps> = ({ issuers }) => {
   const [modal, setModal] = useState(false);
   if (!issuers) return null;
   return (
@@ -41,7 +44,7 @@ export default function OidcLoginButton({ issuers }) {
       </StyledSocialButton>
       {modal && (
         <Modal id="modal-modal">
-          <StyledOicdLoginModal title="Login with OIDC">
+          <StyledOidcLoginModal title="Login with OIDC">
             {issuers
               .filter((issuer) => issuer.enable)
               .map((issuer, index) => (
@@ -55,9 +58,10 @@ export default function OidcLoginButton({ issuers }) {
             >
               Close
             </StyledButton>
-          </StyledOicdLoginModal>
+          </StyledOidcLoginModal>
         </Modal>
       )}
     </>
   );
-}
+};
+export default OidcLoginButton;

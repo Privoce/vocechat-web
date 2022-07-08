@@ -1,4 +1,4 @@
-import { useState, useEffect, FC } from "react";
+import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 // import { ContentTypes } from "../../../app/config";
 import { useNavigate, useMatch } from "react-router-dom";

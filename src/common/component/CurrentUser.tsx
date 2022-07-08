@@ -4,6 +4,7 @@ import micIcon from "../../assets/icons/mic.on.svg?url";
 import Avatar from "./Avatar";
 import useConfig from "../hook/useConfig";
 import { useAppSelector } from "../../app/store";
+import { FC } from "react";
 
 const StyledWrapper = styled.div`
   background-color: #f4f4f5;
@@ -60,8 +61,8 @@ const StyledWrapper = styled.div`
     }
   }
 `;
-
-export default function CurrentUser() {
+type Props = {};
+const CurrentUser: FC<Props> = () => {
   const { values: agoraConfig } = useConfig("agora");
   const currUser = useAppSelector((store) => {
     return store.authData.user;
@@ -86,4 +87,5 @@ export default function CurrentUser() {
       )}
     </StyledWrapper>
   );
-}
+};
+export default CurrentUser;

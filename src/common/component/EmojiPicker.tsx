@@ -11,8 +11,6 @@ interface Props {
 const StyledWrapper = styled.div`
   filter: drop-shadow(0px 25px 50px rgba(31, 41, 55, 0.25));
   border-radius: 12px;
-  /* height: 358px;
-  overflow: hidden; */
   .emoji-mart {
     border: none;
     border-radius: 12px;
@@ -43,10 +41,6 @@ const EmojiPicker: FC<Props> = ({ onSelect, ...rest }) => {
           perLine={10}
           emojiSize={24}
           emojiTooltip={true}
-          // set="twitter"
-          // data={data}
-          // set="twitter"
-          // showPreview={false}
           showSkinTones={false}
           onSelect={onSelect}
           {...rest}

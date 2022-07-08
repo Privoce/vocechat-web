@@ -3,7 +3,7 @@ import BASE_URL from "../config";
 import { updateInfo } from "../slices/server";
 import baseQuery from "./base.query";
 import { RootState } from "../store";
-import { User } from "../../types/auth";
+import { User } from "../../types/user";
 import {
   FirebaseConfig,
   GoogleAuthConfig,
@@ -51,7 +51,6 @@ export const serverApi = createApi({
     getServerVersion: builder.query<string, void>({
       query: () => ({
         headers: {
-          // "content-type": "text/plain",
           accept: "text/plain"
         },
         url: `/admin/system/version`,
@@ -128,7 +127,7 @@ export const serverApi = createApi({
         body: data
       })
     }),
-    updateLogo: builder.mutation({
+    updateLogo: builder.mutation<void, File>({
       query: (data) => ({
         headers: {
           "content-type": "image/png"

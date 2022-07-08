@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import Styled from "./styled";
-import { useSelector } from "react-redux";
-import FavoritedMessage from "../../common/component/Message/FavoritedMessage";
+import FavoredMessage from "../../common/component/Message/FavoredMessage";
 import dayjs from "dayjs";
 import IconAudio from "../../assets/icons/file.audio.svg";
 import IconVideo from "../../assets/icons/file.video.svg";
@@ -10,6 +9,7 @@ import IconUnknown from "../../assets/icons/file.unknown.svg";
 import IconImage from "../../assets/icons/file.image.svg";
 import IconChannel from "../../assets/icons/channel.svg";
 import { ContentTypes } from "../../app/config";
+import { useAppSelector } from "../../app/store";
 const Filters = [
   {
     icon: <IconUnknown className="icon" />,
@@ -40,7 +40,7 @@ const Filters = [
 function FavsPage() {
   const [filter, setFilter] = useState("");
   const [favs, setFavs] = useState([]);
-  const { favorites, channelData, userData } = useSelector((store) => {
+  const { favorites, channelData, userData } = useAppSelector((store) => {
     console.log("favs", store.favorites);
     return {
       favorites: store.favorites,
@@ -153,7 +153,7 @@ function FavsPage() {
                 {tip}
                 {dayjs(created_at).format("YYYY-MM-DD")}
               </h4>
-              <FavoritedMessage key={id} id={id} />
+              <FavoredMessage key={id} id={id} />
             </div>
           );
         })}

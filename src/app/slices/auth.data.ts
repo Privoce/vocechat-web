@@ -7,7 +7,7 @@ import {
   KEY_TOKEN,
   KEY_UID
 } from "../config";
-import { AuthData, AuthToken, User } from "../../types/auth";
+import { AuthData, AuthToken, RenewTokenResponse, User } from "../../types/auth";
 
 interface State {
   initialized: boolean;
@@ -67,7 +67,7 @@ const authDataSlice = createSlice({
     updateInitialized(state, action: PayloadAction<boolean>) {
       state.initialized = action.payload;
     },
-    updateToken(state, action: PayloadAction<AuthToken>) {
+    updateToken(state, action: PayloadAction<RenewTokenResponse>) {
       const { token, refresh_token, expired_in } = action.payload;
       state.token = token;
       const et = +new Date() + Number(expired_in) * 1000;

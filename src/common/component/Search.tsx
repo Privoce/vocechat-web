@@ -4,6 +4,7 @@ import searchIcon from "../../assets/icons/search.svg?url";
 import addIcon from "../../assets/icons/add.svg?url";
 import AddEntriesMenu from "./AddEntriesMenu";
 import Tooltip from "./Tooltip";
+import { FC } from "react";
 
 const StyledWrapper = styled.div`
   position: relative;
@@ -32,8 +33,8 @@ const StyledWrapper = styled.div`
     cursor: pointer;
   }
 `;
-
-export default function Search() {
+type Props = {};
+const Search: FC<Props> = () => {
   return (
     <StyledWrapper>
       <div className="search">
@@ -47,4 +48,5 @@ export default function Search() {
       </Tooltip>
     </StyledWrapper>
   );
-}
+};
+export default Search;

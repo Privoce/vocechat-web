@@ -20,7 +20,6 @@ const StyledConfirm = styled.div`
   gap: 10px;
   width: 250px;
   .tip {
-    /* word-break: break-all; */
     color: orange;
     font-size: 12px;
     line-height: 1.5;
@@ -100,7 +99,7 @@ export default function APIConfig() {
       </Tippy>
       <div className="tip">
         Tip: The security key agreed between the server and the third-party app is used to encrypt
-        the communication data.{" "}
+        the communication data.
       </div>
     </Styled>
   );
