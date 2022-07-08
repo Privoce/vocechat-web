@@ -1,9 +1,9 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface State {
-  ids: string[];
+  ids: number[];
   // todo: check object type
-  byId: { [id: number]: any; };
+  byId: { [id: number]: any };
 }
 
 const initialState: State = {
@@ -18,17 +18,16 @@ const userMsgSlice = createSlice({
     resetUserMsg() {
       return initialState;
     },
-    fullfillUserMsg(state, action: PayloadAction<{ [id: string]: any; }>) {
+    fillUserMsg(state, action: PayloadAction<{ [id: number]: any }>) {
       state.ids = Object.keys(action.payload);
       state.byId = action.payload;
     },
-    addUserMsg(state, action) {
+    addUserMsg(state, action: PayloadAction<{ id: number; mid: number; local_id: number }>) {
       const { id, mid, local_id } = action.payload;
       if (state.byId[id]) {
-        const midExsited = state.byId[id].findIndex((id) => id == mid) > -1;
-        const localMsgExsited = state.byId[id].findIndex((id) => id == local_id) > -1;
-        if (midExsited || localMsgExsited) return;
-
+        const midExisted = state.byId[id].findIndex((id) => id == mid) > -1;
+        const localMsgExisted = state.byId[id].findIndex((id) => id == local_id) > -1;
+        if (midExisted || localMsgExisted) return;
         state.byId[id].push(+mid);
         // 只要有新消息，就检查下
         if (state.ids.findIndex((uid) => uid == id) == -1) {
@@ -62,16 +61,13 @@ const userMsgSlice = createSlice({
     removeUserSession(state, action) {
       const ids = Array.isArray(action.payload) ? action.payload : [action.payload];
       state.ids = state.ids.filter((id) => ids.findIndex((i) => i == id) == -1);
-      // ids.forEach((id) => {
-      //   delete state.byId[id];
-      // });
     }
   }
 });
 export const {
   removeUserSession,
   resetUserMsg,
-  fullfillUserMsg,
+  fillUserMsg,
   addUserMsg,
   removeUserMsg,
   replaceUserMsg

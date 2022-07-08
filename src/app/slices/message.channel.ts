@@ -13,7 +13,7 @@ const channelMsgSlice = createSlice({
     resetChannelMsg() {
       return initialState;
     },
-    fullfillChannelMsg(state, action: PayloadAction<State>) {
+    fillChannelMsg(state, action: PayloadAction<State>) {
       return action.payload;
     },
     addChannelMsg(state, action: PayloadAction<{ id: number; mid: number; local_id?: any }>) {
@@ -59,7 +59,7 @@ const channelMsgSlice = createSlice({
 export const {
   removeChannelSession,
   resetChannelMsg,
-  fullfillChannelMsg,
+  fillChannelMsg,
   addChannelMsg,
   removeChannelMsg,
   replaceChannelMsg

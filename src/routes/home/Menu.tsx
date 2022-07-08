@@ -1,4 +1,4 @@
-// import React from 'react'
+import { FC } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import Tooltip from "../../common/component/Tooltip";
 import settingIcon from "../../assets/icons/setting.svg?url";
@@ -31,7 +31,8 @@ const StyledMenus = styled.ul`
     }
   }
 `;
-export default function Menu() {
+type Props = {};
+const Menu: FC<Props> = () => {
   const { pathname } = useLocation();
   return (
     <StyledMenus>
@@ -59,4 +60,5 @@ export default function Menu() {
       </li> */}
     </StyledMenus>
   );
-}
+};
+export default Menu;

@@ -23,7 +23,6 @@ export const ChatPrefixs = {
   user: "@"
 };
 export const vapidKey = `BGXCn-5YRXSFw38Q9lUKJ5bibL212-yIQn1pCvthGhp6_KwA29FO1Ax_d_7if1vfC2a5wTSVO8AcZrc-Hm1aS0Y`;
-// "840319286941-6ds7lbvk55eq8mjortf68cb2ll65lprt.apps.googleusercontent.com";
 export const tokenHeader = "X-API-Key";
 export const FILE_SLICE_SIZE = 1000 * 200 * 8; //200kb
 export const FILE_IMAGE_SIZE = 1000 * 10000 * 8; //10mb

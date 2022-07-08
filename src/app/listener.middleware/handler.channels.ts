@@ -7,7 +7,7 @@ export default async function handler({ operation, data, payload }) {
     return;
   }
   switch (operation) {
-    case "fullfillChannels":
+    case "fillChannels":
       {
         const chs = payload;
         await Promise.all(

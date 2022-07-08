@@ -5,11 +5,6 @@ import { useLazyGetUsersQuery } from "../../app/services/user";
 import { useLazyGetServerQuery } from "../../app/services/server";
 import useStreaming from "../../common/hook/useStreaming";
 import { useAppSelector } from "../../app/store";
-// pollingInterval: 0,
-// const querySetting = {
-//   refetchOnMountOrArgChange: true,
-// };
-// let request = null;
 export default function usePreload() {
   const { rehydrate, rehydrated } = useRehydrate();
   const { loginUid, token } = useAppSelector((store) => {

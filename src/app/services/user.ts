@@ -4,11 +4,12 @@ import { KEY_UID } from "../config";
 import baseQuery from "./base.query";
 import { resetAuthData } from "../slices/auth.data";
 import { updateMute } from "../slices/footprint";
-import { fullfillUsers } from "../slices/users";
+import { fillUsers } from "../slices/users";
 import BASE_URL, { ContentTypes } from "../config";
 import { onMessageSendStarted } from "./handlers";
 import handleChatMessage from "../../common/hook/useStreaming/chat.handler";
-import { User } from "../../types/auth";
+import { User, UserDTO, UserForAdmin, UserForAdminDTO } from "../../types/user";
+import { ContentType, MuteDTO } from "../../types/message";
 
 export const userApi = createApi({
   reducerPath: "userApi",
@@ -28,7 +29,7 @@ export const userApi = createApi({
         });
       },
       async onQueryStarted(data, { dispatch, queryFulfilled }) {
-        const local_uid = localStorage.getItem(KEY_UID);
+        const local_uid = Number(localStorage.getItem(KEY_UID));
         try {
           const { data: users } = await queryFulfilled;
           const matchedUser = users.find((c) => c.uid == local_uid);
@@ -41,24 +42,24 @@ export const userApi = createApi({
             const markedUsers = users.map((u) => {
               return u.uid == matchedUser.uid ? { ...u, online: true } : u;
             });
-            dispatch(fullfillUsers(markedUsers));
+            dispatch(fillUsers(markedUsers));
           }
         } catch {
           console.log("get user list error");
         }
       }
     }),
-    deleteUser: builder.query({
+    deleteUser: builder.query<void, number>({
       query: (uid) => ({ url: `/admin/user/${uid}`, method: "DELETE" })
     }),
-    updateUser: builder.mutation({
+    updateUser: builder.mutation<UserForAdmin, UserForAdminDTO>({
       query: ({ id, ...rest }) => ({
         url: `/admin/user/${id}`,
         body: rest,
         method: "PUT"
       })
     }),
-    updateMuteSetting: builder.mutation({
+    updateMuteSetting: builder.mutation<void, MuteDTO>({
       query: (data) => ({
         url: `/user/mute`,
         method: "POST",
@@ -83,7 +84,7 @@ export const userApi = createApi({
         body: data
       })
     }),
-    updateInfo: builder.mutation({
+    updateInfo: builder.mutation<User, UserDTO>({
       query: (data) => ({
         url: `user`,
         method: "PUT",

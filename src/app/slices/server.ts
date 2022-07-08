@@ -25,7 +25,7 @@ const serverSlice = createSlice({
     resetServer() {
       return initialState;
     },
-    fullfillServer(state, action: PayloadAction<StoredServer>) {
+    fillServer(state, action: PayloadAction<StoredServer>) {
       const {
         inviteLink = {
           link: "",
@@ -51,5 +51,5 @@ const serverSlice = createSlice({
   }
 });
 
-export const { updateInfo, resetServer, fullfillServer } = serverSlice.actions;
+export const { updateInfo, resetServer, fillServer } = serverSlice.actions;
 export default serverSlice.reducer;

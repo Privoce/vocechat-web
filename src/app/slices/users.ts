@@ -26,7 +26,7 @@ const usersSlice = createSlice({
     resetUsers() {
       return initialState;
     },
-    fullfillUsers(state, action: PayloadAction<StoredUser[]>) {
+    fillUsers(state, action: PayloadAction<StoredUser[]>) {
       const users = action.payload || [];
       state.ids = users.map(({ uid }) => uid);
       state.byId = Object.fromEntries(
@@ -99,6 +99,5 @@ const usersSlice = createSlice({
   }
 });
 
-export const { resetUsers, fullfillUsers, updateUsersByLogs, updateUsersStatus } =
-  usersSlice.actions;
+export const { resetUsers, fillUsers, updateUsersByLogs, updateUsersStatus } = usersSlice.actions;
 export default usersSlice.reducer;

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useDebounce } from "rooks";
 import { NavLink, useLocation } from "react-router-dom";
 import Tippy from "@tippyjs/react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import PinList from "./PinList";
 import FavList from "../FavList";
 import { useReadMessageMutation } from "../../../app/services/message";
@@ -23,16 +23,10 @@ import IconPin from "../../../assets/icons/pin.svg";
 import IconHeadphone from "../../../assets/icons/headphone.svg";
 
 import addIcon from "../../../assets/icons/add.svg?url";
-import {
-  // StyledNotification,
-  StyledUsers,
-  StyledChannelChat,
-  StyledHeader
-} from "./styled";
+import { StyledUsers, StyledChannelChat, StyledHeader } from "./styled";
 import InviteModal from "../../../common/component/InviteModal";
 import LoadMore from "../LoadMore";
-// import useChatScroll from "../../../common/hook/useChatScroll";
-
+import { useAppSelector } from "../../../app/store";
 export default function ChannelChat({ cid = "", dropFiles = [] }) {
   const { values: agoraConfig } = useConfig("agora");
   const {
@@ -44,7 +38,6 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
     context: "channel",
     id: cid
   });
-  // const scrollObserveRef = useChatScroll([msgIds, appends]);
   const [toolVisible, setToolVisible] = useState("");
   const { pathname } = useLocation();
   const dispatch = useDispatch();
@@ -60,7 +53,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
     messageData,
     loginUser,
     footprint
-  } = useSelector((store) => {
+  } = useAppSelector((store) => {
     return {
       selects: store.ui.selectMessages[`channel_${cid}`],
       footprint: store.footprint,
@@ -71,10 +64,6 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
       messageData: store.message || {}
     };
   });
-  // const ref = useChatScroll(msgIds);
-  // const handleClearUnreads = () => {
-  //   dispatch(readMessage(msgIds));
-  // };
   useEffect(() => {
     dispatch(updateRememberedNavs());
     return () => {
@@ -91,7 +80,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
   if (!data) return null;
   const { name, description, is_public, members = [], owner } = data;
   const memberIds = is_public ? userIds : members.slice(0).sort((n) => (n == owner ? -1 : 0));
-  const addVisible = loginUser?.is_admin || owner == loginUser.uid;
+  const addVisible = loginUser?.is_admin || owner == loginUser?.uid;
   console.log("channel message list", msgIds);
   const readIndex = footprint.readChannels[cid];
   const pinCount = data?.pinned_messages?.length || 0;
@@ -103,7 +92,6 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
         to={cid}
         context="channel"
         dropFiles={dropFiles}
-        // ref={containerRef}
         aside={
           <>
             <ul className="tools">
@@ -171,7 +159,6 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
                 </Tooltip>
               </li>
             </ul>
-            {/* <hr className="divider" /> */}
           </>
         }
         header={
@@ -211,11 +198,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
           ) : null
         }
       >
-        <StyledChannelChat
-          // ref={scrollObserveRef}
-          id={`VOCECHAT_FEED_channel_${cid}`}
-        >
-          {/* <div className="anchor"></div> */}
+        <StyledChannelChat id={`VOCECHAT_FEED_channel_${cid}`}>
           {hasMore ? (
             <LoadMore pullUp={pullUp} />
           ) : (
@@ -246,22 +229,7 @@ export default function ChannelChat({ cid = "", dropFiles = [] }) {
               context: "channel"
             });
           })}
-
-          {/* </div> */}
         </StyledChannelChat>
-        {/* {unreads != 0 && (
-        <StyledNotification>
-          <div className="content">
-            {unreads} new messages
-            {msgs.lastAccess
-              ? `since ${dayjs(msgs.lastAccess).format("YYYY-MM-DD h:mm:ss A")}`
-              : ""}
-          </div>
-          <button onClick={handleClearUnreads} className="clear">
-            Mark As Read
-          </button>
-        </StyledNotification>
-      )} */}
       </Layout>
     </>
   );

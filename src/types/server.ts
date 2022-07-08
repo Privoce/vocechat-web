@@ -1,5 +1,5 @@
 // call `organization` in backend
-import { User } from "./auth";
+import { User } from "./user";
 
 export interface Server {
   name: string;

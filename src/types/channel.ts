@@ -46,6 +46,7 @@ export interface UpdateChannelDTO {
   // type = 'user_joined_group' | 'user_leaved_group'
   // gid
   uid?: number[];
+  icon?: string;
 }
 
 export interface UpdatePinnedMessageDTO {

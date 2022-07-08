@@ -1,5 +1,4 @@
 // import React from 'react';
-// import { useEffect } from "react";
 import { Outlet, NavLink, useLocation, useMatch } from "react-router-dom";
 import StyledWrapper from "./styled";
 import User from "./User";
@@ -36,7 +35,6 @@ export default function HomePage() {
     };
   });
   const { loading } = usePreload();
-  // console.log("index loading", loading, ready);
   if (loading || !ready) {
     return <Loading reload={true} fullscreen={true} />;
   }
@@ -60,7 +58,7 @@ export default function HomePage() {
       <Notification />
       <StyledWrapper>
         <div className={`col left`}>
-          <User uid={loginUid} />
+          {loginUid && <User uid={loginUid} />}
           <nav className="link_navs">
             <NavLink
               className={() => {

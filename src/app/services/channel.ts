@@ -99,14 +99,14 @@ export const channelApi = createApi({
         const {
           channelMessage,
           ui: {
-            rememberedNavs: { chat: remeberedPath }
+            rememberedNavs: { chat: rememberedPath }
           }
         } = getState() as RootState;
         try {
           await queryFulfilled;
           // 删掉该channel下的所有消息&reaction
           const mids = channelMessage[id];
-          if (remeberedPath == `/chat/channel/${id}`) {
+          if (rememberedPath == `/chat/channel/${id}`) {
             dispatch(updateRememberedNavs({ path: null }));
           }
           if (mids) {

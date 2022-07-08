@@ -6,7 +6,7 @@ import BASE_URL from "../../../app/config";
 import { setReady } from "../../../app/slices/ui";
 import { useRenewMutation } from "../../../app/services/auth";
 import {
-  fullfillChannels,
+  fillChannels,
   addChannel,
   removeChannel,
   updateChannel,
@@ -208,8 +208,8 @@ export default function useStreaming() {
               }
               break;
             case "related_groups":
-              console.log("fullfill channels from streaming", data);
-              dispatch(fullfillChannels(data.groups));
+              console.log("fill channels from streaming", data);
+              dispatch(fillChannels(data.groups));
               break;
             case "joined_group":
               console.log("joined group", data.group);

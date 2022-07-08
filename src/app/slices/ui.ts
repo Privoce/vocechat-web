@@ -39,7 +39,7 @@ const uiSlice = createSlice({
   name: "ui",
   initialState,
   reducers: {
-    fullfillUI(state, action) {
+    fillUI(state, action) {
       return { ...initialState, ...action.payload };
     },
     setReady(state) {
@@ -57,7 +57,10 @@ const uiSlice = createSlice({
     updateFileListView(state, action) {
       state.fileListView = action.payload;
     },
-    updateRememberedNavs(state, action: PayloadAction<{ key?: string; path: string | null }>) {
+    updateRememberedNavs(
+      state,
+      action: PayloadAction<{ key?: "chat" | "user"; path: string | null } | undefined>
+    ) {
       const { key = "chat", path = null } = action.payload || {};
       state.rememberedNavs[key] = path;
     },
@@ -155,7 +158,7 @@ const uiSlice = createSlice({
 });
 
 export const {
-  fullfillUI,
+  fillUI,
   setReady,
   updateOnline,
   updateInputMode,

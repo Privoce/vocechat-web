@@ -1,10 +1,12 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // todo: check entity type
 export interface State {
-  [mid: number]: {
-    [reaction: number]: number[]
-  } | undefined;
+  [mid: number]:
+    | {
+        [reaction: number]: number[];
+      }
+    | undefined;
 }
 
 const initialState: State = {};
@@ -15,7 +17,7 @@ const reactionMessageSlice = createSlice({
     resetReactionMessage() {
       return initialState;
     },
-    fullfillReactionMessage(state, action: PayloadAction<State>) {
+    fillReactionMessage(state, action: PayloadAction<State>) {
       return action.payload;
     },
     removeReactionMessage(state, action: PayloadAction<number | number[]>) {
@@ -59,7 +61,7 @@ const reactionMessageSlice = createSlice({
 export const {
   removeReactionMessage,
   resetReactionMessage,
-  fullfillReactionMessage,
+  fillReactionMessage,
   toggleReactionMessage
 } = reactionMessageSlice.actions;
 

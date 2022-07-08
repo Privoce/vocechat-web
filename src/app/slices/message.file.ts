@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: number[] = [];
 
@@ -9,7 +9,7 @@ const fileMessageSlice = createSlice({
     resetFileMessage() {
       return initialState;
     },
-    fullfillFileMessage(state, action: PayloadAction<number[]>) {
+    fillFileMessage(state, action: PayloadAction<number[]>) {
       return action.payload || [];
     },
     addFileMessage(state, action: PayloadAction<number>) {
@@ -33,7 +33,7 @@ const fileMessageSlice = createSlice({
   }
 });
 
-export const { removeFileMessage, resetFileMessage, fullfillFileMessage, addFileMessage } =
+export const { removeFileMessage, resetFileMessage, fillFileMessage, addFileMessage } =
   fileMessageSlice.actions;
 
 export default fileMessageSlice.reducer;

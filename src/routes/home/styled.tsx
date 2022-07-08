@@ -13,7 +13,6 @@ const StyledWrapper = styled.div`
       position: relative;
       background: transparent;
       width: 64px;
-      /* box-shadow: inset -1px 0px 0px rgba(0, 0, 0, 0.1); */
       transition: all 0.5s ease-in;
       > .divider {
         width: -webkit-fill-available;

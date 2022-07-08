@@ -1,12 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { ContentTypes } from "../config";
 import { updateReadChannels, updateReadUsers } from "../slices/footprint";
-import {
-  fullfillFavorites,
-  populateFavorite,
-  addFavorite,
-  deleteFavorite
-} from "../slices/favorites";
+import { fillFavorites, populateFavorite, addFavorite, deleteFavorite } from "../slices/favorites";
 import { onMessageSendStarted } from "./handlers";
 import { normalizeArchiveData } from "../../common/utils";
 // import { updateMessage } from "../slices/message";
@@ -150,7 +145,7 @@ export const messageApi = createApi({
       async onQueryStarted(data, { dispatch, queryFulfilled }) {
         try {
           const { data: favorites } = await queryFulfilled;
-          dispatch(fullfillFavorites(favorites));
+          dispatch(fillFavorites(favorites));
           for (const fav of favorites) {
             const { id } = fav;
             dispatch(messageApi.endpoints.getFavoriteDetails.initiate(id));

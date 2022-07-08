@@ -17,7 +17,7 @@ const messageSlice = createSlice({
     resetMessage() {
       return initialState;
     },
-    fullfillMessage(state, action) {
+    fillMessage(state, action) {
       return Object.assign({ ...initialState }, action.payload);
     },
     updateMessage(state, action) {
@@ -75,7 +75,7 @@ const messageSlice = createSlice({
 
 export const {
   resetMessage,
-  fullfillMessage,
+  fillMessage,
   setMessage,
   updateMessage,
   addMessage,

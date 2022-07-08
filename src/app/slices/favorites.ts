@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 // import BASE_URL from "../config";
 
 // todo: check messages type
@@ -13,7 +13,7 @@ const favoritesSlice = createSlice({
   name: `favorites`,
   initialState,
   reducers: {
-    fullfillFavorites(state, action: PayloadAction<Favorite[]>) {
+    fillFavorites(state, action: PayloadAction<Favorite[]>) {
       return action.payload;
     },
     addFavorite(state, action: PayloadAction<Favorite>) {
@@ -36,7 +36,7 @@ const favoritesSlice = createSlice({
   }
 });
 
-export const { addFavorite, deleteFavorite, fullfillFavorites, populateFavorite } =
+export const { addFavorite, deleteFavorite, fillFavorites, populateFavorite } =
   favoritesSlice.actions;
 
 export default favoritesSlice.reducer;

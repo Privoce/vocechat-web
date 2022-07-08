@@ -24,7 +24,7 @@ const channelsSlice = createSlice({
     resetChannels() {
       return initialState;
     },
-    fullfillChannels(state, action: PayloadAction<Channel[]>) {
+    fillChannels(state, action: PayloadAction<Channel[]>) {
       const channels = action.payload || [];
       state.ids = channels.map(({ gid }) => gid);
       channels.forEach((c) => {
@@ -113,7 +113,7 @@ const channelsSlice = createSlice({
 export const {
   updatePinMessage,
   resetChannels,
-  fullfillChannels,
+  fillChannels,
   addChannel,
   updateChannel,
   removeChannel

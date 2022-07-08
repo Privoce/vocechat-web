@@ -1,17 +1,15 @@
-// import React from "react";
-// import { useSelector } from "react-redux";
+import { FC, FormEvent } from "react";
 import styled from "styled-components";
 import usePinMessage from "../../../common/hook/usePinMessage";
 import PreviewMessage from "../../../common/component/Message/PreviewMessage";
-import IconSurprise from "../../../assets/icons/emoji.suprise.svg";
-// import IconForward from "../../../assets/icons/forward.svg";
+import IconSurprise from "../../../assets/icons/emoji.surprise.svg";
 import IconClose from "../../../assets/icons/close.svg";
 const Styled = styled.div`
   padding: 16px;
   background: #f9fafb;
   filter: drop-shadow(0px 25px 50px rgba(31, 41, 55, 0.25));
   border-radius: 12px;
-  width: 406px;
+  min-width: 406px;
   > .head {
     font-weight: 600;
     font-size: 16px;
@@ -81,11 +79,14 @@ const Styled = styled.div`
     }
   }
 `;
-export default function PinList({ id }) {
+type Props = {
+  id: number;
+};
+const PinList: FC<Props> = ({ id }: Props) => {
   const { pins, unpinMessage, canPin } = usePinMessage(id);
-  const handleUnpin = (evt) => {
+  const handleUnpin = (evt: FormEvent<HTMLButtonElement>) => {
     const { mid } = evt.currentTarget.dataset;
-    console.log("unpin msg", mid);
+    if (!mid) return;
     unpinMessage(+mid);
   };
   const noPins = pins.length == 0;
@@ -125,4 +126,5 @@ export default function PinList({ id }) {
       )}
     </Styled>
   );
-}
+};
+export default PinList;
