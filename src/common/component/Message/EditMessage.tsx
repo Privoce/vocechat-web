@@ -1,10 +1,10 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, ChangeEvent, KeyboardEvent, FC } from "react";
 import styled from "styled-components";
 import TextareaAutosize from "react-textarea-autosize";
 import { useKey } from "rooks";
-import { useSelector } from "react-redux";
 import { useEditMessageMutation } from "../../../app/services/message";
 import { ContentTypes } from "../../../app/config";
+import { useAppSelector } from "../../../app/store";
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -46,10 +46,13 @@ const StyledWrapper = styled.div`
     }
   }
 `;
-
-export default function EditMessage({ mid, cancelEdit }) {
+type Props = {
+  mid: number;
+  cancelEdit: () => void;
+};
+const EditMessage: FC<Props> = ({ mid, cancelEdit }) => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const msg = useSelector((store) => store.message[mid] || {});
+  const msg = useAppSelector((store) => store.message[mid] || {});
   const [shift, setShift] = useState(false);
   const [enter, setEnter] = useState(false);
   const [currMsg, setCurrMsg] = useState(msg.content);
@@ -77,16 +80,14 @@ export default function EditMessage({ mid, cancelEdit }) {
     },
     { eventTypes: ["keydown", "keyup"], target: inputRef }
   );
-  const handleMsgChange = (evt) => {
+  const handleMsgChange = (evt: ChangeEvent<HTMLTextAreaElement>) => {
     if (enter && !shift) {
       handleSave();
     } else {
       setCurrMsg(evt.target.value);
     }
   };
-  const handleInputKeydown = (e) => {
-    console.log("keydown event", e);
-    // if(e.key==="Esc")
+  const handleInputKeydown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     setEnter(e.key === "Enter");
   };
   const handleSave = () => {
@@ -129,4 +130,5 @@ export default function EditMessage({ mid, cancelEdit }) {
       </div>
     </StyledWrapper>
   );
-}
+};
+export default EditMessage;

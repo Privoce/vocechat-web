@@ -12,7 +12,7 @@ export default function usePinMessage(cid: number) {
     };
   });
   const [pin, { isError, isLoading, isSuccess }] = usePinMessageMutation();
-  const [unpin, { isError: isUnpinError, isLoading: isUnpining, isSuccess: isUnpinSuccess }] =
+  const [unpin, { isError: isUnpinError, isLoading: isUnpinning, isSuccess: isUnpinSuccess }] =
     useUnpinMessageMutation();
   const pinMessage = (mid: number) => {
     if (!mid || !cid) return;
@@ -46,7 +46,7 @@ export default function usePinMessage(cid: number) {
     isPining: isLoading,
     isSuccess,
     isUnpinError,
-    isUnpining,
+    isUnpinning,
     isUnpinSuccess
   };
 }

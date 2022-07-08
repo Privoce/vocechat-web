@@ -19,14 +19,13 @@ interface SendMessagesDTO {
 }
 
 interface SendMessageDTO {
-  type: "text";
-  content: string;
-  properties: object;
-  reply_mid?: number;
+  context: "user" | "channel";
+  from: number;
+  to: number;
 }
 
-export default function useSendMessage(props?: Props) {
-  const { context = "user", from = null, to = null } = props || {};
+const useSendMessage = (props: Props) => {
+  const { context = "user", from, to = null } = props;
   const dispatch = useAppDispatch();
   const stageFiles = useAppSelector((store) => store.ui.uploadFiles[`${context}_${to}`] || []);
   const [replyMessage, { isError: replyErr, isLoading: replying, isSuccess: replySuccess }] =
@@ -110,4 +109,5 @@ export default function useSendMessage(props?: Props) {
     isSending: userSending || channelSending || replying,
     isSuccess: channelSuccess || userSuccess || replySuccess
   };
-}
+};
+export default useSendMessage;

@@ -1,9 +1,7 @@
-// import React from "react";
-// import { useSelector } from "react-redux";
+import { MouseEvent } from "react";
 import styled from "styled-components";
 import FavoredMessage from "../../common/component/Message/FavoredMessage";
-import IconSurprise from "../../assets/icons/emoji.suprise.svg";
-// import IconForward from "../../../assets/icons/forward.svg";
+import IconSurprise from "../../assets/icons/emoji.surprise.svg";
 import IconRemove from "../../assets/icons/close.svg";
 import useFavMessage from "../../common/hook/useFavMessage";
 
@@ -87,7 +85,7 @@ const Styled = styled.div`
 
 export default function FavList({ cid = null, uid = null }) {
   const { favorites, removeFavorite } = useFavMessage({ cid, uid });
-  const handleRemove = (evt) => {
+  const handleRemove = (evt: MouseEvent<HTMLButtonElement>) => {
     const { id } = evt.currentTarget.dataset;
     console.log("remove fav", id);
     removeFavorite(id);

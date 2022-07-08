@@ -42,10 +42,8 @@ export default function MessageContextMenu({
   const { setReplying } = useSendMessage({ context, to: contextId });
   const handleSelect = () => {
     dispatch(updateSelectMessages({ context, id: contextId, data: mid }));
-    // hideAll();
   };
   const handleReply = () => {
-    // console.log("dddd", contextId, mid);
     if (contextId) {
       setReplying(mid);
     }

@@ -1,7 +1,6 @@
 // import React from 'react';
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 import StyledWrapper from "./styled";
 import BlankPlaceholder from "../../common/component/BlankPlaceholder";
@@ -12,11 +11,12 @@ import DMChat from "./DMChat";
 import UsersModal from "../../common/component/UsersModal";
 import ChannelModal from "../../common/component/ChannelModal";
 import SessionList from "./SessionList";
+import { useAppSelector } from "../../app/store";
 export default function ChatPage() {
   const [channelModalVisible, setChannelModalVisible] = useState(false);
   const [usersModalVisible, setUsersModalVisible] = useState(false);
   const { channel_id, user_id } = useParams();
-  const { sessionUids } = useSelector((store) => {
+  const { sessionUids } = useAppSelector((store) => {
     return {
       sessionUids: store.userMessage.ids
     };
@@ -48,7 +48,7 @@ export default function ChatPage() {
         <div className={`right ${placeholderVisible ? "placeholder" : ""}`}>
           {placeholderVisible && <BlankPlaceholder />}
           {channel_id && <ChannelChat cid={channel_id} />}
-          {user_id && <DMChat uid={user_id} />}
+          {user_id && <DMChat uid={+user_id} />}
         </div>
       </StyledWrapper>
     </>

@@ -45,7 +45,7 @@ const uiSlice = createSlice({
     setReady(state) {
       state.ready = true;
     },
-    updateOnline(state, action) {
+    updateOnline(state, action: PayloadAction<boolean>) {
       state.online = action.payload;
     },
     toggleMenuExpand(state) {

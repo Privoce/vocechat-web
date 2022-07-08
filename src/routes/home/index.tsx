@@ -6,7 +6,6 @@ import User from "./User";
 import Loading from "../../common/component/Loading";
 import Menu from "./Menu";
 import usePreload from "./usePreload";
-import usePWABadge from "../../common/hook/usePWABadge";
 import Tooltip from "../../common/component/Tooltip";
 import Notification from "../../common/component/Notification";
 import Manifest from "../../common/component/Manifest";
@@ -18,7 +17,6 @@ import FolderIcon from "../../assets/icons/folder.svg";
 import { useAppSelector } from "../../app/store";
 // const routes = ["/setting", "/setting/channel/:cid"];
 export default function HomePage() {
-  usePWABadge();
   const isHomePath = useMatch(`/`);
   const isChatHomePath = useMatch(`/chat`);
   const { pathname } = useLocation();
