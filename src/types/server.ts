@@ -58,6 +58,12 @@ export interface LoginConfig {
   metamask: boolean;
   third_party: boolean;
 }
+export interface LicenseResponse {
+  domain: string;
+  created_at: string;
+  expired_at: string;
+  sign: boolean;
+}
 export interface CreateAdminDTO extends Pick<User, "email" | "name" | "gender"> {
   password: string;
 }

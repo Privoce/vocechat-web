@@ -13,7 +13,8 @@ import {
   CreateAdminDTO,
   SMTPConfig,
   AgoraConfig,
-  GithubAuthConfig
+  GithubAuthConfig,
+  LicenseResponse
 } from "../../types/server";
 
 const defaultExpireDuration = 7 * 24 * 60 * 60;
@@ -192,6 +193,21 @@ export const serverApi = createApi({
       query: () => ({
         url: `/admin/system/initialized`
       })
+    }),
+
+    checkLicense: builder.mutation<LicenseResponse, string>({
+      query: (license) => ({
+        url: "/license/check",
+        method: "POST",
+        body: { license }
+      })
+    }),
+    upsertLicense: builder.mutation<boolean, string>({
+      query: (license) => ({
+        url: "/license/save",
+        method: "POST",
+        body: { license }
+      })
     })
   })
 });
@@ -223,5 +239,7 @@ export const {
   useGetThirdPartySecretQuery,
   useUpdateThirdPartySecretMutation,
   useCreateAdminMutation,
-  useGetInitializedQuery
+  useGetInitializedQuery,
+  useUpsertLicenseMutation,
+  useCheckLicenseMutation
 } = serverApi;
