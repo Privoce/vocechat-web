@@ -1,8 +1,7 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, FC } from "react";
 import dayjs from "dayjs";
 import isToday from "dayjs/plugin/isToday";
 import isYesterday from "dayjs/plugin/isYesterday";
-import { useSelector } from "react-redux";
 import useInView from "./useInView";
 import Tippy from "@tippyjs/react";
 import Reaction from "./Reaction";
@@ -17,29 +16,37 @@ import Tooltip from "../Tooltip";
 import ContextMenu from "./ContextMenu";
 import useContextMenu from "../../hook/useContextMenu";
 import usePinMessage from "../../hook/usePinMessage";
+import { useAppSelector } from "../../../app/store";
 
 // todo: move to root file
 dayjs.extend(isToday);
 dayjs.extend(isYesterday);
-
-function Message({
+interface IProps {
+  readOnly?: boolean;
+  contextId: number;
+  context?: "user" | "channel";
+  read?: boolean;
+  mid: number;
+  updateReadIndex: (any) => void;
+}
+const Message: FC<IProps> = ({
   readOnly = false,
-  contextId = 0,
-  mid = "",
+  contextId,
+  mid,
   context = "user",
   updateReadIndex,
   read = true
-}) {
+}) => {
   const { visible: contextMenuVisible, handleContextMenuEvent, hideContextMenu } = useContextMenu();
   const inviewRef = useInView();
   const [edit, setEdit] = useState(false);
   const avatarRef = useRef(null);
-  const { getPinInfo } = usePinMessage(context == "channel" ? contextId : null);
+  const { getPinInfo } = usePinMessage(context == "channel" ? contextId : 0);
   const {
     message = {},
     reactionMessageData,
     usersData
-  } = useSelector((store) => {
+  } = useAppSelector((store) => {
     return {
       reactionMessageData: store.reactionMessage,
       message: store.message[mid] || {},
@@ -75,7 +82,7 @@ function Message({
   }, [mid, read]);
 
   const reactions = reactionMessageData[mid];
-  const currUser = usersData[fromUid] || {};
+  const currUser = usersData[fromUid];
   // if (!message) return null;
   let timePrefix = null;
   const dayjsTime = dayjs(time);
@@ -104,7 +111,7 @@ function Message({
         content={<Profile uid={fromUid} type="card" cid={contextId} />}
       >
         <div className="avatar" data-uid={fromUid} ref={avatarRef}>
-          <Avatar url={currUser.avatar} name={currUser.name} />
+          <Avatar url={currUser?.avatar} name={currUser?.name} />
         </div>
       </Tippy>
       <ContextMenu
@@ -115,9 +122,14 @@ function Message({
         visible={contextMenuVisible}
         hide={hideContextMenu}
       >
-        <div className="details" data-pin-tip={`pinned by ${usersData[pinInfo?.created_by]?.name}`}>
+        <div
+          className="details"
+          data-pin-tip={`pinned by ${
+            pinInfo?.created_by ? usersData[pinInfo.created_by]?.name : ""
+          }`}
+        >
           <div className="up">
-            <span className="name">{currUser.name}</span>
+            <span className="name">{currUser?.name}</span>
             <Tooltip
               delay={200}
               disabled={!timePrefix || readOnly}
@@ -166,7 +178,7 @@ function Message({
       )}
     </StyledWrapper>
   );
-}
+};
 export default React.memo(Message, (prevs, nexts) => {
   return prevs.mid == nexts.mid;
 });

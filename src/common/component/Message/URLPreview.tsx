@@ -18,8 +18,6 @@ const StyledCompact = styled.a`
     height: 48px;
     border-radius: 4px;
     img {
-      /* width: 100%;
-      height: 100%; */
       object-fit: contain;
     }
   }
@@ -96,15 +94,17 @@ const StyledDetails = styled.a`
 export default function URLPreview({ url = "" }) {
   const [favicon, setFavicon] = useState("");
   const [getInfo] = useLazyGetOGInfoQuery();
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<{ title: string; description: string; ogImage: string } | null>(
+    null
+  );
   useEffect(() => {
     const getMetaData = async (url: string) => {
       // todo
       const { data } = await getInfo(url);
-      const title = data.title || data.site_name;
-      const description = data.description;
-      const ogImage = data.images.find((i) => !!i.url)?.url || "";
-      const favicon = data.favicon_url || `${new URL(url).origin}/favicon.ico`;
+      const title = data?.title || data?.site_name || "";
+      const description = data?.description || "";
+      const ogImage = data?.images.find((i) => !!i.url)?.url || "";
+      const favicon = data?.favicon_url || `${new URL(url).origin}/favicon.ico`;
       setFavicon(favicon);
       setData({ title, description, ogImage });
       // console.log("wtf url", data);

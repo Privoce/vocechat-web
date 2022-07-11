@@ -2,7 +2,7 @@ import React from "react";
 import dayjs from "dayjs";
 import styled from "styled-components";
 import reactStringReplace from "react-string-replace";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { isImage } from "../../common/utils";
 import { ContentTypes } from "../../app/config";
 import Checkbox from "../../common/component/styled/Checkbox";
@@ -10,19 +10,7 @@ import Divider from "../../common/component/Divider";
 import Message from "../../common/component/Message";
 import { updateSelectMessages } from "../../app/slices/ui";
 import Mention from "../../common/component/Message/Mention";
-
-// function debounce(callback, wait = 2000, immediate = false) {
-//   let timeout = null;
-//   return function () {
-//     const callNow = immediate && !timeout;
-//     const next = () => callback.apply(this, arguments);
-//     clearTimeout(timeout);
-//     timeout = setTimeout(next, wait);
-//     if (callNow) {
-//       next();
-//     }
-//   };
-// }
+import { useAppSelector } from "../../app/store";
 
 export function getUnreadCount({ mids = [], messageData = {}, loginUid = 0, readIndex = 0 }) {
   // console.log({ mids, loginUid, readIndex });
@@ -130,7 +118,7 @@ const StyledWrapper = styled.div`
 const MessageWrapper = ({ selectMode = false, context, id, mid, children, ...rest }) => {
   const dispatch = useDispatch();
 
-  const selects = useSelector((store) => store.ui.selectMessages[`${context}_${id}`]);
+  const selects = useAppSelector((store) => store.ui.selectMessages[`${context}_${id}`]);
   const selected = !!(selects && selects.find((s) => s == mid));
   const toggleSelect = () => {
     const operation = selected ? "remove" : "add";

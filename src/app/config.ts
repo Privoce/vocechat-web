@@ -18,7 +18,7 @@ export const firebaseConfig = {
   appId: "1:526613312184:web:d13c92582baf470d487a4d",
   measurementId: "G-82RQ3YSCP7"
 };
-export const ChatPrefixs = {
+export const ChatPrefixes = {
   channel: "#",
   user: "@"
 };

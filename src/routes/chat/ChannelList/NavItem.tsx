@@ -1,8 +1,7 @@
-import { useState } from "react";
+import { useState, FC, MouseEvent } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDrop } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
-import { useSelector } from "react-redux";
 import Tippy from "@tippyjs/react";
 import useContextMenu from "../../../common/hook/useContextMenu";
 import ContextMenu from "../../../common/component/ContextMenu";
@@ -15,8 +14,13 @@ import { useUpdateMuteSettingMutation } from "../../../app/services/user";
 import StyledLink from "./styled";
 import ChannelIcon from "../../../common/component/ChannelIcon";
 import { getUnreadCount } from "../utils";
-
-const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
+import { useAppSelector } from "../../../app/store";
+interface IProps {
+  id: number;
+  setFiles: () => void;
+  toggleRemoveConfirm: () => void;
+}
+const NavItem: FC<IProps> = ({ id, setFiles, toggleRemoveConfirm }) => {
   const { pathname } = useLocation();
   const [inviteModalVisible, setInviteModalVisible] = useState(false);
   const navigate = useNavigate();
@@ -29,7 +33,7 @@ const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
     handleContextMenuEvent,
     hideContextMenu
   } = useContextMenu();
-  const { channel, mids, messageData, readIndex, muted, loginUid } = useSelector((store) => {
+  const { channel, mids, messageData, readIndex, muted, loginUid } = useAppSelector((store) => {
     return {
       channel: store.channels.byId[id],
       mids: store.channelMessage[id],
@@ -39,7 +43,7 @@ const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
       muted: store.footprint.muteChannels[id]
     };
   });
-  const handleChannelSetting = (evt) => {
+  const handleChannelSetting = (evt: MouseEvent<SVGElement>) => {
     evt.preventDefault();
     evt.stopPropagation();
     const { id } = evt.currentTarget.dataset;
@@ -142,7 +146,7 @@ const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
           to={`/chat/channel/${id}`}
         >
           <div className={`name`} title={name}>
-            <ChannelIcon personal={!is_public} muted={muted} />
+            <ChannelIcon personal={!is_public} muted={!!muted} />
             <span className={`txt ${unreads == 0 ? "read" : ""}`}>{name}</span>
           </div>
           <div className="icons">
@@ -174,7 +178,7 @@ const NavItem = ({ id, setFiles, toggleRemoveConfirm }) => {
         <InviteModal
           type="channel"
           cid={id}
-          title={channel.name}
+          title={channel?.name}
           closeModal={toggleInviteModalVisible}
         />
       )}

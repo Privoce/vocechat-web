@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useState, useEffect, FC } from "react";
 import dayjs from "dayjs";
 import { useDrop } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
@@ -8,22 +7,29 @@ import ContextMenu from "./ContextMenu";
 import getUnreadCount, { renderPreviewMessage } from "../utils";
 import User from "../../../common/component/User";
 import Avatar from "../../../common/component/Avatar";
-import iconChannel from "../../../assets/icons/channel.svg?url";
+// import iconChannel from "../../../assets/icons/channel.svg?url";
 import IconLock from "../../../assets/icons/lock.svg";
 import useContextMenu from "../../../common/hook/useContextMenu";
 import { useNavigate, NavLink } from "react-router-dom";
 import useUploadFile from "../../../common/hook/useUploadFile";
+import { useAppSelector } from "../../../app/store";
 
 // todo: move to root file
 dayjs.extend(relativeTime);
-
-export default function Session({
+interface IProps {
+  type?: "user" | "channel";
+  id: number;
+  mid: number;
+  setDeleteChannelId: () => void;
+  setInviteChannelId: () => void;
+}
+const Session: FC<IProps> = ({
   type = "user",
   id,
   mid,
   setDeleteChannelId,
   setInviteChannelId
-}) {
+}) => {
   const navigate = useNavigate();
   const { addStageFile } = useUploadFile({ context: type, id });
 
@@ -51,7 +57,7 @@ export default function Session({
 
   const { visible: contextMenuVisible, handleContextMenuEvent, hideContextMenu } = useContextMenu();
   const [data, setData] = useState(null);
-  const { messageData, userData, channelData, readIndex, loginUid, mids, muted } = useSelector(
+  const { messageData, userData, channelData, readIndex, loginUid, mids, muted } = useAppSelector(
     (store) => {
       return {
         mids: type == "user" ? store.userMessage.byId[id] : store.channelMessage[id],
@@ -65,11 +71,6 @@ export default function Session({
       };
     }
   );
-
-  const handleImageError = (evt) => {
-    evt.target.classList.add("channel_default");
-    evt.target.src = iconChannel;
-  };
 
   useEffect(() => {
     const tmp = type == "user" ? userData[id] : channelData[id];
@@ -108,14 +109,9 @@ export default function Session({
         >
           <div className="icon">
             {type == "user" ? (
-              <User avatarSize={40} compact interactive={false} className="avatar" uid={id} />
+              <User avatarSize={40} compact interactive={false} uid={id} />
             ) : (
               <Avatar className="icon" type="channel" name={name} url={icon} />
-              // <img
-              //   className={`${icon ? "" : "channel_default"}`}
-              //   onError={handleImageError}
-              //   src={icon || iconChannel}
-              // />
             )}
           </div>
           <div className="details">
@@ -140,4 +136,5 @@ export default function Session({
       </ContextMenu>
     </li>
   );
-}
+};
+export default Session;

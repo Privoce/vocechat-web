@@ -1,4 +1,4 @@
-// import { useState, useEffect } from "react";
+import { FC } from "react";
 import { useDebounce } from "rooks";
 import Tippy from "@tippyjs/react";
 import FavList from "../FavList";
@@ -15,8 +15,11 @@ import LoadMore from "../LoadMore";
 import { renderMessageFragment } from "../utils";
 import useMessageFeed from "../../../common/hook/useMessageFeed";
 import { useAppSelector } from "../../../app/store";
-
-export default function DMChat({ uid = 0, dropFiles = [] }) {
+type Props = {
+  uid: number;
+  dropFiles: [File];
+};
+const DMChat: FC<Props> = ({ uid = 0, dropFiles }) => {
   const {
     list: msgIds,
     appends,
@@ -104,4 +107,5 @@ export default function DMChat({ uid = 0, dropFiles = [] }) {
       </StyledDMChat>
     </Layout>
   );
-}
+};
+export default DMChat;

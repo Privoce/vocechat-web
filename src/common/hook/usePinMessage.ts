@@ -15,15 +15,15 @@ export default function usePinMessage(cid: number) {
   const [unpin, { isError: isUnpinError, isLoading: isUnpinning, isSuccess: isUnpinSuccess }] =
     useUnpinMessageMutation();
   const pinMessage = (mid: number) => {
-    if (!mid || !cid) return;
+    if (!mid) return;
     pin({ mid, gid: +cid });
   };
   const unpinMessage = (mid: number) => {
-    if (!mid || !cid) return;
+    if (!mid) return;
     unpin({ mid, gid: +cid });
   };
   const getPinInfo = (mid: number) => {
-    if (!cid || !channel) return;
+    if (!channel) return;
     const pins = channel.pinned_messages;
     if (!pins || pins.length == 0) return;
     const pinned = pins.find((p) => p.mid == mid);

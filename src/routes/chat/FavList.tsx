@@ -102,7 +102,6 @@ export default function FavList({ cid = null, uid = null }) {
       ) : (
         <ul className="list">
           {favorites.map(({ id }) => {
-            console.log("favv", id);
             return (
               <li key={id} className="fav">
                 <FavoredMessage id={id} />

@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, FC, ReactElement } from "react";
+import { useState, useRef, useEffect, FC, ReactElement, MouseEvent } from "react";
 import { useDrop } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
 import ImagePreviewModal from "../../../common/component/ImagePreviewModal";
@@ -6,17 +6,17 @@ import Send from "../../../common/component/Send";
 import Styled from "./styled";
 import Operations from "./Operations";
 import useUploadFile from "../../../common/hook/useUploadFile";
-import { ChatPrefixs } from "../../../app/config";
+import { ChatPrefixes } from "../../../app/config";
 import { useAppSelector } from "../../../app/store";
 
 interface Props {
   children: ReactElement;
   header: ReactElement;
   aside: ReactElement | null;
-  users: ReactElement | null;
-  dropFiles: [];
-  context: string;
-  to: number | null;
+  users?: ReactElement;
+  dropFiles: [File];
+  context: "channel" | "user";
+  to: number;
 }
 
 const Layout: FC<Props> = ({
@@ -26,7 +26,7 @@ const Layout: FC<Props> = ({
   users = null,
   dropFiles = [],
   context = "channel",
-  to = null
+  to
 }) => {
   const { addStageFile } = useUploadFile({ context, id: to });
   const messagesContainer = useRef<HTMLDivElement>(null);
@@ -42,7 +42,6 @@ const Layout: FC<Props> = ({
     () => ({
       accept: [NativeTypes.FILE],
       drop({ files }) {
-        console.log("drop files", files, context, to);
         if (files.length) {
           const filesData = files.map((file) => {
             const { size, type, name } = file;
@@ -76,24 +75,23 @@ const Layout: FC<Props> = ({
 
   useEffect(() => {
     const container = messagesContainer?.current;
-    if (container) {
-      // 点击查看大图
-      container.addEventListener(
-        "click",
-        (evt) => {
-          console.log(evt);
-          const { target } = evt;
-          if (target.nodeName == "IMG" && target.classList.contains("preview")) {
-            const thumbnail = target.src;
-            const originUrl = target.dataset.origin || target.src;
-            const downloadLink = target.dataset.download || target.src;
-            const meta = JSON.parse(target.dataset.meta || "{}");
-            setPreviewImage({ thumbnail, originUrl, downloadLink, ...meta });
-          }
-        },
-        true
-      );
-    }
+    if (!container) return;
+    // 点击查看大图
+    container.addEventListener(
+      "click",
+      (evt) => {
+        const target = evt.target as HTMLImageElement;
+        if (!target) return;
+        if (target.nodeName == "IMG" && target.classList.contains("preview")) {
+          const thumbnail = target.src;
+          const originUrl = target.dataset.origin || target.src;
+          const downloadLink = target.dataset.download || target.src;
+          const meta = JSON.parse(target.dataset.meta || "{}");
+          setPreviewImage({ thumbnail, originUrl, downloadLink, ...meta });
+        }
+      },
+      true
+    );
   }, []);
   const name = context == "channel" ? channelsData[to]?.name : usersData[to]?.name;
 
@@ -116,7 +114,7 @@ const Layout: FC<Props> = ({
         <div className={`drag_tip ${isActive ? "visible animate__animated animate__fadeIn" : ""}`}>
           <div className={`box ${isActive ? "animate__animated animate__bounceIn" : ""}`}>
             <div className="inner">
-              <h4 className="head">{`Send to ${ChatPrefixs[context]}${name}`}</h4>
+              <h4 className="head">{`Send to ${ChatPrefixes[context]}${name}`}</h4>
               <span className="intro">Photos accept jpg, png, max size limit to 10M.</span>
             </div>
           </div>

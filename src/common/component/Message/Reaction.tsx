@@ -143,7 +143,7 @@ export default function Reaction({ mid, reactions = null }) {
   return (
     <StyledWrapper className="reactions">
       {Object.entries(reactions).map(([reaction, uids], idx) => {
-        const reacted = uids.findIndex((id) => id == currUid) > -1;
+        const reacted = uids.findIndex((id: number) => id == currUid) > -1;
         return uids.length > 0 ? (
           <span
             onClick={handleReact.bind(null, reaction)}

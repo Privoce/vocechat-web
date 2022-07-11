@@ -2,7 +2,7 @@ import { useEffect, useState, FC } from "react";
 import useSendMessage from "../../hook/useSendMessage";
 import useAddLocalFileMessage from "../../hook/useAddLocalFileMessage";
 import { updateInputMode } from "../../../app/slices/ui";
-import { ContentTypes, ChatPrefixs } from "../../../app/config";
+import { ContentTypes, ChatPrefixes } from "../../../app/config";
 
 import StyledSend from "./styled";
 import UploadFileList from "./UploadFileList";
@@ -132,7 +132,7 @@ const Send: FC<IProps> = ({
     setMarkdownFullscreen((prev) => !prev);
   };
   const name = context == "channel" ? channelsData[id]?.name : usersData[id]?.name;
-  const placeholder = `Send to ${ChatPrefixs[context]}${name} `;
+  const placeholder = `Send to ${ChatPrefixes[context]}${name} `;
   const members =
     context == "channel" ? (channelsData[id]?.is_public ? uids : channelsData[id]?.members) : [];
   return (

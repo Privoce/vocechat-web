@@ -48,7 +48,11 @@ const getFeedWithPagination = (config: Config): PageInfo => {
 };
 let curScrollPos = 0;
 let oldScroll = 0;
-export default function useMessageFeed({ context = "channel", id = null }) {
+type Props = {
+  context?: "channel" | "user";
+  id: number;
+};
+export default function useMessageFeed({ context = "channel", id }: Props) {
   const [loadMoreChannelMsgs] = useLazyGetHistoryMessagesQuery();
   const [loadMoreDmMsgs] = useLazyGetDMHistoryMsg();
   const listRef = useRef<number[]>([]);
@@ -83,7 +87,7 @@ export default function useMessageFeed({ context = "channel", id = null }) {
     }
   }, [items, context, id]);
   useEffect(() => {
-    const serverMids = mids.filter((id) => {
+    const serverMids = mids.filter((id: number) => {
       const ts = +new Date();
       return Math.abs(ts - id) > 10 * 1000;
     });

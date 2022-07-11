@@ -111,7 +111,6 @@ const Styled = styled.article`
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     visibility: hidden;
-    /* pointer-events: none; */
     &.visible {
       visibility: visible;
     }

@@ -3,7 +3,7 @@ import StyledMenu from "./styled/Menu";
 
 export interface Item {
   title: string;
-  icon: string;
+  icon?: string;
   handler: (e: MouseEvent) => void;
   underline?: boolean;
   danger?: boolean;

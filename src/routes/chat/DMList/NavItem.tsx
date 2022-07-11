@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, FC } from "react";
 import { NavLink, useNavigate, useMatch } from "react-router-dom";
 import { useDrop } from "react-dnd";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { NativeTypes } from "react-dnd-html5-backend";
 
 import dayjs from "dayjs";
@@ -16,13 +16,20 @@ dayjs.extend(relativeTime);
 import { renderPreviewMessage } from "../utils";
 import User from "../../../common/component/User";
 import { ContentTypes } from "../../../app/config";
-const NavItem = ({ uid, mid, unreads, setFiles }) => {
+import { useAppSelector } from "../../../app/store";
+interface IProps {
+  uid: number;
+  mid?: number;
+  unreads: number;
+  setFiles: () => void;
+}
+const NavItem: FC<IProps> = ({ uid, mid = 0, unreads, setFiles }) => {
   const [previewMsg, setPreviewMsg] = useState(null);
   const { messages: normalizedMessages, normalizeMessage } = useNormalizeMessage();
   const dispatch = useDispatch();
   const pathMatched = useMatch(`/chat/dm/${uid}`);
   const [updateReadIndex] = useReadMessageMutation();
-  const { currMsg, currUser } = useSelector((store) => {
+  const { currMsg, currUser } = useAppSelector((store) => {
     return {
       currUser: store.users.byId[uid],
       currMsg: store.message[mid]
@@ -73,7 +80,6 @@ const NavItem = ({ uid, mid, unreads, setFiles }) => {
     }
   };
   if (!currUser) return null;
-  // console.log("preview msg", previewMsg, normalizedMessages);
   return (
     <Tippy
       interactive
@@ -107,7 +113,7 @@ const NavItem = ({ uid, mid, unreads, setFiles }) => {
         to={`/chat/dm/${uid}`}
         onContextMenu={handleContextMenuEvent}
       >
-        <User compact interactive={false} className="avatar" uid={uid} />
+        <User compact interactive={false} uid={uid} />
         <div className="details">
           <div className="up">
             <span className="name">{currUser.name}</span>
