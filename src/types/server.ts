@@ -59,10 +59,12 @@ export interface LoginConfig {
   third_party: boolean;
 }
 export interface LicenseResponse {
-  domain: string;
+  domains: string[];
   created_at: string;
   expired_at: string;
   sign: boolean;
+  base58: string;
+  user_limit: number;
 }
 export interface CreateAdminDTO extends Pick<User, "email" | "name" | "gender"> {
   password: string;

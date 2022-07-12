@@ -1,4 +1,5 @@
 {
+  "todohighlight.isCaseSensitive": false,
   "css.validate": false,
   "editor.quickSuggestions": {
     "other": true,
@@ -40,6 +41,9 @@
     "tippyjs",
     "toastui",
     "uiball",
+    "upsert",
+    "upserted",
+    "upserting",
     "vocechat"
   ],
   "reactSnippets.settings.prettierEnabled": true,

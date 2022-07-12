@@ -194,6 +194,11 @@ export const serverApi = createApi({
         url: `/admin/system/initialized`
       })
     }),
+    getLicense: builder.query<LicenseResponse, void>({
+      query: () => ({
+        url: `/license`
+      })
+    }),
 
     checkLicense: builder.mutation<LicenseResponse, string>({
       query: (license) => ({
@@ -205,7 +210,7 @@ export const serverApi = createApi({
     upsertLicense: builder.mutation<boolean, string>({
       query: (license) => ({
         url: "/license/save",
-        method: "POST",
+        method: "PUT",
         body: { license }
       })
     })
@@ -241,5 +246,6 @@ export const {
   useCreateAdminMutation,
   useGetInitializedQuery,
   useUpsertLicenseMutation,
-  useCheckLicenseMutation
+  useCheckLicenseMutation,
+  useGetLicenseQuery
 } = serverApi;

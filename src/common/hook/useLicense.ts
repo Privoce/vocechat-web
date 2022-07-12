@@ -1,8 +1,13 @@
-import { useEffect } from "react";
-import { useCheckLicenseMutation, useUpsertLicenseMutation } from "../../app/services/server";
+// import { useEffect } from "react";
+import {
+  useCheckLicenseMutation,
+  useGetLicenseQuery,
+  useUpsertLicenseMutation
+} from "../../app/services/server";
 
-const useLicense = (license?: string) => {
-  const [check, { data, isLoading: isChecking, isSuccess: checked }] = useCheckLicenseMutation();
+const useLicense = () => {
+  const { data: license } = useGetLicenseQuery();
+  const [check, { isLoading: isChecking, isSuccess: checked }] = useCheckLicenseMutation();
   const [upsert, { isSuccess: upserted, isLoading: upserting }] = useUpsertLicenseMutation();
   const checkLicense = (l: string) => {
     check(l);
@@ -16,14 +21,9 @@ const useLicense = (license?: string) => {
       return false;
     }
   };
-  useEffect(() => {
-    if (license) {
-      checkLicense(license);
-    }
-  }, [license]);
 
   return {
-    validInfo: data,
+    license,
     checked,
     checking: isChecking,
     upserting,

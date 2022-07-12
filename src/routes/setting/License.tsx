@@ -1,4 +1,5 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState, useEffect } from "react";
+import dayjs from "dayjs";
 import styled from "styled-components";
 import Tippy from "@tippyjs/react";
 import toast from "react-hot-toast";
@@ -28,6 +29,34 @@ const StyledConfirm = styled.div`
     gap: 14px;
   }
 `;
+const StyledInfo = styled.div`
+  padding: 12px;
+  border-radius: 5px;
+  border: 2px solid #557d2340;
+  background-color: #d1fadf60;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  .item {
+    white-space: nowrap;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    line-height: 1.2;
+    .label {
+      font-size: 13px;
+      color: #aaa;
+      &:after {
+        content: ":";
+      }
+    }
+    .info {
+      font-weight: bold;
+      font-size: 18px;
+    }
+  }
+`;
 const Styled = styled.div`
   max-width: 500px;
   display: flex;
@@ -45,7 +74,7 @@ const Styled = styled.div`
 `;
 
 export default function License() {
-  const { checking, upserting, upsertLicense } = useLicense();
+  const { license: licenseInfo, checking, upserting, upsertLicense } = useLicense();
   const [license, setLicense] = useState("");
   const handleUpsert = async () => {
     if (!license) {
@@ -64,12 +93,52 @@ export default function License() {
   const handleLicenseInput = (evt: ChangeEvent<HTMLTextAreaElement>) => {
     setLicense(evt.target.value);
   };
+  useEffect(() => {
+    if (licenseInfo?.base58) {
+      setLicense(licenseInfo.base58);
+    }
+  }, [licenseInfo]);
 
-  const disableBtn = checking || upserting || !license;
+  const disableBtn = checking || upserting || !license || license === licenseInfo?.base58;
+  console.log("ddd", licenseInfo);
+
   return (
     <Styled>
       <div className="input">
-        <Textarea rows={10} id="license" value={license} onChange={handleLicenseInput} />
+        <Tippy
+          placement="right-start"
+          visible={!!licenseInfo}
+          content={
+            <StyledInfo>
+              <div className="item">
+                <span className="label">Signed</span>
+                <span className="info">{licenseInfo?.sign ? "Yes" : "Not Yet"}</span>
+              </div>
+              <div className="item">
+                <span className="label">Domains</span>
+                <span className="info"> {licenseInfo?.domains.join(",")}</span>
+              </div>
+              <div className="item">
+                <span className="label">User Limit</span>
+                <span className="info"> {licenseInfo?.user_limit}</span>
+              </div>
+              <div className="item">
+                <span className="label">Expired At</span>
+                <span className="info">
+                  {dayjs(licenseInfo?.expired_at).format("YYYY-MM-DD h:mm:ss A")}
+                </span>
+              </div>
+              <div className="item">
+                <span className="label">Created At</span>
+                <span className="info">
+                  {dayjs(licenseInfo?.created_at).format("YYYY-MM-DD h:mm:ss A")}
+                </span>
+              </div>
+            </StyledInfo>
+          }
+        >
+          <Textarea rows={15} id="license" value={license} onChange={handleLicenseInput} />
+        </Tippy>
       </div>
       <Tippy
         interactive
@@ -89,7 +158,7 @@ export default function License() {
           </StyledConfirm>
         }
       >
-        <Button disabled={disableBtn}>Save License</Button>
+        <Button disabled={disableBtn}>Update License</Button>
       </Tippy>
     </Styled>
   );
