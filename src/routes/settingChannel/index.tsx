@@ -25,7 +25,7 @@ export default function ChannelSetting() {
     })
     .flat();
   const navKey = searchParams.get("nav");
-  from = from ?? (searchParams.get("f") || "/");
+  from = from ? from : searchParams.get("f") || "/";
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const [leaveConfirm, setLeaveConfirm] = useState(false);
   const close = () => {
@@ -40,7 +40,7 @@ export default function ChannelSetting() {
   };
   if (!cid) return null;
   const currNav = flattenNavs.find((n) => n.name == navKey) || flattenNavs[0];
-  const canDelete = loginUser.isAdmin || channel?.owner == loginUser.uid;
+  const canDelete = loginUser?.is_admin || channel?.owner == loginUser?.uid;
   const canLeave = !channel?.is_public;
 
   return (

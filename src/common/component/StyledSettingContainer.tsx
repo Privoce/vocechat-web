@@ -100,7 +100,7 @@ interface Props {
   closeModal: () => void;
   title?: string;
   navs: Nav[];
-  dangers: Danger[];
+  dangers: [Danger | boolean];
   nav: { title: string; name?: string; component?: ReactNode };
   children: ReactNode;
 }

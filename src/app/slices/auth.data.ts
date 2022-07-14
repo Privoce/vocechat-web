@@ -7,7 +7,8 @@ import {
   KEY_TOKEN,
   KEY_UID
 } from "../config";
-import { AuthData, AuthToken, RenewTokenResponse, User } from "../../types/auth";
+import { AuthData, RenewTokenResponse } from "../../types/auth";
+import { User } from "../../types/user";
 
 interface State {
   initialized: boolean;

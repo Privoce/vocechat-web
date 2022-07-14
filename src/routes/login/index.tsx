@@ -80,6 +80,9 @@ export default function LoginPage() {
             "No associated account found, please user admin for an invitation link to join."
           );
           break;
+        case 451:
+          toast.error("License error: Domain incorrect!");
+          break;
         default:
           toast.error("Something Error");
           break;

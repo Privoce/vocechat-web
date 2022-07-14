@@ -36,7 +36,6 @@ const StyledPicker = styled.div`
 `;
 
 export default function ReactionPicker({ mid, hidePicker }) {
-  // const wrapperRef = useRef(null);
   const [reactMessage, { isLoading }] = useReactMessageMutation();
   const { reactionData, currUid } = useAppSelector((store) => {
     return {
@@ -44,8 +43,7 @@ export default function ReactionPicker({ mid, hidePicker }) {
       currUid: store.authData.user?.uid
     };
   });
-  // useOutsideClick(wrapperRef, hidePicker);
-  const handleReact = (emoji) => {
+  const handleReact = (emoji: string) => {
     console.log("react", emoji);
     reactMessage({ mid, action: emoji });
     hidePicker();

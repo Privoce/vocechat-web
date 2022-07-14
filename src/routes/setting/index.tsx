@@ -4,20 +4,19 @@ import StyledSettingContainer from "../../common/component/StyledSettingContaine
 import useNavs from "./navs";
 import LogoutConfirmModal from "./LogoutConfirmModal";
 
-let from: string = "";
+let pageFrom: string = "";
 
 export default function Setting() {
   const [searchParams] = useSearchParams();
   const navs = useNavs();
   const flattenNaves = navs.map(({ items }) => items).flat();
   const navKey = searchParams.get("nav");
-  from = from ?? (searchParams.get("f") || "/");
   const [logoutConfirm, setLogoutConfirm] = useState(false);
   const navigateTo = useNavigate();
+  pageFrom = pageFrom ? pageFrom : searchParams.get("f") || "/";
   const close = () => {
-    // todo: check usage
-    navigateTo(from!);
-    from = "";
+    navigateTo(pageFrom);
+    pageFrom = "";
   };
 
   const toggleLogoutConfirm = () => {

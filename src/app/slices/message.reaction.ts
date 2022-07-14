@@ -4,7 +4,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 export interface State {
   [mid: number]:
     | {
-        [reaction: number]: number[];
+        [reaction: string]: number[];
       }
     | undefined;
 }
@@ -26,7 +26,10 @@ const reactionMessageSlice = createSlice({
         delete state[id];
       });
     },
-    toggleReactionMessage(state, action) {
+    toggleReactionMessage(
+      state,
+      action: PayloadAction<{ from_uid: number; mid: number; rid: number; action: string }>
+    ) {
       // rid: reaction's mid, mid: which message append to
       const { from_uid, mid, rid, action: reaction } = action.payload;
       const ridExisted = state[rid] || false;
@@ -52,8 +55,6 @@ const reactionMessageSlice = createSlice({
       } else {
         state[mid]![reaction] = [from_uid];
       }
-      // todo: ???
-      state[rid] = true;
     }
   }
 });

@@ -37,7 +37,10 @@ const channelMsgSlice = createSlice({
         }
       }
     },
-    replaceChannelMsg(state, action) {
+    replaceChannelMsg(
+      state,
+      action: PayloadAction<{ id: number; localMid: number; serverMid: number }>
+    ) {
       const { id, localMid, serverMid } = action.payload;
       if (state[id]) {
         const localIdx = state[id]!.findIndex((i) => i == localMid);

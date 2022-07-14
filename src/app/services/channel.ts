@@ -50,12 +50,11 @@ export const channelApi = createApi({
       }),
       async onQueryStarted({ id, name, description }, { dispatch, queryFulfilled }) {
         // id: who send to ,from_uid: who sent
-        const patchResult = dispatch(updateChannel({ gid: id, name, description }));
+        dispatch(updateChannel({ gid: id, name, description }));
         try {
           await queryFulfilled;
         } catch {
           console.log("channel update failed");
-          patchResult.undo();
         }
       }
     }),

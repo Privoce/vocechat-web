@@ -11,7 +11,7 @@ interface IProps {
   id: number;
 }
 const useUploadFile = (props: IProps) => {
-  const { context, id } = props;
+  const { context, id } = props ? props : { context: "channel", id: 0 };
   const dispatch = useAppDispatch();
   const { stageFiles, replying } = useAppSelector((store) => {
     return {

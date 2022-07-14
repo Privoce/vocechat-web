@@ -36,7 +36,7 @@ const InvitePage: FC = () => {
 
   useEffect(() => {
     if (checkSuccess) {
-      setValid(isValid);
+      setValid(!!isValid);
     } else {
       setValid(false);
     }
