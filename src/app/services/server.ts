@@ -209,7 +209,7 @@ export const serverApi = createApi({
     }),
     upsertLicense: builder.mutation<boolean, string>({
       query: (license) => ({
-        url: "/license/save",
+        url: "/license",
         method: "PUT",
         body: { license }
       })

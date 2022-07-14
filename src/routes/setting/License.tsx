@@ -116,7 +116,10 @@ export default function License() {
               </div>
               <div className="item">
                 <span className="label">Domains</span>
-                <span className="info"> {licenseInfo?.domains.join(",")}</span>
+                <ul className="info"> {licenseInfo?.domains.map(d => {
+
+                  return <li key={d}>{d}</li>;
+                })}</ul>
               </div>
               <div className="item">
                 <span className="label">User Limit</span>
