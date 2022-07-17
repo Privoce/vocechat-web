@@ -10,8 +10,8 @@ export default async function handler({ operation, data = {}, payload }) {
     case "toggleReactionMessage":
       {
         const { mid, rid } = payload;
-        await table.setItem(mid + "", data[mid]);
-        await table.setItem(rid + "", data[rid]);
+        await table?.setItem(mid + "", data[mid]);
+        await table?.setItem(rid + "", data[rid]);
       }
       break;
     case "removeReactionMessage":
@@ -19,7 +19,7 @@ export default async function handler({ operation, data = {}, payload }) {
         const mids = Array.isArray(payload) ? payload : [payload];
         await Promise.all(
           mids.map(async (mid) => {
-            await table.removeItem(mid + "");
+            await table?.removeItem(mid + "");
           })
         );
       }

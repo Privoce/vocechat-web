@@ -6,7 +6,9 @@ export type BaseOperation = "add" | "remove" | "reset";
 export interface Params {
   operation: string;
   data: {};
-  payload: {};
+  payload: {
+    ["id"]: number;
+  };
 }
 
 export default async function handler({ operation, data = {}, payload }: Params) {
@@ -21,7 +23,7 @@ export default async function handler({ operation, data = {}, payload }: Params)
       {
         const { id } = payload;
 
-        await table.setItem(id + "", data[id]);
+        await table?.setItem(id + "", data[id]);
       }
       break;
     case "removeChannelSession":
@@ -29,7 +31,7 @@ export default async function handler({ operation, data = {}, payload }: Params)
         const ids = Array.isArray(payload) ? payload : [payload];
         await Promise.all(
           ids.map(async (id) => {
-            await table.removeItem(id + "");
+            await table?.removeItem(id + "");
           })
         );
       }

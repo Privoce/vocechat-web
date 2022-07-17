@@ -12,7 +12,7 @@ export default async function handler({ operation, payload }) {
         const data = payload;
         await Promise.all(
           Object.entries(data).map(([_key, _val]) => {
-            return table.setItem(_key, _val);
+            return table?.setItem(_key, _val);
           })
         );
       }

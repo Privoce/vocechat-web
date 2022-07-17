@@ -12,7 +12,7 @@ export default async function handler({ operation, data, payload }) {
         const chs = payload;
         await Promise.all(
           chs.map(({ gid, ...rest }) => {
-            return table.setItem(gid + "", { gid, ...rest });
+            return table?.setItem(gid + "", { gid, ...rest });
           })
         );
       }
@@ -20,19 +20,19 @@ export default async function handler({ operation, data, payload }) {
     case "addChannel":
       {
         const { gid } = payload;
-        await table.setItem(gid + "", payload);
+        await table?.setItem(gid + "", payload);
       }
       break;
     case "removeChannel":
       {
         const id = payload;
-        await table.removeItem(id + "");
+        await table?.removeItem(id + "");
       }
       break;
     case "updateChannel":
       {
         const { id } = payload;
-        await table.setItem(id + "", data.byId[id]);
+        await table?.setItem(id + "", data.byId[id]);
       }
       break;
 

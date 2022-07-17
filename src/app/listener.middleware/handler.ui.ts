@@ -10,17 +10,17 @@ export default async function handler({ operation, data = {} }) {
     case "toggleMenuExpand":
       {
         console.log("cache the toggleMenuExpand");
-        await table.setItem("menuExpand", data.menuExpand);
+        await table?.setItem("menuExpand", data.menuExpand);
       }
       break;
     case "updateInputMode":
       {
-        await table.setItem("inputMode", data.inputMode);
+        await table?.setItem("inputMode", data.inputMode);
       }
       break;
     case "updateFileListView":
       {
-        await table.setItem("fileListView", data.fileListView);
+        await table?.setItem("fileListView", data.fileListView);
       }
       break;
     default:

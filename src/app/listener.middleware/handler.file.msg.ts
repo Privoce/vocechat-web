@@ -11,7 +11,7 @@ export default async function handler({ operation, data = {} }) {
     case "removeFileMessage":
       {
         console.log("file message opt", data, operation);
-        await table.setItem("list", data);
+        await table?.setItem("list", data);
       }
       break;
     default:

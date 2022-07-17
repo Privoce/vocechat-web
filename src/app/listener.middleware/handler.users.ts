@@ -12,7 +12,7 @@ export default async function handler({ operation, data, payload }) {
         const users = payload;
         await Promise.all(
           users.map(({ uid, ...rest }) => {
-            return table.setItem(uid + "", { uid, ...rest });
+            return table?.setItem(uid + "", { uid, ...rest });
           })
         );
       }
@@ -25,10 +25,10 @@ export default async function handler({ operation, data, payload }) {
             switch (action) {
               case "update":
               case "create":
-                await table.setItem(uid + "", data.byId[uid]);
+                await table?.setItem(uid + "", data.byId[uid]);
                 break;
               case "delete":
-                await table.removeItem(uid + "");
+                await table?.removeItem(uid + "");
                 break;
 
               default:
@@ -41,13 +41,13 @@ export default async function handler({ operation, data, payload }) {
     case "addUser":
       {
         const { uid } = payload;
-        await table.setItem(uid + "", payload);
+        await table?.setItem(uid + "", payload);
       }
       break;
     case "removeUser":
       {
         const id = payload;
-        await table.removeItem(id + "");
+        await table?.removeItem(id + "");
       }
       break;
 

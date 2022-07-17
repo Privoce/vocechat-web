@@ -30,7 +30,7 @@ const useRehydrate = () => {
     const tables = Object.keys(window.CACHE);
     const results = await Promise.all(
       tables.map((_key) => {
-        return window.CACHE[_key].iterate((data, key) => {
+        return window.CACHE[_key]?.iterate((data: any, key) => {
           // console.log("iterated", key);
           switch (_key) {
             case "channels":
