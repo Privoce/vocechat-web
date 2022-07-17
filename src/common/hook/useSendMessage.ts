@@ -25,7 +25,7 @@ interface SendMessageDTO {
 }
 
 const useSendMessage = (props: Props) => {
-  const { context = "user", from, to = null } = props;
+  const { context = "user", from, to = null } = props || {};
   const dispatch = useAppDispatch();
   const stageFiles = useAppSelector((store) => store.ui.uploadFiles[`${context}_${to}`] || []);
   const [replyMessage, { isError: replyErr, isLoading: replying, isSuccess: replySuccess }] =
