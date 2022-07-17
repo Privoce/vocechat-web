@@ -19,9 +19,9 @@ const channelMsgSlice = createSlice({
     addChannelMsg(state, action: PayloadAction<{ id: number; mid: number; local_id?: any }>) {
       const { id, mid, local_id = null } = action.payload;
       if (state[id]) {
-        const midExsited = state[id]!.findIndex((id) => id == mid) > -1;
-        const localMsgExsited = state[id]!.findIndex((id) => id == local_id) > -1;
-        if (midExsited || localMsgExsited) return;
+        const midExisted = state[id]!.findIndex((id) => id == mid) > -1;
+        const localMsgExisted = state[id]!.findIndex((id) => id == local_id) > -1;
+        if (midExisted || localMsgExisted) return;
         state[id]!.push(+mid);
       } else {
         state[id] = [+mid];
