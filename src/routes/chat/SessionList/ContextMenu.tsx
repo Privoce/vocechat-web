@@ -1,11 +1,12 @@
 import Tippy from "@tippyjs/react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate, useLocation, useMatch } from "react-router-dom";
 import { useUpdateMuteSettingMutation } from "../../../app/services/user";
 import { useReadMessageMutation } from "../../../app/services/message";
 import { removeUserSession } from "../../../app/slices/message.user";
 import ContextMenu from "../../../common/component/ContextMenu";
 import useUserOperation from "../../../common/hook/useUserOperation";
+import { useAppSelector } from "../../../app/store";
 
 export default function SessionContextMenu({
   context = "user",
@@ -17,14 +18,17 @@ export default function SessionContextMenu({
   setInviteChannelId,
   children
 }) {
-  const { canCopyEmail, copyEmail } = useUserOperation({ uid: context == "user" ? id : null });
+  const { canCopyEmail, copyEmail, canDeleteChannel } = useUserOperation({
+    uid: context == "user" ? id : null,
+    cid: context == "channel" ? id : null
+  });
   const [muteChannel] = useUpdateMuteSettingMutation();
   const [updateReadIndex] = useReadMessageMutation();
   const pathMatched = useMatch(`/chat/dm/${id}`);
   const dispatch = useDispatch();
   const navigateTo = useNavigate();
   const { pathname } = useLocation();
-  const { channelMuted } = useSelector((store) => {
+  const { channelMuted } = useAppSelector((store) => {
     return {
       channelMuted: context == "channel" ? store.footprint.muteChannels[id] : false
     };
@@ -91,7 +95,7 @@ export default function SessionContextMenu({
             title: "Invite People",
             handler: setInviteChannelId.bind(null, id)
           },
-          {
+          canDeleteChannel && {
             title: "Delete Channel",
             danger: true,
             handler: deleteChannel.bind(null, id)

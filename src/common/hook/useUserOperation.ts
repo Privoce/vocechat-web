@@ -53,8 +53,10 @@ const useUserOperation = ({ uid, cid }: IProps) => {
   const handleRemove = (id: number) => {
     const isNumber = !Number.isNaN(+id);
     const finalId = isNumber ? id || passedUid : passedUid;
-    removeUser(finalId);
-    hideAll();
+    if (finalId) {
+      removeUser(finalId);
+      hideAll();
+    }
   };
 
   const copyEmail = (email: string) => {
@@ -72,14 +74,16 @@ const useUserOperation = ({ uid, cid }: IProps) => {
     toast.success("Coming Soon...");
     hideAll();
   };
-  const isAdmin = loginUser?.is_admin;
+  const isAdmin = !!loginUser?.is_admin;
   const loginUid = loginUser?.uid;
+  const canDeleteChannel = cid && !channel?.is_public && isAdmin;
   const canRemoveFromChannel =
-    cid && !channel?.is_public && (isAdmin || channel?.owner == loginUid);
+    cid && !channel?.is_public && (isAdmin || channel?.owner == loginUid) && uid != channel?.owner;
   const canCall: boolean = agoraConfig.enabled && loginUid != uid;
   const canRemove: boolean = isAdmin && loginUid != uid && !cid;
 
   return {
+    canDeleteChannel,
     canRemove,
     removeUser: handleRemove,
     startChat,

@@ -240,7 +240,7 @@ const ManageMembers: FC<Props> = ({ cid }) => {
                         )}
                         {canRemove && (
                           <li className="item danger" onClick={removeUser.bind(null, uid)}>
-                            Remove From Server
+                            Remove
                           </li>
                         )}
                       </StyledMenu>

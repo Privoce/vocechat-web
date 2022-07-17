@@ -60,7 +60,7 @@ const UserContextMenu: FC<Props> = ({ enable = false, uid, cid, visible, hide, c
             },
             canRemove && {
               danger: true,
-              title: "Remove From Server",
+              title: "Remove",
               handler: removeUser
             }
           ]}
