@@ -5,14 +5,12 @@ import { useDispatch } from "react-redux";
 import { NativeTypes } from "react-dnd-html5-backend";
 
 import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
 import Tippy from "@tippyjs/react";
 import { useReadMessageMutation } from "../../../app/services/message";
 import { removeUserSession } from "../../../app/slices/message.user";
 import useNormalizeMessage from "../../../common/hook/useNormalizeMessage";
 import useContextMenu from "../../../common/hook/useContextMenu";
 import ContextMenu from "../../../common/component/ContextMenu";
-dayjs.extend(relativeTime);
 import { renderPreviewMessage } from "../utils";
 import User from "../../../common/component/User";
 import { ContentTypes } from "../../../app/config";

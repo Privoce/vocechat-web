@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect, FC } from "react";
 import dayjs from "dayjs";
-import isToday from "dayjs/plugin/isToday";
-import isYesterday from "dayjs/plugin/isYesterday";
+
 import useInView from "./useInView";
 import Tippy from "@tippyjs/react";
 import Reaction from "./Reaction";
@@ -18,9 +17,6 @@ import useContextMenu from "../../hook/useContextMenu";
 import usePinMessage from "../../hook/usePinMessage";
 import { useAppSelector } from "../../../app/store";
 
-// todo: move to root file
-dayjs.extend(isToday);
-dayjs.extend(isYesterday);
 interface IProps {
   readOnly?: boolean;
   contextId: number;

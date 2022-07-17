@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from "react";
 import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
 import Styled from "./styled";
 import ImageMessage from "./ImageMessage";
 import useRemoveLocalMessage from "../../hook/useRemoveLocalMessage";
@@ -8,14 +7,9 @@ import useUploadFile from "../../hook/useUploadFile";
 import useSendMessage from "../../hook/useSendMessage";
 import Progress from "./Progress";
 import { getFileIcon, formatBytes, isImage, getImageSize, ImageSize } from "../../utils";
-// import { ReactComponent as IconDownload } from "../../../assets/icons/download.svg";
-// import { ReactComponent as IconClose } from "../../../assets/icons/close.circle.svg";
 import { useAppSelector } from "../../../app/store";
 import IconDownload from "../../../assets/icons/download.svg";
 import IconClose from "../../../assets/icons/close.circle.svg";
-
-// todo: move to root file
-dayjs.extend(relativeTime);
 
 const isLocalFile = (content: string) => {
   return content.startsWith("blob:");

@@ -2,20 +2,16 @@ import { useState, useEffect, FC } from "react";
 import dayjs from "dayjs";
 import { useDrop } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
-import relativeTime from "dayjs/plugin/relativeTime";
 import ContextMenu from "./ContextMenu";
 import getUnreadCount, { renderPreviewMessage } from "../utils";
 import User from "../../../common/component/User";
 import Avatar from "../../../common/component/Avatar";
-// import iconChannel from "../../../assets/icons/channel.svg?url";
 import IconLock from "../../../assets/icons/lock.svg";
 import useContextMenu from "../../../common/hook/useContextMenu";
 import { useNavigate, NavLink } from "react-router-dom";
 import useUploadFile from "../../../common/hook/useUploadFile";
 import { useAppSelector } from "../../../app/store";
 
-// todo: move to root file
-dayjs.extend(relativeTime);
 interface IProps {
   type?: "user" | "channel";
   id: number;

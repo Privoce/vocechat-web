@@ -1,6 +1,5 @@
 import { FC, ReactElement } from "react";
 import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
 import Styled from "./styled";
 import {
   VideoPreview,
@@ -13,9 +12,6 @@ import {
 import { getFileIcon, formatBytes } from "../../utils";
 import IconDownload from "../../../assets/icons/download.svg";
 import { useAppSelector } from "../../../app/store";
-
-// todo: move to root file
-dayjs.extend(relativeTime);
 
 interface Data {
   file_type: string;
