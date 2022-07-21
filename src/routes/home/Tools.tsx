@@ -1,4 +1,4 @@
-// import React from 'react';
+import React from "react";
 import { RiAddFill } from "react-icons/ri";
 
 import styled from "styled-components";
@@ -60,7 +60,10 @@ const StyledWrapper = styled.div`
     }
   }
 `;
-export default function Tools({ expand = true }) {
+type Props = {
+  expand?: boolean;
+};
+const Tools: React.FC<Props> = ({ expand = true }) => {
   return (
     <StyledWrapper>
       <hr />
@@ -90,4 +93,5 @@ export default function Tools({ expand = true }) {
       </ul>
     </StyledWrapper>
   );
-}
+};
+export default Tools;

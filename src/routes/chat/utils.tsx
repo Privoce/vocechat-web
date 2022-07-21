@@ -26,11 +26,11 @@ export function getUnreadCount({ mids = [], messageData = {}, loginUid = 0, read
     return mid > readIndex;
   });
   // 拿at数量
-  const tmps = [];
+  const tmps: number[] = [];
   final.forEach((mid) => {
     const msg = messageData[mid];
     const { mentions = [] } = msg.properties || {};
-    mentions.forEach((id) => {
+    mentions.forEach((id: number) => {
       if (id == loginUid) {
         tmps.push(mid);
       }
@@ -104,7 +104,6 @@ const StyledWrapper = styled.div`
     flex: 1;
   }
   &.select {
-    /* cursor: pointer; */
     &:hover {
       border-radius: var(--br);
       background: #f5f6f7;
@@ -127,7 +126,6 @@ const MessageWrapper = ({ selectMode = false, context, id, mid, children, ...res
   return (
     <StyledWrapper className={selectMode ? "select" : ""} {...rest}>
       <Checkbox className="check" checked={selected} />
-      {/* {React.cloneElement(children, { readOnly: selected })} */}
       {children}
       {selectMode && <div className="overlay" onClick={selectMode ? toggleSelect : null}></div>}
     </StyledWrapper>

@@ -37,19 +37,18 @@ const Filters = [
     filter: "audio"
   }
 ];
+type filter = "audio" | "video" | "image" | "";
 function FavsPage() {
-  const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState<filter>("");
   const [favs, setFavs] = useState([]);
   const { favorites, channelData, userData } = useAppSelector((store) => {
-    console.log("favs", store.favorites);
     return {
       favorites: store.favorites,
       userData: store.users.byId,
       channelData: store.channels.byId
     };
   });
-  const handleFilter = (ftr) => {
-    console.log("fff", ftr);
+  const handleFilter = (ftr: filter) => {
     setFilter(ftr);
   };
   useEffect(() => {
@@ -122,7 +121,7 @@ function FavsPage() {
               <li
                 key={f}
                 className={`filter ${f == filter ? "active" : ""}`}
-                onClick={handleFilter.bind(null, f)}
+                onClick={handleFilter.bind(null, f as filter)}
               >
                 {icon}
                 <span className="txt">{title}</span>

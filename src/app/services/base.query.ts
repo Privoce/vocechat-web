@@ -37,7 +37,7 @@ const baseQuery = fetchBaseQuery({
   }
 });
 
-let waitingForRenew = null;
+let waitingForRenew: null | any = null;
 const baseQueryWithTokenCheck = async (args, api, extraOptions) => {
   if (waitingForRenew) {
     await waitingForRenew;
