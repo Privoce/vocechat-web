@@ -50,10 +50,6 @@ const Styled = styled.div`
 
 export default function From({ select = "", updateFilter }) {
   const { input, updateInput, users } = useFilteredUsers();
-  // const users=useSelector(store=>store.users);
-
-  // const uid=users.ids;
-  // const dataMap=users.byId;
   const handleClick = (uid) => {
     updateFilter({ from: uid });
   };

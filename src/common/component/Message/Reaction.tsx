@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { getEmojiDataFromNative } from "emoji-mart";
 import AppleEmojiData from "emoji-mart/data/apple.json";
@@ -106,7 +105,7 @@ const StyledDetails = styled.div`
   }
 `;
 const ReactionDetails = ({ uids = [], emoji, index }) => {
-  const usersData = useSelector((store) => store.users.byId);
+  const usersData = useAppSelector((store) => store.users.byId);
   const names = uids.map((id) => {
     return usersData[id]?.name;
   });

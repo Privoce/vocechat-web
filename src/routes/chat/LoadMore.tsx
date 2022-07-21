@@ -9,7 +9,6 @@ const Styled = styled.div`
   align-items: center;
   width: 100%;
   padding: 30px 0;
-  /* background-color: #eee; */
 `;
 export default function LoadMore({ pullUp = null }) {
   const ref = useRef(undefined);

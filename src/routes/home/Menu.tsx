@@ -42,22 +42,7 @@ const Menu: FC<Props> = () => {
             <img src={settingIcon} alt="setting icon" className="icon" />
           </Tooltip>
         </NavLink>
-        {/* {expand && (
-          <span className="txt animate__animated animate__fadeIn">
-            Settings
-          </span>
-        )} */}
       </li>
-      {/* <li className="menu" onClick={toggle}>
-        <img
-          src={expand ? foldIcon : unfoldIcon}
-          alt="expand icon"
-          className="icon"
-        />
-        {expand && (
-          <span className="txt animate__animated animate__fadeIn">Expand</span>
-        )}
-      </li> */}
     </StyledMenus>
   );
 };

@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 // import BASE_URL from "../config";
 
-// todo: check messages type
 export interface Favorite {
   id: number;
   messages: any[];

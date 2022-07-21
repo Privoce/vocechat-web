@@ -1,6 +1,5 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import { useKey } from "rooks";
-import { useSelector } from "react-redux";
 import { Editor, Transforms } from "slate";
 import {
   createPlateUI,
@@ -31,6 +30,7 @@ import useUploadFile from "../../hook/useUploadFile";
 import Styled from "./styled";
 import { CONFIG } from "./config";
 import User from "../User";
+import { useAppSelector } from "../../../app/store";
 export const TEXT_EDITOR_PREFIX = "_text_editor";
 
 let components = createPlateUI({
@@ -50,7 +50,7 @@ const Plugins = ({
   const [context, to] = id.split("_");
   const { addStageFile } = useUploadFile({ context, id: to });
   const enableMentions = members.length > 0;
-  const userData = useSelector((store) => store.users.byId);
+  const userData = useAppSelector((store) => store.users.byId);
   const [msgs, setMsgs] = useState([]);
   const [cmdKey, setCmdKey] = useState(false);
   const editableRef = useRef(null);

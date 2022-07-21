@@ -1,7 +1,6 @@
 // import React from 'react';
-import { useState } from "react";
+import { useState, MouseEvent } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 import { AiOutlineCaretDown } from "react-icons/ai";
 
@@ -18,30 +17,30 @@ import ChannelList from "./ChannelList";
 import UsersModal from "../../common/component/UsersModal";
 import ChannelModal from "../../common/component/ChannelModal";
 import DMList from "./DMList";
+import { useAppSelector } from "../../app/store";
 
 export default function ChatPage() {
   const [channelDropFiles, setChannelDropFiles] = useState([]);
   const [userDropFiles, setUserDropFiles] = useState([]);
-  const { sessionUids } = useSelector((store) => {
+  const { sessionUids } = useAppSelector((store) => {
     return {
       sessionUids: store.userMessage.ids
     };
   });
   const [channelModalVisible, setChannelModalVisible] = useState(false);
   const [usersModalVisible, setUsersModalVisible] = useState(false);
-  const { channel_id, user_id } = useParams();
+  const { channel_id, user_id = 0 } = useParams();
   const toggleUsersModalVisible = () => {
     setUsersModalVisible((prev) => !prev);
   };
   const toggleChannelModalVisible = () => {
     setChannelModalVisible((prev) => !prev);
   };
-  const handleToggleExpand = (evt) => {
+  const handleToggleExpand = (evt: MouseEvent<HTMLElement>) => {
     const { currentTarget } = evt;
-    const listEle = currentTarget.parentElement.parentElement;
-    listEle.classList.toggle("collapse");
+    currentTarget.classList.toggle("collapse");
   };
-  const tmpUid = sessionUids.findIndex((i) => i == user_id) > -1 ? null : user_id;
+  const tmpUid = sessionUids.findIndex((i) => i == +user_id) > -1 ? null : user_id;
   // console.log("temp uid", tmpUid);
   const placeholderVisible = !channel_id && !user_id;
   return (
