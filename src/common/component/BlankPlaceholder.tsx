@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+// import { NavLink } from "react-router-dom";
 import ChannelModal from "./ChannelModal";
 import InviteModal from "./InviteModal";
 import IconChat from "../../assets/icons/placeholder.chat.svg";
@@ -8,6 +8,7 @@ import IconAsk from "../../assets/icons/placeholder.question.svg";
 import IconInvite from "../../assets/icons/placeholder.invite.svg";
 import IconDownload from "../../assets/icons/placeholder.download.svg";
 import UsersModal from "./UsersModal";
+import usePWAInstallPrompt from "../hook/usePWAInstallPrompt";
 import { useAppSelector } from "../../app/store";
 
 const Styled = styled.div`
@@ -72,6 +73,7 @@ interface Props {
 }
 
 const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
+  const { showPrompt } = usePWAInstallPrompt();
   const server = useAppSelector((store) => store.server);
   const [inviteModalVisible, setInviteModalVisible] = useState(false);
   const [createChannelVisible, setCreateChannelVisible] = useState(false);
@@ -108,14 +110,14 @@ const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
             <IconChat className="icon" />
             <div className="txt">{chatTip}</div>
           </div>
-          <a className="box" href="#">
+          <button className="box" onClick={showPrompt}>
             <IconDownload className="icon" />
             <div className="txt">Download PC and Mobile apps</div>
-          </a>
-          <NavLink to={"#"} className="box">
+          </button>
+          <a href={"https://voce.chat"} target={"_blank"} rel="noreferrer" className="box">
             <IconAsk className="icon" />
             <div className="txt">Got questions? Visit our help center </div>
-          </NavLink>
+          </a>
         </div>
       </Styled>
       {createChannelVisible && (

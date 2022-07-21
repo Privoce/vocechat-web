@@ -189,11 +189,6 @@ export const serverApi = createApi({
         body: data
       })
     }),
-    getInitialized: builder.query<boolean, void>({
-      query: () => ({
-        url: `/admin/system/initialized`
-      })
-    }),
     getLicense: builder.query<LicenseResponse, void>({
       query: () => ({
         url: `/license`
@@ -244,7 +239,6 @@ export const {
   useGetThirdPartySecretQuery,
   useUpdateThirdPartySecretMutation,
   useCreateAdminMutation,
-  useGetInitializedQuery,
   useUpsertLicenseMutation,
   useCheckLicenseMutation,
   useGetLicenseQuery
