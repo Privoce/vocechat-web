@@ -30,6 +30,7 @@
   "cSpell.words": [
     "appinstalled",
     "beforeinstallprompt",
+    "boardos",
     "btns",
     "localstorage",
     "magiclink",
@@ -44,7 +45,8 @@
     "upsert",
     "upserted",
     "upserting",
-    "vocechat"
+    "vocechat",
+    "webrowse"
   ],
   "reactSnippets.settings.prettierEnabled": true,
   "reactSnippets.settings.importReactOnTop": false
