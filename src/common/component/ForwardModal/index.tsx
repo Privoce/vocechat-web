@@ -130,12 +130,7 @@ const ForwardModal: FC<IProps> = ({ mids, closeModal }) => {
             {selectedChannels.map((cid) => {
               return (
                 <li key={cid} className="item">
-                  <Channel
-                    key={cid}
-                    id={cid}
-                    interactive={false}
-                    // avatarSize={40}
-                  />
+                  <Channel key={cid} id={cid} interactive={false} />
                   <CloseIcon
                     className="remove"
                     onClick={removeSelected.bind(null, cid, "channel")}
@@ -146,12 +141,7 @@ const ForwardModal: FC<IProps> = ({ mids, closeModal }) => {
             {selectedMembers.map((uid) => {
               return (
                 <li key={uid} className="item">
-                  <User
-                    key={uid}
-                    uid={uid}
-                    interactive={false}
-                    // avatarSize={40}
-                  />
+                  <User key={uid} uid={uid} interactive={false} />
                   <CloseIcon className="remove" onClick={removeSelected.bind(null, uid, "user")} />
                 </li>
               );

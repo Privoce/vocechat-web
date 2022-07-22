@@ -34,7 +34,7 @@ export interface CreateChannelDTO {
   is_public: boolean;
 }
 
-export interface ChannelDTO extends Pick<Channel, "owner" | "description" | "name"> {
+export interface ChannelDTO extends Partial<Pick<Channel, "owner" | "description" | "name">> {
   id: number;
 }
 

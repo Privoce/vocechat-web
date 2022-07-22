@@ -22,8 +22,8 @@ const useUserOperation = ({ uid, cid }: IProps) => {
   const { copy } = useCopy();
   const { user, channel, loginUser } = useAppSelector((store) => {
     return {
-      user: store.users.byId[uid],
-      channel: store.channels.byId[cid],
+      user: typeof uid !== "undefined" ? store.users.byId[uid] : uid,
+      channel: typeof cid !== "undefined" ? store.channels.byId[cid] : cid,
       loginUser: store.authData.user
     };
   });
@@ -62,7 +62,7 @@ const useUserOperation = ({ uid, cid }: IProps) => {
   const copyEmail = (email: string) => {
     const isString = typeof email == "string";
     const finalEmail = isString ? email || user?.email : user?.email;
-    copy(finalEmail);
+    copy(finalEmail || "");
     hideAll();
   };
 

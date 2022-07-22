@@ -6,6 +6,7 @@ import IconUnknown from "../assets/icons/file.unknown.svg";
 import IconDoc from "../assets/icons/file.doc.svg";
 import IconCode from "../assets/icons/file.code.svg";
 import IconImage from "../assets/icons/file.image.svg";
+import { Archive } from "../types/resource";
 
 export const isImage = (file_type = "", size = 0) => {
   return file_type.startsWith("image") && size <= FILE_IMAGE_SIZE;
@@ -169,7 +170,11 @@ export const getFileIcon = (type: string, name = "") => {
   }
   return icon;
 };
-export const normalizeArchiveData = (data = null, filePath = null, uid = null) => {
+export const normalizeArchiveData = (
+  data: Archive | null,
+  filePath: string | null,
+  uid?: number
+) => {
   if (!data || !filePath) return [];
   const { messages, users } = data;
   const getUrls = (uid, { content, content_type, file_id, thumbnail_id, filePath, avatar }) => {

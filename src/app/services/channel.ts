@@ -126,8 +126,8 @@ export const channelApi = createApi({
         content: string | object;
         type: ContentTypeKey;
         properties?: object;
-        from_uid: number;
-        ignoreLocal: boolean;
+        from_uid?: number;
+        ignoreLocal?: boolean;
       }
     >({
       query: ({ id, content, type = "text", properties = {} }) => ({

@@ -6,6 +6,7 @@ import Toggle from "../../../common/component/styled/Toggle";
 import Label from "../../../common/component/styled/Label";
 import SaveTip from "../../../common/component/SaveTip";
 import useConfig from "../../../common/hook/useConfig";
+import { FirebaseConfig } from "../../../types/server";
 
 export default function ConfigFirebase() {
   const { values, toggleEnable, updateConfig, setValues, reset, changed } = useConfig("firebase");
@@ -20,8 +21,14 @@ export default function ConfigFirebase() {
       return { ...prev, [type]: newValue };
     });
   };
-  //   if (!values) return null;
-  const { token_url, project_id, private_key, client_email, enabled = false } = values ?? {};
+  if (!values) return null;
+  const {
+    token_url,
+    project_id,
+    private_key,
+    client_email,
+    enabled = false
+  } = values as FirebaseConfig;
   return (
     <StyledContainer>
       <div className="inputs">

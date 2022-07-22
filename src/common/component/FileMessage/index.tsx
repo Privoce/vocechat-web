@@ -55,7 +55,7 @@ const FileMessage: FC<Props> = ({
   });
   const { stopUploading, data, uploadFile, progress, isSuccess: uploadSuccess } = useUploadFile();
   const fromUser = useAppSelector((store) => store.users.byId[from_uid]);
-  const { size, name, content_type } = properties ?? {};
+  const { size = 0, name, content_type } = properties ?? {};
   useEffect(() => {
     const handleUpSend = async ({
       url,
@@ -129,7 +129,6 @@ const FileMessage: FC<Props> = ({
         uploading={sending}
         progress={progress}
         properties={{ ...imageSize, ...properties }}
-        size={size}
         content={content}
         download={download}
         thumbnail={thumbnail}
@@ -142,7 +141,6 @@ const FileMessage: FC<Props> = ({
         <div className="info">
           <span className="name">{name}</span>
           <span className="details">
-            {/* <Progress value={30} width={"80%"} /> */}
             {sending ? (
               <Progress value={progress} width={"80%"} />
             ) : (
@@ -158,7 +156,6 @@ const FileMessage: FC<Props> = ({
             )}
           </span>
         </div>
-        {/* <IconClose className="cancel" /> */}
         {sending ? (
           <IconClose className="cancel" onClick={handleCancel} />
         ) : (

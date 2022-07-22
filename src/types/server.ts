@@ -6,8 +6,8 @@ export interface Server {
   description: string;
 }
 export interface GithubAuthConfig {
-  client_id: string;
-  client_secret: string; // todo: check security problem!
+  client_id?: string;
+  client_secret?: string;
 }
 export interface FirebaseConfig {
   enabled: boolean;

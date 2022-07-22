@@ -40,9 +40,6 @@ const Avatar: FC<Props> = ({ url = "", name = "unknown name", type = "user", ...
   return <img src={src} onError={handleError} {...rest} />;
 };
 
-export default memo(Avatar, (prevs, nexts) => {
-  // const prevKey = prevs.url + prevs.name;
-  // const nextKey = nexts.url + nexts.name;
-  // return prevKey == nextKey;
-  return prevs.url == nexts.url;
+export default memo(Avatar, (prev, next) => {
+  return prev.url == next.url;
 });

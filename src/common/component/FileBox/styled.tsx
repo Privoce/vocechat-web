@@ -7,7 +7,6 @@ const Styled = styled.div`
   border-radius: 6px;
   width: 370px;
   height: 66px;
-  /* height: fit-content; */
   * {
     user-select: text;
   }

@@ -116,14 +116,14 @@ export const messageApi = createApi({
         }
       }
     }),
-    getFavoriteDetails: builder.query<Archive, number>({
+    getFavoriteDetails: builder.query<Archive, string>({
       query: (id) => ({
         url: `/favorite/${id}`
       }),
       async onQueryStarted(id, { dispatch, queryFulfilled, getState }) {
         try {
           const { data } = await queryFulfilled;
-          const loginUid = (getState() as RootState).authData.user.uid;
+          const loginUid = (getState() as RootState).authData.user?.uid;
           const messages = normalizeArchiveData(data, id, loginUid);
           dispatch(populateFavorite({ id, messages }));
         } catch (err) {

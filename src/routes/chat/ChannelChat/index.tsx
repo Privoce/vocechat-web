@@ -27,7 +27,11 @@ import { StyledUsers, StyledChannelChat, StyledHeader } from "./styled";
 import InviteModal from "../../../common/component/InviteModal";
 import LoadMore from "../LoadMore";
 import { useAppSelector } from "../../../app/store";
-export default function ChannelChat({ cid = "", dropFiles = [] }) {
+type Props = {
+  cid?: number;
+  dropFiles?: File[];
+};
+export default function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
   const { values: agoraConfig } = useConfig("agora");
   const {
     list: msgIds,

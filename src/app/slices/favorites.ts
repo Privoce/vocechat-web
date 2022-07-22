@@ -2,8 +2,9 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 // import BASE_URL from "../config";
 
 export interface Favorite {
-  id: number;
-  messages: any[];
+  id: string;
+  created_at?: number;
+  messages?: any[];
 }
 
 const initialState: Favorite[] = [];

@@ -15,7 +15,15 @@ export default function useForwardMessage() {
   ] = useSendChannelMsgMutation();
   const [sendUserMsg, { isLoading: userSending, isSuccess: userSuccess, isError: userError }] =
     useSendMsgMutation();
-  const forwardMessage = async ({ mids = [], users = [], channels = [] }) => {
+  const forwardMessage = async ({
+    mids,
+    users,
+    channels
+  }: {
+    mids: number[];
+    users: number[];
+    channels: number[];
+  }) => {
     setForwarding(true);
     const { data: archive_id } = await createArchive(mids);
     if (users.length) {

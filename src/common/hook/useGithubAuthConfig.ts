@@ -3,14 +3,11 @@ import {
   useGetGithubAuthConfigQuery,
   useUpdateGithubAuthConfigMutation
 } from "../../app/services/server";
-
-interface GithubAuthConfig {
-  client_id: string;
-}
+import { GithubAuthConfig } from "../../types/server";
 
 export default function useGithubAuthConfig() {
   const [changed, setChanged] = useState(false);
-  const [config, setConfig] = useState({});
+  const [config, setConfig] = useState<GithubAuthConfig | undefined>(undefined);
   const { data } = useGetGithubAuthConfigQuery(undefined, {
     refetchOnMountOrArgChange: true
   });
@@ -24,13 +21,18 @@ export default function useGithubAuthConfig() {
   useEffect(() => {
     setChanged(isSuccess ? false : JSON.stringify(data) !== JSON.stringify(config));
   }, [data, config, isSuccess]);
-  const updateGithubAuthConfig = (obj) => {
+  const updateGithubAuthConfig = (obj: Partial<GithubAuthConfig>) => {
     setConfig((prev) => {
-      return { ...prev, ...obj };
+      if (prev) {
+        return { ...prev, ...obj };
+      }
+      return obj;
     });
   };
   const updateGithubAuthConfigToServer = async () => {
-    await updateAuthConfig(config);
+    if (config) {
+      await updateAuthConfig(config);
+    }
   };
   return {
     config,

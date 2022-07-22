@@ -5,6 +5,7 @@ import Avatar from "./Avatar";
 import useConfig from "../hook/useConfig";
 import { useAppSelector } from "../../app/store";
 import { FC } from "react";
+import { AgoraConfig } from "../../types/server";
 
 const StyledWrapper = styled.div`
   background-color: #f4f4f5;
@@ -79,7 +80,7 @@ const CurrentUser: FC<Props> = () => {
           <span className="id">#{uid}</span>
         </div>
       </div>
-      {agoraConfig.enabled && (
+      {(agoraConfig as AgoraConfig)?.enabled && (
         <div className="settings">
           <img src={soundIcon} className="icon" alt="mic icon" />
           <img src={micIcon} className="icon" alt="sound icon" />

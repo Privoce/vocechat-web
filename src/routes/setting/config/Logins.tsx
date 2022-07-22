@@ -49,7 +49,6 @@ export default function Logins() {
   };
   const handleGithubAuthChange = (evt) => {
     const { key } = evt.target.dataset;
-    console.log("ggg", key, evt.target.value);
     if (key) {
       updateGithubAuthConfig({ [key]: evt.target.value });
     }
