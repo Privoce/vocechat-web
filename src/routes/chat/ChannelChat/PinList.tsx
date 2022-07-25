@@ -9,7 +9,8 @@ const Styled = styled.div`
   background: #f9fafb;
   filter: drop-shadow(0px 25px 50px rgba(31, 41, 55, 0.25));
   border-radius: 12px;
-  min-width: 406px;
+  min-width: 486px;
+  /* width: fit-content; */
   > .head {
     font-weight: 600;
     font-size: 16px;
@@ -106,13 +107,6 @@ const PinList: FC<Props> = ({ id }: Props) => {
               <li key={mid} className="pin">
                 <PreviewMessage mid={mid} />
                 <div className="opts">
-                  {/* <button
-                    className="btn"
-                    data-mid={mid}
-                    // onClick={handleUnpin}
-                  >
-                    <IconForward />
-                  </button> */}
                   {canPin && (
                     <button className="btn" data-mid={mid} onClick={handleUnpin}>
                       <IconClose />

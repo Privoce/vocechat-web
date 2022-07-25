@@ -12,7 +12,7 @@ import { useAppSelector } from "../../../app/store";
 interface Props {
   uid: number;
   cid?: number;
-  owner?: number;
+  owner?: boolean;
   dm?: boolean;
   interactive?: boolean;
   popover?: boolean;

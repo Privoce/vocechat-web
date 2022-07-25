@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, FC } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import Tippy from "@tippyjs/react";
@@ -61,8 +61,13 @@ const StyledCmds = styled.ul`
     transform: translateX(-100%);
   }
 `;
-
-export default function Commands({ context = "user", contextId = 0, mid = 0, toggleEditMessage }) {
+type Props = {
+  context: "user" | "channel";
+  contextId: number;
+  mid: number;
+  toggleEditMessage: () => void;
+};
+const Commands: FC<Props> = ({ context = "user", contextId = 0, mid = 0, toggleEditMessage }) => {
   const {
     canDelete,
     canReply,
@@ -84,19 +89,17 @@ export default function Commands({ context = "user", contextId = 0, mid = 0, tog
   const dispatch = useDispatch();
   const [tippyVisible, setTippyVisible] = useState(false);
   const cmdsRef = useRef(null);
-  const handleReply = (fromMenu) => {
+  const handleReply = () => {
     if (contextId) {
       setReplying(mid);
     }
-    if (fromMenu) {
-      hideAll();
-    }
+    hideAll();
   };
 
   const handleTippyVisible = (visible = true) => {
     setTippyVisible(visible);
   };
-  const handleSelect = (mid) => {
+  const handleSelect = (mid: number) => {
     dispatch(updateSelectMessages({ context, id: contextId, data: mid }));
     hideAll();
   };
@@ -202,4 +205,5 @@ export default function Commands({ context = "user", contextId = 0, mid = 0, tog
       {DeleteModal}
     </>
   );
-}
+};
+export default Commands;

@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, FC } from "react";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import { Editor } from "@toast-ui/react-editor";
 import "prismjs/themes/prism.css";
@@ -9,15 +9,22 @@ import StyledWrapper from "./styled";
 import useUploadFile from "../../hook/useUploadFile";
 
 import Button from "../styled/Button";
-
-function MarkdownEditor({
+type Props = {
+  updateDraft?: (draft: string) => void;
+  initialValue: string;
+  height: string;
+  placeholder: string;
+  sendMarkdown: (md: string) => void;
+  setEditorInstance: () => void;
+};
+const MarkdownEditor: FC<Props> = ({
   updateDraft = null,
   initialValue = "",
   height = "50vh",
   placeholder,
   sendMarkdown,
   setEditorInstance
-}) {
+}) => {
   const editorRef = useRef<Editor | undefined>(undefined);
   const { uploadFile } = useUploadFile();
   // const [pHolder, setPHolder] = useState(placeholder);
@@ -73,5 +80,5 @@ function MarkdownEditor({
       </Button>
     </StyledWrapper>
   );
-}
+};
 export default MarkdownEditor;

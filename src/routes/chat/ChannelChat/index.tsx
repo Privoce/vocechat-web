@@ -27,6 +27,7 @@ import { StyledUsers, StyledChannelChat, StyledHeader } from "./styled";
 import InviteModal from "../../../common/component/InviteModal";
 import LoadMore from "../LoadMore";
 import { useAppSelector } from "../../../app/store";
+import { AgoraConfig } from "../../../types/server";
 type Props = {
   cid?: number;
   dropFiles?: File[];
@@ -42,7 +43,6 @@ export default function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
     context: "channel",
     id: cid
   });
-  const [toolVisible, setToolVisible] = useState("");
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   const [updateReadIndex] = useReadMessageMutation();
@@ -99,57 +99,37 @@ export default function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
         aside={
           <>
             <ul className="tools">
-              {agoraConfig.enabled && (
+              {(agoraConfig as AgoraConfig)?.enabled && (
                 <li className="tool">
                   <Tooltip tip="Voice/Video Chat" placement="left">
                     <IconHeadphone />
                   </Tooltip>
                 </li>
               )}
-              <Tooltip tip="Pin" placement="left" disabled={toolVisible == "pin"}>
+              <Tooltip tip="Pin" placement="left">
                 <Tippy
-                  onShow={() => {
-                    setToolVisible("pin");
-                  }}
-                  onHide={() => {
-                    setToolVisible("");
-                  }}
                   placement="left-start"
                   popperOptions={{ strategy: "fixed" }}
-                  offset={[0, 80]}
+                  offset={[0, 150]}
                   interactive
                   trigger="click"
                   content={<PinList id={cid} />}
                 >
-                  <li
-                    className={`tool ${pinCount > 0 ? "badge" : ""} ${
-                      toolVisible == "pin" ? "active" : ""
-                    } `}
-                    data-count={pinCount}
-                  >
+                  <li className={`tool ${pinCount > 0 ? "badge" : ""}`} data-count={pinCount}>
                     <IconPin />
                   </li>
                 </Tippy>
               </Tooltip>
-              <Tooltip tip="Favorite" placement="left" disabled={toolVisible == "favorite"}>
+              <Tooltip tip="Favorite" placement="left">
                 <Tippy
-                  onShow={() => {
-                    setToolVisible("favorite");
-                  }}
-                  onHide={() => {
-                    setToolVisible("");
-                  }}
                   placement="left-start"
                   popperOptions={{ strategy: "fixed" }}
-                  offset={[0, 180]}
+                  offset={[0, 162]}
                   interactive
                   trigger="click"
                   content={<FavList cid={cid} />}
                 >
-                  <li
-                    className={`tool fav ${toolVisible == "favorite" ? "active" : ""} `}
-                    data-count={pinCount}
-                  >
+                  <li className={`tool fav`} data-count={pinCount}>
                     <IconFav />
                   </li>
                 </Tippy>
@@ -184,7 +164,7 @@ export default function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
                     <div className="txt">Add members</div>
                   </div>
                 )}
-                {memberIds.map((uid) => {
+                {memberIds.map((uid: number) => {
                   return (
                     <User
                       enableContextMenu={true}

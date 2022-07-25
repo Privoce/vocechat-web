@@ -9,6 +9,7 @@ import Tooltip from "./Tooltip";
 import IssuerList from "./IssuerList";
 import useGoogleAuthConfig from "../../../common/hook/useGoogleAuthConfig";
 import useGithubAuthConfig from "../../../common/hook/useGithubAuthConfig";
+import { LoginConfig } from "../../../types/server";
 
 export default function Logins() {
   const {
@@ -25,7 +26,7 @@ export default function Logins() {
   } = useGithubAuthConfig();
   const { values, updateConfig, setValues, reset, changed } = useConfig("login");
   const handleUpdate = async () => {
-    const { google } = values;
+    const { google } = values as LoginConfig;
     if (changed) {
       updateConfig(values);
     }

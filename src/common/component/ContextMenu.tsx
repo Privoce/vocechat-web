@@ -1,9 +1,9 @@
-import { FC, MouseEvent } from "react";
+import { FC, MouseEvent, ReactElement } from "react";
 import StyledMenu from "./styled/Menu";
 
 export interface Item {
   title: string;
-  icon?: string;
+  icon?: string | ReactElement;
   handler: (e: MouseEvent) => void;
   underline?: boolean;
   danger?: boolean;

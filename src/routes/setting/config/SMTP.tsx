@@ -16,6 +16,7 @@ import Toggle from "../../../common/component/styled/Toggle";
 import Label from "../../../common/component/styled/Label";
 import SaveTip from "../../../common/component/SaveTip";
 import toast from "react-hot-toast";
+import { SMTPConfig } from "../../../types/server";
 
 export default function ConfigSMTP() {
   const [testEmail, setTestEmail] = useState("");
@@ -24,7 +25,7 @@ export default function ConfigSMTP() {
 
   const handleUpdate = () => {
     // const { token_url, description } = values;
-    updateConfig({ ...values, port: Number(values.port ?? 0) });
+    updateConfig({ ...values, port: Number((values as SMTPConfig)?.port ?? 0) });
   };
   const handleChange = (evt) => {
     const newValue = evt.target.value;

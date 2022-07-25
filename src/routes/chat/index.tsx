@@ -15,7 +15,7 @@ import { useAppSelector } from "../../app/store";
 export default function ChatPage() {
   const [channelModalVisible, setChannelModalVisible] = useState(false);
   const [usersModalVisible, setUsersModalVisible] = useState(false);
-  const { channel_id, user_id } = useParams();
+  const { channel_id = 0, user_id = 0 } = useParams();
   const { sessionUids } = useAppSelector((store) => {
     return {
       sessionUids: store.userMessage.ids
@@ -47,7 +47,7 @@ export default function ChatPage() {
         </div>
         <div className={`right ${placeholderVisible ? "placeholder" : ""}`}>
           {placeholderVisible && <BlankPlaceholder />}
-          {channel_id && <ChannelChat cid={channel_id} />}
+          {channel_id && <ChannelChat cid={+channel_id} />}
           {user_id && <DMChat uid={+user_id} />}
         </div>
       </StyledWrapper>

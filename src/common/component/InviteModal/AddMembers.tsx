@@ -97,12 +97,12 @@ interface Props {
   closeModal: () => void;
 }
 
-const AddMembers: FC<Props> = ({ cid, closeModal }) => {
+const AddMembers: FC<Props> = ({ cid = 0, closeModal }) => {
   const [addMembers, { isLoading: isAdding, isSuccess }] = useAddMembersMutation();
   const [selects, setSelects] = useState<number[]>([]);
   const { channel, userData } = useAppSelector((store) => {
     return {
-      channel: cid ? store.channels.byId[cid] : null,
+      channel: store.channels.byId[cid],
       userData: store.users.byId
     };
   });

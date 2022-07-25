@@ -4,6 +4,7 @@ import { useOutsideClick } from "rooks";
 import Tooltip from "../Tooltip";
 import Picker from "../EmojiPicker";
 import SmileIcon from "../../../assets/icons/emoji.smile.svg";
+import { BaseEmoji, EmojiData } from "emoji-mart";
 
 const Styled = styled.div`
   position: relative;
@@ -29,7 +30,7 @@ const Styled = styled.div`
   }
 `;
 
-export default function EmojiPicker({ selectEmoji }) {
+export default function EmojiPicker({ selectEmoji }: { selectEmoji: (e: string) => void }) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 
@@ -37,9 +38,9 @@ export default function EmojiPicker({ selectEmoji }) {
     setVisible((prev) => !prev);
   };
 
-  const handleSelect = (emoji) => {
+  const handleSelect = (emoji: EmojiData) => {
     console.log("semojii", emoji);
-    selectEmoji(emoji.native);
+    selectEmoji((emoji as BaseEmoji).native);
   };
 
   useOutsideClick(
@@ -49,9 +50,7 @@ export default function EmojiPicker({ selectEmoji }) {
       const ignore =
         (clickEle.nodeName == "svg" && clickEle.dataset.emoji == "toggler") ||
         (clickEle.nodeName == "path" && clickEle.parentElement.dataset.emoji == "toggler");
-      // console.log("outside click", clickEle, clickEle.parentElement, ignore);
       if (ignore) return;
-      // if(clickEle)
       setVisible(false);
     },
     visible

@@ -8,6 +8,7 @@ import { useLazyDeleteUserQuery } from "../../app/services/user";
 import useConfig from "./useConfig";
 import useCopy from "./useCopy";
 import { useAppSelector } from "../../app/store";
+import { AgoraConfig } from "../../types/server";
 interface IProps {
   uid?: number;
   cid?: number;
@@ -79,7 +80,7 @@ const useUserOperation = ({ uid, cid }: IProps) => {
   const canDeleteChannel = cid && !channel?.is_public && isAdmin;
   const canRemoveFromChannel =
     cid && !channel?.is_public && (isAdmin || channel?.owner == loginUid) && uid != channel?.owner;
-  const canCall: boolean = agoraConfig.enabled && loginUid != uid;
+  const canCall: boolean = (agoraConfig as AgoraConfig)?.enabled && loginUid != uid;
   const canRemove: boolean = isAdmin && loginUid != uid && !cid;
 
   return {

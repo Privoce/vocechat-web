@@ -29,8 +29,6 @@ const Styled = styled.div`
   }
 `;
 
-// type: server,channel
-
 interface Props {
   type?: "server" | "channel";
   cid?: number;

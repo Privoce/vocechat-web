@@ -4,13 +4,14 @@ import { updateUploadFiles } from "../../app/slices/ui";
 import BASE_URL, { FILE_SLICE_SIZE } from "../../app/config";
 import { usePrepareUploadFileMutation, useUploadFileMutation } from "../../app/services/message";
 import { useAppDispatch, useAppSelector } from "../../app/store";
+import { Message } from "../../types/channel";
 
 // todo: check props type
 interface IProps {
   context: "channel" | "user";
   id: number;
 }
-const useUploadFile = (props: IProps) => {
+const useUploadFile = (props?: IProps) => {
   const { context, id } = props ? props : { context: "channel", id: 0 };
   const dispatch = useAppDispatch();
   const { stageFiles, replying } = useAppSelector((store) => {
@@ -19,8 +20,7 @@ const useUploadFile = (props: IProps) => {
       replying: store.message.replying[`${context}_${id}`]
     };
   });
-  const [data, setData] = useState(null);
-  // const [uploadingFile, setUploadingFile] = useState(false);
+  const [data, setData] = useState<Message | null>(null);
   const canceledRef = useRef(false);
   const sliceUploadedCountRef = useRef(0);
   const totalSliceCountRef = useRef(1);

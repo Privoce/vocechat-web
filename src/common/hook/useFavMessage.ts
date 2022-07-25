@@ -2,7 +2,13 @@ import { useState, useEffect } from "react";
 import { useLazyRemoveFavoriteQuery, useFavoriteMessageMutation } from "../../app/services/message";
 import { useAppSelector } from "../../app/store";
 
-export default function useFavMessage({ cid = null, uid = null }) {
+export default function useFavMessage({
+  cid = null,
+  uid = null
+}: {
+  cid?: number | null;
+  uid?: number | null;
+}) {
   const [removeFav] = useLazyRemoveFavoriteQuery();
   const [addFav] = useFavoriteMessageMutation();
   const [favorites, setFavorites] = useState([]);

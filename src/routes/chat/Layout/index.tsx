@@ -14,7 +14,7 @@ interface Props {
   header: ReactElement;
   aside: ReactElement | null;
   users?: ReactElement;
-  dropFiles: File[];
+  dropFiles?: File[];
   context: "channel" | "user";
   to: number;
 }

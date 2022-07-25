@@ -17,7 +17,7 @@ import useMessageFeed from "../../../common/hook/useMessageFeed";
 import { useAppSelector } from "../../../app/store";
 type Props = {
   uid: number;
-  dropFiles: [File];
+  dropFiles?: [File];
 };
 const DMChat: FC<Props> = ({ uid = 0, dropFiles }) => {
   const {

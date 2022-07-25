@@ -1,4 +1,4 @@
-import { MouseEvent } from "react";
+import { MouseEvent, FC } from "react";
 import styled from "styled-components";
 import FavoredMessage from "../../common/component/Message/FavoredMessage";
 import IconSurprise from "../../assets/icons/emoji.surprise.svg";
@@ -82,8 +82,8 @@ const Styled = styled.div`
     }
   }
 `;
-
-export default function FavList({ cid = null, uid = null }) {
+type Props = { cid?: number; uid?: number };
+const FavList: FC<Props> = ({ cid = null, uid = null }) => {
   const { favorites, removeFavorite } = useFavMessage({ cid, uid });
   const handleRemove = (evt: MouseEvent<HTMLButtonElement>) => {
     const { id } = evt.currentTarget.dataset;
@@ -106,13 +106,6 @@ export default function FavList({ cid = null, uid = null }) {
               <li key={id} className="fav">
                 <FavoredMessage id={id} />
                 <div className="opts">
-                  {/* <button
-                    className="btn"
-                    data-mid={mid}
-                    // onClick={handleRemove}
-                  >
-                    <IconForward />
-                  </button> */}
                   <button className="btn" data-id={id} onClick={handleRemove}>
                     <IconRemove />
                   </button>
@@ -124,4 +117,5 @@ export default function FavList({ cid = null, uid = null }) {
       )}
     </Styled>
   );
-}
+};
+export default FavList;

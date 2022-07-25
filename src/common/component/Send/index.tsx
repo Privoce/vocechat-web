@@ -64,7 +64,7 @@ const Send: FC<IProps> = ({
     }
   }, [replying_mid]);
 
-  const insertEmoji = (emoji) => {
+  const insertEmoji = (emoji: string) => {
     if (mode == Modes.markdown && markdownEditor) {
       // markdown insert emoji
       markdownEditor.insertText(emoji);
