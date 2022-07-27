@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import styled from "styled-components";
 import toast from "react-hot-toast";
 import {
@@ -13,6 +13,7 @@ import Textarea from "../../common/component/styled/Textarea";
 import SaveTip from "../../common/component/SaveTip";
 import channelIcon from "../../assets/icons/channel.svg?url";
 import { useAppSelector } from "../../app/store";
+import { Channel } from "../../types/channel";
 
 const StyledWrapper = styled.div`
   position: relative;
@@ -52,23 +53,25 @@ export default function Overview({ id = 0 }) {
   });
   const { data, refetch } = useGetChannelQuery(id);
   const [changed, setChanged] = useState(false);
-  const [values, setValues] = useState(null);
+  const [values, setValues] = useState<Channel>();
   const [updateChannelIcon] = useUpdateIconMutation();
   const [updateChannel, { isSuccess: updated }] = useUpdateChannelMutation();
   const handleUpdate = () => {
+    if (!values) return;
     const { name, description } = values;
     updateChannel({ id, name, description });
   };
 
-  const handleChange = (evt) => {
+  const handleChange = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const newValue = evt.target.value;
-    const { type } = evt.target.dataset;
+    const { type = "" } = evt.target.dataset;
     setValues((prev) => {
+      if (!prev) return prev;
       return { ...prev, [type]: newValue };
     });
   };
 
-  const updateIcon = (image) => {
+  const updateIcon = (image: File) => {
     updateChannelIcon({ gid: id, image });
   };
 

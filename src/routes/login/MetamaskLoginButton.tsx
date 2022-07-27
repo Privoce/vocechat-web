@@ -4,32 +4,33 @@ import MetaMaskOnboarding from "@metamask/onboarding";
 import { useLazyGetMetamaskNonceQuery } from "../../app/services/auth";
 import metamaskSvg from "../../assets/icons/metamask.svg?url";
 import { StyledSocialButton } from "./styled";
+import Onboarding from "@metamask/onboarding";
 // import toast from "react-hot-toast";
 
 export default function MetamaskLoginButton({ login }) {
   const [requesting, setRequesting] = useState(false);
   const [accounts, setAccounts] = useState([]);
   const [getNonce] = useLazyGetMetamaskNonceQuery();
-  const onboarding = useRef();
+  const onboarding = useRef<Onboarding | undefined>();
 
   useEffect(() => {
     if (!onboarding.current) {
       onboarding.current = new MetaMaskOnboarding();
     }
-    function handleNewAccounts(newAccounts) {
+    function handleNewAccounts(newAccounts: any) {
       setAccounts(newAccounts);
     }
     if (MetaMaskOnboarding.isMetaMaskInstalled()) {
-      ethereum.on("accountsChanged", handleNewAccounts);
+      window.ethereum.on("accountsChanged", handleNewAccounts);
     }
     return () => {
       if (MetaMaskOnboarding.isMetaMaskInstalled()) {
-        ethereum.removeListener("accountsChanged", handleNewAccounts);
+        window.ethereum.removeListener("accountsChanged", handleNewAccounts);
       }
     };
   }, []);
   useEffect(() => {
-    const startLoginWithMask = async (address) => {
+    const startLoginWithMask = async (address: string) => {
       const { data: nonce, isSuccess } = await getNonce(address);
       if (isSuccess) {
         const signature = await getSignature(address, nonce);
@@ -47,16 +48,16 @@ export default function MetamaskLoginButton({ login }) {
         const [address] = accounts;
         startLoginWithMask(address);
         setRequesting(true);
-        onboarding.current.stopOnboarding();
+        onboarding.current?.stopOnboarding();
       } else {
         // setButtonText(CONNECT_TEXT);
         setRequesting(false);
       }
     }
   }, [accounts]);
-  const getSignature = async (address, nonce) => {
+  const getSignature = async (address: string, nonce: string) => {
     console.log("get sn");
-    const signature = await ethereum.request({
+    const signature = await window.ethereum.request({
       method: "personal_sign",
       params: [nonce, address, "hello from "]
     });
@@ -67,13 +68,13 @@ export default function MetamaskLoginButton({ login }) {
     if (MetaMaskOnboarding.isMetaMaskInstalled()) {
       setRequesting(true);
       try {
-        const tmps = await ethereum.request({
+        const tmps = await window.ethereum.request({
           method: "eth_requestAccounts"
         });
         setAccounts(tmps);
       } catch (error) {
         // toast.error(error.message);
-        ethereum.request({
+        window.ethereum.request({
           method: "wallet_requestPermissions",
           params: [{ eth_accounts: {} }]
         });
@@ -81,7 +82,7 @@ export default function MetamaskLoginButton({ login }) {
       }
       setRequesting(false);
     } else {
-      onboarding.current.startOnboarding();
+      onboarding.current?.startOnboarding();
     }
   };
   return (

@@ -25,7 +25,7 @@ const StyledSocialButton = styled(Button)`
 `;
 
 type Props = {
-  client_id: string;
+  client_id?: string;
   type?: "login" | "register";
 };
 

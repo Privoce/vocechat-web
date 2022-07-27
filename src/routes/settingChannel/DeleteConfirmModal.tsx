@@ -7,7 +7,7 @@ import StyledModal from "../../common/component/styled/Modal";
 import Button from "../../common/component/styled/Button";
 
 interface Props {
-  id?: number;
+  id: number;
   closeModal: () => void;
 }
 

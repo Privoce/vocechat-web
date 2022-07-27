@@ -28,4 +28,4 @@ export interface UserForAdmin extends User {
 export interface UserForAdminDTO extends Partial<UserForAdmin> {
   id?: number;
 }
-export interface UserDTO extends Pick<User, "name" | "gender" | "language"> {}
+export interface UserDTO extends Partial<Pick<User, "name" | "gender" | "language" | "email">> {}

@@ -32,7 +32,7 @@ export default function ChatPage() {
       ? null
       : { key: `user_${user_id}`, mid: null, unreads: 0, id: user_id, type: "user" };
   // console.log("temp uid", tmpUid);
-  const placeholderVisible = !channel_id && !user_id;
+  const placeholderVisible = channel_id == 0 && user_id == 0;
   return (
     <>
       {channelModalVisible && (
@@ -47,8 +47,8 @@ export default function ChatPage() {
         </div>
         <div className={`right ${placeholderVisible ? "placeholder" : ""}`}>
           {placeholderVisible && <BlankPlaceholder />}
-          {channel_id && <ChannelChat cid={+channel_id} />}
-          {user_id && <DMChat uid={+user_id} />}
+          {channel_id !== 0 && <ChannelChat cid={+channel_id} />}
+          {user_id !== 0 && <DMChat uid={+user_id} />}
         </div>
       </StyledWrapper>
     </>

@@ -110,10 +110,10 @@ const EditModalInfo = {
     intro: "Enter a new email."
   }
 };
-
+type EditFields = "name" | "email";
 export default function MyAccount() {
   const [passwordModal, setPasswordModal] = useState(false);
-  const [editModal, setEditModal] = useState(null);
+  const [editModal, setEditModal] = useState<EditFields | null>(null);
   const [uploadAvatar, { isSuccess: uploadSuccess }] = useUpdateAvatarMutation();
   const loginUser = useAppSelector((store) => {
     return store.authData.user;
@@ -126,7 +126,7 @@ export default function MyAccount() {
   }, [uploadSuccess]);
 
   const handleBasicEdit = (evt: MouseEvent<HTMLButtonElement>) => {
-    const { edit } = evt.target.dataset;
+    const { edit } = evt.currentTarget.dataset as { edit: EditFields };
     setEditModal(edit);
   };
 

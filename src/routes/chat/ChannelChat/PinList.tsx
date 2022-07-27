@@ -10,6 +10,8 @@ const Styled = styled.div`
   filter: drop-shadow(0px 25px 50px rgba(31, 41, 55, 0.25));
   border-radius: 12px;
   min-width: 486px;
+  max-height: 90vh;
+  overflow-y: scroll;
   /* width: fit-content; */
   > .head {
     font-weight: 600;

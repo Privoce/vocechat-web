@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import styled from "styled-components";
 import toast from "react-hot-toast";
 import {
@@ -14,6 +14,7 @@ import Textarea from "../../common/component/styled/Textarea";
 import SaveTip from "../../common/component/SaveTip";
 import StyledRadio from "../../common/component/styled/Radio";
 import { useAppSelector } from "../../app/store";
+import { LoginConfig, WhoCanSignUp } from "../../types/server";
 
 const StyledWrapper = styled.div`
   position: relative;
@@ -22,29 +23,24 @@ const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
-
   .logo {
     display: flex;
     gap: 16px;
-
     .preview {
       width: 96px;
       height: 96px;
     }
-
     .upload {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       align-items: flex-start;
-
       .tip {
         font-weight: normal;
         font-size: 14px;
         line-height: 20px;
         color: #374151;
       }
-
       .btn {
         padding: 8px 14px;
         font-weight: 500;
@@ -59,13 +55,11 @@ const StyledWrapper = styled.div`
       }
     }
   }
-
   .inputs {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 24px;
-
     .input {
       width: 100%;
       display: flex;
@@ -73,7 +67,6 @@ const StyledWrapper = styled.div`
       align-items: flex-start;
       gap: 8px;
     }
-
     > .radioButton {
       > .label {
         margin-top: 64px;
@@ -81,14 +74,12 @@ const StyledWrapper = styled.div`
         font-size: 14px;
         line-height: 20px;
       }
-
       > .tip {
         font-weight: 400;
         font-size: 14px;
         line-height: 20px;
         color: #667085;
       }
-
       > form {
         margin-top: 16px;
         width: 512px;
@@ -103,7 +94,7 @@ export default function Overview() {
   });
   const [changed, setChanged] = useState(false);
   const [serverValues, setServerValues] = useState<typeof server>(server);
-  const [loginConfigValues, setLoginConfigValues] = useState(null);
+  const [loginConfigValues, setLoginConfigValues] = useState<Partial<LoginConfig>>();
   const { data: loginConfig, refetch: refetchLoginConfig } = useGetLoginConfigQuery();
   const [updateServer, { isSuccess: serverUpdated }] = useUpdateServerMutation();
   const [uploadLogo, { isSuccess: uploadSuccess }] = useUpdateLogoMutation();
@@ -111,16 +102,16 @@ export default function Overview() {
   const handleUpdate = () => {
     const { name, description } = serverValues;
     updateServer({ name, description });
-    if (loginUser?.is_admin) {
+    if (loginUser?.is_admin && loginConfigValues?.who_can_sign_up) {
       updateLoginConfig({
         ...loginConfig,
         who_can_sign_up: loginConfigValues.who_can_sign_up
       });
     }
   };
-  const handleChange = (evt) => {
+  const handleChange = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const newValue = evt.target.value;
-    const { type } = evt.target.dataset;
+    const { type = "" } = evt.target.dataset;
     setServerValues((prev) => {
       return { ...prev, [type]: newValue };
     });
@@ -225,7 +216,7 @@ export default function Overview() {
               options={["Everyone", "Invitation Link Only"]}
               values={["EveryOne", "InvitationOnly"]}
               value={whoCanSignUp}
-              onChange={(v) =>
+              onChange={(v: WhoCanSignUp) =>
                 setLoginConfigValues({
                   ...loginConfig,
                   who_can_sign_up: v

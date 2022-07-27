@@ -25,7 +25,7 @@ const StyledEdit = styled(StyledModal)`
 
 interface Props {
   label?: string;
-  valueKey?: string;
+  valueKey?: "name" | "email";
   value?: string;
   title?: string;
   intro?: string;
