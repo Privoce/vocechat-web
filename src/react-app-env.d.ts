@@ -1,7 +1,6 @@
 /// <reference types="node" />
 /// <reference types="react" />
 /// <reference types="react-dom" />
-/// <reference types="react-scripts" />
 
 declare namespace NodeJS {
   interface ProcessEnv {
@@ -52,10 +51,11 @@ declare module "*.svg?url" {
 }
 
 declare module "*.svg" {
-  import * as React from "react";
+  import React = require("react");
 
-  const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement> & { title?: string }>;
-  export default ReactComponent;
+  const value: React.SFC<React.SVGProps<SVGSVGElement>>;
+
+  export = value;
 }
 
 declare module "*.module.css" {
