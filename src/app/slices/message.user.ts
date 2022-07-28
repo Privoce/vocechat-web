@@ -22,7 +22,7 @@ const userMsgSlice = createSlice({
       state.ids = Object.keys(action.payload).map((k) => +k);
       state.byId = action.payload;
     },
-    addUserMsg(state, action: PayloadAction<{ id: number; mid: number; local_id: number }>) {
+    addUserMsg(state, action: PayloadAction<{ id: number; mid: number; local_id?: number }>) {
       const { id, mid, local_id } = action.payload;
       if (state.byId[id]) {
         const midExisted = state.byId[id].findIndex((id: number) => id == mid) > -1;

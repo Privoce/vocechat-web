@@ -13,7 +13,7 @@ export default function useDraft({ context = "", id = "" }) {
 
   const getUpdateDraft = (type = "mixed") => {
     const update = type == "mixed" ? updateDraftMixedText : updateDraftMarkdown;
-    return (value) => {
+    return (value: string) => {
       dispatch(update({ key: _key, value }));
     };
   };

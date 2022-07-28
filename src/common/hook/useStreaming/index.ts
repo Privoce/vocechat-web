@@ -22,13 +22,13 @@ import { updateUsersByLogs, updateUsersStatus } from "../../../app/slices/users"
 import { resetAuthData } from "../../../app/slices/auth.data";
 import chatMessageHandler from "./chat.handler";
 import store, { useAppDispatch, useAppSelector } from "../../../app/store";
-import { ServerEvent } from "../../../types/sse";
+import { ServerEvent, UsersStateEvent } from "../../../types/sse";
 
 class RetriableError extends Error {}
 
 class FatalError extends Error {}
 
-const getQueryString = (params = {}) => {
+const getQueryString = (params: { [key: string]: string }) => {
   const sp = new URLSearchParams();
   Object.entries(params).forEach(([key, val]) => {
     if (val) {
@@ -37,11 +37,6 @@ const getQueryString = (params = {}) => {
   });
   return sp.toString();
 };
-// const StreamStatus = {
-//   waiting: "waiting",
-//   initialized: "initialized",
-//   streaming: "streaming",
-// };
 let inter: number | null = null;
 
 export default function useStreaming() {
@@ -53,7 +48,7 @@ export default function useStreaming() {
   } = useAppSelector((store) => store);
   const [renewToken] = useRenewMutation();
   const dispatch = useAppDispatch();
-  const loginUid = authData.user?.uid;
+  const loginUid = authData.user?.uid || 0;
   let initialized = false;
   let initializing = false;
   let controller = new AbortController();
@@ -63,21 +58,20 @@ export default function useStreaming() {
     if (initialized || initializing) return;
     // 如果token快要过期，先renew
     const {
-      authData: { token, expireTime = +new Date(), refreshToken }
+      authData: { token = "", expireTime = +new Date(), refreshToken }
     } = store.getState();
     let api_token = token;
     const tokenAlmostExpire = dayjs().isAfter(new Date(expireTime - 20 * 1000));
     console.log("check token expire time", tokenAlmostExpire);
     if (tokenAlmostExpire) {
-      const {
-        data: { token: newToken },
-        isError
-      } = await renewToken({
+      const resp = await renewToken({
         token,
         refresh_token: refreshToken
       });
-      if (isError) return;
-      api_token = newToken;
+      if ("error" in resp) return;
+      if ("data" in resp) {
+        api_token = resp.data.token;
+      }
     }
 
     // 开始初始化
@@ -85,8 +79,8 @@ export default function useStreaming() {
     await fetchEventSource(
       `${BASE_URL}/user/events?${getQueryString({
         "api-key": api_token,
-        users_version: usersVersion,
-        after_mid: afterMid
+        users_version: `${usersVersion}`,
+        after_mid: `${afterMid}`
       })}`,
       {
         openWhenHidden: true,
@@ -186,7 +180,8 @@ export default function useStreaming() {
             case "users_state_changed":
               {
                 let { type, ...rest } = data;
-                const onlines = type == "users_state_changed" ? [rest] : rest.users;
+                const onlines =
+                  type == "users_state_changed" ? [rest] : (rest as UsersStateEvent).users;
                 dispatch(updateUsersStatus(onlines));
               }
               break;
@@ -300,7 +295,7 @@ export default function useStreaming() {
               clearTimeout(inter);
             }
             // 重连
-            inter = setTimeout(() => {
+            inter = window.setTimeout(() => {
               initialized = false;
               startStreaming();
             }, 2000);
@@ -323,7 +318,7 @@ export default function useStreaming() {
     }
   };
 
-  const setStreamingReady = (ready) => {
+  const setStreamingReady = (ready: boolean) => {
     setReadyPullData(ready);
   };
 

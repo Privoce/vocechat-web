@@ -58,7 +58,7 @@ export const channelApi = createApi({
         }
       }
     }),
-    getHistoryMessages: builder.query<ChatMessage[], { id: number; mid?: number; limit: number }>({
+    getHistoryMessages: builder.query<ChatMessage[], { id: number; mid?: number; limit?: number }>({
       query: ({ id, mid = null, limit = 100 }) => ({
         url: mid
           ? `/group/${id}/history?before=${mid}&limit=${limit}`

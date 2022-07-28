@@ -100,13 +100,7 @@ const InvitePage: FC = () => {
           toast.error("Register Failed: invalid token or expired");
           break;
         case 409: {
-          const tips = {
-            email_conflict: "email conflict",
-            name_conflict: "name conflict"
-          };
-          // todo
-          // @ts-ignore
-          toast.error(`Register Failed: ${tips[error.data?.reason]}`);
+          toast.error(`Register Failed: ${error.data?.reason}`);
           break;
         }
         default:

@@ -87,14 +87,14 @@ const footprintSlice = createSlice({
         }
       });
     },
-    updateReadUsers(state, action: PayloadAction<{ uid: number; mid: number }[]>) {
+    updateReadUsers(state, action: PayloadAction<{ uid: number; mid: number }[] | undefined>) {
       const reads = action.payload || [];
       if (reads.length == 0) return;
       reads.forEach(({ uid, mid }) => {
         state.readUsers[uid] = mid;
       });
     },
-    updateReadChannels(state, action: PayloadAction<{ gid: number; mid: number }[]>) {
+    updateReadChannels(state, action: PayloadAction<{ gid: number; mid: number }[] | undefined>) {
       const reads = action.payload || [];
       if (reads.length == 0) return;
       reads.forEach(({ gid, mid }) => {

@@ -29,7 +29,6 @@ const Styled = styled.ul`
           height: 40px;
           &.channel_default {
             padding: 5px;
-            /* height: 35px; */
           }
         }
       }

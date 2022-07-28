@@ -8,7 +8,19 @@ export interface State {
     [key: string | number]: number;
   };
 }
-
+export interface MessagePayload {
+  mid: number;
+  sending: boolean;
+  content_type: string;
+  content: string;
+  properties?: {
+    content_type: string;
+    size: number;
+  };
+  file_path?: string;
+  download?: string;
+  thumbnail?: string;
+}
 const initialState: State = {
   replying: {}
 };
@@ -27,22 +39,7 @@ const messageSlice = createSlice({
       const { mid, ...rest } = action.payload;
       state[mid] = { ...state[mid], ...rest };
     },
-    addMessage(
-      state,
-      action: PayloadAction<{
-        mid: number;
-        sending: boolean;
-        content_type: string;
-        content: string;
-        properties?: {
-          content_type: string;
-          size: number;
-        };
-        file_path?: string;
-        download?: string;
-        thumbnail?: string;
-      }>
-    ) {
+    addMessage(state, action: PayloadAction<MessagePayload>) {
       const data = action.payload;
       const { mid, sending, content_type, content, properties } = data;
       // 如果是正发送，并且已存在，则不覆盖

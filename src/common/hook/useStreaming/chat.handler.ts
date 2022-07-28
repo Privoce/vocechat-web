@@ -7,9 +7,18 @@ import { addUserMsg, removeUserMsg } from "../../../app/slices/message.user";
 import { updateAfterMid } from "../../../app/slices/footprint";
 import { ContentTypes } from "../../../app/config";
 import { ChatEvent } from "../../../types/sse";
-import { AppDispatch, RootState } from "../../../app/store";
-
-const handler = (data: ChatEvent, dispatch: AppDispatch, currState: RootState) => {
+import { AppDispatch } from "../../../app/store";
+type CurrentState = {
+  ready: boolean;
+  loginUid: number;
+  readUsers: {
+    [key: number]: number;
+  };
+  readChannels: {
+    [key: number]: number;
+  };
+};
+const handler = (data: ChatEvent, dispatch: AppDispatch, currState: CurrentState) => {
   const {
     mid,
     from_uid,
@@ -41,7 +50,7 @@ const handler = (data: ChatEvent, dispatch: AppDispatch, currState: RootState) =
       break;
   }
   const { ready, loginUid, readUsers = {}, readChannels = {} } = currState;
-  const to = typeof target.gid !== "undefined" ? "channel" : "user";
+  const to = "gid" in target ? "channel" : "user";
   const appendMessage = to == "user" ? addUserMsg : addChannelMsg;
   const self = from_uid == loginUid;
   // 此处有点绕

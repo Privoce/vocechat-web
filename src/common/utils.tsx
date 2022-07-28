@@ -92,7 +92,8 @@ export const getInitialsAvatar = ({
   canvas.style.width = `${width}px`;
   canvas.style.height = `${height}px`;
 
-  const context = canvas.getContext("2d");
+  const context = canvas.getContext("2d") as CanvasRenderingContext2D;
+
   context.scale(devicePixelRatio, devicePixelRatio);
   context.rect(0, 0, canvas.width, canvas.height);
   context.fillStyle = background;
@@ -115,7 +116,7 @@ export const getInitialsAvatar = ({
  * @param {Number} - chunksAmount
  * @return {Array} - an array of Blobs
  **/
-export function sliceFile(file, chunksAmount) {
+export function sliceFile(file: File | null, chunksAmount: number) {
   if (!file) return null;
   let byteIndex = 0;
   let chunks = [];
@@ -194,7 +195,7 @@ export const normalizeArchiveData = (
   };
   return messages.map(
     ({ source, mid, content, file_id, thumbnail_id, content_type, properties, from_user }) => {
-      let user = { ...(users[from_user] || {}) };
+      let user = users[from_user] ?? {};
       const { transformedContent, thumbnail, download, avatarUrl } = getUrls(uid, {
         content,
         content_type,

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { normalizeArchiveData, ArchiveMessage } from "../utils";
+import { normalizeArchiveData } from "../utils";
 import { useLazyGetArchiveMessageQuery } from "../../app/services/message";
+import { ArchiveMessage } from "../../types/resource";
 
 export default function useNormalizeMessage() {
   const [filePath, setFilePath] = useState<string | null>(null);

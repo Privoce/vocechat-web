@@ -12,7 +12,17 @@ import { updateSelectMessages } from "../../app/slices/ui";
 import Mention from "../../common/component/Message/Mention";
 import { useAppSelector } from "../../app/store";
 
-export function getUnreadCount({ mids = [], messageData = {}, loginUid = 0, readIndex = 0 }) {
+export function getUnreadCount({
+  mids = [],
+  messageData = {},
+  loginUid = 0,
+  readIndex = 0
+}: {
+  mids?: number[];
+  messageData: object;
+  loginUid: number;
+  readIndex: number;
+}) {
   // console.log({ mids, loginUid, readIndex });
   // 先过滤掉空信息和from自己的
   const others = mids.filter((mid) => {

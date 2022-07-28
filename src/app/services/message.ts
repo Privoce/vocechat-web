@@ -166,7 +166,7 @@ export const messageApi = createApi({
     }),
     readMessage: builder.mutation<
       void,
-      { users?: [{ uid: number; mid: number }]; groups?: [{ gid: number; mid: number }] }
+      { users?: { uid: number; mid: number }[]; groups?: { gid: number; mid: number }[] }
     >({
       query: (data) => ({
         url: `/user/read-index`,

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLazyRemoveFavoriteQuery, useFavoriteMessageMutation } from "../../app/services/message";
+import { Favorite } from "../../app/slices/favorites";
 import { useAppSelector } from "../../app/store";
 
 export default function useFavMessage({
@@ -11,7 +12,7 @@ export default function useFavMessage({
 }) {
   const [removeFav] = useLazyRemoveFavoriteQuery();
   const [addFav] = useFavoriteMessageMutation();
-  const [favorites, setFavorites] = useState([]);
+  const [favorites, setFavorites] = useState<Favorite[]>([]);
   const { favs = [] } = useAppSelector((store) => {
     return { favs: store.favorites };
   });
@@ -23,16 +24,16 @@ export default function useFavMessage({
     return !error;
   };
 
-  const removeFavorite = (id) => {
+  const removeFavorite = (id: number) => {
     if (!id) return;
     removeFav(id);
   };
 
   const isFavorited = (mid = null) => {
     if (!mid) return false;
-    let mids = [];
-    favorites.forEach((f) => {
-      if (f.messages.length == 1) {
+    let mids: number[] = [];
+    favorites.forEach((f: Favorite) => {
+      if (f?.messages?.length == 1) {
         const ids = f.messages.map((m) => m.from_mid);
         mids = [...mids, ...ids];
       }
@@ -41,7 +42,7 @@ export default function useFavMessage({
   };
 
   useEffect(() => {
-    let filtereds = [];
+    let filtereds: Favorite[] = [];
     filtereds = cid
       ? favs.filter((f) => {
           if (!f.messages) return false;

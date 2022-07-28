@@ -112,7 +112,7 @@ export const userApi = createApi({
         await onMessageSendStarted.call(this, param1, param2, "user");
       }
     }),
-    getHistoryMessages: builder.query<ChatMessage[], { id: number; mid?: number; limit: number }>({
+    getHistoryMessages: builder.query<ChatMessage[], { id: number; mid?: number; limit?: number }>({
       query: ({ id, mid = null, limit = 100 }) => ({
         url: mid
           ? `/user/${id}/history?before=${mid}&limit=${limit}`

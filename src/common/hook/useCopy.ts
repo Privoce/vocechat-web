@@ -38,13 +38,13 @@ const useCopy = (config: { enableToast: boolean } | void) => {
     if (!copied) {
       if (!isImage) {
         setCopied(copyToClipboard(text));
-        inter = setTimeout(() => {
+        inter = window.setTimeout(() => {
           setCopied(false);
         }, 500);
       } else {
         copyImageToClipboard(text).then(() => {
           setCopied(true);
-          inter = setTimeout(() => {
+          inter = window.setTimeout(() => {
             setCopied(false);
           }, 500);
         });

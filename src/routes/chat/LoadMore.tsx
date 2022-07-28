@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, FC } from "react";
 import styled from "styled-components";
 import { Waveform } from "@uiball/loaders";
 
@@ -10,8 +10,11 @@ const Styled = styled.div`
   width: 100%;
   padding: 30px 0;
 `;
-export default function LoadMore({ pullUp = null }) {
-  const ref = useRef(undefined);
+type Props = {
+  pullUp: () => void | null;
+};
+const LoadMore: FC<Props> = ({ pullUp = null }) => {
+  const ref = useRef<HTMLDivElement>();
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -20,7 +23,7 @@ export default function LoadMore({ pullUp = null }) {
           //   const currEle = entry.target;
           if (intersecting && pullUp) {
             // load more
-            console.log("inview");
+            // console.log("inview");
             pullUp();
           }
         });
@@ -29,7 +32,7 @@ export default function LoadMore({ pullUp = null }) {
     );
     const currEle = ref?.current;
     if (currEle) {
-      observer.observe(ref.current);
+      observer.observe(currEle);
     }
     return () => {
       if (currEle) {
@@ -39,7 +42,8 @@ export default function LoadMore({ pullUp = null }) {
   }, [ref, pullUp]);
   return (
     <Styled ref={ref}>
-      <Waveform className="loading" size={24} lineWeight={5} speed={1} color="#ccc" />
+      <Waveform size={24} lineWeight={5} speed={1} color="#ccc" />
     </Styled>
   );
-}
+};
+export default LoadMore;

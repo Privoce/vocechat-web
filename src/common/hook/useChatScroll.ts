@@ -3,18 +3,6 @@ import { useRef, useEffect } from "react";
 
 function useChatScroll<T extends HTMLElement>() {
   const ref = useRef<T>(null);
-  // useEffect(() => {
-  //   console.log("chat scroll", ref);
-  //   if (ref.current) {
-  //     // setTimeout(() => {
-  //     if (ref.current) {
-  //       setTimeout(() => {
-  //         ref.current.scrollTop = ref.current.scrollHeight;
-  //       }, 500);
-  //     }
-  //     // }, 20);
-  //   }
-  // }, [...deps]);
   useEffect(() => {
     if (ref.current) {
       console.log("chat scroll", ref);

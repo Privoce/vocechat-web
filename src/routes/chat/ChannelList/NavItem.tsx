@@ -33,7 +33,14 @@ const NavItem: FC<IProps> = ({ id, setFiles, toggleRemoveConfirm }) => {
     handleContextMenuEvent,
     hideContextMenu
   } = useContextMenu();
-  const { channel, mids, messageData, readIndex, muted, loginUid } = useAppSelector((store) => {
+  const {
+    channel,
+    mids = [],
+    messageData,
+    readIndex,
+    muted,
+    loginUid = 0
+  } = useAppSelector((store) => {
     return {
       channel: store.channels.byId[id],
       mids: store.channelMessage[id],
@@ -76,7 +83,7 @@ const NavItem: FC<IProps> = ({ id, setFiles, toggleRemoveConfirm }) => {
       updateReadIndex(param);
     }
   };
-  const toggleInviteModalVisible = (evt) => {
+  const toggleInviteModalVisible = (evt?: Event) => {
     if (evt) {
       evt.preventDefault();
       evt.stopPropagation();
@@ -87,6 +94,7 @@ const NavItem: FC<IProps> = ({ id, setFiles, toggleRemoveConfirm }) => {
     const data = muted ? { remove_groups: [id] } : { add_groups: [{ gid: id }] };
     muteChannel(data);
   };
+  if (!channel) return null;
   const { is_public, name, owner } = channel;
   const { unreads = 0, mentions = [] } = getUnreadCount({
     mids,
@@ -119,10 +127,6 @@ const NavItem: FC<IProps> = ({ id, setFiles, toggleRemoveConfirm }) => {
                 title: muted ? "Unmute" : "Mute",
                 handler: handleMute
               },
-              // {
-              //   title: "Notification Settings",
-              //   underline: true,
-              // },
               {
                 title: "Invite People",
                 handler: toggleInviteModalVisible

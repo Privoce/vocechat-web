@@ -13,25 +13,25 @@ import { User } from "../../types/user";
 interface State {
   initialized: boolean;
   user: User | undefined;
-  token: string | null;
+  token: string;
   expireTime: number;
-  refreshToken: string | null;
+  refreshToken: string;
 }
 const loginUser = localStorage.getItem(KEY_LOGIN_USER) || "";
 const initialState: State = {
   initialized: true,
   user: loginUser ? JSON.parse(loginUser) : undefined,
-  token: localStorage.getItem(KEY_TOKEN),
+  token: localStorage.getItem(KEY_TOKEN) || "",
   expireTime: Number(localStorage.getItem(KEY_EXPIRE) || +new Date()),
-  refreshToken: localStorage.getItem(KEY_REFRESH_TOKEN)
+  refreshToken: localStorage.getItem(KEY_REFRESH_TOKEN) || ""
 };
 
 const emptyState: State = {
   initialized: true,
   user: undefined,
-  token: null,
+  token: "",
   expireTime: +new Date(),
-  refreshToken: null
+  refreshToken: ""
 };
 
 const authDataSlice = createSlice({

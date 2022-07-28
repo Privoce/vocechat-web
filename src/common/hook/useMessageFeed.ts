@@ -56,7 +56,7 @@ export default function useMessageFeed({ context = "channel", id }: Props) {
   const [loadMoreChannelMsgs] = useLazyGetHistoryMessagesQuery();
   const [loadMoreDmMsgs] = useLazyGetDMHistoryMsg();
   const listRef = useRef<number[]>([]);
-  const pageRef = useRef<object | null>(null);
+  const pageRef = useRef<PageInfo | null>(null);
   const containerRef = useRef<HTMLElement | null>(null);
   const [hasMore, setHasMore] = useState(true);
   const [appends, setAppends] = useState([]);
@@ -141,12 +141,12 @@ export default function useMessageFeed({ context = "channel", id }: Props) {
         mid: firstMid,
         id
       });
-      if (newList.length == 0) {
+      if (newList?.length == 0) {
         setHasMore(false);
         return;
       }
     }
-    let pageInfo = null;
+    let pageInfo: PageInfo;
     if (!currPageInfo) {
       // 初始化
       pageInfo = getFeedWithPagination({
@@ -173,7 +173,7 @@ export default function useMessageFeed({ context = "channel", id }: Props) {
           oldScroll = container.scrollHeight - container.clientHeight;
         }
       },
-      currPageInfo.isLast ? 10 : 800
+      currPageInfo?.isLast ? 10 : 800
     );
   };
   const pullDown = () => {
