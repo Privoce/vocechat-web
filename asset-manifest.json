@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/static/css/main.41953663.css",
-    "main.js": "/static/js/main.ae5c1f6f.js",
+    "main.css": "/static/css/main.ca7f413a.css",
+    "main.js": "/static/js/main.c8658781.js",
     "static/js/964.6a59ac9f.chunk.js": "/static/js/964.6a59ac9f.chunk.js",
     "static/js/300.ab71976e.chunk.js": "/static/js/300.ab71976e.chunk.js",
     "static/js/85.d180541c.chunk.js": "/static/js/85.d180541c.chunk.js",
     "static/js/866.2599d6bc.chunk.js": "/static/js/866.2599d6bc.chunk.js",
-    "static/js/981.d9ea9a05.chunk.js": "/static/js/981.d9ea9a05.chunk.js",
+    "static/js/981.104ab3f6.chunk.js": "/static/js/981.104ab3f6.chunk.js",
     "static/js/902.4e718c9d.chunk.js": "/static/js/902.4e718c9d.chunk.js",
-    "static/js/777.6e415fd7.chunk.js": "/static/js/777.6e415fd7.chunk.js",
+    "static/js/777.31861516.chunk.js": "/static/js/777.31861516.chunk.js",
     "static/js/923.d4d3cd37.chunk.js": "/static/js/923.d4d3cd37.chunk.js",
     "static/css/954.9779d5d1.chunk.css": "/static/css/954.9779d5d1.chunk.css",
     "static/js/954.be39df04.chunk.js": "/static/js/954.be39df04.chunk.js",
-    "static/js/728.e58be16f.chunk.js": "/static/js/728.e58be16f.chunk.js",
-    "static/js/55.8b54ce6f.chunk.js": "/static/js/55.8b54ce6f.chunk.js",
+    "static/js/728.7b3b98d9.chunk.js": "/static/js/728.7b3b98d9.chunk.js",
+    "static/js/55.33578fd1.chunk.js": "/static/js/55.33578fd1.chunk.js",
     "static/css/802.298f31c6.chunk.css": "/static/css/802.298f31c6.chunk.css",
-    "static/js/802.5d8a2b3a.chunk.js": "/static/js/802.5d8a2b3a.chunk.js",
+    "static/js/802.dab3de34.chunk.js": "/static/js/802.dab3de34.chunk.js",
     "static/js/888.c9c43169.chunk.js": "/static/js/888.c9c43169.chunk.js",
-    "static/js/249.10726aed.chunk.js": "/static/js/249.10726aed.chunk.js",
+    "static/js/249.e8c26a2a.chunk.js": "/static/js/249.e8c26a2a.chunk.js",
     "static/js/952.f83d1bfd.chunk.js": "/static/js/952.f83d1bfd.chunk.js",
     "static/js/840.008264cd.chunk.js": "/static/js/840.008264cd.chunk.js",
     "service-worker.js": "/service-worker.js",
@@ -42,7 +42,7 @@
     "static/media/arrow.left.svg?url": "/static/media/arrow.left.92fbb139607631555459.svg"
   },
   "entrypoints": [
-    "static/css/main.41953663.css",
-    "static/js/main.ae5c1f6f.js"
+    "static/css/main.ca7f413a.css",
+    "static/js/main.c8658781.js"
   ]
 }
