@@ -13,7 +13,7 @@ interface Props {
   children: ReactElement;
   header: ReactElement;
   aside: ReactElement | null;
-  users?: ReactElement;
+  users?: ReactElement | null;
   dropFiles?: File[];
   context: "channel" | "user";
   to: number;

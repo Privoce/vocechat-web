@@ -166,7 +166,7 @@ const ManageMembers: FC<Props> = ({ cid }) => {
           if (!currUser) return null;
           const { name, email, is_admin } = currUser;
           const owner = channel && channel.owner == uid;
-          const switchRoleVisible = loginUser.is_admin && loginUser.uid !== uid;
+          const switchRoleVisible = loginUser?.is_admin && loginUser.uid !== uid;
           const dotsVisible = email || loginUser?.is_admin;
           const canRemove = loginUser?.is_admin && loginUser?.uid != uid;
           const canRemoveFromChannel =

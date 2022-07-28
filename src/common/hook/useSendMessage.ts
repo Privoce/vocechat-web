@@ -25,7 +25,7 @@ interface SendMessageDTO {
 }
 
 const useSendMessage = (props?: Props) => {
-  const { context = "user", from = 0, to = null } = props || {};
+  const { context = "user", from = 0, to = 0 } = props || {};
   const dispatch = useAppDispatch();
   const stageFiles = useAppSelector((store) => store.ui.uploadFiles[`${context}_${to}`] || []);
   const [replyMessage, { isError: replyErr, isLoading: replying, isSuccess: replySuccess }] =
@@ -72,12 +72,9 @@ const useSendMessage = (props?: Props) => {
     if (reply_mid) {
       removeReplying();
       await replyMessage({
-        id: to,
         reply_mid,
         type,
-        content,
-        context,
-        from_uid: from
+        content
       });
     } else {
       await sendFn({

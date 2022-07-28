@@ -20,8 +20,8 @@ export default function useFavMessage({
   const addFavorite = async (mid = []) => {
     const mids = Array.isArray(mid) ? mid.map((i) => +i) : [+mid];
     if (mids.length == 0) return;
-    const { error = null } = await addFav(mids);
-    return !error;
+    const resp = await addFav(mids);
+    return "error" in resp;
   };
 
   const removeFavorite = (id: number) => {

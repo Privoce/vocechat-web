@@ -25,7 +25,11 @@ export default function useForwardMessage() {
     channels: number[];
   }) => {
     setForwarding(true);
-    const { data: archive_id } = await createArchive(mids);
+    const resp = await createArchive(mids);
+    if ("error" in resp) {
+      return;
+    }
+    const archive_id = resp.data;
     if (users.length) {
       for await (const uid of users) {
         await sendUserMsg({

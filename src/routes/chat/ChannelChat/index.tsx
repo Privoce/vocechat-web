@@ -64,7 +64,7 @@ export default function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
       loginUser: store.authData.user,
       // msgIds: store.channelMessage[cid] || [],
       userIds: store.users.ids,
-      data: store.channels.byId[cid] || {},
+      data: store.channels.byId[cid],
       messageData: store.message || {}
     };
   });
@@ -201,7 +201,7 @@ export default function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
             if (!curr) return null;
             const isFirst = idx == 0;
             const prev = isFirst ? null : messageData[feeds[idx - 1]];
-            const read = curr?.from_uid == loginUser.uid || mid <= readIndex;
+            const read = curr?.from_uid == loginUser?.uid || mid <= readIndex;
             return renderMessageFragment({
               selectMode: !!selects,
               updateReadIndex: updateReadDebounced,

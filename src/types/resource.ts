@@ -5,7 +5,7 @@ export interface Archive {
 }
 export interface ArchiveUser {
   name: string;
-  avatar?: number;
+  avatar?: number | string;
 }
 export interface ArchiveMessage {
   from_user: number;

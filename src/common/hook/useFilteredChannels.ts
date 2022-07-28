@@ -5,7 +5,7 @@ import { Channel } from "../../types/channel";
 export default function useFilteredChannels() {
   const [input, setInput] = useState("");
   const channels = useAppSelector((store) => Object.values(store.channels.byId));
-  const [filteredChannels, setFilteredChannels] = useState<Channel[]>([]);
+  const [filteredChannels, setFilteredChannels] = useState<(Channel | undefined)[]>([]);
 
   useEffect(() => {
     if (!input) {
@@ -15,6 +15,7 @@ export default function useFilteredChannels() {
       let reg = new RegExp(str);
       setFilteredChannels(
         channels.filter((c) => {
+          if (!c) return false;
           return reg.test(c.name.toLowerCase());
         })
       );

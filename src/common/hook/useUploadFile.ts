@@ -1,10 +1,11 @@
-import { useState, useRef, FC } from "react";
+import { useState, useRef } from "react";
 import toast from "react-hot-toast";
 import { updateUploadFiles } from "../../app/slices/ui";
 import BASE_URL, { FILE_SLICE_SIZE } from "../../app/config";
 import { usePrepareUploadFileMutation, useUploadFileMutation } from "../../app/services/message";
 import { useAppDispatch, useAppSelector } from "../../app/store";
 import { Message } from "../../types/channel";
+import { UploadFileResponse } from "../../types/message";
 
 // todo: check props type
 interface IProps {
@@ -28,7 +29,7 @@ const useUploadFile = (props?: IProps) => {
   const [uploadFileFn, { isLoading: isUploading, isError: uploadFileError }] =
     useUploadFileMutation();
 
-  const uploadChunk = (data: { file_id: string; chunk: File; is_last: boolean }) => {
+  const uploadChunk = (data: { file_id: string; chunk: Blob; is_last: boolean }) => {
     const { file_id, chunk, is_last } = data;
     const formData = new FormData();
     formData.append("file_id", file_id);
@@ -48,10 +49,15 @@ const useUploadFile = (props?: IProps) => {
       size: file_size
     } = file;
     // 拿file id
-    const { data: file_id } = await prepareUploadFile({
+    const resp = await prepareUploadFile({
       content_type: file_type,
       filename: name
     });
+    if ("error" in resp) {
+      toast.error("Prepare Upload File Error");
+      return;
+    }
+    const file_id = resp.data;
     console.log("file id", file_id);
 
     let uploadResult = null;
@@ -92,9 +98,10 @@ const useUploadFile = (props?: IProps) => {
       console.log("wtfff", uploadResult);
     }
     // setUploadingFile(false);
-    const {
-      data: { path, size, hash }
-    } = uploadResult;
+    if (!uploadResult || "error" in uploadResult) {
+      return;
+    }
+    const { path, size, hash } = uploadResult.data as UploadFileResponse;
     const encodedPath = encodeURIComponent(path);
     const res = {
       name,

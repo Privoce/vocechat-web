@@ -141,7 +141,16 @@ const MessageWrapper = ({ selectMode = false, context, id, mid, children, ...res
     </StyledWrapper>
   );
 };
-
+type Params = {
+  selectMode: boolean;
+  isFirst: boolean;
+  read: boolean;
+  updateReadIndex: (param: any) => void;
+  prev: object | null;
+  curr: object | null;
+  contextId: number;
+  context: "user" | "channel";
+};
 export const renderMessageFragment = ({
   selectMode = false,
   isFirst = false,
@@ -151,7 +160,7 @@ export const renderMessageFragment = ({
   curr = null,
   contextId = 0,
   context = "user"
-}) => {
+}: Partial<Params>) => {
   if (!curr) return null;
   let { created_at, mid } = curr;
   const local_id = curr.properties?.local_id;
@@ -191,14 +200,6 @@ export const renderMessageFragment = ({
       </MessageWrapper>
     </React.Fragment>
   );
-  // React.memo(
-  // (prevs, nexts) => {
-  //   // curr.properties?.local_id
-  //   const prevObj = prevs.curr || undefined;
-  //   const nextObj = nexts.curr || undefined;
-  //   return prevObj?.properties?.local_id === nextObj?.properties?.local_id;
-  // }
-  // );
 };
 
 export default getUnreadCount;

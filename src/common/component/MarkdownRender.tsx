@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef, FC } from "react";
 import "prismjs/themes/prism.css";
 import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css";
+//@ts-ignore
 import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight-all.js";
 
 import { Viewer } from "@toast-ui/react-editor";
@@ -22,7 +23,7 @@ interface IProps {
   content: string;
 }
 const MarkdownRender: FC<IProps> = ({ content }) => {
-  const mdContainer = useRef<HTMLDivElement>();
+  const mdContainer = useRef<HTMLDivElement | null>(null);
   const [previewImage, setPreviewImage] = useState<PreviewImageData | null>(null);
 
   useEffect(() => {
@@ -61,11 +62,7 @@ const MarkdownRender: FC<IProps> = ({ content }) => {
         <ImagePreviewModal download={false} data={previewImage} closeModal={closePreviewModal} />
       )}
       <Styled ref={mdContainer}>
-        <Viewer
-          initialValue={content}
-          // eslint-disable-next-line no-undef
-          plugins={[codeSyntaxHighlight]}
-        ></Viewer>
+        <Viewer initialValue={content} plugins={[codeSyntaxHighlight]}></Viewer>
       </Styled>
     </>
   );

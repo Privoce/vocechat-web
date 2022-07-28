@@ -23,7 +23,7 @@ interface IProps {
   context?: "user" | "channel";
   read?: boolean;
   mid: number;
-  updateReadIndex: (any) => void;
+  updateReadIndex: (param: any) => void;
 }
 const Message: FC<IProps> = ({
   readOnly = false,

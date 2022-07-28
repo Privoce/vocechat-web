@@ -11,7 +11,7 @@ const Styled = styled.div`
   padding: 30px 0;
 `;
 type Props = {
-  pullUp: () => void | null;
+  pullUp: () => Promise<void> | null;
 };
 const LoadMore: FC<Props> = ({ pullUp = null }) => {
   const ref = useRef<HTMLDivElement>();

@@ -14,7 +14,6 @@ const AniFadeIn = keyframes`
 `;
 
 const StyledWrapper = styled.div`
-  /* todo */
   transition: all 0.5s ease;
   width: 100vw;
   height: 100vh;
@@ -129,7 +128,6 @@ const ImagePreviewModal: FC<Props> = ({ download = true, data, closeModal }) => 
               download={name}
               type={type}
               href={downloadLink || originUrl}
-              // target="_blank"
               rel="noreferrer"
             >
               Download original

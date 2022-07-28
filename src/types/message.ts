@@ -19,7 +19,7 @@ export interface UploadFileResponse {
   path: string;
   size: number;
   hash: string;
-  image_properties: {
+  image_properties?: {
     width: number;
     height: number;
   };
