@@ -1,14 +1,24 @@
+import { FC } from "react";
 import { useState, useEffect } from "react";
 import Styled from "./styled";
 import Session from "./Session";
 import DeleteChannelConfirmModal from "../../settingChannel/DeleteConfirmModal";
 import InviteModal from "../../../common/component/InviteModal";
 import { useAppSelector } from "../../../app/store";
-
-export default function SessionList({ tempSession = null }) {
-  const [deleteId, setDeleteId] = useState(null);
-  const [inviteChannelId, setInviteChannelId] = useState(null);
-  const [sessions, setSessions] = useState([]);
+export interface ChatSession {
+  key: string;
+  type: "user" | "channel";
+  id: number;
+  mid?: number;
+  unread?: number;
+}
+type Props = {
+  tempSession: ChatSession;
+};
+const SessionList: FC<Props> = ({ tempSession }) => {
+  const [deleteId, setDeleteId] = useState<number>();
+  const [inviteChannelId, setInviteChannelId] = useState<number>();
+  const [sessions, setSessions] = useState<ChatSession[]>([]);
   const { channelIDs, DMs, readChannels, readUsers, channelMessage, userMessage, loginUid } =
     useAppSelector((store) => {
       return {
@@ -26,7 +36,7 @@ export default function SessionList({ tempSession = null }) {
     const cSessions = channelIDs.map((id) => {
       const mids = channelMessage[id];
       if (!mids || mids.length == 0) {
-        return { key: `channel_${id}`, mid: null, unreads: 0, id, type: "channel" };
+        return { key: `channel_${id}`, unreads: 0, id, type: "channel" };
       }
       const mid = [...mids].pop();
       return { key: `channel_${id}`, id, mid, type: "channel" };
@@ -34,13 +44,15 @@ export default function SessionList({ tempSession = null }) {
     const uSessions = DMs.map((id) => {
       const mids = userMessage[id];
       if (!mids || mids.length == 0) {
-        return { key: `user_${id}`, mid: null, unreads: 0, id, type: "user" };
+        return { key: `user_${id}`, unreads: 0, id, type: "user" };
       }
       const mid = [...mids].pop();
       return { key: `user_${id}`, type: "user", id, mid };
     });
-    const tmps = [...cSessions, ...uSessions].sort((a, b) => {
-      return b.mid - a.mid;
+    const tmps = [...(cSessions as ChatSession[]), ...(uSessions as ChatSession[])].sort((a, b) => {
+      const { mid: aMid = 0 } = a;
+      const { mid: bMid = 0 } = b;
+      return bMid - aMid;
     });
     setSessions(tempSession ? [tempSession, ...tmps] : tmps);
   }, [
@@ -58,7 +70,7 @@ export default function SessionList({ tempSession = null }) {
     <>
       <Styled>
         {sessions.map((s) => {
-          const { key, type, id, mid } = s;
+          const { key, type, id, mid = 0 } = s;
           return (
             <Session
               key={key}
@@ -67,28 +79,28 @@ export default function SessionList({ tempSession = null }) {
               mid={mid}
               setInviteChannelId={setInviteChannelId}
               setDeleteChannelId={setDeleteId}
-              className="session"
             />
           );
         })}
       </Styled>
-      {deleteId && (
+      {!!deleteId && (
         <DeleteChannelConfirmModal
           id={deleteId}
           closeModal={() => {
-            setDeleteId(null);
+            setDeleteId(0);
           }}
         />
       )}
-      {inviteChannelId && (
+      {!!inviteChannelId && (
         <InviteModal
           type="channel"
           cid={inviteChannelId}
           closeModal={() => {
-            setInviteChannelId(null);
+            setInviteChannelId(0);
           }}
         />
       )}
     </>
   );
-}
+};
+export default SessionList;

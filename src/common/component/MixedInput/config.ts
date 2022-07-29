@@ -28,18 +28,6 @@ export const CONFIG = {
             allow: [ELEMENT_IMAGE, ELEMENT_PARAGRAPH]
           }
         }
-        // {
-        //   hotkey: "mod+shift+enter",
-        //   before: true,
-        // },
-        // {
-        //   hotkey: "enter",
-        //   query: {
-        //     start: true,
-        //     end: true,
-        //     allow: KEYS_HEADING,
-        //   },
-        // },
       ]
     }
   },

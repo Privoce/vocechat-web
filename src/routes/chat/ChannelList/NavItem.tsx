@@ -17,8 +17,8 @@ import { getUnreadCount } from "../utils";
 import { useAppSelector } from "../../../app/store";
 interface IProps {
   id: number;
-  setFiles: () => void;
-  toggleRemoveConfirm: () => void;
+  setFiles: (files: File[]) => void;
+  toggleRemoveConfirm: (id: number) => void;
 }
 const NavItem: FC<IProps> = ({ id, setFiles, toggleRemoveConfirm }) => {
   const { pathname } = useLocation();

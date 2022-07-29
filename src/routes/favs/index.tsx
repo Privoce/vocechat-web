@@ -5,11 +5,11 @@ import dayjs from "dayjs";
 import IconAudio from "../../assets/icons/file.audio.svg";
 import IconVideo from "../../assets/icons/file.video.svg";
 import IconUnknown from "../../assets/icons/file.unknown.svg";
-// import IconDoc from "../../assets/icons/file.doc.svg";
 import IconImage from "../../assets/icons/file.image.svg";
 import IconChannel from "../../assets/icons/channel.svg";
 import { ContentTypes } from "../../app/config";
 import { useAppSelector } from "../../app/store";
+import { Favorite } from "../../app/slices/favorites";
 const Filters = [
   {
     icon: <IconUnknown className="icon" />,
@@ -21,11 +21,6 @@ const Filters = [
     title: "Images",
     filter: "image"
   },
-  // {
-  //   icon: <IconDoc className="icon" />,
-  //   title: "Files",
-  //   filter: "file",
-  // },
   {
     icon: <IconVideo className="icon" />,
     title: "Videos",
@@ -40,7 +35,7 @@ const Filters = [
 type filter = "audio" | "video" | "image" | "";
 function FavsPage() {
   const [filter, setFilter] = useState<filter>("");
-  const [favs, setFavs] = useState([]);
+  const [favs, setFavs] = useState<Favorite[]>([]);
   const { favorites, channelData, userData } = useAppSelector((store) => {
     return {
       favorites: store.favorites,
@@ -132,6 +127,7 @@ function FavsPage() {
       </div>
       <div className="right">
         {favs.map(({ id, created_at, messages }) => {
+          if (!messages || messages.length == 0) return null;
           const [
             {
               source: { gid, uid }

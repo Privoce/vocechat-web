@@ -54,7 +54,7 @@ export default function EditFileDetails({
   updateName
 }: {
   name: string;
-  closeModal: () => void;
+  closeModal: (p?: any) => void;
   updateName: (name: string) => void;
 }) {
   const [fileName, setFileName] = useState(name);

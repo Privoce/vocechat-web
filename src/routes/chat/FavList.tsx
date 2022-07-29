@@ -86,7 +86,7 @@ type Props = { cid?: number; uid?: number };
 const FavList: FC<Props> = ({ cid = null, uid = null }) => {
   const { favorites, removeFavorite } = useFavMessage({ cid, uid });
   const handleRemove = (evt: MouseEvent<HTMLButtonElement>) => {
-    const { id } = evt.currentTarget.dataset;
+    const { id = "" } = evt.currentTarget.dataset;
     console.log("remove fav", id);
     removeFavorite(id);
   };

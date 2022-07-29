@@ -10,7 +10,6 @@ interface Props {
 }
 
 const Avatar: FC<Props> = ({ url = "", name = "unknown name", type = "user", ...rest }) => {
-  // console.log("avatar url", url);
   const [src, setSrc] = useState("");
 
   const handleError = (err: SyntheticEvent<HTMLImageElement>) => {

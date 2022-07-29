@@ -1,3 +1,4 @@
+import { InputHTMLAttributes } from "react";
 import styled from "styled-components";
 
 const Styled = styled.input`
@@ -34,6 +35,6 @@ const Styled = styled.input`
   }
 `;
 
-export default function StyledCheckbox(props) {
+export default function StyledCheckbox(props: InputHTMLAttributes<HTMLInputElement>) {
   return <Styled readOnly {...props} type="checkbox" />;
 }

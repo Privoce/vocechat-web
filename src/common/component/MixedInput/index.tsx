@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState, useCallback } from "react";
+import { useRef, useEffect, useState, useCallback, ClipboardEvent } from "react";
 import { useKey } from "rooks";
 import { Editor, Transforms } from "slate";
 import {
@@ -9,19 +9,11 @@ import {
   createNodeIdPlugin,
   createParagraphPlugin,
   createSoftBreakPlugin,
-  // createComboboxPlugin,
   createMentionPlugin,
-  // comboboxSelectors,
-  // getMentionOnSelectItem,
   findMentionInput,
-  // removeMentionInput,
-  // isSelectionInMentionInput,
   createPlugins,
   ELEMENT_PARAGRAPH,
   getPlateEditorRef,
-  // usePlateEditorRef,
-  // ELEMENT_IMAGE,
-  // useComboboxControls,
   MentionCombobox
 } from "@udecode/plate";
 import { createComboboxPlugin } from "@udecode/plate-combobox";
@@ -48,7 +40,7 @@ const Plugins = ({
 }) => {
   // const { getMenuProps, getItemProps } = useComboboxControls();
   const [context, to] = id.split("_");
-  const { addStageFile } = useUploadFile({ context, id: to });
+  const { addStageFile } = useUploadFile({ context, id: Number(to) });
   const enableMentions = members.length > 0;
   const userData = useAppSelector((store) => store.users.byId);
   const [msgs, setMsgs] = useState([]);
@@ -61,7 +53,7 @@ const Plugins = ({
   };
   const plateEditor = getPlateEditorRef(`${TEXT_EDITOR_PREFIX}_${id}`);
   useEffect(() => {
-    const handlePasteEvent = (evt) => {
+    const handlePasteEvent = (evt: ClipboardEvent) => {
       const files = [...evt.clipboardData.files];
       if (files.length) {
         const filesData = files.map((file) => {
@@ -89,6 +81,7 @@ const Plugins = ({
   useKey(
     "Enter",
     (evt) => {
+      if (!plateEditor) return;
       // 是否在at操作
       const mentionInputs = findMentionInput(plateEditor);
       if (mentionInputs || evt.shiftKey || evt.ctrlKey || evt.altKey || evt.isComposing) {
@@ -106,7 +99,6 @@ const Plugins = ({
       });
     },
     {
-      // eventTypes: ["keydown"],
       target: editableRef,
       when: !cmdKey
     }
@@ -154,12 +146,12 @@ const Plugins = ({
   );
 
   const handleChange = useCallback(
-    async (val) => {
+    async (val: any) => {
       console.log("tmps changed", val);
       const tmps = [];
-      const getMixedText = (children) => {
-        const mentions = [];
-        const arr = children.map(({ type, text, uid }) => {
+      const getMixedText = (children: any) => {
+        const mentions: any = [];
+        const arr = children.map(({ type, text, uid }: any) => {
           if (type == "mention") {
             mentions.push(uid);
             return ` @${uid} `;
@@ -208,7 +200,6 @@ const Plugins = ({
     <Styled className="input" ref={editableRef}>
       <Plate
         id={`${TEXT_EDITOR_PREFIX}_${id}`}
-        // key={`${TEXT_EDITOR_PREFIX}_${id}`}
         onChange={handleChange}
         editableProps={{ ...initialProps, style: { userSelect: "text" } }}
         initialValue={initialValue}
@@ -216,9 +207,7 @@ const Plugins = ({
       >
         {enableMentions ? (
           <MentionCombobox
-            // component={StyledCombobox}
             onRenderItem={({ item }) => {
-              console.log("wtf", item);
               if (!item || !item.data) return null;
               return <User key={item.data.uid} uid={item.data.uid} interactive={false} />;
             }}
@@ -245,14 +234,14 @@ const Plugins = ({
   );
 };
 
-export const useMixedEditor = (key) => {
+export const useMixedEditor = (key: string) => {
   const editorRef = getPlateEditorRef(`${TEXT_EDITOR_PREFIX}_${key}`);
   const focus = () => {
     if (editorRef) {
       ReactEditor.focus(editorRef);
     }
   };
-  const insertText = (txt) => {
+  const insertText = (txt: string) => {
     console.log("eref", editorRef);
     if (editorRef) {
       ReactEditor.focus(editorRef);
@@ -265,9 +254,3 @@ export const useMixedEditor = (key) => {
   };
 };
 export default Plugins;
-// export default memo(Plugins, (prev, next) => {
-//   return (
-//     prev.id == next.id &&
-//     JSON.stringify(prev.initialValue) == JSON.stringify(next.initialValue)
-//   );
-// });

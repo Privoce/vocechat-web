@@ -7,7 +7,6 @@ interface Props {
   children?: ReactNode;
 }
 
-// todo: check memory leak
 const Modal: FC<Props> = ({ id = "root-modal", mask = true, children }) => {
   const [wrapper, setWrapper] = useState<HTMLDivElement | null>(null);
 

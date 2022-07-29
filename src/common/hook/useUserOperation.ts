@@ -77,9 +77,12 @@ const useUserOperation = ({ uid, cid }: IProps) => {
   };
   const isAdmin = !!loginUser?.is_admin;
   const loginUid = loginUser?.uid;
-  const canDeleteChannel = cid && !channel?.is_public && isAdmin;
+  const canDeleteChannel = !!cid && !channel?.is_public && isAdmin;
   const canRemoveFromChannel =
-    cid && !channel?.is_public && (isAdmin || channel?.owner == loginUid) && uid != channel?.owner;
+    !!cid &&
+    !channel?.is_public &&
+    (isAdmin || channel?.owner == loginUid) &&
+    uid != channel?.owner;
   const canCall: boolean = (agoraConfig as AgoraConfig)?.enabled && loginUid != uid;
   const canRemove: boolean = isAdmin && loginUid != uid && !cid;
 

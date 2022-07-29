@@ -43,7 +43,7 @@ export default function usePreload() {
       getFavorites();
     }
   }, [rehydrated]);
-  const canStreaming = loginUid && rehydrated && !!token;
+  const canStreaming = !!loginUid && rehydrated && !!token;
   console.log("ttt", loginUid, rehydrated, token);
 
   useEffect(() => {

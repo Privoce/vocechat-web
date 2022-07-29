@@ -8,7 +8,14 @@ export interface State {
   menuExpand: boolean;
   // todo
   fileListView: string;
-  uploadFiles: { [key: string]: any };
+  uploadFiles: {
+    [key: string]: {
+      name: string;
+      url: string;
+      size: number;
+      type: string;
+    }[];
+  };
   selectMessages: { [key: string]: any };
   draftMarkdown: { [key: string]: any };
   draftMixedText: { [key: string]: any };

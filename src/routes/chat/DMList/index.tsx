@@ -5,7 +5,7 @@ import { useAppSelector } from "../../../app/store";
 
 interface Props {
   uids: number[];
-  setDropFiles: () => void;
+  setDropFiles: (files: File[]) => void;
 }
 
 const DMList: FC<Props> = ({ uids, setDropFiles }) => {

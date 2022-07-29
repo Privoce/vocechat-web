@@ -38,14 +38,10 @@ const Message: FC<IProps> = ({
   const [edit, setEdit] = useState(false);
   const avatarRef = useRef(null);
   const { getPinInfo } = usePinMessage(context == "channel" ? contextId : 0);
-  const {
-    message = {},
-    reactionMessageData,
-    usersData
-  } = useAppSelector((store) => {
+  const { message, reactionMessageData, usersData } = useAppSelector((store) => {
     return {
       reactionMessageData: store.reactionMessage,
-      message: store.message[mid] || {},
+      message: store.message[mid],
       usersData: store.users.byId
     };
   });
@@ -104,7 +100,7 @@ const Message: FC<IProps> = ({
         interactive
         placement="right"
         trigger="click"
-        content={<Profile uid={fromUid} type="card" cid={contextId} />}
+        content={<Profile uid={fromUid || 0} type="card" cid={contextId} />}
       >
         <div className="avatar" data-uid={fromUid} ref={avatarRef}>
           <Avatar url={currUser?.avatar} name={currUser?.name} />
@@ -164,11 +160,9 @@ const Message: FC<IProps> = ({
 
       {!edit && !readOnly && (
         <Commands
-          content_type={content_type}
           context={context}
           contextId={contextId}
           mid={mid}
-          from_uid={fromUid}
           toggleEditMessage={toggleEditMessage}
         />
       )}

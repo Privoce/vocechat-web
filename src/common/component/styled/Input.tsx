@@ -1,11 +1,6 @@
-import {
-  useState,
-  FC,
-  DetailedHTMLProps,
-  InputHTMLAttributes
-} from 'react';
-import { HiEye, HiEyeOff } from 'react-icons/hi';
-import styled from 'styled-components';
+import { useState, FC, DetailedHTMLProps, InputHTMLAttributes } from "react";
+import { HiEye, HiEyeOff } from "react-icons/hi";
+import styled from "styled-components";
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -81,21 +76,41 @@ const StyledInput = styled.input`
   }
 `;
 
-interface Props extends DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
+interface Props
+  extends DetailedHTMLProps<
+    Pick<
+      InputHTMLAttributes<HTMLInputElement>,
+      | "placeholder"
+      | "className"
+      | "type"
+      | "autoFocus"
+      | "id"
+      | "value"
+      | "name"
+      | "required"
+      | "readOnly"
+      | "onChange"
+      | "onBlur"
+      | "pattern"
+      | "disabled"
+    >,
+    HTMLInputElement
+  > {
   prefix?: string;
+  ref?: any;
 }
 
-const Input: FC<Props> = ({ type = 'text', prefix = '', className, ...rest }) => {
+const Input: FC<Props> = ({ type = "text", prefix = "", className, ...rest }) => {
   const [inputType, setInputType] = useState(type);
   const togglePasswordVisible = () => {
-    setInputType((prev) => (prev == 'password' ? 'text' : 'password'));
+    setInputType((prev) => (prev == "password" ? "text" : "password"));
   };
 
-  return type == 'password' ? (
+  return type == "password" ? (
     <StyledWrapper className={className}>
       <StyledInput type={inputType} className={`inner ${className}`} {...rest} />
       <div className="view" onClick={togglePasswordVisible}>
-        {inputType == 'password' ? <HiEyeOff color="#78787c"/> : <HiEye color="#78787c"/>}
+        {inputType == "password" ? <HiEyeOff color="#78787c" /> : <HiEye color="#78787c" />}
       </div>
     </StyledWrapper>
   ) : prefix ? (

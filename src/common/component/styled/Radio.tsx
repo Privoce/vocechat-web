@@ -1,4 +1,4 @@
-import { useState, useId } from "react";
+import { useState, useId, FC } from "react";
 import styled from "styled-components";
 
 const StyledForm = styled.form`
@@ -61,17 +61,24 @@ const StyledForm = styled.form`
     }
   }
 `;
+type Props = {
+  options: string[];
+  values: (string | number)[];
+  defaultValue?: string | number;
+  onChange?: (param: any) => void;
+  value: object | number | string;
+};
 
-const VALUE_NOT_SET = {};
-const VALUES_NOT_SET = {};
+const VALUE_NOT_SET = "";
+const VALUES_NOT_SET: string[] = [];
 
-export default function Radio({
+const Radio: FC<Props> = ({
   options,
   values = VALUES_NOT_SET,
   value = VALUE_NOT_SET,
-  defaultValue = undefined,
+  defaultValue = "",
   onChange = undefined
-}) {
+}) => {
   const id = useId();
 
   const [fallbackValue, setFallbackValue] = useState(defaultValue);
@@ -104,4 +111,5 @@ export default function Radio({
       ))}
     </StyledForm>
   );
-}
+};
+export default Radio;

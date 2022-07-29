@@ -24,7 +24,7 @@ export default function useFavMessage({
     return "error" in resp;
   };
 
-  const removeFavorite = (id: number) => {
+  const removeFavorite = (id: string) => {
     if (!id) return;
     removeFav(id);
   };

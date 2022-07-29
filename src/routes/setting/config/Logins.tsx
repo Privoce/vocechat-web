@@ -54,14 +54,6 @@ export default function Logins() {
       updateGithubAuthConfig({ [key]: evt.target.value });
     }
   };
-  // const handleChange = (evt) => {
-  //   const newValue = evt.target.value;
-  //   const { type } = evt.target.dataset;
-  //   const items = newValue ? newValue.split("\n") : [];
-  //   setValues((prev) => {
-  //     return { ...prev, [type]: items };
-  //   });
-  // };
   const handleToggle = (val) => {
     setValues((prev) => {
       return { ...prev, ...val };

@@ -126,13 +126,13 @@ export const authApi = createApi({
     }),
     sendRegMagicLink: builder.mutation<
       {
-        new_magic_token: "string";
+        new_magic_token: string;
         mail_is_sent: boolean;
       },
       {
-        magic_token: "string";
-        email: "string";
-        password: "string";
+        magic_token: string;
+        email: string;
+        password: string;
       }
     >({
       query: (data) => ({

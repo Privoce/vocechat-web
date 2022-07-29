@@ -8,16 +8,17 @@ import ForwardedMessage from "./ForwardedMessage";
 import MarkdownRender from "../MarkdownRender";
 import FileMessage from "../FileMessage";
 import URLPreview from "./URLPreview";
+import { ContentType } from "../../../types/message";
 type Props = {
   context: "user" | "channel";
   to?: number;
   from_uid?: number;
-  created_at: number;
+  created_at?: number;
   properties?: object;
-  content_type;
+  content_type: ContentType;
   content: string;
-  download: string;
-  thumbnail: string;
+  download?: string;
+  thumbnail?: string;
   edited?: boolean | number;
 };
 const renderContent = ({

@@ -15,6 +15,7 @@ import { renderPreviewMessage } from "../utils";
 import User from "../../../common/component/User";
 import { ContentTypes } from "../../../app/config";
 import { useAppSelector } from "../../../app/store";
+import { ArchiveMessage } from "../../../types/resource";
 interface IProps {
   uid: number;
   mid?: number;
@@ -22,7 +23,7 @@ interface IProps {
   setFiles: () => void;
 }
 const NavItem: FC<IProps> = ({ uid, mid = 0, unreads, setFiles }) => {
-  const [previewMsg, setPreviewMsg] = useState(null);
+  const [previewMsg, setPreviewMsg] = useState<ArchiveMessage>();
   const { messages: normalizedMessages, normalizeMessage } = useNormalizeMessage();
   const dispatch = useDispatch();
   const pathMatched = useMatch(`/chat/dm/${uid}`);
@@ -63,7 +64,7 @@ const NavItem: FC<IProps> = ({ uid, mid = 0, unreads, setFiles }) => {
   }, [currMsg]);
   useEffect(() => {
     if (normalizedMessages) {
-      setPreviewMsg(normalizedMessages.pop());
+      setPreviewMsg(normalizedMessages?.pop());
     }
   }, [normalizedMessages]);
 

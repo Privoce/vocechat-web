@@ -96,7 +96,6 @@ const AvatarUploader: FC<Props> = ({
               multiple={false}
               onChange={handleUpload}
               type="file"
-              // todo: xss
               accept="image/*"
               name="avatar"
               id="avatar"

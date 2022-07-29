@@ -1,11 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import BASE_URL, { ContentTypes } from "../config";
 import { isImage } from "../../common/utils";
+import { ContentType } from "../../types/message";
 export interface MessagePayload {
   mid: number;
+  from_uid?: number;
+  read?: boolean;
+  created_at?: number;
   sending: boolean;
-  content_type: string;
+  content_type: ContentType;
   content: string;
+  expires_in?: number | null;
   properties?: {
     content_type: string;
     size: number;
@@ -13,6 +18,8 @@ export interface MessagePayload {
   file_path?: string;
   download?: string;
   thumbnail?: string;
+  edited?: boolean | number;
+  reply_mid?: number;
 }
 export interface State {
   [key: number]: MessagePayload;

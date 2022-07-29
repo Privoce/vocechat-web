@@ -1,3 +1,4 @@
+import { FC, ReactElement } from "react";
 import Tippy from "@tippyjs/react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useLocation, useMatch } from "react-router-dom";
@@ -7,8 +8,17 @@ import { removeUserSession } from "../../../app/slices/message.user";
 import ContextMenu from "../../../common/component/ContextMenu";
 import useUserOperation from "../../../common/hook/useUserOperation";
 import { useAppSelector } from "../../../app/store";
-
-export default function SessionContextMenu({
+type Props = {
+  context: "user" | "channel";
+  id: number;
+  visible: boolean;
+  mid: number;
+  hide: () => void;
+  deleteChannel: (param: number) => void;
+  setInviteChannelId: (param: number) => void;
+  children: ReactElement;
+};
+const SessionContextMenu: FC<Props> = ({
   context = "user",
   id,
   visible,
@@ -17,10 +27,10 @@ export default function SessionContextMenu({
   deleteChannel,
   setInviteChannelId,
   children
-}) {
+}) => {
   const { canCopyEmail, copyEmail, canDeleteChannel } = useUserOperation({
-    uid: context == "user" ? id : null,
-    cid: context == "channel" ? id : null
+    uid: context == "user" ? id : undefined,
+    cid: context == "channel" ? id : undefined
   });
   const [muteChannel] = useUpdateMuteSettingMutation();
   const [updateReadIndex] = useReadMessageMutation();
@@ -114,4 +124,5 @@ export default function SessionContextMenu({
       {children}
     </Tippy>
   );
-}
+};
+export default SessionContextMenu;

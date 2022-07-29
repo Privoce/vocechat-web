@@ -28,7 +28,7 @@ export default function UploadFileList({
     setEditInfo((prev) => (prev ? null : info));
   };
   const handleOpenEditModal = (idx: number) => {
-    const info = stageFiles[idx];
+    const info = stageFiles[`${idx}`];
     if (!info) return;
 
     toggleModalVisible({ ...info, index: idx });
@@ -55,7 +55,7 @@ export default function UploadFileList({
       )}
 
       <Styled>
-        {stageFiles.map(({ name, url, size, type }, idx) => {
+        {stageFiles.map(({ name, url, size, type }, idx: number) => {
           return (
             <li className="file" key={url}>
               <div className="preview">

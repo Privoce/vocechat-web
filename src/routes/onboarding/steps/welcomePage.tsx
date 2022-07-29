@@ -43,7 +43,7 @@ const StyledWrapper = styled.div`
   }
 `;
 
-export default function WelcomePage({ nextStep }) {
+export default function WelcomePage({ nextStep }: { nextStep: () => void }) {
   return (
     <StyledWrapper>
       <span className="primaryText">Welcome to your VoceChat!</span>

@@ -1,16 +1,16 @@
-import { FC, MouseEvent, ReactElement } from "react";
+import { FC, ReactElement } from "react";
 import StyledMenu from "./styled/Menu";
 
 export interface Item {
   title: string;
   icon?: string | ReactElement;
-  handler: (e: MouseEvent) => void;
+  handler: (param: any) => void;
   underline?: boolean;
   danger?: boolean;
 }
 
 interface Props {
-  items: Item[];
+  items: (Item | boolean | undefined)[];
   hideMenu?: () => void;
 }
 
@@ -18,7 +18,7 @@ const ContextMenu: FC<Props> = ({ items = [], hideMenu = null }) => {
   return (
     <StyledMenu>
       {items.map((item) => {
-        if (!item) return null;
+        if (typeof item === "boolean" || !item) return null;
         const {
           title,
           icon = null,

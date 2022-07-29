@@ -8,7 +8,7 @@ import Button from "../../common/component/styled/Button";
 
 interface Props {
   id: number;
-  closeModal: () => void;
+  closeModal: (cid?: number) => void;
 }
 
 const DeleteConfirmModal: FC<Props> = ({ id, closeModal }) => {

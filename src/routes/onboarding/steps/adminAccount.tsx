@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, FC } from "react";
 import styled from "styled-components";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
@@ -62,8 +62,11 @@ const StyledWrapper = styled.div`
     margin-top: 24px;
   }
 `;
-
-export default function AdminAccount({ serverName, nextStep }) {
+type Props = {
+  serverName: string;
+  nextStep: () => void;
+};
+const AdminAccount: FC<Props> = ({ serverName, nextStep }) => {
   const dispatch = useDispatch();
 
   const [createAdmin, { isLoading: isSigningUp, error: signUpError }] = useCreateAdminMutation();
@@ -89,15 +92,13 @@ export default function AdminAccount({ serverName, nextStep }) {
 
   // After logged in
   useEffect(() => {
-    if (isLoggedIn) {
+    if (isLoggedIn && serverData) {
       dispatch(updateInitialized(true));
-      setTimeout(() => {
-        // Set server name
-        updateServer({
-          ...serverData,
-          name: serverName
-        });
-      }, 0);
+      // Set server name
+      updateServer({
+        ...serverData,
+        name: serverName
+      });
     }
   }, [isLoggedIn]);
 
@@ -163,4 +164,5 @@ export default function AdminAccount({ serverName, nextStep }) {
       </StyledButton>
     </StyledWrapper>
   );
-}
+};
+export default AdminAccount;

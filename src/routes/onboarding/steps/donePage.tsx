@@ -57,7 +57,7 @@ const StyledWrapper = styled.div`
   }
 `;
 
-export default function DonePage({ serverName }) {
+export default function DonePage({ serverName }: { serverName: string }) {
   const navigate = useNavigate();
 
   return (

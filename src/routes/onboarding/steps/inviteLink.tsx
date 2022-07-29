@@ -73,7 +73,7 @@ const StyledWrapper = styled.div`
   }
 `;
 
-export default function InviteLink({ nextStep }) {
+export default function InviteLink({ nextStep }: { nextStep: () => void }) {
   const { link, linkCopied, copyLink } = useInviteLink();
 
   return (

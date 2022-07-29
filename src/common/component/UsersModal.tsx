@@ -73,7 +73,7 @@ const UsersModal: FC<Props> = ({ closeModal }) => {
         {users && (
           <ul className="users">
             {users.map((u) => {
-              const { uid } = u;
+              const { uid = 0 } = u || {};
               return (
                 <li key={uid} className="user">
                   <NavLink onClick={closeModal} to={`/chat/dm/${uid}`}>

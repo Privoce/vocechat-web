@@ -135,12 +135,11 @@ const AddMembers: FC<Props> = ({ cid = 0, closeModal }) => {
 
   if (!channel) return null;
   const { members: uids } = channel;
-  const userIds = users.map(({ uid }) => uid);
+  const userIds = users.map((u) => u?.uid || 0);
 
   return (
     <Styled>
       <div className="filter">
-        {/* {selects && selects.length > 0 && ( */}
         <ul className="selects">
           {selects.map((uid) => {
             return (
@@ -158,7 +157,6 @@ const AddMembers: FC<Props> = ({ cid = 0, closeModal }) => {
             onChange={handleFilterInput}
           />
         </ul>
-        {/* )} */}
       </div>
       <ul className="users">
         {userIds.map((uid) => {

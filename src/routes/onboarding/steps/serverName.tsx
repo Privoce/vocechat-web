@@ -1,3 +1,4 @@
+import { FC } from "react";
 import styled from "styled-components";
 import toast from "react-hot-toast";
 import StyledInput from "../../../common/component/styled/Input";
@@ -44,8 +45,12 @@ const StyledWrapper = styled.div`
     margin-top: 24px;
   }
 `;
-
-export default function ServerName({ serverName, setServerName, nextStep }) {
+type Props = {
+  serverName: string;
+  setServerName: (name: string) => void;
+  nextStep: () => void;
+};
+const ServerName: FC<Props> = ({ serverName, setServerName, nextStep }) => {
   return (
     <StyledWrapper>
       <span className="primaryText">Create a new server</span>
@@ -73,4 +78,5 @@ export default function ServerName({ serverName, setServerName, nextStep }) {
       </StyledButton>
     </StyledWrapper>
   );
-}
+};
+export default ServerName;

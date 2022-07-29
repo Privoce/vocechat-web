@@ -4,6 +4,7 @@ import styled from "styled-components";
 import StyledRadio from "../../../common/component/styled/Radio";
 import StyledButton from "../../../common/component/styled/Button";
 import { useGetLoginConfigQuery, useUpdateLoginConfigMutation } from "../../../app/services/server";
+import { WhoCanSignUp } from "../../../types/server";
 
 const StyledWrapper = styled.div`
   height: 100%;
@@ -38,11 +39,11 @@ const StyledWrapper = styled.div`
   }
 `;
 
-export default function WhoCanSignUp({ nextStep }) {
+export default function SignUpSetting({ nextStep }: { nextStep: () => void }) {
   const { data: loginConfig } = useGetLoginConfigQuery();
   const [updateLoginConfig, { isSuccess, error }] = useUpdateLoginConfigMutation();
 
-  const [value, setValue] = useState(undefined);
+  const [value, setValue] = useState<WhoCanSignUp>();
 
   // Sync to `value` when `loginConfig` is fetched
   useEffect(() => {

@@ -114,8 +114,7 @@ const RegWithUsername: FC = () => {
           onChange={handleInput}
         />
         <Button type="submit" disabled={isLoading || !username || isSuccess}>
-          {/* todo typo */}
-          {isLoading ? "Logining" : `Continue`}
+          {isLoading ? "Logging in" : `Continue`}
         </Button>
       </form>
     </>

@@ -1,6 +1,5 @@
 import { FC, useState } from "react";
 import styled from "styled-components";
-// import { NavLink } from "react-router-dom";
 import ChannelModal from "./ChannelModal";
 import InviteModal from "./InviteModal";
 import IconChat from "../../assets/icons/placeholder.chat.svg";

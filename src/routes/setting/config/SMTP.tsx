@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import styled from "styled-components";
 const StyledTest = styled.div`
   display: flex;
@@ -27,14 +27,15 @@ export default function ConfigSMTP() {
     // const { token_url, description } = values;
     updateConfig({ ...values, port: Number((values as SMTPConfig)?.port ?? 0) });
   };
-  const handleChange = (evt) => {
+  const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const newValue = evt.target.value;
-    const { type } = evt.target.dataset;
+    const { type = "" } = evt.target.dataset;
     setValues((prev) => {
+      if (!prev) return prev;
       return { ...prev, [type]: newValue };
     });
   };
-  const handleTestEmailChange = (evt) => {
+  const handleTestEmailChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const newValue = evt.target.value;
     setTestEmail(newValue);
   };
@@ -55,8 +56,8 @@ export default function ConfigSMTP() {
     }
   }, [isSuccess, isError]);
 
-  //   if (!values) return null;
-  const { host, port, from, username, password, enabled = false } = values ?? {};
+  if (!values) return null;
+  const { host, port, from, username, password, enabled = false } = values as SMTPConfig;
   console.log("values", values);
   return (
     <StyledContainer>

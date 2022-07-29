@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement, ReactNode } from "react";
 import dayjs from "dayjs";
 import styled from "styled-components";
 import reactStringReplace from "react-string-replace";
@@ -60,7 +60,7 @@ export const renderPreviewMessage = (message = null) => {
         res = reactStringReplace(content, /(\s{1}@[0-9]+\s{1})/g, (match, idx) => {
           console.log("match", match);
           const uid = match.trim().slice(1);
-          return <Mention key={idx} uid={uid} textOnly={true} />;
+          return <Mention key={idx} uid={+uid} textOnly={true} />;
         });
       }
       break;

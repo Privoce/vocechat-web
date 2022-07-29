@@ -16,8 +16,8 @@ interface IProps {
   type?: "user" | "channel";
   id: number;
   mid: number;
-  setDeleteChannelId: () => void;
-  setInviteChannelId: () => void;
+  setDeleteChannelId: (param: number) => void;
+  setInviteChannelId: (param: number) => void;
 }
 const Session: FC<IProps> = ({
   type = "user",
@@ -52,12 +52,17 @@ const Session: FC<IProps> = ({
   );
 
   const { visible: contextMenuVisible, handleContextMenuEvent, hideContextMenu } = useContextMenu();
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<{
+    name: string;
+    icon: string;
+    mid: number;
+    is_public: boolean;
+  }>();
   const { messageData, userData, channelData, readIndex, loginUid, mids, muted } = useAppSelector(
     (store) => {
       return {
         mids: type == "user" ? store.userMessage.byId[id] : store.channelMessage[id],
-        loginUid: store.authData.user?.uid,
+        loginUid: store.authData.user?.uid || 0,
         readIndex:
           type == "user" ? store.footprint.readUsers[id] : store.footprint.readChannels[id],
         messageData: store.message,
@@ -71,10 +76,15 @@ const Session: FC<IProps> = ({
   useEffect(() => {
     const tmp = type == "user" ? userData[id] : channelData[id];
     if (!tmp) return;
-    const { name, icon, avatar, is_public = true } = tmp;
-    const session =
-      type == "user" ? { name, icon: avatar, mid, is_public } : { name, icon, mid, is_public };
-    setData(session);
+    if ("avatar" in tmp) {
+      // user
+      const { name, avatar } = tmp;
+      setData({ name, icon: avatar, mid, is_public: true });
+    } else {
+      // channel
+      const { name, icon = "", is_public } = tmp;
+      setData({ name, icon, mid, is_public });
+    }
   }, [id, mid, type, userData, channelData]);
   if (!data) return null;
   const previewMsg = messageData[mid] || {};

@@ -1,4 +1,4 @@
-// import { useState, useEffect } from "react";
+import { ChangeEvent } from "react";
 import StyledContainer from "./StyledContainer";
 import Input from "../../../common/component/styled/Input";
 import Textarea from "../../../common/component/styled/Textarea";
@@ -14,7 +14,7 @@ export default function ConfigFirebase() {
     // const { token_url, description } = values;
     updateConfig(values);
   };
-  const handleChange = (evt) => {
+  const handleChange = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const newValue = evt.target.value;
     const { type } = evt.target.dataset;
     setValues((prev) => {

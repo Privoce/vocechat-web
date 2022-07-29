@@ -121,7 +121,7 @@ export const serverApi = createApi({
     getLoginConfig: builder.query<LoginConfig, void>({
       query: () => ({ url: `admin/login/config` })
     }),
-    updateLoginConfig: builder.mutation<void, LoginConfig>({
+    updateLoginConfig: builder.mutation<void, Partial<LoginConfig>>({
       query: (data) => ({
         url: `admin/login/config`,
         method: "POST",

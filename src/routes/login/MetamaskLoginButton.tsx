@@ -5,9 +5,14 @@ import { useLazyGetMetamaskNonceQuery } from "../../app/services/auth";
 import metamaskSvg from "../../assets/icons/metamask.svg?url";
 import { StyledSocialButton } from "./styled";
 import Onboarding from "@metamask/onboarding";
+import { LoginCredential } from "../../types/auth";
 // import toast from "react-hot-toast";
 
-export default function MetamaskLoginButton({ login }) {
+export default function MetamaskLoginButton({
+  login
+}: {
+  login: (params: LoginCredential) => void;
+}) {
   const [requesting, setRequesting] = useState(false);
   const [accounts, setAccounts] = useState([]);
   const [getNonce] = useLazyGetMetamaskNonceQuery();
@@ -64,7 +69,6 @@ export default function MetamaskLoginButton({ login }) {
     return signature;
   };
   const handleMetamaskLogin = async () => {
-    console.log("wtfff", MetaMaskOnboarding.isMetaMaskInstalled());
     if (MetaMaskOnboarding.isMetaMaskInstalled()) {
       setRequesting(true);
       try {
