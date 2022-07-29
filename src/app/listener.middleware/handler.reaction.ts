@@ -1,6 +1,11 @@
 import clearTable from "./clear.handler";
 
-export default async function handler({ operation, data = {}, payload }) {
+interface Params {
+  payload: any;
+  data: any;
+  operation: string;
+}
+export default async function handler({ operation, data = {}, payload }: Params) {
   const table = window.CACHE["messageReaction"];
   if (operation.startsWith("reset")) {
     clearTable("messageReaction");

@@ -5,7 +5,9 @@ export type BaseOperation = "add" | "remove" | "reset";
 
 export interface Params {
   operation: string;
-  data: {};
+  data: {
+    [key: string]: object;
+  };
   payload: {
     ["id"]: number;
   };
@@ -23,7 +25,7 @@ export default async function handler({ operation, data = {}, payload }: Params)
       {
         const { id } = payload;
 
-        await table?.setItem(id + "", data[id]);
+        await table?.setItem(id + "", data[`${id}`]);
       }
       break;
     case "removeChannelSession":
