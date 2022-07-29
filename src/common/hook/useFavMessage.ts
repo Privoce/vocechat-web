@@ -17,7 +17,7 @@ export default function useFavMessage({
     return { favs: store.favorites };
   });
 
-  const addFavorite = async (mid = []) => {
+  const addFavorite = async (mid: number | number[]) => {
     const mids = Array.isArray(mid) ? mid.map((i) => +i) : [+mid];
     if (mids.length == 0) return;
     const resp = await addFav(mids);
@@ -29,7 +29,7 @@ export default function useFavMessage({
     removeFav(id);
   };
 
-  const isFavorited = (mid = null) => {
+  const isFavorited = (mid = 0) => {
     if (!mid) return false;
     let mids: number[] = [];
     favorites.forEach((f: Favorite) => {

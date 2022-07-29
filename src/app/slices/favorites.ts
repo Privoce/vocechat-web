@@ -19,7 +19,7 @@ const favoritesSlice = createSlice({
     addFavorite(state, action: PayloadAction<Favorite>) {
       state.push(action.payload);
     },
-    deleteFavorite(state, action: PayloadAction<number>) {
+    deleteFavorite(state, action: PayloadAction<string>) {
       const id = action.payload;
       const idx = state.findIndex((f) => f.id == id);
       if (idx > -1) {

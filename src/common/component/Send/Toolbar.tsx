@@ -1,4 +1,4 @@
-import { ChangeEvent, useRef } from "react";
+import { ChangeEvent, useRef, FC } from "react";
 import styled from "styled-components";
 import Tooltip from "../Tooltip";
 import AddIcon from "../../../assets/icons/add.solid.svg";
@@ -42,15 +42,22 @@ const Styled = styled.div`
     }
   }
 `;
-
-export default function Toolbar({
+type Props = {
+  toggleMarkdownFullscreen: () => void;
+  fullscreen: boolean;
+  toggleMode: () => void;
+  mode: "markdown" | "text";
+  to: number;
+  context: "user" | "channel";
+};
+const Toolbar: FC<Props> = ({
   toggleMarkdownFullscreen,
   fullscreen,
   toggleMode,
   mode,
   to,
   context
-}) {
+}) => {
   const { addStageFile } = useUploadFile({ context, id: to });
   const fileInputRef = useRef<HTMLInputElement>(null);
   const handleUpload = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -105,4 +112,5 @@ export default function Toolbar({
       </Tooltip>
     </Styled>
   );
-}
+};
+export default Toolbar;

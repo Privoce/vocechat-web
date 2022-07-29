@@ -1,3 +1,4 @@
+import { FC } from "react";
 import styled from "styled-components";
 import { useReactMessageMutation } from "../../../app/services/message";
 import { Emojis } from "../../../app/config";
@@ -34,8 +35,11 @@ const StyledPicker = styled.div`
     }
   }
 `;
-
-export default function ReactionPicker({ mid, hidePicker }) {
+type Props = {
+  mid: number;
+  hidePicker: () => void;
+};
+const ReactionPicker: FC<Props> = ({ mid, hidePicker }) => {
   const [reactMessage, { isLoading }] = useReactMessageMutation();
   const { reactionData, currUid } = useAppSelector((store) => {
     return {
@@ -68,4 +72,5 @@ export default function ReactionPicker({ mid, hidePicker }) {
       </ul>
     </StyledPicker>
   );
-}
+};
+export default ReactionPicker;

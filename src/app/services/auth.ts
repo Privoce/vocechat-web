@@ -82,7 +82,7 @@ export const authApi = createApi({
       }
     }),
     // 更新 device token
-    updateDeviceToken: builder.mutation<void, { device_token: string }>({
+    updateDeviceToken: builder.mutation<void, string>({
       query: (device_token) => ({
         url: "/token/device_token",
         method: "PUT",

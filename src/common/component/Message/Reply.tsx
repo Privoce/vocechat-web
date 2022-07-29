@@ -95,8 +95,6 @@ const Styled = styled.div`
       color: #555;
     }
   }
-
-  /* padding-left: 10px; */
 `;
 
 const renderContent = (data) => {
@@ -162,11 +160,11 @@ const Reply: FC<ReplyProps> = ({ mid, interactive = true }) => {
     const { mid } = evt.currentTarget.dataset;
     const msgEle = document.querySelector<HTMLDivElement>(`[data-msg-mid='${mid}']`);
     if (msgEle) {
-      msgEle.dataset.highlight = true;
+      msgEle.dataset.highlight = "true";
       msgEle.scrollIntoView({ behavior: "smooth", block: "center" });
       setTimeout(() => {
         console.log("scroll view", msgEle);
-        msgEle.dataset.highlight = false;
+        msgEle.dataset.highlight = "false";
       }, 3000);
     }
   };

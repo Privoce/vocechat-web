@@ -12,9 +12,9 @@ const StyledFav = styled.div`
   background-color: #f4f4f5;
 `;
 type Props = {
-  id?: number;
+  id?: string;
 };
-const FavoredMessage: FC<Props> = ({ id }) => {
+const FavoredMessage: FC<Props> = ({ id = "" }) => {
   const { favorites } = useFavMessage({});
   const [msgs, setMsgs] = useState<ReactElement | null>(null);
 

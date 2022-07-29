@@ -52,10 +52,10 @@ type Props = {
 };
 const EditMessage: FC<Props> = ({ mid, cancelEdit }) => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const msg = useAppSelector((store) => store.message[mid] || {});
+  const msg = useAppSelector((store) => store.message[mid]);
   const [shift, setShift] = useState(false);
   const [enter, setEnter] = useState(false);
-  const [currMsg, setCurrMsg] = useState(msg.content);
+  const [currMsg, setCurrMsg] = useState(msg?.content);
   const [edit, { isLoading: isEditing, isSuccess }] = useEditMessageMutation();
   useEffect(() => {
     if (isSuccess) {

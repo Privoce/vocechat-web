@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react";
+// import { FC, ReactNode } from "react";
 import Tippy from "@tippyjs/react";
 import styled from "styled-components";
 import Profile from "../Profile";
@@ -19,7 +19,7 @@ interface Props {
   textOnly?: boolean;
 }
 
-const Mention: FC<Props> = ({ uid, popover = true, cid, textOnly = false }) => {
+const Mention = ({ uid, popover = true, cid, textOnly = false }: Props) => {
   const usersData = useAppSelector((store) => store.users.byId);
   const user = usersData[uid];
   if (!user) return null;

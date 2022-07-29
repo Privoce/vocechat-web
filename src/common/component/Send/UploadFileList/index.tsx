@@ -7,24 +7,34 @@ import useUploadFile from "../../../hook/useUploadFile";
 import EditIcon from "../../../../assets/icons/edit.svg";
 import DeleteIcon from "../../../../assets/icons/delete.svg";
 
-export default function UploadFileList({ context = "", id = null }) {
+type EditProps = {
+  index: number;
+  name: string;
+};
+export default function UploadFileList({
+  context,
+  id
+}: {
+  context: "user" | "channel";
+  id: number;
+}) {
   const eidtor = useMixedEditor(`${context}_${id}`);
-  const [editInfo, setEditInfo] = useState(null);
+  const [editInfo, setEditInfo] = useState<EditProps | null>(null);
   const { stageFiles, updateStageFile, removeStageFile } = useUploadFile({
     context,
     id
   });
-  const toggleModalVisible = (info) => {
+  const toggleModalVisible = (info: EditProps) => {
     setEditInfo((prev) => (prev ? null : info));
   };
-  const handleOpenEditModal = (idx) => {
+  const handleOpenEditModal = (idx: number) => {
     const info = stageFiles[idx];
     if (!info) return;
 
     toggleModalVisible({ ...info, index: idx });
   };
-  const updateFileName = (name) => {
-    if (!name) return;
+  const updateFileName = (name: string) => {
+    if (!name || !editInfo) return;
     const { index } = editInfo;
     updateStageFile(index, { name });
   };

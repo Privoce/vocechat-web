@@ -8,6 +8,7 @@ import pictureIcon from "../../../assets/icons/picture.svg?url";
 import { getFileIcon, isImage } from "../../utils";
 import useSendMessage from "../../hook/useSendMessage";
 import { useAppSelector } from "../../../app/store";
+import { MessagePayload } from "../../../app/slices/message";
 
 const Styled = styled.div`
   background-color: #f3f4f6;
@@ -74,10 +75,9 @@ const Styled = styled.div`
     position: absolute;
     top: 16px;
     right: 16px;
-    /* transform: translateY(-50%); */
   }
 `;
-const renderContent = (data) => {
+const renderContent = (data: MessagePayload) => {
   const { content_type, content, thumbnail = "", properties } = data;
   let res = null;
   switch (content_type) {
@@ -120,7 +120,15 @@ const renderContent = (data) => {
   return res;
 };
 
-export default function Replying({ context, id, mid }) {
+export default function Replying({
+  context,
+  id,
+  mid
+}: {
+  context: "user" | "channel";
+  id: number;
+  mid: number;
+}) {
   const { removeReplying } = useSendMessage({ to: id, context });
   const { msg, usersData } = useAppSelector((store) => {
     return { usersData: store.users.byId, msg: store.message[mid] };

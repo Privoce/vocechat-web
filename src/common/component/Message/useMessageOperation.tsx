@@ -26,9 +26,9 @@ export default function useMessageOperation({ mid, context, contextId }: Params)
     };
   });
   const { canPin, pins, unpinMessage, isUnpinSuccess } = usePinMessage(
-    context == "channel" ? contextId : undefined
+    context == "channel" ? contextId : 0
   );
-  const [mids, setMids] = useState([]);
+  const [mids, setMids] = useState<number[]>([]);
   const [pinModalVisible, setPinModalVisible] = useState(false);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [forwardModalVisible, setForwardModalVisible] = useState(false);
@@ -53,10 +53,9 @@ export default function useMessageOperation({ mid, context, contextId }: Params)
       // forward message
       const forwardEle = document.querySelector(
         `[data-msg-mid='${mid}'] .down [data-forwarded-mids]`
-      );
+      ) as HTMLDivElement;
       if (forwardEle) {
-        console.log("ddddd", mid, forwardEle.dataset);
-        const mids = forwardEle.dataset.forwardedMids.split(",");
+        const mids = forwardEle.dataset.forwardedMids?.split(",").map((m) => +m) || [];
         setMids(mids);
       }
     } else {

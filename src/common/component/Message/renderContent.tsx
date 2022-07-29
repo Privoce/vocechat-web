@@ -8,11 +8,22 @@ import ForwardedMessage from "./ForwardedMessage";
 import MarkdownRender from "../MarkdownRender";
 import FileMessage from "../FileMessage";
 import URLPreview from "./URLPreview";
-
+type Props = {
+  context: "user" | "channel";
+  to?: number;
+  from_uid?: number;
+  created_at: number;
+  properties?: object;
+  content_type;
+  content: string;
+  download: string;
+  thumbnail: string;
+  edited?: boolean | number;
+};
 const renderContent = ({
-  context = null,
-  to = null,
-  from_uid,
+  context,
+  to = 0,
+  from_uid = 0,
   created_at,
   properties,
   content_type,
@@ -20,7 +31,7 @@ const renderContent = ({
   download,
   thumbnail,
   edited = false
-}) => {
+}: Props) => {
   let ctn = null;
   switch (content_type) {
     case ContentTypes.text:
@@ -39,13 +50,13 @@ const renderContent = ({
             {reactStringReplace(content, /(\s{1}@[0-9]+\s{1})/g, (match, idx) => {
               console.log("match", match);
               const uid = match.trim().slice(1);
-              return <Mention key={idx} uid={uid} cid={to} />;
+              return <Mention key={idx} uid={+uid} cid={to} />;
             })}
             {/* {content.replace(/\s{1}\@[1-9]+\s{1}/g,)} */}
             {/* {new RegExp(/\s{1}\@[1-9]+\s{1}/g).exec(content)} */}
           </Linkit>
           {edited && (
-            <span className="edited" title={dayjs(edited).format("YYYY-MM-DD h:mm:ss A")}>
+            <span className="edited" title={dayjs(+edited).format("YYYY-MM-DD h:mm:ss A")}>
               (edited)
             </span>
           )}

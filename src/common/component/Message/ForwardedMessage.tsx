@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, FC, ReactElement } from "react";
 import styled from "styled-components";
 import StyledMsg from "./styled";
 import renderContent from "./renderContent";
@@ -29,9 +29,15 @@ const StyledForward = styled.div`
     color: #98a2b3;
   }
 `;
-const ForwardedMessage = ({ context, to, from_uid, id }) => {
+type Props = {
+  context: "user" | "channel";
+  to: number;
+  from_uid: number;
+  id: string;
+};
+const ForwardedMessage: FC<Props> = ({ context, to, from_uid, id }) => {
   const { normalizeMessage, messages } = useNormalizeMessage();
-  const [forwards, setForwards] = useState(null);
+  const [forwards, setForwards] = useState<ReactElement | null>(null);
   useEffect(() => {
     if (id) {
       normalizeMessage(id);
@@ -50,15 +56,7 @@ const ForwardedMessage = ({ context, to, from_uid, id }) => {
           </h4>
           <div className="list">
             {messages.map((msg, idx) => {
-              const {
-                user = {},
-                // created_at,
-                download,
-                content,
-                content_type,
-                properties,
-                thumbnail
-              } = msg;
+              const { user = {}, download, content, content_type, properties, thumbnail } = msg;
               return (
                 <StyledMsg className="archive" key={idx}>
                   {user && (

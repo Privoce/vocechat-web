@@ -8,7 +8,7 @@ import EmojiHeart from "../../assets/icons/emoji.heart.svg";
 import EmojiRocket from "../../assets/icons/emoji.rocket.svg";
 import EmojiLook from "../../assets/icons/emoji.look.svg";
 
-interface Emojis {
+export interface Emojis {
   "👍": ReactElement;
   "👎": ReactElement;
   "😄": ReactElement;
@@ -31,11 +31,11 @@ const emojis: Emojis = {
 };
 
 interface Props {
-  native?: keyof Emojis;
+  native: keyof Emojis;
 }
 
 const ReactionItem: FC<Props> = ({ native }) => {
-  if (!native) return null;
+  // if (!native) return null;
   return emojis[native] ?? null;
 };
 

@@ -1,9 +1,10 @@
+import { FC } from "react";
 import styled from "styled-components";
 import { getEmojiDataFromNative } from "emoji-mart";
 import AppleEmojiData from "emoji-mart/data/apple.json";
 import Tippy from "@tippyjs/react";
 import { hideAll } from "tippy.js";
-import ReactionItem from "../ReactionItem";
+import ReactionItem, { Emojis } from "../ReactionItem";
 import ReactionPicker from "./ReactionPicker";
 import Tooltip from "../Tooltip";
 import { useReactMessageMutation } from "../../../app/services/message";
@@ -104,12 +105,20 @@ const StyledDetails = styled.div`
     color: #1d2939;
   }
 `;
-const ReactionDetails = ({ uids = [], emoji, index }) => {
+const ReactionDetails = ({
+  uids = [],
+  emoji,
+  index
+}: {
+  uids: number[];
+  emoji?: keyof Emojis;
+  index: number;
+}) => {
   const usersData = useAppSelector((store) => store.users.byId);
   const names = uids.map((id) => {
     return usersData[id]?.name;
   });
-  const emojiData = getEmojiDataFromNative(emoji, "apple", AppleEmojiData);
+  const emojiData = getEmojiDataFromNative(emoji || "", "apple", AppleEmojiData);
   const prefixDesc =
     names.length > 3
       ? `${names.join(", ")} and ${names.length - 3} others reacted with`
@@ -127,14 +136,20 @@ const ReactionDetails = ({ uids = [], emoji, index }) => {
     </StyledDetails>
   );
 };
-export default function Reaction({ mid, reactions = null }) {
+type Props = {
+  mid: number;
+  reactions?: {
+    [key in keyof Emojis]: number[];
+  };
+};
+const Reaction: FC<Props> = ({ mid, reactions = null }) => {
   const [reactWithEmoji] = useReactMessageMutation();
   const { currUid } = useAppSelector((store) => {
     return {
       currUid: store.authData.user?.uid
     };
   });
-  const handleReact = (emoji) => {
+  const handleReact = (emoji: string) => {
     reactWithEmoji({ mid, action: emoji });
   };
   console.log("curr reactions", reactions);
@@ -178,4 +193,5 @@ export default function Reaction({ mid, reactions = null }) {
       </Tooltip>
     </StyledWrapper>
   );
-}
+};
+export default Reaction;

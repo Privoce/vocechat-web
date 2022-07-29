@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import styled from "styled-components";
 import Modal from "../../Modal";
 import Button from "../../styled/Button";
@@ -48,9 +48,17 @@ const StyledWrapper = styled.div`
   }
 `;
 
-export default function EditFileDetails({ name, closeModal, updateName }) {
+export default function EditFileDetails({
+  name,
+  closeModal,
+  updateName
+}: {
+  name: string;
+  closeModal: () => void;
+  updateName: (name: string) => void;
+}) {
   const [fileName, setFileName] = useState(name);
-  const handleNameChange = (evt) => {
+  const handleNameChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setFileName(evt.target.value);
   };
   const handleUpdate = () => {

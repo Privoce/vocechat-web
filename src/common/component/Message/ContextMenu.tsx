@@ -1,3 +1,4 @@
+import { FC, ReactElement, ReactNode } from "react";
 import Tippy from "@tippyjs/react";
 import { useDispatch } from "react-redux";
 import ContextMenu from "../ContextMenu";
@@ -11,8 +12,16 @@ import IconSelect from "../../../assets/icons/select.svg";
 import { updateSelectMessages } from "../../../app/slices/ui";
 import useSendMessage from "../../hook/useSendMessage";
 import useMessageOperation from "./useMessageOperation";
-
-export default function MessageContextMenu({
+type Props = {
+  context: "user" | "channel";
+  contextId: number;
+  mid: number;
+  visible: boolean;
+  hide: () => void;
+  editMessage: () => void;
+  children: ReactElement;
+};
+const MessageContextMenu: FC<Props> = ({
   context,
   contextId,
   mid,
@@ -20,10 +29,9 @@ export default function MessageContextMenu({
   hide,
   editMessage,
   children
-}) {
+}) => {
   const {
     copyContent,
-    // isMarkdown,
     canEdit,
     canPin,
     canDelete,
@@ -109,4 +117,5 @@ export default function MessageContextMenu({
       </Tippy>
     </>
   );
-}
+};
+export default MessageContextMenu;

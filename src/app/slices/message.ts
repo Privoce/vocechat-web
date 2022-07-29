@@ -1,13 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import BASE_URL, { ContentTypes } from "../config";
 import { isImage } from "../../common/utils";
-
-export interface State {
-  [key: number]: object;
-  replying: {
-    [key: string | number]: number;
-  };
-}
 export interface MessagePayload {
   mid: number;
   sending: boolean;
@@ -21,6 +14,13 @@ export interface MessagePayload {
   download?: string;
   thumbnail?: string;
 }
+export interface State {
+  [key: number]: MessagePayload;
+  replying: {
+    [key: string | number]: number;
+  };
+}
+
 const initialState: State = {
   replying: {}
 };
