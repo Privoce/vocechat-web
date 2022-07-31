@@ -1,5 +1,8 @@
 // const BASE_URL = `${location.origin}/api`;
-const BASE_URL = `https://dev.voce.chat/api`;
+const BASE_URL = process.env.REACT_APP_RELEASE
+  ? `${location.origin}/api`
+  : `https://dev.voce.chat/api`;
+// const BASE_URL = `https://dev.voce.chat/api`;
 export const CACHE_VERSION = `0.3.1`;
 export const ContentTypes = {
   text: "text/plain",
