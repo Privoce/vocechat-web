@@ -68,7 +68,6 @@ const LogoutConfirmModal: FC<Props> = ({ closeModal }) => {
             </Button>
           </>
         }
-        // className="animate__animated animate__fadeInDown animate__faster"
       >
         <div className="clear">
           <label htmlFor="clear_cb" className="txt">

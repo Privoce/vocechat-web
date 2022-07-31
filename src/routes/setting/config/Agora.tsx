@@ -5,6 +5,8 @@ import Label from "../../../common/component/styled/Label";
 import Toggle from "../../../common/component/styled/Toggle";
 import SaveTip from "../../../common/component/SaveTip";
 import useConfig from "../../../common/hook/useConfig";
+import { ChangeEvent } from "react";
+import { AgoraConfig } from "../../../types/server";
 
 export default function ConfigAgora() {
   const { changed, reset, values, setValues, toggleEnable, updateConfig } = useConfig("agora");
@@ -13,10 +15,11 @@ export default function ConfigAgora() {
     updateConfig(values);
   };
 
-  const handleChange = (evt) => {
+  const handleChange = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const newValue = evt.target.value;
-    const { type } = evt.target.dataset;
+    const { type = "" } = evt.target.dataset;
     setValues((prev) => {
+      if (!prev) return prev;
       return { ...prev, [type]: newValue };
     });
   };
@@ -29,7 +32,7 @@ export default function ConfigAgora() {
     rtm_key,
     rtm_secret,
     enabled = false
-  } = values ?? {};
+  } = values as AgoraConfig;
 
   return (
     <StyledContainer>

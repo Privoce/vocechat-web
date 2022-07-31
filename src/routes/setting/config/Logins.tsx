@@ -1,3 +1,4 @@
+import { ChangeEvent } from "react";
 import toast from "react-hot-toast";
 import StyledContainer from "./StyledContainer";
 import Toggle from "../../../common/component/styled/Toggle";
@@ -45,22 +46,25 @@ export default function Logins() {
       }
     }
   };
-  const handleGoogleClientIdChange = (evt) => {
+  const handleGoogleClientIdChange = (evt: ChangeEvent<HTMLInputElement>) => {
     updateClientId(evt.target.value);
   };
-  const handleGithubAuthChange = (evt) => {
+  const handleGithubAuthChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const { key } = evt.target.dataset;
     if (key) {
       updateGithubAuthConfig({ [key]: evt.target.value });
     }
   };
-  const handleToggle = (val) => {
+  const handleToggle = (
+    val: Partial<Pick<LoginConfig, "github" | "google" | "password" | "magic_link" | "metamask">>
+  ) => {
     setValues((prev) => {
+      if (!prev) return prev;
       return { ...prev, ...val };
     });
   };
   if (!values) return null;
-  const { google, magic_link, github, metamask, password, oidc = [] } = values ?? {};
+  const { google, magic_link, github, metamask, password, oidc = [] } = values as LoginConfig;
   const valuesChanged = clientIdChanged || changed || githubChanged;
 
   return (
@@ -177,10 +181,10 @@ export default function Logins() {
             <IssuerList
               issuers={oidc}
               onChange={(newOidc) => {
-                setValues((prev) => ({
-                  ...prev,
-                  oidc: newOidc
-                }));
+                setValues((prev) => {
+                  if (!prev) return prev;
+                  return { ...prev, oidc: newOidc };
+                });
               }}
             />
           </div>

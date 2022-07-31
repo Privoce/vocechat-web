@@ -16,8 +16,9 @@ export default function ConfigFirebase() {
   };
   const handleChange = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const newValue = evt.target.value;
-    const { type } = evt.target.dataset;
+    const { type = "" } = evt.target.dataset;
     setValues((prev) => {
+      if (!prev) return prev;
       return { ...prev, [type]: newValue };
     });
   };
