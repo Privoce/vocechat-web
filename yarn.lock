@@ -3993,10 +3993,10 @@
   resolved "https://mirrors.tencent.com/npm/@types%2fnode/-/node-17.0.35.tgz#635b7586086d51fb40de0a2ec9d1014a5283ba4a"
   integrity sha512-vu1SrqBjbbZ3J6vwY17jBs8Sr/BKA+/a/WtjRG+whKg1iuLFOosq872EXS0eXWILdO36DHQQeku/ZcL6hz2fpg==
 
-"@types/node@^18.6.1":
-  version "18.6.1"
-  resolved "https://mirrors.tencent.com/npm/@types%2fnode/-/node-18.6.1.tgz#828e4785ccca13f44e2fb6852ae0ef11e3e20ba5"
-  integrity sha512-z+2vB6yDt1fNwKOeGbckpmirO+VBDuQqecXkgeIqDlaOtmKn6hPR/viQ8cxCfqLU4fTlvM3+YjM367TukWdxpg==
+"@types/node@^18.6.3":
+  version "18.6.3"
+  resolved "https://mirrors.tencent.com/npm/@types%2fnode/-/node-18.6.3.tgz#4e4a95b6fe44014563ceb514b2598b3e623d1c98"
+  integrity sha512-6qKpDtoaYLM+5+AFChLhHermMQxc3TOEFIDzrZLPRGHPrLEwqFkkT5Kx3ju05g6X7uDPazz3jHbKPX0KzCjntg==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.1"
@@ -4451,10 +4451,10 @@
   dependencies:
     "@udecode/plate-core" "15.0.3"
 
-"@udecode/plate-headless@15.0.3":
-  version "15.0.3"
-  resolved "https://mirrors.cloud.tencent.com/npm/@udecode%2fplate-headless/-/plate-headless-15.0.3.tgz#56c2882839f701a189b95356ddea3a93ec5ee8ed"
-  integrity sha512-rOu2vpk5MbJPg7vajwd8q7xtFk9KwbjOJEEVmyorQma/zLJBWd2FzxeLF2zdUbhZYld/39hBxeAILod8EPuntw==
+"@udecode/plate-headless@15.0.5":
+  version "15.0.5"
+  resolved "https://mirrors.cloud.tencent.com/npm/@udecode%2fplate-headless/-/plate-headless-15.0.5.tgz#e457a831f54b799ea3eac4138cea8a26674f23bb"
+  integrity sha512-QCzUa+lzOKyPxMximEFgx73Jsuu1+XFptFf0LgFxGng8KZx2eswXOF0mDe/nfpJrViBMfDbtS1S4CZI85O23vA==
   dependencies:
     "@udecode/plate-alignment" "15.0.3"
     "@udecode/plate-autoformat" "15.0.3"
@@ -4477,7 +4477,7 @@
     "@udecode/plate-indent-list" "15.0.3"
     "@udecode/plate-kbd" "15.0.3"
     "@udecode/plate-line-height" "15.0.3"
-    "@udecode/plate-link" "15.0.3"
+    "@udecode/plate-link" "15.0.5"
     "@udecode/plate-list" "15.0.3"
     "@udecode/plate-media-embed" "15.0.3"
     "@udecode/plate-mention" "15.0.3"
@@ -4489,7 +4489,7 @@
     "@udecode/plate-serializer-csv" "15.0.3"
     "@udecode/plate-serializer-docx" "15.0.3"
     "@udecode/plate-serializer-html" "15.0.3"
-    "@udecode/plate-serializer-md" "15.0.3"
+    "@udecode/plate-serializer-md" "15.0.5"
     "@udecode/plate-table" "15.0.3"
     "@udecode/plate-trailing-block" "15.0.3"
 
@@ -4546,10 +4546,10 @@
   dependencies:
     "@udecode/plate-core" "15.0.3"
 
-"@udecode/plate-link@15.0.3":
-  version "15.0.3"
-  resolved "https://mirrors.cloud.tencent.com/npm/@udecode%2fplate-link/-/plate-link-15.0.3.tgz#c8273b29544bfc4d9c5a579aa3313d1574de754d"
-  integrity sha512-1CEoq1auM/9wgmJZ05dtkTf7kuppMty/oIzfew8MgmEE71w2rW2VIO5q52mla/sNVDHQa3D4+QIre0WvBfb+Qw==
+"@udecode/plate-link@15.0.5":
+  version "15.0.5"
+  resolved "https://mirrors.cloud.tencent.com/npm/@udecode%2fplate-link/-/plate-link-15.0.5.tgz#002cfc8af95d33d996a3ca0a148e393ff8f56d51"
+  integrity sha512-zJyqrIbMuiBmCOP2rz/93Ir2SrinafYizLcSLwkkCzBjXCxBM8ekxWOQfrx6Up/H1t28W0LtE55OBeYRyj8aLA==
   dependencies:
     "@udecode/plate-button" "15.0.3"
     "@udecode/plate-core" "15.0.3"
@@ -4644,16 +4644,16 @@
     "@udecode/plate-core" "15.0.3"
     html-entities "^2.3.3"
 
-"@udecode/plate-serializer-md@15.0.3":
-  version "15.0.3"
-  resolved "https://mirrors.cloud.tencent.com/npm/@udecode%2fplate-serializer-md/-/plate-serializer-md-15.0.3.tgz#124411b2fd023990f2a3f7240c55eca388519bf8"
-  integrity sha512-QOuZBkYQHK7FFf8P+79vq45fwCNZGsIrcpTtluM7LWdjDPGVPWZ4+XzK6ir9nKU2C6+4y5jSxthh9ISw+E0swQ==
+"@udecode/plate-serializer-md@15.0.5":
+  version "15.0.5"
+  resolved "https://mirrors.cloud.tencent.com/npm/@udecode%2fplate-serializer-md/-/plate-serializer-md-15.0.5.tgz#b5169945c3ddb2fc260417a4fb1f8522e857aaaa"
+  integrity sha512-+FjKWvF4K1zvMjXIYclz/pVuglHfZEgLwkIN6WnbubjmpC3d46p7YqJ2FFUgnhsY7Ur0vGC7T36bEHvThvK4DQ==
   dependencies:
     "@udecode/plate-block-quote" "15.0.3"
     "@udecode/plate-code-block" "15.0.3"
     "@udecode/plate-core" "15.0.3"
     "@udecode/plate-heading" "15.0.3"
-    "@udecode/plate-link" "15.0.3"
+    "@udecode/plate-link" "15.0.5"
     "@udecode/plate-list" "15.0.3"
     "@udecode/plate-paragraph" "15.0.3"
     remark-parse "^9.0.0"
@@ -4720,10 +4720,10 @@
     "@udecode/plate-styled-components" "15.0.3"
     "@udecode/plate-ui-toolbar" "15.0.3"
 
-"@udecode/plate-ui-combobox@15.0.3":
-  version "15.0.3"
-  resolved "https://mirrors.cloud.tencent.com/npm/@udecode%2fplate-ui-combobox/-/plate-ui-combobox-15.0.3.tgz#b8ac0e72f648b0c5c505254846153299199d0c03"
-  integrity sha512-SrswHY6i8CjBldD3VtKCIhNsc6aZlkcO1wtYMxQ32tl5pgFQUEjB/kgdo1gWbeovLwZJ7qluerMLg7djh0tK8Q==
+"@udecode/plate-ui-combobox@15.0.4":
+  version "15.0.4"
+  resolved "https://mirrors.cloud.tencent.com/npm/@udecode%2fplate-ui-combobox/-/plate-ui-combobox-15.0.4.tgz#9807e3cbf36624370d4a5ef8be454a786ee592b9"
+  integrity sha512-qDFODtDn4GYaAn8pPzVN2PuGp3H9dcmPYFvxVDUm8ajRQKVa8xWV6y2X8FHnPac3OYwJPJOopPW3lSEZNTCWyA==
   dependencies:
     "@udecode/plate-combobox" "15.0.3"
     "@udecode/plate-core" "15.0.3"
@@ -4789,13 +4789,13 @@
     "@udecode/plate-styled-components" "15.0.3"
     "@udecode/plate-ui-toolbar" "15.0.3"
 
-"@udecode/plate-ui-link@15.0.3":
-  version "15.0.3"
-  resolved "https://mirrors.cloud.tencent.com/npm/@udecode%2fplate-ui-link/-/plate-ui-link-15.0.3.tgz#23db617600d00849da087e8f43ab8d4ed31ac55d"
-  integrity sha512-yhvfOyKvjJJB84+OJnybxTbjhL/tliYxoFZhAjSdSShAJssKNjMeAxyaw2MuZ0whFQ/y0w1+yl9skVqkut0FJA==
+"@udecode/plate-ui-link@15.0.5":
+  version "15.0.5"
+  resolved "https://mirrors.cloud.tencent.com/npm/@udecode%2fplate-ui-link/-/plate-ui-link-15.0.5.tgz#6a91246634997f589bb1bcecacbffc956fe5cf69"
+  integrity sha512-oxxGwUl6+BFBk4MF5SWuta16Tt/L5jUKGRpqE9SMtVskkMk89tMSviV39RgoHmrkMjB+sB3rnaf/SHC622fUDw==
   dependencies:
     "@udecode/plate-core" "15.0.3"
-    "@udecode/plate-link" "15.0.3"
+    "@udecode/plate-link" "15.0.5"
     "@udecode/plate-styled-components" "15.0.3"
     "@udecode/plate-ui-button" "15.0.3"
     "@udecode/plate-ui-toolbar" "15.0.3"
@@ -4821,16 +4821,16 @@
     "@udecode/plate-ui-toolbar" "15.0.3"
     js-video-url-parser "0.5.1"
 
-"@udecode/plate-ui-mention@15.0.3":
-  version "15.0.3"
-  resolved "https://mirrors.cloud.tencent.com/npm/@udecode%2fplate-ui-mention/-/plate-ui-mention-15.0.3.tgz#275e24f37af1fe6e104229887b4e0888b18312e7"
-  integrity sha512-uI4xTdXu7+popjQRrg4tIeEP5TuZb84dwoV7GBxk41vUchnG+fATHiAxZYHlFKtr4uXSS5TW8xP1sCZMmeBO+Q==
+"@udecode/plate-ui-mention@15.0.4":
+  version "15.0.4"
+  resolved "https://mirrors.cloud.tencent.com/npm/@udecode%2fplate-ui-mention/-/plate-ui-mention-15.0.4.tgz#86c7713979b76bc1db1e2057f194bcce523ce305"
+  integrity sha512-yDjBFfXRxArfsM9A5euF2l393st8AKHiKyY2ROw8XKsjdKbl9GxpB/12tuCgXp7+j/HkvGfAe0GUA65pvGkCuA==
   dependencies:
     "@udecode/plate-combobox" "15.0.3"
     "@udecode/plate-core" "15.0.3"
     "@udecode/plate-mention" "15.0.3"
     "@udecode/plate-styled-components" "15.0.3"
-    "@udecode/plate-ui-combobox" "15.0.3"
+    "@udecode/plate-ui-combobox" "15.0.4"
 
 "@udecode/plate-ui-placeholder@15.0.3":
   version "15.0.3"
@@ -4873,40 +4873,40 @@
     "@udecode/plate-styled-components" "15.0.3"
     react-use "^17.3.2"
 
-"@udecode/plate-ui@15.0.3":
-  version "15.0.3"
-  resolved "https://mirrors.cloud.tencent.com/npm/@udecode%2fplate-ui/-/plate-ui-15.0.3.tgz#7f56a1dcc6783323883b3e7a07319c15b01f17c6"
-  integrity sha512-Amgb9w1oh7McnyyAwyH7s/t16NGk8+Vwk2ycfjroYr6+u0TygPl15bh2bKz4BHlDDb2Mx0AcKU+oIJ+DCcnBow==
+"@udecode/plate-ui@15.0.5":
+  version "15.0.5"
+  resolved "https://mirrors.cloud.tencent.com/npm/@udecode%2fplate-ui/-/plate-ui-15.0.5.tgz#a1917c4a148bdb69891abc1608756598a7882b5b"
+  integrity sha512-YEDXTcjz1LJd6fdH0EA02Ab2tY4TZ+oidEVhjyMCtXiH5B2FV2xqrf++TRIXn2ttRJfzsA7V2Cvcetmq3w0o/w==
   dependencies:
-    "@udecode/plate-headless" "15.0.3"
+    "@udecode/plate-headless" "15.0.5"
     "@udecode/plate-styled-components" "15.0.3"
     "@udecode/plate-ui-alignment" "15.0.3"
     "@udecode/plate-ui-block-quote" "15.0.3"
     "@udecode/plate-ui-button" "15.0.3"
     "@udecode/plate-ui-code-block" "15.0.3"
-    "@udecode/plate-ui-combobox" "15.0.3"
+    "@udecode/plate-ui-combobox" "15.0.4"
     "@udecode/plate-ui-cursor" "15.0.3"
     "@udecode/plate-ui-dnd" "15.0.3"
     "@udecode/plate-ui-find-replace" "15.0.3"
     "@udecode/plate-ui-font" "15.0.3"
     "@udecode/plate-ui-image" "15.0.3"
     "@udecode/plate-ui-line-height" "15.0.3"
-    "@udecode/plate-ui-link" "15.0.3"
+    "@udecode/plate-ui-link" "15.0.5"
     "@udecode/plate-ui-list" "15.0.3"
     "@udecode/plate-ui-media-embed" "15.0.3"
-    "@udecode/plate-ui-mention" "15.0.3"
+    "@udecode/plate-ui-mention" "15.0.4"
     "@udecode/plate-ui-placeholder" "15.0.3"
     "@udecode/plate-ui-popover" "15.0.3"
     "@udecode/plate-ui-table" "15.0.3"
     "@udecode/plate-ui-toolbar" "15.0.3"
 
-"@udecode/plate@^15.0.3":
-  version "15.0.3"
-  resolved "https://mirrors.cloud.tencent.com/npm/@udecode%2fplate/-/plate-15.0.3.tgz#8a893bd95e9430dac4ad80aa476d362da61bcd45"
-  integrity sha512-N6nCP1WlbtLkXsw+gAIrjHnYghFL2QJu/lLXZIMTvIJpJAU9BDz6F2/dJtOgG2USfibT18MJgrDdFZyKVJkGaA==
+"@udecode/plate@^15.0.5":
+  version "15.0.5"
+  resolved "https://mirrors.cloud.tencent.com/npm/@udecode%2fplate/-/plate-15.0.5.tgz#d7feb642152c0df68572cc5c02a945d5447825c0"
+  integrity sha512-73CTz8Wg2HH6BvKhIcqS/Xj2NaKzlY41kH2pLfxTlWh+pOVekz5z1VQEjDcrMeUhQsh6/6WQ/clRMD24piP+/w==
   dependencies:
-    "@udecode/plate-headless" "15.0.3"
-    "@udecode/plate-ui" "15.0.3"
+    "@udecode/plate-headless" "15.0.5"
+    "@udecode/plate-ui" "15.0.5"
 
 "@udecode/zustood@^1.1.1":
   version "1.1.1"
@@ -5706,15 +5706,15 @@ browserslist@^4.0.0, browserslist@^4.14.5, browserslist@^4.16.6, browserslist@^4
     node-releases "^2.0.3"
     picocolors "^1.0.0"
 
-browserslist@^4.21.2:
-  version "4.21.2"
-  resolved "https://mirrors.tencent.com/npm/browserslist/-/browserslist-4.21.2.tgz#59a400757465535954946a400b841ed37e2b4ecf"
-  integrity sha512-MonuOgAtUB46uP5CezYbRaYKBNt2LxP0yX+Pmj4LkcDFGkn9Cbpi83d9sCjwQDErXsIJSzY5oKGDbgOlF/LPAA==
+browserslist@^4.21.3:
+  version "4.21.3"
+  resolved "https://mirrors.tencent.com/npm/browserslist/-/browserslist-4.21.3.tgz#5df277694eb3c48bc5c4b05af3e8b7e09c5a6d1a"
+  integrity sha512-898rgRXLAyRkM1GryrrBHGkqA5hlpkV5MhtZwg9QXeiyLUYs2k00Un05aX5l2/yJIOObYKOpS2JNo8nJDE7fWQ==
   dependencies:
-    caniuse-lite "^1.0.30001366"
-    electron-to-chromium "^1.4.188"
+    caniuse-lite "^1.0.30001370"
+    electron-to-chromium "^1.4.202"
     node-releases "^2.0.6"
-    update-browserslist-db "^1.0.4"
+    update-browserslist-db "^1.0.5"
 
 bser@2.1.1:
   version "2.1.1"
@@ -5813,10 +5813,10 @@ caniuse-lite@^1.0.30001335:
   resolved "https://registry.npmmirror.com/caniuse-lite/-/caniuse-lite-1.0.30001355.tgz#e240b7177443ed0198c737a7f609536976701c77"
   integrity sha512-Sd6pjJHF27LzCB7pT7qs+kuX2ndurzCzkpJl6Qct7LPSZ9jn0bkOA8mdgMgmqnQAWLVOOGjLpc+66V57eLtb1g==
 
-caniuse-lite@^1.0.30001366:
-  version "1.0.30001367"
-  resolved "https://mirrors.cloud.tencent.com/npm/caniuse-lite/-/caniuse-lite-1.0.30001367.tgz#2b97fe472e8fa29c78c5970615d7cd2ee414108a"
-  integrity sha512-XDgbeOHfifWV3GEES2B8rtsrADx4Jf+juKX2SICJcaUhjYBO3bR96kvEIHa15VU6ohtOhBZuPGGYGbXMRn0NCw==
+caniuse-lite@^1.0.30001370:
+  version "1.0.30001373"
+  resolved "https://mirrors.cloud.tencent.com/npm/caniuse-lite/-/caniuse-lite-1.0.30001373.tgz#2dc3bc3bfcb5d5a929bec11300883040d7b4b4be"
+  integrity sha512-pJYArGHrPp3TUqQzFYRmP/lwJlj8RCbVe3Gd3eJQkAV8SAC6b19XS9BjMvRdvaS8RMkaTN8ZhoHP6S1y8zzwEQ==
 
 case-sensitive-paths-webpack-plugin@^2.4.0:
   version "2.4.0"
@@ -6920,10 +6920,10 @@ electron-to-chromium@^1.4.118:
   resolved "https://mirrors.tencent.com/npm/electron-to-chromium/-/electron-to-chromium-1.4.137.tgz#186180a45617283f1c012284458510cd99d6787f"
   integrity sha512-0Rcpald12O11BUogJagX3HsCN3FE83DSqWjgXoHo5a72KUKMSfI39XBgJpgNNxS9fuGzytaFjE06kZkiVFy2qA==
 
-electron-to-chromium@^1.4.188:
-  version "1.4.192"
-  resolved "https://mirrors.cloud.tencent.com/npm/electron-to-chromium/-/electron-to-chromium-1.4.192.tgz#fac050058b3e0713b401a1088cc579e14c2ab165"
-  integrity sha512-8nCXyIQY9An88NXAp+PuPy5h3/w5ZY7Iu2lag65Q0XREprcat5F8gKhoHsBUnQcFuCRnmevpR8yEBYRU3d2HDw==
+electron-to-chromium@^1.4.202:
+  version "1.4.206"
+  resolved "https://mirrors.tencent.com/npm/electron-to-chromium/-/electron-to-chromium-1.4.206.tgz#580ff85b54d7ec0c05f20b1e37ea0becdd7b0ee4"
+  integrity sha512-h+Fadt1gIaQ06JaIiyqPsBjJ08fV5Q7md+V8bUvQW/9OvXfL2LRICTz2EcnnCP7QzrFTS6/27MRV6Bl9Yn97zA==
 
 email-addresses@^3.0.1:
   version "3.1.0"
@@ -8331,6 +8331,11 @@ idb@^6.1.4:
   version "6.1.5"
   resolved "http://mirrors.cloud.tencent.com/npm/idb/-/idb-6.1.5.tgz#dbc53e7adf1ac7c59f9b2bf56e00b4ea4fce8c7b"
   integrity sha512-IJtugpKkiVXQn5Y+LteyBCNk1N8xpGV3wWZk9EVtZWH8DYkjBn0bX1XnGP9RkyZF0sAcywa6unHqSWKe7q4LGw==
+
+idb@^7.0.1:
+  version "7.0.2"
+  resolved "https://mirrors.cloud.tencent.com/npm/idb/-/idb-7.0.2.tgz#7a067e20dd16539938e456814b7d714ba8db3892"
+  integrity sha512-jjKrT1EnyZewQ/gCBb/eyiYrhGzws2FeY92Yx8qT9S9GeQAmo4JFVIiWRIfKW/6Ob9A+UDAOW9j9jn58fy2HIg==
 
 identity-obj-proxy@^3.0.0:
   version "3.0.0"
@@ -12048,10 +12053,10 @@ rollup@^2.43.1:
   optionalDependencies:
     fsevents "~2.3.2"
 
-rooks@^5.14.0:
-  version "5.14.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/rooks/-/rooks-5.14.0.tgz#265cecded1f4ae24cc16e6180fc713ad5cd368fd"
-  integrity sha512-liU+FLpfW512Vf0ZBZ/NW3Bq+UUVrGUoN0FJipoYzzA5MwsdiqorZQXYi5Rr7ucLE/ERsdEPifHHDhYxt7RiZw==
+rooks@^6.0.1:
+  version "6.0.1"
+  resolved "https://mirrors.cloud.tencent.com/npm/rooks/-/rooks-6.0.1.tgz#8245f4ccc0c7f53cdc4d467e46c37ddd71b5c56d"
+  integrity sha512-LpHFzRFX2+rHisdpFs++cMb56ENz06Ns8R0l3sHu9iSkC0iCwAsnGh1LP1+FWhD7dzW5zAt9fm1omxcqJ3LdZg==
   dependencies:
     lodash.debounce "^4.0.8"
     raf "^3.4.1"
@@ -12372,10 +12377,10 @@ slate-history@^0.66.0:
   dependencies:
     is-plain-object "^5.0.0"
 
-slate-react@^0.81.0:
-  version "0.81.0"
-  resolved "http://mirrors.cloud.tencent.com/npm/slate-react/-/slate-react-0.81.0.tgz#248eb688ce01f23680ce2554625fd60676614962"
-  integrity sha512-bwryad4EvOmc7EFKb8aGg9DWNDh3KvToaggGieIgGTTbHJYHc9ADFC3A87Ittlpd5XUVopR0MpChQ3g3ODyvqw==
+slate-react@^0.82.0:
+  version "0.82.0"
+  resolved "https://mirrors.cloud.tencent.com/npm/slate-react/-/slate-react-0.82.0.tgz#42be9615f79c4367bce6967e7a2ddb870032b795"
+  integrity sha512-kaLpphZ2apX1C7N+8LQElKZ3XKHdmuAZYfTtUOetxCQ6MctDMHg1GHE/tX5hNvF/2bvG5PSnEOrfUOqaSOpzMA==
   dependencies:
     "@types/is-hotkey" "^0.1.1"
     "@types/lodash" "^4.14.149"
@@ -12386,10 +12391,10 @@ slate-react@^0.81.0:
     scroll-into-view-if-needed "^2.2.20"
     tiny-invariant "1.0.6"
 
-slate@^0.81.1:
-  version "0.81.1"
-  resolved "https://mirrors.cloud.tencent.com/npm/slate/-/slate-0.81.1.tgz#98d9f87b1ea2d648bfbab2739dcb1ba897f3bba0"
-  integrity sha512-nmqphQb2qnlJpPMKsoxeWShpa+pOlKfy6XVdmlTuOtgWeGethM6SMPSRTrhh5UF/G+3/IoXhfbKF7o3iDZCbWw==
+slate@^0.82.0:
+  version "0.82.0"
+  resolved "https://mirrors.cloud.tencent.com/npm/slate/-/slate-0.82.0.tgz#3a948347df58af2800bef162179cebc467c08b34"
+  integrity sha512-2O2NQunBoIWp3M6HP9w1RnNYR6eC52jW4cAXiUDthTxeiwTjL+wrSncls+9jmfqVrUnUb13qbgOEmw6/EdE1yA==
   dependencies:
     immer "^9.0.6"
     is-plain-object "^5.0.0"
@@ -13361,10 +13366,10 @@ upath@^1.2.0:
   resolved "https://mirrors.tencent.com/npm/upath/-/upath-1.2.0.tgz#8f66dbcd55a883acdae4408af8b035a5044c1894"
   integrity sha512-aZwGpamFO61g3OlfT7OQCHqhGnW43ieH9WZeP7QxN/G/jS4jfqUkZxoryvJgVPEcrl5NL/ggHsSmLMHuH64Lhg==
 
-update-browserslist-db@^1.0.4:
-  version "1.0.4"
-  resolved "https://mirrors.tencent.com/npm/update-browserslist-db/-/update-browserslist-db-1.0.4.tgz#dbfc5a789caa26b1db8990796c2c8ebbce304824"
-  integrity sha512-jnmO2BEGUjsMOe/Fg9u0oczOe/ppIDZPebzccl1yDWGLFP16Pa1/RM5wEoKYPG2zstNcDuAStejyxsOuKINdGA==
+update-browserslist-db@^1.0.5:
+  version "1.0.5"
+  resolved "https://mirrors.tencent.com/npm/update-browserslist-db/-/update-browserslist-db-1.0.5.tgz#be06a5eedd62f107b7c19eb5bcefb194411abf38"
+  integrity sha512-dteFFpCyvuDdr9S/ff1ISkKt/9YZxKjI9WlRR99c180GaztJtRa/fn18FdxGVKVsnPY7/a/FDN68mcvUmP4U7Q==
   dependencies:
     escalade "^3.1.1"
     picocolors "^1.0.0"
@@ -13834,7 +13839,7 @@ word-wrap@^1.2.3, word-wrap@~1.2.3:
   resolved "https://mirrors.tencent.com/npm/word-wrap/-/word-wrap-1.2.3.tgz#610636f6b1f703891bd34771ccb17fb93b47079c"
   integrity sha512-Hz/mrNwitNRh/HUAtM/VT/5VH+ygD6DV7mYKZAtHOrbs8U7lvPS6xf7EJKMF0uW1KJCl0H701g3ZGus+muE5vQ==
 
-workbox-background-sync@6.5.3, workbox-background-sync@^6.5.3:
+workbox-background-sync@6.5.3:
   version "6.5.3"
   resolved "http://mirrors.cloud.tencent.com/npm/workbox-background-sync/-/workbox-background-sync-6.5.3.tgz#7c66c1836aeca6f3762dc48d17a1852a33b3168c"
   integrity sha512-0DD/V05FAcek6tWv9XYj2w5T/plxhDSpclIcAGjA/b7t/6PdaRkQ7ZgtAX6Q/L7kV7wZ8uYRJUoH11VjNipMZw==
@@ -13842,12 +13847,27 @@ workbox-background-sync@6.5.3, workbox-background-sync@^6.5.3:
     idb "^6.1.4"
     workbox-core "6.5.3"
 
-workbox-broadcast-update@6.5.3, workbox-broadcast-update@^6.5.3:
+workbox-background-sync@6.5.4, workbox-background-sync@^6.5.4:
+  version "6.5.4"
+  resolved "https://mirrors.cloud.tencent.com/npm/workbox-background-sync/-/workbox-background-sync-6.5.4.tgz#3141afba3cc8aa2ae14c24d0f6811374ba8ff6a9"
+  integrity sha512-0r4INQZMyPky/lj4Ou98qxcThrETucOde+7mRGJl13MPJugQNKeZQOdIJe/1AchOP23cTqHcN/YVpD6r8E6I8g==
+  dependencies:
+    idb "^7.0.1"
+    workbox-core "6.5.4"
+
+workbox-broadcast-update@6.5.3:
   version "6.5.3"
   resolved "http://mirrors.cloud.tencent.com/npm/workbox-broadcast-update/-/workbox-broadcast-update-6.5.3.tgz#fc2ad79cf507e22950cda9baf1e9a0ccc43f31bc"
   integrity sha512-4AwCIA5DiDrYhlN+Miv/fp5T3/whNmSL+KqhTwRBTZIL6pvTgE4lVuRzAt1JltmqyMcQ3SEfCdfxczuI4kwFQg==
   dependencies:
     workbox-core "6.5.3"
+
+workbox-broadcast-update@6.5.4, workbox-broadcast-update@^6.5.4:
+  version "6.5.4"
+  resolved "https://mirrors.cloud.tencent.com/npm/workbox-broadcast-update/-/workbox-broadcast-update-6.5.4.tgz#8441cff5417cd41f384ba7633ca960a7ffe40f66"
+  integrity sha512-I/lBERoH1u3zyBosnpPEtcAVe5lwykx9Yg1k6f8/BGEPGaMMgZrwVrqL1uA9QZ1NGGFoyE6t9i7lBjOlDhFEEw==
+  dependencies:
+    workbox-core "6.5.4"
 
 workbox-build@6.5.3:
   version "6.5.3"
@@ -13892,25 +13912,88 @@ workbox-build@6.5.3:
     workbox-sw "6.5.3"
     workbox-window "6.5.3"
 
-workbox-cacheable-response@6.5.3, workbox-cacheable-response@^6.5.3:
+workbox-build@6.5.4:
+  version "6.5.4"
+  resolved "https://mirrors.cloud.tencent.com/npm/workbox-build/-/workbox-build-6.5.4.tgz#7d06d31eb28a878817e1c991c05c5b93409f0389"
+  integrity sha512-kgRevLXEYvUW9WS4XoziYqZ8Q9j/2ziJYEtTrjdz5/L/cTUa2XfyMP2i7c3p34lgqJ03+mTiz13SdFef2POwbA==
+  dependencies:
+    "@apideck/better-ajv-errors" "^0.3.1"
+    "@babel/core" "^7.11.1"
+    "@babel/preset-env" "^7.11.0"
+    "@babel/runtime" "^7.11.2"
+    "@rollup/plugin-babel" "^5.2.0"
+    "@rollup/plugin-node-resolve" "^11.2.1"
+    "@rollup/plugin-replace" "^2.4.1"
+    "@surma/rollup-plugin-off-main-thread" "^2.2.3"
+    ajv "^8.6.0"
+    common-tags "^1.8.0"
+    fast-json-stable-stringify "^2.1.0"
+    fs-extra "^9.0.1"
+    glob "^7.1.6"
+    lodash "^4.17.20"
+    pretty-bytes "^5.3.0"
+    rollup "^2.43.1"
+    rollup-plugin-terser "^7.0.0"
+    source-map "^0.8.0-beta.0"
+    stringify-object "^3.3.0"
+    strip-comments "^2.0.1"
+    tempy "^0.6.0"
+    upath "^1.2.0"
+    workbox-background-sync "6.5.4"
+    workbox-broadcast-update "6.5.4"
+    workbox-cacheable-response "6.5.4"
+    workbox-core "6.5.4"
+    workbox-expiration "6.5.4"
+    workbox-google-analytics "6.5.4"
+    workbox-navigation-preload "6.5.4"
+    workbox-precaching "6.5.4"
+    workbox-range-requests "6.5.4"
+    workbox-recipes "6.5.4"
+    workbox-routing "6.5.4"
+    workbox-strategies "6.5.4"
+    workbox-streams "6.5.4"
+    workbox-sw "6.5.4"
+    workbox-window "6.5.4"
+
+workbox-cacheable-response@6.5.3:
   version "6.5.3"
   resolved "http://mirrors.cloud.tencent.com/npm/workbox-cacheable-response/-/workbox-cacheable-response-6.5.3.tgz#b1f8c2bc599a7be8f7e3c262535629c558738e47"
   integrity sha512-6JE/Zm05hNasHzzAGKDkqqgYtZZL2H06ic2GxuRLStA4S/rHUfm2mnLFFXuHAaGR1XuuYyVCEey1M6H3PdZ7SQ==
   dependencies:
     workbox-core "6.5.3"
 
-workbox-core@6.5.3, workbox-core@^6.5.3:
+workbox-cacheable-response@6.5.4, workbox-cacheable-response@^6.5.4:
+  version "6.5.4"
+  resolved "https://mirrors.cloud.tencent.com/npm/workbox-cacheable-response/-/workbox-cacheable-response-6.5.4.tgz#a5c6ec0c6e2b6f037379198d4ef07d098f7cf137"
+  integrity sha512-DCR9uD0Fqj8oB2TSWQEm1hbFs/85hXXoayVwFKLVuIuxwJaihBsLsp4y7J9bvZbqtPJ1KlCkmYVGQKrBU4KAug==
+  dependencies:
+    workbox-core "6.5.4"
+
+workbox-core@6.5.3:
   version "6.5.3"
   resolved "http://mirrors.cloud.tencent.com/npm/workbox-core/-/workbox-core-6.5.3.tgz#bca038a9ef0d7a634a6db2a60f45313ed22ac249"
   integrity sha512-Bb9ey5n/M9x+l3fBTlLpHt9ASTzgSGj6vxni7pY72ilB/Pb3XtN+cZ9yueboVhD5+9cNQrC9n/E1fSrqWsUz7Q==
 
-workbox-expiration@6.5.3, workbox-expiration@^6.5.3:
+workbox-core@6.5.4, workbox-core@^6.5.4:
+  version "6.5.4"
+  resolved "https://mirrors.cloud.tencent.com/npm/workbox-core/-/workbox-core-6.5.4.tgz#df48bf44cd58bb1d1726c49b883fb1dffa24c9ba"
+  integrity sha512-OXYb+m9wZm8GrORlV2vBbE5EC1FKu71GGp0H4rjmxmF4/HLbMCoTFws87M3dFwgpmg0v00K++PImpNQ6J5NQ6Q==
+
+workbox-expiration@6.5.3:
   version "6.5.3"
   resolved "http://mirrors.cloud.tencent.com/npm/workbox-expiration/-/workbox-expiration-6.5.3.tgz#efc0811f371a2ede1052b9de1c4f072b71d50503"
   integrity sha512-jzYopYR1zD04ZMdlbn/R2Ik6ixiXbi15c9iX5H8CTi6RPDz7uhvMLZPKEndZTpfgmUk8mdmT9Vx/AhbuCl5Sqw==
   dependencies:
     idb "^6.1.4"
     workbox-core "6.5.3"
+
+workbox-expiration@6.5.4, workbox-expiration@^6.5.4:
+  version "6.5.4"
+  resolved "https://mirrors.cloud.tencent.com/npm/workbox-expiration/-/workbox-expiration-6.5.4.tgz#501056f81e87e1d296c76570bb483ce5e29b4539"
+  integrity sha512-jUP5qPOpH1nXtjGGh1fRBa1wJL2QlIb5mGpct3NzepjGG2uFFBn4iiEBiI9GUmfAFR2ApuRhDydjcRmYXddiEQ==
+  dependencies:
+    idb "^7.0.1"
+    workbox-core "6.5.4"
 
 workbox-google-analytics@6.5.3:
   version "6.5.3"
@@ -13922,14 +14005,31 @@ workbox-google-analytics@6.5.3:
     workbox-routing "6.5.3"
     workbox-strategies "6.5.3"
 
-workbox-navigation-preload@6.5.3, workbox-navigation-preload@^6.5.3:
+workbox-google-analytics@6.5.4:
+  version "6.5.4"
+  resolved "https://mirrors.cloud.tencent.com/npm/workbox-google-analytics/-/workbox-google-analytics-6.5.4.tgz#c74327f80dfa4c1954cbba93cd7ea640fe7ece7d"
+  integrity sha512-8AU1WuaXsD49249Wq0B2zn4a/vvFfHkpcFfqAFHNHwln3jK9QUYmzdkKXGIZl9wyKNP+RRX30vcgcyWMcZ9VAg==
+  dependencies:
+    workbox-background-sync "6.5.4"
+    workbox-core "6.5.4"
+    workbox-routing "6.5.4"
+    workbox-strategies "6.5.4"
+
+workbox-navigation-preload@6.5.3:
   version "6.5.3"
   resolved "http://mirrors.cloud.tencent.com/npm/workbox-navigation-preload/-/workbox-navigation-preload-6.5.3.tgz#81b74f598b11aa07e2cf1c21af7a826a4f0f70b3"
   integrity sha512-bK1gDFTc5iu6lH3UQ07QVo+0ovErhRNGvJJO/1ngknT0UQ702nmOUhoN9qE5mhuQSrnK+cqu7O7xeaJ+Rd9Tmg==
   dependencies:
     workbox-core "6.5.3"
 
-workbox-precaching@6.5.3, workbox-precaching@^6.5.3:
+workbox-navigation-preload@6.5.4, workbox-navigation-preload@^6.5.4:
+  version "6.5.4"
+  resolved "https://mirrors.cloud.tencent.com/npm/workbox-navigation-preload/-/workbox-navigation-preload-6.5.4.tgz#ede56dd5f6fc9e860a7e45b2c1a8f87c1c793212"
+  integrity sha512-IIwf80eO3cr8h6XSQJF+Hxj26rg2RPFVUmJLUlM0+A2GzB4HFbQyKkrgD5y2d84g2IbJzP4B4j5dPBRzamHrng==
+  dependencies:
+    workbox-core "6.5.4"
+
+workbox-precaching@6.5.3:
   version "6.5.3"
   resolved "http://mirrors.cloud.tencent.com/npm/workbox-precaching/-/workbox-precaching-6.5.3.tgz#c870312b2ef901d790ab9e48da084e776c62af47"
   integrity sha512-sjNfgNLSsRX5zcc63H/ar/hCf+T19fRtTqvWh795gdpghWb5xsfEkecXEvZ8biEi1QD7X/ljtHphdaPvXDygMQ==
@@ -13938,12 +14038,28 @@ workbox-precaching@6.5.3, workbox-precaching@^6.5.3:
     workbox-routing "6.5.3"
     workbox-strategies "6.5.3"
 
-workbox-range-requests@6.5.3, workbox-range-requests@^6.5.3:
+workbox-precaching@6.5.4, workbox-precaching@^6.5.4:
+  version "6.5.4"
+  resolved "https://mirrors.cloud.tencent.com/npm/workbox-precaching/-/workbox-precaching-6.5.4.tgz#740e3561df92c6726ab5f7471e6aac89582cab72"
+  integrity sha512-hSMezMsW6btKnxHB4bFy2Qfwey/8SYdGWvVIKFaUm8vJ4E53JAY+U2JwLTRD8wbLWoP6OVUdFlXsTdKu9yoLTg==
+  dependencies:
+    workbox-core "6.5.4"
+    workbox-routing "6.5.4"
+    workbox-strategies "6.5.4"
+
+workbox-range-requests@6.5.3:
   version "6.5.3"
   resolved "http://mirrors.cloud.tencent.com/npm/workbox-range-requests/-/workbox-range-requests-6.5.3.tgz#e624ac82ff266a5e4f236d055797def07949d941"
   integrity sha512-pGCP80Bpn/0Q0MQsfETSfmtXsQcu3M2QCJwSFuJ6cDp8s2XmbUXkzbuQhCUzKR86ZH2Vex/VUjb2UaZBGamijA==
   dependencies:
     workbox-core "6.5.3"
+
+workbox-range-requests@6.5.4, workbox-range-requests@^6.5.4:
+  version "6.5.4"
+  resolved "https://mirrors.cloud.tencent.com/npm/workbox-range-requests/-/workbox-range-requests-6.5.4.tgz#86b3d482e090433dab38d36ae031b2bb0bd74399"
+  integrity sha512-Je2qR1NXCFC8xVJ/Lux6saH6IrQGhMpDrPXWZWWS8n/RD+WZfKa6dSZwU+/QksfEadJEr/NfY+aP/CXFFK5JFg==
+  dependencies:
+    workbox-core "6.5.4"
 
 workbox-recipes@6.5.3:
   version "6.5.3"
@@ -13957,21 +14073,47 @@ workbox-recipes@6.5.3:
     workbox-routing "6.5.3"
     workbox-strategies "6.5.3"
 
-workbox-routing@6.5.3, workbox-routing@^6.5.3:
+workbox-recipes@6.5.4:
+  version "6.5.4"
+  resolved "https://mirrors.cloud.tencent.com/npm/workbox-recipes/-/workbox-recipes-6.5.4.tgz#cca809ee63b98b158b2702dcfb741b5cc3e24acb"
+  integrity sha512-QZNO8Ez708NNwzLNEXTG4QYSKQ1ochzEtRLGaq+mr2PyoEIC1xFW7MrWxrONUxBFOByksds9Z4//lKAX8tHyUA==
+  dependencies:
+    workbox-cacheable-response "6.5.4"
+    workbox-core "6.5.4"
+    workbox-expiration "6.5.4"
+    workbox-precaching "6.5.4"
+    workbox-routing "6.5.4"
+    workbox-strategies "6.5.4"
+
+workbox-routing@6.5.3:
   version "6.5.3"
   resolved "http://mirrors.cloud.tencent.com/npm/workbox-routing/-/workbox-routing-6.5.3.tgz#a0a699d8cc90b5692bd3df24679acbbda3913777"
   integrity sha512-DFjxcuRAJjjt4T34RbMm3MCn+xnd36UT/2RfPRfa8VWJGItGJIn7tG+GwVTdHmvE54i/QmVTJepyAGWtoLPTmg==
   dependencies:
     workbox-core "6.5.3"
 
-workbox-strategies@6.5.3, workbox-strategies@^6.5.3:
+workbox-routing@6.5.4, workbox-routing@^6.5.4:
+  version "6.5.4"
+  resolved "https://mirrors.cloud.tencent.com/npm/workbox-routing/-/workbox-routing-6.5.4.tgz#6a7fbbd23f4ac801038d9a0298bc907ee26fe3da"
+  integrity sha512-apQswLsbrrOsBUWtr9Lf80F+P1sHnQdYodRo32SjiByYi36IDyL2r7BH1lJtFX8fwNHDa1QOVY74WKLLS6o5Pg==
+  dependencies:
+    workbox-core "6.5.4"
+
+workbox-strategies@6.5.3:
   version "6.5.3"
   resolved "http://mirrors.cloud.tencent.com/npm/workbox-strategies/-/workbox-strategies-6.5.3.tgz#4bea9a48fee16cf43766e0d8138296773c8a9783"
   integrity sha512-MgmGRrDVXs7rtSCcetZgkSZyMpRGw8HqL2aguszOc3nUmzGZsT238z/NN9ZouCxSzDu3PQ3ZSKmovAacaIhu1w==
   dependencies:
     workbox-core "6.5.3"
 
-workbox-streams@6.5.3, workbox-streams@^6.5.3:
+workbox-strategies@6.5.4, workbox-strategies@^6.5.4:
+  version "6.5.4"
+  resolved "https://mirrors.cloud.tencent.com/npm/workbox-strategies/-/workbox-strategies-6.5.4.tgz#4edda035b3c010fc7f6152918370699334cd204d"
+  integrity sha512-DEtsxhx0LIYWkJBTQolRxG4EI0setTJkqR4m7r4YpBdxtWJH1Mbg01Cj8ZjNOO8etqfA3IZaOPHUxCs8cBsKLw==
+  dependencies:
+    workbox-core "6.5.4"
+
+workbox-streams@6.5.3:
   version "6.5.3"
   resolved "http://mirrors.cloud.tencent.com/npm/workbox-streams/-/workbox-streams-6.5.3.tgz#b6860290031caa7d0e46ad7142315c94359c780b"
   integrity sha512-vN4Qi8o+b7zj1FDVNZ+PlmAcy1sBoV7SC956uhqYvZ9Sg1fViSbOpydULOssVJ4tOyKRifH/eoi6h99d+sJ33w==
@@ -13979,12 +14121,25 @@ workbox-streams@6.5.3, workbox-streams@^6.5.3:
     workbox-core "6.5.3"
     workbox-routing "6.5.3"
 
+workbox-streams@6.5.4, workbox-streams@^6.5.4:
+  version "6.5.4"
+  resolved "https://mirrors.cloud.tencent.com/npm/workbox-streams/-/workbox-streams-6.5.4.tgz#1cb3c168a6101df7b5269d0353c19e36668d7d69"
+  integrity sha512-FXKVh87d2RFXkliAIheBojBELIPnWbQdyDvsH3t74Cwhg0fDheL1T8BqSM86hZvC0ZESLsznSYWw+Va+KVbUzg==
+  dependencies:
+    workbox-core "6.5.4"
+    workbox-routing "6.5.4"
+
 workbox-sw@6.5.3:
   version "6.5.3"
   resolved "http://mirrors.cloud.tencent.com/npm/workbox-sw/-/workbox-sw-6.5.3.tgz#cd2f0c086f4496acd25774ed02c48504189bebdd"
   integrity sha512-BQBzm092w+NqdIEF2yhl32dERt9j9MDGUTa2Eaa+o3YKL4Qqw55W9yQC6f44FdAHdAJrJvp0t+HVrfh8AiGj8A==
 
-workbox-webpack-plugin@^6.4.1, workbox-webpack-plugin@^6.5.3:
+workbox-sw@6.5.4:
+  version "6.5.4"
+  resolved "https://mirrors.cloud.tencent.com/npm/workbox-sw/-/workbox-sw-6.5.4.tgz#d93e9c67924dd153a61367a4656ff4d2ae2ed736"
+  integrity sha512-vo2RQo7DILVRoH5LjGqw3nphavEjK4Qk+FenXeUsknKn14eCNedHOXWbmnvP4ipKhlE35pvJ4yl4YYf6YsJArA==
+
+workbox-webpack-plugin@^6.4.1:
   version "6.5.3"
   resolved "https://registry.npmmirror.com/workbox-webpack-plugin/-/workbox-webpack-plugin-6.5.3.tgz#c37bb323be4952311565c07db51054fe59c87d73"
   integrity sha512-Es8Xr02Gi6Kc3zaUwR691ZLy61hz3vhhs5GztcklQ7kl5k2qAusPh0s6LF3wEtlpfs9ZDErnmy5SErwoll7jBA==
@@ -13995,6 +14150,17 @@ workbox-webpack-plugin@^6.4.1, workbox-webpack-plugin@^6.5.3:
     webpack-sources "^1.4.3"
     workbox-build "6.5.3"
 
+workbox-webpack-plugin@^6.5.4:
+  version "6.5.4"
+  resolved "https://mirrors.cloud.tencent.com/npm/workbox-webpack-plugin/-/workbox-webpack-plugin-6.5.4.tgz#baf2d3f4b8f435f3469887cf4fba2b7fac3d0fd7"
+  integrity sha512-LmWm/zoaahe0EGmMTrSLUi+BjyR3cdGEfU3fS6PN1zKFYbqAKuQ+Oy/27e4VSXsyIwAw8+QDfk1XHNGtZu9nQg==
+  dependencies:
+    fast-json-stable-stringify "^2.1.0"
+    pretty-bytes "^5.4.1"
+    upath "^1.2.0"
+    webpack-sources "^1.4.3"
+    workbox-build "6.5.4"
+
 workbox-window@6.5.3:
   version "6.5.3"
   resolved "http://mirrors.cloud.tencent.com/npm/workbox-window/-/workbox-window-6.5.3.tgz#4ade70056cb73477ef1cd8fea7cfd0ecbd825c7f"
@@ -14002,6 +14168,14 @@ workbox-window@6.5.3:
   dependencies:
     "@types/trusted-types" "^2.0.2"
     workbox-core "6.5.3"
+
+workbox-window@6.5.4:
+  version "6.5.4"
+  resolved "https://mirrors.cloud.tencent.com/npm/workbox-window/-/workbox-window-6.5.4.tgz#d991bc0a94dff3c2dbb6b84558cff155ca878e91"
+  integrity sha512-HnLZJDwYBE+hpG25AQBO8RUWBJRaCsI9ksQJEp3aCOFCaG5kqaToAYXFRAHxzRluM2cQbGzdQF5rjKPWPA1fug==
+  dependencies:
+    "@types/trusted-types" "^2.0.2"
+    workbox-core "6.5.4"
 
 wrap-ansi@^6.2.0:
   version "6.2.0"
