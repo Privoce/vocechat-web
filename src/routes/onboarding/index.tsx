@@ -76,7 +76,10 @@ export default function OnboardingPage() {
             <WhoCanSignUp {...serverSetup} />
           </SwiperSlide>
           <SwiperSlide>
-            <InviteLink {...serverSetup} />
+            {/* lazy call invite link API  */}
+            {({ isActive }) => {
+              return isActive ? <InviteLink {...serverSetup} /> : null;
+            }}
           </SwiperSlide>
           <SwiperSlide>
             <DonePage {...serverSetup} />

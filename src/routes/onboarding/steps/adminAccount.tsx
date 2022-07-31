@@ -11,6 +11,7 @@ import {
 } from "../../../app/services/server";
 import { useLoginMutation } from "../../../app/services/auth";
 import { updateInitialized } from "../../../app/slices/auth.data";
+import { useAppSelector } from "../../../app/store";
 
 const StyledWrapper = styled.div`
   height: 100%;
@@ -67,11 +68,11 @@ type Props = {
   nextStep: () => void;
 };
 const AdminAccount: FC<Props> = ({ serverName, nextStep }) => {
+  const loggedIn = useAppSelector((store) => !!store.authData.token);
   const dispatch = useDispatch();
 
   const [createAdmin, { isLoading: isSigningUp, error: signUpError }] = useCreateAdminMutation();
-  const [login, { isLoading: isLoggingIn, isSuccess: isLoggedIn, error: loginError }] =
-    useLoginMutation();
+  const [login, { isLoading: isLoggingIn, error: loginError }] = useLoginMutation();
   const { data: serverData } = useGetServerQuery();
   const [updateServer, { isLoading: isUpdatingServer, isSuccess: isUpdatedServer }] =
     useUpdateServerMutation();
@@ -92,7 +93,7 @@ const AdminAccount: FC<Props> = ({ serverName, nextStep }) => {
 
   // After logged in
   useEffect(() => {
-    if (isLoggedIn && serverData) {
+    if (loggedIn && serverData) {
       dispatch(updateInitialized(true));
       // Set server name
       updateServer({
@@ -100,7 +101,7 @@ const AdminAccount: FC<Props> = ({ serverName, nextStep }) => {
         name: serverName
       });
     }
-  }, [isLoggedIn]);
+  }, [loggedIn]);
 
   // After updated server
   useEffect(() => {
