@@ -35,18 +35,13 @@ export default function usePreload() {
       setStreamingReady(false);
     };
   }, []);
-
-  useEffect(() => {
-    if (rehydrated) {
-      getUsers();
-      getServer();
-      getFavorites();
-    }
-  }, [rehydrated]);
   const canStreaming = !!loginUid && rehydrated && !!token;
   console.log("ttt", loginUid, rehydrated, token);
 
   useEffect(() => {
+    getServer();
+    getUsers();
+    getFavorites();
     setStreamingReady(canStreaming);
   }, [canStreaming]);
 

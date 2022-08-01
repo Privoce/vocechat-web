@@ -7,7 +7,7 @@ import "./assets/base.css";
 import "animate.css";
 import "./common/DayjsSetting";
 import "./common/TippySetting";
-import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import { register } from "./serviceWorkerRegistration";
 import MarkdownStyleOverride from "./common/component/MarkdownStyleOverride";
 import ReduxRoutes from "./routes";
 import NewVersion from "./common/component/NewVersion";
@@ -25,7 +25,7 @@ root.render(
   </>
 );
 
-serviceWorkerRegistration.register({
+register({
   // onSuccess: () => {
   //   toast.success("Service Worker Installed");
   // },

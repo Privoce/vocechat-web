@@ -7,7 +7,6 @@ import { useAppDispatch, useAppSelector } from "../../app/store";
 import { Message } from "../../types/channel";
 import { UploadFileResponse } from "../../types/message";
 
-// todo: check props type
 interface IProps {
   context: "channel" | "user";
   id: number;
