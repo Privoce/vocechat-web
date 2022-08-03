@@ -82,3 +82,4 @@ const MarkdownEditor: FC<Props> = ({
   );
 };
 export default MarkdownEditor;
+// prosemirror-mode version error https://github.com/ueberdosis/tiptap/issues/577

@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState, useCallback, ClipboardEvent } from "react";
+import { useRef, useEffect, useState, useCallback, ClipboardEvent, FC } from "react";
 import { useKey } from "rooks";
 import { Editor, Transforms } from "slate";
 import {
@@ -30,10 +30,19 @@ let components = createPlateUI({
   // customize your components by plugin key
 });
 const initials = [{ type: ELEMENT_PARAGRAPH, children: [{ text: "" }] }];
-const Plugins = ({
+type ctx = "channel" | "user";
+type Props = {
+  updateDraft: (draft: any) => void | null;
+  initialValue?: any;
+  id: `${ctx}_${number}`;
+  placeholder: string;
+  sendMessages: any;
+  members: number[];
+};
+const Plugins: FC<Props> = ({
   updateDraft = null,
   initialValue = initials,
-  id = "",
+  id,
   placeholder = "Write some markdown...",
   sendMessages,
   members = []

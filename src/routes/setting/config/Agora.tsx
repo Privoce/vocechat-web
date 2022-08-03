@@ -23,7 +23,7 @@ export default function ConfigAgora() {
       return { ...prev, [type]: newValue };
     });
   };
-  //   if (!values) return null;
+  if (!values) return null;
   const {
     url,
     project_id,

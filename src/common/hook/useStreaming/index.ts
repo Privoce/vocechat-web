@@ -62,7 +62,6 @@ export default function useStreaming() {
     } = store.getState();
     let api_token = token;
     const tokenAlmostExpire = dayjs().isAfter(new Date(expireTime - 20 * 1000));
-    console.log("check token expire time", tokenAlmostExpire);
     if (tokenAlmostExpire) {
       const resp = await renewToken({
         token,
@@ -285,7 +284,7 @@ export default function useStreaming() {
         },
         onerror(err) {
           initializing = false;
-          if (err instanceof FatalError) {
+          if (err instanceof FatalError || err.toString().indexOf("network error") > -1) {
             console.log("sse debug: error fatal", err);
             throw err; // rethrow to stop the operation
           } else {

@@ -26,7 +26,7 @@ import HomePage from "./home";
 import ChatPage from "./chat";
 import Loading from "../common/component/Loading";
 import store, { useAppSelector } from "../app/store";
-
+let toastId: string;
 const PageRoutes = () => {
   const {
     ui: { online },
@@ -37,10 +37,9 @@ const PageRoutes = () => {
 
   // 掉线检测
   useEffect(() => {
-    let toastId = "0";
     if (!online) {
-      toast.error("Network Offline!", { duration: Infinity });
-    } else {
+      toastId = toast.error("Network Offline!", { duration: Infinity });
+    } else if (toastId) {
       toast.dismiss(toastId);
     }
   }, [online]);
