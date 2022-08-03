@@ -84,17 +84,17 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
                 </li>
               )}
               {canCopyEmail && (
-                <li className="item" onClick={copyEmail}>
+                <li className="item" onClick={copyEmail.bind(undefined, email)}>
                   Copy Email
                 </li>
               )}
               {canRemoveFromChannel && (
-                <li className="item danger" onClick={removeFromChannel}>
+                <li className="item danger" onClick={removeFromChannel.bind(null, uid)}>
                   Remove from Channel
                 </li>
               )}
               {canRemoveFromServer && (
-                <li className="item danger" onClick={removeUser}>
+                <li className="item danger" onClick={removeUser.bind(null, uid)}>
                   Remove from Server
                 </li>
               )}

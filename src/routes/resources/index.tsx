@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useState, useEffect, useRef, memo } from "react";
 import Masonry from "masonry-layout";
 import Styled from "./styled";
@@ -7,7 +8,6 @@ import Search from "./Search";
 import Filter from "./Filter";
 import FileBox from "../../common/component/FileBox";
 import { useAppSelector } from "../../app/store";
-
 const checkFilter = (data, filter, channelMessage) => {
   let selected = true;
   const { mid, file_type, created_at, from_uid, properties } = data;
@@ -35,9 +35,9 @@ const checkFilter = (data, filter, channelMessage) => {
   return selected;
 };
 
-let msnry: typeof Masonry | null;
+let msnry: Masonry | null;
 function ResourceManagement({ fileMessages }) {
-  const listContainerRef = useRef(null);
+  const listContainerRef = useRef<HTMLDivElement>();
   const [filter, setFilter] = useState({});
   const { message, view, channelMessage } = useAppSelector((store) => {
     return {
@@ -62,12 +62,13 @@ function ResourceManagement({ fileMessages }) {
   useEffect(() => {
     if (view == Views.grid && listContainerRef) {
       const container = listContainerRef.current;
+      if (!container) return;
       const cWidth = container.getBoundingClientRect().width - 16 * 2;
       const count = Math.floor(cWidth / 368);
       const leftWidth = cWidth % 368;
       const gutter = Math.max(Math.floor(leftWidth / (count - 1)), 8);
       console.log("gutter", gutter, cWidth, count, leftWidth);
-      msnry = new Masonry(listContainerRef.current, {
+      msnry = new Masonry(container, {
         // options
         fitWidth: true,
         gutter,
@@ -79,11 +80,6 @@ function ResourceManagement({ fileMessages }) {
         msnry.destroy();
       }
     }
-    // return ()=>{
-    //   if(msnry){
-    //     msnry.destory()
-    //   }
-    // }
   }, [view, filter]);
 
   return (

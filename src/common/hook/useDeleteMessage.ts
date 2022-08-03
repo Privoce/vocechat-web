@@ -23,7 +23,7 @@ export default function useDeleteMessage() {
     }
     setDeleting(false);
   };
-  const canDelete = (mids = []) => {
+  const canDelete = (mids?: number[]) => {
     if (!mids || mids.length == 0) return false;
     // 管理员
     if (loginUser?.is_admin) return true;

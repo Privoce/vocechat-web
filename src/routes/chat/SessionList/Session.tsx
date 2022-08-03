@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useState, useEffect, FC } from "react";
 import dayjs from "dayjs";
 import { useDrop } from "react-dnd";

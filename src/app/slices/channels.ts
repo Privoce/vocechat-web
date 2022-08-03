@@ -9,7 +9,7 @@ interface StoredChannel extends Channel {
 
 interface State {
   ids: number[];
-  byId: { [id: number]: StoredChannel | undefined };
+  byId: { [id: number]: StoredChannel };
 }
 
 const initialState: State = {

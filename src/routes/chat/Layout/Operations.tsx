@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 import styled from "styled-components";
 import { useKey } from "rooks";
 import toast from "react-hot-toast";
@@ -16,7 +16,6 @@ import { useAppDispatch, useAppSelector } from "../../../app/store";
 const Styled = styled.div`
   position: relative;
   padding: 16px;
-  /* padding-bottom: 0; */
   display: flex;
   gap: 32px;
   align-items: center;
@@ -41,8 +40,11 @@ const Styled = styled.div`
     transform: translateY(-50%);
   }
 `;
-
-export default function Operations({ context, id }) {
+type Props = {
+  context: "user" | "channel";
+  id: number;
+};
+const Operations: FC<Props> = ({ context, id }) => {
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const { canDelete } = useDeleteMessage();
   const { addFavorite } = useFavMessage({});
@@ -103,4 +105,5 @@ export default function Operations({ context, id }) {
       )}
     </>
   );
-}
+};
+export default Operations;

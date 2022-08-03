@@ -137,13 +137,14 @@ const MessageWrapper = ({ selectMode = false, context, id, mid, children, ...res
     <StyledWrapper className={selectMode ? "select" : ""} {...rest}>
       <Checkbox className="check" checked={selected} />
       {children}
-      {selectMode && <div className="overlay" onClick={selectMode ? toggleSelect : null}></div>}
+      {selectMode && (
+        <div className="overlay" onClick={selectMode ? toggleSelect : undefined}></div>
+      )}
     </StyledWrapper>
   );
 };
 type Params = {
   selectMode: boolean;
-  isFirst: boolean;
   read: boolean;
   updateReadIndex: (param: any) => void;
   prev: object | null;
@@ -153,14 +154,13 @@ type Params = {
 };
 export const renderMessageFragment = ({
   selectMode = false,
-  isFirst = false,
   read = true,
   updateReadIndex,
   prev = null,
   curr = null,
   contextId = 0,
   context = "user"
-}: Partial<Params>) => {
+}: Params) => {
   if (!curr) return null;
   let { created_at, mid } = curr;
   const local_id = curr.properties?.local_id;
@@ -189,7 +189,6 @@ export const renderMessageFragment = ({
       >
         <Message
           readOnly={selectMode}
-          isFirst={isFirst}
           updateReadIndex={updateReadIndex}
           read={read}
           context={context}

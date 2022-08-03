@@ -6,8 +6,8 @@ export interface State {
   afterMid: number;
   readUsers: { [uid: number]: number };
   readChannels: { [gid: number]: number };
-  muteUsers: { [uid: number]: { expired_in: number } | undefined };
-  muteChannels: { [gid: number]: { expired_in: number } | undefined };
+  muteUsers: { [uid: number]: { expired_in?: number } | undefined };
+  muteChannels: { [gid: number]: { expired_in?: number } | undefined };
 }
 
 const initialState: State = {

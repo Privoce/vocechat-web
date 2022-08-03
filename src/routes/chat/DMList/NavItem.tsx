@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useEffect, useState, FC } from "react";
 import { NavLink, useNavigate, useMatch } from "react-router-dom";
 import { useDrop } from "react-dnd";
@@ -20,7 +21,7 @@ interface IProps {
   uid: number;
   mid?: number;
   unreads: number;
-  setFiles: () => void;
+  setFiles: (files: File[]) => void;
 }
 const NavItem: FC<IProps> = ({ uid, mid = 0, unreads, setFiles }) => {
   const [previewMsg, setPreviewMsg] = useState<ArchiveMessage>();

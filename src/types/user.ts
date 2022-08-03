@@ -2,7 +2,7 @@ export type Gender = 0 | 1;
 
 export interface User {
   uid: number;
-  email?: string;
+  email: string;
   name: string;
   gender: Gender;
   language: string;

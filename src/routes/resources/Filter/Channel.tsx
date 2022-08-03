@@ -1,3 +1,4 @@
+import { FC } from "react";
 import styled from "styled-components";
 import CheckSign from "../../../assets/icons/check.sign.svg";
 import ChannelIcon from "../../../common/component/ChannelIcon";
@@ -51,10 +52,13 @@ const Styled = styled.div`
     }
   }
 `;
-
-export default function Channel({ select = "", updateFilter }) {
+type Props = {
+  select: number;
+  updateFilter: (param: { channel?: number }) => void;
+};
+const Channel: FC<Props> = ({ select = 0, updateFilter }) => {
   const { input, updateInput, channels } = useFilteredChannels();
-  const handleClick = (gid) => {
+  const handleClick = (gid?: number) => {
     updateFilter({ channel: gid });
   };
 
@@ -81,4 +85,5 @@ export default function Channel({ select = "", updateFilter }) {
       </ul>
     </Styled>
   );
-}
+};
+export default Channel;

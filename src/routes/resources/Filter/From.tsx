@@ -1,3 +1,4 @@
+import { FC } from "react";
 import styled from "styled-components";
 import Search from "../Search";
 import CheckSign from "../../../assets/icons/check.sign.svg";
@@ -47,10 +48,13 @@ const Styled = styled.div`
     }
   }
 `;
-
-export default function From({ select = "", updateFilter }) {
+type Props = {
+  select: number;
+  updateFilter: (param: { from?: number }) => void;
+};
+const From: FC<Props> = ({ select = "", updateFilter }) => {
   const { input, updateInput, users } = useFilteredUsers();
-  const handleClick = (uid) => {
+  const handleClick = (uid?: number) => {
     updateFilter({ from: uid });
   };
 
@@ -75,4 +79,5 @@ export default function From({ select = "", updateFilter }) {
       </ul>
     </Styled>
   );
-}
+};
+export default From;

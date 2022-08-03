@@ -33,14 +33,14 @@ const Styled = styled.div`
   }
 `;
 
-interface Props {
+type Props = {
   uploading: boolean;
   progress: number;
   thumbnail: string;
   download: string;
   content: string;
   properties: { width: number; height: number };
-}
+};
 
 const ImageMessage: FC<Props> = ({
   uploading,

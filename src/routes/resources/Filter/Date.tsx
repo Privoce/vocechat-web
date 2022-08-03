@@ -1,3 +1,4 @@
+import { FC } from "react";
 import styled from "styled-components";
 import CheckSign from "../../../assets/icons/check.sign.svg";
 
@@ -5,7 +6,6 @@ const Styled = styled.div`
   padding: 12px;
   background: #ffffff;
   min-width: 200px;
-  /* max-height: 230px; */
   overflow: auto;
   box-shadow: 0px 24px 48px -12px rgba(16, 24, 40, 0.18);
   border-radius: 8px;
@@ -56,9 +56,12 @@ export const Dates = {
     title: "Last 12 months"
   }
 };
-
-export default function Date({ select = "", updateFilter }) {
-  const handleClick = (dur) => {
+type Props = {
+  select: number;
+  updateFilter: (param: { date?: string }) => void;
+};
+const DateFilter: FC<Props> = ({ select = "", updateFilter }) => {
+  const handleClick = (dur?: string) => {
     updateFilter({ date: dur });
   };
 
@@ -80,4 +83,5 @@ export default function Date({ select = "", updateFilter }) {
       </ul>
     </Styled>
   );
-}
+};
+export default DateFilter;

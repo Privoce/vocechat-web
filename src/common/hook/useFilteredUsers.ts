@@ -5,7 +5,7 @@ import { useAppSelector } from "../../app/store";
 export default function useFilteredUsers() {
   const [input, setInput] = useState("");
   const users = useAppSelector((store) => Object.values(store.users.byId));
-  const [filteredUsers, setFilteredUsers] = useState<(StoredUser | undefined)[]>([]);
+  const [filteredUsers, setFilteredUsers] = useState<StoredUser[]>([]);
   useEffect(() => {
     if (!input) {
       setFilteredUsers(users);

@@ -7,6 +7,7 @@ import IconDoc from "../../../assets/icons/file.doc.svg";
 import IconCode from "../../../assets/icons/file.code.svg";
 import IconImage from "../../../assets/icons/file.image.svg";
 import CheckSign from "../../../assets/icons/check.sign.svg";
+import { FC } from "react";
 
 const Styled = styled.div`
   padding: 12px;
@@ -77,8 +78,12 @@ export const FileTypes = {
     icon: <IconUnknown className="icon" />
   }
 };
-export default function Type({ select = "", updateFilter }) {
-  const handleClick = (type) => {
+type Props = {
+  select: number;
+  updateFilter: (param: { type?: string }) => void;
+};
+const Type: FC<Props> = ({ select = "", updateFilter }) => {
+  const handleClick = (type?: string) => {
     updateFilter({ type });
   };
   return (
@@ -99,4 +104,5 @@ export default function Type({ select = "", updateFilter }) {
       </ul>
     </Styled>
   );
-}
+};
+export default Type;

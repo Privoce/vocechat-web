@@ -5,7 +5,7 @@ import { Channel } from "../../types/channel";
 export default function useFilteredChannels() {
   const [input, setInput] = useState("");
   const channels = useAppSelector((store) => Object.values(store.channels.byId));
-  const [filteredChannels, setFilteredChannels] = useState<(Channel | undefined)[]>([]);
+  const [filteredChannels, setFilteredChannels] = useState<Channel[]>([]);
 
   useEffect(() => {
     if (!input) {

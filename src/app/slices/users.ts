@@ -11,7 +11,7 @@ export interface StoredUser extends User {
 
 export interface State {
   ids: number[];
-  byId: { [id: number]: StoredUser | undefined };
+  byId: { [id: number]: StoredUser };
 }
 
 const initialState: State = {

@@ -16,7 +16,7 @@ export interface State {
       type: string;
     }[];
   };
-  selectMessages: { [key: string]: any };
+  selectMessages: { [key: string]: number[] };
   draftMarkdown: { [key: string]: any };
   draftMixedText: { [key: string]: any };
   rememberedNavs: {

@@ -20,7 +20,7 @@ export const isTreatAsImage = (file: File) => {
   return false;
 };
 
-export function getDefaultSize(size = null, min = 480) {
+export function getDefaultSize(size?: { width: number; height: number }, min = 480) {
   if (!size) return { width: 0, height: 0 };
   const { width: oWidth, height: oHeight } = size;
   if (oWidth == oHeight) {
