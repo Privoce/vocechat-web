@@ -123,7 +123,7 @@ const Session: FC<IProps> = ({
           </div>
           <div className="details">
             <div className="up">
-              <span className="name">
+              <span className={`name ${previewMsg.created_at ? "" : "only_title"}`}>
                 {name} {!is_public && <IconLock />}
               </span>
               <span className="time">

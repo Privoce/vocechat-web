@@ -50,6 +50,9 @@ const Styled = styled.ul`
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            &.only_title {
+              max-width: 190px;
+            }
           }
           .time {
             font-weight: 500;

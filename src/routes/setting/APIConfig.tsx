@@ -4,11 +4,14 @@ import Tippy from "@tippyjs/react";
 import toast from "react-hot-toast";
 import { hideAll } from "tippy.js";
 import Input from "../../common/component/styled/Input";
+import Toggle from "../../common/component/styled/Toggle";
 import Button from "../../common/component/styled/Button";
 import {
   useGetThirdPartySecretQuery,
   useUpdateThirdPartySecretMutation
 } from "../../app/services/server";
+import useConfig from "../../common/hook/useConfig";
+import { LoginConfig } from "../../types/server";
 
 const StyledConfirm = styled.div`
   padding: 12px;
@@ -58,6 +61,7 @@ const Styled = styled.div`
 `;
 
 export default function APIConfig() {
+  const { updateConfig, values } = useConfig("login");
   const { data } = useGetThirdPartySecretQuery();
   const [updateSecret, { data: updatedSecret, isSuccess, isLoading }] =
     useUpdateThirdPartySecretMutation();
@@ -68,12 +72,19 @@ export default function APIConfig() {
       toast.success("Update API Secret Successfully!");
     }
   }, [isSuccess]);
-
+  const handleToggle = (val: { third_party: boolean }) => {
+    updateConfig({ ...values, ...val });
+  };
+  const thirdParty = (values as LoginConfig)?.third_party;
   return (
     <Styled>
+      <Toggle
+        onClick={handleToggle.bind(null, { third_party: !thirdParty })}
+        data-checked={thirdParty}
+      />
       <div className="input">
         <label htmlFor="secret">API Secure Key:</label>
-        <Input type="password" id="secret" value={updatedSecret || data} />
+        <Input disabled={!thirdParty} type="password" id="secret" value={updatedSecret || data} />
       </div>
       <Tippy
         interactive
@@ -95,7 +106,7 @@ export default function APIConfig() {
           </StyledConfirm>
         }
       >
-        <Button>Update Secret</Button>
+        <Button disabled={!thirdParty}>Update Secret</Button>
       </Tippy>
       <div className="tip">
         Tip: The security key agreed between the server and the third-party app is used to encrypt
