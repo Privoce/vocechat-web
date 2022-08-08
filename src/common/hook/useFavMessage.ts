@@ -21,7 +21,8 @@ export default function useFavMessage({
     const mids = Array.isArray(mid) ? mid.map((i) => +i) : [+mid];
     if (mids.length == 0) return;
     const resp = await addFav(mids);
-    return "error" in resp;
+    const hasError = "error" in resp;
+    return !hasError;
   };
 
   const removeFavorite = (id: string) => {

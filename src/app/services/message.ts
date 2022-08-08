@@ -102,7 +102,7 @@ export const messageApi = createApi({
         }
       }
     }),
-    removeFavorite: builder.query<void, number>({
+    removeFavorite: builder.query<void, string>({
       query: (id) => ({
         url: `/favorite/${id}`,
         method: "DELETE"
