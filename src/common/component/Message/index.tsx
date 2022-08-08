@@ -100,7 +100,7 @@ const Message: FC<IProps> = ({
         interactive
         placement="right"
         trigger="click"
-        content={<Profile uid={fromUid || 0} type="card" cid={contextId} />}
+        content={<Profile uid={fromUid || 0} type="card" cid={context == "user" ? 0 : contextId} />}
       >
         <div className="avatar" data-uid={fromUid} ref={avatarRef}>
           <Avatar url={currUser?.avatar} name={currUser?.name} />
