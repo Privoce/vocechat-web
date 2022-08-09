@@ -1,18 +1,21 @@
-import { useEffect } from "react";
+import { useEffect, memo } from "react";
 import { useNavigate } from "react-router-dom";
 import useDeviceToken from "./useDeviceToken";
 import { vapidKey } from "../../../app/config";
 import { useUpdateDeviceTokenMutation } from "../../../app/services/auth";
-
+let updated = false;
 const Notification = () => {
   const navigateTo = useNavigate();
   const token = useDeviceToken(vapidKey);
-  const [updateDeviceToken] = useUpdateDeviceTokenMutation();
+  const [updateDeviceToken, { isSuccess }] = useUpdateDeviceTokenMutation();
   useEffect(() => {
-    if (token) {
+    if (token && !updated) {
       updateDeviceToken(token);
     }
   }, [token]);
+  useEffect(() => {
+    updated = isSuccess;
+  }, [isSuccess]);
 
   useEffect(() => {
     const handleServiceworkerMessage = (event: MessageEvent) => {
@@ -29,4 +32,4 @@ const Notification = () => {
   return null;
 };
 
-export default Notification;
+export default memo(Notification);
