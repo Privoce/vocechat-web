@@ -41,7 +41,6 @@ export default function HomePage() {
   if (isSettingPage) {
     return (
       <>
-        <Notification />
         <Outlet />
       </>
     );
