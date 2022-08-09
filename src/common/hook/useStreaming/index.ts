@@ -62,7 +62,7 @@ export default function useStreaming() {
     } = store.getState();
     let api_token = token;
     const tokenAlmostExpire = dayjs().isAfter(new Date(expireTime - 20 * 1000));
-    if (tokenAlmostExpire) {
+    if (tokenAlmostExpire && refreshToken && token) {
       const resp = await renewToken({
         token,
         refresh_token: refreshToken
