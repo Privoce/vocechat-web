@@ -11,7 +11,9 @@ import Toolbar from "./Toolbar";
 import EmojiPicker from "./EmojiPicker";
 
 import MarkdownEditor from "../MarkdownEditor";
-import MixedInput, { useMixedEditor } from "../MixedInput";
+// import MixedInput, { useMixedEditor } from "../MixedInput";
+import Editor from "../Editor";
+
 import useDraft from "../../hook/useDraft";
 import useUploadFile from "../../hook/useUploadFile";
 import { useAppDispatch, useAppSelector } from "../../../app/store";
@@ -31,7 +33,7 @@ const Send: FC<IProps> = ({
 }) => {
   const { resetStageFiles } = useUploadFile({ context, id });
   const { getDraft, getUpdateDraft } = useDraft({ context, id });
-  const editor = useMixedEditor(`${context}_${id}`);
+  // const editor = useMixedEditor(`${context}_${id}`);
   const [markdownEditor, setMarkdownEditor] = useState(null);
   const [markdownFullscreen, setMarkdownFullscreen] = useState(false);
   const dispatch = useAppDispatch();
@@ -58,11 +60,11 @@ const Send: FC<IProps> = ({
   });
   const { sendMessage } = useSendMessage({ context, from: from_uid, to: id });
 
-  useEffect(() => {
-    if (replying_mid) {
-      editor.focus();
-    }
-  }, [replying_mid]);
+  // useEffect(() => {
+  //   if (replying_mid) {
+  //     editor.focus();
+  //   }
+  // }, [replying_mid]);
 
   const insertEmoji = (emoji: string) => {
     if (mode == Modes.markdown && markdownEditor) {
@@ -70,7 +72,7 @@ const Send: FC<IProps> = ({
       markdownEditor.insertText(emoji);
     } else {
       console.log("emojii", emoji);
-      editor.insertText(emoji);
+      // editor.insertText(emoji);
     }
   };
   const handleSendMessage = async (msgs = []) => {
@@ -147,14 +149,15 @@ const Send: FC<IProps> = ({
       <div className={`send_box ${mode}`}>
         <EmojiPicker selectEmoji={insertEmoji} />
         {mode == Modes.text && (
-          <MixedInput
-            updateDraft={getUpdateDraft()}
-            initialValue={getDraft()}
-            members={members}
-            id={`${context}_${id}`}
-            placeholder={placeholder}
-            sendMessages={handleSendMessage}
-          />
+          <Editor autofocus html="<p>wtf</p>" />
+          // <MixedInput
+          //   updateDraft={getUpdateDraft()}
+          //   initialValue={getDraft()}
+          //   members={members}
+          //   id={`${context}_${id}`}
+          //   placeholder={placeholder}
+          //   sendMessages={handleSendMessage}
+          // />
         )}
         <Toolbar
           context={context}

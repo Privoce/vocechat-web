@@ -11,6 +11,7 @@ const useDeviceToken = (vapidKey: string) => {
     const messaging = getMessaging(initializeApp(firebaseConfig));
     if (requesting || error) return;
     requesting = true;
+    // https://github.com/firebase/firebase-js-sdk/issues/5081
     getToken(messaging, {
       vapidKey
     })
