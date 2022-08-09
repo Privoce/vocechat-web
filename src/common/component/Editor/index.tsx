@@ -2,6 +2,7 @@ import React, { FC, useEffect, useRef, useState } from "react";
 import { EditorView } from "prosemirror-view";
 import { EditorState, Selection } from "prosemirror-state";
 import { DOMParser, DOMSerializer, Node } from "prosemirror-model";
+import "./editor.css";
 import Toolbar from "./toolbar";
 import AutocompleteContainer from "./plugin/autocomplete/container";
 import schema from "./schema";
