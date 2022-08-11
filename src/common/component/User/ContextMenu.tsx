@@ -1,7 +1,7 @@
 import { FC, ReactElement } from "react";
 import Tippy from "@tippyjs/react";
 import useUserOperation from "../../hook/useUserOperation";
-import ContextMenu from "../ContextMenu";
+import ContextMenu, { Item } from "../ContextMenu";
 
 interface Props {
   enable?: boolean;
@@ -40,30 +40,32 @@ const UserContextMenu: FC<Props> = ({ enable = false, uid, cid, visible, hide, c
       content={
         <ContextMenu
           hideMenu={hide}
-          items={[
-            {
-              title: "Message",
-              handler: startChat
-            },
-            canCall && {
-              title: "Call",
-              handler: call
-            },
-            canCopyEmail && {
-              title: "Copy Email",
-              handler: copyEmail
-            },
-            canRemoveFromChannel && {
-              danger: true,
-              title: "Remove From Channel",
-              handler: removeFromChannel
-            },
-            canRemove && {
-              danger: true,
-              title: "Remove",
-              handler: removeUser
-            }
-          ]}
+          items={
+            [
+              {
+                title: "Message",
+                handler: startChat
+              },
+              canCall && {
+                title: "Call",
+                handler: call
+              },
+              canCopyEmail && {
+                title: "Copy Email",
+                handler: copyEmail
+              },
+              canRemoveFromChannel && {
+                danger: true,
+                title: "Remove From Channel",
+                handler: removeFromChannel
+              },
+              canRemove && {
+                danger: true,
+                title: "Remove",
+                handler: removeUser
+              }
+            ].filter(Boolean) as Item[]
+          }
         />
       }
     >

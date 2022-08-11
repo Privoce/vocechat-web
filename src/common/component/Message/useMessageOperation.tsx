@@ -71,7 +71,7 @@ export default function useMessageOperation({ mid, context, contextId }: Params)
   // const enableReply = currUid != from_uid;
   const isImage =
     content_type == ContentTypes.file &&
-    properties?.content_type &&
+    !!properties?.content_type &&
     properties?.content_type.startsWith("image");
   const enableEdit =
     currUid == from_uid && [ContentTypes.text, ContentTypes.markdown].includes(content_type);
