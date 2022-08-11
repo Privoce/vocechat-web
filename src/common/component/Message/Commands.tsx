@@ -5,7 +5,7 @@ import Tippy from "@tippyjs/react";
 import { hideAll } from "tippy.js";
 import toast from "react-hot-toast";
 import { updateSelectMessages } from "../../../app/slices/ui";
-import ContextMenu from "../ContextMenu";
+import ContextMenu, { Item } from "../ContextMenu";
 import Tooltip from "../Tooltip";
 import useFavMessage from "../../hook/useFavMessage";
 import useSendMessage from "../../hook/useSendMessage";
@@ -166,30 +166,31 @@ const Commands: FC<Props> = ({ context = "user", contextId = 0, mid = 0, toggleE
           trigger="click"
           content={
             <ContextMenu
-              items={[
-                canPin && {
-                  title: pinned ? `Unpin Message` : `Pin Message`,
-                  icon: <IconPin className="icon" />,
-                  handler: pinned ? handleUnpin : togglePinModal
-                },
-                {
-                  title: "Forward",
-                  icon: <IconForward className="icon" />,
-                  handler: toggleForwardModal
-                },
-                {
-                  title: "Select",
-                  icon: <IconSelect className="icon" />,
-                  handler: handleSelect.bind(null, mid)
-                },
-
-                canDelete && {
-                  title: " Delete",
-                  danger: true,
-                  icon: <IconDelete className="icon" />,
-                  handler: toggleDeleteModal
-                }
-              ]}
+              items={
+                [
+                  canPin && {
+                    title: pinned ? `Unpin Message` : `Pin Message`,
+                    icon: <IconPin className="icon" />,
+                    handler: pinned ? handleUnpin : togglePinModal
+                  },
+                  {
+                    title: "Forward",
+                    icon: <IconForward className="icon" />,
+                    handler: toggleForwardModal
+                  },
+                  {
+                    title: "Select",
+                    icon: <IconSelect className="icon" />,
+                    handler: handleSelect.bind(null, mid)
+                  },
+                  canDelete && {
+                    title: " Delete",
+                    danger: true,
+                    icon: <IconDelete className="icon" />,
+                    handler: toggleDeleteModal
+                  }
+                ].filter(Boolean) as Item[]
+              }
             />
           }
         >

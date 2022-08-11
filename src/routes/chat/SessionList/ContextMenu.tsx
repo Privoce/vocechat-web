@@ -5,7 +5,7 @@ import { useNavigate, useLocation, useMatch } from "react-router-dom";
 import { useUpdateMuteSettingMutation } from "../../../app/services/user";
 import { useReadMessageMutation } from "../../../app/services/message";
 import { removeUserSession } from "../../../app/slices/message.user";
-import ContextMenu from "../../../common/component/ContextMenu";
+import ContextMenu, { Item } from "../../../common/component/ContextMenu";
 import useUserOperation from "../../../common/hook/useUserOperation";
 import { useAppSelector } from "../../../app/store";
 type Props = {
@@ -119,7 +119,7 @@ const SessionContextMenu: FC<Props> = ({
       followCursor={"initial"}
       visible={visible}
       onClickOutside={hide}
-      content={<ContextMenu hideMenu={hide} items={items} />}
+      content={<ContextMenu hideMenu={hide} items={items.filter(Boolean) as Item[]} />}
     >
       {children}
     </Tippy>

@@ -10,7 +10,7 @@ export interface Item {
 }
 
 interface Props {
-  items: (Item | boolean | undefined)[];
+  items: Item[];
   hideMenu?: () => void;
 }
 
@@ -18,7 +18,7 @@ const ContextMenu: FC<Props> = ({ items = [], hideMenu = null }) => {
   return (
     <StyledMenu>
       {items.map((item) => {
-        if (typeof item === "boolean" || !item) return null;
+        // if (!item) return null;
         const {
           title,
           icon = null,
