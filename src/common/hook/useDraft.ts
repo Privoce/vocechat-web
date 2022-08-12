@@ -1,7 +1,7 @@
 import { updateDraftMarkdown, updateDraftMixedText } from "../../app/slices/ui";
 import { useAppDispatch, useAppSelector } from "../../app/store";
 
-export default function useDraft({ context = "", id = "" }) {
+const useDraft = ({ context = "user", id = 0 }: { context: "user" | "channel"; id: number }) => {
   const dispatch = useAppDispatch();
   const _key = `${context}_${id}`;
   const { draftMarkdown, draftMixedText } = useAppSelector((store) => {
@@ -23,4 +23,5 @@ export default function useDraft({ context = "", id = "" }) {
   };
 
   return { getDraft, getUpdateDraft };
-}
+};
+export default useDraft;
