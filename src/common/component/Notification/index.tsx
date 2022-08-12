@@ -7,12 +7,21 @@ let updated = false;
 const Notification = () => {
   const navigateTo = useNavigate();
   const token = useDeviceToken(vapidKey);
-  const [updateDeviceToken, { isSuccess }] = useUpdateDeviceTokenMutation();
+  const [updateDeviceToken, { isLoading, isSuccess }] = useUpdateDeviceTokenMutation();
   useEffect(() => {
-    if (token && !updated) {
-      updateDeviceToken(token);
+    if (token && !isLoading && !updated) {
+      updateDeviceToken(token)
+        .then(() => {
+          updated = true;
+        })
+        .catch(() => {
+          updated = true;
+        })
+        .finally(() => {
+          updated = true;
+        });
     }
-  }, [token]);
+  }, [token, isLoading]);
   useEffect(() => {
     updated = isSuccess;
   }, [isSuccess]);
