@@ -48,12 +48,11 @@ const Plugins: FC<Props> = ({
   members = []
 }) => {
   // const { getMenuProps, getItemProps } = useComboboxControls();
-  const [context, to] = id.split("_");
-  const { addStageFile } = useUploadFile({ context, id: Number(to) });
+  const [context, to] = id.split("_") as [ctx, number];
+  const { addStageFile } = useUploadFile({ context, id: to });
   const enableMentions = members.length > 0;
   const userData = useAppSelector((store) => store.users.byId);
   const [msgs, setMsgs] = useState([]);
-  const [cmdKey, setCmdKey] = useState(false);
   const editableRef = useRef(null);
   const initialProps = {
     ...CONFIG.editableProps,
@@ -67,13 +66,10 @@ const Plugins: FC<Props> = ({
       if (files.length) {
         const filesData = files.map((file) => {
           const { size, type, name } = file;
-          console.log("paste event name", name);
+          // console.log("paste event name", name);
           const url = URL.createObjectURL(file);
           return { size, type, name, url };
         });
-        const [context, to] = id.split("_");
-
-        console.log("paste event", context, to, files, evt);
         addStageFile(filesData);
       }
     };
@@ -90,9 +86,11 @@ const Plugins: FC<Props> = ({
   useKey(
     "Enter",
     (evt) => {
+      // console.log("tttt", plateEditor);
       if (!plateEditor) return;
       // 是否在at操作
       const mentionInputs = findMentionInput(plateEditor);
+      // console.log("tttt", mentionInputs, evt);
       if (mentionInputs || evt.shiftKey || evt.ctrlKey || evt.altKey || evt.isComposing) {
         return true;
       }
@@ -108,18 +106,6 @@ const Plugins: FC<Props> = ({
       });
     },
     {
-      target: editableRef,
-      when: !cmdKey
-    }
-  );
-  useKey(
-    [91, 93],
-    (evt) => {
-      setCmdKey(evt.type == "keydown");
-      console.log("cmd", evt.type);
-    },
-    {
-      eventTypes: ["keydown", "keyup"],
       target: editableRef
     }
   );
@@ -137,7 +123,7 @@ const Plugins: FC<Props> = ({
           createMentionPlugin({
             options: {
               createMentionNode: (item) => {
-                console.log("mention", item);
+                // console.log("mention", item);
                 const {
                   text,
                   data: { uid }
@@ -200,7 +186,7 @@ const Plugins: FC<Props> = ({
       });
       const msgs = arr.filter(({ content }) => !!content);
       setMsgs(msgs);
-      console.log("tmps", tmps, arr, msgs);
+      // console.log("tmps", tmps, arr, msgs);
     },
     [msgs]
   );
@@ -251,7 +237,7 @@ export const useMixedEditor = (key: string) => {
     }
   };
   const insertText = (txt: string) => {
-    console.log("eref", editorRef);
+    // console.log("eref", editorRef);
     if (editorRef) {
       ReactEditor.focus(editorRef);
       editorRef.insertText(txt);
