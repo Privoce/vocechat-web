@@ -40,7 +40,6 @@ export default function UsersPage() {
             })}
           </nav>
         </div>
-        {/* <CurrentUser /> */}
       </div>
       {user_id ? (
         <div className="right">

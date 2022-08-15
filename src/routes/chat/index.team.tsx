@@ -81,7 +81,6 @@ export default function ChatPage() {
               />
             </nav>
           </div>
-          {/* <CurrentUser /> */}
         </div>
         <div className={`right ${placeholderVisible ? "placeholder" : ""}`}>
           {placeholderVisible && <BlankPlaceholder />}

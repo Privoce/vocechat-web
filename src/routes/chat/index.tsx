@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 import StyledWrapper from "./styled";
 import BlankPlaceholder from "../../common/component/BlankPlaceholder";
 import Server from "../../common/component/Server";
-import CurrentUser from "../../common/component/CurrentUser";
 import ChannelChat from "./ChannelChat";
 import DMChat from "./DMChat";
 import UsersModal from "../../common/component/UsersModal";
@@ -48,7 +47,6 @@ export default function ChatPage() {
         <div className="left">
           <Server />
           <SessionList tempSession={tmpSession} />
-          <CurrentUser />
         </div>
         <div className={`right ${placeholderVisible ? "placeholder" : ""}`}>
           {placeholderVisible && <BlankPlaceholder />}
