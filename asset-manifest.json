@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.24ab0c86.css",
-    "main.js": "/static/js/main.7814d9cb.js",
+    "main.js": "/static/js/main.a7e308ae.js",
     "static/js/964.2623f16c.chunk.js": "/static/js/964.2623f16c.chunk.js",
     "static/js/300.842b5b70.chunk.js": "/static/js/300.842b5b70.chunk.js",
     "static/js/85.e7fa56f3.chunk.js": "/static/js/85.e7fa56f3.chunk.js",
@@ -13,9 +13,9 @@
     "static/css/954.9779d5d1.chunk.css": "/static/css/954.9779d5d1.chunk.css",
     "static/js/954.a3567d0a.chunk.js": "/static/js/954.a3567d0a.chunk.js",
     "static/js/728.20515e88.chunk.js": "/static/js/728.20515e88.chunk.js",
-    "static/js/55.c2007440.chunk.js": "/static/js/55.c2007440.chunk.js",
+    "static/js/55.70c6137c.chunk.js": "/static/js/55.70c6137c.chunk.js",
     "static/css/802.298f31c6.chunk.css": "/static/css/802.298f31c6.chunk.css",
-    "static/js/802.ad5d7b60.chunk.js": "/static/js/802.ad5d7b60.chunk.js",
+    "static/js/802.583e4cb1.chunk.js": "/static/js/802.583e4cb1.chunk.js",
     "static/js/888.1e909142.chunk.js": "/static/js/888.1e909142.chunk.js",
     "static/js/249.e8c26a2a.chunk.js": "/static/js/249.e8c26a2a.chunk.js",
     "static/js/952.f83d1bfd.chunk.js": "/static/js/952.f83d1bfd.chunk.js",
@@ -28,10 +28,8 @@
     "static/media/setting.svg?url": "/static/media/setting.3cfa5bc4fac01d78f3a0.svg",
     "static/media/picture.svg?url": "/static/media/picture.57a395fb7f41e8e3c5d1.svg",
     "static/media/upload.image.svg?url": "/static/media/upload.image.9f8c7fc90042d2ff4eb7.svg",
-    "static/media/sound.on.svg?url": "/static/media/sound.on.b52a5b656fded2ead800.svg",
     "static/media/add.emoji.svg?url": "/static/media/add.emoji.b1d5ed1b1206ddc32d02.svg",
     "static/media/reaction.svg?url": "/static/media/reaction.dfc99cbb32dd13e55782.svg",
-    "static/media/mic.on.svg?url": "/static/media/mic.on.ce4d7bc6e790710d7c3b.svg",
     "static/media/reply.svg?url": "/static/media/reply.5d4e2e3c5d8cf0c084f0.svg",
     "static/media/search.svg?url": "/static/media/search.6ee4d07d418f350e5389.svg",
     "static/media/edit.svg?url": "/static/media/edit.8c029902e162a2073edd.svg",
@@ -44,6 +42,6 @@
   },
   "entrypoints": [
     "static/css/main.24ab0c86.css",
-    "static/js/main.7814d9cb.js"
+    "static/js/main.a7e308ae.js"
   ]
 }
