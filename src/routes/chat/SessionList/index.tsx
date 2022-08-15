@@ -13,7 +13,7 @@ export interface ChatSession {
   unread?: number;
 }
 type Props = {
-  tempSession: ChatSession;
+  tempSession?: ChatSession;
 };
 const SessionList: FC<Props> = ({ tempSession }) => {
   const [deleteId, setDeleteId] = useState<number>();
