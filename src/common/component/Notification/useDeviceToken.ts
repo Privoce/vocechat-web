@@ -5,7 +5,7 @@ import { firebaseConfig } from "../../../app/config";
 let requesting = false;
 let error = false;
 const useDeviceToken = (vapidKey: string) => {
-  const [token, setToken] = useState<string | null>(null);
+  const [token, setToken] = useState<string>("");
   // https only
   if (navigator.serviceWorker) {
     const messaging = getMessaging(initializeApp(firebaseConfig));
@@ -32,7 +32,7 @@ const useDeviceToken = (vapidKey: string) => {
         console.log("An error occurred while retrieving token. ", err);
       });
   }
-  return token;
+  return token as string;
 };
 
 export default useDeviceToken;

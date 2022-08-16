@@ -4,27 +4,25 @@ import useDeviceToken from "./useDeviceToken";
 import { vapidKey } from "../../../app/config";
 import { useUpdateDeviceTokenMutation } from "../../../app/services/auth";
 let updated = false;
+let updating = false;
 const Notification = () => {
   const navigateTo = useNavigate();
   const token = useDeviceToken(vapidKey);
-  const [updateDeviceToken, { isLoading, isSuccess }] = useUpdateDeviceTokenMutation();
+  const [updateDeviceToken] = useUpdateDeviceTokenMutation();
   useEffect(() => {
-    if (token && !isLoading && !updated) {
-      updateDeviceToken(token)
-        .then(() => {
-          updated = true;
-        })
-        .catch(() => {
-          updated = true;
-        })
-        .finally(() => {
-          updated = true;
-        });
-    }
-  }, [token, isLoading]);
-  useEffect(() => {
-    updated = isSuccess;
-  }, [isSuccess]);
+    const updateToken = async (token: string) => {
+      if (!token || updating || updated) return;
+      try {
+        updating = true;
+        await updateDeviceToken(token);
+        updated = true;
+      } catch {
+        updating = false;
+        updated = true;
+      }
+    };
+    updateToken(token as string);
+  }, [token]);
 
   useEffect(() => {
     const handleServiceworkerMessage = (event: MessageEvent) => {
