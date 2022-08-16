@@ -4,7 +4,7 @@ const Styled = styled.ul`
   flex-direction: column;
   gap: 2px;
   padding: 8px;
-  height: calc(100vh - 56px - 56px - 16px);
+  height: calc(100vh - 56px - 16px - 8px);
   overflow: auto;
   > .session {
     > a {
