@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import { fetchEventSource, EventStreamContentType } from "@microsoft/fetch-event-source";
 import toast from "react-hot-toast";
-import dayjs from "dayjs";
 import BASE_URL from "../../../app/config";
 import { setReady } from "../../../app/slices/ui";
-import { useRenewMutation } from "../../../app/services/auth";
 import {
   fillChannels,
   addChannel,
@@ -46,7 +44,6 @@ export default function useStreaming() {
     ui: { ready, online },
     footprint: { afterMid, usersVersion, readUsers, readChannels }
   } = useAppSelector((store) => store);
-  const [renewToken] = useRenewMutation();
   const dispatch = useAppDispatch();
   const loginUid = authData.user?.uid || 0;
   let initialized = false;
@@ -58,26 +55,14 @@ export default function useStreaming() {
     if (initialized || initializing) return;
     // 如果token快要过期，先renew
     const {
-      authData: { token = "", expireTime = +new Date(), refreshToken }
+      authData: { token = "" }
     } = store.getState();
-    let api_token = token;
-    const tokenAlmostExpire = dayjs().isAfter(new Date(expireTime - 20 * 1000));
-    if (tokenAlmostExpire && refreshToken && token) {
-      const resp = await renewToken({
-        token,
-        refresh_token: refreshToken
-      });
-      if ("error" in resp) return;
-      if ("data" in resp) {
-        api_token = resp.data.token;
-      }
-    }
 
     // 开始初始化
     initializing = true;
     await fetchEventSource(
       `${BASE_URL}/user/events?${getQueryString({
-        "api-key": api_token,
+        "api-key": token,
         users_version: `${usersVersion}`,
         after_mid: `${afterMid}`
       })}`,

@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import dayjs from "dayjs";
 import initCache, { useRehydrate } from "../../app/cache";
 import { useLazyGetFavoritesQuery } from "../../app/services/message";
 import { useLazyGetUsersQuery } from "../../app/services/user";
@@ -7,8 +8,16 @@ import useStreaming from "../../common/hook/useStreaming";
 import { useAppSelector } from "../../app/store";
 export default function usePreload() {
   const { rehydrate, rehydrated } = useRehydrate();
-  const { loginUid, token } = useAppSelector((store) => {
-    return { loginUid: store.authData.user?.uid, token: store.authData.token };
+  const {
+    loginUid,
+    token,
+    expireTime = +new Date()
+  } = useAppSelector((store) => {
+    return {
+      loginUid: store.authData.user?.uid,
+      token: store.authData.token,
+      expireTime: store.authData.expireTime
+    };
   });
   const { setStreamingReady } = useStreaming();
   const [
@@ -35,13 +44,19 @@ export default function usePreload() {
       setStreamingReady(false);
     };
   }, []);
-  const canStreaming = !!loginUid && rehydrated && !!token;
+
+  useEffect(() => {
+    if (rehydrated) {
+      getUsers();
+      getServer();
+      getFavorites();
+    }
+  }, [rehydrated]);
+  const tokenAlmostExpire = dayjs().isAfter(new Date(expireTime - 20 * 1000));
+  const canStreaming = !!loginUid && rehydrated && !!token && !tokenAlmostExpire;
   console.log("ttt", loginUid, rehydrated, token);
 
   useEffect(() => {
-    getServer();
-    getUsers();
-    getFavorites();
     setStreamingReady(canStreaming);
   }, [canStreaming]);
 
