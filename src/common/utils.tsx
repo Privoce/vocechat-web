@@ -67,12 +67,11 @@ export const getImageSize = (url: string) => {
     };
   });
 };
-export const getInitials = (name: string) => {
+export const getInitials = (name: string, length: number = 4) => {
   const arr = name.split(" ").filter((n) => !!n);
-  return arr
-    .map((t) => t[0])
-    .join("")
-    .toUpperCase();
+  const initialArr = arr.map((t) => [...t][0]);
+  initialArr.length = length;
+  return initialArr.join("").toUpperCase();
 };
 export const getInitialsAvatar = ({
   initials = "UK",
