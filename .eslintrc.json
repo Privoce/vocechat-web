@@ -7,6 +7,7 @@
     "react/react-in-jsx-scope": "off",
     "semi": 2,
     "no-console": "off",
+    "no-control-regex": "off",
     "react/prop-types": 0,
     "react/no-unescaped-entities": "off",
     "no-unused-vars": "off",

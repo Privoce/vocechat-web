@@ -68,7 +68,12 @@ export const getImageSize = (url: string) => {
   });
 };
 export const getInitials = (name: string, length: number = 4) => {
-  const arr = name.split(" ").filter((n) => !!n);
+  const arr = name
+    .split(
+      // eslint-disable-next-line no-misleading-character-class
+      /[\u0009\u000a\u000b\u000c\u000d\u0020\u0085\u00a0\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u200c\u200d\u2028\u2029\u202f\u205f\u2060\u3000\ufeff]/
+    )
+    .filter((n) => !!n);
   const initialArr = arr.map((t) => [...t][0]);
   initialArr.length = length;
   return initialArr.join("").toUpperCase();
