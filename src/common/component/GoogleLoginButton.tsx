@@ -11,23 +11,43 @@ const StyledSocialButton = styled(Button)`
   position: relative;
   width: 100%;
   margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  color: #344054;
+  background: white !important;
   border: 1px solid #d0d5dd;
-  background: none !important;
-  .icon {
-    width: 24px;
-    height: 24px;
+  color: #344054;
+  height: 42px;
+  overflow: hidden;
+  .mask {
+    background: inherit;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    z-index: 998;
+    height: 40px;
+    .icon {
+      width: 24px;
+      height: 24px;
+    }
   }
   .invisible {
-    opacity: 0;
+    /* z-index: 1; */
+    /* opacity: 0; */
+    left: 0;
+    top: 0;
     position: absolute;
     width: 100%;
     iframe {
       width: 100% !important;
+    }
+  }
+  &:hover {
+    .invisible {
+      opacity: 0;
+      z-index: 999;
     }
   }
 `;
@@ -67,8 +87,17 @@ const GoogleLoginInner: FC<Props> = ({ type = "login", loaded, loadError }) => {
 
   return (
     <StyledSocialButton disabled={!loaded || isLoading}>
+      <div className="mask">
+        <IconGoogle className="icon" />
+        {loadError
+          ? "Script Load Error!"
+          : loaded
+          ? `${type === "login" ? "Sign in" : "Sign up"} with Google`
+          : `Initializing`}
+      </div>
       <div className="invisible">
         <GoogleLogin
+          width="360px"
           onSuccess={(res) => {
             login({
               magic_token,
@@ -78,12 +107,6 @@ const GoogleLoginInner: FC<Props> = ({ type = "login", loaded, loadError }) => {
           }}
         />
       </div>
-      <IconGoogle className="icon" />
-      {loadError
-        ? "Script Load Error!"
-        : loaded
-        ? `${type === "login" ? "Sign in" : "Sign up"} with Google`
-        : `Initializing`}
     </StyledSocialButton>
   );
 };
