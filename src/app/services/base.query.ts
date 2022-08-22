@@ -97,6 +97,7 @@ const baseQueryWithTokenCheck = async (args, api, extraOptions) => {
         }
         break;
       case 500:
+      case 503:
         {
           toast.error(result.error.data || "Server Error");
         }

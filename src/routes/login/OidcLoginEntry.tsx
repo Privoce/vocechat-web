@@ -21,9 +21,9 @@ const OidcLoginEntry: FC<{ issuer: OIDCConfig }> = ({ issuer }) => {
   }, [data, isSuccess]);
 
   return (
-    <StyledSocialButton disabled={isLoading} onClick={handleSolidLogin}>
-      {Boolean(issuer.favicon) && <img src={issuer.favicon} className="icon" alt="icon" />}
-      Login with {issuer.domain}
+    <StyledSocialButton disabled={isLoading || isSuccess} onClick={handleSolidLogin}>
+      {!!issuer.favicon && <img src={issuer.favicon} className="icon" alt="icon" />}
+      {isLoading ? `Loading...` : `Login with ${issuer.domain}`}
     </StyledSocialButton>
   );
 };

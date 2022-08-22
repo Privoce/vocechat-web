@@ -31,26 +31,18 @@ export default function LoginPage() {
 
   useEffect(() => {
     const query = new URLSearchParams(location.search);
-    // const githubCode = query.get("gcode");
-    const oauth = query.get("oauth");
     const code = query.get("code");
     const state = query.get("state");
     const magic_token = query.get("magic_token");
     const exists = query.get("exists");
-    if (oauth) {
-      switch (oauth) {
-        case "oidc":
-          if (code && state) {
-            login({
-              code,
-              state,
-              type: "oidc"
-            });
-          }
-          break;
-        default:
-          break;
-      }
+    // oidc
+    const fromOIDC = code && state;
+    if (fromOIDC) {
+      login({
+        code,
+        state,
+        type: "oidc"
+      });
     }
     // magic link
     if (magic_token && typeof exists !== "undefined") {
