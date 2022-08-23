@@ -169,14 +169,14 @@ const Reply: FC<ReplyProps> = ({ mid, interactive = true }) => {
     }
   };
   if (!data) return null;
-  const currUser = users[data.from_uid];
+  const currUser = users[data.from_uid || 0];
   if (!currUser) return null;
   return (
     <Styled
       key={mid}
       data-mid={mid}
       className={`reply ${interactive ? "clickable" : ""}`}
-      onClick={interactive ? handleClick : null}
+      onClick={interactive ? handleClick : undefined}
     >
       <div className="user">
         <Avatar className="avatar" url={currUser.avatar} name={currUser.name} />

@@ -74,7 +74,7 @@ const Message: FC<IProps> = ({
   }, [mid, read]);
 
   const reactions = reactionMessageData[mid];
-  const currUser = usersData[fromUid];
+  const currUser = usersData[fromUid || 0];
   // if (!message) return null;
   let timePrefix = null;
   const dayjsTime = dayjs(time);
@@ -121,7 +121,7 @@ const Message: FC<IProps> = ({
           }`}
         >
           <div className="up">
-            <span className="name">{currUser?.name}</span>
+            <span className="name">{currUser?.name || "Deleted User"}</span>
             <Tooltip
               delay={200}
               disabled={!timePrefix || readOnly}

@@ -66,7 +66,7 @@ const ForwardedMessage: FC<Props> = ({ context, to, from_uid, id }) => {
                   )}
                   <div className="details">
                     <div className="up">
-                      <span className="name">{user?.name}</span>
+                      <span className="name">{user?.name || "Deleted User"}</span>
                     </div>
                     <div className="down">
                       {renderContent({

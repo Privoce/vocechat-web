@@ -9,7 +9,7 @@ interface Props {
   type?: "user" | "channel";
 }
 
-const Avatar: FC<Props> = ({ url = "", name = "unknown name", type = "user", ...rest }) => {
+const Avatar: FC<Props> = ({ url = "", name = "Deleted User", type = "user", ...rest }) => {
   const [src, setSrc] = useState("");
 
   const handleError = (err: SyntheticEvent<HTMLImageElement>) => {
