@@ -2,7 +2,7 @@
   "name": "vocechat-web",
   "version": "0.3.0",
   "private": true,
-  "homepage": "https://privoce.voce.chat",
+  "homepage": "https://voce.chat",
   "dependencies": {
     "@emoji-mart/data": "^1.0.5",
     "@metamask/onboarding": "^1.0.1",
@@ -20,7 +20,6 @@
     "@types/react-dom": "^18.0.6",
     "@udecode/plate": "^16.4.1",
     "@uiball/loaders": "^1.2.6",
-    "animate.css": "^4.1.1",
     "bfj": "^7.0.2",
     "browserslist": "^4.21.3",
     "case-sensitive-paths-webpack-plugin": "^2.4.0",

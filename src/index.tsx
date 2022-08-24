@@ -4,7 +4,6 @@ import { Reset } from "styled-reset";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import "./assets/base.css";
-import "animate.css";
 import "./common/DayjsSetting";
 import "./common/TippySetting";
 import { register } from "./serviceWorkerRegistration";
