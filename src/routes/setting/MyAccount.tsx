@@ -116,7 +116,7 @@ export default function MyAccount() {
   const [editModal, setEditModal] = useState<EditFields | null>(null);
   const [uploadAvatar, { isSuccess: uploadSuccess }] = useUpdateAvatarMutation();
   const loginUser = useAppSelector((store) => {
-    return store.authData.user;
+    return store.users.byId[store.authData.user?.uid || 0];
   });
 
   useEffect(() => {
