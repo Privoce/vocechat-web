@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 
 const StyledSignInLink = styled.p`
   text-align: center;
@@ -22,9 +21,8 @@ const StyledSignInLink = styled.p`
 `;
 
 export default function SignInLink() {
-  const navigate = useNavigate();
   const handleSignIn = () => {
-    navigate("/login");
+    location.href = "/#/login";
   };
   return (
     <StyledSignInLink>
