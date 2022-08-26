@@ -104,6 +104,13 @@
 
   body {
     overflow: hidden;
+    width: 100%;
+    height: 100%;
+  }
+
+  body.iframe {
+    position: fixed;
+    top: 0;
   }
 
   a {
@@ -132,5 +139,11 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
 </body>
+<script>
+  if (window.location !== window.parent.location) {
+    // The page is in an iframe
+    document.body.classList.add("iframe")
+  }
+</script>
 
 </html>
