@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { useUpdateAvatarMutation } from "../../app/services/user";
 import AvatarUploader from "../../common/component/AvatarUploader";
 import ProfileBasicEditModal from "./ProfileBasicEditModal";
+import RemoveAccountConfirmModal from "./RemoveAccountConfirmModal";
 import UpdatePasswordModal from "./UpdatePasswordModal";
 import { useAppSelector } from "../../app/store";
 
@@ -114,7 +115,9 @@ type EditFields = "name" | "email";
 export default function MyAccount() {
   const [passwordModal, setPasswordModal] = useState(false);
   const [editModal, setEditModal] = useState<EditFields | null>(null);
+  const [removeConfirmVisible, setRemoveConfirmVisible] = useState(false);
   const [uploadAvatar, { isSuccess: uploadSuccess }] = useUpdateAvatarMutation();
+
   const loginUser = useAppSelector((store) => {
     return store.users.byId[store.authData.user?.uid || 0];
   });
@@ -136,6 +139,9 @@ export default function MyAccount() {
 
   const togglePasswordModal = () => {
     setPasswordModal((prev) => !prev);
+  };
+  const toggleRemoveAccountModalVisible = () => {
+    setRemoveConfirmVisible((prev) => !prev);
   };
 
   if (!loginUser) return null;
@@ -185,7 +191,9 @@ export default function MyAccount() {
             <div className="desc">
               Disabling your account means you can recover it at any time after taking this action.
             </div>
-            <button className="btn">Delete Account</button>
+            <button className="btn" onClick={toggleRemoveAccountModalVisible}>
+              Delete Account
+            </button>
           </div>
         )}
       </StyledWrapper>
@@ -198,6 +206,9 @@ export default function MyAccount() {
         />
       )}
       {passwordModal && <UpdatePasswordModal closeModal={togglePasswordModal} />}
+      {removeConfirmVisible && (
+        <RemoveAccountConfirmModal closeModal={toggleRemoveAccountModalVisible} />
+      )}
     </>
   );
 }

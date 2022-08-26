@@ -185,7 +185,7 @@ export default function useStreaming() {
                   break;
                 case "delete_user":
                   dispatch(resetAuthData());
-                  toast("sorry, your account has been deleted");
+                  toast("Your account has been deleted");
                   break;
                 default:
                   break;

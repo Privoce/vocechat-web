@@ -175,6 +175,12 @@ export const authApi = createApi({
           console.log("api initialized error");
         }
       }
+    }),
+    deleteCurrentAccount: builder.query<void, void>({
+      query: () => ({
+        url: `/user/delete`,
+        method: "DELETE"
+      })
     })
   })
 });
@@ -193,5 +199,6 @@ export const {
   useLazyLogoutQuery,
   useCheckMagicTokenValidMutation,
   useUpdatePasswordMutation,
-  useRegisterMutation
+  useRegisterMutation,
+  useLazyDeleteCurrentAccountQuery
 } = authApi;
