@@ -5,7 +5,7 @@ import User from "./User";
 // import Tools from "./Tools";
 import Loading from "../../common/component/Loading";
 import Menu from "./Menu";
-import usePreload from "./usePreload";
+import usePreload from "../../common/hook/usePreload";
 import Tooltip from "../../common/component/Tooltip";
 import Notification from "../../common/component/Notification";
 import Manifest from "../../common/component/Manifest";

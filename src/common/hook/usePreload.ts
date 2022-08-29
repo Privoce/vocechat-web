@@ -4,8 +4,11 @@ import initCache, { useRehydrate } from "../../app/cache";
 import { useLazyGetFavoritesQuery } from "../../app/services/message";
 import { useLazyGetUsersQuery } from "../../app/services/user";
 import { useLazyGetServerQuery } from "../../app/services/server";
-import useStreaming from "../../common/hook/useStreaming";
+import useStreaming from "./useStreaming";
 import { useAppSelector } from "../../app/store";
+// type Props={
+//   guest?:boolean
+// }
 export default function usePreload() {
   const { rehydrate, rehydrated } = useRehydrate();
   const {

@@ -206,7 +206,6 @@ export default function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
               selectMode: !!selects,
               updateReadIndex: updateReadDebounced,
               read,
-              isFirst,
               prev,
               curr,
               contextId: cid,

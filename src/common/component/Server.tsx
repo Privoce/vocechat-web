@@ -50,8 +50,10 @@ const StyledWrapper = styled.div`
     cursor: pointer;
   }
 `;
-
-export default function Server() {
+type Props = {
+  readonly?: boolean;
+};
+export default function Server({ readonly = false }: Props) {
   const { pathname } = useLocation();
   const { server, userCount } = useAppSelector((store) => {
     return {
@@ -61,6 +63,22 @@ export default function Server() {
   });
   console.log("server info", server);
   const { name, description, logo } = server;
+  if (readonly)
+    return (
+      <StyledWrapper>
+        <div className="server">
+          <div className="logo">
+            <img alt={`${name} logo`} src={logo} />
+          </div>
+          <div className="info">
+            <h3 className="name" title={description}>
+              {name}
+            </h3>
+            <span className="desc">{userCount} members</span>
+          </div>
+        </div>
+      </StyledWrapper>
+    );
 
   return (
     <StyledWrapper>
@@ -77,6 +95,7 @@ export default function Server() {
           </div>
         </div>
       </NavLink>
+
       <Tooltip tip="More" placement="bottom">
         <Tippy interactive placement="bottom-end" trigger="click" content={<AddEntriesMenu />}>
           <img src={addIcon} alt="add icon" className="add" />

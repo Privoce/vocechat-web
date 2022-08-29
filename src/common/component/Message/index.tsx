@@ -23,7 +23,7 @@ interface IProps {
   context?: "user" | "channel";
   read?: boolean;
   mid: number;
-  updateReadIndex: (param: any) => void;
+  updateReadIndex?: (param: any) => void;
 }
 const Message: FC<IProps> = ({
   readOnly = false,
@@ -69,7 +69,9 @@ const Message: FC<IProps> = ({
         context == "user"
           ? { users: [{ uid: +contextId, mid }] }
           : { groups: [{ gid: +contextId, mid }] };
-      updateReadIndex(data);
+      if (updateReadIndex) {
+        updateReadIndex(data);
+      }
     }
   }, [mid, read]);
 
@@ -86,7 +88,7 @@ const Message: FC<IProps> = ({
   return (
     <StyledWrapper
       key={_key}
-      onContextMenu={handleContextMenuEvent}
+      onContextMenu={readOnly ? undefined : handleContextMenuEvent}
       data-msg-mid={mid}
       ref={inviewRef}
       className={`message ${readOnly ? "readonly" : ""} ${pinInfo ? "pinned" : ""} ${

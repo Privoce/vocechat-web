@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, FC, ReactElement, MouseEvent } from "react";
+import { useState, useRef, useEffect, FC, ReactElement } from "react";
 import { useDrop } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
 import ImagePreviewModal from "../../../common/component/ImagePreviewModal";
@@ -8,11 +8,13 @@ import Operations from "./Operations";
 import useUploadFile from "../../../common/hook/useUploadFile";
 import { ChatPrefixes } from "../../../app/config";
 import { useAppSelector } from "../../../app/store";
+import LoginTip from "./LoginTip";
 
 interface Props {
+  readonly?: boolean;
   children: ReactElement;
   header: ReactElement;
-  aside: ReactElement | null;
+  aside?: ReactElement | null;
   users?: ReactElement | null;
   dropFiles?: File[];
   context: "channel" | "user";
@@ -20,6 +22,7 @@ interface Props {
 }
 
 const Layout: FC<Props> = ({
+  readonly = false,
   children,
   header,
   aside = null,
@@ -98,27 +101,31 @@ const Layout: FC<Props> = ({
   return (
     <>
       {previewImage && <ImagePreviewModal data={previewImage} closeModal={closePreviewModal} />}
-      <Styled ref={drop}>
+      <Styled ref={drop} className={`${readonly ? "readonly" : ""}`}>
         {header}
         <main className="main" ref={messagesContainer}>
           <div className="chat">
             {children}
             <div className={`send ${selects ? "selecting" : ""}`}>
-              <Send key={to} id={to} context={context} />
+              {readonly ? <LoginTip /> : <Send key={to} id={to} context={context} />}
               {selects && <Operations context={context} id={to} />}
             </div>
           </div>
           {users && <div className="members">{users}</div>}
           {aside && <div className="aside">{aside}</div>}
         </main>
-        <div className={`drag_tip ${isActive ? "visible animate__animated animate__fadeIn" : ""}`}>
-          <div className={`box ${isActive ? "animate__animated animate__bounceIn" : ""}`}>
-            <div className="inner">
-              <h4 className="head">{`Send to ${ChatPrefixes[context]}${name}`}</h4>
-              <span className="intro">Photos accept jpg, png, max size limit to 10M.</span>
+        {!readonly && (
+          <div
+            className={`drag_tip ${isActive ? "visible animate__animated animate__fadeIn" : ""}`}
+          >
+            <div className={`box ${isActive ? "animate__animated animate__bounceIn" : ""}`}>
+              <div className="inner">
+                <h4 className="head">{`Send to ${ChatPrefixes[context]}${name}`}</h4>
+                <span className="intro">Photos accept jpg, png, max size limit to 10M.</span>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </Styled>
     </>
   );

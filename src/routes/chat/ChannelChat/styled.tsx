@@ -89,15 +89,6 @@ export const StyledChannelChat = styled.article`
   overflow-x: hidden;
   overflow-y: auto;
   overflow-anchor: auto;
-  /* pagination start */
-  /* transform: rotate(180deg);
-  direction: rtl;
-  > div,
-  > hr {
-    direction: ltr;
-    transform: rotate(180deg);
-  } */
-  /* pagination end */
   > .info {
     padding-top: 62px;
     display: flex;
@@ -138,6 +129,4 @@ export const StyledChannelChat = styled.article`
       text-fill-color: transparent;
     }
   }
-  /* > .feed {
-  } */
 `;

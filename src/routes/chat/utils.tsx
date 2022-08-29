@@ -144,15 +144,17 @@ const MessageWrapper = ({ selectMode = false, context, id, mid, children, ...res
   );
 };
 type Params = {
+  readonly?: boolean;
   selectMode: boolean;
-  read: boolean;
-  updateReadIndex: (param: any) => void;
+  read?: boolean;
+  updateReadIndex?: (param: any) => void;
   prev: object | null;
   curr: object | null;
   contextId: number;
   context: "user" | "channel";
 };
 export const renderMessageFragment = ({
+  readonly = false,
   selectMode = false,
   read = true,
   updateReadIndex,
@@ -188,7 +190,7 @@ export const renderMessageFragment = ({
         selectMode={selectMode}
       >
         <Message
-          readOnly={selectMode}
+          readOnly={selectMode || readonly}
           updateReadIndex={updateReadIndex}
           read={read}
           context={context}
