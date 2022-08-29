@@ -23,6 +23,8 @@ import RequireAuth from "../common/component/RequireAuth";
 import RequireNoAuth from "../common/component/RequireNoAuth";
 import Meta from "../common/component/Meta";
 import HomePage from "./home";
+import GeustPage from "./guest";
+// import GuestChannelChatPage from "./guest/ChannelChat";
 import ChatPage from "./chat";
 import Loading from "../common/component/Loading";
 import store, { useAppSelector } from "../app/store";
@@ -89,6 +91,11 @@ const PageRoutes = () => {
           />
           <Route path="/invite" element={<InvitePage />} />
           <Route path="/onboarding" element={<OnboardingPage />} />
+          {/* guest mode */}
+          <Route path="v">
+            <Route index element={<GeustPage />} />
+            <Route path="c/:cid" element={<GeustPage />} />
+          </Route>
           <Route
             path="/"
             element={
