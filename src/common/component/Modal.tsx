@@ -1,13 +1,12 @@
-import { FC, ReactNode, useEffect, useState } from "react";
+import { FC, useEffect, useState, PropsWithChildren } from "react";
 import { createPortal } from "react-dom";
 
 interface Props {
   id?: string;
   mask?: boolean;
-  children?: ReactNode;
 }
 
-const Modal: FC<Props> = ({ id = "root-modal", mask = true, children }) => {
+const Modal: FC<PropsWithChildren<Props>> = ({ id = "root-modal", mask = true, children }) => {
   const [wrapper, setWrapper] = useState<HTMLDivElement | null>(null);
 
   useEffect(() => {

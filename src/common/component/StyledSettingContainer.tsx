@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react";
+import { FC, PropsWithChildren, ReactNode } from "react";
 import styled from "styled-components";
 import { useLocation, NavLink } from "react-router-dom";
 import backIcon from "../../assets/icons/arrow.left.svg?url";
@@ -102,10 +102,9 @@ interface Props {
   navs: Nav[];
   dangers: [Danger | boolean];
   nav: { title: string; name?: string; component?: ReactNode };
-  children: ReactNode;
 }
 
-const StyledSettingContainer: FC<Props> = ({
+const StyledSettingContainer: FC<PropsWithChildren<Props>> = ({
   closeModal,
   title = "Settings",
   navs = [],

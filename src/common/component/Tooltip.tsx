@@ -1,7 +1,7 @@
 // import React from 'react'
 import Tippy, { TippyProps } from "@tippyjs/react";
 import styled from "styled-components";
-import { FC, ReactElement } from "react";
+import { FC } from "react";
 
 const StyledTip = styled.div`
   position: relative;
@@ -39,18 +39,11 @@ const StyledTip = styled.div`
   }
 `;
 
-interface IProps extends TippyProps {
+type Props = {
   tip: string;
-  children: ReactElement;
-}
+} & TippyProps;
 
-const Tooltip: FC<IProps> = ({
-  tip = "",
-  placement = "right",
-  delay = null,
-  children,
-  ...rest
-}) => {
+const Tooltip: FC<Props> = ({ tip = "", placement = "right", delay = null, children, ...rest }) => {
   const defaultDuration: [number, number] = [300, 250];
 
   return (
