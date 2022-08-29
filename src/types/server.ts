@@ -52,6 +52,7 @@ export interface LoginConfig {
   who_can_sign_up: WhoCanSignUp;
   password: boolean;
   magic_link: boolean;
+  guest: boolean;
   google: boolean;
   github: boolean;
   oidc: OIDCSetting[];

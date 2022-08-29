@@ -56,7 +56,9 @@ export default function Logins() {
     }
   };
   const handleToggle = (
-    val: Partial<Pick<LoginConfig, "github" | "google" | "password" | "magic_link" | "metamask">>
+    val: Partial<
+      Pick<LoginConfig, "github" | "google" | "guest" | "password" | "magic_link" | "metamask">
+    >
   ) => {
     setValues((prev) => {
       if (!prev) return prev;
@@ -64,12 +66,34 @@ export default function Logins() {
     });
   };
   if (!values) return null;
-  const { google, magic_link, github, metamask, password, oidc = [] } = values as LoginConfig;
+  const {
+    google,
+    magic_link,
+    github,
+    metamask,
+    password,
+    guest,
+    oidc = []
+  } = values as LoginConfig;
   const valuesChanged = clientIdChanged || changed || githubChanged;
 
   return (
     <StyledContainer>
       <div className="inputs">
+        <div className="input">
+          <div className="row">
+            <div className="title">
+              <div className="txt">
+                <Label>Guest Mode</Label>
+              </div>
+              <span className="desc">Allows guest to access</span>
+            </div>
+            <Toggle
+              onClick={handleToggle.bind(null, { guest: !guest })}
+              data-checked={guest}
+            ></Toggle>
+          </div>
+        </div>
         <div className="input">
           <div className="row">
             <div className="title">
