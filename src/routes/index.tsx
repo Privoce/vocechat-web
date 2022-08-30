@@ -28,6 +28,8 @@ import GeustPage from "./guest";
 import ChatPage from "./chat";
 import Loading from "../common/component/Loading";
 import store, { useAppSelector } from "../app/store";
+import OffTip from "./guest/OffTip";
+import GuestOnly from "../common/component/GuestOnly";
 let toastId: string;
 const PageRoutes = () => {
   const {
@@ -92,9 +94,24 @@ const PageRoutes = () => {
           <Route path="/invite" element={<InvitePage />} />
           <Route path="/onboarding" element={<OnboardingPage />} />
           {/* guest mode */}
-          <Route path="v">
-            <Route index element={<GeustPage />} />
-            <Route path="c/:cid" element={<GeustPage />} />
+          <Route path="/v">
+            <Route
+              index
+              element={
+                <GuestOnly>
+                  <GeustPage />
+                </GuestOnly>
+              }
+            />
+            <Route
+              path="c/:cid"
+              element={
+                <GuestOnly>
+                  <GeustPage />
+                </GuestOnly>
+              }
+            />
+            <Route path="off" element={<OffTip />} />
           </Route>
           <Route
             path="/"

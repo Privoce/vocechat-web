@@ -10,6 +10,7 @@ import fileMessageHandler from "./handler.file.msg";
 import reactionHandler from "./handler.reaction";
 import UIHandler from "./handler.ui";
 import footprintHandler from "./handler.footprint";
+import { RootState } from "../store";
 
 const operations = [
   "__rtkq",
@@ -41,11 +42,14 @@ listenerMiddleware.startListening({
   },
   effect: async (action, listenerApi) => {
     const { type = "", payload } = action;
-    const [prefix, operation] = type.split("/");
+    const [prefix, operation]: [keyof RootState | "__rtkq", string] = type.split("/");
     // console.log("effect opt", action);
     if (!window.CACHE && prefix !== "__rtkq") return;
-
-    const state = listenerApi.getState()[prefix];
+    const currentState = listenerApi.getState() as RootState;
+    // 如果是guest，则忽略
+    const isGuest = currentState.authData.user?.create_by === "guest";
+    if (isGuest) return;
+    const state = prefix == "__rtkq" ? null : currentState[prefix];
     switch (prefix) {
       case "__rtkq":
         {

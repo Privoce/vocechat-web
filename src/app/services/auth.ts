@@ -57,6 +57,21 @@ export const authApi = createApi({
         }
       }
     }),
+    guestLogin: builder.query<AuthData, void>({
+      query: () => ({ url: "/token/login_guest" }),
+      async onQueryStarted(params, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          if (data) {
+            dispatch(setAuthData(data));
+          }
+          // 从localstorage 去掉 magic token
+          localStorage.removeItem(KEY_LOCAL_MAGIC_TOKEN);
+        } catch {
+          console.log("guest login error");
+        }
+      }
+    }),
     register: builder.mutation<any, any>({
       query: (data) => ({
         url: `user/register`,
@@ -186,6 +201,8 @@ export const authApi = createApi({
 });
 
 export const {
+  useLazyGuestLoginQuery,
+  useGuestLoginQuery,
   useLazyCheckEmailQuery,
   useGetInitializedQuery,
   useSendLoginMagicLinkMutation,

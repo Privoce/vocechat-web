@@ -6,17 +6,24 @@ import { useLazyGetUsersQuery } from "../../app/services/user";
 import { useLazyGetServerQuery } from "../../app/services/server";
 import useStreaming from "./useStreaming";
 import { useAppSelector } from "../../app/store";
+import { useLazyGetHistoryMessagesQuery } from "../../app/services/channel";
 // type Props={
 //   guest?:boolean
 // }
+let preloadChannelMsgs = false;
 export default function usePreload() {
+  const [preloadChannelMessages] = useLazyGetHistoryMessagesQuery();
   const { rehydrate, rehydrated } = useRehydrate();
   const {
     loginUid,
     token,
-    expireTime = +new Date()
+    expireTime = +new Date(),
+    channelMessageData,
+    channelIds
   } = useAppSelector((store) => {
     return {
+      channelIds: store.channels.ids,
+      channelMessageData: store.channelMessage,
       loginUid: store.authData.user?.uid,
       token: store.authData.token,
       expireTime: store.authData.expireTime
@@ -48,6 +55,16 @@ export default function usePreload() {
     };
   }, []);
 
+  useEffect(() => {
+    if (channelIds.length > 0 && !preloadChannelMsgs) {
+      const tmps = channelIds.filter((cid) => !channelMessageData[cid]);
+      console.log("tmpss", tmps);
+      tmps.forEach((id) => {
+        preloadChannelMessages({ id, limit: 50 });
+      });
+      preloadChannelMsgs = true;
+    }
+  }, [channelIds, channelMessageData]);
   useEffect(() => {
     if (rehydrated) {
       getUsers();

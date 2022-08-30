@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch, batch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { fillReactionMessage } from "../slices/message.reaction";
 import { fillServer } from "../slices/server";
 import { fillMessage } from "../slices/message";
@@ -10,11 +10,22 @@ import { fillUsers } from "../slices/users";
 import { fillFootprint } from "../slices/footprint";
 import { fillFileMessage } from "../slices/message.file";
 import { fillUI } from "../slices/ui";
+import { useAppSelector } from "../store";
 
 const useRehydrate = () => {
   const [iterated, setIterated] = useState(false);
   const dispatch = useDispatch();
+  const { isGuest } = useAppSelector((store) => {
+    return {
+      isGuest: store.authData.user?.create_by == "guest"
+    };
+  });
   const rehydrate = async () => {
+    // 如果是游客，直接忽略
+    if (isGuest) {
+      setIterated(true);
+      return;
+    }
     const rehydrateData = {
       channels: [],
       users: [],
@@ -74,20 +85,18 @@ const useRehydrate = () => {
         });
       })
     );
-    batch(() => {
-      dispatch(fillUsers(rehydrateData.users));
-      dispatch(fillServer(rehydrateData.server));
-      console.log("fill channels from indexedDB");
-      dispatch(fillChannels(rehydrateData.channels));
-      // file message
-      dispatch(fillFileMessage(rehydrateData.fileMessage.list));
-      dispatch(fillChannelMsg(rehydrateData.channelMessage));
-      dispatch(fillUserMsg(rehydrateData.userMessage));
-      dispatch(fillMessage(rehydrateData.message));
-      dispatch(fillFootprint(rehydrateData.footprint));
-      dispatch(fillUI(rehydrateData.ui));
-      dispatch(fillReactionMessage(rehydrateData.reactionMessage));
-    });
+    dispatch(fillUsers(rehydrateData.users));
+    dispatch(fillServer(rehydrateData.server));
+    console.log("fill channels from indexedDB");
+    dispatch(fillChannels(rehydrateData.channels));
+    // file message
+    dispatch(fillFileMessage(rehydrateData.fileMessage.list));
+    dispatch(fillChannelMsg(rehydrateData.channelMessage));
+    dispatch(fillUserMsg(rehydrateData.userMessage));
+    dispatch(fillMessage(rehydrateData.message));
+    dispatch(fillFootprint(rehydrateData.footprint));
+    dispatch(fillUI(rehydrateData.ui));
+    dispatch(fillReactionMessage(rehydrateData.reactionMessage));
 
     setIterated(true);
     console.log("iterate results", rehydrateData, results);

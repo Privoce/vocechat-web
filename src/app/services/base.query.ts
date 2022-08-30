@@ -6,6 +6,7 @@ import BASE_URL, { tokenHeader } from "../config";
 import { RootState } from "../store";
 
 const whiteList = [
+  "guestLogin",
   "login",
   "register",
   "sendLoginMagicLink",

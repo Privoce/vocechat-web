@@ -1,5 +1,5 @@
 // import React from 'react';
-import { NavLink, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import StyledWrapper from "./styled";
 import Loading from "../../common/component/Loading";
 import Manifest from "../../common/component/Manifest";

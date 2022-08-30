@@ -155,7 +155,7 @@ const Message: FC<IProps> = ({
                 edited
               })
             )}
-            {reactions && <Reaction mid={mid} reactions={reactions} />}
+            {reactions && <Reaction mid={mid} reactions={reactions} readOnly={readOnly} />}
           </div>
         </div>
       </ContextMenu>
