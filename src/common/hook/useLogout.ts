@@ -1,4 +1,4 @@
-import { useDispatch, batch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { resetFootprint } from "../../app/slices/footprint";
 import { resetChannels } from "../../app/slices/channels";
 import { resetUsers } from "../../app/slices/users";
@@ -11,21 +11,15 @@ import { useLazyLogoutQuery } from "../../app/services/auth";
 export default function useLogout() {
   const dispatch = useDispatch();
   const [logout, { isLoading, isSuccess }] = useLazyLogoutQuery();
-  // todo: remove batch
-  // If you're using React 18, you do not need to use the batch API. React 18 automatically
-  // batches all state updates, no matter where they're queued.
-  // ref: https://react-redux.js.org/api/batch
   const clearLocalData = () => {
-    batch(() => {
-      dispatch(resetFootprint());
-      dispatch(resetChannelMsg());
-      dispatch(resetUserMsg());
-      dispatch(resetChannels());
-      dispatch(resetUsers());
-      dispatch(resetMessage());
-      dispatch(resetReactionMessage());
-      dispatch(resetFileMessage());
-    });
+    dispatch(resetFootprint());
+    dispatch(resetChannelMsg());
+    dispatch(resetUserMsg());
+    dispatch(resetChannels());
+    dispatch(resetUsers());
+    dispatch(resetMessage());
+    dispatch(resetReactionMessage());
+    dispatch(resetFileMessage());
   };
 
   return { clearLocalData, logout, exited: isSuccess, exiting: isLoading };
