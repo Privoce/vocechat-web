@@ -111,7 +111,7 @@ const ReactionDetails = ({
   index
 }: {
   uids: number[];
-  emoji?: keyof Emojis;
+  emoji: keyof Emojis;
   index: number;
 }) => {
   const usersData = useAppSelector((store) => store.users.byId);
@@ -137,12 +137,13 @@ const ReactionDetails = ({
   );
 };
 type Props = {
+  readOnly?: boolean;
   mid: number;
   reactions?: {
     [key in keyof Emojis]: number[];
   };
 };
-const Reaction: FC<Props> = ({ mid, reactions = null }) => {
+const Reaction: FC<Props> = ({ mid, reactions = null, readOnly = false }) => {
   const [reactWithEmoji] = useReactMessageMutation();
   const { currUid } = useAppSelector((store) => {
     return {
@@ -160,20 +161,21 @@ const Reaction: FC<Props> = ({ mid, reactions = null }) => {
         const reacted = uids.findIndex((id: number) => id == currUid) > -1;
         return uids.length > 0 ? (
           <span
-            onClick={handleReact.bind(null, reaction)}
+            onClick={readOnly ? undefined : handleReact.bind(null, reaction)}
             className={`reaction ${reacted ? "reacted" : ""}`}
             // data-count={count > 1 ? count : ""}
             key={reaction}
           >
             <Tippy
+              disabled={readOnly}
               offset={[0, 20]}
               // visible={true}
               interactive
               placement="top"
-              content={<ReactionDetails uids={uids} emoji={reaction} index={idx} />}
+              content={<ReactionDetails uids={uids} emoji={reaction as keyof Emojis} index={idx} />}
             >
               <i className="emoji">
-                <ReactionItem native={reaction} />
+                <ReactionItem native={reaction as keyof Emojis} />
               </i>
             </Tippy>
 
@@ -181,16 +183,18 @@ const Reaction: FC<Props> = ({ mid, reactions = null }) => {
           </span>
         ) : null;
       })}
-      <Tooltip placement="top" tip="Add Reaction">
-        <Tippy
-          interactive
-          placement="right-start"
-          trigger="click"
-          content={<ReactionPicker mid={mid} hidePicker={hideAll} />}
-        >
-          <button className="add"></button>
-        </Tippy>
-      </Tooltip>
+      {!readOnly && (
+        <Tooltip placement="top" tip="Add Reaction">
+          <Tippy
+            interactive
+            placement="right-start"
+            trigger="click"
+            content={<ReactionPicker mid={mid} hidePicker={hideAll} />}
+          >
+            <button className="add"></button>
+          </Tippy>
+        </Tooltip>
+      )}
     </StyledWrapper>
   );
 };
