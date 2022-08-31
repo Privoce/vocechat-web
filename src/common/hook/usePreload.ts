@@ -74,7 +74,7 @@ export default function usePreload() {
   }, [rehydrated]);
   const tokenAlmostExpire = dayjs().isAfter(new Date(expireTime - 20 * 1000));
   const canStreaming = !!loginUid && rehydrated && !!token && !tokenAlmostExpire;
-  console.log("ttt", loginUid, rehydrated, token);
+  // console.log("ttt", loginUid, rehydrated, token);
 
   useEffect(() => {
     setStreamingReady(canStreaming);

@@ -36,7 +36,6 @@ export default function OAuthPage() {
     if (isSuccess && data) {
       setLoading(false);
       // 更新本地认证信息
-      console.log("login data", data);
       toast.success("Login Successfully");
       dispatch(setAuthData(data));
       navigateTo("/");

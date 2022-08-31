@@ -62,12 +62,15 @@ export default function useStreaming() {
     initializing = true;
     const params: {
       "api-key": string;
-      after_mid: string;
+      after_mid?: string;
       users_version?: string;
     } = {
-      "api-key": token,
-      after_mid: `${afterMid}`
+      "api-key": token
     };
+    // 如果afterMid是0，则不传该参数
+    if (afterMid !== 0) {
+      params.after_mid = `${afterMid}`;
+    }
     // 如果usersVersion是0，则不传该参数
     if (usersVersion !== 0) {
       params.users_version = `${usersVersion}`;
@@ -320,9 +323,9 @@ export default function useStreaming() {
         stopStreaming();
       }
     }
-    return () => {
-      stopStreaming();
-    };
+    // return () => {
+    //   stopStreaming();
+    // };
   }, [online, readyPullData]);
 
   return {

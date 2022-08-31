@@ -40,7 +40,6 @@ export default function ConfigSMTP() {
     setTestEmail(newValue);
   };
   const handleTestClick = () => {
-    console.log("test");
     sendTestEmail({
       to: testEmail,
       subject: "test title",
@@ -58,7 +57,6 @@ export default function ConfigSMTP() {
 
   if (!values) return null;
   const { host, port, from, username, password, enabled = false } = values as SMTPConfig;
-  console.log("values", values);
   return (
     <StyledContainer>
       <div className="inputs">

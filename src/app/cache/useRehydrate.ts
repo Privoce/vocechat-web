@@ -39,7 +39,7 @@ const useRehydrate = () => {
       server: {}
     };
     const tables = Object.keys(window.CACHE);
-    const results = await Promise.all(
+    await Promise.all(
       tables.map((_key) => {
         return window.CACHE[_key]?.iterate((data: any, key) => {
           // console.log("iterated", key);
@@ -87,7 +87,7 @@ const useRehydrate = () => {
     );
     dispatch(fillUsers(rehydrateData.users));
     dispatch(fillServer(rehydrateData.server));
-    console.log("fill channels from indexedDB");
+    // console.log("fill channels from indexedDB");
     dispatch(fillChannels(rehydrateData.channels));
     // file message
     dispatch(fillFileMessage(rehydrateData.fileMessage.list));
@@ -99,7 +99,7 @@ const useRehydrate = () => {
     dispatch(fillReactionMessage(rehydrateData.reactionMessage));
 
     setIterated(true);
-    console.log("iterate results", rehydrateData, results);
+    // console.log("iterate results", rehydrateData, results);
   };
   return { rehydrate, rehydrated: iterated };
 };

@@ -22,7 +22,7 @@ export const onMessageSendStarted = async (
   // 忽略archive类型的消息
   if (type == "archive") return;
   // id: who send to ,from_uid: who sent
-  console.log("handlers data", content, type, properties, ignoreLocal, id);
+  // console.log("handlers data", content, type, properties, ignoreLocal, id);
   const isImage = properties.content_type?.startsWith("image");
   const ts = properties.local_id || +new Date();
   const tmpMsg = {
@@ -45,7 +45,7 @@ export const onMessageSendStarted = async (
 
   try {
     const { data: server_mid } = await queryFulfilled;
-    console.log("message server mid", server_mid);
+    // console.log("message server mid", server_mid);
     batch(() => {
       dispatch(removeContextMessage({ id, mid: ts }));
       dispatch(addMessage({ mid: server_mid, ...tmpMsg }));

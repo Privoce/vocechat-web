@@ -76,7 +76,6 @@ export default function Overview({ id = 0 }) {
   };
 
   const handleReset = () => {
-    console.log("reset", data);
     setValues(data);
   };
 

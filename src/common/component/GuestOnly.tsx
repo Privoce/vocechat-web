@@ -7,7 +7,6 @@ import { useAppSelector } from "../../app/store";
 interface Props {
   children: ReactElement;
 }
-
 const GuestOnly: FC<Props> = ({ children }) => {
   const { data: loginConfig, isLoading: fetchingConfig } = useGetLoginConfigQuery();
   const { isLoading: initChecking } = useGetInitializedQuery();
@@ -19,14 +18,14 @@ const GuestOnly: FC<Props> = ({ children }) => {
     if (!token) {
       guestLogin();
     }
-  }, [token, user]);
+  }, [token]);
 
   // 已登录的非guest用户
   if (token && user?.create_by !== "guest") {
     return <Navigate to={`/`} replace />;
   }
   if (initChecking || guestSigning || fetchingConfig) return null;
-  // console.log("wtfff", token, user);
+  console.log("guest check", token, user, loginConfig?.guest, initialized);
   // 检查有没有开启guest mode
   if (!loginConfig?.guest) return <Navigate to={`/v/off`} replace />;
   //  未初始化 则先走setup 流程

@@ -46,7 +46,7 @@ const baseQueryWithTokenCheck = async (args, api, extraOptions) => {
   // 先检查token是否过期，过期则renew
   const { token, refreshToken, expireTime = +new Date() } = api.getState().authData;
   let result = null;
-  console.log("base check", whiteList.includes(api.endpoint), api.endpoint);
+  // console.log("base check", whiteList.includes(api.endpoint), api.endpoint);
   if (!whiteList.includes(api.endpoint) && dayjs().isAfter(new Date(expireTime - 20 * 1000))) {
     // 快过期了，renew
     waitingForRenew = baseQuery(

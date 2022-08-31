@@ -91,7 +91,6 @@ export default function LoginPage() {
 
   const handleLogin = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    console.log("wtf", input);
     login({
       ...input,
       type: "password"

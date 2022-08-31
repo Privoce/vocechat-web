@@ -47,7 +47,7 @@ const ForwardedMessage: FC<Props> = ({ context, to, from_uid, id }) => {
   useEffect(() => {
     if (messages) {
       const forward_mids = messages.map(({ from_mid }) => from_mid) || [];
-      console.log("fff", messages);
+      // console.log("fff", messages);
       setForwards(
         <StyledForward data-forwarded-mids={forward_mids.join(",")}>
           <h4 className="tip">

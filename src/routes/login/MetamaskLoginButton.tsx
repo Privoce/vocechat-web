@@ -61,7 +61,6 @@ export default function MetamaskLoginButton({
     }
   }, [accounts]);
   const getSignature = async (address: string, nonce: string) => {
-    console.log("get sn");
     const signature = await window.ethereum.request({
       method: "personal_sign",
       params: [nonce, address, "hello from "]

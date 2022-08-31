@@ -61,7 +61,7 @@ export default function Server({ readonly = false }: Props) {
       server: store.server
     };
   });
-  console.log("server info", server);
+  // console.log("server info", server);
   const { name, description, logo } = server;
   if (readonly)
     return (

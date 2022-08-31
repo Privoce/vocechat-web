@@ -117,7 +117,6 @@ export default function Overview() {
     });
   };
   const handleReset = () => {
-    console.log("reset", server, loginConfig);
     setServerValues(server);
     setLoginConfigValues(loginConfig);
   };

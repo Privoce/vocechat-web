@@ -45,7 +45,6 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
   const enableCall = type == "card" && canCall;
   const canRemoveFromServer = type == "embed" && canRemove;
   const hasMore = enableCall || email || canRemoveFromChannel || canRemoveFromServer;
-  console.log("ccc", canRemove, cid, uid);
 
   return (
     <StyledWrapper className={type}>

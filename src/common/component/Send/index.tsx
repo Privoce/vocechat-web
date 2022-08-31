@@ -69,7 +69,6 @@ const Send: FC<IProps> = ({
       // markdown insert emoji
       markdownEditor.insertText(emoji);
     } else {
-      console.log("emojii", emoji);
       editor.insertText(emoji);
     }
   };
@@ -78,7 +77,6 @@ const Send: FC<IProps> = ({
     if (msgs && msgs.length) {
       // send text msgs
       for await (const msg of msgs) {
-        console.log("send msg", msg);
         const { type: content_type, content, properties = {} } = msg;
         properties.local_id = properties.local_id ?? +new Date();
         await sendMessage({

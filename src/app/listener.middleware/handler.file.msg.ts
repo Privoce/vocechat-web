@@ -13,7 +13,7 @@ export default async function handler({ operation, data = {} }: Params) {
     case "addFileMessage":
     case "removeFileMessage":
       {
-        console.log("file message opt", data, operation);
+        // console.log("file message opt", data, operation);
         await table?.setItem("list", data);
       }
       break;

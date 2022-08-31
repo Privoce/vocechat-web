@@ -13,7 +13,7 @@ export default async function handler({ operation, data = {} }: Params) {
   switch (operation) {
     case "toggleMenuExpand":
       {
-        console.log("cache the toggleMenuExpand");
+        // console.log("cache the toggleMenuExpand");
         await table?.setItem("menuExpand", data.menuExpand);
       }
       break;

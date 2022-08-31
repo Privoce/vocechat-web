@@ -23,7 +23,6 @@ export default function UsersPage() {
     };
   }, [pathname]);
 
-  console.log({ userIds, user_id });
   if (!userIds) return null;
   return (
     <StyledWrapper>

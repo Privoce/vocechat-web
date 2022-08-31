@@ -29,7 +29,6 @@ export default function GuestChannelChat({ cid = 0 }: Props) {
   });
   if (!data) return null;
   const { name, description, is_public } = data;
-  console.log("channel message list", msgIds);
   const feeds = [...msgIds, ...appends];
   return (
     <>

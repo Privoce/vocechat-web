@@ -34,10 +34,10 @@ export const userApi = createApi({
         try {
           const { data: users } = await queryFulfilled;
           const matchedUser = users.find((c) => c.uid == local_uid);
-          console.log("wtf", users, matchedUser);
+          // console.log("wtf", users, matchedUser);
           if (!matchedUser) {
             // 用户已注销或被禁用
-            console.log("no matched user, redirect to login");
+            // console.log("no matched user, redirect to login");
             dispatch(resetAuthData());
           } else {
             const markedUsers = users.map((u) => {

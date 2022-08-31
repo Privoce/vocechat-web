@@ -100,8 +100,6 @@ export default function License() {
   }, [licenseInfo]);
 
   const disableBtn = checking || upserting || !license || license === licenseInfo?.base58;
-  console.log("ddd", licenseInfo);
-
   return (
     <Styled>
       <div className="input">
@@ -116,10 +114,12 @@ export default function License() {
               </div>
               <div className="item">
                 <span className="label">Domains</span>
-                <ul className="info"> {licenseInfo?.domains.map(d => {
-
-                  return <li key={d}>{d}</li>;
-                })}</ul>
+                <ul className="info">
+                  {" "}
+                  {licenseInfo?.domains.map((d) => {
+                    return <li key={d}>{d}</li>;
+                  })}
+                </ul>
               </div>
               <div className="item">
                 <span className="label">User Limit</span>

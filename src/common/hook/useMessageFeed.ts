@@ -29,14 +29,14 @@ const getFeedWithPagination = (config: Config): PageInfo => {
   shadowMids.sort((a, b) => {
     return Number(a) - Number(b);
   });
-  console.log("message pagination", shadowMids);
+  // console.log("message pagination", shadowMids);
   const pageCount = Math.ceil(shadowMids.length / pageSize);
   const computedPageNumber = isLast ? pageCount : pageNumber;
   const _start = -(pageCount - computedPageNumber + 1) * pageSize;
   const _tmp = _start + pageSize;
   const _end = _tmp == 0 ? undefined : _tmp;
   const ids = shadowMids.slice(_start, _end);
-  console.log("start,end", _start, _end, ids);
+  // console.log("start,end", _start, _end, ids);
   return {
     isFirst: computedPageNumber == 1,
     isLast: computedPageNumber == pageCount,
@@ -97,11 +97,11 @@ export default function useMessageFeed({ context = "channel", id }: Props) {
         mids: serverMids,
         isLast: true
       });
-      console.log("pull up 2", pageInfo);
+      // console.log("pull up 2", pageInfo);
       pageRef.current = pageInfo;
       listRef.current = pageInfo.ids;
       setItems(listRef.current);
-      console.log("message pageInfo", serverMids, pageInfo);
+      // console.log("message pageInfo", serverMids, pageInfo);
     } else {
       //   追加
       const [lastMid] = listRef.current.slice(-1);
@@ -109,7 +109,7 @@ export default function useMessageFeed({ context = "channel", id }: Props) {
         return Number(a) - Number(b);
       });
       const appends = sorteds.filter((s: number) => s > lastMid);
-      console.log("appends", appends, sorteds, lastMid, mids);
+      // console.log("appends", appends, sorteds, lastMid, mids);
       if (appends.length) {
         setAppends(appends);
         const [newestMsgId] = appends.slice(-1);
@@ -119,7 +119,7 @@ export default function useMessageFeed({ context = "channel", id }: Props) {
           const msgFromSelf = loginUid == messageData[newestMsgId]?.from_uid;
           const scrollDistance =
             container.scrollHeight - (container.offsetHeight + container.scrollTop);
-          console.log("scrollDistance", msgFromSelf, scrollDistance);
+          // console.log("scrollDistance", msgFromSelf, scrollDistance);
           if (msgFromSelf) {
             container.scrollTop = container.scrollHeight;
           } else if (scrollDistance <= 100) {
@@ -133,7 +133,7 @@ export default function useMessageFeed({ context = "channel", id }: Props) {
   }, [mids, messageData, loginUid]);
   const pullUp = async () => {
     const currPageInfo = pageRef.current;
-    console.log("pull up", currPageInfo);
+    // console.log("pull up", currPageInfo);
     // 第一页
     if (currPageInfo && currPageInfo.isFirst) {
       const [firstMid] = currPageInfo.ids;
@@ -165,7 +165,7 @@ export default function useMessageFeed({ context = "channel", id }: Props) {
     setTimeout(
       () => {
         setItems(listRef.current);
-        console.log("pull up", currPageInfo, listRef.current);
+        // console.log("pull up", currPageInfo, listRef.current);
         setHasMore(pageInfo.pageNumber !== 1);
         const container = containerRef.current;
         if (container) {

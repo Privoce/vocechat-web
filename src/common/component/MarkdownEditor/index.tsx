@@ -46,7 +46,7 @@ const MarkdownEditor: FC<Props> = ({
         if (updateDraft) {
           updateDraft(md);
         }
-        console.log("mmmm", md);
+        // console.log("mmmm", md);
         editorInstance.destroy();
       }
     };

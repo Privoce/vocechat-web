@@ -86,11 +86,9 @@ const Plugins: FC<Props> = ({
   useKey(
     "Enter",
     (evt) => {
-      // console.log("tttt", plateEditor);
       if (!plateEditor) return;
       // 是否在at操作
       const mentionInputs = findMentionInput(plateEditor);
-      // console.log("tttt", mentionInputs, evt);
       if (mentionInputs || evt.shiftKey || evt.ctrlKey || evt.altKey || evt.isComposing) {
         return true;
       }
@@ -142,7 +140,7 @@ const Plugins: FC<Props> = ({
 
   const handleChange = useCallback(
     async (val: any) => {
-      console.log("tmps changed", val);
+      // console.log("tmps changed", val);
       const tmps = [];
       const getMixedText = (children: any) => {
         const mentions: any = [];
@@ -186,7 +184,6 @@ const Plugins: FC<Props> = ({
       });
       const msgs = arr.filter(({ content }) => !!content);
       setMsgs(msgs);
-      // console.log("tmps", tmps, arr, msgs);
     },
     [msgs]
   );

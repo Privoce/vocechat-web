@@ -49,7 +49,6 @@ const ProfileBasicEditModal: FC<Props> = ({ closeModal }) => {
     });
   };
   const handleUpdate = () => {
-    console.log("pwd", input);
     const { current, newPassword } = input;
     updatePassword({ old_password: current, new_password: newPassword });
   };

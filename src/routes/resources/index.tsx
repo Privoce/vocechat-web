@@ -67,7 +67,7 @@ function ResourceManagement({ fileMessages }) {
       const count = Math.floor(cWidth / 368);
       const leftWidth = cWidth % 368;
       const gutter = Math.max(Math.floor(leftWidth / (count - 1)), 8);
-      console.log("gutter", gutter, cWidth, count, leftWidth);
+      // console.log("gutter", gutter, cWidth, count, leftWidth);
       msnry = new Masonry(container, {
         // options
         fitWidth: true,

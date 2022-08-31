@@ -83,7 +83,7 @@ const messageSlice = createSlice({
     },
     addReplyingMessage(state, action: PayloadAction<{ key: string | number; mid: number }>) {
       const { key, mid } = action.payload;
-      console.log("to ", key, mid);
+      // console.log("to ", key, mid);
       state.replying[key] = mid;
     },
     removeReplyingMessage(state, action: PayloadAction<string | number>) {
