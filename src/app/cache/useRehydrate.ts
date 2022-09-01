@@ -87,7 +87,6 @@ const useRehydrate = () => {
     );
     dispatch(fillUsers(rehydrateData.users));
     dispatch(fillServer(rehydrateData.server));
-    // console.log("fill channels from indexedDB");
     dispatch(fillChannels(rehydrateData.channels));
     // file message
     dispatch(fillFileMessage(rehydrateData.fileMessage.list));
@@ -99,7 +98,6 @@ const useRehydrate = () => {
     dispatch(fillReactionMessage(rehydrateData.reactionMessage));
 
     setIterated(true);
-    // console.log("iterate results", rehydrateData, results);
   };
   return { rehydrate, rehydrated: iterated };
 };

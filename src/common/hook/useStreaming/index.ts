@@ -323,9 +323,9 @@ export default function useStreaming() {
         stopStreaming();
       }
     }
-    // return () => {
-    //   stopStreaming();
-    // };
+    return () => {
+      stopStreaming();
+    };
   }, [online, readyPullData]);
 
   return {
