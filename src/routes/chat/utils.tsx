@@ -58,7 +58,6 @@ export const renderPreviewMessage = (message = null) => {
     case ContentTypes.text:
       {
         res = reactStringReplace(content, /(\s{1}@[0-9]+\s{1})/g, (match, idx) => {
-          console.log("match", match);
           const uid = match.trim().slice(1);
           return <Mention key={idx} uid={+uid} textOnly={true} />;
         });
@@ -177,7 +176,6 @@ export const renderMessageFragment = ({
     }
   }
   const _key = local_id || mid;
-  console.log("_key", _key, local_id, mid);
   return (
     <React.Fragment key={_key}>
       {divider && <Divider content={divider}></Divider>}

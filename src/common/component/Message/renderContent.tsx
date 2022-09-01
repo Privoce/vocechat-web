@@ -49,7 +49,6 @@ const renderContent = ({
             )}
           >
             {reactStringReplace(content, /(\s{1}@[0-9]+\s{1})/g, (match, idx) => {
-              console.log("match", match);
               const uid = match.trim().slice(1);
               return <Mention key={idx} uid={+uid} cid={to} />;
             })}

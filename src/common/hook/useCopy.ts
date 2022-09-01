@@ -34,7 +34,6 @@ const useCopy = (config: { enableToast: boolean } | void) => {
 
   const copy = (text: string, isImage = false) => {
     let inter = 0;
-    console.log("copy", text, isImage);
     if (!copied) {
       if (!isImage) {
         setCopied(copyToClipboard(text));

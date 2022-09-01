@@ -59,7 +59,6 @@ const Operations: FC<Props> = ({ context, id }) => {
   const handleFav = async () => {
     const added = await addFavorite(mids);
     if (added) {
-      console.log("added", added);
       dispatch(updateSelectMessages({ context, id, operation: "reset" }));
       toast.success("Messages Saved!");
     } else {
@@ -79,8 +78,7 @@ const Operations: FC<Props> = ({ context, id }) => {
     setForwardModalVisible((prev) => !prev);
   };
 
-  useKey("Escape", (evt) => {
-    console.log("Escape keypress", evt);
+  useKey("Escape", () => {
     dispatch(updateSelectMessages({ context, id, operation: "reset" }));
   });
   const canDel = canDelete(mids);

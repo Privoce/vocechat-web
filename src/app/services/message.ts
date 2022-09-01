@@ -57,7 +57,6 @@ export const messageApi = createApi({
         body: formData
       }),
       transformResponse: (data: UploadFileResponse | null) => {
-        console.log("upload file response", data);
         return data ? data : {};
       }
     }),

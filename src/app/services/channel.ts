@@ -31,7 +31,7 @@ export const channelApi = createApi({
           await queryFulfilled;
           dispatch(removeChannel(gid));
         } catch {
-          console.log("channel update failed");
+          console.error("channel update failed");
         }
       }
     }),
@@ -54,7 +54,7 @@ export const channelApi = createApi({
         try {
           await queryFulfilled;
         } catch {
-          console.log("channel update failed");
+          console.error("channel update failed");
         }
       }
     }),
@@ -115,7 +115,7 @@ export const channelApi = createApi({
             dispatch(removeReactionMessage(mids));
           }
         } catch {
-          console.log("remove channel error");
+          console.error("remove channel error");
         }
       }
     }),
@@ -178,7 +178,7 @@ export const channelApi = createApi({
             })
           );
         } catch (error) {
-          console.log("err", error);
+          console.error("err", error);
         }
       }
     })

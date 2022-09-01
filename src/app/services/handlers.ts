@@ -56,7 +56,6 @@ export const onMessageSendStarted = async (
     }, 300);
     // dispatch(removePendingMessage({ id, mid:ts, type: from }));
   } catch {
-    console.log("message send failed");
     toast.error("Send Message Failed");
     dispatch(removeContextMessage({ id, mid: ts }));
     dispatch(removeMessage(ts));

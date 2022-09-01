@@ -48,7 +48,6 @@ const ReactionPicker: FC<Props> = ({ mid, hidePicker }) => {
     };
   });
   const handleReact = (emoji: string) => {
-    console.log("react", emoji);
     reactMessage({ mid, action: emoji });
     hidePicker();
   };

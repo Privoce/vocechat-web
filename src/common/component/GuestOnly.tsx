@@ -25,7 +25,7 @@ const GuestOnly: FC<Props> = ({ children }) => {
     return <Navigate to={`/`} replace />;
   }
   if (initChecking || guestSigning || fetchingConfig) return null;
-  console.log("guest check", token, user, loginConfig?.guest, initialized);
+  // console.log("guest check", token, user, loginConfig?.guest, initialized);
   // 检查有没有开启guest mode
   if (!loginConfig?.guest) return <Navigate to={`/v/off`} replace />;
   //  未初始化 则先走setup 流程

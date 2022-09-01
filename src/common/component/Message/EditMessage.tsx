@@ -66,7 +66,6 @@ const EditMessage: FC<Props> = ({ mid, cancelEdit }) => {
   useKey(
     "Shift",
     (e) => {
-      console.log("shift", e.type);
       setShift(e.type == "keydown");
     },
     { eventTypes: ["keydown", "keyup"], target: inputRef }
@@ -75,7 +74,6 @@ const EditMessage: FC<Props> = ({ mid, cancelEdit }) => {
   useKey(
     "Escape",
     () => {
-      console.log("cancel edit");
       cancelEdit();
     },
     { eventTypes: ["keydown", "keyup"], target: inputRef }

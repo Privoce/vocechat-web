@@ -149,7 +149,6 @@ export const getFileIcon = (type: string, name = "") => {
   switch (true) {
     case checks.image.test(_type):
       {
-        console.log("image");
         icon = <IconImage className="icon" />;
       }
       break;

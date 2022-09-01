@@ -83,7 +83,6 @@ const renderContent = (data: MessagePayload) => {
   switch (content_type) {
     case ContentTypes.text:
       res = reactStringReplace(content, /(\s{1}@[0-9]+\s{1})/g, (match, idx) => {
-        console.log("match", match);
         const uid = match.trim().slice(1);
         return <Mention popover={false} key={idx} uid={+uid} />;
       });

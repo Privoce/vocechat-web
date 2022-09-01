@@ -34,7 +34,6 @@ const MarkdownRender: FC<IProps> = ({ content }) => {
     container.addEventListener(
       "click",
       (evt) => {
-        console.log(evt);
         evt.stopPropagation();
         const target = evt.target as HTMLImageElement;
         if (!target) return;

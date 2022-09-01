@@ -109,7 +109,6 @@ const renderContent = (data) => {
             // eslint-disable-next-line no-useless-escape
             /(\s{1}\@[0-9]+\s{1})/g,
             (match, idx) => {
-              console.log("match", match);
               const uid = match.trim().slice(1);
               return <Mention key={idx} uid={+uid} popover={false} />;
             }
@@ -163,7 +162,6 @@ const Reply: FC<ReplyProps> = ({ mid, interactive = true }) => {
       msgEle.dataset.highlight = "true";
       msgEle.scrollIntoView({ behavior: "smooth", block: "center" });
       setTimeout(() => {
-        console.log("scroll view", msgEle);
         msgEle.dataset.highlight = "false";
       }, 3000);
     }

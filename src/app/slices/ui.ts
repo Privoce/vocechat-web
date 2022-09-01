@@ -89,7 +89,6 @@ const uiSlice = createSlice({
           {
             const { data } = rest;
             const isArray = Array.isArray(data);
-            console.log("add opt", data, files, isArray);
             if (files) {
               if (isArray) {
                 data.forEach((item) => {

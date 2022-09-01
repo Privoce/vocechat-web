@@ -31,7 +31,6 @@ const DMChat: FC<Props> = ({ uid = 0, dropFiles }) => {
   });
   const [updateReadIndex] = useReadMessageMutation();
   const updateReadDebounced = useDebounce(updateReadIndex, 300);
-  console.log("dm files", dropFiles);
   const { currUser, messageData, footprint, loginUid, selects } = useAppSelector((store) => {
     return {
       selects: store.ui.selectMessages[`user_${uid}`],

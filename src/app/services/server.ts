@@ -31,7 +31,7 @@ export const serverApi = createApi({
           const logo = `${BASE_URL}/resource/organization/logo?t=${+new Date()}`;
           dispatch(updateInfo({ ...server, logo }));
         } catch {
-          console.log("get server info error");
+          console.error("get server info error");
         }
       }
     }),
@@ -146,7 +146,7 @@ export const serverApi = createApi({
             })
           );
         } catch {
-          console.log("update server logo error");
+          console.error("update server logo error");
         }
       }
     }),

@@ -62,7 +62,6 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (error) {
-      console.log("login err", error);
       switch ((error as FetchBaseQueryError).status) {
         case 401:
           toast.error("Username or Password incorrect");

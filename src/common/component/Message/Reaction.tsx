@@ -123,7 +123,6 @@ const ReactionDetails = ({
     names.length > 3
       ? `${names.join(", ")} and ${names.length - 3} others reacted with`
       : `${names.join(", ")} reacted with`;
-  console.log("eeee", emojiData);
   return (
     <StyledDetails className={index == 0 ? "first" : ""}>
       <div className="emoji">
@@ -153,7 +152,6 @@ const Reaction: FC<Props> = ({ mid, reactions = null, readOnly = false }) => {
   const handleReact = (emoji: string) => {
     reactWithEmoji({ mid, action: emoji });
   };
-  console.log("curr reactions", reactions);
   if (!reactions || Object.entries(reactions).length == 0) return null;
   return (
     <StyledWrapper className="reactions">

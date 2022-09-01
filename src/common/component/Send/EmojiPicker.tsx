@@ -39,7 +39,6 @@ export default function EmojiPicker({ selectEmoji }: { selectEmoji: (e: string) 
   };
 
   const handleSelect = (emoji: EmojiData) => {
-    console.log("semojii", emoji);
     selectEmoji((emoji as BaseEmoji).native);
   };
 

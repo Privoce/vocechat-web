@@ -16,20 +16,19 @@ const useDeviceToken = (vapidKey: string) => {
     })
       .then((currentToken) => {
         if (currentToken) {
-          console.log("current token for client: ", currentToken);
           setToken(currentToken);
           // updateDeviceToken(currentToken)
           // Perform any other necessary action with the token
         } else {
           // Show permission request UI
-          console.log("No registration token available. Request permission to generate one.");
+          console.error("No registration token available. Request permission to generate one.");
         }
         requesting = false;
       })
       .catch((err) => {
         requesting = false;
         error = true;
-        console.log("An error occurred while retrieving token. ", err);
+        console.error("An error occurred while retrieving token. ", err);
       });
   }
   return token as string;

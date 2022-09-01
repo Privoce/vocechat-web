@@ -25,7 +25,7 @@ const Audio: FC<Props> = ({ url }) => {
   const [err, setErr] = useState(false);
 
   const handleError: ReactEventHandler<HTMLAudioElement> = (err) => {
-    console.log("audio err", err);
+    console.error("audio err", err);
     setErr(true);
   };
 

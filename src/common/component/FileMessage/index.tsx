@@ -80,7 +80,7 @@ const FileMessage: FC<Props> = ({
         setUploadingFile(false);
       } catch (error) {
         setUploadingFile(false);
-        console.log("fetch local file error", error);
+        console.error("fetch local file error", error);
       }
     };
     // local file
@@ -93,7 +93,6 @@ const FileMessage: FC<Props> = ({
     const propsV2 = imageSize ? { ...props, ...imageSize } : props;
     // 本地文件 并且上传成功
     if (uploadSuccess && isLocalFile(content)) {
-      console.log("send local file message", uploadSuccess, propsV2, data, content);
       // 把已经上传的东西当做消息发出去
       const { path } = data;
       sendMessage({

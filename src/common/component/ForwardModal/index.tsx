@@ -37,7 +37,6 @@ const ForwardModal: FC<IProps> = ({ mids, closeModal }) => {
     const ids = type == "user" ? selectedMembers : selectedChannels;
     const updateState = type == "user" ? setSelectedMembers : setSelectedChannels;
     let tmp = ids.includes(+id) ? ids.filter((m) => m != id) : [...ids, +id];
-    console.log(id, currentTarget);
     updateState(tmp);
   };
   const updateAppendText = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -90,7 +89,6 @@ const ForwardModal: FC<IProps> = ({ mids, closeModal }) => {
               channels.map((c) => {
                 const { gid } = c;
                 const checked = selectedChannels.includes(gid);
-                console.log({ checked });
                 return (
                   <li
                     key={gid}
@@ -108,7 +106,6 @@ const ForwardModal: FC<IProps> = ({ mids, closeModal }) => {
               users.map((u) => {
                 const { uid } = u;
                 const checked = selectedMembers.includes(uid);
-                console.log({ checked });
                 return (
                   <li
                     key={uid}

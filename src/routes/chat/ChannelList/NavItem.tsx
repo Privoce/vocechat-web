@@ -77,7 +77,6 @@ const NavItem: FC<IProps> = ({ id, setFiles, toggleRemoveConfirm }) => {
   }));
   const handleReadAll = () => {
     const lastMid = mids[mids.length - 1];
-    console.log("last mid", mids, lastMid);
     if (lastMid) {
       const param = { groups: [{ gid: id, mid: lastMid }] };
       updateReadIndex(param);

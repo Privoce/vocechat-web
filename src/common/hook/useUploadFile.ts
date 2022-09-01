@@ -57,7 +57,6 @@ const useUploadFile = (props?: IProps) => {
       return;
     }
     const file_id = resp.data;
-    console.log("file id", file_id);
 
     let uploadResult = null;
     canceledRef.current = false;
@@ -90,11 +89,10 @@ const useUploadFile = (props?: IProps) => {
           });
           sliceUploadedCountRef.current++;
         } catch (error) {
-          console.log("upload file error", error);
+          console.error("upload file error", error);
           return;
         }
       }
-      console.log("wtfff", uploadResult);
     }
     // setUploadingFile(false);
     if (!uploadResult || "error" in uploadResult) {

@@ -85,7 +85,6 @@ export default function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
   const { name, description, is_public, members = [], owner } = data;
   const memberIds = is_public ? userIds : members.slice(0).sort((n) => (n == owner ? -1 : 0));
   const addVisible = loginUser?.is_admin || owner == loginUser?.uid;
-  console.log("channel message list", msgIds);
   const readIndex = footprint.readChannels[cid];
   const pinCount = data?.pinned_messages?.length || 0;
   const feeds = [...msgIds, ...appends];

@@ -51,7 +51,7 @@ export default function useStreaming() {
   let controller = new AbortController();
 
   const startStreaming = async () => {
-    console.log("start streaming", initialized, initializing);
+    console.info("sse start streaming", initialized, initializing);
     if (initialized || initializing) return;
     // 如果token快要过期，先renew
     const {
@@ -81,42 +81,42 @@ export default function useStreaming() {
       async onopen(response) {
         initializing = false;
         if (response.ok && response.headers.get("content-type") === EventStreamContentType) {
-          console.log("sse everything ok");
+          console.info("sse everything ok");
           initialized = true;
           return; // everything's good
         } else if (response.status >= 400 && response.status < 500 && response.status !== 429) {
           // 重新登录
           // client-side errors are usually non-retriable:
-          console.log("sse debug: open fatal");
+          console.info("sse debug: open fatal");
           throw new FatalError();
         } else {
           // server error
-          console.log("sse debug: open retry");
+          console.info("sse debug: open retry");
           throw new RetriableError();
         }
       },
       onmessage(evt) {
         initializing = false;
-        console.log("sse message", evt.data);
+        console.info("sse message", evt.data);
         // if the server emits an error message, throw an exception
         // so it gets handled by the onerror callback below:
         if (evt.event === "FatalError") {
-          console.log("sse debug: error message fatal");
+          console.info("sse debug: error message fatal");
           throw new FatalError(evt.data);
         }
         const data: ServerEvent = JSON.parse(evt.data);
         const { type } = data;
         switch (type) {
           case "heartbeat":
-            console.log("heartbeat", loginUid);
+            console.info("sse heartbeat", loginUid);
             break;
           case "ready":
-            console.log("streaming ready");
+            console.info("sse streaming ready");
             dispatch(setReady());
             break;
           case "users_snapshot":
             {
-              console.log("users snapshot");
+              console.info("sse users snapshot");
               const { version } = data;
               dispatch(updateUsersVersion(version));
             }
@@ -124,14 +124,14 @@ export default function useStreaming() {
           case "users_log":
             {
               const { logs } = data;
-              console.log("users change logs", logs);
+              console.info("sse users change logs", logs);
               dispatch(updateUsersByLogs(logs));
             }
             break;
           case "user_settings":
           case "user_settings_changed":
             {
-              console.log("users settings");
+              console.info("sse users settings");
               Object.keys(data).forEach((key) => {
                 switch (key) {
                   case "read_index_groups":
@@ -180,7 +180,7 @@ export default function useStreaming() {
             break;
           case "kick":
             {
-              console.log("kicked");
+              console.info("sse kicked");
               switch (data.reason) {
                 case "login_from_other_device":
                   dispatch(resetAuthData());
@@ -196,11 +196,11 @@ export default function useStreaming() {
             }
             break;
           case "related_groups":
-            console.log("fill channels from streaming", data);
+            console.info("sse fill channels from streaming", data);
             dispatch(fillChannels(data.groups));
             break;
           case "joined_group":
-            console.log("joined group", data.group);
+            console.info("sse joined group", data.group);
             dispatch(addChannel(data.group));
             break;
           case "group_changed":
@@ -216,7 +216,7 @@ export default function useStreaming() {
             break;
           case "user_joined_group":
             {
-              console.log("new user joined group", data.gid);
+              console.info("sse new user joined group", data.gid);
               const { gid, uid: uids } = data;
               // 去重
               dispatch(
@@ -245,7 +245,7 @@ export default function useStreaming() {
             }
             break;
           case "kick_from_group":
-            console.log("kicked from group", data.gid);
+            console.info("sse kicked from group", data.gid);
             dispatch(removeChannel(data.gid));
             break;
           case "pinned_message_updated":
@@ -266,23 +266,23 @@ export default function useStreaming() {
             break;
 
           default:
-            console.log("sse event data", data);
+            console.info("sse event data", data);
             break;
         }
       },
       onclose() {
         // if the server closes the connection unexpectedly, retry:
-        console.log("sse debug: closed");
+        console.info("sse debug: closed");
         initializing = false;
         throw new RetriableError();
       },
       onerror(err) {
         initializing = false;
         if (err instanceof FatalError || err.toString().indexOf("network error") > -1) {
-          console.log("sse debug: error fatal", err);
+          console.info("sse debug: error fatal", err);
           throw err; // rethrow to stop the operation
         } else {
-          console.log("sse debug: error other", err);
+          console.info("sse debug: error other", err);
           stopStreaming();
           if (inter) {
             clearTimeout(inter);
@@ -304,7 +304,7 @@ export default function useStreaming() {
   };
 
   const stopStreaming = () => {
-    console.log("stop st");
+    console.info("sse stop streaming");
     if (controller && controller.abort) {
       controller.abort();
     }
@@ -315,7 +315,6 @@ export default function useStreaming() {
   };
 
   useEffect(() => {
-    console.log("network changed", online, readyPullData);
     if (readyPullData) {
       if (online) {
         startStreaming();

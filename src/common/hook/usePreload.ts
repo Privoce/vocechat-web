@@ -58,7 +58,6 @@ export default function usePreload() {
   useEffect(() => {
     if (channelIds.length > 0 && !preloadChannelMsgs) {
       const tmps = channelIds.filter((cid) => !channelMessageData[cid]);
-      console.log("tmpss", tmps);
       tmps.forEach((id) => {
         preloadChannelMessages({ id, limit: 50 });
       });

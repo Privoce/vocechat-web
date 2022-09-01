@@ -43,7 +43,6 @@ export default function UploadFileList({
   }, [stageFiles.length]);
 
   if (!context || !id || !stageFiles || stageFiles.length == 0) return null;
-  console.log("upload stageFiles", stageFiles);
   return (
     <>
       {editInfo && (

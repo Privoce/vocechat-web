@@ -89,8 +89,6 @@ const ForwardedMessage: FC<Props> = ({ context, to, from_uid, id }) => {
       );
     }
   }, [messages, context, to, from_uid]);
-
-  console.log("archive data", messages);
   if (!id) return null;
 
   return forwards;

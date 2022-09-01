@@ -29,7 +29,7 @@ const whiteList = [
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
   prepareHeaders: (headers, { getState, endpoint }) => {
-    console.log("req", endpoint);
+    console.info("req", endpoint);
     const { token } = (getState() as RootState).authData;
     if (token && !whiteList.includes(endpoint)) {
       headers.set(tokenHeader, token);
@@ -73,7 +73,7 @@ const baseQueryWithTokenCheck = async (args, api, extraOptions) => {
     result = await baseQuery(args, api, extraOptions);
   }
   if (result?.error) {
-    console.log("api error", result.error, api.endpoint);
+    console.error("api error", result.error, api.endpoint);
     switch (result.error.originalStatus || result.error.status) {
       case "FETCH_ERROR":
         {

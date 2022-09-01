@@ -13,7 +13,7 @@ const Avatar: FC<Props> = ({ url = "", name = "Deleted User", type = "user", ...
   const [src, setSrc] = useState("");
 
   const handleError = (err: SyntheticEvent<HTMLImageElement>) => {
-    console.log("load avatar error", err);
+    console.error("load avatar error", err);
     const tmp = getInitialsAvatar({
       initials: getInitials(name),
       background: type == "channel" ? "#EAECF0" : undefined,

@@ -86,7 +86,6 @@ const ImagePreviewModal: FC<Props> = ({ download = true, data, closeModal }) => 
   useKey(
     "Escape",
     () => {
-      console.log("close preview modal");
       closeModal();
     },
     { eventTypes: ["keyup"] }

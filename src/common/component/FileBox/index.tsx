@@ -36,7 +36,6 @@ const renderPreview = (data: Data) => {
   switch (true) {
     case checks.image.test(_type):
       {
-        console.log("image");
         preview = <ImagePreview url={content} />;
       }
       break;
