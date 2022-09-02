@@ -112,8 +112,9 @@ export default function Overview() {
   const handleReset = () => {
     setServerValues(server);
   };
-  const handleGuestToggle = (val: Partial<Pick<LoginConfig, "guest">>) => {
-    updateLoginConfig({ ...loginConfig, ...val });
+  const handleGuestToggle = (v: "true" | "false") => {
+    const guest = v === "true";
+    updateLoginConfig({ ...loginConfig, guest });
   };
   useEffect(() => {
     if (uploadSuccess) {
@@ -205,13 +206,21 @@ export default function Overview() {
           </div>
           <div className="setting">
             <p className="label">Guest Mode</p>
-            <div className="tip">
-              <span className="txt">Allow Guest visiting homepage.</span>
-              <Toggle
-                onClick={handleGuestToggle.bind(null, { guest: !guest })}
-                data-checked={guest}
-              ></Toggle>
-            </div>
+            <p className="tip">
+              <span className="txt">
+                If enabled, visitors will see public channels on this server.
+              </span>
+            </p>
+            <StyledRadio
+              options={["Enabled", "Disabled"]}
+              values={["true", "false"]}
+              value={String(guest)}
+              onChange={(v) => {
+                console.log("wtff", v);
+
+                handleGuestToggle(v);
+              }}
+            />
           </div>
         </>
       )}

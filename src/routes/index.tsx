@@ -2,6 +2,7 @@ import { Suspense, useEffect, lazy } from "react";
 import { Route, Routes, HashRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import toast from "react-hot-toast";
+import { isEqual } from "lodash";
 import NotFoundPage from "./404";
 // import Welcome from './Welcome'
 // const HomePage = lazy(() => import("./home"));
@@ -34,7 +35,7 @@ const PageRoutes = () => {
     fileMessages
   } = useAppSelector((store) => {
     return { ui: store.ui, fileMessages: store.fileMessage };
-  });
+  }, isEqual);
 
   // 掉线检测
   useEffect(() => {
