@@ -30,7 +30,6 @@ export default function HomePage() {
   } = useAppSelector((store) => {
     return {
       ui: store.ui,
-
       loginUid: store.authData.user?.uid,
       guest: store.authData.guest
     };
@@ -87,7 +86,6 @@ export default function HomePage() {
                 </Tooltip>
               </NavLink>
             </nav>
-            {/* <div className="divider"></div> */}
             <Menu />
           </div>
         )}

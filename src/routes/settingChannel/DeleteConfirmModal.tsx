@@ -13,7 +13,6 @@ interface Props {
 
 const DeleteConfirmModal: FC<Props> = ({ id, closeModal }) => {
   const navigateTo = useNavigate();
-  // const pathMatched = useMatch(`/chat/channel/${id}`);
   const [deleteChannel, { isLoading, isSuccess }] = useLazyRemoveChannelQuery();
   const handleDelete = () => {
     deleteChannel(id);
@@ -44,7 +43,6 @@ const DeleteConfirmModal: FC<Props> = ({ id, closeModal }) => {
             </Button>
           </>
         }
-        // className="animate__animated animate__fadeInDown animate__faster"
       ></StyledModal>
     </Modal>
   );

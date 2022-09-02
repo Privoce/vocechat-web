@@ -41,7 +41,6 @@ const NavItem: FC<IProps> = ({ uid, mid = 0, unreads, setFiles }) => {
     accept: [NativeTypes.FILE],
     drop({ dataTransfer }) {
       if (dataTransfer.files.length) {
-        // console.log(files, rest);
         setFiles([...dataTransfer.files]);
         navigate(`/chat/dm/${uid}`);
         // 重置

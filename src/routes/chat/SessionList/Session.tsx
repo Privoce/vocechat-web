@@ -35,7 +35,6 @@ const Session: FC<IProps> = ({
       accept: [NativeTypes.FILE],
       drop({ files }) {
         if (files.length) {
-          // console.log(files, rest);
           const filesData = files.map((file) => {
             const { size, type, name } = file;
             const url = URL.createObjectURL(file);

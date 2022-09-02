@@ -13,14 +13,12 @@ const GuestAllows = GuestRoutes.map((path) => {
   return { path };
 });
 const RequireAuth: FC<Props> = ({ children, redirectTo = "/login" }) => {
-  // GuestRoutes
   const location = useLocation();
   const matchs = matchRoutes(GuestAllows, location);
   const allowGuest = matchs ? !!matchs[0].pathname : false;
   const { data: loginConfig, isLoading: fetchingLoginConfig } = useGetLoginConfigQuery();
   const { isLoading: checkingInitial } = useGetInitializedQuery();
   const { token, guest, initialized } = useAppSelector((store) => store.authData);
-  // console.log("authhhhh", allowGuest);
 
   // 初始化和login配置检查
   if (checkingInitial || fetchingLoginConfig) return null;
@@ -30,6 +28,7 @@ const RequireAuth: FC<Props> = ({ children, redirectTo = "/login" }) => {
   if (loginConfig?.guest && !token && allowGuest) return <Navigate to={"/guest_login"} replace />;
   // 登陆者是guest，并且不允许访问
   if (token && guest && !allowGuest) return <Navigate to={"/"} replace />;
+  // console.log("authhhhh", allowGuest, token, guest);
   return token ? children : <Navigate to={redirectTo} replace />;
 };
 

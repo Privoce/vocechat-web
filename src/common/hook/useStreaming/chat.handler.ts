@@ -63,7 +63,6 @@ const handler = (data: ChatEvent, dispatch: AppDispatch, currState: CurrentState
         // 如果是自己发的消息，就是已读
         dispatch(addMessage({ mid, read, ...common }));
         // 未推送完  or  不是自己发的消息
-        // console.log("curr state", ready, loginUid, common.from_uid);
         // if (!ready || loginUid != common.from_uid) {
         dispatch(
           appendMessage({

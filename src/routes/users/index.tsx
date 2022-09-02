@@ -40,15 +40,9 @@ export default function UsersPage() {
           </nav>
         </div>
       </div>
-      {user_id ? (
-        <div className="right">
-          <Profile uid={+user_id} />
-        </div>
-      ) : (
-        <div className="right placeholder">
-          <BlankPlaceholder type="user" />
-        </div>
-      )}
+      <div className={`right ${!user_id ? "placeholder" : ""}`}>
+        {user_id ? <Profile uid={+user_id} /> : <BlankPlaceholder type="user" />}
+      </div>
     </StyledWrapper>
   );
 }

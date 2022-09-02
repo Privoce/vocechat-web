@@ -23,7 +23,6 @@ const LoadMore: FC<Props> = ({ pullUp = null }) => {
           //   const currEle = entry.target;
           if (intersecting && pullUp) {
             // load more
-            // console.log("inview");
             pullUp();
           }
         });

@@ -41,7 +41,6 @@ const ProfileBasicEditModal: FC<Props> = ({
   closeModal
 }) => {
   const [input, setInput] = useState(value);
-  // const dispatch = useDispatch();
   const [update, { isLoading, isSuccess }] = useUpdateInfoMutation();
   const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setInput(evt.target.value);

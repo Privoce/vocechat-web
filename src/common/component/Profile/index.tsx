@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, memo } from "react";
 import { NavLink } from "react-router-dom";
 import Tippy from "@tippyjs/react";
 import IconMessage from "../../../assets/icons/message.svg";
@@ -110,4 +110,4 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
   );
 };
 
-export default Profile;
+export default memo(Profile);

@@ -49,7 +49,6 @@ const SessionContextMenu: FC<Props> = ({
   };
 
   const handleReadAll = () => {
-    // console.log("last mid", mids, lastMid);
     if (mid) {
       const param =
         context == "user" ? { users: [{ uid: +id, mid }] } : { groups: [{ gid: +id, mid }] };
