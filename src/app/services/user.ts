@@ -1,8 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 // import toast from "react-hot-toast";
-import { KEY_UID } from "../config";
 import baseQuery from "./base.query";
-import { resetAuthData } from "../slices/auth.data";
 import { updateMute } from "../slices/footprint";
 import { fillUsers } from "../slices/users";
 import BASE_URL, { ContentTypes } from "../config";
@@ -30,21 +28,11 @@ export const userApi = createApi({
         });
       },
       async onQueryStarted(data, { dispatch, queryFulfilled }) {
-        const local_uid = Number(localStorage.getItem(KEY_UID));
+        // const local_uid = Number(localStorage.getItem(KEY_UID));
         try {
           const { data: users } = await queryFulfilled;
-          const matchedUser = users.find((c) => c.uid == local_uid);
-          // console.log("wtf", users, matchedUser);
-          if (!matchedUser) {
-            // 用户已注销或被禁用
-            // console.log("no matched user, redirect to login");
-            dispatch(resetAuthData());
-          } else {
-            const markedUsers = users.map((u) => {
-              return u.uid == matchedUser.uid ? { ...u, online: true } : u;
-            });
-            dispatch(fillUsers(markedUsers));
-          }
+          dispatch(fillUsers(users));
+          // }
         } catch {
           console.log("get user list error");
         }

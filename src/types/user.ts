@@ -9,7 +9,6 @@ export interface User {
   is_admin: boolean;
   avatar_updated_at: number;
   create_by: string;
-  avatar?: string;
 }
 export type UserStatus = "normal" | "frozen";
 export type UserDevice = {
