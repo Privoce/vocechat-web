@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, memo } from "react";
 import { useNavigate } from "react-router-dom";
 import Tippy from "@tippyjs/react";
 import IconOwner from "../../../assets/icons/owner.svg";
@@ -34,11 +34,14 @@ const User: FC<Props> = ({
 }) => {
   const navigate = useNavigate();
   const { visible: contextMenuVisible, handleContextMenuEvent, hideContextMenu } = useContextMenu();
-  const curr = useAppSelector((store) => store.users.byId[uid]);
+  const { curr, loginUid } = useAppSelector((store) => {
+    return { curr: store.users.byId[uid], loginUid: store.authData.user?.uid };
+  });
   const handleDoubleClick = () => {
     navigate(`/chat/dm/${uid}`);
   };
   if (!curr) return null;
+  const online = curr.online || curr.uid == loginUid;
   return (
     <ContextMenu
       cid={cid}
@@ -63,7 +66,7 @@ const User: FC<Props> = ({
         >
           <div className="avatar">
             <Avatar url={curr.avatar} name={curr.name} alt="avatar" />
-            <div className={`status ${curr.online ? "online" : "offline"}`}></div>
+            <div className={`status ${online ? "online" : "offline"}`}></div>
           </div>
           {!compact && <span className="name">{curr?.name}</span>}
           {owner && <IconOwner />}
@@ -73,4 +76,4 @@ const User: FC<Props> = ({
   );
 };
 
-export default User;
+export default memo(User, (prev, next) => prev.uid == next.uid);
