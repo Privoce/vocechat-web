@@ -10,22 +10,11 @@ import { fillUsers } from "../slices/users";
 import { fillFootprint } from "../slices/footprint";
 import { fillFileMessage } from "../slices/message.file";
 import { fillUI } from "../slices/ui";
-import { useAppSelector } from "../store";
 
 const useRehydrate = () => {
   const [iterated, setIterated] = useState(false);
   const dispatch = useDispatch();
-  const { isGuest } = useAppSelector((store) => {
-    return {
-      isGuest: store.authData.user?.create_by == "guest"
-    };
-  });
   const rehydrate = async () => {
-    // 如果是游客，直接忽略
-    if (isGuest) {
-      setIterated(true);
-      return;
-    }
     const rehydrateData = {
       channels: [],
       users: [],

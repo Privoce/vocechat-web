@@ -5,10 +5,8 @@ import Session from "./Session";
 import { useAppSelector } from "../../../app/store";
 export interface ChatSession {
   key: string;
-  type: "user" | "channel";
   id: number;
   mid?: number;
-  unread?: number;
 }
 type Props = {};
 const SessionList: FC<Props> = () => {

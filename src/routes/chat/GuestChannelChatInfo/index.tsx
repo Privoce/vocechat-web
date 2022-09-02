@@ -2,10 +2,10 @@
 // import { NavLink } from "react-router-dom";
 import useMessageFeed from "../../../common/hook/useMessageFeed";
 import ChannelIcon from "../../../common/component/ChannelIcon";
-import Layout from "../../chat/Layout";
-import { renderMessageFragment } from "../../chat/utils";
+import Layout from "../Layout";
+import { renderMessageFragment } from "../utils";
 import { StyledChannelChat, StyledHeader } from "./styled";
-import LoadMore from "../../chat/LoadMore";
+import LoadMore from "../LoadMore";
 import { useAppSelector } from "../../../app/store";
 type Props = {
   cid?: number;

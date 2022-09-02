@@ -3,6 +3,9 @@ const StyledWrapper = styled.div`
   display: flex;
   height: 100%;
   padding: 8px 48px 10px 0;
+  &.guest {
+    padding-right: 0;
+  }
   > .left {
     background-color: #fff;
     position: relative;

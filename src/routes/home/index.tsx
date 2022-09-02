@@ -22,6 +22,7 @@ export default function HomePage() {
   const { pathname } = useLocation();
   const {
     loginUid,
+    guest,
     ui: {
       ready,
       rememberedNavs: { chat: chatPath, user: userPath }
@@ -29,7 +30,9 @@ export default function HomePage() {
   } = useAppSelector((store) => {
     return {
       ui: store.ui,
-      loginUid: store.authData.user?.uid
+
+      loginUid: store.authData.user?.uid,
+      guest: store.authData.guest
     };
   });
   const { loading } = usePreload();
@@ -53,39 +56,41 @@ export default function HomePage() {
     <>
       <Manifest />
       <Notification />
-      <StyledWrapper>
-        <div className={`col left`}>
-          {loginUid && <User uid={loginUid} />}
-          <nav className="link_navs">
-            <NavLink
-              className={() => {
-                return `link ${isChattingPage ? "active" : ""}`;
-              }}
-              to={chatNav}
-            >
-              <Tooltip tip="Chat">
-                <ChatIcon />
-              </Tooltip>
-            </NavLink>
-            <NavLink className="link" to={userNav}>
-              <Tooltip tip="Members">
-                <UserIcon />
-              </Tooltip>
-            </NavLink>
-            <NavLink className="link" to={"/favs"}>
-              <Tooltip tip="Saved Items">
-                <FavIcon />
-              </Tooltip>
-            </NavLink>
-            <NavLink className="link" to={"/files"}>
-              <Tooltip tip="Files">
-                <FolderIcon />
-              </Tooltip>
-            </NavLink>
-          </nav>
-          {/* <div className="divider"></div> */}
-          <Menu />
-        </div>
+      <StyledWrapper className={guest ? "guest" : ""}>
+        {!guest && (
+          <div className={`col left`}>
+            {loginUid && <User uid={loginUid} />}
+            <nav className="link_navs">
+              <NavLink
+                className={() => {
+                  return `link ${isChattingPage ? "active" : ""}`;
+                }}
+                to={chatNav}
+              >
+                <Tooltip tip="Chat">
+                  <ChatIcon />
+                </Tooltip>
+              </NavLink>
+              <NavLink className="link" to={userNav}>
+                <Tooltip tip="Members">
+                  <UserIcon />
+                </Tooltip>
+              </NavLink>
+              <NavLink className="link" to={"/favs"}>
+                <Tooltip tip="Saved Items">
+                  <FavIcon />
+                </Tooltip>
+              </NavLink>
+              <NavLink className="link" to={"/files"}>
+                <Tooltip tip="Files">
+                  <FolderIcon />
+                </Tooltip>
+              </NavLink>
+            </nav>
+            {/* <div className="divider"></div> */}
+            <Menu />
+          </div>
+        )}
         <div className="col right">
           <Outlet />
         </div>

@@ -55,6 +55,9 @@ const StyledWrapper = styled.div`
       }
     }
   }
+  &.guest > .col.right {
+    margin: 0 8px;
+  }
 `;
 
 export default StyledWrapper;

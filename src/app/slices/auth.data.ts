@@ -12,6 +12,7 @@ import { User } from "../../types/user";
 
 interface State {
   initialized: boolean;
+  guest: boolean;
   user: User | undefined;
   token: string;
   expireTime: number;
@@ -20,6 +21,7 @@ interface State {
 const loginUser = localStorage.getItem(KEY_LOGIN_USER) || "";
 const initialState: State = {
   initialized: true,
+  guest: false,
   user: loginUser ? JSON.parse(loginUser) : undefined,
   token: localStorage.getItem(KEY_TOKEN) || "",
   expireTime: Number(localStorage.getItem(KEY_EXPIRE) || +new Date()),
@@ -28,6 +30,7 @@ const initialState: State = {
 
 const emptyState: State = {
   initialized: true,
+  guest: false,
   user: undefined,
   token: "",
   expireTime: +new Date(),
@@ -43,6 +46,7 @@ const authDataSlice = createSlice({
       const { uid } = user;
       state.initialized = initialized;
       state.user = user;
+      // state.guest = user.create_by == "guest";
       state.token = token;
       state.refreshToken = refresh_token;
       // 当前时间往后推expire时长

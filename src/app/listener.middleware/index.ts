@@ -46,9 +46,6 @@ listenerMiddleware.startListening({
     // console.log("effect opt", action);
     if (!window.CACHE && prefix !== "__rtkq") return;
     const currentState = listenerApi.getState() as RootState;
-    // 如果是guest，则忽略
-    const isGuest = currentState.authData.user?.create_by === "guest";
-    if (isGuest) return;
     const state = prefix == "__rtkq" ? null : currentState[prefix];
     switch (prefix) {
       case "__rtkq":

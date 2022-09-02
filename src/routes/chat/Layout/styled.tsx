@@ -141,8 +141,5 @@ const Styled = styled.article`
       }
     }
   }
-  &.readonly .main .chat {
-    height: calc(100vh - 62px - 18px);
-  }
 `;
 export default Styled;
