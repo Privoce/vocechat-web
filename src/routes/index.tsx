@@ -26,6 +26,7 @@ import HomePage from "./home";
 import ChatPage from "./chat";
 import Loading from "../common/component/Loading";
 import store, { useAppSelector } from "../app/store";
+import GuestLogining from "./guest";
 let toastId: string;
 const PageRoutes = () => {
   const {
@@ -48,6 +49,7 @@ const PageRoutes = () => {
     <HashRouter>
       <Suspense fallback={<Loading fullscreen={true} />}>
         <Routes>
+          <Route path="/guest_login" element={<GuestLogining />} />
           <Route path="/oauth/:token" element={<OAuthPage />} />
           <Route
             path="/login"
@@ -91,6 +93,7 @@ const PageRoutes = () => {
           <Route path="/onboarding" element={<OnboardingPage />} />
 
           <Route
+            key={"main"}
             path="/"
             element={
               <RequireAuth>

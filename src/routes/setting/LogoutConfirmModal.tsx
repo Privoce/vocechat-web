@@ -6,6 +6,8 @@ import StyledModal from "../../common/component/styled/Modal";
 import Button from "../../common/component/styled/Button";
 import Checkbox from "../../common/component/styled/Checkbox";
 import useLogout from "../../common/hook/useLogout";
+import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../../app/store";
 
 const StyledConfirm = styled(StyledModal)`
   .clear {
@@ -32,6 +34,8 @@ interface Props {
 }
 
 const LogoutConfirmModal: FC<Props> = ({ closeModal }) => {
+  const token = useAppSelector((store) => store.authData.token);
+  const navigateTo = useNavigate();
   const [clearLocal, setClearLocal] = useState(false);
   const { logout, exited, exiting, clearLocalData } = useLogout();
   const handleLogout = () => {
@@ -48,12 +52,13 @@ const LogoutConfirmModal: FC<Props> = ({ closeModal }) => {
         clearLocalData();
       }
       toast.success("Logout Successfully");
-      setTimeout(() => {
-        location.href = `${location.origin}#/login`;
-      }, 500);
-      // location.reload();
     }
   }, [exited, clearLocal]);
+  useEffect(() => {
+    if (!token) {
+      navigateTo("/login");
+    }
+  }, [token]);
 
   return (
     <Modal id="modal-modal">

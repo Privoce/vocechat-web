@@ -21,7 +21,7 @@ interface State {
 const loginUser = localStorage.getItem(KEY_LOGIN_USER) || "";
 const initialState: State = {
   initialized: true,
-  guest: false,
+  guest: loginUser ? JSON.parse(loginUser).create_by == "guest" : false,
   user: loginUser ? JSON.parse(loginUser) : undefined,
   token: localStorage.getItem(KEY_TOKEN) || "",
   expireTime: Number(localStorage.getItem(KEY_EXPIRE) || +new Date()),
@@ -43,10 +43,10 @@ const authDataSlice = createSlice({
   reducers: {
     setAuthData(state, { payload }: PayloadAction<AuthData>) {
       const { initialized = true, user, token, refresh_token, expired_in = 0 } = payload;
-      const { uid } = user;
+      const { uid, create_by } = user;
       state.initialized = initialized;
       state.user = user;
-      // state.guest = user.create_by == "guest";
+      state.guest = create_by == "guest";
       state.token = token;
       state.refreshToken = refresh_token;
       // 当前时间往后推expire时长

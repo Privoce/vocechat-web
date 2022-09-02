@@ -55,7 +55,7 @@ export default function HomePage() {
   return (
     <>
       <Manifest />
-      <Notification />
+      {!guest && <Notification />}
       <StyledWrapper className={guest ? "guest" : ""}>
         {!guest && (
           <div className={`col left`}>

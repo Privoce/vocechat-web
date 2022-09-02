@@ -4,6 +4,7 @@ const BASE_URL = process.env.REACT_APP_RELEASE
   ? `${location.origin}/api`
   : `https://dev.voce.chat/api`;
 export const CACHE_VERSION = `0.3.1`;
+export const GuestRoutes = ["/", "/chat", "/chat/channel/:channel_id"];
 export const ContentTypes = {
   text: "text/plain",
   markdown: "text/markdown",

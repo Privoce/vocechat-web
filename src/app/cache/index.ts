@@ -43,10 +43,6 @@ const tables = [
     storeName: "ui",
     description: "store UI state"
   }
-  // {
-  //   storeName: "message",
-  //   description: "store message with key-val full data",
-  // },
 ];
 const initCache = () => {
   const uid = localStorage.getItem(KEY_UID) || "";
