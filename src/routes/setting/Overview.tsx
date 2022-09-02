@@ -1,12 +1,7 @@
 import { useState, useEffect, ChangeEvent } from "react";
 import styled from "styled-components";
 import toast from "react-hot-toast";
-import {
-  useUpdateServerMutation,
-  useUpdateLogoMutation,
-  useUpdateLoginConfigMutation,
-  useGetLoginConfigQuery
-} from "../../app/services/server";
+import { useUpdateServerMutation, useUpdateLogoMutation } from "../../app/services/server";
 import LogoUploader from "../../common/component/AvatarUploader";
 import Input from "../../common/component/styled/Input";
 import Label from "../../common/component/styled/Label";
@@ -15,6 +10,8 @@ import SaveTip from "../../common/component/SaveTip";
 import StyledRadio from "../../common/component/styled/Radio";
 import { useAppSelector } from "../../app/store";
 import { LoginConfig, WhoCanSignUp } from "../../types/server";
+import Toggle from "../../common/component/styled/Toggle";
+import useConfig from "../../common/hook/useConfig";
 
 const StyledWrapper = styled.div`
   position: relative;
@@ -60,6 +57,7 @@ const StyledWrapper = styled.div`
     flex-direction: column;
     align-items: flex-start;
     gap: 24px;
+    margin-bottom: 64px;
     .input {
       width: 100%;
       display: flex;
@@ -67,23 +65,23 @@ const StyledWrapper = styled.div`
       align-items: flex-start;
       gap: 8px;
     }
-    > .radioButton {
-      > .label {
-        margin-top: 64px;
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 20px;
-      }
-      > .tip {
-        font-weight: 400;
-        font-size: 14px;
-        line-height: 20px;
-        color: #667085;
-      }
-      > form {
-        margin-top: 16px;
-        width: 512px;
-      }
+  }
+  > .setting {
+    font-size: 14px;
+    line-height: 20px;
+    > .label {
+      font-weight: 500;
+    }
+    > .tip {
+      font-weight: 400;
+      color: #667085;
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+    }
+    > form {
+      margin-top: 16px;
+      width: 512px;
     }
   }
 `;
@@ -94,20 +92,15 @@ export default function Overview() {
   });
   const [changed, setChanged] = useState(false);
   const [serverValues, setServerValues] = useState<typeof server>(server);
-  const [loginConfigValues, setLoginConfigValues] = useState<Partial<LoginConfig>>();
-  const { data: loginConfig, refetch: refetchLoginConfig } = useGetLoginConfigQuery();
-  const [updateServer, { isSuccess: serverUpdated }] = useUpdateServerMutation();
+  const { values: loginConfig, updateConfig: updateLoginConfig } = useConfig("login");
+  const [updateServer] = useUpdateServerMutation();
   const [uploadLogo, { isSuccess: uploadSuccess }] = useUpdateLogoMutation();
-  const [updateLoginConfig, { isSuccess: loginConfigUpdated }] = useUpdateLoginConfigMutation();
-  const handleUpdate = () => {
+  const handleUpdateServer = () => {
     const { name, description } = serverValues;
     updateServer({ name, description });
-    if (loginUser?.is_admin && loginConfigValues?.who_can_sign_up) {
-      updateLoginConfig({
-        ...loginConfig,
-        who_can_sign_up: loginConfigValues.who_can_sign_up
-      });
-    }
+  };
+  const handleUpdateWhoCanSignUp = (value: WhoCanSignUp) => {
+    updateLoginConfig({ ...loginConfig, who_can_sign_up: value });
   };
   const handleChange = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const newValue = evt.target.value;
@@ -118,7 +111,9 @@ export default function Overview() {
   };
   const handleReset = () => {
     setServerValues(server);
-    setLoginConfigValues(loginConfig);
+  };
+  const handleGuestToggle = (val: Partial<Pick<LoginConfig, "guest">>) => {
+    updateLoginConfig({ ...loginConfig, ...val });
   };
   useEffect(() => {
     if (uploadSuccess) {
@@ -131,33 +126,19 @@ export default function Overview() {
     }
   }, [server]);
   useEffect(() => {
-    if (loginConfig) {
-      setLoginConfigValues(loginConfig);
-    }
-  }, [loginConfig]);
-  useEffect(() => {
-    if (server && serverValues && loginConfig && loginConfigValues) {
+    if (server && serverValues) {
       const { name, description } = serverValues;
       const { name: oName, description: oDescription } = server;
-      const { who_can_sign_up: whoCanSignUp } = loginConfigValues;
-      const { who_can_sign_up: oWhoCanSignUp } = loginConfig;
-      if (oName !== name || oDescription !== description || oWhoCanSignUp !== whoCanSignUp) {
+      if (oName !== name || oDescription !== description) {
         setChanged(true);
       } else {
         setChanged(false);
       }
     }
-  }, [server, serverValues, loginConfig, loginConfigValues]);
-  useEffect(() => {
-    if (serverUpdated && loginConfigUpdated) {
-      toast.success("Configuration updated!");
-      refetchLoginConfig();
-    }
-  }, [serverUpdated, loginConfigUpdated]);
-
-  if (!serverValues || !loginConfigValues) return null;
+  }, [server, serverValues]);
+  if (!serverValues || !loginConfig) return null;
   const { name, description, logo } = serverValues;
-  const { who_can_sign_up: whoCanSignUp } = loginConfigValues;
+  const { who_can_sign_up: whoCanSignUp, guest } = loginConfig as LoginConfig;
   const isAdmin = loginUser?.is_admin;
 
   return (
@@ -207,26 +188,34 @@ export default function Overview() {
             placeholder="Tell the world a bit about this server"
           />
         </div>
-        {isAdmin && (
-          <div className="radioButton">
+      </div>
+      {isAdmin && (
+        <>
+          <div className="setting">
             <p className="label">Default Sign Up</p>
             <p className="tip">Who can sign up this server.</p>
             <StyledRadio
               options={["Everyone", "Invitation Link Only"]}
               values={["EveryOne", "InvitationOnly"]}
               value={whoCanSignUp}
-              onChange={(v: WhoCanSignUp) =>
-                setLoginConfigValues({
-                  ...loginConfig,
-                  who_can_sign_up: v
-                })
-              }
+              onChange={(v: WhoCanSignUp) => {
+                handleUpdateWhoCanSignUp(v);
+              }}
             />
           </div>
-        )}
-      </div>
-      {changed && <SaveTip saveHandler={handleUpdate} resetHandler={handleReset} />}
-      {/* <button onClick={handleUpdate} className="btn">update</button> */}
+          <div className="setting">
+            <p className="label">Guest Mode</p>
+            <div className="tip">
+              <span className="txt">Allow Guest visiting homepage.</span>
+              <Toggle
+                onClick={handleGuestToggle.bind(null, { guest: !guest })}
+                data-checked={guest}
+              ></Toggle>
+            </div>
+          </div>
+        </>
+      )}
+      {changed && <SaveTip saveHandler={handleUpdateServer} resetHandler={handleReset} />}
     </StyledWrapper>
   );
 }
