@@ -56,25 +56,12 @@ const store = configureStore({
 
 let initialized = false;
 
-setupListeners(store.dispatch, (dispatch, { onOnline, onOffline, onFocus, onFocusLost }) => {
-  const handleFocus = () => dispatch(onFocus());
-  const handleFocusLost = () => dispatch(onFocusLost());
+setupListeners(store.dispatch, (dispatch, { onOnline, onOffline }) => {
   const handleOnline = () => dispatch(onOnline());
   const handleOffline = () => dispatch(onOffline());
-  const handleVisibilityChange = () => {
-    if (window.document.visibilityState === "visible") {
-      handleFocus();
-    } else {
-      handleFocusLost();
-    }
-  };
 
   if (!initialized) {
     if (typeof window !== "undefined" && window.addEventListener) {
-      // Handle focus events
-      window.addEventListener("visibilitychange", handleVisibilityChange, false);
-      window.addEventListener("focus", handleFocus, false);
-
       // Handle connection events
       window.addEventListener("online", handleOnline, false);
       window.addEventListener("offline", handleOffline, false);
@@ -83,8 +70,6 @@ setupListeners(store.dispatch, (dispatch, { onOnline, onOffline, onFocus, onFocu
   }
 
   return () => {
-    window.removeEventListener("focus", handleFocus);
-    window.removeEventListener("visibilitychange", handleVisibilityChange);
     window.removeEventListener("online", handleOnline);
     window.removeEventListener("offline", handleOffline);
     initialized = false;
