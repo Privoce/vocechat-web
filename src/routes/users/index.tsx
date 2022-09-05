@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+import { memo, useEffect } from "react";
 import { NavLink, useParams, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import _ from "lodash";
 import { updateRememberedNavs } from "../../app/slices/ui";
 import Search from "../../common/component/Search";
 import User from "../../common/component/User";
@@ -10,12 +11,12 @@ import StyledWrapper from "./styled";
 import BlankPlaceholder from "../../common/component/BlankPlaceholder";
 import { useAppSelector } from "../../app/store";
 
-export default function UsersPage() {
+function UsersPage() {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
 
   const { user_id } = useParams();
-  const userIds = useAppSelector((store) => store.users.ids);
+  const userIds = useAppSelector((store) => store.users.ids, _.isEqual);
   useEffect(() => {
     dispatch(updateRememberedNavs({ key: "user" }));
     return () => {
@@ -46,3 +47,4 @@ export default function UsersPage() {
     </StyledWrapper>
   );
 }
+export default memo(UsersPage);

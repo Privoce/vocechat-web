@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import { useDebounce } from "rooks";
 import { NavLink, useLocation } from "react-router-dom";
 import Tippy from "@tippyjs/react";
@@ -32,7 +32,7 @@ type Props = {
   cid?: number;
   dropFiles?: File[];
 };
-export default function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
+function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
   const { values: agoraConfig } = useConfig("agora");
   const {
     list: msgIds,
@@ -216,3 +216,4 @@ export default function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
     </>
   );
 }
+export default memo(ChannelChat);

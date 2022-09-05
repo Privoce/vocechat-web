@@ -1,5 +1,5 @@
 // import React from 'react';
-import { useState } from "react";
+import { memo, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import StyledWrapper from "./styled";
@@ -14,7 +14,7 @@ import { useAppSelector } from "../../app/store";
 import GuestBlankPlaceholder from "./GuestBlankPlaceholder";
 import GuestChannelChatInfo from "./GuestChannelChatInfo";
 import GuestSessionList from "./GuestSessionList";
-export default function ChatPage() {
+function ChatPage() {
   const [channelModalVisible, setChannelModalVisible] = useState(false);
   const [usersModalVisible, setUsersModalVisible] = useState(false);
   const { channel_id = 0, user_id = 0 } = useParams();
@@ -66,3 +66,4 @@ export default function ChatPage() {
     </>
   );
 }
+export default memo(ChatPage);

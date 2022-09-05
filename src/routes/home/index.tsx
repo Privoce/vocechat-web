@@ -1,4 +1,4 @@
-// import React from 'react';
+import { memo } from "react";
 import { Outlet, NavLink, useLocation, useMatch } from "react-router-dom";
 import StyledWrapper from "./styled";
 import User from "./User";
@@ -16,7 +16,7 @@ import FavIcon from "../../assets/icons/bookmark.svg";
 import FolderIcon from "../../assets/icons/folder.svg";
 import { useAppSelector } from "../../app/store";
 // const routes = ["/setting", "/setting/channel/:cid"];
-export default function HomePage() {
+function HomePage() {
   const isHomePath = useMatch(`/`);
   const isChatHomePath = useMatch(`/chat`);
   const { pathname } = useLocation();
@@ -96,3 +96,4 @@ export default function HomePage() {
     </>
   );
 }
+export default memo(HomePage);
