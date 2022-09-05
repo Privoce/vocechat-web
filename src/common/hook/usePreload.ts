@@ -17,6 +17,7 @@ export default function usePreload() {
   const {
     loginUid,
     token,
+    isGuest,
     expireTime = +new Date(),
     channelMessageData,
     channelIds
@@ -25,6 +26,7 @@ export default function usePreload() {
       channelIds: store.channels.ids,
       channelMessageData: store.channelMessage,
       loginUid: store.authData.user?.uid,
+      isGuest: store.authData.guest,
       token: store.authData.token,
       expireTime: store.authData.expireTime
     };
@@ -54,16 +56,16 @@ export default function usePreload() {
       setStreamingReady(false);
     };
   }, []);
-
+  // 在guest的时候 预取channel数据
   useEffect(() => {
-    if (channelIds.length > 0 && !preloadChannelMsgs) {
+    if (isGuest && channelIds.length > 0 && !preloadChannelMsgs) {
       const tmps = channelIds.filter((cid) => !channelMessageData[cid]);
       tmps.forEach((id) => {
         preloadChannelMessages({ id, limit: 50 });
       });
       preloadChannelMsgs = true;
     }
-  }, [channelIds, channelMessageData]);
+  }, [channelIds, channelMessageData, isGuest]);
   useEffect(() => {
     if (rehydrated) {
       getUsers();

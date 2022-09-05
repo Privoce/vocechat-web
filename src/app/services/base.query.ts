@@ -80,6 +80,9 @@ const baseQueryWithTokenCheck = async (args, api, extraOptions) => {
           toast.error(`${api.endpoint}: Failed to fetch`);
         }
         break;
+      case 400:
+        toast.error("Bad Request");
+        break;
       case 401:
         {
           if (api.endpoint !== "login") {
