@@ -97,7 +97,9 @@ const baseQueryWithTokenCheck = async (args, api, extraOptions) => {
         break;
       case 404:
         {
-          toast.error("Request Not Found");
+          if (api.endpoint !== "login") {
+            toast.error("Request Not Found");
+          }
         }
         break;
       case 500:

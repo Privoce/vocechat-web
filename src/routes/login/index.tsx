@@ -64,6 +64,7 @@ export default function LoginPage() {
     if (error) {
       switch ((error as FetchBaseQueryError).status) {
         case 401:
+        case 404:
           toast.error("Username or Password incorrect");
           break;
         case 410:
