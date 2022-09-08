@@ -188,10 +188,12 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
             <div className="info">
               <h2 className="title">Welcome to #{name} !</h2>
               <p className="desc">This is the start of the #{name} channel. </p>
-              <NavLink to={`/setting/channel/${cid}?f=${pathname}`} className="edit">
-                <EditIcon className="icon" />
-                Edit Channel
-              </NavLink>
+              {loginUser?.is_admin && (
+                <NavLink to={`/setting/channel/${cid}?f=${pathname}`} className="edit">
+                  <EditIcon className="icon" />
+                  Edit Channel
+                </NavLink>
+              )}
             </div>
           )}
           {/* <div className="feed"> */}
