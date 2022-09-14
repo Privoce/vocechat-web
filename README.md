@@ -18,7 +18,7 @@
 
 ## Host your server! Or use our test server
 
-- Host your own Voce server (docker image): 
+- Host your own Voce server ([docker image](https://hub.docker.com/r/privoce/vocechat-server/tags)): 
 Run on x86_64 platform:
 ```bash
 docker run -d --restart=always \
