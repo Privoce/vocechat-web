@@ -16,11 +16,22 @@
 - 📦 PWA
 - 📢 Notification
 
-## Docs
+## Host your server! Or use our test server
 
-https://doc.voce.chat/en-us/
+- Host your own Voce server (docker image): 
+Run on x86_64 platform:
+```bash
+docker run -d --restart=always \
+  -p 3000:3000 \
+  --name vocechat-server \
+  privoce/vocechat-server:latest
+```
+For more server hosting instructions, see our documentation: https://doc.voce.chat/en-us/
 
 ## Preview
+
+
+
 
 - Official Online Demo: https://privoce.voce.chat/
 - Demo API Docs (Swagger): https://dev.voce.chat/api/swagger
