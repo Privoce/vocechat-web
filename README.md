@@ -32,9 +32,9 @@ For more server hosting instructions, see our documentation: https://doc.voce.ch
 
 
 
-
-- Official Online Demo: https://privoce.voce.chat/
-- Demo API Docs (Swagger): https://dev.voce.chat/api/swagger
+- official site: https://voce.chat
+- live demo: https://privoce.voce.chat/
+- demo API Docs (Swagger): https://dev.voce.chat/api/swagger
 
 - design: https://www.figma.com/file/EHnNr53kNmDWgUT86It6CH/UI
 - text editor: https://plate.udecode.io/docs/installation
