@@ -18,7 +18,7 @@
     "@types/node": "^18.7.18",
     "@types/react": "^18.0.20",
     "@types/react-dom": "^18.0.6",
-    "@udecode/plate": "^17.0.0",
+    "@udecode/plate": "16.8",
     "@uiball/loaders": "^1.2.6",
     "bfj": "^7.0.2",
     "browserslist": "^4.21.3",
