@@ -18,19 +18,19 @@
 
 ## Host your server! Or use our test server
 
-- Host your own Voce server ([docker image](https://hub.docker.com/r/privoce/vocechat-server/tags)): 
-Run on x86_64 platform:
+- Host your own Voce server ([docker image](https://hub.docker.com/r/privoce/vocechat-server/tags)):
+  Run on x86_64 platform:
+
 ```bash
 docker run -d --restart=always \
   -p 3000:3000 \
   --name vocechat-server \
   privoce/vocechat-server:latest
 ```
-For more server hosting instructions, see our documentation: https://doc.voce.chat/en-us/
+
+For more server hosting instructions, see our documentation: https://doc.voce.chat/
 
 ## Preview
-
-
 
 - official site: https://voce.chat
 - live demo: https://privoce.voce.chat/
