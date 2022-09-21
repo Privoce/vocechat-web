@@ -53,5 +53,8 @@
     "webrowse"
   ],
   "reactSnippets.settings.prettierEnabled": true,
-  "reactSnippets.settings.importReactOnTop": false
+  "reactSnippets.settings.importReactOnTop": false,
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }
