@@ -13,7 +13,7 @@ export const LicensePriceList = [
   {
     title: "VoceChat Supreme",
     limit: 99999,
-    pid: "price_1LkKqdGGoUDRyc3jnpZvXhzx",
+    pid: "price_1Lkgc7GGoUDRyc3j49Lqtncs",
     desc: "User Limit: No Limit"
   }
   // {
@@ -24,9 +24,10 @@ export const LicensePriceList = [
   //   desc: "User Limit: 500"
   // }
 ];
-export const PAYMENT_URL_PREFIX = process.env.REACT_APP_RELEASE
-  ? `https://vera.nicegoodthings.com`
-  : `http://localhost:4000`;
+export const PAYMENT_URL_PREFIX =
+  process.env.NODE_ENV === "production"
+    ? `https://vera.nicegoodthings.com`
+    : `http://localhost:4000`;
 export const CACHE_VERSION = `0.3.1`;
 export const GuestRoutes = ["/", "/chat", "/chat/channel/:channel_id"];
 export const ContentTypes = {

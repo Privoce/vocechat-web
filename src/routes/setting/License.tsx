@@ -84,7 +84,9 @@ export default function License() {
             </div>
             <div className="item">
               <span className="label">User Limit</span>
-              <span className="info"> {licenseInfo?.user_limit}</span>
+              <span className="info">
+                {licenseInfo?.user_limit == 99999 ? "No Limit" : licenseInfo?.user_limit}
+              </span>
             </div>
             <div className="item">
               <span className="label">Expired At</span>

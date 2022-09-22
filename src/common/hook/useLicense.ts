@@ -8,7 +8,7 @@ import { useAppSelector } from "../../app/store";
 
 const useLicense = () => {
   const userCount = useAppSelector((store) => store.users.ids.length);
-  const { data: license } = useGetLicenseQuery();
+  const { data: license } = useGetLicenseQuery(undefined, { refetchOnMountOrArgChange: true });
   const [check, { isLoading: isChecking, isSuccess: checked }] = useCheckLicenseMutation();
   const [upsert, { isSuccess: upserted, isLoading: upserting }] = useUpsertLicenseMutation();
   const checkLicense = (l: string) => {
