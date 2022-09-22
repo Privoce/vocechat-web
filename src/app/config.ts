@@ -3,6 +3,30 @@
 const BASE_URL = process.env.REACT_APP_RELEASE
   ? `${location.origin}/api`
   : `https://dev.voce.chat/api`;
+export const LicensePriceList = [
+  {
+    title: "VoceChat Pro",
+    limit: 100,
+    pid: "price_1LkICIGGoUDRyc3jqrdPEnkY",
+    desc: "User Limit: 100"
+  },
+  {
+    title: "VoceChat Supreme",
+    limit: 99999,
+    pid: "price_1LkKqdGGoUDRyc3jnpZvXhzx",
+    desc: "User Limit: No Limit"
+  }
+  // {
+  //   title: "VoceChat Enterprise",
+  //   limit: 500,
+  //   // pid: "price_1LkJNsGGoUDRyc3jkVNf4VPE",
+  //   pid: "price_1LkQGpGGoUDRyc3jGTh3GYHw",
+  //   desc: "User Limit: 500"
+  // }
+];
+export const PAYMENT_URL_PREFIX = process.env.REACT_APP_RELEASE
+  ? `https://vera.nicegoodthings.com`
+  : `http://localhost:4000`;
 export const CACHE_VERSION = `0.3.1`;
 export const GuestRoutes = ["/", "/chat", "/chat/channel/:channel_id"];
 export const ContentTypes = {

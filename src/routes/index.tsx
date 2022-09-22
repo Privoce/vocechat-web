@@ -14,6 +14,7 @@ const RegPage = lazy(() => import("./reg/Register"));
 const LoginPage = lazy(() => import("./login"));
 const OAuthPage = lazy(() => import("./oauth"));
 const UsersPage = lazy(() => import("./users"));
+const CallbackPage = lazy(() => import("./callback"));
 const FavoritesPage = lazy(() => import("./favs"));
 const OnboardingPage = lazy(() => import("./onboarding"));
 const InvitePage = lazy(() => import("./invite"));
@@ -51,6 +52,7 @@ const PageRoutes = () => {
       <Suspense fallback={<Loading fullscreen={true} />}>
         <Routes>
           <Route path="/guest_login" element={<GuestLogining />} />
+          <Route path="/cb/:type/:payload" element={<CallbackPage />} />
           <Route path="/oauth/:token" element={<OAuthPage />} />
           <Route
             path="/login"

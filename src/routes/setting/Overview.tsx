@@ -10,7 +10,6 @@ import SaveTip from "../../common/component/SaveTip";
 import StyledRadio from "../../common/component/styled/Radio";
 import { useAppSelector } from "../../app/store";
 import { LoginConfig, WhoCanSignUp } from "../../types/server";
-import Toggle from "../../common/component/styled/Toggle";
 import useConfig from "../../common/hook/useConfig";
 
 const StyledWrapper = styled.div`

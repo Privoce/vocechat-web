@@ -67,6 +67,20 @@ export interface LicenseResponse {
   base58: string;
   user_limit: number;
 }
+export interface LicenseMetadata {
+  expire: string;
+  user_limit: number;
+  domain: string | string[];
+}
+export interface RenewLicense {
+  priceId: string;
+  metadata: LicenseMetadata;
+  cancel_url: string;
+  success_url: string;
+}
+export interface RenewLicenseResponse {
+  session_url: string;
+}
 export interface CreateAdminDTO extends Pick<User, "email" | "name" | "gender"> {
   password: string;
 }

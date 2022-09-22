@@ -1,5 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import BASE_URL from "../config";
+import BASE_URL, { PAYMENT_URL_PREFIX } from "../config";
 import { updateInfo } from "../slices/server";
 import baseQuery from "./base.query";
 import { RootState } from "../store";
@@ -14,7 +14,9 @@ import {
   SMTPConfig,
   AgoraConfig,
   GithubAuthConfig,
-  LicenseResponse
+  LicenseResponse,
+  RenewLicense,
+  RenewLicenseResponse
 } from "../../types/server";
 
 const defaultExpireDuration = 7 * 24 * 60 * 60;
@@ -195,6 +197,18 @@ export const serverApi = createApi({
       })
     }),
 
+    getLicensePaymentUrl: builder.mutation<RenewLicenseResponse, RenewLicense>({
+      query: (data) => ({
+        url: `${PAYMENT_URL_PREFIX}/vocechat/payment/create`,
+        method: "POST",
+        body: data
+      })
+    }),
+    getGeneratedLicense: builder.query<{ license: string }, string>({
+      query: (session_id) => ({
+        url: `${PAYMENT_URL_PREFIX}/vocechat/licenses/${session_id}`
+      })
+    }),
     checkLicense: builder.mutation<LicenseResponse, string>({
       query: (license) => ({
         url: "/license/check",
@@ -241,5 +255,7 @@ export const {
   useCreateAdminMutation,
   useUpsertLicenseMutation,
   useCheckLicenseMutation,
-  useGetLicenseQuery
+  useGetLicenseQuery,
+  useGetLicensePaymentUrlMutation,
+  useLazyGetGeneratedLicenseQuery
 } = serverApi;

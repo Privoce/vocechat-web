@@ -4,8 +4,10 @@ import {
   useGetLicenseQuery,
   useUpsertLicenseMutation
 } from "../../app/services/server";
+import { useAppSelector } from "../../app/store";
 
 const useLicense = () => {
+  const userCount = useAppSelector((store) => store.users.ids.length);
   const { data: license } = useGetLicenseQuery();
   const [check, { isLoading: isChecking, isSuccess: checked }] = useCheckLicenseMutation();
   const [upsert, { isSuccess: upserted, isLoading: upserting }] = useUpsertLicenseMutation();
@@ -21,8 +23,10 @@ const useLicense = () => {
       return false;
     }
   };
-
+  console.log("uuu", userCount, license);
+  const lUserLimit = license?.user_limit ?? 0;
   return {
+    reachLimit: userCount >= lUserLimit,
     license,
     checked,
     checking: isChecking,
