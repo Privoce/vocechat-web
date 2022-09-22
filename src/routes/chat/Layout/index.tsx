@@ -9,6 +9,8 @@ import useUploadFile from "../../../common/hook/useUploadFile";
 import { ChatPrefixes } from "../../../app/config";
 import { useAppSelector } from "../../../app/store";
 import LoginTip from "./LoginTip";
+import useLicense from "../../../common/hook/useLicense";
+import LicenseUpgradeTip from "./LicenseOutdatedTip";
 
 interface Props {
   readonly?: boolean;
@@ -31,6 +33,7 @@ const Layout: FC<Props> = ({
   context = "channel",
   to
 }) => {
+  const { reachLimit } = useLicense();
   const { addStageFile } = useUploadFile({ context, id: to });
   const messagesContainer = useRef<HTMLDivElement>(null);
   const [previewImage, setPreviewImage] = useState(null);
@@ -107,7 +110,13 @@ const Layout: FC<Props> = ({
           <div className="chat">
             {children}
             <div className={`send ${selects ? "selecting" : ""}`}>
-              {readonly ? <LoginTip /> : <Send key={to} id={to} context={context} />}
+              {readonly ? (
+                <LoginTip />
+              ) : reachLimit ? (
+                <LicenseUpgradeTip />
+              ) : (
+                <Send key={to} id={to} context={context} />
+              )}
               {selects && <Operations context={context} id={to} />}
             </div>
           </div>
