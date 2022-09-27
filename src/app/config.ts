@@ -3,7 +3,7 @@
 const BASE_URL = process.env.REACT_APP_RELEASE
   ? `${location.origin}/api`
   : `https://dev.voce.chat/api`;
-export const LicensePriceList = [
+let prices = [
   {
     title: "VoceChat Pro",
     limit: 100,
@@ -16,14 +16,19 @@ export const LicensePriceList = [
     pid: "price_1Lkgc7GGoUDRyc3j49Lqtncs",
     desc: "User Limit: No Limit"
   }
-  // {
-  //   title: "VoceChat Enterprise",
-  //   limit: 500,
-  //   // pid: "price_1LkJNsGGoUDRyc3jkVNf4VPE",
-  //   pid: "price_1LkQGpGGoUDRyc3jGTh3GYHw",
-  //   desc: "User Limit: 500"
-  // }
 ];
+export const LicensePriceList =
+  process.env.NODE_ENV === "development"
+    ? [
+        ...prices,
+        {
+          title: "VoceChat Enterprise",
+          limit: 99999,
+          pid: "price_1LkQGpGGoUDRyc3jGTh3GYHw",
+          desc: "test price"
+        }
+      ]
+    : prices;
 export const PAYMENT_URL_PREFIX =
   process.env.NODE_ENV === "production"
     ? `https://vera.nicegoodthings.com`

@@ -3,7 +3,10 @@ const StyledWrapper = styled.div`
   display: flex;
   width: 100vw;
   height: 100vh;
-  background-color: var(---navs-bg);
+  background: var(---navs-bg);
+  &.guest {
+    background: none;
+  }
   > .col {
     height: 100%;
     display: flex;

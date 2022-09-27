@@ -7,8 +7,13 @@ import {
 import { useAppSelector } from "../../app/store";
 
 const useLicense = () => {
-  const userCount = useAppSelector((store) => store.users.ids.length);
-  const { data: license } = useGetLicenseQuery(undefined, { refetchOnMountOrArgChange: true });
+  const { userCount, isGuest } = useAppSelector((store) => {
+    return { userCount: store.users.ids.length, isGuest: store.authData.guest };
+  });
+  const { data: license } = useGetLicenseQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+    skip: isGuest
+  });
   const [check, { isLoading: isChecking, isSuccess: checked }] = useCheckLicenseMutation();
   const [upsert, { isSuccess: upserted, isLoading: upserting }] = useUpsertLicenseMutation();
   const checkLicense = (l: string) => {
@@ -24,7 +29,7 @@ const useLicense = () => {
     }
   };
   console.log("uuu", userCount, license);
-  const lUserLimit = license?.user_limit ?? 0;
+  const lUserLimit = license?.user_limit ?? Number.MAX_SAFE_INTEGER;
   return {
     reachLimit: userCount >= lUserLimit,
     license,
