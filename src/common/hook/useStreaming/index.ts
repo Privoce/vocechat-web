@@ -22,9 +22,9 @@ import chatMessageHandler from "./chat.handler";
 import store, { useAppDispatch, useAppSelector } from "../../../app/store";
 import { ServerEvent, UsersStateEvent } from "../../../types/sse";
 
-class RetriableError extends Error {}
+class RetryError extends Error { }
 
-class FatalError extends Error {}
+class FatalError extends Error { }
 
 const getQueryString = (params: { [key: string]: string }) => {
   const sp = new URLSearchParams();
@@ -67,6 +67,11 @@ export default function useStreaming() {
     } = {
       "api-key": token
     };
+    //  token 非空
+    if (!token) {
+      initializing = false;
+      return;
+    }
     // 如果afterMid是0，则不传该参数
     if (afterMid !== 0) {
       params.after_mid = `${afterMid}`;
@@ -92,7 +97,7 @@ export default function useStreaming() {
         } else {
           // server error
           console.info("sse debug: open retry");
-          throw new RetriableError();
+          throw new RetryError();
         }
       },
       onmessage(evt) {
@@ -274,7 +279,7 @@ export default function useStreaming() {
         // if the server closes the connection unexpectedly, retry:
         console.info("sse debug: closed");
         initializing = false;
-        throw new RetriableError();
+        throw new RetryError();
       },
       onerror(err) {
         initializing = false;

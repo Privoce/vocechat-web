@@ -25,14 +25,16 @@ const Notification = () => {
   }, [token]);
 
   useEffect(() => {
-    const handleServiceworkerMessage = (event: MessageEvent) => {
+    const handleServiceWorkerMessage = (event: MessageEvent) => {
       const { newPath } = event.data;
-      navigateTo(newPath);
+      if (newPath) {
+        navigateTo(newPath);
+      }
     };
     // https only
-    navigator.serviceWorker?.addEventListener("message", handleServiceworkerMessage);
+    navigator.serviceWorker?.addEventListener("message", handleServiceWorkerMessage);
     return () => {
-      navigator.serviceWorker?.removeEventListener("message", handleServiceworkerMessage);
+      navigator.serviceWorker?.removeEventListener("message", handleServiceWorkerMessage);
     };
   }, []);
 
