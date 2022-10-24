@@ -1,12 +1,11 @@
 {
   "name": "vocechat-web",
-  "version": "0.3.11",
+  "version": "0.3.12",
   "private": true,
   "homepage": "https://voce.chat",
   "dependencies": {
     "@emoji-mart/data": "^1.0.6",
     "@metamask/onboarding": "^1.0.1",
-    "@microsoft/fetch-event-source": "^2.0.1",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.8",
     "@react-oauth/google": "^0.2.8",
     "@reduxjs/toolkit": "^1.8.6",

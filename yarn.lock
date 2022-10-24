@@ -2296,11 +2296,6 @@
   dependencies:
     bowser "^2.9.0"
 
-"@microsoft/fetch-event-source@^2.0.1":
-  version "2.0.1"
-  resolved "https://mirrors.cloud.tencent.com/npm/@microsoft%2ffetch-event-source/-/fetch-event-source-2.0.1.tgz#9ceecc94b49fbaa15666e38ae8587f64acce007d"
-  integrity sha512-W6CLUJ2eBMw3Rec70qrsEW0jOm/3twwJv21mrmj2yORiaVmVYGS4sSS5yUwvQc1ZlDLYGPnClVWmUUMagKNsfA==
-
 "@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1":
   version "5.1.1-v1"
   resolved "https://mirrors.cloud.tencent.com/npm/@nicolo-ribaudo%2feslint-scope-5-internals/-/eslint-scope-5-internals-5.1.1-v1.tgz#dbf733a965ca47b1973177dc0bb6c889edcfb129"
