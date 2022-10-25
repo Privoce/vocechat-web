@@ -20,14 +20,14 @@ let prices = [
 export const LicensePriceList =
   process.env.NODE_ENV === "development"
     ? [
-        ...prices,
-        {
-          title: "VoceChat Enterprise",
-          limit: 99999,
-          pid: "price_1LkQGpGGoUDRyc3jGTh3GYHw",
-          desc: "test price"
-        }
-      ]
+      ...prices,
+      {
+        title: "VoceChat Enterprise",
+        limit: 99999,
+        pid: "price_1LkQGpGGoUDRyc3jGTh3GYHw",
+        desc: "test price"
+      }
+    ]
     : prices;
 export const PAYMENT_URL_PREFIX =
   process.env.NODE_ENV === "production"

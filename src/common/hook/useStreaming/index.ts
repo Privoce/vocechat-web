@@ -82,9 +82,19 @@ export default function useStreaming() {
       initialized = true;
     };
     SSE.onerror = (err) => {
-      console.error("sse error", err);
-
+      const { readyState } = err.target as EventSource;
+      console.error("sse error", readyState);
+      // 连接还处于开启或正在连接状态
+      if (readyState === EventSource.OPEN || readyState === EventSource.CONNECTING) {
+        return;
+      }
       initializing = false;
+      // 正常的关闭
+      if (readyState === EventSource.CLOSED) {
+        initialized = false;
+        return;
+      }
+      // 非正常状态，目前未知
       stopStreaming();
       if (inter) {
         clearTimeout(inter);
