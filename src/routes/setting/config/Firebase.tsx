@@ -43,7 +43,7 @@ export default function ConfigFirebase() {
             disabled={!enabled}
             data-type="token_url"
             onChange={handleChange}
-            value={token_url || "https://oauth2.googleapis.com/token"}
+            value={token_url}
             name="token_url"
             placeholder="Token URL"
           />
