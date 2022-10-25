@@ -1,12 +1,12 @@
 import { useEffect, memo } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import useDeviceToken from "./useDeviceToken";
 import { vapidKey } from "../../../app/config";
 import { useUpdateDeviceTokenMutation } from "../../../app/services/auth";
 let updated = false;
 let updating = false;
 const Notification = () => {
-  const navigateTo = useNavigate();
+  // const navigateTo = useNavigate();
   const token = useDeviceToken(vapidKey);
   const [updateDeviceToken] = useUpdateDeviceTokenMutation();
   useEffect(() => {
@@ -24,19 +24,19 @@ const Notification = () => {
     updateToken(token as string);
   }, [token]);
 
-  useEffect(() => {
-    const handleServiceWorkerMessage = (event: MessageEvent) => {
-      const { newPath } = event.data;
-      if (newPath) {
-        navigateTo(newPath);
-      }
-    };
-    // https only
-    navigator.serviceWorker?.addEventListener("message", handleServiceWorkerMessage);
-    return () => {
-      navigator.serviceWorker?.removeEventListener("message", handleServiceWorkerMessage);
-    };
-  }, []);
+  // useEffect(() => {
+  //   const handleServiceWorkerMessage = (event: MessageEvent) => {
+  //     const { newPath } = event.data;
+  //     if (newPath && document.hidden) {
+  //       navigateTo(newPath);
+  //     }
+  //   };
+  //   // https only
+  //   navigator.serviceWorker?.addEventListener("message", handleServiceWorkerMessage);
+  //   return () => {
+  //     navigator.serviceWorker?.removeEventListener("message", handleServiceWorkerMessage);
+  //   };
+  // }, []);
 
   return null;
 };
