@@ -33,7 +33,7 @@ const StyledSocialButton = styled(Button)`
       height: 24px;
     }
   }
-  .invisible {
+  > .hide {
     /* z-index: 1; */
     /* opacity: 0; */
     left: 0;
@@ -45,7 +45,7 @@ const StyledSocialButton = styled(Button)`
     }
   }
   &:hover {
-    .invisible {
+     .hide {
       opacity: 0;
       z-index: 999;
     }
@@ -92,10 +92,10 @@ const GoogleLoginInner: FC<Props> = ({ type = "login", loaded, loadError }) => {
         {loadError
           ? "Script Load Error!"
           : loaded
-          ? `${type === "login" ? "Sign in" : "Sign up"} with Google`
-          : `Initializing`}
+            ? `${type === "login" ? "Sign in" : "Sign up"} with Google`
+            : `Initializing`}
       </div>
-      <div className="invisible">
+      <div className="hide">
         <GoogleLogin
           width="360px"
           onSuccess={(res) => {

@@ -7,7 +7,7 @@ import { GithubAuthConfig } from "../../types/server";
 
 export default function useGithubAuthConfig() {
   const [changed, setChanged] = useState(false);
-  const [config, setConfig] = useState<GithubAuthConfig | undefined>(undefined);
+  const [config, setConfig] = useState<GithubAuthConfig | undefined>();
   const { data } = useGetGithubAuthConfigQuery(undefined, {
     refetchOnMountOrArgChange: true
   });

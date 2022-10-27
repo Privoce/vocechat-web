@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/indent */
-import { FC, memo } from 'react';
+import { FC, memo, useEffect } from 'react';
 // import { MessagePayload } from '../../../app/slices/message';
 import { useAppSelector } from '../../../app/store';
 import TextMessage from './Message/Text';
@@ -13,6 +13,14 @@ const interval = 10 * 1000;
 const Index: FC<Props> = ({ uid }) => {
   const { mids, messageMap } = useAppSelector(store => { return { mids: store.userMessage.byId[uid], messageMap: store.message }; });
   console.log("mids", mids, uid);
+  useEffect(() => {
+    const container = document.querySelector("#MESSAGE_LIST_CONTAINER");
+    if (mids && mids.length > 0 && container) {
+      setTimeout(() => {
+        container.scrollTop = container.scrollHeight;
+      }, 30);
+    }
+  }, [mids]);
 
   if (!mids) return null;
   return mids.map((mid, idx) => {
@@ -23,7 +31,7 @@ const Index: FC<Props> = ({ uid }) => {
       : prevMsg.from_uid !== currMsg.from_uid
         ? false
         : (currMsg.created_at ?? 0) - (prevMsg.created_at ?? 0) < interval;
-    return <TextMessage key={currMsg.mid} {...currMsg} compact={compact} isFirst={idx === 0} />;
+    return <TextMessage hostId={uid} key={currMsg.mid} {...currMsg} compact={compact} isFirst={idx === 0} />;
   });
 };
 

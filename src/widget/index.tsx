@@ -4,11 +4,11 @@ import { useGetServerQuery } from "../app/services/server";
 import Icon from "./Icon";
 import Popup from "./Popup";
 import usePreload from "./usePreload";
-// type Props = {
+type Props = {
+  hostId: number
+};
 
-// };
-
-function Widget() {
+function Widget({ hostId }: Props) {
   const { rehydrated } = usePreload();
   const [visible, setVisible] = useState(false);
   const { isLoading, isError } = useGetServerQuery();
@@ -23,7 +23,7 @@ function Widget() {
     }
   }, [visible]);
   if (isLoading || isError || !rehydrated) return null;
-  return visible ? <Popup handleClose={toggleVisible} /> : <Icon handleClick={toggleVisible} />;
+  return visible ? <Popup handleClose={toggleVisible} hostId={hostId} /> : <Icon handleClick={toggleVisible} />;
 }
 
 export default Widget;

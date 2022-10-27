@@ -6,9 +6,9 @@ import './assets/index.css';
 import store from "./app/store";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
-
+const hostId = new URLSearchParams(location.search).get("host");
 root.render(
-  <Provider store={store}>
-    <Widget />
-  </Provider>
+  hostId ? <Provider store={store}>
+    <Widget hostId={Number(hostId)} />
+  </Provider> : null
 );

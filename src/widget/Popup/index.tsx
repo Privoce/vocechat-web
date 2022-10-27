@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, ChangeEvent } from 'react';
+import { useState, useRef, ChangeEvent } from 'react';
 import Header from './Header';
 import Welcome from './Welcome';
 import MessageFeed from './MessageFeed';
@@ -6,21 +6,17 @@ import Line from './Line';
 import useSendMessage from '../../common/hook/useSendMessage';
 import { useAppSelector } from '../../app/store';
 type Props = {
+    hostId: number,
     handleClose: () => void
 }
 
-const Index = ({ handleClose }: Props) => {
-    const messageListRef = useRef<HTMLElement | null>(null);
-    const loginUid = useAppSelector(store => store.authData.user?.uid);
-    const { sendMessage, isSuccess } = useSendMessage({
-        from: loginUid,
-        to: 304,
+const Index = ({ handleClose, hostId }: Props) => {
+    const { user: loginUser, token, guest: isGuest } = useAppSelector(store => store.authData);
+    const { sendMessage } = useSendMessage({
+        from: loginUser?.uid,
+        to: hostId,
         context: "user"
     });
-    // const { checked, firstEnter, session } = useSession({ preCheck: true });
-    // const { isSending, sendSuccess, sendMessage, message } = useSendMessage();
-    // const { appendMessage, messages } = useFeed();
-    // const messageListRef = useRef<HTMLElement | null>(null);
     const [input, setInput] = useState('');
     const handleInput = (evt: ChangeEvent<HTMLTextAreaElement>) => {
         setInput(evt.target.value);
@@ -34,23 +30,16 @@ const Index = ({ handleClose }: Props) => {
         setInput("");
     };
 
-    // 自动滚动到底部，todo:根据距离底部位置大小自动滚动 类似微信体验
-    useEffect(() => {
-        const container = messageListRef.current;
-        if (container) {
-            setTimeout(() => {
-                container.scrollTop = container.scrollHeight;
-            }, 30);
-        }
-    }, [isSuccess]);
+    // no token or guest login
+    const notLogin = !token || isGuest;
     return (
-        <aside className="flex flex-col justify-between bg-white w-full h-full rounded-[10px] pointer-events-auto">
+        <aside className="flex flex-col justify-between bg-white w-full h-full rounded-md overflow-hidden">
             <Header handleClose={handleClose} />
             <Line />
             {/* message list */}
-            <section ref={messageListRef} className="px-2 py-3 flex-1 overflow-y-auto scroll-smooth">
-                <Welcome />
-                <MessageFeed uid={304} />
+            <section id='MESSAGE_LIST_CONTAINER' className="px-2 py-3 flex-1 overflow-y-auto scroll-smooth">
+                <Welcome needLogin={notLogin} />
+                {notLogin ? null : <MessageFeed uid={hostId} />}
             </section>
             <Line />
             {/* message input */}

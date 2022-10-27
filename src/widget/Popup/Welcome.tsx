@@ -1,11 +1,15 @@
 // import clsx from 'clsx'
 import { memo } from 'react';
 import { useAppSelector } from '../../app/store';
+import Login from './Login';
 
 const TextMessage = ({ text, animate = '' }: { text: string; animate?: string }) => (
   <p className={`text-gray-600 text-md mb-3 ${animate}`}>{text}</p>
 );
-const Index = () => {
+type Props = {
+  needLogin?: boolean
+}
+const Index = ({ needLogin = false }: Props) => {
   const { name, logo } = useAppSelector(store => store.server);
   return (
     <div className="flex gap-2">
@@ -21,7 +25,13 @@ const Index = () => {
             hour12: true,
           })}`}</time>
         </span>
-        <TextMessage text="Hi there, Nice to meet you!" animate="animate-[fadeInUp_.5s_ease-in-out_both]" />
+        <TextMessage text="👋 Hi there, Nice to meet you!" animate="animate-[fadeInUp_.5s_ease-in-out_both]" />
+        {needLogin && <>
+          <TextMessage text="You need login before we have a nice talk 👇" animate="animate-[fadeInUp_.5s_.8s_ease-in-out_both]" />
+          <div className="animate-[fadeInUp_.5s_1.2s_ease-in-out_both]">
+            <Login />
+          </div>
+        </>}
       </div>
     </div>
   );

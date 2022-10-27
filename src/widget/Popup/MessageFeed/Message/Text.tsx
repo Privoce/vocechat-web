@@ -21,29 +21,29 @@ const Time: FC<TimeProps> = ({ time }) => {
 };
 
 export type MessageProps = {
+  hostId: number;
   compact?: boolean;
   isFirst?: boolean;
 } & MessagePayload;
 
 const Index: FC<MessageProps> = (props) => {
   const { server: { name, logo }, loginUser } = useAppSelector(store => { return { server: store.server, loginUser: store.authData.user }; });
-  const { from_uid, content, created_at, compact, isFirst = false } = props;
-  // 暂时写死
-  const isHost = from_uid == 304;
+  const { hostId, from_uid, content, created_at, compact, isFirst = false } = props;
+  const isHost = from_uid == hostId;
   return (
     <div
       className={clsx(
         'flex flex-col relative pl-14 py-1 hover:bg-gray-100 rounded-sm',
-        compact ? 'mt-2' : 'mt-6',
+        compact ? 'mt-0' : 'mt-4',
         isFirst ? 'mt-0' : ''
       )}
     >
       {!compact && (
-        <div className="absolute left-2 top-2 w-10 h-10 rounded-full overflow-hidden">
+        <div className="absolute left-0 top-2 w-12 h-12 rounded-full overflow-hidden">
           {isHost ? (
             <img src={logo} alt="logo" className="w-full h-full" />
           ) : (
-            <img className="w-10 h-10" src={getInitialsAvatar({ initials: getInitials(loginUser?.name ?? "Unkown") })} alt="avatar" />
+            <img className="w-12 h-12" src={getInitialsAvatar({ initials: getInitials(loginUser?.name ?? "Unkown") })} alt="avatar" />
           )}
         </div>
       )}
@@ -55,12 +55,12 @@ const Index: FC<MessageProps> = (props) => {
       )}
       <p
         className={clsx(
-          'text-gray-600 text-sm whitespace-normal break-words mt-2 w-[80%]',
+          'text-gray-600 text-md whitespace-normal break-words mt-2 w-[80%]',
           compact ? 'group relative mt-0' : ''
         )}
       >
         {compact && (
-          <time className="absolute -left-2 top-0 -translate-x-full text-gray-300 text-[10px] invisible group-hover:visible">{`${new Date(created_at)
+          <time className="absolute -left-2 top-0 -translate-x-full text-gray-300 text-xs invisible group-hover:visible">{`${new Date(created_at)
             .toLocaleTimeString('en-US', {
               second: 'numeric',
               minute: 'numeric',
