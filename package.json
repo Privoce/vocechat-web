@@ -21,6 +21,7 @@
     "@uiball/loaders": "^1.2.6",
     "bfj": "^7.0.2",
     "browserslist": "^4.21.4",
+    "clsx": "^1.2.1",
     "copy-image-clipboard": "^2.1.2",
     "css-loader": "^6.7.1",
     "css-minimizer-webpack-plugin": "^4.2.2",

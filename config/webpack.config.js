@@ -133,7 +133,7 @@ module.exports = function (webpackEnv) {
       : isEnvDevelopment && "cheap-module-source-map",
     // These are the "entry points" to our application.
     // This means they will be the "root" imports that are included in JS bundle.
-    entry: { main: paths.appIndexJs, embed: paths.embedAppIndexJs },
+    entry: { main: paths.appIndexJs, widget: paths.widgetAppIndexJs },
     output: {
       // The build folder.
       path: paths.appBuild,
@@ -439,10 +439,10 @@ module.exports = function (webpackEnv) {
         Object.assign(
           {},
           {
-            filename: "embed.html",
+            filename: "widget.html",
             inject: true,
-            template: paths.embedAppHtml,
-            chunks: ["embed"]
+            template: paths.widgetAppHtml,
+            chunks: ["widget"]
           },
           isEnvProduction
             ? {

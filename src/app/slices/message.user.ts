@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 export interface State {
   ids: number[];
   // todo: check object type
-  byId: { [id: number]: any };
+  byId: { [id: number]: number[] };
 }
 
 const initialState: State = {

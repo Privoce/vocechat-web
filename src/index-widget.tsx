@@ -1,13 +1,14 @@
 import ReactDOM from "react-dom/client";
-import Embed from "./embed/index";
+import { Provider } from "react-redux";
+
+import Widget from "./widget/index";
 import './assets/index.css';
-import MarkdownStyleOverride from "./common/component/MarkdownStyleOverride";
+import store from "./app/store";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 
 root.render(
-  <>
-    <Embed />
-    <MarkdownStyleOverride />
-  </>
+  <Provider store={store}>
+    <Widget />
+  </Provider>
 );

@@ -1,9 +1,10 @@
 import toast from "react-hot-toast";
-import { removeReplyingMessage, addReplyingMessage } from "../../app/slices/message";
+import { removeReplyingMessage, addReplyingMessage, MessagePayload } from "../../app/slices/message";
 import { useSendChannelMsgMutation } from "../../app/services/channel";
 import { useSendMsgMutation } from "../../app/services/user";
 import { useReplyMessageMutation } from "../../app/services/message";
 import { useAppDispatch, useAppSelector } from "../../app/store";
+import { ContentTypeKey } from "../../types/message";
 
 interface Props {
   context: "user" | "channel";
@@ -18,12 +19,7 @@ interface SendMessagesDTO {
   channels: number[];
 }
 
-interface SendMessageDTO {
-  context: "user" | "channel";
-  from: number;
-  to: number;
-}
-
+type SendMessageDTO = { type: ContentTypeKey } & Partial<MessagePayload>
 const useSendMessage = (props?: Props) => {
   const { context = "user", from = 0, to = 0 } = props || {};
   const dispatch = useAppDispatch();
@@ -65,7 +61,7 @@ const useSendMessage = (props?: Props) => {
   const sendMessage = async ({
     type = "text",
     content,
-    properties = {},
+    properties,
     reply_mid,
     ...rest
   }: SendMessageDTO) => {
@@ -80,7 +76,7 @@ const useSendMessage = (props?: Props) => {
       await sendFn({
         id: to,
         content,
-        properties: { ...properties },
+        properties,
         type,
         from_uid: from,
         ...rest
