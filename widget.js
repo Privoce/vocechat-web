@@ -11,7 +11,8 @@ const styles = {
   position: "fixed",
   right: "15px",
   bottom: "15px",
-  border: "none"
+  border: "none",
+  zIndex: 9999
 };
 Object.assign(wrapper.style, styles);
 wrapper.src = `${domain}/widget.html?host=${hostId}`;
