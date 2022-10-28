@@ -152,7 +152,7 @@ export default function Reg() {
       {enableGithubLogin && (
         <GithubLoginButton type="register" client_id={githubAuthConfig?.client_id} />
       )}
-      <SignInLink />
+      <SignInLink token={magicToken} />
     </>
   );
 }
