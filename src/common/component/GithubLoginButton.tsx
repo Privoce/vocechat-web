@@ -1,12 +1,7 @@
-import { useEffect, FC } from "react";
+import { FC, useEffect } from "react";
 import IconGithub from "../../assets/icons/github.svg";
 import styled from "styled-components";
-import { KEY_LOCAL_MAGIC_TOKEN } from "../../app/config";
-
 import Button from "./styled/Button";
-import { useLoginMutation } from "../../app/services/auth";
-import toast from "react-hot-toast";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 
 const StyledSocialButton = styled(Button)`
   width: 100%;
@@ -25,52 +20,42 @@ const StyledSocialButton = styled(Button)`
 `;
 
 type Props = {
+  source?: "widget" | "webapp",
   client_id?: string;
   type?: "login" | "register";
 };
 
-const GithubLoginButton: FC<Props> = ({ type = "login", client_id }) => {
-  //拿本地存的magic token
-  const magic_token = localStorage.getItem(KEY_LOCAL_MAGIC_TOKEN);
-  const [login, { isLoading, isSuccess, error }] = useLoginMutation();
+const GithubLoginButton: FC<Props> = ({ type = "login", source = "webapp", client_id }) => {
   useEffect(() => {
-    const query = new URLSearchParams(location.search);
-    const isGithub = query.get("oauth") === "github";
-    const code = query.get("code");
-    if (isGithub && code) {
-      login({
-        magic_token,
-        code: code,
-        type: "github"
-      });
-    }
-  }, []);
-  useEffect(() => {
-    if (isSuccess) {
-      toast.success("Login Successfully");
-    }
-  }, [isSuccess]);
-  useEffect(() => {
-    if (error) {
-      // todo: why?
-      switch ((error as FetchBaseQueryError).status) {
-        case 410:
-          toast.error(
-            "No associated account found, please user admin for an invitation link to join."
-          );
-          break;
-        default:
-          toast.error("Something Error");
-          break;
+    const handleGithubLoginStatusChange = (evt: StorageEvent) => {
+      const { key, newValue } = evt;
+      if (key == 'widget' && !!newValue) {
+        console.log("github logged in");
+        localStorage.removeItem("widget");
+        const parentWindow = window.parent;
+        if (parentWindow) {
+          parentWindow.postMessage("RELOAD_WITH_OPEN", '*');
+        }
       }
-      return;
+    };
+    if (source == "widget") {
+      window.addEventListener("storage", handleGithubLoginStatusChange);
     }
-  }, [error]);
+
+    return () => {
+      if (source == "widget") {
+        window.removeEventListener("storage", handleGithubLoginStatusChange);
+      }
+    };
+  }, [source]);
+
   const handleGithubLogin = () => {
-    location.href = `https://github.com/login/oauth/authorize?client_id=${client_id}`;
+    window.open(`https://github.com/login/oauth/authorize?client_id=${client_id}&redirect_uri=${location.origin}/#/cb/github/${source}`);
+    // location.href = `https://github.com/login/oauth/authorize?client_id=${client_id}`;
   };
+
   return (
-    <StyledSocialButton onClick={handleGithubLogin} disabled={isLoading}>
+    <StyledSocialButton onClick={handleGithubLogin}>
       <IconGithub className="icon" />
       {` ${type === "login" ? "Sign in" : "Sign up"} with Github`}
     </StyledSocialButton>

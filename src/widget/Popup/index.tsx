@@ -1,4 +1,4 @@
-import { useState, useRef, ChangeEvent } from 'react';
+import { useState, ChangeEvent } from 'react';
 import Header from './Header';
 import Welcome from './Welcome';
 import MessageFeed from './MessageFeed';
@@ -33,7 +33,7 @@ const Index = ({ handleClose, hostId }: Props) => {
     // no token or guest login
     const notLogin = !token || isGuest;
     return (
-        <aside className="flex flex-col justify-between bg-white w-full h-full rounded-md overflow-hidden">
+        <aside className="flex flex-col justify-between bg-white w-[600px] h-[800px] rounded-md overflow-hidden">
             <Header handleClose={handleClose} />
             <Line />
             {/* message list */}
@@ -45,10 +45,11 @@ const Index = ({ handleClose, hostId }: Props) => {
             {/* message input */}
             <div className="w-full px-2 py-3">
                 <textarea
+                    disabled={notLogin}
                     value={input}
                     onChange={handleInput}
                     className="w-full h-full text-sm p-2 rounded-lg bg-gray-200 resize-none text-black outline-none"
-                    placeholder="Write a message..."
+                    placeholder={notLogin ? "Login first..." : "Write a message..."}
                     rows={3}
                 />
             </div>

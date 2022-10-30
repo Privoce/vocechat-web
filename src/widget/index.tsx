@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useGetServerQuery } from "../app/services/server";
 
 import Icon from "./Icon";
@@ -10,18 +10,16 @@ type Props = {
 
 function Widget({ hostId }: Props) {
   const { rehydrated } = usePreload();
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(!!new URLSearchParams(location.search).get("open"));
   const { isLoading, isError } = useGetServerQuery();
   const toggleVisible = () => {
-    setVisible((prev) => !prev);
-  };
-  useEffect(() => {
     // 有无iframe内嵌
     const parentWindow = window.parent;
     if (parentWindow) {
-      parentWindow.postMessage(visible ? 'OPEN' : 'CLOSE', '*');
+      parentWindow.postMessage(visible ? 'CLOSE' : 'OPEN', '*');
     }
-  }, [visible]);
+    setVisible((prev) => !prev);
+  };
   if (isLoading || isError || !rehydrated) return null;
   return visible ? <Popup handleClose={toggleVisible} hostId={hostId} /> : <Icon handleClick={toggleVisible} />;
 }

@@ -28,18 +28,18 @@ export type MessageProps = {
 
 const Index: FC<MessageProps> = (props) => {
   const { server: { name, logo }, loginUser } = useAppSelector(store => { return { server: store.server, loginUser: store.authData.user }; });
-  const { hostId, from_uid, content, created_at, compact, isFirst = false } = props;
+  const { hostId, from_uid, content, created_at = 0, compact, isFirst = false } = props;
   const isHost = from_uid == hostId;
   return (
     <div
       className={clsx(
-        'flex flex-col relative pl-14 py-1 hover:bg-gray-100 rounded-sm',
-        compact ? 'mt-0' : 'mt-4',
+        'flex flex-col relative pl-14 py-2 hover:bg-gray-100 rounded-sm',
+        compact ? 'py-1' : 'mt-4',
         isFirst ? 'mt-0' : ''
       )}
     >
       {!compact && (
-        <div className="absolute left-0 top-2 w-12 h-12 rounded-full overflow-hidden">
+        <div className="absolute left-1 top-2 w-12 h-12 rounded-full overflow-hidden">
           {isHost ? (
             <img src={logo} alt="logo" className="w-full h-full" />
           ) : (
@@ -48,19 +48,19 @@ const Index: FC<MessageProps> = (props) => {
         </div>
       )}
       {!compact && (
-        <span className="flex items-center gap-2 leading-6">
-          <em className="text-black not-italic font-bold text-md">{isHost ? name : loginUser?.name}</em>
-          <Time time={created_at ?? 0} />
+        <span className="flex items-center gap-2 text-md">
+          <em className="text-black not-italic font-bold">{isHost ? name : loginUser?.name}</em>
+          <Time time={created_at} />
         </span>
       )}
       <p
         className={clsx(
-          'text-gray-600 text-md whitespace-normal break-words mt-2 w-[80%]',
-          compact ? 'group relative mt-0' : ''
+          'text-gray-600 text-md whitespace-normal break-words w-[80%]',
+          compact ? 'group relative ' : 'pt-1'
         )}
       >
         {compact && (
-          <time className="absolute -left-2 top-0 -translate-x-full text-gray-300 text-xs invisible group-hover:visible">{`${new Date(created_at)
+          <time className="absolute -left-2 top-1/2 -translate-x-full -translate-y-1/2 text-gray-300 text-xs invisible group-hover:visible">{`${new Date(created_at)
             .toLocaleTimeString('en-US', {
               second: 'numeric',
               minute: 'numeric',
