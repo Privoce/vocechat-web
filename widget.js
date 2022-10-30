@@ -32,6 +32,14 @@ window.addEventListener(
         wrapper.setAttribute("width", closeWidth);
         wrapper.setAttribute("height", closeHeight);
         break;
+      case "RELOAD_WITH_OPEN":
+        {
+          const url = new URL(wrapper.src);
+          url.searchParams.append("open", new Date().getTime());
+          console.log("new src", url.href);
+          wrapper.src = url.href;
+        }
+        break;
       default:
         break;
     }
