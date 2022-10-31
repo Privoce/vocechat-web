@@ -42,6 +42,13 @@ export const channelApi = createApi({
         body: data
       })
     }),
+    changeChannelType: builder.mutation<number, { is_public: boolean, id: number }>({
+      query: ({ id, is_public }) => ({
+        url: `group/${id}/change_type`,
+        method: "POST",
+        body: { is_public }
+      })
+    }),
     updateChannel: builder.mutation<void, ChannelDTO>({
       query: ({ id, ...data }) => ({
         url: `group/${id}`,
@@ -186,6 +193,7 @@ export const channelApi = createApi({
 });
 
 export const {
+  useChangeChannelTypeMutation,
   useLazyLeaveChannelQuery,
   useLazyCreateInviteLinkQuery,
   useCreateInviteLinkQuery,

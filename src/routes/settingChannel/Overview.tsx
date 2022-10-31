@@ -2,6 +2,7 @@ import { useState, useEffect, ChangeEvent } from "react";
 import styled from "styled-components";
 import toast from "react-hot-toast";
 import {
+  useChangeChannelTypeMutation,
   useGetChannelQuery,
   useUpdateChannelMutation,
   useUpdateIconMutation
@@ -9,6 +10,7 @@ import {
 import AvatarUploader from "../../common/component/AvatarUploader";
 import Input from "../../common/component/styled/Input";
 import Label from "../../common/component/styled/Label";
+import Radio from "../../common/component/styled/Radio";
 import Textarea from "../../common/component/styled/Textarea";
 import SaveTip from "../../common/component/SaveTip";
 import channelIcon from "../../assets/icons/channel.svg?url";
@@ -41,6 +43,7 @@ const StyledWrapper = styled.div`
         background-position-y: 8px;
         background-repeat: no-repeat;
       }
+
     }
   }
 `;
@@ -56,6 +59,7 @@ export default function Overview({ id = 0 }) {
   const [values, setValues] = useState<Channel>();
   const [updateChannelIcon] = useUpdateIconMutation();
   const [updateChannel, { isSuccess: updated }] = useUpdateChannelMutation();
+  const [changeChannelType, { isSuccess: changeTypeSuccess }] = useChangeChannelTypeMutation();
   const handleUpdate = () => {
     if (!values) return;
     const { name, description } = values;
@@ -103,6 +107,11 @@ export default function Overview({ id = 0 }) {
       refetch();
     }
   }, [updated]);
+  useEffect(() => {
+    if (changeTypeSuccess) {
+      toast.success("Change channel visibility successfully!");
+    }
+  }, [changeTypeSuccess]);
 
   if (!values || !id) return null;
   const { name, description } = values;
@@ -138,6 +147,19 @@ export default function Overview({ id = 0 }) {
             placeholder="Let everyone know how to use this channel."
           />
         </div>
+        {!readOnly && <div className="input">
+          <Label htmlFor="desc">Channel Visibility</Label>
+          <Radio
+            options={["Public", "Private"]}
+            values={["true", "false"]}
+            value={String(channel.is_public)}
+            onChange={(v: string) => {
+              // console.log("wtff", typeof v, v);
+              changeChannelType({ is_public: v.toLowerCase() === 'true', id });
+              // handleGuestToggle(v);
+            }}
+          />
+        </div>}
       </div>
       {changed && <SaveTip saveHandler={handleUpdate} resetHandler={handleReset} />}
     </StyledWrapper>

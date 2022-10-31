@@ -2,6 +2,7 @@ import { useState, useId, FC } from "react";
 import styled from "styled-components";
 
 const StyledForm = styled.form`
+  width: 100%;
   > .option {
     &:not(:last-child) {
       margin-bottom: 8px;
