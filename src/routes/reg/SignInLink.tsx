@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import styled from "styled-components";
 
 const StyledSignInLink = styled.ul`
@@ -26,21 +27,23 @@ const StyledSignInLink = styled.ul`
 `;
 
 export default function SignInLink({ token }: { token?: string }) {
-  const isMobile = "ontouchstart" in document.documentElement;
   const handleSignIn = () => {
     location.href = "/#/login";
   };
-  const showAppEntry = isMobile && !!token;
+  useEffect(() => {
+    const isMobile = "ontouchstart" in document.documentElement;
+    // 直接跳转
+    if (isMobile && !!token) {
+      location.href = `https://voce.chat/download?link=${encodeURIComponent(`${location.origin}?magic_token=${token}`)}`;
+    }
+  }, [token]);
+
   return (
     <StyledSignInLink>
       <li className="item">
         <span>Have an account?</span>
         <a onClick={handleSignIn}>Sign In</a>
       </li>
-      {showAppEntry && <li className="item">
-        <span>Using a mobile device? Open in</span>
-        <a href={`https://voce.chat?magic_link=${encodeURIComponent(`${location.origin}?magic_token=${token}`)}`} target={"_blank"} rel="noreferrer">VoceChat App</a>
-      </li>}
     </StyledSignInLink>
   );
 }
