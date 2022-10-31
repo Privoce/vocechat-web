@@ -66,6 +66,7 @@ const Index = ({ handleClose, hostId }: Props) => {
                     Send
                 </button>
             </div>
+            <span className="text-sm text-gray-300 text-center pb-2">Powered by <a href="https://voce.chat" target="_blank" rel="noopener noreferrer" className="text-gray-400">voce.chat</a></span>
         </aside>
     );
 };
