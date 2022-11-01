@@ -4,7 +4,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { Reset } from "styled-reset";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import "./assets/base.css";
+import "./assets/index.css";
 import "./common/DayjsSetting";
 import "./common/TippySetting";
 import { register } from "./serviceWorkerRegistration";

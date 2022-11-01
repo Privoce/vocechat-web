@@ -17,18 +17,6 @@ const StyledMenus = styled.ul`
     align-items: center;
     padding: 10px;
     gap: 10px;
-    .icon {
-      width: 24px;
-      height: 24px;
-      transition: all 0.5s ease;
-    }
-    .txt {
-      color: #4b5563;
-      font-style: normal;
-      font-weight: 600;
-      font-size: 14px;
-      line-height: 20px;
-    }
   }
 `;
 type Props = {};
@@ -39,7 +27,7 @@ const Menu: FC<Props> = () => {
       <li className="menu link_navs">
         <NavLink className="link" to={`/setting?f=${pathname}`}>
           <Tooltip placement="right" tip="Settings">
-            <img src={settingIcon} alt="setting icon" className="icon" />
+            <img src={settingIcon} alt="setting icon" className="w-6 h-6 max-w-[unset]" />
           </Tooltip>
         </NavLink>
       </li>

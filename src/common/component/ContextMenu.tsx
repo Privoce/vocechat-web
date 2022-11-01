@@ -33,7 +33,7 @@ const ContextMenu: FC<Props> = ({ items = [], hideMenu = null }) => {
         } = item;
         return (
           <li
-            className={`item ${underline ? "underline" : ""} ${danger ? "danger" : ""}`}
+            className={`item ${underline ? "bottom_line" : ""} ${danger ? "danger" : ""}`}
             key={title}
             onClick={(evt) => {
               evt.stopPropagation();

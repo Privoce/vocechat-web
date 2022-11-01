@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+::-webkit-scrollbar-thumb {
+  background: #ddd;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar {
+  background: transparent;
+  width: 5px;
+  height: 5px;
+}
+
+:root {
+  /* border radius */
+  --br: 8px;
+  ---navs-bg: #e5e7eb;
+  ---body-bg: #f5f6f7;
+  ---chat-bg: #fff;
+  ---channel-text-color: #1c1c1e;
+  ---msg-text-color: #374151;
+}

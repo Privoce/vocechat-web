@@ -1,20 +1,11 @@
 import { useRef, useEffect, FC } from "react";
-import styled from "styled-components";
 import { Waveform } from "@uiball/loaders";
 
-const Styled = styled.div`
-  margin-top: 80px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  padding: 30px 0;
-`;
 type Props = {
   pullUp: () => Promise<void> | null;
 };
 const LoadMore: FC<Props> = ({ pullUp = null }) => {
-  const ref = useRef<HTMLDivElement>();
+  const ref = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -29,9 +20,12 @@ const LoadMore: FC<Props> = ({ pullUp = null }) => {
       },
       { threshold: 0 }
     );
-    const currEle = ref?.current;
-    if (currEle) {
-      observer.observe(currEle);
+    let currEle: HTMLDivElement | null = null;
+    if (ref) {
+      currEle = ref.current;
+      if (currEle) {
+        observer.observe(currEle);
+      }
     }
     return () => {
       if (currEle) {
@@ -40,9 +34,9 @@ const LoadMore: FC<Props> = ({ pullUp = null }) => {
     };
   }, [ref, pullUp]);
   return (
-    <Styled ref={ref}>
+    <div className="mt-20 flex justify-center items-center w-full py-7" ref={ref}>
       <Waveform size={24} lineWeight={5} speed={1} color="#ccc" />
-    </Styled>
+    </div>
   );
 };
 export default LoadMore;

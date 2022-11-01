@@ -1,34 +1,10 @@
-import styled from "styled-components";
-
-const Styled = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  .title {
-    font-weight: 600;
-    font-size: 30px;
-    line-height: 38px;
-    color: #101828;
-    margin-bottom: 12px;
-  }
-  .desc {
-    text-align: center;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    color: #667085;
-    &:not(:last-child) {
-      margin-bottom: 24px;
-    }
-  }
-`;
 
 export default function EmailNextTip() {
   return (
-    <Styled>
-      <div className="title">Magic link Sent</div>
-      <p className="desc">Login to your email client, and continue next step</p>
-      <p className="desc">You can close this window now.</p>
-    </Styled>
+    <div className="flex flex-col items-center">
+      <div className="font-bold text-3xl text-gray-800 mt-3">Magic link Sent</div>
+      <p className="text-center text-gray-400 mb-6">Login to your email client, and continue next step</p>
+      <p className="text-center text-gray-400">You can close this window now.</p>
+    </div>
   );
 }

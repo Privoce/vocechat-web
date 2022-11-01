@@ -25,6 +25,7 @@ const Styled = styled.ul`
         background-color: #eee;
         border-radius: 50%;
         img {
+          max-width: unset;
           width: 40px;
           height: 40px;
           &.channel_default {
@@ -42,6 +43,9 @@ const Styled = styled.ul`
           align-items: center;
           justify-content: space-between;
           .name {
+            display: flex;
+            align-items: center;
+            gap: 2px;
             font-weight: 600;
             font-size: 14px;
             line-height: 20px;

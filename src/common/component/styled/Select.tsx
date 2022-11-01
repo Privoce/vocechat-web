@@ -66,7 +66,7 @@ const Select: FC<Props> = ({ options = [], updateSelect = null, current = null }
             return (
               <li
                 onClick={selected ? undefined : handleSelect.bind(null, { title, value })}
-                className={`item sb ${underline ? "underline" : ""}`}
+                className={`item sb ${underline ? "bottom_line" : ""}`}
                 data-disabled={selected}
                 key={value}
               >

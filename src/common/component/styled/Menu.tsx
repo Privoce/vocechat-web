@@ -42,7 +42,7 @@ const StyledMenu = styled.ul`
         }
       }
     }
-    &.underline {
+    &.bottom_line {
       margin-bottom: 9px;
       &:before {
         position: absolute;
