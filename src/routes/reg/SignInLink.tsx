@@ -34,7 +34,7 @@ export default function SignInLink({ token }: { token?: string }) {
     const isMobile = "ontouchstart" in document.documentElement;
     // 直接跳转
     if (isMobile && !!token) {
-      location.href = `https://voce.chat/download?link=${encodeURIComponent(`${location.origin}?magic_token=${token}`)}`;
+      location.href = `https://join.voce.chat/download?link=${encodeURIComponent(`${location.origin}?magic_token=${token}`)}`;
     }
   }, [token]);
 
