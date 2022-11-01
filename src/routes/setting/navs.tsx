@@ -5,6 +5,7 @@ import ConfigFirebase from "./config/Firebase";
 import ConfigSMTP from "./config/SMTP";
 import APIConfig from "./APIConfig";
 import License from "./License";
+import Widget from "./Widget";
 import ManageMembers from "../../common/component/ManageMembers";
 import FAQ from "../../common/component/FAQ";
 import ConfigAgora from "./config/Agora";
@@ -64,6 +65,11 @@ const navs = [
         name: "api",
         title: "Third-party APP",
         component: <APIConfig />
+      },
+      {
+        name: "widget",
+        title: "Widget",
+        component: <Widget />
       },
       {
         name: "license",

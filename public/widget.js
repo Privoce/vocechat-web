@@ -1,5 +1,5 @@
 const {
-  domain = location.origin,
+  origin = location.origin,
   hostId = 1,
   closeWidth = 52,
   closeHeight = 52,
@@ -15,7 +15,7 @@ const styles = {
   zIndex: 9999
 };
 Object.assign(wrapper.style, styles);
-wrapper.src = `${domain}/widget.html?host=${hostId}`;
+wrapper.src = `${origin}/widget.html?host=${hostId}`;
 wrapper.width = closeWidth;
 wrapper.height = closeHeight;
 wrapper.frameborder = 0;
