@@ -3249,6 +3249,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-syntax-highlighter@^15.5.5":
+  version "15.5.5"
+  resolved "https://mirrors.cloud.tencent.com/npm/@types%2freact-syntax-highlighter/-/react-syntax-highlighter-15.5.5.tgz#4d3b51f8956195f1f63360ff03f8822c5d74c516"
+  integrity sha512-QH3JZQXa2usAvJvSsdSUJ4Yu4j8ReuZpgRrEW+XP+Rmosbn425YshW9iGEb/pAARm8496axHhHUPRH3UmTiB6A==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react@*":
   version "18.0.20"
   resolved "https://mirrors.cloud.tencent.com/npm/@types%2freact/-/react-18.0.20.tgz#e4c36be3a55eb5b456ecf501bd4a00fd4fd0c9ab"

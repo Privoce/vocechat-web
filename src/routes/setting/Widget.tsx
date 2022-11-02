@@ -21,31 +21,24 @@ export default function Widget() {
   return (
     <div className="flex flex-col justify-start items-start">
       <div className="text-gray-600 ">
-        Extending VoceChat by embedding vocechat widget SDK!
+        Extending VoceChat by embedding the vocechat widget SDK!
       </div>
       <label htmlFor="code" className="text-gray-500 text-sm mt-5">
         Code Example:
       </label>
-      <SyntaxHighlighter id="code" language="html" style={vscDarkPlus}>
+      <SyntaxHighlighter id="code" language="html" style={vscDarkPlus} className="rounded">
         {`<!-- put this code snippet into your html file -->\n<script \n  data-host-id="4" \n  data-origin="${location.origin}" \n  data-close-width="52" \n  data-close-height="52" \n  data-open-width="600" \n  data-open-height="800" \n  src="${location.origin}/widget.js" \n  async \n/>`}
       </SyntaxHighlighter>
       <div className="text-gray-500 text-sm mt-5 mb-2">
         Configuration Description:
       </div>
-      <div className="w-[700px] border border-solid border-gray-300">
-
-        <table className="min-w-full border table-auto">
+      <div className="w-[700px] border border-solid border-gray-300 rounded overflow-hidden">
+        <table className="min-w-full table-auto">
           <thead className="border-b bg-gray-50">
             <tr>
-              <th scope="col" className="text-sm font-bold text-gray-900 px-6 py-4 text-left">
-                Configuration Key
-              </th>
-              <th scope="col" className="text-sm font-bold text-gray-900 px-6 py-4 text-left">
-                Default Value
-              </th>
-              <th scope="col" className="text-sm font-bold text-gray-900 px-6 py-4 text-left">
-                Remarks
-              </th>
+              {["Parameter Key", "Default Value", "Remarks"].map(title => <th key={title} scope="col" className="text-sm font-bold text-gray-900 px-6 py-4 text-left">
+                {title}
+              </th>)}
             </tr>
           </thead>
           <tbody>
@@ -76,10 +69,12 @@ export default function Widget() {
             }
             ].map(row => <Row key={row.paramKey} {...row} />)}
           </tbody>
-          <tfoot className="border-t border-solid border-gray-200">
-            <div className="text-gray-400 px-5 py-3 text-sm">
-              * <code className="bg-gray-700 text-white px-1">data-</code> prefixed
-            </div>
+          <tfoot className="border-t border-solid border-gray-200" >
+            <tr>
+              <td colSpan={3} className="text-gray-400 px-5 py-3 text-sm">
+                * All the parameters are optional, and prefixed by <i className="bg-gray-700 text-white px-1">data-</i>
+              </td>
+            </tr>
           </tfoot>
         </table>
       </div>

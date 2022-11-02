@@ -123,6 +123,7 @@
     "@types/masonry-layout": "^4.2.5",
     "@types/react-helmet": "^6.1.5",
     "@types/react-linkify": "^1.0.1",
+    "@types/react-syntax-highlighter": "^15.5.5",
     "@types/styled-components": "^5.1.26",
     "@typescript-eslint/eslint-plugin": "^5.42.0",
     "@typescript-eslint/parser": "^5.42.0",
