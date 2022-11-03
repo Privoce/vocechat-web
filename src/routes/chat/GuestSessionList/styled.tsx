@@ -22,6 +22,7 @@ const Styled = styled.ul`
         background-color: #eee;
         border-radius: 50%;
         img {
+          max-width: unset;
           width: 40px;
           height: 40px;
           &.channel_default {
