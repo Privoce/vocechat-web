@@ -14,7 +14,7 @@ const Index = ({ needLogin = false }: Props) => {
   return (
     <div className="flex gap-1 pl-1">
       <div className="w-12 h-12">
-        <img src={logo} alt="logo" className="w-full h-full" />
+        <img src={logo} alt="logo" className="w-full h-full rounded-full" />
       </div>
       <div className="flex flex-col">
         <span className="flex items-center gap-2 leading-6">

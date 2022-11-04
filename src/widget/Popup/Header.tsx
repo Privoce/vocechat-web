@@ -11,7 +11,7 @@ const Index: FC<Props> = ({ handleClose }) => {
   return (
     <div className="flex gap-2 justify-between items-center p-2">
       <div className="relative w-12 h-12">
-        <img src={logo} alt="logo" className="w-full h-full" />
+        <img src={logo} alt="logo" className="w-full h-full rounded-full" />
       </div>
       <div className="flex flex-col flex-1">
         <span className="text-gray-900 text-lg font-bold">{name}</span>

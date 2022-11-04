@@ -8,8 +8,8 @@ type Props = {
 const Icon = ({ handleClick }: Props) => {
   const { logo } = useAppSelector(store => store.server);
   if (!logo) return null;
-  return <button className="rounded-full w-12 h-12" onClick={handleClick}>
-    <img src={logo} alt="logo" className="w-full h-full" />
+  return <button className="rounded-full w-12 h-12 overflow-hidden" onClick={handleClick}>
+    <img src={logo} alt="logo" className="w-full h-full rounded-full" />
   </button>;
 };
 
