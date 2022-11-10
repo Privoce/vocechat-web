@@ -1,21 +1,23 @@
 const {
-  origin = location.origin,
   hostId = 1,
-  closeWidth = 52,
-  closeHeight = 52,
-  openWidth = 600,
-  openHeight = 800
+  closeWidth = 48,
+  closeHeight = 48,
+  openWidth = 380,
+  openHeight = 680
 } = document.currentScript.dataset;
+const _src = document.currentScript.src;
 const wrapper = document.createElement("iframe");
 const styles = {
   position: "fixed",
-  right: "15px",
-  bottom: "15px",
+  borderRadius: "8px",
+  right: "16px",
+  bottom: "16px",
   border: "none",
-  zIndex: 9999
+  zIndex: 9999,
+  boxShadow: `rgb(0 0 0 / 25%) 0px 25px 50px -12px`
 };
 Object.assign(wrapper.style, styles);
-wrapper.src = `${origin}/widget.html?host=${hostId}`;
+wrapper.src = `${new URL(_src).origin}/widget.html?host=${hostId}`;
 wrapper.width = closeWidth;
 wrapper.height = closeHeight;
 wrapper.frameborder = 0;
