@@ -7,18 +7,20 @@ type Props = {
 };
 
 const Index: FC<Props> = ({ handleClose }) => {
-  const { name, description, logo } = useAppSelector(store => store.server);
+  const { name, logo } = useAppSelector(store => store.server);
   return (
-    <div className="flex gap-2 justify-between items-center p-2">
-      <div className="relative w-12 h-12">
+    <header className="relative flex justify-between items-center h-14 px-4 bg-[#1fe1f9]">
+      <div className="relative w-8 h-8">
         <img src={logo} alt="logo" className="w-full h-full rounded-full" />
       </div>
-      <div className="flex flex-col flex-1">
-        <span className="text-gray-900 text-lg font-bold">{name}</span>
-        {description && <span className="text-gray-400 text-sm">{description}</span>}
+      <div className="flex-1 px-4 pr-2 text-lg">
+        <span className="text-lg font-bold truncate text-gray-50">{name}</span>
       </div>
-      <IconClose className="w-5 h-5 mr-2 cursor-pointer" onClick={handleClose} />
-    </div>
+      <button type='button' className='w-6 h-6'>
+
+        <IconClose onClick={handleClose} />
+      </button>
+    </header>
   );
 };
 

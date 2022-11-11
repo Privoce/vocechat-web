@@ -20,7 +20,7 @@ const Login = () => {
     } = loginConfig;
     const googleLogin = enableGoogleLogin && clientId;
     return (
-        <div className="w-60 flex flex-col py-2">
+        <div className="w-60 flex flex-col gap-2 mt-4">
             {googleLogin && <GoogleLoginButton clientId={clientId} />}
             {enableGithubLogin && <GithubLoginButton client_id={githubAuthConfig?.client_id} source="widget" />}
         </div>

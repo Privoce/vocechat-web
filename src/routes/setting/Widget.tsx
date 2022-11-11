@@ -27,7 +27,7 @@ export default function Widget() {
         Code Example:
       </label>
       <SyntaxHighlighter id="code" language="html" style={vscDarkPlus} className="rounded">
-        {`<!-- put this code snippet into your html file -->\n<script \n  data-host-id="4" \n  data-origin="${location.origin}" \n  data-close-width="52" \n  data-close-height="52" \n  data-open-width="600" \n  data-open-height="800" \n  src="${location.origin}/widget.js" \n  async \n/>`}
+        {`<!-- put this code snippet into your html file -->\n<script \n  data-host-id="4" \n  data-close-width="48" \n  data-close-height="48" \n  data-open-width="380" \n  data-open-height="680" \n  src="${location.origin}/widget.js" \n  async \n/>`}
       </SyntaxHighlighter>
       <div className="text-gray-500 text-sm mt-5 mb-2">
         Configuration Description:
@@ -47,24 +47,20 @@ export default function Widget() {
               paramDefault: 1,
               remarks: "Assign the user chatting with visitor"
             }, {
-              paramKey: "origin",
-              paramDefault: 'location.origin',
-              remarks: "The domain (with protocol) script load from"
-            }, {
               paramKey: "close-width",
-              paramDefault: `52(px)`,
+              paramDefault: `48(px)`,
               remarks: "The width while widget closed"
             }, {
               paramKey: "close-height",
-              paramDefault: `52(px)`,
+              paramDefault: `48(px)`,
               remarks: "The height while widget closed"
             }, {
               paramKey: "open-width",
-              paramDefault: `600(px)`,
+              paramDefault: `380(px)`,
               remarks: "The width while widget opened"
             }, {
               paramKey: "open-height",
-              paramDefault: `800(px)`,
+              paramDefault: `680(px)`,
               remarks: "The height while widget opened"
             }
             ].map(row => <Row key={row.paramKey} {...row} />)}

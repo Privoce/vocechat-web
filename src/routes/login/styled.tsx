@@ -76,6 +76,11 @@ const StyledWrapper = styled.div`
         color: #667085;
       }
     }
+    >.btns{
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
   }
 `;
 

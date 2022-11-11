@@ -156,11 +156,14 @@ export default function LoginPage() {
           </Button>
         </form>
         {hasDivider && <hr className="or" />}
-        {enableMagicLink && <MagicLinkLogin />}
-        {googleLogin && <GoogleLoginButton clientId={clientId} />}
-        {enableGithubLogin && <GithubLoginButton client_id={githubAuthConfig?.client_id} />}
-        {enableMetamaskLogin && <MetamaskLoginButton login={login} />}
-        {oidc.length > 0 && <OidcLoginButton issuers={oidc} />}
+        <div className="btns">
+
+          {enableMagicLink && <MagicLinkLogin />}
+          {googleLogin && <GoogleLoginButton clientId={clientId} />}
+          {enableGithubLogin && <GithubLoginButton client_id={githubAuthConfig?.client_id} />}
+          {enableMetamaskLogin && <MetamaskLoginButton login={login} />}
+          {oidc.length > 0 && <OidcLoginButton issuers={oidc} />}
+        </div>
         {whoCanSignUp === "EveryOne" && <SignUpLink />}
       </div>
     </StyledWrapper>

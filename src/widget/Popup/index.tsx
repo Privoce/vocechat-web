@@ -1,9 +1,9 @@
-import { useState, ChangeEvent } from 'react';
+// import { useState, ChangeEvent } from 'react';
 import Header from './Header';
+import Footer from './Footer';
 import Welcome from './Welcome';
 import MessageFeed from './MessageFeed';
-import Line from './Line';
-import useSendMessage from '../../common/hook/useSendMessage';
+import MessageInput from './MessageInput';
 import { useAppSelector } from '../../app/store';
 type Props = {
     hostId: number,
@@ -12,61 +12,39 @@ type Props = {
 
 const Index = ({ handleClose, hostId }: Props) => {
     const { user: loginUser, token, guest: isGuest } = useAppSelector(store => store.authData);
-    const { sendMessage } = useSendMessage({
-        from: loginUser?.uid,
-        to: hostId,
-        context: "user"
-    });
-    const [input, setInput] = useState('');
-    const handleInput = (evt: ChangeEvent<HTMLTextAreaElement>) => {
-        setInput(evt.target.value);
-    };
-    const handleSend = () => {
-        if (!input) return;
-        sendMessage({
-            type: "text",
-            content: input
-        });
-        setInput("");
-    };
+    // const { sendMessage } = useSendMessage({
+    //     from: loginUser?.uid,
+    //     to: hostId,
+    //     context: "user"
+    // });
+    // const [input, setInput] = useState('');
+    // const handleInput = (evt: ChangeEvent<HTMLTextAreaElement>) => {
+    //     setInput(evt.target.value);
+    // };
+    // const handleSend = () => {
+    //     if (!input) return;
+    //     sendMessage({
+    //         type: "text",
+    //         content: input
+    //     });
+    //     setInput("");
+    // };
 
     // no token or guest login
     const notLogin = !token || isGuest;
     return (
-        <aside className="flex flex-col justify-between bg-white w-[600px] h-[800px] rounded-md overflow-hidden">
+        <aside className="flex flex-col bg-white w-full h-full rounded-md overflow-hidden">
             <Header handleClose={handleClose} />
-            <Line />
             {/* message list */}
-            <section id='MESSAGE_LIST_CONTAINER' className="px-2 py-3 flex-1 overflow-y-auto scroll-smooth">
+            <main id='MESSAGE_LIST_CONTAINER' className="relative flex-1 overflow-y-auto scroll-smooth">
+                {/* placeholder */}
+                <div className="flex items-center h-10 justify-center"></div>
                 <Welcome needLogin={notLogin} />
-                {notLogin ? null : <MessageFeed uid={hostId} />}
-            </section>
-            <Line />
+                {notLogin ? null : <MessageFeed hostId={hostId} />}
+            </main>
             {/* message input */}
-            <div className="w-full px-2 py-3">
-                <textarea
-                    disabled={notLogin}
-                    value={input}
-                    onChange={handleInput}
-                    className="w-full h-full text-sm p-2 rounded-lg bg-gray-200 resize-none text-black outline-none"
-                    placeholder={notLogin ? "Login first..." : "Write a message..."}
-                    rows={3}
-                />
-            </div>
-            <Line thin />
-            {/* operation area */}
-            <div className="w-full flex px-3 py-2 justify-between">
-                <div className="opts">{/* opts placeholder */}</div>
-                <button
-                    type="button"
-                    onClick={handleSend}
-                    disabled={input.trim() === ''}
-                    className="rounded-full bg-[#FA491D] disabled:bg-gray-200 text-white disabled:text-gray-400 text-xs leading-4 px-2 py-1.5 "
-                >
-                    Send
-                </button>
-            </div>
-            <span className="text-sm text-gray-300 text-center pb-2">Powered by <a href="https://voce.chat" target="_blank" rel="noopener noreferrer" className="text-gray-400">voce.chat</a></span>
+            {notLogin ? null : <MessageInput from={loginUser?.uid || 0} to={hostId} />}
+            <Footer />
         </aside>
     );
 };

@@ -5,7 +5,6 @@ import Button from "./styled/Button";
 
 const StyledSocialButton = styled(Button)`
   width: 100%;
-  margin-bottom: 16px;
   display: flex;
   align-items: center;
   justify-content: center;

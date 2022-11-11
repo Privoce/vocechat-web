@@ -10,11 +10,10 @@ import { useLoginMutation } from "../../app/services/auth";
 const StyledSocialButton = styled(Button)`
   position: relative;
   width: 100%;
-  margin-bottom: 16px;
   background: white !important;
   border: 1px solid #d0d5dd;
   color: #344054;
-  height: 42px;
+  height: 46px;
   overflow: hidden;
   .mask {
     background: inherit;

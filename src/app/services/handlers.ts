@@ -48,7 +48,7 @@ export const onMessageSendStarted = async (
     // console.log("message server mid", server_mid);
     batch(() => {
       dispatch(removeContextMessage({ id, mid: ts }));
-      dispatch(addMessage({ mid: server_mid, ...tmpMsg }));
+      dispatch(addMessage({ mid: server_mid, ...tmpMsg, sending: false }));
       dispatch(addContextMessage({ id, mid: server_mid }));
     });
     setTimeout(() => {
