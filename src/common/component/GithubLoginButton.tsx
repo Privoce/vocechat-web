@@ -49,7 +49,7 @@ const GithubLoginButton: FC<Props> = ({ type = "login", source = "webapp", clien
   }, [source]);
 
   const handleGithubLogin = () => {
-    window.open(`https://github.com/login/oauth/authorize?client_id=${client_id}&redirect_uri=${location.origin}/#/cb/github/${source}`);
+    window.open(`https://github.com/login/oauth/authorize?client_id=${client_id}&redirect_uri=${location.origin}/github/cb/${source}.html`);
     // location.href = `https://github.com/login/oauth/authorize?client_id=${client_id}`;
   };
 

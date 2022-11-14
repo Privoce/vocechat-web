@@ -7,7 +7,7 @@ type Props = {
   needLogin?: boolean
 }
 const Index = ({ needLogin = false }: Props) => {
-  const { name, logo } = useAppSelector(store => store.server);
+  const { logo } = useAppSelector(store => store.server);
   return (
     <>
       <div className="group relative flex justify-start items-start mb-3">
@@ -22,7 +22,7 @@ const Index = ({ needLogin = false }: Props) => {
           </div>
         </div>
       </div>
-      {needLogin && <div className="pl-14 animate-[fadeInUp_.5s_1.2s_ease-in-out_both]">
+      {needLogin && <div className="pl-14 animate-[fadeInUp_.5s_ease-in-out_both]">
         <Login />
       </div>}
     </>
