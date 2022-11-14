@@ -2,7 +2,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { nanoid } from "@reduxjs/toolkit";
 import baseQuery from "./base.query";
 import { setAuthData, updateToken, resetAuthData, updateInitialized } from "../slices/auth.data";
-import BASE_URL, { KEY_DEVICE_KEY, KEY_LOCAL_MAGIC_TOKEN } from "../config";
+import BASE_URL, { KEY_DEVICE_ID, KEY_LOCAL_MAGIC_TOKEN } from "../config";
 import {
   AuthData,
   CredentialResponse,
@@ -12,10 +12,10 @@ import {
 } from "../../types/auth";
 
 const getDeviceId = () => {
-  let d = localStorage.getItem(KEY_DEVICE_KEY);
+  let d = localStorage.getItem(KEY_DEVICE_ID);
   if (!d) {
     d = `web:${nanoid()}`;
-    localStorage.setItem(KEY_DEVICE_KEY, d);
+    localStorage.setItem(KEY_DEVICE_ID, d);
   }
   return d;
 };

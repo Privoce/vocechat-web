@@ -1,22 +1,9 @@
 import { useEffect, FC } from 'react';
-import styled from 'styled-components';
 import { KEY_LOCAL_MAGIC_TOKEN } from "../../app/config";
 import { useLoginMutation } from "../../app/services/auth";
 import toast from "react-hot-toast";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 
-const Styled = styled.section`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    .success{
-        font-size: 30px;
-        font-weight: bold;
-        color: green;
-    }
-`;
 export type GithubLoginSource = "widget" | "webapp"
 type Props = {
     code: string, from?: GithubLoginSource
@@ -41,6 +28,10 @@ const GithubCallback: FC<Props> = ({ code, from = "webapp" }) => {
             if (from == 'widget') {
                 localStorage.setItem("widget", `${new Date().getTime()}`);
             }
+            // webapp 跳回首页
+            if (from == 'webapp') {
+                location.href = "/";
+            }
         }
     }, [isSuccess, from]);
     useEffect(() => {
@@ -60,10 +51,10 @@ const GithubCallback: FC<Props> = ({ code, from = "webapp" }) => {
         }
     }, [error]);
     if (error) return <span>Something Error</span>;
-    return <Styled>
+    return <section className='flex flex-col gap-3 justify-center items-center'>
         {isSuccess && from == 'widget' && <h1>Please close this window and return widget window</h1>}
-        <span className='success'>{isLoading ? "Github Logging in..." : "Github Login Success!"}</span>
-    </Styled>;
+        <span className='text-3xl text-green-600 font-bold'>{isLoading ? "Github Logging in..." : "Github Login Success!"}</span>
+    </section>;
 };
 
 export default GithubCallback;

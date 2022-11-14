@@ -148,10 +148,12 @@ export default function Reg() {
         </Button>
       </form>
       <hr className="or" />
-      {googleLogin && <GoogleLoginButton type="register" clientId={clientId} />}
-      {enableGithubLogin && (
-        <GithubLoginButton type="register" client_id={githubAuthConfig?.client_id} />
-      )}
+      <div className="flex flex-col gap-3">
+        {googleLogin && <GoogleLoginButton type="register" clientId={clientId} />}
+        {enableGithubLogin && (
+          <GithubLoginButton type="register" client_id={githubAuthConfig?.client_id} />
+        )}
+      </div>
       <SignInLink token={magicToken} />
     </>
   );

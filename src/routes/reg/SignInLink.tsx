@@ -1,30 +1,4 @@
 import { useEffect } from 'react';
-import styled from "styled-components";
-
-const StyledSignInLink = styled.ul`
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-top: 30px;
-  >.item{
-    text-align: center;
-    margin: 0;
-    > span {
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 20px;
-      color: #667085;
-      margin-right: 4px;
-    }
-    > a {
-      font-weight: 500;
-      font-size: 14px;
-      line-height: 20px;
-      color: #22d3ee;
-      cursor: pointer;
-    }
-}
-`;
 
 export default function SignInLink({ token }: { token?: string }) {
   const handleSignIn = () => {
@@ -39,11 +13,9 @@ export default function SignInLink({ token }: { token?: string }) {
   }, [token]);
 
   return (
-    <StyledSignInLink>
-      <li className="item">
-        <span>Have an account?</span>
-        <a onClick={handleSignIn}>Sign In</a>
-      </li>
-    </StyledSignInLink>
+    <div className="flex gap-1 mt-7 text-sm text-[#667085] justify-center">
+      <span>Have an account?</span>
+      <a onClick={handleSignIn} className="text-[#22d3ee]">Sign In</a>
+    </div>
   );
 }

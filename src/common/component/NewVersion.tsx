@@ -1,21 +1,6 @@
 import { FC } from "react";
 import toast from "react-hot-toast";
-import styled from "styled-components";
 import Button from "./styled/Button";
-
-const Styled = styled.span`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  strong {
-    white-space: nowrap;
-    font-weight: bold;
-  }
-  .btns {
-    gap: 5px;
-    display: flex;
-  }
-`;
 
 interface Props {
   id: string;
@@ -24,9 +9,9 @@ interface Props {
 
 const Index: FC<Props> = ({ id, handleUpdate }) => {
   return (
-    <Styled>
-      <strong>New Version</strong> Available
-      <div className="btns">
+    <div className="flex items-center gap-2">
+      <strong className="whitespace-nowrap font-bold">New Version</strong> Available
+      <div className="flex gap-1">
         <Button className="mini main" onClick={handleUpdate}>
           Update
         </Button>
@@ -34,7 +19,7 @@ const Index: FC<Props> = ({ id, handleUpdate }) => {
           Dismiss
         </Button>
       </div>
-    </Styled>
+    </div>
   );
 };
 

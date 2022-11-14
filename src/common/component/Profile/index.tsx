@@ -48,9 +48,9 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
 
   return (
     <StyledWrapper className={type}>
-      <Avatar className="avatar" url={avatar} name={name} />
-      <h2 className="name">{name}</h2>
-      <span className="email">{email}</span>
+      <Avatar className="rounded-full w-20 h-20 object-cover" url={avatar} name={name} />
+      <h2 className="text-lg select-text font-bold text-[#1c1c1e]">{name}</h2>
+      <span className="text-sm text-[#98a2b3] select-text">{email}</span>
       {/* <p className="intro">{introduction}</p> */}
       <ul className="icons">
         <NavLink to={`/chat/dm/${uid}`}>

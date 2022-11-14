@@ -9,33 +9,6 @@ const StyledWrapper = styled.div`
   margin-top: 80px;
   width: 432px;
   gap: 4px;
-  .avatar {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-  .name {
-    user-select: text;
-    font-weight: bold;
-    font-size: 18px;
-    line-height: 100%;
-    color: #1c1c1e;
-  }
-  .email {
-    user-select: text;
-    font-weight: normal;
-    font-size: 14px;
-    line-height: 20px;
-    color: #98a2b3;
-  }
-  .intro {
-    color: #344054;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 20px;
-  }
   .icons {
     margin-top: 24px;
     display: flex;
@@ -75,12 +48,6 @@ const StyledWrapper = styled.div`
         user-select: none;
       }
     }
-  }
-  .line {
-    width: 100%;
-    height: 1px;
-    border: none;
-    background-color: rgba(0, 0, 0, 0.1);
   }
   &.card {
     padding: 16px;
