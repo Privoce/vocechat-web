@@ -1,4 +1,4 @@
-# Web Client of voce.chat
+# Web Client of VoceChat
 
 <center>
   <img src="./public/android-chrome-192x192.png" width="100" height="100">
