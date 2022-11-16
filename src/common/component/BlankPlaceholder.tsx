@@ -6,7 +6,6 @@ import IconAsk from "../../assets/icons/placeholder.question.svg";
 import IconInvite from "../../assets/icons/placeholder.invite.svg";
 import IconDownload from "../../assets/icons/placeholder.download.svg";
 import UsersModal from "./UsersModal";
-import usePWAInstallPrompt from "../hook/usePWAInstallPrompt";
 import { useAppSelector } from "../../app/store";
 
 
@@ -19,7 +18,6 @@ const classes = {
   boxTip: "px-5 text-sm text-[#475467] font-bold text-center"
 };
 const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
-  const { showPrompt } = usePWAInstallPrompt();
   const server = useAppSelector((store) => store.server);
   const [inviteModalVisible, setInviteModalVisible] = useState(false);
   const [createChannelVisible, setCreateChannelVisible] = useState(false);
@@ -55,10 +53,10 @@ const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
             <IconChat className={classes.boxIcon} />
             <div className={classes.boxTip}>{chatTip}</div>
           </button>
-          <button onClick={showPrompt} className={classes.box} >
+          <a href={"https://voce.chat#download"} target={"_blank"} rel="noreferrer" className={classes.box} >
             <IconDownload className={classes.boxIcon} />
-            <div className={classes.boxTip}>Download PC and Mobile apps</div>
-          </button>
+            <div className={classes.boxTip}>Download Mobile apps</div>
+          </a>
           <a href={"https://voce.chat"} target={"_blank"} rel="noreferrer" className={classes.box} >
             <IconAsk className={classes.boxIcon} />
             <div className={classes.boxTip}>Got questions? Visit our help center</div>

@@ -1,4 +1,5 @@
-import "./wdyr";
+// just for debug performance problem
+// import "./wdyr";
 import ReactDOM from "react-dom/client";
 import toast, { Toaster } from "react-hot-toast";
 import { Reset } from "styled-reset";

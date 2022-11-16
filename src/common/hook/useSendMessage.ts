@@ -60,7 +60,7 @@ const useSendMessage = (props?: Props) => {
   };
   const sendMessage = async ({
     type = "text",
-    content,
+    content = "",
     properties,
     reply_mid,
     ...rest
