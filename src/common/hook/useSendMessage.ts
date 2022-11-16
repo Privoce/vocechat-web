@@ -68,6 +68,7 @@ const useSendMessage = (props?: Props) => {
     if (reply_mid) {
       removeReplying();
       await replyMessage({
+        from_uid: from,
         reply_mid,
         type,
         content
