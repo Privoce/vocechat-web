@@ -63,6 +63,7 @@ export default function ConfigFirebase() {
           <Label htmlFor="desc">Private Key</Label>
           <Textarea
             rows={10}
+            spellCheck={false}
             disabled={!enabled}
             data-type="private_key"
             onChange={handleChange}
