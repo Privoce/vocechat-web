@@ -13,7 +13,7 @@ let prices = [
   {
     title: "VoceChat Supreme",
     limit: 99999,
-    pid: "price_1Lkgc7GGoUDRyc3j49Lqtncs",
+    pid: "price_1M5VoGGGoUDRyc3j6xhQou6D",
     desc: "User Limit: No Limit"
   }
 ];
