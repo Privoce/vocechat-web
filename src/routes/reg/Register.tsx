@@ -32,7 +32,6 @@ export default function Reg() {
 
   useEffect(() => {
     const query = new URLSearchParams(location.search);
-    // const githubCode = query.get("gcode");
     const token = query.get("magic_token");
     if (token) {
       //本地存一下 magic token 后续oauth流程用到
@@ -47,7 +46,6 @@ export default function Reg() {
       if (!mail_is_sent && new_magic_token) {
         // 直接进入set_name流程
         location.href = `?magic_token=${new_magic_token}#/register/set_name`;
-        // navigateTo(`/register/set_name?magic_token=${new_magic_token}`);
       }
     }
   }, [isSuccess, data]);
