@@ -19,7 +19,7 @@ import {
   RenewLicenseResponse
 } from "../../types/server";
 
-const defaultExpireDuration = 7 * 24 * 60 * 60;
+const defaultExpireDuration = 2 * 24 * 60 * 60;
 
 export const serverApi = createApi({
   reducerPath: "serverApi",
