@@ -1,151 +1,69 @@
-import { useState, MouseEvent } from "react";
+import { useState, HTMLAttributes } from "react";
 import dayjs from "dayjs";
-import styled from "styled-components";
-// import Tippy from "@tippyjs/react";
-// import toast from "react-hot-toast";
-// import { hideAll } from "tippy.js";
-// import Textarea from "../../common/component/styled/Textarea";
 import Button from "../../common/component/styled/Button";
 import useLicense from "../../common/hook/useLicense";
 import LicensePriceListModal from "./LicensePriceListModal";
+import clsx from "clsx";
 
-const Styled = styled.div`
-  max-width: 760px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 15px;
-  > .license {
-    position: relative;
-    width: 100%;
-    padding: 12px;
-    border-radius: 5px;
-    border: 2px solid #557d2340;
-    background-color: #d1fadf60;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    &.outdated {
-      border-color: #ef4444;
-      background-color: #ef444457;
-      &:after {
-        content: "License Outdated";
-        position: absolute;
-        right: 10px;
-        top: 10px;
-        background-color: #ef4444;
-        padding: 5px 4px;
-        font-size: 14px;
-        font-weight: bold;
-        color: #fff;
-        border-radius: 4px;
-      }
-    }
-    .item {
-      white-space: nowrap;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: flex-start;
-      line-height: 1.2;
-      .label {
-        font-size: 13px;
-        color: #aaa;
-        &:after {
-          content: ":";
-        }
-      }
-      .info {
-        font-weight: bold;
-        font-size: 18px;
-        line-height: 1.4;
-        &.value {
-          cursor: pointer;
-          width: 100%;
-          white-space: pre-wrap;
-          word-break: break-all;
-          &.fold {
-            white-space: inherit;
-            overflow: hidden;
-            text-overflow: ellipsis;
-          }
-        }
-      }
-    }
-  }
-`;
+interface ItemProps extends HTMLAttributes<HTMLSpanElement> { label: string, data?: string | number | string[], foldable?: boolean }
+const Item = ({ label, data, foldable = false, ...rest }: ItemProps) => {
+  const infoClass = clsx("font-bold w-full cursor-pointer", foldable ? " overflow-hidden text-ellipsis" : "whitespace-pre-wrap break-all");
+  if (!data) return null;
+  return <div className="whitespace-nowrap  flex flex-col items-start justify-start text-lg">
+    <span className="text-sm text-gray-400">{label}</span>
+    {Array.isArray(data) ? <ul className={infoClass}>
+      {data.map((d) => {
+        return <li key={d}>{d}</li>;
+      })}
+    </ul> : <span className={infoClass} {...rest}>
+      {data}
+    </span>}
+  </div>;
 
+};
 export default function License() {
   const { license: licenseInfo, reachLimit } = useLicense();
   const [modalVisible, setModalVisible] = useState(false);
+  const [base58Fold, setBase58Fold] = useState(true);
   const handleRenewLicense = () => {
     toggleModalVisible();
   };
   const toggleModalVisible = () => {
     setModalVisible((prev) => !prev);
   };
-  const handleLicenseValueToggle = (evt: MouseEvent<HTMLSpanElement>) => {
-    const ele = evt.currentTarget;
-    ele.classList.toggle("fold");
-    if (ele.classList.contains("fold")) {
-      ele.title = "Click to see full text";
-    } else {
-      ele.title = "Click to fold text";
-    }
+  const handleLicenseValueToggle = () => {
+    setBase58Fold(pre => !pre);
   };
-  // const disableBtn = !reachLimit;
   return (
     <>
-      <Styled>
-        <div className={`license ${reachLimit ? "outdated" : ""}`}>
-          <div className="item">
-            <span className="label">Signed</span>
-            <span className="info">{licenseInfo?.sign ? "Yes" : "Not Yet"}</span>
-          </div>
-          <div className="item">
-            <span className="label">Domains</span>
-            <ul className="info">
-              {licenseInfo?.domains.map((d) => {
-                return <li key={d}>{d}</li>;
-              })}
-            </ul>
-          </div>
-          <div className="item">
-            <span className="label">User Limit</span>
-            <span className="info">
-              {licenseInfo?.user_limit == 99999 ? "No Limit" : licenseInfo?.user_limit}
-            </span>
-          </div>
-          <div className="item">
-            <span className="label">Expired At</span>
-            <span className="info">
-              {dayjs(licenseInfo?.expired_at).format("YYYY-MM-DD h:mm:ss A")}
-            </span>
-          </div>
-          <div className="item">
-            <span className="label">Created At</span>
-            <span className="info">
-              {dayjs(licenseInfo?.created_at).format("YYYY-MM-DD h:mm:ss A")}
-            </span>
-          </div>
-          <div className="item">
-            <span className="label">License Value</span>
-            <span
-              className="info value fold"
-              title="Click to see full text"
-              onClick={handleLicenseValueToggle}
-            >
-              {licenseInfo?.base58}
-            </span>
-          </div>
+      <div className="max-w-3xl flex flex-col justify-start items-start gap-4">
+        <div className={clsx('relative w-full p-3 rounded border-solid border flex flex-col gap-4 shadow', reachLimit ? "border-red-600 bg-red-200/50" : "border-green-600 bg-green-200/50")}>
+          <Item label="Signed" data={licenseInfo?.sign ? "Yes" : "Not Yet"} />
+          <Item label="Domains" data={licenseInfo?.domains} />
+          <Item label="User Limit" data={licenseInfo?.user_limit == 99999 ? "No Limit" : licenseInfo?.user_limit} />
+          <Item label="Expired At" data={dayjs(licenseInfo?.expired_at).format("YYYY-MM-DD h:mm:ss A")} />
+          <Item label="Created At" data={dayjs(licenseInfo?.created_at).format("YYYY-MM-DD h:mm:ss A")} />
+          <Item label="License Value" data={licenseInfo?.base58} foldable={base58Fold} title={base58Fold ? "Click to see full text" : "Click to fold text"}
+            onClick={handleLicenseValueToggle} />
         </div>
         <Button onClick={handleRenewLicense}>Renew License</Button>
-      </Styled>
+        <div className="flex flex-col gap-4 bg-primary-500 text-white rounded drop-shadow-xl p-5">
+          <h2 className="text-2xl font-bold">A chance to get a free license upgrade! 🎁</h2>
+          <p className="text-base flex flex-col"><span>
+            Getting a free license upgrade by joining our <em className="font-bold">User Test Session</em>
+          </span>
+            <span>
+              Book a time here: <a className="underline text-lg text-green-200" href="https://calendly.com/hansu/han-meeting" target="_blank" rel="noopener noreferrer">https://calendly.com/hansu/han-meeting</a>
+            </span>
+            <span>
+              Or, add WeChat for more information: <em className="text-lg text-green-200">yanggc_2013</em>
+            </span>
+          </p>
+        </div>
+      </div>
       {modalVisible && (
         <LicensePriceListModal
           closeModal={toggleModalVisible}
-          // domain={licenseInfo?.domains ? licenseInfo.domains.join("|") : ""}
         />
       )}
     </>
