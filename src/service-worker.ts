@@ -33,7 +33,7 @@ registerRoute(
       return false;
     } // If this is a URL that starts with /_, skip.
 
-    if (url.pathname.startsWith("/_")) {
+    if (url.pathname.startsWith("/_") || url.pathname.startsWith("/api/swagger")) {
       return false;
     } // If this looks like a URL for a resource, because it contains // a file extension, skip.
 
