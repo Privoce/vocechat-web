@@ -26,5 +26,7 @@
   "share_invite_link": "分享此链接，邀请朋友加入",
 
   "invite_link_expire": "邀请链接有效期：48小时",
-  "generate_new_link": "生成新邀请链接"
+  "generate_new_link": "生成新邀请链接",
+
+  "send_to": "发送至"
 }
