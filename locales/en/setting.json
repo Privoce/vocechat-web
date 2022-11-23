@@ -22,6 +22,19 @@
     "terms": "Terms & Privacy",
     "feedback": "Feedback"
   },
+  "channel": {
+    "leave": "Leave Channel",
+    "leave_desc": "Are you sure want to leave this channel?",
+    "transfer_desc": "You need to transfer your channel ownership to someone else before leaving the channel.",
+    "delete": "Delete Channel",
+    "delete_desc": "Are you sure want to delete this channel?",
+    "name": "Channel Name",
+    "topic": "Channel Topic",
+    "topic_placeholder": "Let everyone know how to use this channel.",
+    "visibility": "Channel Visibility",
+    "public": "Public",
+    "private": "Private"
+  },
   "overview": {
     "name": "Server Name",
     "desc": "Server Description",
@@ -84,6 +97,22 @@
     "update_tip": "Are you sure to update API secret? Previous secret will be invalided",
     "key_tip": "The security key agreed between the server and the third-party app is used to encrypt the communication data."
   },
+  "login": {
+    "password": "Password",
+    "password_desc": "Allows members login with password.",
+    "magic_link": "Magic Link",
+    "magic_link_desc": "Allows members login with Magic Link.",
+    "google": "Google",
+    "google_desc": "Allows members login with Google.",
+    "github": "Github",
+    "github_desc": "Allows members login with Github.",
+    "metamask": "Metamask",
+    "metamask_desc": "Allows members login with Metamask.",
+    "oidc": "OIDC",
+    "oidc_desc": "Allows members login with OIDC.",
+    "oidc_custom": "Custom",
+    "more_details": "Need more detail? See our <link>doc</link>."
+  },
   "widget": {
     "tip": "Extending VoceChat by embedding the vocechat widget SDK!",
     "code": "Code Example",
@@ -92,5 +121,10 @@
     "param_key": "Parameter Key",
     "default_value": "Default Value",
     "remark": "Remarks"
+  },
+  "faq": {
+    "client_version": "Client Version",
+    "server_version": "Server Version",
+    "build_time": "Build Timestamp"
   }
 }

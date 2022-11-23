@@ -10,5 +10,21 @@
   "add_channel_members": "新增成员",
   "welcome_channel": "欢迎来到 {{name}} 频道",
   "welcome_desc": "这是频道 #{{name}} 的开始.",
-  "edit_channel": "编辑频道"
+  "edit_channel": "编辑频道",
+
+  "channel_name": "频道名称",
+  "private_channel": "私密频道",
+  "create_channel": "创建新频道",
+  "create_channel_desc": "这是一个公开频道，所有人都能看到",
+  "create_private_channel_desc": "这是一个私密频道，只有被选择的人才能看到",
+  "search_user_placeholder": "请输入用户名",
+
+  "invite_title": "邀请朋友加入{{name}}",
+  "invite_by_email": "邮件邀请",
+  "enable_smtp": "首先开启SMTP",
+  "send_invite_link": "或者，向朋友发送邀请链接",
+  "share_invite_link": "分享此链接，邀请朋友加入",
+
+  "invite_link_expire": "邀请链接有效期：48小时",
+  "generate_new_link": "生成新邀请链接"
 }

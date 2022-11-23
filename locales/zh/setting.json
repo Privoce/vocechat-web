@@ -21,6 +21,20 @@
     "terms": "隐私声明",
     "feedback": "反馈"
   },
+  "channel": {
+    "leave": "离开",
+    "leave_desc": "确定离开该频道？",
+    "transfer_desc": "在离开此频道前，需要转让所有权。",
+    "delete": "删除频道",
+    "delete_desc": "确定删除该频道？",
+
+    "name": "频道名",
+    "topic": "频道主题",
+    "topic_placeholder": "让别人知道这个频道是用来做啥的",
+    "visibility": "可见性",
+    "public": "公开",
+    "private": "私密"
+  },
   "overview": {
     "name": "服务器名",
     "desc": "服务器描述",
@@ -84,6 +98,22 @@
     "update_tip": "确定更新API安全密钥？之前密钥将作废",
     "key_tip": "安全密钥用于服务器与第三方安全通信，请妥善保存！"
   },
+  "login": {
+    "password": "密码登录",
+    "password_desc": "允许用户使用密码登录",
+    "magic_link": "邀请连接",
+    "magic_link_desc": "允许用户使用邀请链接登录",
+    "google": "谷歌登录",
+    "google_desc": "允许用户谷歌登录",
+    "github": "Github",
+    "github_desc": "允许用户使用GitHub登录",
+    "metamask": "Metamask",
+    "metamask_desc": "允许用户使用Metamask登录",
+    "oidc": "OIDC",
+    "oidc_desc": "允许用户使用OIDC登录",
+    "oidc_custom": "自定义",
+    "more_details": "更多详情，移步 <0> 参考文档 </0> ."
+  },
   "widget": {
     "tip": "将挂件SDK内嵌到网页，实现VoceChat扩展！",
     "code": "代码举例",
@@ -92,5 +122,10 @@
     "param_key": "参数",
     "default_value": "默认值",
     "remark": "备注"
+  },
+  "faq": {
+    "client_version": "客户端版本",
+    "server_version": "服务器端版本",
+    "build_time": "构建时间戳"
   }
 }
