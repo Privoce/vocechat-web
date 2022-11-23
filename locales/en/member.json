@@ -1,0 +1,12 @@
+{
+  "username": "Username",
+  "email": "Email",
+  "password": "Password",
+  "delete_account": "Delete Account",
+  "change_name": "Change your username",
+  "change_name_desc": "Enter a new username",
+  "manage_members": "Manage Members",
+  "manage_tip": "Disabling your account means you can recover it at any time after taking this action.",
+  "admin": "Admin",
+  "user": "User"
+}

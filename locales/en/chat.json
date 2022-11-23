@@ -1,0 +1,14 @@
+{
+  "pin": "Pin",
+  "pin_desc": "Do you want to pin this message to",
+  "pinned_msg": "Pinned Message",
+  "pin_empty_tip": "This channel doesn’t have any pinned message yet.",
+  "fav": "Favorite",
+  "fav_msg": "Saved Message",
+  "fav_empty_tip": "This channel doesn’t have any saved message yet.",
+  "channel_members": "Channel Members",
+  "add_channel_members": "Add members",
+  "welcome_channel": "Welcome to {{name}}",
+  "welcome_desc": "This is the start of the #{{name}} channel.",
+  "edit_channel": "Edit Channel"
+}

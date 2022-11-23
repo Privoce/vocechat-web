@@ -1,0 +1,14 @@
+{
+  "pin": "置顶",
+  "pin_desc": "确定将该消息置顶至 ",
+  "pinned_msg": "已置顶消息",
+  "pin_empty_tip": "该频道暂无置顶消息",
+  "fav": "收藏",
+  "fav_msg": "已收藏消息",
+  "fav_empty_tip": "该频道暂无收藏消息",
+  "channel_members": "频道成员",
+  "add_channel_members": "新增成员",
+  "welcome_channel": "欢迎来到 {{name}} 频道",
+  "welcome_desc": "这是频道 #{{name}} 的开始.",
+  "edit_channel": "编辑频道"
+}

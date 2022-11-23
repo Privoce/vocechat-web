@@ -1,0 +1,28 @@
+{
+  "chat": "聊天",
+  "members": "成员",
+  "favs": "收藏",
+  "files": "文件",
+  "setting": "设置",
+  "more": "更多",
+  "action": {
+    "logout": "退出登录",
+    "change_avatar": "修改头像",
+    "cancel": "取消",
+    "new_channel": "新建频道",
+    "new_private_channel": "新建私有频道",
+    "new_msg": "发消息",
+    "invite_people": "邀请TA人",
+    "search": "搜索",
+    "done": "完成",
+    "yes": "是的",
+    "remove": "删除",
+    "edit": "编辑",
+    "pin": "置顶",
+    "send_msg": "发消息",
+    "copy_email": "复制邮箱"
+  },
+  "status": {
+    "uploading": "上传中"
+  }
+}

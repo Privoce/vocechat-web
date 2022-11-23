@@ -1,0 +1,96 @@
+{
+  "title": "Settings",
+  "save_change": "Save Changes",
+  "reset": "Reset",
+  "save_tip": "You have unsaved chagnes!",
+  "nav": {
+    "general": "General",
+    "overview": "Overview",
+    "members": "Members",
+    "user": "User",
+    "my_account": "My Account",
+    "config": "Configuration",
+    "firebase": "Firebase",
+    "agora": "Agora",
+    "smtp": "SMTP",
+    "login_method": "Login Methods",
+    "third_app": "Third-party APP",
+    "widget": "Widget",
+    "license": "License",
+    "about": "About",
+    "faq": "FAQ",
+    "terms": "Terms & Privacy",
+    "feedback": "Feedback"
+  },
+  "overview": {
+    "name": "Server Name",
+    "desc": "Server Description",
+    "upload_desc": "Minimum size is 128x128, We recommend at least 512x512 for the server. Max size limited to 5M.",
+    "sign_up": {
+      "title": "Default Sign Up",
+      "desc": "Who can sign up this server.",
+      "everyone": "Everyone",
+      "invite": "Invitation Link Only"
+    },
+    "guest_mode": {
+      "title": "Guest Mode",
+      "desc": "If enabled, visitors will see public channels on this server.",
+      "enable": "Enable",
+      "disable": "Disabled"
+    },
+    "lang": {
+      "title": "Language",
+      "desc": "Setting the language",
+      "en": "English",
+      "zh": "中文"
+    }
+  },
+  "license": {
+    "signed": "Signed",
+    "domain": "Domains",
+    "user_limit": "User Limit",
+    "expire": "Expired At",
+    "create": "Created At",
+    "value": "License Value",
+    "renew": "Renew License",
+    "renew_select": "Please select the price",
+    "tip": {
+      "title": "A chance to get a free license upgrade!",
+      "user_test": "Getting a free license upgrade by joining our User Test Session",
+      "booking": "Book a time here: ",
+      "wechat": "Or, add WeChat for more information:"
+    }
+  },
+  "firebase": {
+    "enable": "Enable",
+    "token_url": "Token Url",
+    "project_id": "Project ID",
+    "private_key": "Private Key",
+    "client_email": "Client Email"
+  },
+  "smtp": {
+    "enable": "Enable",
+    "host": "Host",
+    "port": "Port",
+    "from": "From",
+    "username": "Username",
+    "password": "Password",
+    "how_to": "How to setup SMTP?",
+    "send_test_email": "Send Test Email"
+  },
+  "third_app": {
+    "key": "API Secure Key",
+    "update": "Update Secret",
+    "update_tip": "Are you sure to update API secret? Previous secret will be invalided",
+    "key_tip": "The security key agreed between the server and the third-party app is used to encrypt the communication data."
+  },
+  "widget": {
+    "tip": "Extending VoceChat by embedding the vocechat widget SDK!",
+    "code": "Code Example",
+    "code_comment": "put this code snippet into your html file",
+    "config": "Configuration Description",
+    "param_key": "Parameter Key",
+    "default_value": "Default Value",
+    "remark": "Remarks"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "title": "Welcome to {{name}} server",
+  "desc": "Here are some steps to help you get started. For more, check out our Getting Started guide",
+  "invite": "Invite your friends or teammates",
+  "start_by_channel": "Create a Channel to Start a Conversation",
+  "start_by_dm": "Send a Direct Message",
+  "download": "Download Mobile apps",
+  "help": "Got questions? Visit our help center"
+}

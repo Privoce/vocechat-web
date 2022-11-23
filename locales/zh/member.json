@@ -1,0 +1,12 @@
+{
+  "username": "用户名",
+  "email": "邮箱",
+  "password": "密码",
+  "delete_account": "注销账户",
+  "change_name": "修改用户名",
+  "change_name_desc": "请输入新用户名",
+  "manage_members": "成员管理",
+  "manage_tip": "请在此管理你的成员",
+  "admin": "管理员",
+  "user": "普通用户"
+}
