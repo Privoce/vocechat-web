@@ -1,12 +1,13 @@
 import { FC, useState } from "react";
 import toast from "react-hot-toast";
-import Modal from "../../common/component/Modal";
-import StyledModal from "../../common/component/styled/Modal";
-import Button from "../../common/component/styled/Button";
-import StyledRadio from "../../common/component/styled/Radio";
+import Modal from "../../../common/component/Modal";
+import StyledModal from "../../../common/component/styled/Modal";
+import Button from "../../../common/component/styled/Button";
+import StyledRadio from "../../../common/component/styled/Radio";
 
-import { useGetLicensePaymentUrlMutation } from "../../app/services/server";
-import { LicensePriceList } from "../../app/config";
+import { useGetLicensePaymentUrlMutation } from "../../../app/services/server";
+import { LicensePriceList } from "../../../app/config";
+import { useTranslation } from "react-i18next";
 // import { LicenseMetadata, RenewLicense } from "../../types/server";
 
 interface Props {
@@ -15,6 +16,7 @@ interface Props {
 }
 
 const LicensePriceListModal: FC<Props> = ({ closeModal }) => {
+  const { t } = useTranslation(["setting", "common"]);
   const [getUrl, { isLoading, isSuccess }] = useGetLicensePaymentUrlMutation();
   const [selectPrice, setSelectPrice] = useState(
     `${LicensePriceList[0].pid}|${LicensePriceList[0].limit}`
@@ -46,15 +48,15 @@ const LicensePriceListModal: FC<Props> = ({ closeModal }) => {
   return (
     <Modal id="modal-modal">
       <StyledModal
-        title="Renew License"
-        description="Please select the price"
+        title={t("license.renew") || ""}
+        description={t("license.renew_select") || ""}
         buttons={
           <>
             <Button onClick={closeModal} className="ghost">
-              Cancel
+              {t("action.cancel", { ns: "common" })}
             </Button>
             <Button disabled={isLoading || isSuccess} onClick={handleRenew} className="danger">
-              {isLoading ? "Initialize Payment Url" : isSuccess ? "Redirecting" : "Renew"}
+              {isLoading ? "Initialize Payment Url" : isSuccess ? "Redirecting" : t("license.renew")}
             </Button>
           </>
         }

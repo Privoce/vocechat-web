@@ -5,6 +5,7 @@ import renderContent from "./renderContent";
 import Avatar from "../Avatar";
 import IconForward from "../../../assets/icons/forward.svg";
 import useNormalizeMessage from "../../hook/useNormalizeMessage";
+import { useTranslation } from "react-i18next";
 
 const StyledForward = styled.div`
   display: flex;
@@ -36,6 +37,7 @@ type Props = {
   id: string;
 };
 const ForwardedMessage: FC<Props> = ({ context, to, from_uid, id }) => {
+  const { t } = useTranslation();
   const { normalizeMessage, messages } = useNormalizeMessage();
   const [forwards, setForwards] = useState<ReactElement | null>(null);
   useEffect(() => {
@@ -52,7 +54,7 @@ const ForwardedMessage: FC<Props> = ({ context, to, from_uid, id }) => {
         <StyledForward data-forwarded-mids={forward_mids.join(",")}>
           <h4 className="tip">
             <IconForward className="icon" />
-            Forwarded
+            {t("action.forward")}
           </h4>
           <div className="list">
             {messages.map((msg, idx) => {

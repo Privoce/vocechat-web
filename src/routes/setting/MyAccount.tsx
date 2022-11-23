@@ -7,6 +7,7 @@ import ProfileBasicEditModal from "./ProfileBasicEditModal";
 import RemoveAccountConfirmModal from "./RemoveAccountConfirmModal";
 import UpdatePasswordModal from "./UpdatePasswordModal";
 import { useAppSelector } from "../../app/store";
+import { useTranslation } from "react-i18next";
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -99,24 +100,25 @@ const StyledWrapper = styled.div`
     border-radius: 8px;
   }
 `;
-const EditModalInfo = {
-  name: {
-    label: "Username",
-    title: "Change your username",
-    intro: "Enter a new username."
-  },
-  email: {
-    label: "Email",
-    title: "Change your email",
-    intro: "Enter a new email."
-  }
-};
 type EditFields = "name" | "email";
 export default function MyAccount() {
+  const { t } = useTranslation(["member", "common"]);
   const [passwordModal, setPasswordModal] = useState(false);
   const [editModal, setEditModal] = useState<EditFields | null>(null);
   const [removeConfirmVisible, setRemoveConfirmVisible] = useState(false);
   const [uploadAvatar, { isSuccess: uploadSuccess }] = useUpdateAvatarMutation();
+  const EditModalInfo = {
+    name: {
+      label: t("username"),
+      title: t("change_name"),
+      intro: t("change_name_desc")
+    },
+    email: {
+      label: t("email"),
+      title: t("change_email"),
+      intro: t("change_email_desc")
+    }
+  };
 
   const loginUser = useAppSelector((store) => {
     return store.users.byId[store.authData.user?.uid || 0];
@@ -156,43 +158,39 @@ export default function MyAccount() {
           </div>
           <div className="row">
             <div className="info">
-              <span className="label">username</span>
+              <span className="label">{t("username")}</span>
               <span className="txt">
                 {name} <span className="gray"> #{uid}</span>
               </span>
             </div>
             <button data-edit="name" onClick={handleBasicEdit} className="btn">
-              Edit
+              {t("action.edit", { ns: "common" })}
             </button>
           </div>
           <div className="row">
             <div className="info">
-              <span className="label">email</span>
+              <span className="label">{t("email")}</span>
               <span className="txt">{email}</span>
             </div>
             <button data-edit="email" onClick={handleBasicEdit} className="btn">
-              Edit
+              {t("action.edit", { ns: "common" })}
             </button>
           </div>
           <div className="row">
             <div className="info">
-              <span className="label">password</span>
+              <span className="label">{t("password")}</span>
               <span className="txt">*********</span>
             </div>
             <button onClick={togglePasswordModal} className="btn">
-              Edit
+              {t("action.edit", { ns: "common" })}
             </button>
           </div>
         </div>
         {/* uid 1 是初始账户，不能删 */}
         {uid != 1 && (
           <div className="danger">
-            <h4 className="head">Account Removal</h4>
-            <div className="desc">
-              Disabling your account means you can recover it at any time after taking this action.
-            </div>
             <button className="btn" onClick={toggleRemoveAccountModalVisible}>
-              Delete Account
+              {t("delete_account")}
             </button>
           </div>
         )}

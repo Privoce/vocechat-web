@@ -2,6 +2,7 @@ import { FC, useEffect } from "react";
 import IconGithub from "../../assets/icons/github.svg";
 import styled from "styled-components";
 import Button from "./styled/Button";
+import { useTranslation } from "react-i18next";
 
 const StyledSocialButton = styled(Button)`
   width: 100%;
@@ -25,6 +26,7 @@ type Props = {
 };
 
 const GithubLoginButton: FC<Props> = ({ type = "login", source = "webapp", client_id }) => {
+  const { t } = useTranslation("auth");
   useEffect(() => {
     const handleGithubLoginStatusChange = (evt: StorageEvent) => {
       const { key, newValue } = evt;
@@ -60,7 +62,7 @@ const GithubLoginButton: FC<Props> = ({ type = "login", source = "webapp", clien
   return (
     <StyledSocialButton onClick={handleGithubLogin}>
       <IconGithub className="icon" />
-      {` ${type === "login" ? "Sign in" : "Sign up"} with Github`}
+      {` ${type === "login" ? t("login.github") : t("reg.github")}`}
     </StyledSocialButton>
   );
 };

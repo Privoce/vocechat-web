@@ -7,6 +7,7 @@ import useLeaveChannel from "../../hook/useLeaveChannel";
 import StyledModal from "../styled/Modal";
 import Button from "../styled/Button";
 import User from "../User";
+import { useTranslation } from "react-i18next";
 
 const UserList = styled.ul`
   display: flex;
@@ -37,6 +38,7 @@ interface Props {
 }
 
 const TransferOwnerModal: FC<Props> = ({ id, closeModal, withLeave = true }) => {
+  const { t } = useTranslation();
   const {
     transferOwner,
     otherMembers,
@@ -80,7 +82,7 @@ const TransferOwnerModal: FC<Props> = ({ id, closeModal, withLeave = true }) => 
         buttons={
           <>
             <Button onClick={closeModal.bind(null, undefined)} className="cancel">
-              Cancel
+              {t("action.cancel")}
             </Button>
             <Button disabled={!uid} onClick={handleTransferAndLeave} className="danger">
               {operating ? "Assigning" : `Assign and Leave`}

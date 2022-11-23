@@ -1,4 +1,5 @@
 // import React from "react";
+import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -32,6 +33,7 @@ const Styled = styled.div`
 // type Props = {};
 
 const GuestBlankPlaceholder = () => {
+  const { t } = useTranslation("auth");
   const dispatch = useDispatch();
   const { clearLocalData } = useLogout();
   const navigateTo = useNavigate();
@@ -43,10 +45,10 @@ const GuestBlankPlaceholder = () => {
   };
   return (
     <Styled>
-      <h2 className="title">Welcome to {serverName} server</h2>
+      <h2 className="title">{t("welcome", { name: serverName })}</h2>
       <div className="details">
-        <span className="desc">Please sign in to send a message</span>
-        <Button onClick={handleSignIn} className="small">{`Sign In`}</Button>
+        <span className="desc">{t("guest_login_tip")}</span>
+        <Button onClick={handleSignIn} className="small">{t("sign_in")}</Button>
       </div>
     </Styled>
   );

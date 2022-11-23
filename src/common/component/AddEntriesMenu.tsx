@@ -8,6 +8,7 @@ import ChannelIcon from "./ChannelIcon";
 import ChannelModal from "./ChannelModal";
 import UsersModal from "./UsersModal";
 import InviteModal from "./InviteModal";
+import { useTranslation } from "react-i18next";
 
 const Styled = styled.ul`
   z-index: 999;
@@ -42,6 +43,7 @@ const Styled = styled.ul`
   }
 `;
 export default function AddEntriesMenu() {
+  const { t } = useTranslation();
   const currentUser = useAppSelector((store) => store.authData.user);
   const [isPrivate, setIsPrivate] = useState(false);
   const [inviteModalVisible, setInviteModalVisible] = useState(false);
@@ -79,20 +81,20 @@ export default function AddEntriesMenu() {
         {currentUser?.is_admin && (
           <li className="item" onClick={handleOpenChannelModal.bind(null, false)}>
             <ChannelIcon className="icon" />
-            New Channel
+            {t("action.new_channel")}
           </li>
         )}
         <li className="item" onClick={handleOpenChannelModal.bind(null, true)}>
           <ChannelIcon personal={true} className="icon" />
-          New Private Channel
+          {t("action.new_private_channel")}
         </li>
         <li className="item" onClick={toggleUsersModalVisible}>
           <IconMention className="icon" />
-          New Message
+          {t("action.new_msg")}
         </li>
         <li className="item" onClick={toggleInviteModalVisible}>
           <IconInvite className="icon" />
-          Invite People
+          {t("action.invite_people")}
         </li>
       </Styled>
       {channelModalVisible && <ChannelModal personal={isPrivate} closeModal={handleCloseModal} />}

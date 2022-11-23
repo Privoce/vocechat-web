@@ -1,4 +1,5 @@
 import { FC, MouseEvent } from "react";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
 const StyledWrapper = styled.div`
@@ -54,15 +55,16 @@ interface Props {
 }
 
 const SaveTip: FC<Props> = ({ saveHandler, resetHandler }) => {
+  const { t } = useTranslation("setting");
   return (
     <StyledWrapper className="animate__animated animate__flipInX animate__faster">
-      <span className="txt">You have unsaved changes!</span>
+      <span className="txt">{t('save_tip')}</span>
       <div className="btns">
         <button className="btn reset" onClick={resetHandler}>
-          Reset
+          {t('reset')}
         </button>
         <button className="btn" onClick={saveHandler}>
-          Save Changes
+          {t('save_change')}
         </button>
       </div>
     </StyledWrapper>

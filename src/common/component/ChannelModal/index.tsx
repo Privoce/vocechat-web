@@ -12,6 +12,7 @@ import useFilteredUsers from "../../hook/useFilteredUsers";
 import { useCreateChannelMutation } from "../../../app/services/channel";
 import { useAppSelector } from "../../../app/store";
 import { CreateChannelDTO } from "../../../types/channel";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   personal?: boolean;
@@ -19,6 +20,7 @@ interface Props {
 }
 
 const ChannelModal: FC<Props> = ({ personal = false, closeModal }) => {
+  const { t } = useTranslation("chat");
   const { usersData, loginUid } = useAppSelector((store) => {
     return { usersData: store.users.byId, loginUid: store.authData.user?.uid };
   });
@@ -98,7 +100,7 @@ const ChannelModal: FC<Props> = ({ personal = false, closeModal }) => {
               <input
                 value={input}
                 onChange={handleInputChange}
-                placeholder="Type Username to search"
+                placeholder={t("search_user_placeholder") || ""}
               />
             </div>
             {users && (
@@ -129,21 +131,21 @@ const ChannelModal: FC<Props> = ({ personal = false, closeModal }) => {
           </div>
         )}
         <div className={`right ${!is_public ? "private" : ""}`}>
-          <h3 className="title">Create New Channel</h3>
+          <h3 className="title">{t("create_channel")}</h3>
           <p className="desc normal">
             {!is_public
-              ? "This is a private channel, only select members will be able to join."
-              : "This is a public channel, everyone in this team can see it."}
+              ? t("create_private_channel_desc")
+              : t("create_channel_desc")}
           </p>
           <div className="name">
-            <span className="label normal">Channel Name</span>
+            <span className="label normal">{t("channel_name")}</span>
             <div className="input">
               <input onChange={handleNameInput} value={name} placeholder="new channel" />
               <ChannelIcon personal={!is_public} className="icon" />
             </div>
           </div>
           <div className="private">
-            <span className="txt normal">Private Channel</span>
+            <span className="txt normal">{t("private_channel")}</span>
             <StyledToggle
               data-checked={!is_public}
               data-disabled={!loginUser?.is_admin}
@@ -152,10 +154,10 @@ const ChannelModal: FC<Props> = ({ personal = false, closeModal }) => {
           </div>
           <div className="btns">
             <Button onClick={closeModal} className="normal cancel">
-              Cancel
+              {t("action.cancel", { ns: "common" })}
             </Button>
             <Button disabled={isLoading} onClick={handleCreate} className="normal">
-              Create
+              {t("action.create", { ns: "common" })}
             </Button>
           </div>
         </div>

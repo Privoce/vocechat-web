@@ -1,0 +1,46 @@
+{
+  "chat": "聊天",
+  "members": "成员",
+  "favs": "收藏",
+  "files": "文件",
+  "setting": "设置",
+  "more": "更多",
+  "action": {
+    "logout": "退出登录",
+    "change_avatar": "修改头像",
+    "cancel": "取消",
+    "new_channel": "新建频道",
+    "new_private_channel": "新建私有频道",
+    "new_msg": "发消息",
+    "invite_people": "邀请TA人",
+    "search": "搜索",
+    "create": "创建",
+    "update": "更新",
+    "upload": "上传",
+    "done": "完成",
+    "add": "新增",
+    "yes": "是的",
+    "remove": "删除",
+    "edit": "编辑",
+    "edit_msg": "编辑消息",
+    "add_reaction": "表情",
+    "add_to_fav": "收藏",
+    "select": "选择",
+    "forward": "转发",
+    "reply": "回复",
+    "pin": "置顶",
+    "unpin": "取消置顶",
+
+    "send": "发送",
+    "send_msg": "发消息",
+    "copy": "复制",
+    "copy_email": "复制邮箱",
+    "mute": "静默通知",
+    "unmute": "取消静默",
+    "mark_read": "标记已读",
+    "hide_session": "隐藏会话"
+  },
+  "status": {
+    "uploading": "上传中"
+  }
+}

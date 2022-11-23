@@ -3,10 +3,12 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import StyledSettingContainer from "../../common/component/StyledSettingContainer";
 import useNavs from "./navs";
 import LogoutConfirmModal from "./LogoutConfirmModal";
+import { useTranslation } from "react-i18next";
 
 let pageFrom: string = "";
 
 export default function Setting() {
+  const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   const navs = useNavs();
   const flattenNaves = navs.map(({ items }) => items).flat();
@@ -30,9 +32,9 @@ export default function Setting() {
       <StyledSettingContainer
         nav={currNav}
         closeModal={close}
-        title="Settings"
+        title={t("setting") || ""}
         navs={navs}
-        dangers={[{ title: "Log Out", handler: toggleLogoutConfirm }]}
+        dangers={[{ title: t("action.logout"), handler: toggleLogoutConfirm }]}
       >
         {currNav.component}
       </StyledSettingContainer>

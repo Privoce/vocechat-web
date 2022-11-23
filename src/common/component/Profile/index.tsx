@@ -9,6 +9,7 @@ import StyledWrapper from "./styled";
 import StyledMenu from "../styled/Menu";
 import useUserOperation from "../../hook/useUserOperation";
 import { useAppSelector } from "../../../app/store";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   uid: number;
@@ -17,6 +18,7 @@ interface Props {
 }
 
 const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
+  const { t } = useTranslation(["member", "common"]);
   const {
     canCall,
     call,
@@ -56,14 +58,14 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
         <NavLink to={`/chat/dm/${uid}`}>
           <li className="icon chat">
             <IconMessage />
-            <span className="txt">Message</span>
+            <span className="txt">{t("send_msg")}</span>
           </li>
         </NavLink>
         {/* <NavLink to={`#`}> */}
         {enableCall && (
           <li className="icon call" onClick={call}>
             <IconCall />
-            <span className="txt">Call</span>
+            <span className="txt">{t("call")}</span>
           </li>
         )}
         {/* </NavLink> */}
@@ -79,22 +81,22 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
               {enableCall && (
                 <li className="item" onClick={call}>
                   {/* <IconCall className="icon" /> */}
-                  Call
+                  {t("call")}
                 </li>
               )}
               {canCopyEmail && (
                 <li className="item" onClick={copyEmail.bind(undefined, email)}>
-                  Copy Email
+                  {t("copy_email")}
                 </li>
               )}
               {canRemoveFromChannel && (
                 <li className="item danger" onClick={removeFromChannel.bind(null, uid)}>
-                  Remove from Channel
+                  {t("remove_from_channel")}
                 </li>
               )}
               {canRemoveFromServer && (
                 <li className="item danger" onClick={removeUser.bind(null, uid)}>
-                  Remove from Server
+                  {t("remove")}
                 </li>
               )}
             </StyledMenu>
@@ -102,7 +104,7 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
         >
           <li className={`icon more ${hasMore ? "" : "disabled"}`}>
             <IconMore />
-            <span className="txt">More</span>
+            <span className="txt">{t("more", { ns: "common" })}</span>
           </li>
         </Tippy>
       </ul>

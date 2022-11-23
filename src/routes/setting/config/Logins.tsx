@@ -11,8 +11,10 @@ import IssuerList from "./IssuerList";
 import useGoogleAuthConfig from "../../../common/hook/useGoogleAuthConfig";
 import useGithubAuthConfig from "../../../common/hook/useGithubAuthConfig";
 import { LoginConfig } from "../../../types/server";
+import { useTranslation } from "react-i18next";
 
 export default function Logins() {
+  const { t } = useTranslation("setting", { keyPrefix: "login" });
   const {
     changed: clientIdChanged,
     clientId,
@@ -74,9 +76,9 @@ export default function Logins() {
           <div className="row">
             <div className="title">
               <div className="txt">
-                <Label>Password</Label>
+                <Label>{t("password")}</Label>
               </div>
-              <span className="desc">Allows members login with password.</span>
+              <span className="desc">{t("password_desc")}</span>
             </div>
             <Toggle
               onClick={handleToggle.bind(null, { password: !password })}
@@ -88,9 +90,9 @@ export default function Logins() {
           <div className="row">
             <div className="title">
               <div className="txt">
-                <Label>Magic Link</Label>
+                <Label>{t("magic_link")}</Label>
               </div>
-              <span className="desc">Allows members login with Magic Link.</span>
+              <span className="desc">{t("magic_link_desc")}</span>
             </div>
             <Toggle
               onClick={handleToggle.bind(null, { magic_link: !magic_link })}
@@ -102,10 +104,10 @@ export default function Logins() {
           <div className="row">
             <div className="title">
               <div className="txt">
-                <Label>Google</Label>
+                <Label>{t("google")}</Label>
                 <Tooltip link="https://doc.voce.chat/setting/third_login/login-google" />
               </div>
-              <span className="desc">Allows members login with Google.</span>
+              <span className="desc">{t("google_desc")}</span>
             </div>
             <Toggle
               onClick={handleToggle.bind(null, { google: !google })}
@@ -125,10 +127,10 @@ export default function Logins() {
           <div className="row">
             <div className="title">
               <div className="txt">
-                <Label>Github</Label>
+                <Label>{t("github")}</Label>
                 <Tooltip link="https://doc.voce.chat/setting/third_login/login-github" />
               </div>
-              <span className="desc">Allows members login with Github.</span>
+              <span className="desc">{t("github_desc")}</span>
             </div>
             <Toggle
               onClick={handleToggle.bind(null, { github: !github })}
@@ -156,10 +158,10 @@ export default function Logins() {
           <div className="row">
             <div className="title">
               <div className="txt">
-                <Label>Metamask</Label>
+                <Label>{t("metamask")}</Label>
                 <Tooltip link="https://doc.voce.chat/setting/third_login/login-metamask" />
               </div>
-              <span className="desc">Allows members login with Metamask.</span>
+              <span className="desc">{t("metamask_desc")}</span>
             </div>
             <Toggle
               onClick={handleToggle.bind(null, { metamask: !metamask })}
@@ -171,10 +173,10 @@ export default function Logins() {
           <div className="row">
             <div className="title">
               <div className="txt">
-                <Label htmlFor="desc">OIDC</Label>
+                <Label htmlFor="desc">{t("oidc")}</Label>
                 <Tooltip link="https://doc.voce.chat/setting/third_login/login-webid" />
               </div>
-              <span className="desc">Save my login details for next time.</span>
+              <span className="desc">{t("oidc_desc")}</span>
             </div>
           </div>
           <div className="row">

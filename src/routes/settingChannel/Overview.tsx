@@ -16,6 +16,7 @@ import SaveTip from "../../common/component/SaveTip";
 import channelIcon from "../../assets/icons/channel.svg?url";
 import { useAppSelector } from "../../app/store";
 import { Channel } from "../../types/channel";
+import { useTranslation } from "react-i18next";
 
 const StyledWrapper = styled.div`
   position: relative;
@@ -48,6 +49,7 @@ const StyledWrapper = styled.div`
   }
 `;
 export default function Overview({ id = 0 }) {
+  const { t } = useTranslation("setting", { keyPrefix: "channel" });
   const { loginUser, channel } = useAppSelector((store) => {
     return {
       loginUser: store.authData.user,
@@ -122,7 +124,7 @@ export default function Overview({ id = 0 }) {
       <AvatarUploader type="channel" url={channel?.icon} name={name} uploadImage={updateIcon} />
       <div className="inputs">
         <div className="input">
-          <Label htmlFor="name">Channel Name</Label>
+          <Label htmlFor="name">{t("name")}</Label>
           <Input
             disabled={readOnly}
             className="name"
@@ -131,11 +133,11 @@ export default function Overview({ id = 0 }) {
             value={name}
             name="name"
             id="name"
-            placeholder="Channel Name"
+            placeholder={t("name") || ""}
           />
         </div>
         <div className="input">
-          <Label htmlFor="desc">Channel Topic</Label>
+          <Label htmlFor="desc">{t("topic")}</Label>
           <Textarea
             disabled={readOnly}
             data-type="description"
@@ -144,13 +146,12 @@ export default function Overview({ id = 0 }) {
             rows={4}
             name="name"
             id="name"
-            placeholder="Let everyone know how to use this channel."
-          />
+            placeholder={t("topic_placeholder") || ""} />
         </div>
         {!readOnly && <div className="input">
-          <Label htmlFor="desc">Channel Visibility</Label>
+          <Label htmlFor="desc">{t("visibility")}</Label>
           <Radio
-            options={["Public", "Private"]}
+            options={[t("public"), t("private")]}
             values={["true", "false"]}
             value={String(channel.is_public)}
             onChange={(v: string) => {

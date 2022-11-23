@@ -8,6 +8,7 @@ import FilterChannel from "./Channel";
 import FilterType, { FileTypes } from "./Type";
 import ArrowDown from "../../../assets/icons/arrow.down.svg";
 import { useAppSelector } from "../../../app/store";
+import { useTranslation } from "react-i18next";
 
 const Styled = styled.div`
   /* padding: 20px 0; */
@@ -44,6 +45,7 @@ const Styled = styled.div`
 `;
 
 export default function Filter({ filter, updateFilter }) {
+  const { t } = useTranslation("file");
   const [filtersVisible, setFiltersVisible] = useState({
     channel: false,
     date: false,
@@ -93,7 +95,7 @@ export default function Filter({ filter, updateFilter }) {
           {from && (
             <Avatar className="avatar" name={userMap[from].name} url={userMap[from].avatar} />
           )}
-          <span className="txt">From {from && userMap[from].name}</span>
+          <span className="txt">{t("from")} {from && userMap[from].name}</span>
           <ArrowDown className="arrow" />
         </div>
       </Tippy>
@@ -108,7 +110,7 @@ export default function Filter({ filter, updateFilter }) {
           className={`filter ${channel && "selected"}`}
           onClick={toggleFilterVisible.bind(null, { channel: true })}
         >
-          <span className="txt">{channel ? `In ${channelMap[channel].name}` : `Channel`}</span>
+          <span className="txt">{channel ? `In ${channelMap[channel].name}` : t("channel")}</span>
           <ArrowDown className="arrow" />
         </div>
       </Tippy>
@@ -123,7 +125,7 @@ export default function Filter({ filter, updateFilter }) {
           className={`filter ${type && "selected"}`}
           onClick={toggleFilterVisible.bind(null, { type: true })}
         >
-          <span className="txt">{type ? FileTypes[type].title : "Type"}</span>
+          <span className="txt">{type ? FileTypes[type].title : t("type")}</span>
           <ArrowDown className="arrow" />
         </div>
       </Tippy>
@@ -138,7 +140,7 @@ export default function Filter({ filter, updateFilter }) {
           className={`filter ${date && "selected"}`}
           onClick={toggleFilterVisible.bind(null, { date: true })}
         >
-          <span className="txt">{date ? Dates[date].title : "Date"}</span>
+          <span className="txt">{date ? Dates[date].title : t("date")}</span>
           <ArrowDown className="arrow" />
         </div>
       </Tippy>

@@ -20,6 +20,7 @@ import IconSelect from "../../../assets/icons/select.svg";
 import IconDelete from "../../../assets/icons/delete.svg";
 import moreIcon from "../../../assets/icons/more.svg?url";
 import useMessageOperation from "./useMessageOperation";
+import { useTranslation } from "react-i18next";
 
 const StyledCmds = styled.ul`
   z-index: 999;
@@ -68,6 +69,7 @@ type Props = {
   toggleEditMessage: () => void;
 };
 const Commands: FC<Props> = ({ context = "user", contextId = 0, mid = 0, toggleEditMessage }) => {
+  const { t } = useTranslation();
   const {
     canDelete,
     canReply,
@@ -134,27 +136,27 @@ const Commands: FC<Props> = ({ context = "user", contextId = 0, mid = 0, toggleE
           content={<ReactionPicker mid={mid} hidePicker={hideAll} />}
         >
           <li className="cmd">
-            <Tooltip placement="top" tip="Add Reaction">
+            <Tooltip placement="top" tip={t("action.add_reaction")}>
               <img src={reactIcon} className="toggler" alt="icon emoji" />
             </Tooltip>
           </li>
         </Tippy>
         {canEdit && (
           <li className="cmd" onClick={toggleEditMessage}>
-            <Tooltip placement="top" tip="Edit">
+            <Tooltip placement="top" tip={t("action.edit")}>
               <img src={editIcon} alt="icon edit" />
             </Tooltip>
           </li>
         )}
         {canReply && (
           <li className="cmd" onClick={handleReply}>
-            <Tooltip placement="top" tip="Reply">
+            <Tooltip placement="top" tip={t("action.reply")}>
               <img src={replyIcon} alt="icon reply" />
             </Tooltip>
           </li>
         )}
         <li className="cmd fav" onClick={handleAddFav}>
-          <Tooltip placement="top" tip="Add to Favorites">
+          <Tooltip placement="top" tip={t("action.add_to_fav")}>
             <IconBookmark />
           </Tooltip>
         </li>
@@ -169,22 +171,22 @@ const Commands: FC<Props> = ({ context = "user", contextId = 0, mid = 0, toggleE
               items={
                 [
                   canPin && {
-                    title: pinned ? `Unpin Message` : `Pin Message`,
+                    title: pinned ? t("action.unpin") : t("action.pin"),
                     icon: <IconPin className="icon" />,
                     handler: pinned ? handleUnpin : togglePinModal
                   },
                   {
-                    title: "Forward",
+                    title: t("action.forward"),
                     icon: <IconForward className="icon" />,
                     handler: toggleForwardModal
                   },
                   {
-                    title: "Select",
+                    title: t("action.select"),
                     icon: <IconSelect className="icon" />,
                     handler: handleSelect.bind(null, mid)
                   },
                   canDelete && {
-                    title: " Delete",
+                    title: t("action.remove"),
                     danger: true,
                     icon: <IconDelete className="icon" />,
                     handler: toggleDeleteModal
@@ -195,7 +197,7 @@ const Commands: FC<Props> = ({ context = "user", contextId = 0, mid = 0, toggleE
           }
         >
           <li className="cmd">
-            <Tooltip placement="top" tip="More">
+            <Tooltip placement="top" tip={t("more")}>
               <img src={moreIcon} alt="icon more" />
             </Tooltip>
           </li>

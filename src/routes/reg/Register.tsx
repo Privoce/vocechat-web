@@ -11,6 +11,7 @@ import useGithubAuthConfig from "../../common/hook/useGithubAuthConfig";
 import useGoogleAuthConfig from "../../common/hook/useGoogleAuthConfig";
 import GoogleLoginButton from "../../common/component/GoogleLoginButton";
 import GithubLoginButton from "../../common/component/GithubLoginButton";
+import { useTranslation } from "react-i18next";
 
 interface AuthForm {
   email: string;
@@ -19,6 +20,7 @@ interface AuthForm {
 }
 
 export default function Reg() {
+  const { t } = useTranslation("auth");
   const [sendRegMagicLink, { isLoading: signingUp, data, isSuccess }] =
     useSendRegMagicLinkMutation();
   const [checkEmail, { isLoading: checkingEmail }] = useLazyCheckEmailQuery();
@@ -107,8 +109,8 @@ export default function Reg() {
     <>
       <div className="tips">
         <img src={`${BASE_URL}/resource/organization/logo`} alt="logo" className="logo" />
-        <h2 className="title">Sign Up to VoceChat</h2>
-        <span className="desc">Please enter your details.</span>
+        <h2 className="title">{t("reg.title")}</h2>
+        <span className="desc">{t("reg.desc")}</span>
       </div>
 
       <form onSubmit={handleReg} autoSave={"false"} autoComplete={"true"}>
@@ -117,7 +119,7 @@ export default function Reg() {
           name="email"
           value={email}
           required
-          placeholder="Enter email"
+          placeholder={t("placeholder_email") || ""}
           data-type="email"
           onChange={handleInput}
         />
@@ -129,7 +131,7 @@ export default function Reg() {
           required
           data-type="password"
           onChange={handleInput}
-          placeholder="Enter password"
+          placeholder={t("placeholder_pwd") || ""}
         />
         <Input
           required
@@ -139,10 +141,10 @@ export default function Reg() {
           value={confirmPassword}
           data-type="confirmPassword"
           onChange={handleInput}
-          placeholder="Confirm Password"
+          placeholder={t("placeholder_confirm_pwd") || ""}
         ></Input>
         <Button type="submit" disabled={isLoading}>
-          {isLoading ? "Signing Up" : `Sign Up`}
+          {isLoading ? "Signing Up" : t("sign_up")}
         </Button>
       </form>
       <hr className="or" />

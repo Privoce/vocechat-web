@@ -5,30 +5,17 @@ import Welcome from './Welcome';
 import MessageFeed from './MessageFeed';
 import MessageInput from './MessageInput';
 import { useAppSelector } from '../../app/store';
+import useSSE from '../useSSE';
+
 type Props = {
     hostId: number,
     handleClose: () => void
 }
 
 const Index = ({ handleClose, hostId }: Props) => {
+    // 建立SSE连接
+    useSSE();
     const { user: loginUser, token, guest: isGuest } = useAppSelector(store => store.authData);
-    // const { sendMessage } = useSendMessage({
-    //     from: loginUser?.uid,
-    //     to: hostId,
-    //     context: "user"
-    // });
-    // const [input, setInput] = useState('');
-    // const handleInput = (evt: ChangeEvent<HTMLTextAreaElement>) => {
-    //     setInput(evt.target.value);
-    // };
-    // const handleSend = () => {
-    //     if (!input) return;
-    //     sendMessage({
-    //         type: "text",
-    //         content: input
-    //     });
-    //     setInput("");
-    // };
 
     // no token or guest login
     const notLogin = !token || isGuest;

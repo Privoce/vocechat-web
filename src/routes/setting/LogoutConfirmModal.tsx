@@ -6,6 +6,7 @@ import StyledModal from "../../common/component/styled/Modal";
 import Button from "../../common/component/styled/Button";
 import Checkbox from "../../common/component/styled/Checkbox";
 import useLogout from "../../common/hook/useLogout";
+import { useTranslation } from "react-i18next";
 
 const StyledConfirm = styled(StyledModal)`
   .clear {
@@ -32,6 +33,7 @@ interface Props {
 }
 
 const LogoutConfirmModal: FC<Props> = ({ closeModal }) => {
+  const { t } = useTranslation();
   const [clearLocal, setClearLocal] = useState(false);
   const { logout, exited, exiting, clearLocalData } = useLogout();
   const handleLogout = () => {
@@ -58,9 +60,9 @@ const LogoutConfirmModal: FC<Props> = ({ closeModal }) => {
         description="Are you sure want to log out this account?"
         buttons={
           <>
-            <Button onClick={closeModal}>Cancel</Button>
+            <Button onClick={closeModal}>{t("action.cancel")}</Button>
             <Button onClick={handleLogout} className="danger">
-              {exiting ? "Logging out" : "Log Out"}
+              {exiting ? "Logging out" : t("action.logout")}
             </Button>
           </>
         }

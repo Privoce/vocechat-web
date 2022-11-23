@@ -6,6 +6,7 @@ import { useUpdatePasswordMutation, useGetCredentialsQuery } from "../../app/ser
 import StyledModal from "../../common/component/styled/Modal";
 import Button from "../../common/component/styled/Button";
 import Modal from "../../common/component/Modal";
+import { useTranslation } from "react-i18next";
 
 const StyledEdit = styled(StyledModal)`
   .input {
@@ -34,6 +35,7 @@ interface BaseForm {
 }
 
 const ProfileBasicEditModal: FC<Props> = ({ closeModal }) => {
+  const { t } = useTranslation("member");
   const { data } = useGetCredentialsQuery();
   const [input, setInput] = useState<BaseForm>({
     current: "",
@@ -75,22 +77,22 @@ const ProfileBasicEditModal: FC<Props> = ({ closeModal }) => {
   return (
     <Modal id="modal-modal">
       <StyledEdit
-        title={"Change your password"}
-        description={"Enter current password and new password."}
+        title={t("change_pwd") || ""}
+        description={t("change_pwd_desc") || ""}
         buttons={
           <>
             <Button className="cancel" onClick={closeModal}>
-              Cancel
+              {t("action.cancel", { ns: "common" })}
             </Button>
             <Button disabled={disableBtn} onClick={handleUpdate}>
-              {isLoading ? "Updating" : `Update`}
+              {isLoading ? "Updating" : t("action.update", { ns: "common" })}
             </Button>
           </>
         }
       >
         {data?.password && (
           <div className="input">
-            <label htmlFor={"current"}>Current Password</label>
+            <label htmlFor={"current"}>{t("current_pwd")}</label>
             <Input
               type="password"
               id="current"
@@ -102,7 +104,7 @@ const ProfileBasicEditModal: FC<Props> = ({ closeModal }) => {
           </div>
         )}
         <div className="input">
-          <label htmlFor={"newPassword"}>New Password</label>
+          <label htmlFor={"newPassword"}>{t("new_pwd")}</label>
           <Input
             type="password"
             name={"newPassword"}
@@ -112,7 +114,7 @@ const ProfileBasicEditModal: FC<Props> = ({ closeModal }) => {
           ></Input>
         </div>
         <div className="input">
-          <label htmlFor={"confirmPassword"}>Confirm New Password</label>
+          <label htmlFor={"confirmPassword"}>{t("confirm_new_pwd")}</label>
           <Input
             onBlur={handleCompare}
             type="password"

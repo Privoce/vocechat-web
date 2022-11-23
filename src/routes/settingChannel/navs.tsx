@@ -1,6 +1,7 @@
 import Overview from "./Overview";
 import ManageMembers from "../../common/component/ManageMembers";
 import { ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 
 export interface NavItem {
   name: string;
@@ -15,18 +16,19 @@ export interface Nav {
 }
 
 const useNavs = (cid: number): Nav[] => {
+  const { t } = useTranslation("setting");
   return [
     {
-      title: "General",
+      title: t("nav.general"),
       items: [
         {
           name: "overview",
-          title: "Overview",
+          title: t("nav.overview"),
           component: <Overview id={cid} />
         },
         {
           name: "members",
-          title: "Members",
+          title: t("nav.members"),
           component: <ManageMembers cid={cid} />
         }
       ]

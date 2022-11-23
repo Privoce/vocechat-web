@@ -15,8 +15,10 @@ import UserIcon from "../../assets/icons/user.svg";
 import FavIcon from "../../assets/icons/bookmark.svg";
 import FolderIcon from "../../assets/icons/folder.svg";
 import { useAppSelector } from "../../app/store";
+import { useTranslation } from "react-i18next";
 // const routes = ["/setting", "/setting/channel/:cid"];
 function HomePage() {
+  const { t } = useTranslation();
   const isHomePath = useMatch(`/`);
   const isChatHomePath = useMatch(`/chat`);
   const { pathname } = useLocation();
@@ -66,22 +68,22 @@ function HomePage() {
                 }}
                 to={chatNav}
               >
-                <Tooltip tip="Chat">
+                <Tooltip tip={t("chat")}>
                   <ChatIcon />
                 </Tooltip>
               </NavLink>
               <NavLink className="link" to={userNav}>
-                <Tooltip tip="Members">
+                <Tooltip tip={t("members")}>
                   <UserIcon />
                 </Tooltip>
               </NavLink>
               <NavLink className="link" to={"/favs"}>
-                <Tooltip tip="Saved Items">
+                <Tooltip tip={t("favs")}>
                   <FavIcon />
                 </Tooltip>
               </NavLink>
               <NavLink className="link" to={"/files"}>
-                <Tooltip tip="Files">
+                <Tooltip tip={t("files")}>
                   <FolderIcon />
                 </Tooltip>
               </NavLink>

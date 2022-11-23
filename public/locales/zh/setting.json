@@ -1,0 +1,131 @@
+{
+  "title": "设置",
+  "save_change": "保存修改",
+  "reset": "重置",
+  "save_tip": "有未保存的修改！",
+  "nav": {
+    "general": "通用",
+    "overview": "概况",
+    "members": "成员",
+    "my_account": "我的账号",
+    "config": "配置",
+    "firebase": "Firebase",
+    "agora": "Agora",
+    "smtp": "SMTP",
+    "login_method": "登录设置",
+    "third_app": "第三方APP",
+    "widget": "网页挂件",
+    "license": "证书",
+    "about": "关于",
+    "faq": "常见问题",
+    "terms": "隐私声明",
+    "feedback": "反馈"
+  },
+  "channel": {
+    "leave": "离开",
+    "leave_desc": "确定离开该频道？",
+    "transfer_desc": "在离开此频道前，需要转让所有权。",
+    "delete": "删除频道",
+    "delete_desc": "确定删除该频道？",
+
+    "name": "频道名",
+    "topic": "频道主题",
+    "topic_placeholder": "让别人知道这个频道是用来做啥的",
+    "visibility": "可见性",
+    "public": "公开",
+    "private": "私密"
+  },
+  "overview": {
+    "name": "服务器名",
+    "desc": "服务器描述",
+    "upload_desc": "图片最小 128x128，我们推荐上传 512x512 大小的图片，最大不要超过5M。",
+
+    "sign_up": {
+      "title": "注册设置",
+      "desc": "允许什么方式注册",
+      "everyone": "每个人",
+      "invite": "邀请连接"
+    },
+    "guest_mode": {
+      "title": "访客模式",
+      "desc": "开启后，访客可以看到公共频道信息流",
+      "enable": "开启",
+      "disable": "禁用"
+    },
+    "lang": {
+      "title": "语言",
+      "desc": "设置界面语言",
+      "en": "英文",
+      "zh": "中文"
+    }
+  },
+  "license": {
+    "signed": "签名",
+    "domain": "域名",
+    "user_limit": "用户数限制",
+    "expire": "过期时间",
+    "create": "创建时间",
+    "value": "证书内容",
+    "renew": "升级证书",
+    "renew_select": "请选择价格套餐",
+    "tip": {
+      "title": "一个获取免费升级的机会！",
+      "user_test": "通过参与我们的用户测试，获取免费升级的机会",
+      "booking": "在此与我们预约时间：",
+      "wechat": "或者，加微信了解更多："
+    }
+  },
+  "firebase": {
+    "enable": "开启",
+    "token_url": "Token 地址",
+    "project_id": "项目 ID",
+    "private_key": "私有密钥",
+    "client_email": "客户端邮箱"
+  },
+  "smtp": {
+    "enable": "开启",
+    "host": "主机",
+    "port": "端口",
+    "from": "源自",
+    "username": "用户名",
+    "password": "密码",
+    "how_to": "如何设置SMTP？",
+    "send_test_email": "发送测试邮件"
+  },
+  "third_app": {
+    "key": "API 安全密钥",
+    "update": "更新安全密钥",
+    "update_tip": "确定更新API安全密钥？之前密钥将作废",
+    "key_tip": "安全密钥用于服务器与第三方安全通信，请妥善保存！"
+  },
+  "login": {
+    "password": "密码登录",
+    "password_desc": "允许用户使用密码登录",
+    "magic_link": "邀请连接",
+    "magic_link_desc": "允许用户使用邀请链接登录",
+    "google": "谷歌登录",
+    "google_desc": "允许用户谷歌登录",
+    "github": "Github",
+    "github_desc": "允许用户使用GitHub登录",
+    "metamask": "Metamask",
+    "metamask_desc": "允许用户使用Metamask登录",
+    "oidc": "OIDC",
+    "oidc_desc": "允许用户使用OIDC登录",
+    "oidc_custom": "自定义",
+    "more_details": "更多详情，移步 <0> 参考文档 </0> ."
+  },
+  "widget": {
+    "tip": "将挂件SDK内嵌到网页，实现VoceChat扩展！",
+    "code": "代码举例",
+    "code_comment": "将以下代码放置于你的网页中",
+    "config": "配置说明",
+    "param_key": "参数",
+    "default_value": "默认值",
+    "remark": "备注"
+  },
+  "faq": {
+    "client_version": "客户端版本",
+    "server_version": "服务器端版本",
+    "build_time": "构建时间戳"
+  }
+}

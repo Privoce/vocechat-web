@@ -5,6 +5,7 @@ import Modal from "../../common/component/Modal";
 import { useLazyRemoveChannelQuery } from "../../app/services/channel";
 import StyledModal from "../../common/component/styled/Modal";
 import Button from "../../common/component/styled/Button";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   id: number;
@@ -12,6 +13,7 @@ interface Props {
 }
 
 const DeleteConfirmModal: FC<Props> = ({ id, closeModal }) => {
+  const { t } = useTranslation("setting");
   const navigateTo = useNavigate();
   const [deleteChannel, { isLoading, isSuccess }] = useLazyRemoveChannelQuery();
   const handleDelete = () => {
@@ -31,15 +33,15 @@ const DeleteConfirmModal: FC<Props> = ({ id, closeModal }) => {
     <Modal id="modal-modal">
       <StyledModal
         className="compact"
-        title="Delete Channel"
-        description="Are you sure want to delete this channel?"
+        title={t("channel.delete") || ""}
+        description={t("channel.delete_desc") || ""}
         buttons={
           <>
             <Button onClick={closeModal.bind(null, undefined)} className="cancel">
-              Cancel
+              {t("action.cancel", { ns: "common" })}
             </Button>
             <Button onClick={handleDelete} className="danger">
-              {isLoading ? "Deleting" : `Delete`}
+              {isLoading ? "Deleting" : t("action.remove", { ns: "common" })}
             </Button>
           </>
         }

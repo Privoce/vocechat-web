@@ -2,6 +2,7 @@ import { FC, ReactElement } from "react";
 import Tippy from "@tippyjs/react";
 import useUserOperation from "../../hook/useUserOperation";
 import ContextMenu, { Item } from "../ContextMenu";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   enable?: boolean;
@@ -13,6 +14,7 @@ interface Props {
 }
 
 const UserContextMenu: FC<Props> = ({ enable = false, uid, cid, visible, hide, children }) => {
+  const { t } = useTranslation("member");
   const {
     canCall,
     call,
@@ -43,25 +45,25 @@ const UserContextMenu: FC<Props> = ({ enable = false, uid, cid, visible, hide, c
           items={
             [
               {
-                title: "Message",
+                title: t("send_msg"),
                 handler: startChat
               },
               canCall && {
-                title: "Call",
+                title: t("call"),
                 handler: call
               },
               canCopyEmail && {
-                title: "Copy Email",
+                title: t("copy_email"),
                 handler: copyEmail
               },
               canRemoveFromChannel && {
                 danger: true,
-                title: "Remove From Channel",
+                title: t("remove_from_channel"),
                 handler: removeFromChannel
               },
               canRemove && {
                 danger: true,
-                title: "Remove",
+                title: t("remove"),
                 handler: removeUser
               }
             ].filter(Boolean) as Item[]

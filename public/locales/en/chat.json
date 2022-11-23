@@ -1,0 +1,31 @@
+{
+  "pin": "Pin",
+  "pin_desc": "Do you want to pin this message to",
+  "pinned_msg": "Pinned Message",
+  "pin_empty_tip": "This channel doesn’t have any pinned message yet.",
+  "fav": "Favorite",
+  "fav_msg": "Saved Message",
+  "fav_empty_tip": "This channel doesn’t have any saved message yet.",
+  "channel_members": "Channel Members",
+  "add_channel_members": "Add members",
+  "welcome_channel": "Welcome to {{name}}",
+  "welcome_desc": "This is the start of the #{{name}} channel.",
+  "edit_channel": "Edit Channel",
+
+  "channel_name": "Channel Name",
+  "private_channel": "Private Channel",
+  "create_channel": "Create New Channel",
+  "create_channel_desc": "This is a public channel, everyone in this team can see it.",
+  "create_private_channel_desc": "This is a private channel, only select members will be able to join.",
+  "search_user_placeholder": "Type Username to search",
+
+  "invite_title": "Add friends to {{name}}",
+  "invite_by_email": "Invite by Email",
+  "enable_smtp": "Enable SMTP First",
+  "send_invite_link": "Or Send invite link to your friends",
+  "share_invite_link": "Share this link to invite people to this server.",
+  "invite_link_expire": "Invite link expires in 48 hours",
+  "generate_new_link": "Generate New Link",
+
+  "send_to": "Send To"
+}

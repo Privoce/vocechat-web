@@ -4,6 +4,7 @@ import usePinMessage from "../../../common/hook/usePinMessage";
 import PreviewMessage from "../../../common/component/Message/PreviewMessage";
 import IconSurprise from "../../../assets/icons/emoji.surprise.svg";
 import IconClose from "../../../assets/icons/close.svg";
+import { useTranslation } from "react-i18next";
 const Styled = styled.div`
   padding: 16px;
   background: #f9fafb;
@@ -86,6 +87,7 @@ type Props = {
   id: number;
 };
 const PinList: FC<Props> = ({ id }: Props) => {
+  const { t } = useTranslation("chat");
   const { pins, unpinMessage, canPin } = usePinMessage(id);
   const handleUnpin = (evt: FormEvent<HTMLButtonElement>) => {
     const { mid } = evt.currentTarget.dataset;
@@ -95,12 +97,12 @@ const PinList: FC<Props> = ({ id }: Props) => {
   const noPins = pins.length == 0;
   return (
     <Styled>
-      <h4 className="head">Pinned Message({pins.length})</h4>
+      <h4 className="head">{t("pinned_msg")}({pins.length})</h4>
 
       {noPins ? (
         <div className="none">
           <IconSurprise />
-          <div className="tip">This channel doesn’t have any pinned message yet.</div>
+          <div className="tip">{t("pin_empty_tip")}</div>
         </div>
       ) : (
         <ul className="list">

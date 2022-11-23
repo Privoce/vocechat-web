@@ -12,6 +12,7 @@ const StyledButton = styled.button`
   line-height: 20px;
   color: #fff;
   background-color: #22ccee;
+  word-break: keep-all;
   &.flex {
     width: 100%;
   }

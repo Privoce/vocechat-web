@@ -6,6 +6,7 @@ import Toggle from "../../../../common/component/styled/Toggle";
 import options from "./items.json";
 import Styled from "./styled";
 import IconMinus from "../../../../assets/icons/minus.circle.svg";
+import { useTranslation } from "react-i18next";
 
 interface Issuer {
   domain: string;
@@ -19,6 +20,7 @@ interface Props {
 }
 
 const IssuerList: FC<Props> = ({ issuers = [], onChange }) => {
+  const { t } = useTranslation();
   const [select, setSelect] = useState<Partial<Option> | null>(null);
   const [newDomain, setNewDomain] = useState("");
 
@@ -111,7 +113,7 @@ const IssuerList: FC<Props> = ({ issuers = [], onChange }) => {
                 setNewDomain("");
               }}
             >
-              Add
+              {t("action.add")}
             </Button>
           </div>
         </li>

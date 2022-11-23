@@ -7,6 +7,7 @@ import IconInvite from "../../assets/icons/placeholder.invite.svg";
 import IconDownload from "../../assets/icons/placeholder.download.svg";
 import UsersModal from "./UsersModal";
 import { useAppSelector } from "../../app/store";
+import { useTranslation } from "react-i18next";
 
 
 interface Props {
@@ -18,6 +19,7 @@ const classes = {
   boxTip: "px-5 text-sm text-[#475467] font-bold text-center"
 };
 const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
+  const { t } = useTranslation("welcome");
   const server = useAppSelector((store) => store.server);
   const [inviteModalVisible, setInviteModalVisible] = useState(false);
   const [createChannelVisible, setCreateChannelVisible] = useState(false);
@@ -32,22 +34,21 @@ const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
     setInviteModalVisible((prev) => !prev);
   };
   const chatTip =
-    type == "chat" ? "Create a Channel to Start a Conversation" : "Send a Direct Message";
+    type == "chat" ? t("start_by_channel") : t("start_by_dm");
   const chatHandler = type == "chat" ? toggleChannelModalVisible : toggleUserListVisible;
   return (
     <>
       <div className="flex flex-col gap-8 -mt-[50px]">
         <div className="flex flex-col gap-2 items-center">
-          <h2 className="text-3xl text-[#344054] font-bold">Welcome to {server.name} server</h2>
+          <h2 className="text-3xl text-[#344054] font-bold">{t("title", { name: server.name })}</h2>
           <p className="text-sm text-[#98a2b3] max-w-[424px] text-center">
-            Here are some steps to help you get started. For more, check out our Getting Started
-            guide
+            {t("desc")}
           </p>
         </div>
         <div className="grid grid-cols-2 grid-rows-2 gap-6">
           <div className={classes.box} onClick={toggleInviteModalVisible}>
             <IconInvite className={classes.boxIcon} />
-            <div className={classes.boxTip}>Invite your friends or teammates</div>
+            <div className={classes.boxTip}>{t("invite")}</div>
           </div>
           <button onClick={chatHandler} className={classes.box} >
             <IconChat className={classes.boxIcon} />
@@ -55,11 +56,11 @@ const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
           </button>
           <a href={"https://voce.chat#download"} target={"_blank"} rel="noreferrer" className={classes.box} >
             <IconDownload className={classes.boxIcon} />
-            <div className={classes.boxTip}>Download Mobile apps</div>
+            <div className={classes.boxTip}>{t("download")}</div>
           </a>
-          <a href={"https://voce.chat"} target={"_blank"} rel="noreferrer" className={classes.box} >
+          <a href={"https://doc.voce.chat"} target={"_blank"} rel="noreferrer" className={classes.box} >
             <IconAsk className={classes.boxIcon} />
-            <div className={classes.boxTip}>Got questions? Visit our help center</div>
+            <div className={classes.boxTip}>{t("help")}</div>
           </a>
         </div>
       </div>

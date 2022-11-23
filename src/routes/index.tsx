@@ -21,6 +21,7 @@ const InvitePage = lazy(() => import("./invite"));
 const SettingChannelPage = lazy(() => import("./settingChannel"));
 const SettingPage = lazy(() => import("./setting"));
 const ResourceManagement = lazy(() => import("./resources"));
+const GuestLogin = lazy(() => import("./guest"));
 import RequireAuth from "../common/component/RequireAuth";
 import RequireNoAuth from "../common/component/RequireNoAuth";
 import Meta from "../common/component/Meta";
@@ -28,7 +29,6 @@ import HomePage from "./home";
 import ChatPage from "./chat";
 import Loading from "../common/component/Loading";
 import store, { useAppSelector } from "../app/store";
-import GuestLogin from "./guest";
 let toastId: string;
 const PageRoutes = () => {
   const {

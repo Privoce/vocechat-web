@@ -12,6 +12,7 @@ import {
 } from "../../app/services/server";
 import useConfig from "../../common/hook/useConfig";
 import { LoginConfig } from "../../types/server";
+import { useTranslation } from "react-i18next";
 
 const StyledConfirm = styled.div`
   padding: 12px;
@@ -61,6 +62,7 @@ const Styled = styled.div`
 `;
 
 export default function APIConfig() {
+  const { t } = useTranslation(["setting", "common"]);
   const { updateConfig, values } = useConfig("login");
   const { data } = useGetThirdPartySecretQuery();
   const [updateSecret, { data: updatedSecret, isSuccess, isLoading }] =
@@ -83,7 +85,7 @@ export default function APIConfig() {
         data-checked={thirdParty}
       />
       <div className="input">
-        <label htmlFor="secret">API Secure Key:</label>
+        <label htmlFor="secret"> {t("third_app.key")}:</label>
         <Input disabled={!thirdParty} type="password" id="secret" value={updatedSecret || data} />
       </div>
       <Tippy
@@ -93,24 +95,23 @@ export default function APIConfig() {
         content={
           <StyledConfirm>
             <div className="tip">
-              Are you sure to update API secret? Previous secret will be invalided
+              {t("third_app.update_tip")}
             </div>
             <div className="btns">
               <Button onClick={() => hideAll()} className="cancel small">
-                Cancel
+                {t("action.cancel", { ns: "common" })}
               </Button>
               <Button disabled={isLoading} className="small danger" onClick={() => updateSecret()}>
-                Yes
+                {t("action.yes", { ns: "common" })}
               </Button>
             </div>
           </StyledConfirm>
         }
       >
-        <Button disabled={!thirdParty}>Update Secret</Button>
+        <Button disabled={!thirdParty}> {t("third_app.update")}</Button>
       </Tippy>
       <div className="tip">
-        Tip: The security key agreed between the server and the third-party app is used to encrypt
-        the communication data.
+        {t("third_app.key_tip")}
       </div>
     </Styled>
   );

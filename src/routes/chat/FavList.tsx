@@ -4,6 +4,7 @@ import FavoredMessage from "../../common/component/Message/FavoredMessage";
 import IconSurprise from "../../assets/icons/emoji.surprise.svg";
 import IconRemove from "../../assets/icons/close.svg";
 import useFavMessage from "../../common/hook/useFavMessage";
+import { useTranslation } from "react-i18next";
 
 const Styled = styled.div`
   padding: 16px;
@@ -84,6 +85,7 @@ const Styled = styled.div`
 `;
 type Props = { cid?: number; uid?: number };
 const FavList: FC<Props> = ({ cid = null, uid = null }) => {
+  const { t } = useTranslation("chat");
   const { favorites, removeFavorite } = useFavMessage({ cid, uid });
   const handleRemove = (evt: MouseEvent<HTMLButtonElement>) => {
     const { id = "" } = evt.currentTarget.dataset;
@@ -93,11 +95,11 @@ const FavList: FC<Props> = ({ cid = null, uid = null }) => {
   const noFavs = favorites.length == 0;
   return (
     <Styled>
-      <h4 className="head">Saved Message({favorites.length})</h4>
+      <h4 className="head">{t('fav_msg')}({favorites.length})</h4>
       {noFavs ? (
         <div className="none">
           <IconSurprise />
-          <div className="tip">This channel doesn’t have any saved message yet.</div>
+          <div className="tip">{t("fav_empty_tip")}</div>
         </div>
       ) : (
         <ul className="list">

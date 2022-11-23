@@ -4,6 +4,7 @@ import Tippy from "@tippyjs/react";
 import IconSelect from "../../../assets/icons/check.sign.svg";
 import IconArrow from "../../../assets/icons/arrow.down.svg";
 import Menu from "./Menu";
+import { useTranslation } from "react-i18next";
 
 const Styled = styled.div`
   user-select: none;
@@ -41,6 +42,7 @@ interface Props {
 }
 
 const Select: FC<Props> = ({ options = [], updateSelect = null, current = null }) => {
+  const { t } = useTranslation();
   const [optionsVisible, setOptionsVisible] = useState(false);
   const [curr, setCurr] = useState<Partial<Option> | null>(null);
   const toggleVisible = () => {
@@ -79,7 +81,7 @@ const Select: FC<Props> = ({ options = [], updateSelect = null, current = null }
       }
     >
       <Styled onClick={toggleVisible}>
-        <span className="txt">{(current !== null ? current : curr)?.title || "Select"}</span>
+        <span className="txt">{(current !== null ? current : curr)?.title || t("action.select")}</span>
         <IconArrow className="icon" />
       </Styled>
     </Tippy>

@@ -28,11 +28,13 @@ import InviteModal from "../../../common/component/InviteModal";
 import LoadMore from "../LoadMore";
 import { useAppSelector } from "../../../app/store";
 import { AgoraConfig } from "../../../types/server";
+import { useTranslation } from "react-i18next";
 type Props = {
   cid?: number;
   dropFiles?: File[];
 };
 function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
+  const { t } = useTranslation("chat");
   const { values: agoraConfig } = useConfig("agora");
   const {
     list: msgIds,
@@ -105,7 +107,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
                   </Tooltip>
                 </li>
               )}
-              <Tooltip tip="Pin" placement="left">
+              <Tooltip tip={t("pin")} placement="left">
                 <Tippy
                   placement="left-start"
                   popperOptions={{ strategy: "fixed" }}
@@ -119,7 +121,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
                   </li>
                 </Tippy>
               </Tooltip>
-              <Tooltip tip="Favorite" placement="left">
+              <Tooltip tip={t("fav")} placement="left">
                 <Tippy
                   placement="left-start"
                   popperOptions={{ strategy: "fixed" }}
@@ -137,7 +139,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
                 className={`tool ${membersVisible ? "active" : ""}`}
                 onClick={toggleMembersVisible}
               >
-                <Tooltip tip="Channel Members" placement="left">
+                <Tooltip tip={t("channel_members")} placement="left">
                   <IconPeople />
                 </Tooltip>
               </li>
@@ -160,7 +162,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
                 {addVisible && (
                   <div className="add" onClick={toggleAddVisible}>
                     <img className="icon" src={addIcon} />
-                    <div className="txt">Add members</div>
+                    <div className="txt">{t("add_channel_members")}</div>
                   </div>
                 )}
                 {memberIds.map((uid: number) => {
@@ -186,12 +188,12 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
             <LoadMore pullUp={pullUp} />
           ) : (
             <div className="info">
-              <h2 className="title">Welcome to #{name} !</h2>
-              <p className="desc">This is the start of the #{name} channel. </p>
+              <h2 className="title">{t("welcome_channel", { name })}</h2>
+              <p className="desc">{t("welcome_desc", { name })} </p>
               {loginUser?.is_admin && (
                 <NavLink to={`/setting/channel/${cid}?f=${pathname}`} className="edit">
                   <EditIcon className="icon" />
-                  Edit Channel
+                  {t("edit_channel")}
                 </NavLink>
               )}
             </div>

@@ -1,13 +1,15 @@
 import { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useGetServerVersionQuery } from "../../app/services/server";
 type Props = {};
 const FAQ: FC<Props> = () => {
+  const { t } = useTranslation("setting", { keyPrefix: "faq" });
   const { data: serverVersion } = useGetServerVersionQuery();
   return (
     <div className="flex flex-col gap-3">
-      <div className="item">Client Version: {process.env.VERSION}</div>
-      <div className="item">Server Version: {serverVersion}</div>
-      <div className="item">Build Timestamp: {process.env.REACT_APP_BUILD_TIME}</div>
+      <div className="item">{t("client_version")}: {process.env.VERSION}</div>
+      <div className="item">{t("server_version")}: {serverVersion}</div>
+      <div className="item">{t("build_time")}: {process.env.REACT_APP_BUILD_TIME}</div>
     </div>
   );
 };

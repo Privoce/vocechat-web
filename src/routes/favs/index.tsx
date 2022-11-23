@@ -10,32 +10,35 @@ import IconChannel from "../../assets/icons/channel.svg";
 import { ContentTypes } from "../../app/config";
 import { useAppSelector } from "../../app/store";
 import { Favorite } from "../../app/slices/favorites";
-const Filters = [
-  {
-    icon: <IconUnknown className="icon" />,
-    title: "All Items",
-    filter: ""
-  },
-  {
-    icon: <IconImage className="icon" />,
-    title: "Images",
-    filter: "image"
-  },
-  {
-    icon: <IconVideo className="icon" />,
-    title: "Videos",
-    filter: "video"
-  },
-  {
-    icon: <IconAudio className="icon" />,
-    title: "Audios",
-    filter: "audio"
-  }
-];
+import { useTranslation } from "react-i18next";
+
 type filter = "audio" | "video" | "image" | "";
 function FavsPage() {
+  const { t } = useTranslation("fav");
   const [filter, setFilter] = useState<filter>("");
   const [favs, setFavs] = useState<Favorite[]>([]);
+  const Filters = [
+    {
+      icon: <IconUnknown className="icon" />,
+      title: t("all_items"),
+      filter: ""
+    },
+    {
+      icon: <IconImage className="icon" />,
+      title: t("image"),
+      filter: "image"
+    },
+    {
+      icon: <IconVideo className="icon" />,
+      title: t("video"),
+      filter: "video"
+    },
+    {
+      icon: <IconAudio className="icon" />,
+      title: t("audio"),
+      filter: "audio"
+    }
+  ];
   const { favorites, channelData, userData } = useAppSelector((store) => {
     return {
       favorites: store.favorites,

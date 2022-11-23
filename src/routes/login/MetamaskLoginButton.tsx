@@ -6,6 +6,7 @@ import metamaskSvg from "../../assets/icons/metamask.svg?url";
 import { StyledSocialButton } from "./styled";
 import Onboarding from "@metamask/onboarding";
 import { LoginCredential } from "../../types/auth";
+import { useTranslation } from "react-i18next";
 // import toast from "react-hot-toast";
 
 export default function MetamaskLoginButton({
@@ -13,6 +14,7 @@ export default function MetamaskLoginButton({
 }: {
   login: (params: LoginCredential) => void;
 }) {
+  const { t } = useTranslation("auth");
   const [requesting, setRequesting] = useState(false);
   const [accounts, setAccounts] = useState([]);
   const [getNonce] = useLazyGetMetamaskNonceQuery();
@@ -91,7 +93,7 @@ export default function MetamaskLoginButton({
   return (
     <StyledSocialButton disabled={requesting} onClick={handleMetamaskLogin}>
       <img className="icon" src={metamaskSvg} alt="meta mask icon" />
-      Sign in with MetaMask
+      {t("login.metamask")}
     </StyledSocialButton>
   );
 }

@@ -17,8 +17,10 @@ import useGithubAuthConfig from "../../common/hook/useGithubAuthConfig";
 import GoogleLoginButton from "../../common/component/GoogleLoginButton";
 import GithubLoginButton from "../../common/component/GithubLoginButton";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
+import { useTranslation } from "react-i18next";
 
 export default function LoginPage() {
+  const { t } = useTranslation("auth");
   const { data: enableSMTP } = useGetSMTPStatusQuery();
   const [login, { isSuccess, isLoading, error }] = useLoginMutation();
   const { clientId } = useGoogleAuthConfig();
@@ -128,8 +130,8 @@ export default function LoginPage() {
       <div className="form">
         <div className="tips">
           <img src={`${BASE_URL}/resource/organization/logo`} alt="logo" className="logo" />
-          <h2 className="title">Login to VoceChat</h2>
-          <span className="desc">Please enter your details.</span>
+          <h2 className="title">{t("login.title")}</h2>
+          <span className="desc">{t("login.desc")}</span>
         </div>
         <form onSubmit={handleLogin}>
           <Input
@@ -137,7 +139,7 @@ export default function LoginPage() {
             name="email"
             value={email}
             required
-            placeholder="Enter your email"
+            placeholder={t("placeholder_email") || ""}
             data-type="email"
             onChange={handleInput}
           />
@@ -149,10 +151,10 @@ export default function LoginPage() {
             required
             data-type="password"
             onChange={handleInput}
-            placeholder="Enter your password"
+            placeholder={t("placeholder_pwd") || ""}
           />
           <Button type="submit" disabled={isLoading}>
-            {isLoading ? "Signing" : `Sign in`}
+            {isLoading ? "Signing" : t("sign_in")}
           </Button>
         </form>
         {hasDivider && <hr className="or" />}

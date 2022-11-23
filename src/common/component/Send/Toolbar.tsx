@@ -6,6 +6,7 @@ import MarkdownIcon from "../../../assets/icons/markdown.svg";
 import FullscreenIcon from "../../../assets/icons/fullscreen.svg";
 import ExitFullscreenIcon from "../../../assets/icons/fullscreen.exit.svg";
 import useUploadFile from "../../hook/useUploadFile";
+import { useTranslation } from "react-i18next";
 
 const Styled = styled.div`
   display: flex;
@@ -58,6 +59,7 @@ const Toolbar: FC<Props> = ({
   to,
   context
 }) => {
+  const { t } = useTranslation();
   const { addStageFile } = useUploadFile({ context, id: to });
   const fileInputRef = useRef<HTMLInputElement>(null);
   const handleUpload = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -94,7 +96,7 @@ const Toolbar: FC<Props> = ({
             </Tooltip>
           ))}
       </div>
-      <Tooltip placement="top" tip="Upload">
+      <Tooltip placement="top" tip={t("action.upload")}>
         <div className="add">
           <AddIcon />
           <label htmlFor="file">

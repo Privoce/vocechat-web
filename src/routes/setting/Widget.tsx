@@ -1,5 +1,6 @@
 // import { useState, MouseEvent } from "react";
 // import dayjs from "dayjs";
+import { useTranslation } from 'react-i18next';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
@@ -17,26 +18,27 @@ const Row = ({ paramKey, paramDefault, remarks }: { paramKey: string, paramDefau
   </tr>;
 };
 export default function Widget() {
+  const { t } = useTranslation("setting", { keyPrefix: "widget" });
   // const disableBtn = !reachLimit;
   return (
     <div className="flex flex-col justify-start items-start">
       <div className="text-gray-600 ">
-        Extending VoceChat by embedding the vocechat widget SDK!
+        {t('tip')}
       </div>
       <label htmlFor="code" className="text-gray-500 text-sm mt-5">
-        Code Example:
+        {t('code')}:
       </label>
       <SyntaxHighlighter id="code" language="html" style={vscDarkPlus} className="rounded">
-        {`<!-- put this code snippet into your html file -->\n<script \n  data-host-id="4" \n  data-close-width="48" \n  data-close-height="48" \n  data-open-width="380" \n  data-open-height="680" \n  src="${location.origin}/widget.js" \n  async \n/>`}
+        {`<!-- ${t('code_comment')} -->\n<script \n  data-host-id="4" \n  data-close-width="48" \n  data-close-height="48" \n  data-open-width="380" \n  data-open-height="680" \n  src="${location.origin}/widget.js" \n  async \n/>`}
       </SyntaxHighlighter>
       <div className="text-gray-500 text-sm mt-5 mb-2">
-        Configuration Description:
+        {t('config')}:
       </div>
       <div className="w-[700px] border border-solid border-gray-300 rounded overflow-hidden">
         <table className="min-w-full table-auto">
           <thead className="border-b bg-gray-50">
             <tr>
-              {["Parameter Key", "Default Value", "Remarks"].map(title => <th key={title} scope="col" className="text-sm font-bold text-gray-900 px-6 py-4 text-left">
+              {[t('param_key'), t('default_value'), t('remark')].map(title => <th key={title} scope="col" className="text-sm font-bold text-gray-900 px-6 py-4 text-left">
                 {title}
               </th>)}
             </tr>

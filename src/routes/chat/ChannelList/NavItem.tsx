@@ -15,12 +15,14 @@ import StyledLink from "./styled";
 import ChannelIcon from "../../../common/component/ChannelIcon";
 import { getUnreadCount } from "../utils";
 import { useAppSelector } from "../../../app/store";
+import { useTranslation } from "react-i18next";
 interface IProps {
   id: number;
   setFiles: (files: File[]) => void;
   toggleRemoveConfirm: (id: number) => void;
 }
 const NavItem: FC<IProps> = ({ id, setFiles, toggleRemoveConfirm }) => {
+  const { t } = useTranslation();
   const { pathname } = useLocation();
   const [inviteModalVisible, setInviteModalVisible] = useState(false);
   const navigate = useNavigate();
@@ -118,20 +120,20 @@ const NavItem: FC<IProps> = ({ id, setFiles, toggleRemoveConfirm }) => {
             hideMenu={hideContextMenu}
             items={[
               {
-                title: "Mark As Read",
+                title: t("action.mark_read"),
                 underline: true,
                 handler: handleReadAll
               },
               {
-                title: muted ? "Unmute" : "Mute",
+                title: muted ? t("action.unmute") : t("action.mute"),
                 handler: handleMute
               },
               {
-                title: "Invite People",
+                title: t("action.invite_people"),
                 handler: toggleInviteModalVisible
               },
               {
-                title: "Delete Channel",
+                title: t("channel.delete", { ns: "setting" }),
                 danger: true,
                 handler: toggleRemoveConfirm.bind(null, id)
               }

@@ -1,5 +1,6 @@
 import { useEffect, useState, ChangeEvent, FC } from "react";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import useInviteLink from "../../hook/useInviteLink";
 import Button from "../styled/Button";
@@ -59,6 +60,7 @@ const Styled = styled.div`
     font-size: 12px;
     line-height: 18px;
     button {
+      margin-left: 4px;
       background: none;
       border: none;
       color: #22ccee;
@@ -71,6 +73,7 @@ interface Props {
 }
 
 const InviteByEmail: FC<Props> = ({ cid }) => {
+  const { t } = useTranslation("chat");
   const [email, setEmail] = useState("");
   const { enableSMTP, linkCopied, link, copyLink, generateNewLink, generating } =
     useInviteLink(cid);
@@ -87,33 +90,33 @@ const InviteByEmail: FC<Props> = ({ cid }) => {
   return (
     <Styled>
       <div className="invite">
-        <label htmlFor="">Invite by Email</label>
+        <label htmlFor="">{t("invite_by_email")}</label>
         <div className="input">
           <Input
             value={email}
             onChange={handleEmail}
             disabled={!enableSMTP}
             type="email"
-            placeholder={enableSMTP ? "Enter Email" : "Enable SMTP First"}
+            placeholder={enableSMTP ? "Enter Email" : t("enable_smtp") || ""}
           />
           <Button disabled={!enableSMTP || !email} className="send">
-            Send
+            {t("action.send", { ns: "common" })}
           </Button>
         </div>
       </div>
       <div className="link">
-        <label htmlFor="">Or Send invite link to your friends</label>
+        <label htmlFor="">{t("send_invite_link")}</label>
         <div className="input">
           <Input readOnly className="invite" placeholder="Generating" value={link} />
           <button className="copy" onClick={copyLink}>
-            Copy
+            {t("action.copy", { ns: "common" })}
           </button>
         </div>
       </div>
       <div className="tip">
-        Invite link expires in 7 days.{" "}
+        {t("invite_link_expire")}
         <button disabled={generating} className="new" onClick={() => generateNewLink()}>
-          Generate New Link
+          {t("generate_new_link")}
         </button>
       </div>
     </Styled>

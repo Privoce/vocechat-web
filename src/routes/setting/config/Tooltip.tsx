@@ -1,22 +1,17 @@
 import Tippy from "@tippyjs/react";
 import { roundArrow } from "tippy.js";
 import "tippy.js/dist/svg-arrow.css";
-import styled from "styled-components";
 import IconQuestion from "../../../assets/icons/question.svg";
+// import { useTranslation } from "react-i18next";
+import { PropsWithChildren } from "react";
+import { Trans } from 'react-i18next';
 
-const StyledContent = styled.div`
-  padding: 8px 12px;
-  background: #101828;
-  border-radius: 8px;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 18px;
-  color: #ffffff;
-  a {
-    color: #55c7ec;
-  }
-`;
+const Link = ({ to, children }: PropsWithChildren<{ to: string }>) => {
 
+  return <a href={to} className="text-primary-500" target="_blank" rel="noreferrer" >
+    {children}
+  </a>;
+};
 export default function Tooltip({ link = "#" }) {
   return (
     <Tippy
@@ -25,13 +20,11 @@ export default function Tooltip({ link = "#" }) {
       arrow={roundArrow}
       placement="bottom"
       content={
-        <StyledContent>
-          Need more detail? See our{" "}
-          <a target={"doc"} href={link}>
-            doc
-          </a>
-          .
-        </StyledContent>
+        <div className="py-2 px-3 bg-gray-800 text-xs text-white rounded-lg">
+          <Trans ns="setting" i18nKey={"login.more_details"}  >
+            <Link to={link} />
+          </Trans>
+        </div>
       }
     >
       <IconQuestion className="icon" />

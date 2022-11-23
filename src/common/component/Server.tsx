@@ -5,6 +5,7 @@ import addIcon from "../../assets/icons/add.svg?url";
 import Tooltip from "./Tooltip";
 import AddEntriesMenu from "./AddEntriesMenu";
 import { useAppSelector } from "../../app/store";
+import { useTranslation } from "react-i18next";
 
 const StyledWrapper = styled.div`
   min-height: 56px;
@@ -54,6 +55,7 @@ type Props = {
   readonly?: boolean;
 };
 export default function Server({ readonly = false }: Props) {
+  const { t } = useTranslation();
   const { pathname } = useLocation();
   const { server, userCount } = useAppSelector((store) => {
     return {
@@ -74,7 +76,7 @@ export default function Server({ readonly = false }: Props) {
             <h3 className="name" title={description}>
               {name}
             </h3>
-            <span className="desc">{userCount} members</span>
+            <span className="desc">{userCount} {t("members")}</span>
           </div>
         </div>
       </StyledWrapper>
@@ -91,12 +93,12 @@ export default function Server({ readonly = false }: Props) {
             <h3 className="name" title={description}>
               {name}
             </h3>
-            <span className="desc">{userCount} members</span>
+            <span className="desc">{userCount} {t("members")}</span>
           </div>
         </div>
       </NavLink>
 
-      <Tooltip tip="More" placement="bottom">
+      <Tooltip tip={t("more")} placement="bottom">
         <Tippy interactive placement="bottom-end" trigger="click" content={<AddEntriesMenu />}>
           <img src={addIcon} alt="add icon" className="add" />
         </Tippy>

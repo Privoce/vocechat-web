@@ -1,4 +1,5 @@
 import { ChangeEvent, FC } from "react";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import iconSearch from "../../assets/icons/search.svg?url";
 
@@ -32,6 +33,7 @@ interface Props {
 }
 
 const Search: FC<Props> = ({ value = "", updateSearchValue = null, embed = false }) => {
+  const { t } = useTranslation();
   const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
     if (updateSearchValue) {
       updateSearchValue(evt.target.value);
@@ -40,7 +42,7 @@ const Search: FC<Props> = ({ value = "", updateSearchValue = null, embed = false
 
   return (
     <Styled className={embed ? "embed" : ""}>
-      <input value={value} onChange={handleChange} className="search" placeholder="Search..." />
+      <input value={value} onChange={handleChange} className="search" placeholder={`${t("action.search")}...`} />
     </Styled>
   );
 };

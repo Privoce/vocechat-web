@@ -1,0 +1,26 @@
+{
+  "username": "Username",
+  "email": "Email",
+  "password": "Password",
+  "delete_account": "Delete Account",
+  "change_name": "Change your username",
+  "change_name_desc": "Enter a new username",
+  "change_email": "Change your email",
+  "change_email_desc": "Enter a new email.",
+  "change_pwd": "Change your password",
+  "change_pwd_desc": "Enter current password and new password",
+  "current_pwd": "Current Password",
+  "new_pwd": "New Password",
+  "confirm_new_pwd": "Confirm New Password",
+
+  "manage_members": "Manage Members",
+  "manage_tip": "Disabling your account means you can recover it at any time after taking this action.",
+  "admin": "Admin",
+  "user": "User",
+  "copy_email": "Copy Email",
+  "send_msg": "Send Message",
+  "remove": "Remove",
+  "remove_account": "Remove Account",
+  "remove_account_desc": "Are you sure remove this account?",
+  "remove_from_channel": "Remove From Channel"
+}

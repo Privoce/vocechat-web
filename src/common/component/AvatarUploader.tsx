@@ -2,6 +2,7 @@ import { ChangeEvent, FC, useState } from "react";
 import styled from "styled-components";
 import Avatar from "./Avatar";
 import uploadIcon from "../../assets/icons/upload.image.svg?url";
+import { useTranslation } from "react-i18next";
 
 const StyledWrapper = styled.div`
   width: 96px;
@@ -75,6 +76,7 @@ const AvatarUploader: FC<Props> = ({
   uploadImage,
   disabled = false
 }) => {
+  const { t } = useTranslation();
   const [uploading, setUploading] = useState(false);
   const handleUpload = async (evt: ChangeEvent<HTMLInputElement>) => {
     if (uploading) return;
@@ -91,7 +93,7 @@ const AvatarUploader: FC<Props> = ({
         <Avatar type={type} url={url} name={name} />
         {!disabled && (
           <>
-            <div className="tip">{uploading ? `Uploading` : `Change Avatar`}</div>
+            <div className="tip">{uploading ? t("status.uploading") : t("action.change_avatar")}</div>
             <input
               multiple={false}
               onChange={handleUpload}

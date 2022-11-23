@@ -7,8 +7,10 @@ import Label from "../../../common/component/styled/Label";
 import SaveTip from "../../../common/component/SaveTip";
 import useConfig from "../../../common/hook/useConfig";
 import { FirebaseConfig } from "../../../types/server";
+import { useTranslation } from "react-i18next";
 
 export default function ConfigFirebase() {
+  const { t } = useTranslation("setting");
   const { values, toggleEnable, updateConfig, setValues, reset, changed } = useConfig("firebase");
   const handleUpdate = () => {
     // const { token_url, description } = values;
@@ -34,33 +36,33 @@ export default function ConfigFirebase() {
     <StyledContainer>
       <div className="inputs">
         <div className="input row">
-          <Label>Enable</Label>
+          <Label>{t("firebase.enable")}</Label>
           <Toggle onClick={toggleEnable} data-checked={enabled}></Toggle>
         </div>
         <div className="input">
-          <Label htmlFor="name">Token Url</Label>
+          <Label htmlFor="name">{t("firebase.token_url")}</Label>
           <Input
             disabled={!enabled}
             data-type="token_url"
             onChange={handleChange}
             value={token_url}
             name="token_url"
-            placeholder="Token URL"
+            placeholder={t("firebase.token_url") || ""}
           />
         </div>
         <div className="input">
-          <Label htmlFor="desc">Project ID</Label>
+          <Label htmlFor="desc">{t("firebase.project_id")}</Label>
           <Input
             disabled={!enabled}
             data-type="project_id"
             onChange={handleChange}
             value={project_id}
             name="project_id"
-            placeholder="Project ID"
+            placeholder={t("firebase.project_id") || ""}
           />
         </div>
         <div className="input">
-          <Label htmlFor="desc">Private Key</Label>
+          <Label htmlFor="desc">{t("firebase.private_key")}</Label>
           <Textarea
             rows={10}
             spellCheck={false}
@@ -69,18 +71,18 @@ export default function ConfigFirebase() {
             onChange={handleChange}
             value={private_key}
             name="private_key"
-            placeholder="Private key"
+            placeholder={t("firebase.private_key") || ""}
           />
         </div>
         <div className="input">
-          <Label htmlFor="desc">Client Email</Label>
+          <Label htmlFor="desc">{t("firebase.client_email")}</Label>
           <Input
             disabled={!enabled}
             data-type="client_email"
             onChange={handleChange}
             value={client_email}
             name="client_email"
-            placeholder="Client Email address"
+            placeholder={t("firebase.client_email") || ""}
           />
         </div>
       </div>

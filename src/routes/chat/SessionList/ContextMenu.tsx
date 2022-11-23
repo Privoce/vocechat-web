@@ -8,6 +8,8 @@ import { removeUserSession } from "../../../app/slices/message.user";
 import ContextMenu, { Item } from "../../../common/component/ContextMenu";
 import useUserOperation from "../../../common/hook/useUserOperation";
 import { useAppSelector } from "../../../app/store";
+import { useTranslation } from "react-i18next";
+import { t } from "i18next";
 type Props = {
   context: "user" | "channel";
   id: number;
@@ -28,6 +30,7 @@ const SessionContextMenu: FC<Props> = ({
   setInviteChannelId,
   children
 }) => {
+  const { t } = useTranslation();
   const { canCopyEmail, copyEmail, canDeleteChannel } = useUserOperation({
     uid: context == "user" ? id : undefined,
     cid: context == "channel" ? id : undefined
@@ -71,45 +74,45 @@ const SessionContextMenu: FC<Props> = ({
   const items =
     context == "user"
       ? [
-          {
-            title: "Mark As Read",
-            handler: handleReadAll
-          },
-          canCopyEmail && {
-            title: "Copy Email",
-            handler: copyEmail
-          },
-          {
-            title: "Hide Session",
-            danger: true,
-            handler: handleRemoveSession
-          }
-        ]
+        {
+          title: t("action.mark_read"),
+          handler: handleReadAll
+        },
+        canCopyEmail && {
+          title: t("action.copy_email"),
+          handler: copyEmail
+        },
+        {
+          title: t("action.hide_session"),
+          danger: true,
+          handler: handleRemoveSession
+        }
+      ]
       : [
-          {
-            title: "Settings",
-            underline: true,
-            handler: handleChannelSetting
-          },
-          {
-            title: "Mark As Read",
-            // underline: true
-            handler: handleReadAll
-          },
-          {
-            title: channelMuted ? "Unmute" : "Mute",
-            handler: handleChannelMute
-          },
-          {
-            title: "Invite People",
-            handler: setInviteChannelId.bind(null, id)
-          },
-          canDeleteChannel && {
-            title: "Delete Channel",
-            danger: true,
-            handler: deleteChannel.bind(null, id)
-          }
-        ];
+        {
+          title: t("setting"),
+          underline: true,
+          handler: handleChannelSetting
+        },
+        {
+          title: t("action.mark_read"),
+          // underline: true
+          handler: handleReadAll
+        },
+        {
+          title: channelMuted ? t("action.unmute") : t("action.mute"),
+          handler: handleChannelMute
+        },
+        {
+          title: t("action.invite_people"),
+          handler: setInviteChannelId.bind(null, id)
+        },
+        canDeleteChannel && {
+          title: t("action.delete_channel"),
+          danger: true,
+          handler: deleteChannel.bind(null, id)
+        }
+      ];
   return (
     <Tippy
       interactive

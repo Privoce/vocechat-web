@@ -6,6 +6,7 @@ import useFilteredUsers from "../hook/useFilteredUsers";
 
 import User from "./User";
 import Modal from "./Modal";
+import { useTranslation } from "react-i18next";
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -56,6 +57,7 @@ interface Props {
 }
 
 const UsersModal: FC<Props> = ({ closeModal }) => {
+  const { t } = useTranslation("chat");
   const wrapperRef = useRef<HTMLDivElement>(null);
   const { users, updateInput, input } = useFilteredUsers();
   useOutsideClick(wrapperRef, closeModal);
@@ -68,7 +70,7 @@ const UsersModal: FC<Props> = ({ closeModal }) => {
     <Modal>
       <StyledWrapper ref={wrapperRef}>
         <div className="search">
-          <input value={input} onChange={handleSearch} placeholder="Type Username to search" />
+          <input value={input} onChange={handleSearch} placeholder={t("search_user_placeholder") || ""} />
         </div>
         {users && (
           <ul className="users">

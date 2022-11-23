@@ -5,10 +5,12 @@ import StyledSettingContainer from "../../common/component/StyledSettingContaine
 import DeleteConfirmModal from "./DeleteConfirmModal";
 import useNavs from "./navs";
 import { useAppSelector } from "../../app/store";
+import { useTranslation } from "react-i18next";
 
 let from: string = "";
 
 export default function ChannelSetting() {
+  const { t } = useTranslation("setting");
   const { cid = 0 } = useParams();
   const { loginUser, channel } = useAppSelector((store) => {
     return {
@@ -52,11 +54,11 @@ export default function ChannelSetting() {
         navs={navs}
         dangers={[
           canLeave && {
-            title: "Leave Channel",
+            title: t("channel.leave"),
             handler: toggleLeaveConfirm
           },
           canDelete && {
-            title: "Delete Channel",
+            title: t("channel.delete"),
             handler: toggleDeleteConfirm
           }
         ]}

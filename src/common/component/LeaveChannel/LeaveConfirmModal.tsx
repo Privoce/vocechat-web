@@ -5,6 +5,7 @@ import useLeaveChannel from "../../hook/useLeaveChannel";
 import Modal from "../Modal";
 import StyledModal from "../styled/Modal";
 import Button from "../styled/Button";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   id: number;
@@ -13,6 +14,7 @@ interface Props {
 }
 
 const LeaveConfirmModal: FC<Props> = ({ id, closeModal, handleNextStep }) => {
+  const { t } = useTranslation("setting");
   const navigateTo = useNavigate();
   const { isOwner, leaving, leaveChannel, leaveSuccess } = useLeaveChannel(id);
 
@@ -28,16 +30,16 @@ const LeaveConfirmModal: FC<Props> = ({ id, closeModal, handleNextStep }) => {
     <Modal id="modal-modal">
       <StyledModal
         className="compact"
-        title="Leave Channel"
+        title={t("channel.leave") || ""}
         description={
           isOwner
-            ? "You need to transfer your channel ownership to someone else before leaving the channel."
-            : "Are you sure want to leave this channel?"
+            ? t("channel.transfer_desc") || ""
+            : t("channel.leave_desc") || ""
         }
         buttons={
           <>
             <Button onClick={closeModal.bind(null, undefined)} className="cancel">
-              Cancel
+              {t("action.cancel", { ns: "common" })}
             </Button>
             {isOwner ? (
               <Button onClick={handleNextStep} className="main">

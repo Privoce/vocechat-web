@@ -1,0 +1,9 @@
+{
+  "title": "欢迎来到 {{name}}",
+  "desc": "下面几步，有助于您开始",
+  "invite": "邀请朋友或队友",
+  "start_by_channel": "创建频道，开启会话",
+  "start_by_dm": "找人聊天",
+  "download": "下载移动端APP",
+  "help": "还有问题？访问我们的帮助中心"
+}

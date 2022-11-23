@@ -5,6 +5,7 @@ import addIcon from "../../assets/icons/add.svg?url";
 import AddEntriesMenu from "./AddEntriesMenu";
 import Tooltip from "./Tooltip";
 import { FC } from "react";
+import { useTranslation } from "react-i18next";
 
 const StyledWrapper = styled.div`
   position: relative;
@@ -35,13 +36,14 @@ const StyledWrapper = styled.div`
 `;
 type Props = {};
 const Search: FC<Props> = () => {
+  const { t } = useTranslation();
   return (
     <StyledWrapper>
       <div className="search">
         <img src={searchIcon} alt="search icon" />
-        <input placeholder="Search..." className="input" />
+        <input placeholder={`${t("action.search")}...`} className="input" />
       </div>
-      <Tooltip tip="More" placement="bottom">
+      <Tooltip tip={t("more")} placement="bottom">
         <Tippy interactive placement="bottom-end" trigger="click" content={<AddEntriesMenu />}>
           <img src={addIcon} alt="add icon" className="add" />
         </Tippy>

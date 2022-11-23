@@ -11,6 +11,7 @@ import { useAppSelector } from "../../../app/store";
 import LoginTip from "./LoginTip";
 import useLicense from "../../../common/hook/useLicense";
 import LicenseUpgradeTip from "./LicenseOutdatedTip";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   readonly?: boolean;
@@ -33,6 +34,7 @@ const Layout: FC<Props> = ({
   context = "channel",
   to
 }) => {
+  const { t } = useTranslation('chat');
   const { reachLimit } = useLicense();
   const { addStageFile } = useUploadFile({ context, id: to });
   const messagesContainer = useRef<HTMLDivElement>(null);
@@ -129,7 +131,7 @@ const Layout: FC<Props> = ({
           >
             <div className={`box ${isActive ? "animate__animated animate__bounceIn" : ""}`}>
               <div className="inner">
-                <h4 className="head">{`Send to ${ChatPrefixes[context]}${name}`}</h4>
+                <h4 className="head">{`${t("send_to")} ${ChatPrefixes[context]}${name}`}</h4>
                 <span className="intro">Photos accept jpg, png, max size limit to 10M.</span>
               </div>
             </div>

@@ -13,11 +13,13 @@ import IconArrowDown from "../../../assets/icons/arrow.down.mini.svg";
 import IconCheck from "../../../assets/icons/check.sign.svg";
 import useUserOperation from "../../hook/useUserOperation";
 import { useAppSelector } from "../../../app/store";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   cid?: number;
 }
 const ManageMembers: FC<Props> = ({ cid }) => {
+  const { t } = useTranslation(["member", "common"]);
   const { users, channels, loginUser } = useAppSelector((store) => {
     return {
       users: store.users,
@@ -54,9 +56,9 @@ const ManageMembers: FC<Props> = ({ cid }) => {
     <StyledWrapper>
       {loginUser?.is_admin && <InviteLink />}
       <div className="intro">
-        <h4 className="title">Manage Members</h4>
+        <h4 className="title">{t("manage_members")}</h4>
         <p className="desc">
-          Disabling your account means you can recover it at any time after taking this action.
+          {t("manage_tip")}
         </p>
       </div>
 
@@ -84,7 +86,7 @@ const ManageMembers: FC<Props> = ({ cid }) => {
               </div>
               <div className="right">
                 <span className="role">
-                  {is_admin ? "Admin" : "User"}
+                  {is_admin ? t("admin") : t("user")}
                   {switchRoleVisible && (
                     <Tippy
                       interactive
@@ -100,7 +102,7 @@ const ManageMembers: FC<Props> = ({ cid }) => {
                               isAdmin: true
                             })}
                           >
-                            Admin
+                            {t("admin")}
                             {is_admin && <IconCheck className="icon" />}
                           </li>
                           <li
@@ -111,7 +113,7 @@ const ManageMembers: FC<Props> = ({ cid }) => {
                               isAdmin: false
                             })}
                           >
-                            User
+                            {t("user")}
                             {!is_admin && <IconCheck className="icon" />}
                           </li>
                         </StyledMenu>
@@ -130,17 +132,17 @@ const ManageMembers: FC<Props> = ({ cid }) => {
                       <StyledMenu className="menu">
                         {email && (
                           <li className="item" onClick={copyEmail.bind(null, email)}>
-                            Copy Email
+                            {t("action.copy_email", { ns: "common" })}
                           </li>
                         )}
                         {canRemoveFromChannel && (
                           <li className="item danger" onClick={removeFromChannel.bind(null, uid)}>
-                            Remove From Channel
+                            {t("remove_from_channel")}
                           </li>
                         )}
                         {canRemove && (
                           <li className="item danger" onClick={removeUser.bind(null, uid)}>
-                            Remove
+                            {t("action.remove", { ns: "common" })}
                           </li>
                         )}
                       </StyledMenu>

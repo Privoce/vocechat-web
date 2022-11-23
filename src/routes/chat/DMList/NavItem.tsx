@@ -17,6 +17,8 @@ import User from "../../../common/component/User";
 import { ContentTypes } from "../../../app/config";
 import { useAppSelector } from "../../../app/store";
 import { ArchiveMessage } from "../../../types/resource";
+import { useTranslation } from "react-i18next";
+
 interface IProps {
   uid: number;
   mid?: number;
@@ -24,6 +26,7 @@ interface IProps {
   setFiles: (files: File[]) => void;
 }
 const NavItem: FC<IProps> = ({ uid, mid = 0, unreads, setFiles }) => {
+  const { t } = useTranslation();
   const [previewMsg, setPreviewMsg] = useState<ArchiveMessage>();
   const { messages: normalizedMessages, normalizeMessage } = useNormalizeMessage();
   const dispatch = useDispatch();
@@ -93,11 +96,11 @@ const NavItem: FC<IProps> = ({ uid, mid = 0, unreads, setFiles }) => {
           hideMenu={hideContextMenu}
           items={[
             {
-              title: "Mark As Read",
+              title: t("action.mark_read"),
               handler: handleReadAll
             },
             {
-              title: "Hide Session",
+              title: t("action.hide_session"),
               danger: true,
               handler: handleRemoveSession
             }

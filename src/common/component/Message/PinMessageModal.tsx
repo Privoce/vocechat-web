@@ -7,6 +7,7 @@ import StyledModal from "../styled/Modal";
 import Button from "../styled/Button";
 import Modal from "../Modal";
 import PreviewMessage from "./PreviewMessage";
+import { useTranslation } from "react-i18next";
 
 const StyledPinModal = styled(StyledModal)`
   min-width: 406px;
@@ -30,6 +31,7 @@ interface Props {
 }
 
 const PinMessageModal: FC<Props> = ({ closeModal, mid = 0, gid = 0 }) => {
+  const { t } = useTranslation();
   const { channel, pinMessage, isPining, isSuccess } = usePinMessage(gid);
   const handlePin = () => {
     pinMessage(mid);
@@ -51,14 +53,14 @@ const PinMessageModal: FC<Props> = ({ closeModal, mid = 0, gid = 0 }) => {
         buttons={
           <>
             <Button onClick={closeModal} className="cancel">
-              Cancel
+              {t("action.cancel")}
             </Button>
             <Button disabled={isPining} onClick={handlePin} className="main">
-              {isPining ? "Pining" : `Pin It`}
+              {isPining ? "Pining" : t("action.pin")}
             </Button>
           </>
         }
-        title="Pin It"
+        title={t("action.pin") || ""}
         description={`Do you want to pin this message to #${channel?.name}`}
       >
         <PreviewMessage mid={mid} />

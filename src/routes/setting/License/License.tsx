@@ -1,9 +1,10 @@
 import { useState, HTMLAttributes } from "react";
 import dayjs from "dayjs";
-import Button from "../../common/component/styled/Button";
-import useLicense from "../../common/hook/useLicense";
+import Button from "../../../common/component/styled/Button";
+import useLicense from "../../../common/hook/useLicense";
 import LicensePriceListModal from "./LicensePriceListModal";
 import clsx from "clsx";
+import { useTranslation } from "react-i18next";
 
 interface ItemProps extends HTMLAttributes<HTMLSpanElement> { label: string, data?: string | number | string[], foldable?: boolean }
 const Item = ({ label, data, foldable = false, ...rest }: ItemProps) => {
@@ -22,6 +23,7 @@ const Item = ({ label, data, foldable = false, ...rest }: ItemProps) => {
 
 };
 export default function License() {
+  const { t } = useTranslation("setting");
   const { license: licenseInfo, reachLimit } = useLicense();
   const [modalVisible, setModalVisible] = useState(false);
   const [base58Fold, setBase58Fold] = useState(true);
@@ -38,25 +40,25 @@ export default function License() {
     <>
       <div className="max-w-3xl flex flex-col justify-start items-start gap-4">
         <div className={clsx('relative w-full p-3 rounded border-solid border flex flex-col gap-4 shadow', reachLimit ? "border-red-600 bg-red-200/50" : "border-green-600 bg-green-200/50")}>
-          <Item label="Signed" data={licenseInfo?.sign ? "Yes" : "Not Yet"} />
-          <Item label="Domains" data={licenseInfo?.domains} />
-          <Item label="User Limit" data={licenseInfo?.user_limit == 99999 ? "No Limit" : licenseInfo?.user_limit} />
-          <Item label="Expired At" data={dayjs(licenseInfo?.expired_at).format("YYYY-MM-DD h:mm:ss A")} />
-          <Item label="Created At" data={dayjs(licenseInfo?.created_at).format("YYYY-MM-DD h:mm:ss A")} />
-          <Item label="License Value" data={licenseInfo?.base58} foldable={base58Fold} title={base58Fold ? "Click to see full text" : "Click to fold text"}
+          <Item label={t("license.signed")} data={licenseInfo?.sign ? "Yes" : "Not Yet"} />
+          <Item label={t("license.domain")} data={licenseInfo?.domains} />
+          <Item label={t("license.user_limit")} data={licenseInfo?.user_limit == 99999 ? "No Limit" : licenseInfo?.user_limit} />
+          <Item label={t("license.expire")} data={dayjs(licenseInfo?.expired_at).format("YYYY-MM-DD h:mm:ss A")} />
+          <Item label={t("license.create")} data={dayjs(licenseInfo?.created_at).format("YYYY-MM-DD h:mm:ss A")} />
+          <Item label={t("license.value")} data={licenseInfo?.base58} foldable={base58Fold} title={base58Fold ? "Click to see full text" : "Click to fold text"}
             onClick={handleLicenseValueToggle} />
         </div>
-        <Button onClick={handleRenewLicense}>Renew License</Button>
+        <Button onClick={handleRenewLicense}>{t("license.renew")}</Button>
         <div className="flex flex-col gap-4 bg-primary-500 text-white rounded drop-shadow-xl p-5">
-          <h2 className="text-2xl font-bold">A chance to get a free license upgrade! 🎁</h2>
+          <h2 className="text-2xl font-bold">{t("license.tip.title")} 🎁</h2>
           <p className="text-base flex flex-col"><span>
-            Getting a free license upgrade by joining our <em className="font-bold">User Test Session</em>
+            {t("license.tip.user_test")}
           </span>
             <span>
-              Book a time here: <a className="underline text-lg text-green-200" href="https://calendly.com/hansu/han-meeting" target="_blank" rel="noopener noreferrer">https://calendly.com/hansu/han-meeting</a>
+              {t("license.tip.booking")} <a className="underline text-lg text-green-200" href="https://calendly.com/hansu/han-meeting" target="_blank" rel="noopener noreferrer">https://calendly.com/hansu/han-meeting</a>
             </span>
             <span>
-              Or, add WeChat for more information: <em className="text-lg text-green-200">yanggc_2013</em>
+              {t("license.tip.wechat")}<em className="text-lg text-green-200">yanggc_2013</em>
             </span>
           </p>
         </div>

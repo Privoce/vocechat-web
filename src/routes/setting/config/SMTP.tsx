@@ -17,8 +17,10 @@ import Label from "../../../common/component/styled/Label";
 import SaveTip from "../../../common/component/SaveTip";
 import toast from "react-hot-toast";
 import { SMTPConfig } from "../../../types/server";
+import { useTranslation } from "react-i18next";
 
 export default function ConfigSMTP() {
+  const { t } = useTranslation("setting", { keyPrefix: "smtp" });
   const [testEmail, setTestEmail] = useState("");
   const [sendTestEmail, { isSuccess, isError }] = useSendTestEmailMutation();
   const { reset, updateConfig, values, setValues, changed, toggleEnable } = useConfig("smtp");
@@ -61,11 +63,11 @@ export default function ConfigSMTP() {
     <StyledContainer>
       <div className="inputs">
         <div className="input row">
-          <Label>Enable</Label>
+          <Label>{t("enable")}</Label>
           <Toggle onClick={toggleEnable} data-checked={enabled}></Toggle>
         </div>
         <div className="input">
-          <Label htmlFor="name">Host</Label>
+          <Label htmlFor="name">{t("host")}</Label>
           <Input
             disabled={!enabled}
             data-type="host"
@@ -76,7 +78,7 @@ export default function ConfigSMTP() {
           />
         </div>
         <div className="input">
-          <Label htmlFor="desc">Port</Label>
+          <Label htmlFor="desc">{t("port")}</Label>
           <Input
             disabled={!enabled}
             type={"number"}
@@ -88,7 +90,7 @@ export default function ConfigSMTP() {
           />
         </div>
         <div className="input">
-          <Label htmlFor="desc">From</Label>
+          <Label htmlFor="desc">{t("from")}</Label>
           <Input
             disabled={!enabled}
             data-type="from"
@@ -99,7 +101,7 @@ export default function ConfigSMTP() {
           />
         </div>
         <div className="input">
-          <Label htmlFor="desc">Username</Label>
+          <Label htmlFor="desc">{t("username")}</Label>
           <Input
             disabled={!enabled}
             data-type="username"
@@ -110,7 +112,7 @@ export default function ConfigSMTP() {
           />
         </div>
         <div className="input">
-          <Label htmlFor="desc">Password</Label>
+          <Label htmlFor="desc">{t("password")}</Label>
           <Input
             type={"password"}
             disabled={!enabled}
@@ -130,7 +132,7 @@ export default function ConfigSMTP() {
           className="link"
           rel="noreferrer"
         >
-          How to set up SMTP?
+          {t("how_to")}
         </a>
       </div>
       <StyledTest>
@@ -143,7 +145,7 @@ export default function ConfigSMTP() {
           placeholder="test@email.com"
         />
         <Button disabled={!enabled || !testEmail} onClick={handleTestClick}>
-          Send Test Email
+          {t("send_test_email")}
         </Button>
       </StyledTest>
       {changed && <SaveTip saveHandler={handleUpdate} resetHandler={reset} />}

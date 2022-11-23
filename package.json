@@ -1,6 +1,6 @@
 {
   "name": "vocechat-web",
-  "version": "0.3.20",
+  "version": "0.3.21",
   "private": true,
   "homepage": "https://voce.chat",
   "dependencies": {
@@ -34,6 +34,9 @@
     "firebase": "^9.14.0",
     "fs-extra": "^10.1.0",
     "html-webpack-plugin": "^5.5.0",
+    "i18next": "^22.0.6",
+    "i18next-browser-languagedetector": "^7.0.1",
+    "i18next-http-backend": "^2.0.1",
     "linkify-it": "3.0.3",
     "linkify-plugin-mention": "^3.0.4",
     "linkifyjs": "^3.0.5",
@@ -49,6 +52,7 @@
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
     "react-hot-toast": "^2.4.0",
+    "react-i18next": "^12.0.0",
     "react-icons": "^4.6.0",
     "react-linkify": "^1.0.0-alpha",
     "react-redux": "^8.0.5",

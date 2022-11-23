@@ -50,6 +50,7 @@ const StyledWrapper = styled.div`
     }
   }
   .right {
+    min-width: 400px;
     display: flex;
     flex-direction: column;
     align-items: center;

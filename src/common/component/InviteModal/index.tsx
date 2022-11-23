@@ -5,6 +5,7 @@ import CloseIcon from "../../../assets/icons/close.svg";
 import Modal from "../Modal";
 import { useAppSelector } from "../../../app/store";
 import { FC } from "react";
+import { useTranslation } from "react-i18next";
 
 const Styled = styled.div`
   display: flex;
@@ -37,6 +38,7 @@ interface Props {
 }
 
 const InviteModal: FC<Props> = ({ type = "server", cid, title = "", closeModal }) => {
+  const { t } = useTranslation("chat");
   const { channel, server } = useAppSelector((store) => {
     return {
       channel: cid ? store.channels.byId[cid] : undefined,
@@ -48,7 +50,7 @@ const InviteModal: FC<Props> = ({ type = "server", cid, title = "", closeModal }
     <Modal>
       <Styled>
         <h2 className="title">
-          Add friends to {finalTitle}
+          {t("invite_title", { name: finalTitle })}
           <CloseIcon className="close" onClick={closeModal} />
         </h2>
         {!channel?.is_public && <AddMembers cid={cid} closeModal={closeModal} />}

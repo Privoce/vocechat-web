@@ -12,6 +12,7 @@ import IconSelect from "../../../assets/icons/select.svg";
 import { updateSelectMessages } from "../../../app/slices/ui";
 import useSendMessage from "../../hook/useSendMessage";
 import useMessageOperation from "./useMessageOperation";
+import { useTranslation } from "react-i18next";
 type Props = {
   context: "user" | "channel";
   contextId: number;
@@ -30,6 +31,7 @@ const MessageContextMenu: FC<Props> = ({
   editMessage,
   children
 }) => {
+  const { t } = useTranslation();
   const {
     copyContent,
     canEdit,
@@ -58,37 +60,37 @@ const MessageContextMenu: FC<Props> = ({
   };
   const items = [
     canEdit && {
-      title: "Edit Message",
+      title: t("action.edit_msg"),
       icon: <IconEdit className="icon" />,
       handler: editMessage
     },
     canReply && {
-      title: "Reply",
+      title: t("action.reply"),
       icon: <IconReply className="icon" />,
       handler: handleReply
     },
     canCopy && {
-      title: "Copy",
+      title: t("action.copy"),
       icon: <IconCopy className="icon" />,
       handler: copyContent
     },
     canPin && {
-      title: pinned ? "Unpin" : "Pin",
+      title: pinned ? t("action.unpin") : t("action.pin"),
       icon: <IconPin className="icon" />,
       handler: pinned ? unPin.bind(null, mid) : togglePinModal
     },
     {
-      title: "Forward",
+      title: t("action.forward"),
       icon: <IconForward className="icon" />,
       handler: toggleForwardModal
     },
     {
-      title: "Select",
+      title: t("action.select"),
       icon: <IconSelect className="icon" />,
       handler: handleSelect
     },
     canDelete && {
-      title: "Delete",
+      title: t("action.remove"),
       danger: true,
       icon: <IconDelete className="icon" />,
       handler: toggleDeleteModal

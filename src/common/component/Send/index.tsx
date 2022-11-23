@@ -15,6 +15,7 @@ import MixedInput, { useMixedEditor } from "../MixedInput";
 import useDraft from "../../hook/useDraft";
 import useUploadFile from "../../hook/useUploadFile";
 import { useAppDispatch, useAppSelector } from "../../../app/store";
+import { useTranslation } from "react-i18next";
 
 const Modes = {
   text: "text",
@@ -29,6 +30,7 @@ const Send: FC<IProps> = ({
   context = "channel",
   id
 }) => {
+  const { t } = useTranslation("chat");
   const { resetStageFiles } = useUploadFile({ context, id });
   const { getDraft, getUpdateDraft } = useDraft({ context, id });
   const editor = useMixedEditor(`${context}_${id}`);
@@ -130,14 +132,13 @@ const Send: FC<IProps> = ({
     setMarkdownFullscreen((prev) => !prev);
   };
   const name = context == "channel" ? channelsData[id]?.name : usersData[id]?.name;
-  const placeholder = `Send to ${ChatPrefixes[context]}${name} `;
+  const placeholder = `${t("send_to")} ${ChatPrefixes[context]}${name} `;
   const members =
     context == "channel" ? (channelsData[id]?.is_public ? uids : channelsData[id]?.members) : [];
   return (
     <StyledSend
-      className={`send ${mode} ${markdownFullscreen ? "fullscreen" : ""} ${
-        replying_mid ? "reply" : ""
-      } ${context}`}
+      className={`send ${mode} ${markdownFullscreen ? "fullscreen" : ""} ${replying_mid ? "reply" : ""
+        } ${context}`}
     >
       {replying_mid && <Replying context={context} mid={replying_mid} id={id} />}
       {mode == Modes.text && <UploadFileList context={context} id={id} />}

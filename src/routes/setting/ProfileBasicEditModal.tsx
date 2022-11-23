@@ -6,6 +6,7 @@ import { useUpdateInfoMutation } from "../../app/services/user";
 import StyledModal from "../../common/component/styled/Modal";
 import Button from "../../common/component/styled/Button";
 import Modal from "../../common/component/Modal";
+import { useTranslation } from "react-i18next";
 
 const StyledEdit = styled(StyledModal)`
   .input {
@@ -40,6 +41,7 @@ const ProfileBasicEditModal: FC<Props> = ({
   intro = "Enter a new username and your existing password.",
   closeModal
 }) => {
+  const { t } = useTranslation();
   const [input, setInput] = useState(value);
   const [update, { isLoading, isSuccess }] = useUpdateInfoMutation();
   const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -63,9 +65,9 @@ const ProfileBasicEditModal: FC<Props> = ({
         buttons={
           <>
             <Button className="cancel" onClick={closeModal}>
-              Cancel
+              {t("action.cancel")}
             </Button>
-            <Button onClick={handleUpdate}>{isLoading ? "Updating" : `Done`}</Button>
+            <Button onClick={handleUpdate}>{isLoading ? "Updating" : t("action.done")}</Button>
           </>
         }
       >

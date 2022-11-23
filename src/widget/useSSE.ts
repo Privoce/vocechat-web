@@ -1,13 +1,9 @@
 import { useEffect } from "react";
 import dayjs from "dayjs";
 import { useAppSelector } from "../app/store";
-import initCache, { useRehydrate } from "../app/cache";
 import useStreaming from "../common/hook/useStreaming";
-// type Props={
-//   guest?:boolean
-// }
-export default function usePreload() {
-    const { rehydrate, rehydrated } = useRehydrate();
+
+export default function useSSE() {
     const {
         loginUid,
         token,
@@ -20,23 +16,17 @@ export default function usePreload() {
         };
     });
     const { setStreamingReady } = useStreaming();
-    useEffect(() => {
-        initCache();
-        rehydrate();
-        return () => {
-            setStreamingReady(false);
-        };
-    }, []);
 
     const tokenAlmostExpire = dayjs().isAfter(new Date(expireTime - 20 * 1000));
-    const canStreaming = !!loginUid && rehydrated && !!token && !tokenAlmostExpire;
+    const canStreaming = !!loginUid && !!token && !tokenAlmostExpire;
     // console.log("ttt", loginUid, rehydrated, token);
 
     useEffect(() => {
         setStreamingReady(canStreaming);
+        return () => {
+            setStreamingReady(false);
+        };
     }, [canStreaming]);
 
-    return {
-        rehydrated
-    };
+    return null;
 }

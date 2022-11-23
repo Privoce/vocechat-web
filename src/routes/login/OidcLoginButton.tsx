@@ -7,6 +7,7 @@ import { StyledSocialButton } from "./styled";
 import StyledButton from "../../common/component/styled/Button";
 import OidcLoginEntry from "./OidcLoginEntry";
 import { OIDCConfig } from "../../types/auth";
+import { useTranslation } from "react-i18next";
 
 const StyledOidcLoginModal = styled(StyledModal)`
   text-align: center;
@@ -31,6 +32,7 @@ interface IProps {
   issuers?: OIDCConfig[];
 }
 const OidcLoginButton: FC<IProps> = ({ issuers }) => {
+  const { t } = useTranslation("auth");
   const [modal, setModal] = useState(false);
   if (!issuers) return null;
   return (
@@ -40,7 +42,7 @@ const OidcLoginButton: FC<IProps> = ({ issuers }) => {
           setModal(true);
         }}
       >
-        Sign in with OIDC
+        {t("login.oidc")}
       </StyledSocialButton>
       {modal && (
         <Modal id="modal-modal">

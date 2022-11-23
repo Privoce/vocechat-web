@@ -6,6 +6,7 @@ import { KEY_LOCAL_MAGIC_TOKEN } from "../../app/config";
 import IconGoogle from "../../assets/icons/google.svg";
 import Button from "./styled/Button";
 import { useLoginMutation } from "../../app/services/auth";
+import { useTranslation } from "react-i18next";
 
 const StyledSocialButton = styled(Button)`
   position: relative;
@@ -59,6 +60,7 @@ interface Props {
 }
 
 const GoogleLoginInner: FC<Props> = ({ type = "login", loaded, loadError }) => {
+  const { t } = useTranslation("auth");
   const [login, { isSuccess, isLoading, error }] = useLoginMutation();
   //拿本地存的magic token
   const magic_token = localStorage.getItem(KEY_LOCAL_MAGIC_TOKEN);
@@ -91,7 +93,7 @@ const GoogleLoginInner: FC<Props> = ({ type = "login", loaded, loadError }) => {
         {loadError
           ? "Script Load Error!"
           : loaded
-            ? `${type === "login" ? "Sign in" : "Sign up"} with Google`
+            ? `${type === "login" ? t("login.google") : t("reg.google")}`
             : `Initializing`}
       </div>
       <div className="hide">

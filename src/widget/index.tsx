@@ -3,13 +3,13 @@ import { useGetServerQuery } from "../app/services/server";
 
 import Icon from "./Icon";
 import Popup from "./Popup";
-import usePreload from "./usePreload";
+import useCache from "./useCache";
 type Props = {
   hostId: number
 };
 
 function Widget({ hostId }: Props) {
-  const { rehydrated } = usePreload();
+  const { rehydrated } = useCache();
   const [visible, setVisible] = useState(!!new URLSearchParams(location.search).get("open"));
   const { isLoading, isError } = useGetServerQuery();
   const toggleVisible = () => {

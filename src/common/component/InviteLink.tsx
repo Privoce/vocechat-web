@@ -3,6 +3,7 @@ import useInviteLink from "../hook/useInviteLink";
 import Input from "./styled/Input";
 import Button from "./styled/Button";
 import { FC } from "react";
+import { useTranslation } from "react-i18next";
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -40,6 +41,7 @@ const StyledWrapper = styled.div`
 `;
 type Props = {};
 const InviteLink: FC<Props> = () => {
+  const { t } = useTranslation("chat");
   const { generating, link, linkCopied, copyLink, generateNewLink } = useInviteLink();
   const handleNewLink = () => {
     generateNewLink();
@@ -47,16 +49,16 @@ const InviteLink: FC<Props> = () => {
 
   return (
     <StyledWrapper>
-      <span className="tip">Share this link to invite people to this server.</span>
+      <span className="tip">{t("share_invite_link")}</span>
       <div className="link">
         <Input readOnly className={"large"} placeholder="Generating" value={link} />
         <Button onClick={copyLink} className="ghost small border_less">
-          {linkCopied ? "Copied" : `Copy`}
+          {linkCopied ? "Copied" : t("action.copy", { ns: "common" })}
         </Button>
       </div>
-      <span className="sub_tip">Invite link expires in 7 days.</span>
+      <span className="sub_tip">{t("invite_link_expire")}</span>
       <Button className="ghost" disabled={generating} onClick={handleNewLink}>
-        {generating ? `Generating` : `Generate New Link`}
+        {generating ? `Generating` : t("generate_new_link")}
       </Button>
     </StyledWrapper>
   );
