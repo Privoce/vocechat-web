@@ -8,5 +8,9 @@
   "manage_members": "Manage Members",
   "manage_tip": "Disabling your account means you can recover it at any time after taking this action.",
   "admin": "Admin",
-  "user": "User"
+  "user": "User",
+  "copy_email": "Copy Email",
+  "send_msg": "Send Message",
+  "remove": "Remove",
+  "remove_from_channel": "Remove From Channel"
 }
