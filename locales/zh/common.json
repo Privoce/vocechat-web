@@ -9,12 +9,14 @@
     "logout": "退出登录",
     "change_avatar": "修改头像",
     "cancel": "取消",
+    "dismiss": "关闭",
     "new_channel": "新建频道",
     "new_private_channel": "新建私有频道",
     "new_msg": "发消息",
     "invite_people": "邀请TA人",
     "search": "搜索",
     "create": "创建",
+    "open": "打开",
     "update": "更新",
     "upload": "上传",
     "done": "完成",
@@ -42,5 +44,7 @@
   },
   "status": {
     "uploading": "上传中"
-  }
+  },
+  "new_version": "有<0>新版本</0>",
+  "mobile_app": "欢迎下载使用<0>手机APP</0>"
 }
