@@ -9,12 +9,14 @@
     "logout": "Log Out",
     "change_avatar": "Change Avatar",
     "cancel": "Cancel",
+    "dismiss": "Dismiss",
     "search": "Search",
     "new_channel": "New Channel",
     "new_private_channel": "New Private Channel",
     "new_msg": "New Message",
     "invite_people": "Invite People",
     "create": "Create",
+    "open": "Open",
     "update": "Update",
     "upload": "Upload",
     "done": "Done",
@@ -41,5 +43,7 @@
   },
   "status": {
     "uploading": "Uploading"
-  }
+  },
+  "new_version": "<0>New Version</0> Available",
+  "mobile_app": "Check out our <0>Mobile APP</0>"
 }

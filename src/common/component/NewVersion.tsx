@@ -1,5 +1,7 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import toast from "react-hot-toast";
+import { Trans, useTranslation } from "react-i18next";
+import { KEY_MOBILE_APP_TIP } from "../../app/config";
 import Button from "./styled/Button";
 
 interface Props {
@@ -8,15 +10,24 @@ interface Props {
 }
 
 const Index: FC<Props> = ({ id, handleUpdate }) => {
+  const { t } = useTranslation();
+  useEffect(() => {
+    localStorage.setItem(KEY_MOBILE_APP_TIP, "1");
+  }, []);
+
   return (
-    <div className="flex items-center gap-2">
-      <strong className="whitespace-nowrap font-bold">New Version</strong> Available
+    <div className="flex items-center gap-2 whitespace-nowrap">
+      <div>
+        <Trans i18nKey={"new_version"}>
+          <strong className="font-bold" />
+        </Trans>
+      </div>
       <div className="flex gap-1">
         <Button className="mini main" onClick={handleUpdate}>
-          Update
+          {t("action.update")}
         </Button>
         <Button className="mini cancel" onClick={() => toast.dismiss(id)}>
-          Dismiss
+          {t("action.dismiss")}
         </Button>
       </div>
     </div>

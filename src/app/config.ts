@@ -60,6 +60,7 @@ export const vapidKey = `BOmzyZhw-DcIGYQ77mzQUVqLlcvn0bm_76P_kc7rpwRxzXNbui-JP8i
 export const tokenHeader = "X-API-Key";
 export const FILE_SLICE_SIZE = 1000 * 200 * 8; //200kb
 export const FILE_IMAGE_SIZE = 1000 * 10000 * 8; //10mb
+export const KEY_MOBILE_APP_TIP = "MOBILE_APP_TIP";
 export const KEY_LOGIN_USER = "VOCECHAT_LOGIN_USER";
 export const KEY_TOKEN = "VOCECHAT_TOKEN";
 export const KEY_EXPIRE = "VOCECHAT_TOKEN_EXPIRE";

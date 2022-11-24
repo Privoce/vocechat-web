@@ -11,6 +11,7 @@ import "./common/DayjsSetting";
 import "./common/TippySetting";
 import { register } from "./serviceWorkerRegistration";
 import MarkdownStyleOverride from "./common/component/MarkdownStyleOverride";
+import MobileAppTip from "./common/component/MobileAppTip";
 import ReduxRoutes from "./routes";
 import NewVersion from "./common/component/NewVersion";
 // import i18n (needs to be bundled ;)) 
@@ -26,6 +27,7 @@ root.render(
       <ReduxRoutes />
     </DndProvider>
     <MarkdownStyleOverride />
+    <MobileAppTip />
   </Suspense>
 );
 
