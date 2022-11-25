@@ -1,4 +1,4 @@
-import { Suspense, useEffect, lazy } from "react";
+import { useEffect, lazy } from "react";
 import { Route, Routes, HashRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import toast from "react-hot-toast";
@@ -22,12 +22,14 @@ const SettingChannelPage = lazy(() => import("./settingChannel"));
 const SettingPage = lazy(() => import("./setting"));
 const ResourceManagement = lazy(() => import("./resources"));
 const GuestLogin = lazy(() => import("./guest"));
+const ChatPage = lazy(() => import("./chat"));
+const HomePage = lazy(() => import("./home"));
 import RequireAuth from "../common/component/RequireAuth";
 import RequireNoAuth from "../common/component/RequireNoAuth";
 import Meta from "../common/component/Meta";
-import HomePage from "./home";
-import ChatPage from "./chat";
-import Loading from "../common/component/Loading";
+// import HomePage from "./home";
+// import ChatPage from "./chat";
+import LazyIt from './lazy';
 import store, { useAppSelector } from "../app/store";
 let toastId: string;
 const PageRoutes = () => {
@@ -49,137 +51,145 @@ const PageRoutes = () => {
 
   return (
     <HashRouter>
-      <Suspense fallback={<Loading fullscreen={true} />}>
-        <Routes>
-          <Route path="/guest_login" element={<GuestLogin />} />
-          <Route path="/cb/:type/:payload" element={<CallbackPage />} />
-          <Route path="/oauth/:token" element={<OAuthPage />} />
-          <Route
-            path="/login"
-            element={
+      <Routes>
+        <Route path="/guest_login" element={<LazyIt><GuestLogin /></LazyIt>} />
+        <Route path="/cb/:type/:payload" element={<LazyIt><CallbackPage /></LazyIt>} />
+        <Route path="/oauth/:token" element={<LazyIt><OAuthPage /></LazyIt>} />
+        <Route
+          path="/login"
+          element={
+            <LazyIt>
               <RequireNoAuth>
                 <LoginPage />
               </RequireNoAuth>
-            }
-          />
-          <Route
-            path="/send_magic_link"
-            element={
+            </LazyIt>
+          }
+        />
+        <Route
+          path="/send_magic_link"
+          element={
+            <LazyIt>
               <RequireNoAuth>
                 <SendMagicLinkPage />
               </RequireNoAuth>
-            }
-          />
-          <Route
-            path="/register"
-            element={
+            </LazyIt>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <LazyIt>
               <RequireNoAuth>
                 <RegBasePage />
               </RequireNoAuth>
-            }
-          >
-            <Route index element={<RegPage />} />
-            <Route path="set_name">
-              <Route index element={<RegWithUsernamePage />} />
-              <Route path=":from" element={<RegWithUsernamePage />} />
-            </Route>
+            </LazyIt>
+          }
+        >
+          <Route index element={<LazyIt><RegPage /></LazyIt>} />
+          <Route path="set_name">
+            <Route index element={<LazyIt><RegWithUsernamePage /></LazyIt>} />
+            <Route path=":from" element={<LazyIt><RegWithUsernamePage /></LazyIt>} />
           </Route>
-          <Route
-            path="/email_login"
-            element={
+        </Route>
+        <Route
+          path="/email_login"
+          element={
+            <LazyIt>
               <RequireNoAuth>
                 <SendMagicLinkPage />
               </RequireNoAuth>
-            }
-          />
-          <Route path="/invite" element={<InvitePage />} />
-          <Route path="/onboarding" element={<OnboardingPage />} />
+            </LazyIt>
+          }
+        />
+        <Route path="/invite" element={<LazyIt><InvitePage /></LazyIt>} />
+        <Route path="/onboarding" element={<LazyIt><OnboardingPage /></LazyIt>} />
 
-          <Route
-            key={"main"}
-            path="/"
-            element={
+        <Route
+          key={"main"}
+          path="/"
+          element={
+            <LazyIt>
               <RequireAuth>
                 <HomePage />
               </RequireAuth>
-            }
-          >
-            <Route path="setting">
-              <Route
-                index
-                element={
-                  <Suspense fallback={<Loading />}>
-                    <SettingPage />
-                  </Suspense>
-                }
-              />
-              <Route path="channel/:cid" element={<SettingChannelPage />} />
-            </Route>
+            </LazyIt>
+          }
+        >
+          <Route path="setting">
             <Route
               index
               element={
-                // <Suspense fallback={<Loading />}>
-                <ChatPage />
-                // </Suspense>
+                <LazyIt>
+                  <SettingPage />
+                </LazyIt>
               }
             />
-            <Route path="chat">
-              <Route index element={<ChatPage />} />
-              <Route
-                path="channel/:channel_id"
-                element={
-                  // <Suspense fallback={<Loading />}>
-                  <ChatPage />
-                  // </Suspense>
-                }
-              />
-              <Route
-                path="dm/:user_id"
-                element={
-                  // <Suspense fallback={<Loading />}>
-                  <ChatPage />
-                  // </Suspense>
-                }
-              />
-            </Route>
-            <Route path="users">
-              <Route
-                index
-                element={
-                  <Suspense fallback={<Loading />}>
-                    <UsersPage />
-                  </Suspense>
-                }
-              />
-              <Route
-                path=":user_id"
-                element={
-                  <Suspense fallback={<Loading />}>
-                    <UsersPage />
-                  </Suspense>
-                }
-              />
-            </Route>
-            <Route
-              path="favs"
-              element={
-                <Suspense fallback={<Loading />}>
-                  <FavoritesPage />
-                </Suspense>
-              }
-            ></Route>
-            <Route
-              path="files"
-              element={
-                <Suspense fallback={<Loading />}>
-                  <ResourceManagement fileMessages={fileMessages} />
-                </Suspense>
-              }
-            ></Route>
+            <Route path="channel/:cid" element={<LazyIt><SettingChannelPage /></LazyIt>} />
           </Route>
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </Suspense>
+          <Route
+            index
+            element={
+              <LazyIt>
+                <ChatPage />
+              </LazyIt>
+            }
+          />
+          <Route path="chat">
+            <Route index element={<LazyIt><ChatPage /></LazyIt>} />
+            <Route
+              path="channel/:channel_id"
+              element={
+                <LazyIt>
+                  <ChatPage />
+                </LazyIt>
+              }
+            />
+            <Route
+              path="dm/:user_id"
+              element={
+                <LazyIt>
+                  <ChatPage />
+                </LazyIt>
+              }
+            />
+          </Route>
+          <Route path="users">
+            <Route
+              index
+              element={
+                <LazyIt>
+                  <UsersPage />
+                </LazyIt>
+              }
+            />
+            <Route
+              path=":user_id"
+              element={
+                <LazyIt>
+                  <UsersPage />
+                </LazyIt>
+              }
+            />
+          </Route>
+          <Route
+            path="favs"
+            element={
+              <LazyIt>
+                <FavoritesPage />
+              </LazyIt>
+            }
+          ></Route>
+          <Route
+            path="files"
+            element={
+              <LazyIt>
+                <ResourceManagement fileMessages={fileMessages} />
+              </LazyIt>
+            }
+          ></Route>
+        </Route>
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
     </HashRouter>
   );
 };

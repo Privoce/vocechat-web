@@ -1,10 +1,9 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { useOutsideClick } from "rooks";
 import Tooltip from "../Tooltip";
-import Picker from "../EmojiPicker";
+import { Picker } from 'emoji-mart';
 import SmileIcon from "../../../assets/icons/emoji.smile.svg";
-import { BaseEmoji, EmojiData } from "emoji-mart";
 
 const Styled = styled.div`
   position: relative;
@@ -13,19 +12,20 @@ const Styled = styled.div`
   align-items: center;
   > .emoji {
     cursor: pointer;
+    user-select: none;
   }
   > svg {
     width: 22px;
     height: 22px;
   }
   > .picker {
-    visibility: hidden;
+    display: none;
     position: absolute;
     top: -20px;
     left: -20px;
     transform: translateY(-100%);
     &.visible {
-      visibility: visible;
+      display: block;
     }
   }
 `;
@@ -33,14 +33,32 @@ const Styled = styled.div`
 export default function EmojiPicker({ selectEmoji }: { selectEmoji: (e: string) => void }) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
-
   const togglePickerVisible = () => {
     setVisible((prev) => !prev);
   };
+  useEffect(() => {
+    if (ref && ref.current) {
+      ref.current.innerHTML = "";
+      new Picker({
+        data: async () => {
+          const response = await fetch(
+            'https://cdn.jsdelivr.net/npm/@emoji-mart/data',
+          );
 
-  const handleSelect = (emoji: EmojiData) => {
-    selectEmoji((emoji as BaseEmoji).native);
-  };
+          return response.json();
+        },
+        parent: ref.current,
+        onEmojiSelect: (item) => {
+          console.log("eee333", item);
+
+          selectEmoji(item.native);
+        },
+        // onClickOutside: () => {
+        //   setVisible(false);
+        // }
+      });
+    }
+  }, [selectEmoji]);
 
   useOutsideClick(
     ref,
@@ -59,7 +77,7 @@ export default function EmojiPicker({ selectEmoji }: { selectEmoji: (e: string) 
     <Tooltip placement="top" tip="Emojis" disabled={visible}>
       <Styled>
         <div ref={ref} className={`picker ${visible ? "visible" : ""}`}>
-          <Picker onSelect={handleSelect} />
+          {/* emoji picker */}
         </div>
         <SmileIcon data-emoji="toggler" className="emoji" onClick={togglePickerVisible} />
       </Styled>

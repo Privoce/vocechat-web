@@ -18,7 +18,16 @@ export interface Emojis {
   "🙁": ReactElement;
   "🎉": ReactElement;
 }
-
+export const ReactionMap = {
+  "🎉": ":tada:",
+  "👍": ":+1:",
+  "🙁": ":slightly_frown_face:",
+  "❤️": ":heart:",
+  "👎": ":thumb_down:",
+  "😄": ":smile:",
+  "👀": ":eyes:",
+  "🚀": ":rocket:",
+};
 const emojis: Emojis = {
   "👍": <EmojiThumbUp className="emoji" />,
   "👎": <EmojiThumbDown className="emoji" />,

@@ -1,10 +1,8 @@
 import { FC } from "react";
 import styled from "styled-components";
-import { getEmojiDataFromNative } from "emoji-mart";
-import AppleEmojiData from "emoji-mart/data/apple.json";
 import Tippy from "@tippyjs/react";
 import { hideAll } from "tippy.js";
-import ReactionItem, { Emojis } from "../ReactionItem";
+import ReactionItem, { Emojis, ReactionMap } from "../ReactionItem";
 import ReactionPicker from "./ReactionPicker";
 import Tooltip from "../Tooltip";
 import { useReactMessageMutation } from "../../../app/services/message";
@@ -105,6 +103,7 @@ const StyledDetails = styled.div`
     color: #1d2939;
   }
 `;
+
 const ReactionDetails = ({
   uids = [],
   emoji,
@@ -118,7 +117,7 @@ const ReactionDetails = ({
   const names = uids.map((id) => {
     return usersData[id]?.name;
   });
-  const emojiData = getEmojiDataFromNative(emoji || "", "apple", AppleEmojiData);
+  // const emojiData = getEmojiDataFromNative(emoji || "", "apple", AppleEmojiData);
   const prefixDesc =
     names.length > 3
       ? `${names.join(", ")} and ${names.length - 3} others reacted with`
@@ -130,7 +129,7 @@ const ReactionDetails = ({
       </div>
       <div className="desc">
         <span>{prefixDesc}</span>
-        <span>{emojiData?.colons}</span>
+        <span>{ReactionMap[emoji]}</span>
       </div>
     </StyledDetails>
   );
