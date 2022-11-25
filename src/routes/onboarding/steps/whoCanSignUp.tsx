@@ -5,6 +5,7 @@ import StyledRadio from "../../../common/component/styled/Radio";
 import StyledButton from "../../../common/component/styled/Button";
 import { useGetLoginConfigQuery, useUpdateLoginConfigMutation } from "../../../app/services/server";
 import { WhoCanSignUp } from "../../../types/server";
+import { useTranslation } from "react-i18next";
 
 const StyledWrapper = styled.div`
   height: 100%;
@@ -40,6 +41,7 @@ const StyledWrapper = styled.div`
 `;
 
 export default function SignUpSetting({ nextStep }: { nextStep: () => void }) {
+  const { t } = useTranslation("welcome");
   const { data: loginConfig } = useGetLoginConfigQuery();
   const [updateLoginConfig, { isSuccess, error }] = useUpdateLoginConfigMutation();
 
@@ -65,10 +67,10 @@ export default function SignUpSetting({ nextStep }: { nextStep: () => void }) {
 
   return (
     <StyledWrapper>
-      <span className="primaryText">Last step: invite others!</span>
-      <span className="secondaryText">Firstly, who can sign up to this server?</span>
+      <span className="primaryText">{t("onboarding.invite_title")}</span>
+      <span className="secondaryText">{t("onboarding.invite_desc")}</span>
       <StyledRadio
-        options={["Everyone", "Invitation link only"]}
+        options={[t("overview.sign_up.everyone", { ns: "setting" }), t("overview.sign_up.invite", { ns: "setting" })]}
         values={["EveryOne", "InvitationOnly"]}
         value={value}
         onChange={setValue}
@@ -85,7 +87,7 @@ export default function SignUpSetting({ nextStep }: { nextStep: () => void }) {
           }
         }}
       >
-        Confirm
+        {t("onboarding.confirm")}
       </StyledButton>
     </StyledWrapper>
   );

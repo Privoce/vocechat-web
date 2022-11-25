@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import StyledButton from "../../../common/component/styled/Button";
 import PlayIcon from "../../../assets/icons/play.svg?url";
+import { useTranslation } from "react-i18next";
 
 const StyledWrapper = styled.div`
   height: 100%;
@@ -44,15 +45,16 @@ const StyledWrapper = styled.div`
 `;
 
 export default function WelcomePage({ nextStep }: { nextStep: () => void }) {
+  const { t } = useTranslation("welcome", { keyPrefix: "onboarding" });
   return (
     <StyledWrapper>
-      <span className="primaryText">Welcome to your VoceChat!</span>
+      <span className="primaryText">{t("welcome")}</span>
       <span className="secondaryText">
-        Everything in this space is owned by you. Let’s set up your space!
+        {t("welcome_desc")}
       </span>
       <StyledButton className="startButton" onClick={nextStep}>
         <img src={PlayIcon} alt="play icon" />
-        <span>Start</span>
+        <span>{t("start")}</span>
       </StyledButton>
     </StyledWrapper>
   );

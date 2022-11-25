@@ -10,6 +10,7 @@ import InviteLink from "./steps/inviteLink";
 import DonePage from "./steps/donePage";
 import useServerSetup, { steps } from "./useServerSetup";
 import StyledOnboardingPage from "./styled";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   step: string;
@@ -17,6 +18,7 @@ interface Props {
 }
 
 const Navigator: FC<Props> = ({ step, setStep }) => {
+
   const index = steps.map((value) => value.name).indexOf(step);
   const canJumpTo = steps.find((value) => value.name === step)?.canJumpTo || [];
 
@@ -24,9 +26,8 @@ const Navigator: FC<Props> = ({ step, setStep }) => {
     <div className="navigator">
       {steps.map((stepToRender, indexToRender) => {
         const clickable = canJumpTo.includes(stepToRender.name);
-        const nodeCls = `node ${indexToRender === index ? "emphasized" : ""} ${
-          indexToRender > index ? "disabled" : ""
-        } ${clickable ? "clickable" : ""}`;
+        const nodeCls = `node ${indexToRender === index ? "emphasized" : ""} ${indexToRender > index ? "disabled" : ""
+          } ${clickable ? "clickable" : ""}`;
         const arrowCls = `arrow ${indexToRender >= index ? "disabled" : ""}`;
         return (
           <React.Fragment key={indexToRender}>
@@ -49,12 +50,12 @@ const Navigator: FC<Props> = ({ step, setStep }) => {
 };
 
 export default function OnboardingPage() {
+  const { t } = useTranslation("welcome");
   const serverSetup = useServerSetup();
-
   return (
     <>
       <Helmet>
-        <title>VoceChat Setup</title>
+        <title>{t("onboarding.title")}</title>
       </Helmet>
       <StyledOnboardingPage>
         <Navigator {...serverSetup} />

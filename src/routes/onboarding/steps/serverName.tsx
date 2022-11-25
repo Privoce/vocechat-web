@@ -3,6 +3,7 @@ import styled from "styled-components";
 import toast from "react-hot-toast";
 import StyledInput from "../../../common/component/styled/Input";
 import StyledButton from "../../../common/component/styled/Button";
+import { useTranslation } from "react-i18next";
 
 const StyledWrapper = styled.div`
   height: 100%;
@@ -51,15 +52,16 @@ type Props = {
   nextStep: () => void;
 };
 const ServerName: FC<Props> = ({ serverName, setServerName, nextStep }) => {
+  const { t } = useTranslation("welcome", { keyPrefix: "onboarding" });
   return (
     <StyledWrapper>
-      <span className="primaryText">Create a new server</span>
+      <span className="primaryText">{t("new_server")}</span>
       <span className="secondaryText">
-        Servers are shared environments where teams can work on projects and chat.
+        {t("server_desc")}
       </span>
       <StyledInput
         className="input"
-        placeholder="Enter server name"
+        placeholder={t("placeholder_server")}
         value={serverName}
         onChange={(e) => setServerName(e.target.value)}
       />
@@ -74,7 +76,7 @@ const ServerName: FC<Props> = ({ serverName, setServerName, nextStep }) => {
           nextStep();
         }}
       >
-        Create Server
+        {t("create_server")}
       </StyledButton>
     </StyledWrapper>
   );

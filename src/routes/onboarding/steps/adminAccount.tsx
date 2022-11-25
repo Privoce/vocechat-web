@@ -12,6 +12,7 @@ import {
 import { useLoginMutation } from "../../../app/services/auth";
 import { updateInitialized } from "../../../app/slices/auth.data";
 import { useAppSelector } from "../../../app/store";
+import { useTranslation } from "react-i18next";
 
 const StyledWrapper = styled.div`
   height: 100%;
@@ -68,6 +69,7 @@ type Props = {
   nextStep: () => void;
 };
 const AdminAccount: FC<Props> = ({ serverName, nextStep }) => {
+  const { t } = useTranslation("welcome", { keyPrefix: "onboarding" });
   const loggedIn = useAppSelector((store) => !!store.authData.token);
   const dispatch = useDispatch();
 
@@ -112,8 +114,8 @@ const AdminAccount: FC<Props> = ({ serverName, nextStep }) => {
 
   return (
     <StyledWrapper>
-      <span className="primaryText">Now let’s set up your admin account</span>
-      <span className="secondaryText">You are the 1st user and admin of your space!</span>
+      <span className="primaryText">{t("admin_title")}</span>
+      <span className="secondaryText">{t("admin_desc")}</span>
       <StyledInput
         className="input"
         placeholder="Enter your email"
@@ -161,7 +163,7 @@ const AdminAccount: FC<Props> = ({ serverName, nextStep }) => {
           });
         }}
       >
-        {!(isSigningUp || isLoggingIn || isUpdatingServer) ? "Sign Up" : "..."}
+        {!(isSigningUp || isLoggingIn || isUpdatingServer) ? t("sign") : "..."}
       </StyledButton>
     </StyledWrapper>
   );

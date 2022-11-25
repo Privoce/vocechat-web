@@ -2,6 +2,7 @@ import styled from "styled-components";
 import StyledInput from "../../../common/component/styled/Input";
 import StyledButton from "../../../common/component/styled/Button";
 import useInviteLink from "../../../common/hook/useInviteLink";
+import { useTranslation } from "react-i18next";
 
 const StyledWrapper = styled.div`
   height: 100%;
@@ -74,21 +75,22 @@ const StyledWrapper = styled.div`
 `;
 
 export default function InviteLink({ nextStep }: { nextStep: () => void }) {
+  const { t } = useTranslation("welcome", { keyPrefix: "onboarding" });
+  const { t: ct } = useTranslation();
   const { link, linkCopied, copyLink } = useInviteLink();
-
   return (
     <StyledWrapper>
-      <span className="primaryText">Last step: invite others!</span>
-      <span className="secondaryText">Now let’s invite others!</span>
-      <span className="tip">Send invitation link to your future community members:</span>
+      <span className="primaryText">{t("invite_title")}</span>
+      <span className="secondaryText">{t("last_tip")}</span>
+      <span className="tip">{t("last_desc")}</span>
       <div className="link">
         <StyledInput className="large" readOnly placeholder="Generating" value={link} />
         <StyledButton onClick={copyLink} className="ghost small border_less">
-          {linkCopied ? "Copied" : `Copy`}
+          {linkCopied ? "Copied" : ct("action.copy")}
         </StyledButton>
       </div>
       <StyledButton className="button" onClick={nextStep}>
-        Done
+        {t("done")}
       </StyledButton>
     </StyledWrapper>
   );
