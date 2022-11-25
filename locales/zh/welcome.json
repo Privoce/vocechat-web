@@ -5,5 +5,28 @@
   "start_by_channel": "创建频道，开启会话",
   "start_by_dm": "找人聊天",
   "download": "下载移动端APP",
-  "help": "还有问题？访问我们的帮助中心"
+  "help": "还有问题？访问我们的帮助中心",
+  "onboarding": {
+    "title": "VoceChat初始化",
+    "welcome": "欢迎来到你的VoceChat！",
+    "welcome_desc": "在这里，你能掌控一切，开始构建你的空间吧！",
+    "start": "开始",
+    "new_server": "创建一个新的服务器",
+    "server_desc": "服务器是你和你的朋友能够沟通的载体",
+    "placeholder_server": "输入服务器名称",
+    "create_server": "创建服务器",
+    "admin_title": "现在，初始化一个管理员账号",
+    "admin_desc": "这是你的服务器上第一个管理员账号，也是超级管理员",
+    "sign": "注册",
+    "invite_title": "最后一步：邀请TA人！",
+    "invite_desc": "首先，决定下注册方式",
+    "confirm": "确认",
+    "done_welcome": "欢迎来到 {{serverName}} 👏🏻",
+    "done_title": "VoceChat倾情打造",
+    "done_desc": "更多设置，像权限，安全，邀请，请前往 <0>设置页</0>",
+    "enter": "进入",
+    "last_tip": "现在，你可以邀请别人啦！",
+    "last_desc": "将邀请链接发送给将来要入驻的社区成员吧：",
+    "done": "完成"
+  }
 }
