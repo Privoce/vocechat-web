@@ -133,7 +133,7 @@ export default function Overview({ id = 0 }) {
             value={name}
             name="name"
             id="name"
-            placeholder={t("name") || ""}
+            placeholder={t("name")}
           />
         </div>
         <div className="input">
@@ -146,7 +146,7 @@ export default function Overview({ id = 0 }) {
             rows={4}
             name="name"
             id="name"
-            placeholder={t("topic_placeholder") || ""} />
+            placeholder={t("topic_placeholder")} />
         </div>
         {!readOnly && <div className="input">
           <Label htmlFor="desc">{t("visibility")}</Label>

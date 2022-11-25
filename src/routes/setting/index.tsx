@@ -32,7 +32,7 @@ export default function Setting() {
       <StyledSettingContainer
         nav={currNav}
         closeModal={close}
-        title={t("setting") || ""}
+        title={t("setting")}
         navs={navs}
         dangers={[{ title: t("action.logout"), handler: toggleLogoutConfirm }]}
       >

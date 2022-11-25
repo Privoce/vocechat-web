@@ -97,7 +97,7 @@ const InviteByEmail: FC<Props> = ({ cid }) => {
             onChange={handleEmail}
             disabled={!enableSMTP}
             type="email"
-            placeholder={enableSMTP ? "Enter Email" : t("enable_smtp") || ""}
+            placeholder={enableSMTP ? "Enter Email" : t("enable_smtp")}
           />
           <Button disabled={!enableSMTP || !email} className="send">
             {t("action.send", { ns: "common" })}

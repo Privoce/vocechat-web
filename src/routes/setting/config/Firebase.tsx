@@ -47,7 +47,7 @@ export default function ConfigFirebase() {
             onChange={handleChange}
             value={token_url}
             name="token_url"
-            placeholder={t("firebase.token_url") || ""}
+            placeholder={t("firebase.token_url")}
           />
         </div>
         <div className="input">
@@ -58,7 +58,7 @@ export default function ConfigFirebase() {
             onChange={handleChange}
             value={project_id}
             name="project_id"
-            placeholder={t("firebase.project_id") || ""}
+            placeholder={t("firebase.project_id")}
           />
         </div>
         <div className="input">
@@ -71,7 +71,7 @@ export default function ConfigFirebase() {
             onChange={handleChange}
             value={private_key}
             name="private_key"
-            placeholder={t("firebase.private_key") || ""}
+            placeholder={t("firebase.private_key")}
           />
         </div>
         <div className="input">
@@ -82,7 +82,7 @@ export default function ConfigFirebase() {
             onChange={handleChange}
             value={client_email}
             name="client_email"
-            placeholder={t("firebase.client_email") || ""}
+            placeholder={t("firebase.client_email")}
           />
         </div>
       </div>

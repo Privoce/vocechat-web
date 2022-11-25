@@ -62,7 +62,8 @@ const Styled = styled.div`
 `;
 
 export default function APIConfig() {
-  const { t } = useTranslation(["setting", "common"]);
+  const { t } = useTranslation("setting");
+  const { t: ct } = useTranslation();
   const { updateConfig, values } = useConfig("login");
   const { data } = useGetThirdPartySecretQuery();
   const [updateSecret, { data: updatedSecret, isSuccess, isLoading }] =
@@ -99,10 +100,10 @@ export default function APIConfig() {
             </div>
             <div className="btns">
               <Button onClick={() => hideAll()} className="cancel small">
-                {t("action.cancel", { ns: "common" })}
+                {ct("action.cancel")}
               </Button>
               <Button disabled={isLoading} className="small danger" onClick={() => updateSecret()}>
-                {t("action.yes", { ns: "common" })}
+                {ct("action.yes")}
               </Button>
             </div>
           </StyledConfirm>

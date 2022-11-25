@@ -139,7 +139,7 @@ export default function LoginPage() {
             name="email"
             value={email}
             required
-            placeholder={t("placeholder_email") || ""}
+            placeholder={t("placeholder_email")}
             data-type="email"
             onChange={handleInput}
           />
@@ -151,7 +151,7 @@ export default function LoginPage() {
             required
             data-type="password"
             onChange={handleInput}
-            placeholder={t("placeholder_pwd") || ""}
+            placeholder={t("placeholder_pwd")}
           />
           <Button type="submit" disabled={isLoading}>
             {isLoading ? "Signing" : t("sign_in")}

@@ -1,5 +1,6 @@
 import Button from "../../common/component/styled/Button";
 import { FC, MouseEvent } from "react";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   email: string;
@@ -7,14 +8,15 @@ interface Props {
 }
 
 const SentTip: FC<Props> = ({ email, reset }) => {
+  const { t } = useTranslation("auth");
   return (
     <div className="tips">
-      <h2 className="title">Check your email</h2>
+      <h2 className="title">{t("check_email")}</h2>
       <span className="desc">
-        We’ve sent you a magic link to {email}. Click on the link to continue.
+        {t("check_email_desc", { email })}
       </span>
       <Button onClick={reset} className="main flex">
-        Use a different email
+        {t("use_different")}
       </Button>
     </div>
   );

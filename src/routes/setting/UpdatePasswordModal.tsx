@@ -77,8 +77,8 @@ const ProfileBasicEditModal: FC<Props> = ({ closeModal }) => {
   return (
     <Modal id="modal-modal">
       <StyledEdit
-        title={t("change_pwd") || ""}
-        description={t("change_pwd_desc") || ""}
+        title={t("change_pwd")}
+        description={t("change_pwd_desc")}
         buttons={
           <>
             <Button className="cancel" onClick={closeModal}>

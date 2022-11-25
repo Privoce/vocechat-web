@@ -24,8 +24,8 @@ const RemoveConfirmModal: FC<Props> = ({ closeModal }) => {
   return (
     <Modal id="modal-modal">
       <StyledModal
-        title={t("remove_account") || ""}
-        description={t("remove_account_desc") || ""}
+        title={t("remove_account")}
+        description={t("remove_account_desc")}
         buttons={
           <>
             <Button onClick={closeModal}>{t("action.cancel", { ns: "common" })}</Button>

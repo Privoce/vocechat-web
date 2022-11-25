@@ -119,7 +119,7 @@ export default function Reg() {
           name="email"
           value={email}
           required
-          placeholder={t("placeholder_email") || ""}
+          placeholder={t("placeholder_email")}
           data-type="email"
           onChange={handleInput}
         />
@@ -131,7 +131,7 @@ export default function Reg() {
           required
           data-type="password"
           onChange={handleInput}
-          placeholder={t("placeholder_pwd") || ""}
+          placeholder={t("placeholder_pwd")}
         />
         <Input
           required
@@ -141,7 +141,7 @@ export default function Reg() {
           value={confirmPassword}
           data-type="confirmPassword"
           onChange={handleInput}
-          placeholder={t("placeholder_confirm_pwd") || ""}
+          placeholder={t("placeholder_confirm_pwd")}
         ></Input>
         <Button type="submit" disabled={isLoading}>
           {isLoading ? "Signing Up" : t("sign_up")}

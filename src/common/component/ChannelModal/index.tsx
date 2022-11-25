@@ -100,7 +100,7 @@ const ChannelModal: FC<Props> = ({ personal = false, closeModal }) => {
               <input
                 value={input}
                 onChange={handleInputChange}
-                placeholder={t("search_user_placeholder") || ""}
+                placeholder={t("search_user_placeholder")}
               />
             </div>
             {users && (

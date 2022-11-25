@@ -1,12 +1,39 @@
 import i18n from 'i18next';
+import dayjs from 'dayjs';
 import { initReactI18next } from 'react-i18next';
-
 import Backend from 'i18next-http-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
+import common from '../public/locales/en/common.json';
+
+import auth from '../public/locales/en/auth.json';
+import member from '../public/locales/en/member.json';
+import chat from '../public/locales/en/chat.json';
+import fav from '../public/locales/en/fav.json';
+import welcome from '../public/locales/en/welcome.json';
+import setting from '../public/locales/en/setting.json';
+import file from '../public/locales/en/file.json';
+
 // don't want to use this?
 // have a look at the Quick start guide 
 // for passing in lng and translations on init
 
+export const defaultNS = "common";
+export const resources = {
+    en: {
+        common,
+        chat,
+        auth,
+        fav,
+        member,
+        welcome,
+        setting,
+        file,
+    },
+} as const;
+i18n.on("languageChanged", (lng) => {
+    console.log("changed", lng);
+    dayjs.locale(lng === 'zh' ? "zh-cn" : lng);
+});
 i18n
     // load translation using http -> see /public/locales (i.e. https://github.com/i18next/react-i18next/tree/master/example/react/public/locales)
     // learn more: https://github.com/i18next/i18next-http-backend
@@ -21,12 +48,18 @@ i18n
     // for all options read: https://www.i18next.com/overview/configuration-options
     .init({
         ns: ["common", "chat", "member", "setting", "fav", "file", "welcome", "auth"],
-        defaultNS: "common",
+        defaultNS,
+        // lng: "en",
         fallbackLng: 'en',
-        debug: true,
-        // interpolation: {
-        //     escapeValue: false, // not needed for react as it escapes by default
-        // }
+        fallbackNS: "common",
+        debug: false,
+        detection: {
+            order: ["localStorage", "navigator"]
+        },
+        interpolation: {
+            escapeValue: false, // not needed for react as it escapes by default
+        },
+        returnNull: false,
     });
 
 

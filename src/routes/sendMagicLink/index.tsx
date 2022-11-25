@@ -7,8 +7,10 @@ import Input from "../../common/component/styled/Input";
 import Button from "../../common/component/styled/Button";
 import { useSendLoginMagicLinkMutation } from "../../app/services/auth";
 import SentTip from "./SentTip";
+import { useTranslation } from "react-i18next";
 
 export default function SendMagicLinkPage() {
+  const { t } = useTranslation("auth");
   const [sent, setSent] = useState(false);
   const [sendMagicLink, { isSuccess, isLoading, error }] = useSendLoginMagicLinkMutation();
   const navigateTo = useNavigate();
@@ -69,8 +71,8 @@ export default function SendMagicLinkPage() {
           <>
             <div className="tips">
               <img src={`${BASE_URL}/resource/organization/logo`} alt="logo" className="logo" />
-              <h2 className="title">Login to VoceChat</h2>
-              <span className="desc">Please enter your Email</span>
+              <h2 className="title">{t("login.title")}</h2>
+              <span className="desc">{t("placeholder_email")}</span>
             </div>
             <form onSubmit={handleLogin}>
               <Input
@@ -81,15 +83,15 @@ export default function SendMagicLinkPage() {
                 value={email}
                 required
                 // pattern={`^\S+@\S+\.\S+$`}
-                placeholder="Enter your email"
+                placeholder={t("placeholder_email")}
                 onChange={handleInput}
               />
               <Button type="submit" disabled={isLoading || !email}>
-                {isLoading ? "Sending" : `Continue with Email`}
+                {isLoading ? "Sending" : t("continue")}
               </Button>
             </form>
             <hr className="or" />
-            <Button onClick={handlePwdPath}>Sign in with Password</Button>
+            <Button onClick={handlePwdPath}>{t("login.password")}</Button>
           </>
         )}
       </div>

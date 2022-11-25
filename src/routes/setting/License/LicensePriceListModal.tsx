@@ -48,8 +48,8 @@ const LicensePriceListModal: FC<Props> = ({ closeModal }) => {
   return (
     <Modal id="modal-modal">
       <StyledModal
-        title={t("license.renew") || ""}
-        description={t("license.renew_select") || ""}
+        title={t("license.renew")}
+        description={t("license.renew_select")}
         buttons={
           <>
             <Button onClick={closeModal} className="ghost">

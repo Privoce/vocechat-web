@@ -30,11 +30,11 @@ const LeaveConfirmModal: FC<Props> = ({ id, closeModal, handleNextStep }) => {
     <Modal id="modal-modal">
       <StyledModal
         className="compact"
-        title={t("channel.leave") || ""}
+        title={t("channel.leave")}
         description={
           isOwner
-            ? t("channel.transfer_desc") || ""
-            : t("channel.leave_desc") || ""
+            ? t("channel.transfer_desc")
+            : t("channel.leave_desc")
         }
         buttons={
           <>

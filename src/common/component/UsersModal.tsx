@@ -70,7 +70,7 @@ const UsersModal: FC<Props> = ({ closeModal }) => {
     <Modal>
       <StyledWrapper ref={wrapperRef}>
         <div className="search">
-          <input value={input} onChange={handleSearch} placeholder={t("search_user_placeholder") || ""} />
+          <input value={input} onChange={handleSearch} placeholder={t("search_user_placeholder")} />
         </div>
         {users && (
           <ul className="users">

@@ -60,7 +60,7 @@ const PinMessageModal: FC<Props> = ({ closeModal, mid = 0, gid = 0 }) => {
             </Button>
           </>
         }
-        title={t("action.pin") || ""}
+        title={t("action.pin")}
         description={`Do you want to pin this message to #${channel?.name}`}
       >
         <PreviewMessage mid={mid} />

@@ -1,5 +1,4 @@
 // import React from 'react'
-import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import StyledRadio from "../../../common/component/styled/Radio";
 
@@ -9,7 +8,6 @@ const Index = () => {
     const { t, i18n } = useTranslation("setting");
     const handleGuestToggle = (v: "zh" | "en") => {
         i18n.changeLanguage(v);
-        dayjs.locale(v === "zh" ? "zh-cn" : "en");
     };
     return (
         <div className="setting">
