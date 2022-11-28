@@ -1,0 +1,132 @@
+{
+  "title": "設定",
+  "save_change": "保存",
+  "reset": "リセット",
+  "save_tip": "保存されていない変更があります！",
+  "nav": {
+    "general": "一般",
+    "overview": "概要",
+    "members": "メンバー",
+    "my_account": "アカウント",
+    "config": "設定",
+    "firebase": "Firebase",
+    "agora": "Agora",
+    "smtp": "SMTP",
+    "login_method": "ログイン方法",
+    "third_app": "サードパーティー",
+    "widget": "ウィジェット",
+    "license": "ライセンス",
+    "about": "このアプリについて",
+    "faq": "FAQ",
+    "terms": "プライバシーに関する説明",
+    "feedback": "フィードバック"
+  },
+  "channel": {
+    "leave": "チャンネルを離れる",
+    "leave_desc": "このチャンネルを離れますか？",
+    "transfer_desc": "離れる前にこのチャンネルのコントロール権を他のユーザーに譲渡しなければならない",
+    "delete": "チャンネルを削除する",
+    "delete_desc": "このチャンネルを削除しますか？",
+
+    "name": "チャンネル名",
+    "topic": "トピック",
+    "topic_placeholder": "チャンネルのトピックを入力してください",
+    "visibility": "公開範囲",
+    "public": "公開",
+    "private": "プライベート"
+  },
+  "overview": {
+    "name": "サーバー名",
+    "desc": "サーバーの説明",
+    "upload_desc": "画像サイズとして、128x128は必須、512x512はおすすめ。大きさは5Mを超えないでください。",
+
+    "sign_up": {
+      "title": "登録方法",
+      "desc": "登録方法を設定してください",
+      "everyone": "誰でも",
+      "invite": "招待制"
+    },
+    "guest_mode": {
+      "title": "ゲストモード",
+      "desc": "ゲストモードにすると、ゲストは公開チャンネルのメッセージを見れる",
+      "enable": "有効",
+      "disable": "無効"
+    },
+    "lang": {
+      "title": "言語",
+      "desc": "言語の設定",
+      "en": "英語",
+      "zh": "中国語",
+      "ja": "日本語"
+    }
+  },
+  "license": {
+    "signed": "署名",
+    "domain": "ドメイン",
+    "user_limit": "利用者数制限",
+    "expire": "有効期限",
+    "create": "作成日時",
+    "value": "内容",
+    "renew": "アップグ",
+    "renew_select": "アップグするライセンスを選択してください",
+    "tip": {
+      "title": "無料アップグレードを取得するチャンス！",
+      "user_test": "テストに参加することで、無料アップグレードを取得する機会を得る",
+      "booking": "ここで予約する：",
+      "wechat": "または、WeChatで友達登録し詳細を確認してください："
+    }
+  },
+  "firebase": {
+    "enable": "有効にする",
+    "token_url": "トークンURL",
+    "project_id": "プロジェクトID",
+    "private_key": "秘密鍵",
+    "client_email": "クライアントメール"
+  },
+  "smtp": {
+    "enable": "有効にする",
+    "host": "ホスト",
+    "port": "ポート",
+    "from": "from",
+    "username": "ユーザー名",
+    "password": "パスワード",
+    "how_to": "SMTPの設定方法？",
+    "send_test_email": "テストメールを送信する"
+  },
+  "third_app": {
+    "key": "API key",
+    "update": "API keyを更新する",
+    "update_tip": "API keyを更新すると、以前発行するkeyは無効になります。",
+    "key_tip": "API keyはサーバとサードパーティーとの安全な通信に使用されますので、大切に保管してください。"
+  },
+  "login": {
+    "password": "パスワードでログイン可能",
+    "password_desc": "パスワードでログイン可能にする",
+    "magic_link": "招待リンクでログイン可能",
+    "magic_link_desc": "招待リンクでログイン可能にする",
+    "google": "Googleでログイン可能",
+    "google_desc": "Googleでログイン可能にする",
+    "github": "GitHubでログイン可能",
+    "github_desc": "GitHubでログイン可能にする",
+    "metamask": "MetaMaskでログイン可能",
+    "metamask_desc": "MetaMaskでログイン可能にする",
+    "oidc": "OIDCでログイン可能",
+    "oidc_desc": "OIDCでログイン可能にする",
+    "oidc_custom": "カスタマイズ",
+    "more_details": "<0>ドキュメント</0> を参照してください."
+  },
+  "widget": {
+    "tip": "ストラップSDKをwebページに埋め込み、VoceChat拡張を実現できます！",
+    "code": "コード",
+    "code_comment": "コードをコピーして、webページに貼り付けてください。",
+    "config": "説明",
+    "param_key": "パラメータ",
+    "default_value": "デフォルト値",
+    "remark": "メモ"
+  },
+  "faq": {
+    "client_version": "クライアントバージョン",
+    "server_version": "サーバーバージョン",
+    "build_time": "ビルド時間"
+  }
+}
