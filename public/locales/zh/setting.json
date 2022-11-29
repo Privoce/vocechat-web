@@ -17,6 +17,7 @@
     "widget": "网页挂件",
     "license": "证书",
     "about": "关于",
+    "api_doc": "API 文档",
     "faq": "常见问题",
     "terms": "隐私声明",
     "feedback": "反馈"
@@ -135,5 +136,14 @@
     "client_version": "客户端版本",
     "server_version": "服务器端版本",
     "build_time": "构建时间戳"
+  },
+  "api_doc": {
+    "desc": "我们有详尽的API文档说明，你可以基于该文档，构建自己的客户端聊天工具。",
+    "access": "访问地址：",
+    "use_method": "使用方式：",
+    "step_1": "第一步：切换到自己的Server",
+    "step_2": "第二步：填入已登录的Token",
+    "step_2_desc": "Token值本质是JWT中的Token，所以有时长限制，如在使用时过期，请重新获取。获取方式可通过请求头 X-API-Key 拿到，或直接Copy👇",
+    "last": "最后：每个API都有 Try it Out 选项，可以由此调试该API"
   }
 }

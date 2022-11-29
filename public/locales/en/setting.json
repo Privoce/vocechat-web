@@ -18,6 +18,7 @@
     "widget": "Widget",
     "license": "License",
     "about": "About",
+    "api_doc": "API Document",
     "faq": "FAQ",
     "terms": "Terms & Privacy",
     "feedback": "Feedback"
@@ -133,5 +134,14 @@
     "client_version": "Client Version",
     "server_version": "Server Version",
     "build_time": "Build Timestamp"
+  },
+  "api_doc": {
+    "desc": "We have detailed API documentation that you can build your own chat tool based on.",
+    "access": "Access URL:",
+    "use_method": "User Method:",
+    "step_1": "Step One: Change to your own Server",
+    "step_2": "Step Two: Input the login token",
+    "step_2_desc": "You can get the token by access X-API-Key http header or just copy the text below:",
+    "last": "Every API has a 'Try it Out' button, and you can debug the API with it"
   }
 }

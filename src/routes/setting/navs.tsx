@@ -6,6 +6,7 @@ import ConfigSMTP from "./config/SMTP";
 import APIConfig from "./APIConfig";
 import License from "./License/License";
 import Widget from "./Widget";
+import APIDocument from "./APIDocument";
 import ManageMembers from "../../common/component/ManageMembers";
 import FAQ from "../../common/component/FAQ";
 // import ConfigAgora from "./config/Agora";
@@ -68,6 +69,10 @@ const navs = [
   {
     title: "about",
     items: [
+      {
+        name: "api_doc",
+        component: <APIDocument />
+      },
       {
         name: "faq",
         component: <FAQ />
