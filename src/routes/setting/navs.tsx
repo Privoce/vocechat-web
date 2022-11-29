@@ -78,7 +78,7 @@ const navs = [
       },
       {
         name: "feedback",
-        component: "Email: han@privoce.com\nWechat: yanggc_2013"
+        component: "Email: han@privoce.com Wechat: Privoce"
       }
     ]
   }

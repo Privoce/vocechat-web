@@ -29,7 +29,7 @@ export default function Widget() {
         {t('code')}:
       </label>
       <SyntaxHighlighter id="code" language="html" style={vscDarkPlus} className="rounded">
-        {`<!-- ${t('code_comment')} -->\n<script \n  data-host-id="4" \n  data-close-width="48" \n  data-close-height="48" \n  data-open-width="380" \n  data-open-height="680" \n  src="${location.origin}/widget.js" \n  async \n/>`}
+        {`<!-- ${t('code_comment')} -->\n<script \n  data-host-id="1" \n  data-close-width="48" \n  data-close-height="48" \n  data-open-width="380" \n  data-open-height="680" \n  src="${location.origin}/widget.js" \n  async \n/>`}
       </SyntaxHighlighter>
       <div className="text-gray-500 text-sm mt-5 mb-2">
         {t('config')}:
@@ -47,23 +47,23 @@ export default function Widget() {
             {[{
               paramKey: "host-id",
               paramDefault: 1,
-              remarks: "Assign the user chatting with visitor"
+              remarks: t("param_host")
             }, {
               paramKey: "close-width",
               paramDefault: `48(px)`,
-              remarks: "The width while widget closed"
+              remarks: t("param_open_width")
             }, {
               paramKey: "close-height",
               paramDefault: `48(px)`,
-              remarks: "The height while widget closed"
+              remarks: t("param_close_height")
             }, {
               paramKey: "open-width",
               paramDefault: `380(px)`,
-              remarks: "The width while widget opened"
+              remarks: t("param_open_width")
             }, {
               paramKey: "open-height",
               paramDefault: `680(px)`,
-              remarks: "The height while widget opened"
+              remarks: t("param_open_height")
             }
             ].map(row => <Row key={row.paramKey} {...row} />)}
           </tbody>

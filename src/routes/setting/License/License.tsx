@@ -5,6 +5,7 @@ import useLicense from "../../../common/hook/useLicense";
 import LicensePriceListModal from "./LicensePriceListModal";
 import clsx from "clsx";
 import { useTranslation } from "react-i18next";
+import UpdateLicenseModal from "./UpdateLicenseModal";
 
 interface ItemProps extends HTMLAttributes<HTMLSpanElement> { label: string, data?: string | number | string[], foldable?: boolean }
 const Item = ({ label, data, foldable = false, ...rest }: ItemProps) => {
@@ -24,18 +25,20 @@ const Item = ({ label, data, foldable = false, ...rest }: ItemProps) => {
 };
 export default function License() {
   const { t } = useTranslation("setting");
-  const { license: licenseInfo, reachLimit } = useLicense();
+  const { license: licenseInfo, reachLimit, upsertLicense, upserting, upserted } = useLicense();
   const [modalVisible, setModalVisible] = useState(false);
+  const [updateVisible, setUpdateVisible] = useState(false);
   const [base58Fold, setBase58Fold] = useState(true);
-  const handleRenewLicense = () => {
-    toggleModalVisible();
-  };
   const toggleModalVisible = () => {
     setModalVisible((prev) => !prev);
+  };
+  const toggleUpdateModalVisible = () => {
+    setUpdateVisible((prev) => !prev);
   };
   const handleLicenseValueToggle = () => {
     setBase58Fold(pre => !pre);
   };
+
   return (
     <>
       <div className="max-w-3xl flex flex-col justify-start items-start gap-4">
@@ -48,7 +51,10 @@ export default function License() {
           <Item label={t("license.value")} data={licenseInfo?.base58} foldable={base58Fold} title={base58Fold ? "Click to see full text" : "Click to fold text"}
             onClick={handleLicenseValueToggle} />
         </div>
-        <Button onClick={handleRenewLicense}>{t("license.renew")}</Button>
+        <div className="flex gap-2">
+          <Button onClick={toggleModalVisible}>{t("license.renew")}</Button>
+          <Button onClick={toggleUpdateModalVisible} className="ghost">{t("license.update")}</Button>
+        </div>
         <div className="flex flex-col gap-4 bg-primary-500 text-white rounded drop-shadow-xl p-5">
           <h2 className="text-2xl font-bold">{t("license.tip.title")} 🎁</h2>
           <p className="text-base flex flex-col"><span>
@@ -58,7 +64,7 @@ export default function License() {
               {t("license.tip.booking")} <a className="underline text-lg text-green-200" href="https://calendly.com/hansu/han-meeting" target="_blank" rel="noopener noreferrer">https://calendly.com/hansu/han-meeting</a>
             </span>
             <span>
-              {t("license.tip.wechat")}<em className="text-lg text-green-200">yanggc_2013</em>
+              {t("license.tip.wechat")}<em className="text-lg text-green-200">Privoce</em>
             </span>
           </p>
         </div>
@@ -66,6 +72,14 @@ export default function License() {
       {modalVisible && (
         <LicensePriceListModal
           closeModal={toggleModalVisible}
+        />
+      )}
+      {updateVisible && (
+        <UpdateLicenseModal
+          updated={upserted}
+          updating={upserting}
+          updateLicense={upsertLicense}
+          closeModal={toggleUpdateModalVisible}
         />
       )}
     </>

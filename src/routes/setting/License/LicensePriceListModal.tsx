@@ -16,7 +16,8 @@ interface Props {
 }
 
 const LicensePriceListModal: FC<Props> = ({ closeModal }) => {
-  const { t } = useTranslation(["setting", "common"]);
+  const { t } = useTranslation("setting");
+  const { t: ct } = useTranslation();
   const [getUrl, { isLoading, isSuccess }] = useGetLicensePaymentUrlMutation();
   const [selectPrice, setSelectPrice] = useState(
     `${LicensePriceList[0].pid}|${LicensePriceList[0].limit}`
@@ -53,9 +54,9 @@ const LicensePriceListModal: FC<Props> = ({ closeModal }) => {
         buttons={
           <>
             <Button onClick={closeModal} className="ghost">
-              {t("action.cancel", { ns: "common" })}
+              {ct("action.cancel")}
             </Button>
-            <Button disabled={isLoading || isSuccess} onClick={handleRenew} className="danger">
+            <Button disabled={isLoading || isSuccess} onClick={handleRenew} >
               {isLoading ? "Initialize Payment Url" : isSuccess ? "Redirecting" : t("license.renew")}
             </Button>
           </>
