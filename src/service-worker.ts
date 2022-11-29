@@ -61,6 +61,18 @@ registerRoute(
     ]
   })
 );
+// 缓存多语言文件
+registerRoute(
+  ({ url }) => url.pathname.startsWith("/locales/"),
+  new StaleWhileRevalidate({
+    cacheName: "locales",
+    plugins: [
+      // Ensure that once this runtime cache reaches a maximum size the
+      // least-recently used images are removed.
+      new ExpirationPlugin({ maxEntries: 100 })
+    ]
+  })
+);
 
 // This allows the web app to trigger skipWaiting via
 // registration.waiting.postMessage({type: 'SKIP_WAITING'})
