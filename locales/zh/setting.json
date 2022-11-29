@@ -67,6 +67,9 @@
     "create": "创建时间",
     "value": "证书内容",
     "renew": "升级证书",
+    "update": "手动更新",
+    "update_placeholder": "请输入新的证书内容",
+
     "renew_select": "请选择价格套餐",
     "tip": {
       "title": "一个获取免费升级的机会！",
@@ -121,7 +124,12 @@
     "config": "配置说明",
     "param_key": "参数",
     "default_value": "默认值",
-    "remark": "备注"
+    "remark": "备注",
+    "param_host": "指定和谁聊天(用户ID)",
+    "param_close_width": "挂件关闭态的宽度",
+    "param_close_height": "挂件关闭态的高度",
+    "param_open_width": "挂件打开态的宽度",
+    "param_open_height": "挂件打开态的高度"
   },
   "faq": {
     "client_version": "客户端版本",

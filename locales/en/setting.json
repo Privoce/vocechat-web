@@ -66,6 +66,8 @@
     "create": "Created At",
     "value": "License Value",
     "renew": "Renew License",
+    "update": "Update Manually",
+    "update_placeholder": "Please Input the new license value",
     "renew_select": "Please select the price",
     "tip": {
       "title": "A chance to get a free license upgrade!",
@@ -120,7 +122,12 @@
     "config": "Configuration Description",
     "param_key": "Parameter Key",
     "default_value": "Default Value",
-    "remark": "Remarks"
+    "remark": "Remarks",
+    "param_host": "Assign the user chatting with visitor(User ID)",
+    "param_close_width": "The width while widget closed",
+    "param_close_height": "The height while widget closed",
+    "param_open_width": "The width while widget opened",
+    "param_open_height": "The height while widget opened"
   },
   "faq": {
     "client_version": "Client Version",
