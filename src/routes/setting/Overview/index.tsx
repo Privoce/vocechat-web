@@ -92,7 +92,7 @@ export default function Overview() {
 
   if (!loginConfig) return null;
 
-  const { who_can_sign_up: whoCanSignUp, guest } = loginConfig as LoginConfig;
+  const { who_can_sign_up: whoCanSignUp, guest = false } = loginConfig as LoginConfig;
   const isAdmin = loginUser?.is_admin;
 
   return (
