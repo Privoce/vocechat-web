@@ -33,7 +33,8 @@ interface Props {
 }
 
 const LogoutConfirmModal: FC<Props> = ({ closeModal }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("auth");
+  const { t: ct } = useTranslation();
   const [clearLocal, setClearLocal] = useState(false);
   const { logout, exited, exiting, clearLocalData } = useLogout();
   const handleLogout = () => {
@@ -56,20 +57,20 @@ const LogoutConfirmModal: FC<Props> = ({ closeModal }) => {
   return (
     <Modal id="modal-modal">
       <StyledConfirm
-        title="Log Out"
-        description="Are you sure want to log out this account?"
+        title={t("logout.title")}
+        description={t("logout.desc")}
         buttons={
           <>
-            <Button onClick={closeModal}>{t("action.cancel")}</Button>
+            <Button onClick={closeModal}>{ct("action.cancel")}</Button>
             <Button onClick={handleLogout} className="danger">
-              {exiting ? "Logging out" : t("action.logout")}
+              {exiting ? "Logging out" : ct("action.logout")}
             </Button>
           </>
         }
       >
         <div className="clear">
           <label htmlFor="clear_cb" className="txt">
-            Clear local data
+            {t("logout.clear_local")}
           </label>
           <Checkbox name="clear_cb" checked={clearLocal} onChange={handleCheck} />
         </div>
