@@ -49,6 +49,7 @@ i18n
     .init({
         ns: ["common", "chat", "member", "setting", "fav", "file", "welcome", "auth"],
         defaultNS,
+        load: "languageOnly",
         // lng: "en",
         fallbackLng: 'en',
         fallbackNS: "common",
