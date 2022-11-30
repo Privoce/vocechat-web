@@ -9,7 +9,6 @@ import ContextMenu, { Item } from "../../../common/component/ContextMenu";
 import useUserOperation from "../../../common/hook/useUserOperation";
 import { useAppSelector } from "../../../app/store";
 import { useTranslation } from "react-i18next";
-import { t } from "i18next";
 type Props = {
   context: "user" | "channel";
   id: number;

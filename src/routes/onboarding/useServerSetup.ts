@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import { Swiper } from "swiper/types";
-
+import { t } from 'i18next';
 // `name` for in-code usage, `label` for display
 export interface Step {
   name: string;
@@ -11,28 +11,28 @@ export interface Step {
 const steps: Step[] = [
   {
     name: "welcomePage",
-    label: "Welcome Page"
+    label: t("welcome:onboarding.welcome_page")
   },
   {
     name: "serverName",
-    label: "Set Name"
+    label: t("welcome:onboarding.set_name")
   },
   {
     name: "adminAccount",
-    label: "Admin Account"
+    label: t("welcome:onboarding.admin_account")
   },
   {
     name: "whoCanSignUp",
-    label: "Who Can Sign Up"
+    label: t("welcome:onboarding.who_sign_up")
   },
   {
     name: "inviteLink",
-    label: "Invites",
+    label: t("welcome:onboarding.invites"),
     canJumpTo: ["whoCanSignUp"]
   },
   {
     name: "donePage",
-    label: "Done",
+    label: t("welcome:onboarding.done"),
     canJumpTo: ["whoCanSignUp", "inviteLink"]
   }
 ];

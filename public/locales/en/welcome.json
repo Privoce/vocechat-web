@@ -27,6 +27,11 @@
     "enter": "Enter",
     "last_tip": "Now let’s invite others!",
     "last_desc": "Send invitation link to your future community members:",
-    "done": "Done"
+    "done": "Done",
+    "welcome_page": "Welcome Page",
+    "set_name": "Set Name",
+    "admin_account": "Admin Account",
+    "who_sign_up": "Who Can Sign Up",
+    "invites": "Invites"
   }
 }
