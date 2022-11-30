@@ -23,6 +23,7 @@
     "add": "新增",
     "yes": "是的",
     "remove": "删除",
+    "delete_channel": "删除频道",
     "edit": "编辑",
     "edit_msg": "编辑消息",
     "add_reaction": "表情",
