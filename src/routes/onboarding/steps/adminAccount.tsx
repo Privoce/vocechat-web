@@ -73,8 +73,8 @@ const AdminAccount: FC<Props> = ({ serverName, nextStep }) => {
   const loggedIn = useAppSelector((store) => !!store.authData.token);
   const dispatch = useDispatch();
 
-  const [createAdmin, { isLoading: isSigningUp, error: signUpError }] = useCreateAdminMutation();
-  const [login, { isLoading: isLoggingIn, error: loginError }] = useLoginMutation();
+  const [createAdmin, { isLoading: isSigningUp, isError: signUpError, isSuccess: signUpOk }] = useCreateAdminMutation();
+  const [login, { isLoading: isLoggingIn, isError: loginError, }] = useLoginMutation();
   const { data: serverData } = useGetServerQuery();
   const [updateServer, { isLoading: isUpdatingServer, isSuccess: isUpdatedServer }] =
     useUpdateServerMutation();
@@ -85,12 +85,23 @@ const AdminAccount: FC<Props> = ({ serverName, nextStep }) => {
 
   // Display error
   useEffect(() => {
-    if (signUpError === undefined) return;
-    toast.error(`Failed to sign up: ${signUpError.data}`);
+    if (signUpError) {
+      toast.error(`Failed to sign up`);
+    }
   }, [signUpError]);
   useEffect(() => {
-    if (loginError === undefined) return;
-    toast.error(`Login failed: ${loginError.data}`);
+    if (signUpOk) {
+      login({
+        email,
+        password,
+        type: "password"
+      });
+    }
+  }, [signUpOk]);
+  useEffect(() => {
+    if (loginError) {
+      toast.error(`Login failed`);
+    }
   }, [loginError]);
 
   // After logged in
@@ -150,17 +161,13 @@ const AdminAccount: FC<Props> = ({ serverName, nextStep }) => {
             toast.error("Two passwords do not match!");
             return;
           }
-          await createAdmin({
+          createAdmin({
             email,
             name: "Admin",
             password,
             gender: 0
           });
-          await login({
-            email,
-            password,
-            type: "password"
-          });
+
         }}
       >
         {!(isSigningUp || isLoggingIn || isUpdatingServer) ? t("sign") : "..."}
