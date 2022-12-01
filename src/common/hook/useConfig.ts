@@ -21,14 +21,14 @@ let originalValue: valuesOf<ConfigMap> | undefined = undefined;
 export default function useConfig(config: keyof ConfigMap = "smtp") {
   const [changed, setChanged] = useState(false);
   const [values, setValues] = useState<valuesOf<ConfigMap> | undefined>(undefined);
-  const [updateLoginConfig, { isSuccess: LoginUpdated }] = useUpdateLoginConfigMutation();
-  const [updateSMTPConfig, { isSuccess: SMTPUpdated }] = useUpdateSMTPConfigMutation();
+  const [updateLoginConfig, { isSuccess: LoginUpdated, isLoading: LoginUpdating }] = useUpdateLoginConfigMutation();
+  const [updateSMTPConfig, { isSuccess: SMTPUpdated, isLoading: SMTPUpdating }] = useUpdateSMTPConfigMutation();
+  const [updateAgoraConfig, { isSuccess: AgoraUpdated, isLoading: AgoraUpdating }] = useUpdateAgoraConfigMutation();
+  const [updateFirebaseConfig, { isSuccess: FirebaseUpdated, isLoading: FirebaseUpdating }] = useUpdateFirebaseConfigMutation();
   const [getAgoraConfig, { data: agoraConfig }] = useLazyGetAgoraConfigQuery();
-  const [updateAgoraConfig, { isSuccess: AgoraUpdated }] = useUpdateAgoraConfigMutation();
   const [getLoginConfig, { data: loginConfig }] = useLazyGetLoginConfigQuery();
   const [getSMTPConfig, { data: smtpConfig }] = useLazyGetSMTPConfigQuery();
   const [getFirebaseConfig, { data: firebaseConfig }] = useLazyGetFirebaseConfigQuery();
-  const [updateFirebaseConfig, { isSuccess: FirebaseUpdated }] = useUpdateFirebaseConfigMutation();
 
   const updateFns = {
     login: updateLoginConfig,
@@ -48,9 +48,16 @@ export default function useConfig(config: keyof ConfigMap = "smtp") {
     agora: AgoraUpdated,
     firebase: FirebaseUpdated
   };
+  const updatings = {
+    login: LoginUpdating,
+    smtp: SMTPUpdating,
+    agora: AgoraUpdating,
+    firebase: FirebaseUpdating
+  };
   const updateConfig = updateFns[config];
   const refetch = requests[config];
   const updated = updates[config];
+  const updating = updatings[config];
   const reset = () => {
     setValues(undefined);
   };
@@ -71,6 +78,7 @@ export default function useConfig(config: keyof ConfigMap = "smtp") {
   useEffect(() => {
     if (updated) {
       toast.success("Configuration Updated!");
+      // setChanged(false);
       refetch();
     }
   }, [updated]);
@@ -92,6 +100,8 @@ export default function useConfig(config: keyof ConfigMap = "smtp") {
   }, [values]);
 
   return {
+    updating,
+    updated,
     reset,
     changed,
     updateConfig,

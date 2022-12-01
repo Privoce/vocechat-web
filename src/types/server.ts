@@ -10,6 +10,7 @@ export interface GithubAuthConfig {
   client_secret?: string;
 }
 export interface FirebaseConfig {
+  use_official: boolean;
   enabled: boolean;
   token_url: string;
   project_id: string;

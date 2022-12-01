@@ -2,16 +2,36 @@ import { ChangeEvent } from "react";
 import StyledContainer from "./StyledContainer";
 import Input from "../../../common/component/styled/Input";
 import Textarea from "../../../common/component/styled/Textarea";
-import Toggle from "../../../common/component/styled/Toggle";
 import Label from "../../../common/component/styled/Label";
 import SaveTip from "../../../common/component/SaveTip";
 import useConfig from "../../../common/hook/useConfig";
+import StyledRadio from "../../../common/component/styled/Radio";
+
 import { FirebaseConfig } from "../../../types/server";
 import { useTranslation } from "react-i18next";
 
+interface IOptions {
+  disable: string,
+  official: string,
+  custom: string
+}
+const Options: IOptions = {
+  disable: "Disable",
+  official: "Use Official Configuration",
+  custom: "Custom"
+};
 export default function ConfigFirebase() {
+  const { values, setValues, updateConfig, changed, reset } = useConfig("firebase");
   const { t } = useTranslation("setting");
-  const { values, toggleEnable, updateConfig, setValues, reset, changed } = useConfig("firebase");
+  let select: keyof IOptions | "" = "";
+  if (values) {
+    const {
+      use_official,
+      enabled = false
+    } = values as FirebaseConfig;
+    select = enabled ? (use_official ? "official" : "custom") : "disable";
+
+  }
   const handleUpdate = () => {
     // const { token_url, description } = values;
     updateConfig(values);
@@ -24,25 +44,51 @@ export default function ConfigFirebase() {
       return { ...prev, [type]: newValue };
     });
   };
+  const handleChangeSelect = (v: keyof IOptions) => {
+    let tmp = null;
+    switch (v) {
+      case "custom": {
+        tmp = { ...values, enabled: true, use_official: false, };
+      }
+        break;
+      case "official": {
+        tmp = { ...values, enabled: true, use_official: true };
+      }
+        break;
+      case "disable": {
+        tmp = { ...values, enabled: false };
+      }
+        break;
+      default:
+        break;
+    }
+    if (tmp) {
+      setValues(tmp);
+    }
+  };
+  const handleReset = () => {
+    reset();
+  };
+
   if (!values) return null;
   const {
     token_url,
     project_id,
     private_key,
     client_email,
-    enabled = false
   } = values as FirebaseConfig;
   return (
     <StyledContainer>
-      <div className="inputs">
-        <div className="input row">
-          <Label>{t("firebase.enable")}</Label>
-          <Toggle onClick={toggleEnable} data-checked={enabled}></Toggle>
-        </div>
+      <StyledRadio
+        options={Object.values(Options)}
+        values={Object.keys(Options)}
+        value={select}
+        onChange={handleChangeSelect}
+      />
+      {<fieldset className="inputs" disabled={select !== "custom"}>
         <div className="input">
           <Label htmlFor="name">{t("firebase.token_url")}</Label>
           <Input
-            disabled={!enabled}
             data-type="token_url"
             onChange={handleChange}
             value={token_url}
@@ -53,7 +99,6 @@ export default function ConfigFirebase() {
         <div className="input">
           <Label htmlFor="desc">{t("firebase.project_id")}</Label>
           <Input
-            disabled={!enabled}
             data-type="project_id"
             onChange={handleChange}
             value={project_id}
@@ -66,7 +111,6 @@ export default function ConfigFirebase() {
           <Textarea
             rows={10}
             spellCheck={false}
-            disabled={!enabled}
             data-type="private_key"
             onChange={handleChange}
             value={private_key}
@@ -77,7 +121,6 @@ export default function ConfigFirebase() {
         <div className="input">
           <Label htmlFor="desc">{t("firebase.client_email")}</Label>
           <Input
-            disabled={!enabled}
             data-type="client_email"
             onChange={handleChange}
             value={client_email}
@@ -85,9 +128,9 @@ export default function ConfigFirebase() {
             placeholder={t("firebase.client_email")}
           />
         </div>
-      </div>
-      {changed && <SaveTip saveHandler={handleUpdate} resetHandler={reset} />}
-      {/* <button onClick={handleUpdate} className="btn">update</button> */}
+      </fieldset>
+      }
+      {changed && <SaveTip saveHandler={handleUpdate} resetHandler={handleReset} />}
     </StyledContainer>
   );
 }
