@@ -1,5 +1,5 @@
 // const BASE_URL = `${location.origin}/api`;
-// const BASE_URL = `https://dev.voce.chat/api`;
+// const BASE_URL = `http://localhost:3333/api`;
 const BASE_URL = process.env.REACT_APP_RELEASE
   ? `${location.origin}/api`
   : `https://dev.voce.chat/api`;
