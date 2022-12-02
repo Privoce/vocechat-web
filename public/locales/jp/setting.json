@@ -17,6 +17,7 @@
     "widget": "ウィジェット",
     "license": "ライセンス",
     "about": "このアプリについて",
+    "api_doc": "APIドキュメント",
     "faq": "FAQ",
     "terms": "プライバシーに関する説明",
     "feedback": "フィードバック"
@@ -55,8 +56,8 @@
     "lang": {
       "title": "言語",
       "desc": "言語の設定",
-      "en": "英語",
-      "zh": "中国語",
+      "en": "English",
+      "zh": "中文",
       "jp": "日本語"
     }
   },
@@ -67,7 +68,10 @@
     "expire": "有効期限",
     "create": "作成日時",
     "value": "内容",
-    "renew": "アップグ",
+    "renew": "ライセンスキをリニューアル",
+    "update": "ライセンスキーをアップロード",
+    "update_placeholder": "ライセンスキーをアップロードしてください",
+
     "renew_select": "アップグするライセンスを選択してください",
     "tip": {
       "title": "無料アップグレードを取得するチャンス！",
@@ -122,11 +126,25 @@
     "config": "説明",
     "param_key": "パラメータ",
     "default_value": "デフォルト値",
-    "remark": "メモ"
+    "remark": "メモ",
+    "param_host": "ユーザーIDでチットの相手を指定する",
+    "param_close_width": "ウィジェット閉じたままの幅",
+    "param_close_height": "ウィジェット閉じたままの高さ",
+    "param_open_width": "ウィジェット開きままの幅",
+    "param_open_height": "ウィジェット開きままの高さ"
   },
   "faq": {
     "client_version": "クライアントバージョン",
     "server_version": "サーバーバージョン",
     "build_time": "ビルド時間"
+  },
+  "api_doc": {
+    "desc": "VoceChat APIドキュメントを参照しで、VoceChatをカスタマイズできます。",
+    "access": "アクセス:",
+    "use_method": "使用方法:",
+    "step_1": "1. 自分のサーバーに切り替えください",
+    "step_2": "2. 登録済みのトークンを入力してください",
+    "step_2_desc": "トークンを取得するには、http headerのX-API-Keyにアクセスしてください、もしくは以下のテキストを直接コピーで使用してください👇",
+    "last": "3. 最後に各APIにはTry it Outオプションが付いてる、あれを使ってAPIを試すことができます"
   }
 }

@@ -23,6 +23,7 @@
     "add": "追加",
     "yes": "はい",
     "remove": "削除",
+    "delete_channel": "チャンネルを削除",
     "edit": "編集",
     "edit_msg": "メッセージを編集する",
     "add_reaction": "リアクション",
