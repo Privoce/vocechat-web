@@ -59,6 +59,20 @@ const authDataSlice = createSlice({
       localStorage.setItem(KEY_REFRESH_TOKEN, refresh_token);
       localStorage.setItem(KEY_UID, `${uid}`);
     },
+    updateLoginUser(state, { payload }: PayloadAction<Partial<User>>) {
+      if (!state.user) return;
+      console.log("upppp", payload);
+
+      const obj = { ...state.user, ...payload };
+      Object.keys(obj).forEach(key => {
+        // @ts-ignore
+        if (obj[key] === undefined) {
+          // @ts-ignore
+          delete obj[key];
+        }
+      });
+      state.user = obj;
+    },
     resetAuthData() {
       // remove local data
       localStorage.removeItem(KEY_EXPIRE);
@@ -85,5 +99,5 @@ const authDataSlice = createSlice({
   }
 });
 
-export const { updateInitialized, setAuthData, resetAuthData, updateToken } = authDataSlice.actions;
+export const { updateInitialized, updateLoginUser, setAuthData, resetAuthData, updateToken } = authDataSlice.actions;
 export default authDataSlice.reducer;

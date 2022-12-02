@@ -16,10 +16,11 @@ import {
   updateMute
 } from "../../../app/slices/footprint";
 import { updateUsersByLogs, updateUsersStatus } from "../../../app/slices/users";
-import { resetAuthData } from "../../../app/slices/auth.data";
+import { resetAuthData, updateLoginUser } from "../../../app/slices/auth.data";
 import chatMessageHandler from "./chat.handler";
 import store, { useAppDispatch, useAppSelector } from "../../../app/store";
 import { ServerEvent, UsersStateEvent } from "../../../types/sse";
+import { isNull, omitBy } from "lodash";
 
 const getQueryString = (params: { [key: string]: string }) => {
   const sp = new URLSearchParams();
@@ -130,6 +131,13 @@ export default function useStreaming() {
             const { logs } = data;
             console.info("sse users change logs", logs);
             dispatch(updateUsersByLogs(logs));
+            // 特殊处理当前登录用户的更新
+            logs.forEach((log) => {
+              const { uid, action, log_id, ...rest } = log;
+              if (uid === loginUid && action === 'update') {
+                dispatch(updateLoginUser(omitBy(rest, isNull)));
+              }
+            });
           }
           break;
         case "user_settings":
