@@ -18,8 +18,8 @@ const Index = () => {
                 </span>
             </p>
             <StyledRadio
-                options={[t("overview.lang.en"), t("overview.lang.zh")]}
-                values={["en", "zh"]}
+                options={[t("overview.lang.en"), t("overview.lang.zh"), t("overview.lang.jp")]}
+                values={["en", "zh", "jp"]}
                 value={i18n.language.split("-")[0]}
                 onChange={(v) => {
                     console.log("wtff", v);

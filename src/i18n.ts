@@ -32,7 +32,7 @@ export const resources = {
 } as const;
 i18n.on("languageChanged", (lng) => {
     console.log("changed", lng);
-    dayjs.locale(lng === 'zh' ? "zh-cn" : lng);
+    dayjs.locale(lng === 'zh' ? "zh-cn" : lng === 'jp' ? "ja" : lng);
 });
 i18n
     // load translation using http -> see /public/locales (i.e. https://github.com/i18next/react-i18next/tree/master/example/react/public/locales)
@@ -50,7 +50,7 @@ i18n
         ns: ["common", "chat", "member", "setting", "fav", "file", "welcome", "auth"],
         defaultNS,
         load: "languageOnly",
-        // lng: "zh",
+        // lng: "jp",
         fallbackLng: 'en',
         fallbackNS: "common",
         debug: false,

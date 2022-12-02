@@ -56,7 +56,8 @@
       "title": "Language",
       "desc": "Setting the language",
       "en": "English",
-      "zh": "中文"
+      "zh": "中文",
+      "jp": "Japanese"
     }
   },
   "license": {

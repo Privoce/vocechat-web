@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import "dayjs/locale/zh-cn";
+import "dayjs/locale/ja";
 import relativeTime from "dayjs/plugin/relativeTime";
 import isToday from "dayjs/plugin/isToday";
 import isYesterday from "dayjs/plugin/isYesterday";
