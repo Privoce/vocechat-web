@@ -1,0 +1,32 @@
+{
+  "pin": "ピン留め",
+  "pin_desc": " をピン留めするか ",
+  "pinned_msg": "ピン留めしました",
+  "pin_empty_tip": "このチャネルにはピン留めのメッセージはありません",
+  "fav": "お気に入り",
+  "fav_msg": "お気に入りのメッセージ",
+  "fav_empty_tip": "このチャネルにはお気に入りのメッセージはありません",
+  "channel_members": "チャネルメンバー",
+  "add_channel_members": "メンバーを増やす",
+  "welcome_channel": " {{name}} チャンネルへようこそ",
+  "welcome_desc": " #{{name}} の最初のところ",
+  "edit_channel": "チャネルを編集する",
+
+  "channel_name": "チャネル名",
+  "private_channel": "プライベートチャネル",
+  "create_channel": "チャネルを作る",
+  "create_channel_desc": "これはオープンチャンネルで、誰もが見ることができます",
+  "create_private_channel_desc": "これはプライベートチャンネルで、指定された人だけが見ることができます",
+  "search_user_placeholder": "ユーザー名を入力してください",
+
+  "invite_title": "友達を{{name}}に招待する",
+  "invite_by_email": "招待メールを送信する",
+  "enable_smtp": "始めにSMTPを有効にする",
+  "send_invite_link": "もしくは、招待用URLをコピーする",
+  "share_invite_link": "このリンクを使って、友達を招待する",
+
+  "invite_link_expire": "招待用URLの有効期限は48時間です",
+  "generate_new_link": "新しいリンクを生成する",
+
+  "send_to": "送信先"
+}
