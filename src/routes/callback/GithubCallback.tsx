@@ -40,7 +40,7 @@ const GithubCallback: FC<Props> = ({ code, from = "webapp" }) => {
             switch ((error as FetchBaseQueryError).status) {
                 case 410:
                     toast.error(
-                        "No associated account found, please user admin for an invitation link to join."
+                        "No associated account found, please contact user admin for an invitation link to join."
                     );
                     break;
                 default:

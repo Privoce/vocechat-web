@@ -71,7 +71,7 @@ export default function LoginPage() {
           break;
         case 410:
           toast.error(
-            "No associated account found, please user admin for an invitation link to join."
+            "No associated account found, please contact user admin for an invitation link to join."
           );
           break;
         case 451:
