@@ -157,6 +157,9 @@ const AdminAccount: FC<Props> = ({ serverName, nextStep }) => {
           } else if (password === "") {
             toast.error("Please enter admin password!");
             return;
+          } else if (password.length < 6) {
+            toast.error("Password length greater than 6!");
+            return;
           } else if (password !== confirm) {
             toast.error("Two passwords do not match!");
             return;

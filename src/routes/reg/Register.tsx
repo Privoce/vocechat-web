@@ -55,6 +55,10 @@ export default function Reg() {
   const handleReg = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     const { email, password, confirmPassword } = input;
+    if (password.length < 6) {
+      toast.error("Password greater than 6!");
+      return;
+    }
     if (password !== confirmPassword) {
       toast.error("Not Same Password!");
       return;
