@@ -55,10 +55,7 @@
     },
     "lang": {
       "title": "言語",
-      "desc": "言語の設定",
-      "en": "English",
-      "zh": "中文",
-      "jp": "日本語"
+      "desc": "言語の設定"
     }
   },
   "license": {
