@@ -27,6 +27,11 @@
     "enter": "入ります",
     "last_tip": "現在、招待準備を終わりました",
     "last_desc": "リンクをメンバーに送信しましょう：",
-    "done": "完了"
+    "done": "完了",
+    "welcome_page": "ようこそ",
+    "set_name": "名前を設定",
+    "admin_account": "管理者アカウント",
+    "who_sign_up": "登録に関する権限設定",
+    "invites": "招待"
   }
 }
