@@ -7,10 +7,12 @@ import { renderMessageFragment } from "../utils";
 import { StyledChannelChat, StyledHeader } from "./styled";
 import LoadMore from "../LoadMore";
 import { useAppSelector } from "../../../app/store";
+import { useTranslation } from "react-i18next";
 type Props = {
   cid?: number;
 };
 export default function GuestChannelChat({ cid = 0 }: Props) {
+  const { t } = useTranslation("chat");
   const {
     list: msgIds,
     appends,
@@ -51,8 +53,8 @@ export default function GuestChannelChat({ cid = 0 }: Props) {
             <LoadMore pullUp={pullUp} />
           ) : (
             <div className="info">
-              <h2 className="title">Welcome to #{name} !</h2>
-              <p className="desc">This is the start of the #{name} channel. </p>
+              <h2 className="title">{t("welcome_channel", { name })}</h2>
+              <p className="desc">{t("welcome_desc", { name })} </p>
             </div>
           )}
           {/* <div className="feed"> */}

@@ -1,33 +1,15 @@
 // import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import { resetAuthData } from "../../../app/slices/auth.data";
 import Button from "../../../common/component/styled/Button";
 import useLogout from "../../../common/hook/useLogout";
-const Styled = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: #e5e7eb;
-  border-radius: var(--br);
-  width: 100%;
-  width: -webkit-fill-available;
-  padding: 16px 18px;
-  .txt {
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 20px;
-    color: #98a2b3;
-    .hand {
-      font-size: 20px;
-      margin-right: 10px;
-    }
-  }
-`;
 // type Props = {};
 
 const LoginTip = () => {
+  const { t } = useTranslation("welcome");
+  const { t: ct } = useTranslation();
   const dispatch = useDispatch();
   const { clearLocalData } = useLogout();
   const navigateTo = useNavigate();
@@ -38,13 +20,13 @@ const LoginTip = () => {
   };
 
   return (
-    <Styled>
-      <span className="txt">
-        <i className="hand">👋</i>
-        Please sign in to send message
+    <div className="flex items-center justify-between bg-slate-200/80 rounded-lg w-full p-4">
+      <span className="text-base text-[#98a2b3]">
+        <i className="mr-2 text-lg">👋</i>
+        {t("sign_in_tip")}
       </span>
-      <Button onClick={handleSignIn} className="small">{`Sign In`}</Button>
-    </Styled>
+      <Button onClick={handleSignIn} className="small">{ct("action.login")}</Button>
+    </div>
   );
 };
 
