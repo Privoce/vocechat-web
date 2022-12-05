@@ -2,7 +2,6 @@ import { FC, memo } from "react";
 import { NavLink } from "react-router-dom";
 import Tippy from "@tippyjs/react";
 import IconMessage from "../../../assets/icons/message.svg";
-import IconCall from "../../../assets/icons/call.svg";
 import IconMore from "../../../assets/icons/more.svg";
 import Avatar from "../Avatar";
 import StyledWrapper from "./styled";
@@ -18,10 +17,9 @@ interface Props {
 }
 
 const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
-  const { t } = useTranslation(["member", "common"]);
+  const { t } = useTranslation("member");
+  const { t: ct } = useTranslation();
   const {
-    canCall,
-    call,
     canCopyEmail,
     copyEmail,
     removeFromChannel,
@@ -44,9 +42,8 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
     avatar
     // introduction = "This guy has nothing to introduce",
   } = data;
-  const enableCall = type == "card" && canCall;
   const canRemoveFromServer = type == "embed" && canRemove;
-  const hasMore = enableCall || email || canRemoveFromChannel || canRemoveFromServer;
+  const hasMore = email || canRemoveFromChannel || canRemoveFromServer;
 
   return (
     <StyledWrapper className={type}>
@@ -62,12 +59,6 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
           </li>
         </NavLink>
         {/* <NavLink to={`#`}> */}
-        {enableCall && (
-          <li className="icon call" onClick={call}>
-            <IconCall />
-            <span className="txt">{t("call")}</span>
-          </li>
-        )}
         {/* </NavLink> */}
         <Tippy
           disabled={!hasMore}
@@ -78,12 +69,6 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
           hideOnClick={true}
           content={
             <StyledMenu>
-              {enableCall && (
-                <li className="item" onClick={call}>
-                  {/* <IconCall className="icon" /> */}
-                  {t("call")}
-                </li>
-              )}
               {canCopyEmail && (
                 <li className="item" onClick={copyEmail.bind(undefined, email)}>
                   {t("copy_email")}
@@ -104,7 +89,7 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
         >
           <li className={`icon more ${hasMore ? "" : "disabled"}`}>
             <IconMore />
-            <span className="txt">{t("more", { ns: "common" })}</span>
+            <span className="txt">{ct("more")}</span>
           </li>
         </Tippy>
       </ul>

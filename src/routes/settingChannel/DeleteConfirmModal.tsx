@@ -14,6 +14,7 @@ interface Props {
 
 const DeleteConfirmModal: FC<Props> = ({ id, closeModal }) => {
   const { t } = useTranslation("setting");
+  const { t: ct } = useTranslation();
   const navigateTo = useNavigate();
   const [deleteChannel, { isLoading, isSuccess }] = useLazyRemoveChannelQuery();
   const handleDelete = () => {
@@ -38,10 +39,10 @@ const DeleteConfirmModal: FC<Props> = ({ id, closeModal }) => {
         buttons={
           <>
             <Button onClick={closeModal.bind(null, undefined)} className="cancel">
-              {t("action.cancel", { ns: "common" })}
+              {ct("action.cancel")}
             </Button>
             <Button onClick={handleDelete} className="danger">
-              {isLoading ? "Deleting" : t("action.remove", { ns: "common" })}
+              {isLoading ? "Deleting" : ct("action.remove")}
             </Button>
           </>
         }

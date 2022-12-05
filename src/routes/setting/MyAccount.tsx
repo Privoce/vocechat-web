@@ -102,7 +102,8 @@ const StyledWrapper = styled.div`
 `;
 type EditFields = "name" | "email";
 export default function MyAccount() {
-  const { t } = useTranslation(["member", "common"]);
+  const { t } = useTranslation("member");
+  const { t: ct } = useTranslation();
   const [passwordModal, setPasswordModal] = useState(false);
   const [editModal, setEditModal] = useState<EditFields | null>(null);
   const [removeConfirmVisible, setRemoveConfirmVisible] = useState(false);
@@ -164,7 +165,7 @@ export default function MyAccount() {
               </span>
             </div>
             <button data-edit="name" onClick={handleBasicEdit} className="btn">
-              {t("action.edit", { ns: "common" })}
+              {ct("action.edit")}
             </button>
           </div>
           <div className="row">
@@ -173,7 +174,7 @@ export default function MyAccount() {
               <span className="txt">{email}</span>
             </div>
             <button data-edit="email" onClick={handleBasicEdit} className="btn">
-              {t("action.edit", { ns: "common" })}
+              {ct("action.edit")}
             </button>
           </div>
           <div className="row">
@@ -182,7 +183,7 @@ export default function MyAccount() {
               <span className="txt">*********</span>
             </div>
             <button onClick={togglePasswordModal} className="btn">
-              {t("action.edit", { ns: "common" })}
+              {ct("action.edit")}
             </button>
           </div>
         </div>

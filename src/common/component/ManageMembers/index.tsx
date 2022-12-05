@@ -19,7 +19,8 @@ interface Props {
   cid?: number;
 }
 const ManageMembers: FC<Props> = ({ cid }) => {
-  const { t } = useTranslation(["member", "common"]);
+  const { t } = useTranslation("member");
+  const { t: ct } = useTranslation();
   const { users, channels, loginUser } = useAppSelector((store) => {
     return {
       users: store.users,
@@ -68,9 +69,9 @@ const ManageMembers: FC<Props> = ({ cid }) => {
           if (!currUser) return null;
           const { name, email, is_admin } = currUser;
           const owner = channel && channel.owner == uid;
-          const switchRoleVisible = loginUser?.is_admin && loginUser.uid !== uid;
+          const switchRoleVisible = loginUser?.is_admin && loginUser.uid !== uid && uid !== 1;
           const dotsVisible = email || loginUser?.is_admin;
-          const canRemove = loginUser?.is_admin && loginUser?.uid != uid;
+          const canRemove = loginUser?.is_admin && loginUser?.uid != uid && uid !== 1;
           const canRemoveFromChannel =
             channel && channel.owner == loginUser?.uid && loginUser?.uid != uid;
           return (
@@ -132,7 +133,7 @@ const ManageMembers: FC<Props> = ({ cid }) => {
                       <StyledMenu className="menu">
                         {email && (
                           <li className="item" onClick={copyEmail.bind(null, email)}>
-                            {t("action.copy_email", { ns: "common" })}
+                            {ct("action.copy_email")}
                           </li>
                         )}
                         {canRemoveFromChannel && (
@@ -142,7 +143,7 @@ const ManageMembers: FC<Props> = ({ cid }) => {
                         )}
                         {canRemove && (
                           <li className="item danger" onClick={removeUser.bind(null, uid)}>
-                            {t("action.remove", { ns: "common" })}
+                            {ct("action.remove")}
                           </li>
                         )}
                       </StyledMenu>

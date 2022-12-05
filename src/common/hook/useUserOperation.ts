@@ -84,7 +84,7 @@ const useUserOperation = ({ uid, cid }: IProps) => {
     (isAdmin || channel?.owner == loginUid) &&
     uid != channel?.owner;
   const canCall: boolean = (agoraConfig as AgoraConfig)?.enabled && loginUid != uid;
-  const canRemove: boolean = isAdmin && loginUid != uid && !cid;
+  const canRemove: boolean = isAdmin && loginUid != uid && !cid && uid !== 1;
 
   return {
     canDeleteChannel,
