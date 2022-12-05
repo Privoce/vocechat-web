@@ -61,7 +61,7 @@ const User: FC<Props> = ({
             <Avatar url={curr.avatar} name={curr.name} alt="avatar" />
             <div className={`status ${online ? "online" : "offline"}`}></div>
           </div>
-          {!compact && <span className="name">{curr?.name}</span>}
+          {!compact && <span className="name" title={curr?.name}>{curr?.name}</span>}
           {owner && <IconOwner />}
         </StyledWrapper>
       </ContextMenu>
@@ -91,7 +91,7 @@ const User: FC<Props> = ({
             <Avatar url={curr.avatar} name={curr.name} alt="avatar" />
             <div className={`status ${online ? "online" : "offline"}`}></div>
           </div>
-          {!compact && <span className="name">{curr?.name}</span>}
+          {!compact && <span className="name" title={curr?.name}>{curr?.name}</span>}
           {owner && <IconOwner />}
         </StyledWrapper>
       </Tippy>

@@ -1,22 +1,21 @@
 import { memo, useEffect } from "react";
 import { NavLink, useParams, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import _ from "lodash";
 import { updateRememberedNavs } from "../../app/slices/ui";
-import Search from "../../common/component/Search";
+import Search from "./Search";
 import User from "../../common/component/User";
 import Profile from "../../common/component/Profile";
 
 import StyledWrapper from "./styled";
 import BlankPlaceholder from "../../common/component/BlankPlaceholder";
-import { useAppSelector } from "../../app/store";
+import useFilteredUsers from "../../common/hook/useFilteredUsers";
 
 function UsersPage() {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
-
+  const { input, updateInput, users } = useFilteredUsers();
   const { user_id } = useParams();
-  const userIds = useAppSelector((store) => store.users.ids, _.isEqual);
+  // 记住路由
   useEffect(() => {
     dispatch(updateRememberedNavs({ key: "user" }));
     return () => {
@@ -24,14 +23,14 @@ function UsersPage() {
     };
   }, [pathname]);
 
-  if (!userIds) return null;
+  if (!users) return null;
   return (
     <StyledWrapper>
       <div className="left">
-        <Search />
+        <Search input={input} updateInput={updateInput} />
         <div className="list">
           <nav className="nav">
-            {userIds.map((uid: number) => {
+            {users.map(({ uid }) => {
               return (
                 <NavLink key={uid} className="session" to={`/users/${uid}`}>
                   <User uid={uid} enableContextMenu={true} />

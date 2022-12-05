@@ -50,6 +50,9 @@ const StyledWrapper = styled.div`
     font-size: 14px;
     line-height: 20px;
     color: #52525b;
+    max-width: 190px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   /* session nav */
   &.compact {

@@ -2,9 +2,9 @@ import styled from "styled-components";
 import Tippy from "@tippyjs/react";
 import searchIcon from "../../assets/icons/search.svg?url";
 import addIcon from "../../assets/icons/add.svg?url";
-import AddEntriesMenu from "./AddEntriesMenu";
-import Tooltip from "./Tooltip";
-import { FC } from "react";
+import AddEntriesMenu from "../../common/component/AddEntriesMenu";
+import Tooltip from "../../common/component/Tooltip";
+import { FC, ChangeEvent } from "react";
 import { useTranslation } from "react-i18next";
 
 const StyledWrapper = styled.div`
@@ -30,22 +30,25 @@ const StyledWrapper = styled.div`
       line-height: 20px;
     }
   }
-  .add {
-    cursor: pointer;
-  }
 `;
-type Props = {};
-const Search: FC<Props> = () => {
+type Props = {
+  input: string,
+  updateInput: (input: string) => void
+};
+const Search: FC<Props> = ({ input, updateInput }) => {
   const { t } = useTranslation();
+  const handleInput = (evt: ChangeEvent<HTMLInputElement>) => {
+    updateInput(evt.target.value);
+  };
   return (
     <StyledWrapper>
       <div className="search">
         <img src={searchIcon} alt="search icon" />
-        <input placeholder={`${t("action.search")}...`} className="input" />
+        <input value={input} placeholder={`${t("action.search")}...`} className="input" onChange={handleInput} />
       </div>
       <Tooltip tip={t("more")} placement="bottom">
         <Tippy interactive placement="bottom-end" trigger="click" content={<AddEntriesMenu />}>
-          <img src={addIcon} alt="add icon" className="add" />
+          <img src={addIcon} alt="add icon" className="cursor-pointer" />
         </Tippy>
       </Tooltip>
     </StyledWrapper>
