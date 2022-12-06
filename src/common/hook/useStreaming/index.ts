@@ -84,17 +84,18 @@ export default function useStreaming() {
     };
     SSE.onerror = (err) => {
       const { readyState } = err.target as EventSource;
-      console.error("sse error", readyState);
-      // 连接还处于开启或正在连接状态
-      if (readyState === EventSource.OPEN || readyState === EventSource.CONNECTING) {
+      console.error("sse error", readyState, err);
+      // 连接还处于开启状态
+      if (readyState === EventSource.OPEN) {
         return;
       }
-      initializing = false;
       // 正常的关闭
       if (readyState === EventSource.CLOSED) {
         initialized = false;
         return;
       }
+      // 表示连接还未建立，或者连接断线
+      initializing = false;
       // 非正常状态，目前未知
       stopStreaming();
       if (inter) {
@@ -104,7 +105,7 @@ export default function useStreaming() {
       inter = window.setTimeout(() => {
         initialized = false;
         startStreaming();
-      }, 2000);
+      }, 1000);
     };
     SSE.onmessage = (evt) => {
       initializing = false;
