@@ -138,6 +138,7 @@ export default function LoginPage() {
             className="large"
             name="email"
             value={email}
+            type="email"
             required
             placeholder={t("placeholder_email")}
             data-type="email"

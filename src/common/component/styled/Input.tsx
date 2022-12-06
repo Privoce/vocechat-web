@@ -93,6 +93,7 @@ interface Props
       | "onBlur"
       | "pattern"
       | "disabled"
+      | "minLength"
     >,
     HTMLInputElement
   > {

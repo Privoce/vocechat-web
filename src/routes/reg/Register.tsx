@@ -55,10 +55,6 @@ export default function Reg() {
   const handleReg = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     const { email, password, confirmPassword } = input;
-    if (password.length < 6) {
-      toast.error("Password can't be less than 6 digits!");
-      return;
-    }
     if (password !== confirmPassword) {
       toast.error("Not Same Password!");
       return;
@@ -123,6 +119,7 @@ export default function Reg() {
           name="email"
           value={email}
           required
+          type="email"
           placeholder={t("placeholder_email")}
           data-type="email"
           onChange={handleInput}
@@ -133,6 +130,7 @@ export default function Reg() {
           value={password}
           name="password"
           required
+          minLength={6}
           data-type="password"
           onChange={handleInput}
           placeholder={t("placeholder_pwd")}
@@ -141,6 +139,7 @@ export default function Reg() {
           required
           onBlur={handleCompare}
           type="password"
+          minLength={6}
           name={"confirmPassword"}
           value={confirmPassword}
           data-type="confirmPassword"

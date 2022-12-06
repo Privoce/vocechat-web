@@ -100,12 +100,12 @@ const StyledWrapper = styled.div`
     border-radius: 8px;
   }
 `;
-type EditFields = "name" | "email";
+type EditField = "name" | "email" | "";
 export default function MyAccount() {
   const { t } = useTranslation("member");
   const { t: ct } = useTranslation();
   const [passwordModal, setPasswordModal] = useState(false);
-  const [editModal, setEditModal] = useState<EditFields | null>(null);
+  const [editModal, setEditModal] = useState<EditField>("");
   const [removeConfirmVisible, setRemoveConfirmVisible] = useState(false);
   const [uploadAvatar, { isSuccess: uploadSuccess }] = useUpdateAvatarMutation();
   const EditModalInfo = {
@@ -132,12 +132,12 @@ export default function MyAccount() {
   }, [uploadSuccess]);
 
   const handleBasicEdit = (evt: MouseEvent<HTMLButtonElement>) => {
-    const { edit } = evt.currentTarget.dataset as { edit: EditFields };
+    const { edit } = evt.currentTarget.dataset as { edit: EditField };
     setEditModal(edit);
   };
 
   const closeBasicEditModal = () => {
-    setEditModal(null);
+    setEditModal("");
   };
 
   const togglePasswordModal = () => {
@@ -198,6 +198,7 @@ export default function MyAccount() {
       </StyledWrapper>
       {editModal && (
         <ProfileBasicEditModal
+          type={editModal == "email" ? "email" : "text"}
           valueKey={editModal}
           {...EditModalInfo[editModal]}
           value={eval(editModal)}
