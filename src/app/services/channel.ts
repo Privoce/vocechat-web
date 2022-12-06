@@ -92,9 +92,8 @@ export const channelApi = createApi({
         responseHandler: (response: Response) => response.text()
       }),
       transformResponse: (link: string) => {
-        // 替换掉域名
-        const invite = new URL(link);
-        return `${location.origin}${invite.pathname}${invite.search}${invite.hash}`;
+        // 确保http开头
+        return link.startsWith("http") ? link : `http://${link}`;
       }
     }),
     removeChannel: builder.query<void, number>({
