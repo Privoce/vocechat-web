@@ -149,11 +149,14 @@ export const messageApi = createApi({
     }),
     replyMessage: builder.mutation<
       number,
-      { reply_mid: number; content: string; type: ContentTypeKey }
+      { from_uid: number, reply_mid: number; content: string; type: ContentTypeKey, properties?: {} }
     >({
-      query: ({ reply_mid, content, type = "text" }) => ({
+      query: ({ reply_mid, content, type = "text", properties }) => ({
         headers: {
-          "content-type": ContentTypes[type]
+          "content-type": ContentTypes[type],
+          "X-Properties": properties
+            ? btoa(unescape(encodeURIComponent(JSON.stringify(properties))))
+            : ""
         },
         url: `/message/${reply_mid}/reply`,
         method: "POST",

@@ -71,7 +71,8 @@ const useSendMessage = (props?: Props) => {
         from_uid: from,
         reply_mid,
         type,
-        content
+        content,
+        properties
       });
     } else {
       await sendFn({
