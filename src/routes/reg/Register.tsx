@@ -56,7 +56,7 @@ export default function Reg() {
     evt.preventDefault();
     const { email, password, confirmPassword } = input;
     if (password.length < 6) {
-      toast.error("Password greater than 6!");
+      toast.error("Password can't be less than 6 digits!");
       return;
     }
     if (password !== confirmPassword) {
