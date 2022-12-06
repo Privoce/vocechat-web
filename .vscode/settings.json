@@ -38,6 +38,7 @@
     "magiclink",
     "navs",
     "oidc",
+    "Privoce",
     "reduxjs",
     "Swiper",
     "thirdparty",
@@ -50,7 +51,8 @@
     "upserted",
     "upserting",
     "vocechat",
-    "webrowse"
+    "webrowse",
+    "Wechat"
   ],
   "reactSnippets.settings.prettierEnabled": true,
   "reactSnippets.settings.importReactOnTop": false,
