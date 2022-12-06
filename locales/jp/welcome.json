@@ -6,6 +6,7 @@
   "start_by_dm": "チャットしましょう",
   "download": "アプリをダウンロードしましょう",
   "help": "まだ聞きたいことがある？ ヘルプにアクセスしましょう",
+  "sign_in_tip": "Please sign in to send message",
   "onboarding": {
     "title": "VoceChat初期化",
     "welcome": "あなたのVoceChatへようこそ！",

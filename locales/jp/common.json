@@ -6,6 +6,8 @@
   "setting": "設定",
   "more": "もっと",
   "action": {
+    "login": "Sign In",
+
     "logout": "ログアウト",
     "change_avatar": "アバターを変更",
     "cancel": "キャンセル",

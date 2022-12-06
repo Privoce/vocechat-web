@@ -6,6 +6,7 @@
   "setting": "Setting",
   "more": "More",
   "action": {
+    "login": "Sign In",
     "logout": "Log Out",
     "change_avatar": "Change Avatar",
     "cancel": "Cancel",
