@@ -18,9 +18,11 @@ import {
 import { updateUsersByLogs, updateUsersStatus } from "../../../app/slices/users";
 import { resetAuthData, updateLoginUser } from "../../../app/slices/auth.data";
 import chatMessageHandler from "./chat.handler";
-import store, { useAppDispatch, useAppSelector } from "../../../app/store";
+import { useAppDispatch, useAppSelector } from "../../../app/store";
 import { ServerEvent, UsersStateEvent } from "../../../types/sse";
 import { isNull, omitBy } from "lodash";
+import { useRenewMutation } from "../../../app/services/auth";
+import dayjs from "dayjs";
 
 const getQueryString = (params: { [key: string]: string }) => {
   const sp = new URLSearchParams();
@@ -32,41 +34,52 @@ const getQueryString = (params: { [key: string]: string }) => {
   return sp.toString();
 };
 let inter: number | null = null;
-let SSE: EventSource | null = null;
+let SSE: EventSource | undefined = undefined;
+let opened = false;
+
 export default function useStreaming() {
+  const [renewToken] = useRenewMutation();
   const [readyPullData, setReadyPullData] = useState(false);
   const {
     authData,
-    ui: { ready, online },
+    ui: { ready },
     footprint: { afterMid, usersVersion, readUsers, readChannels }
   } = useAppSelector((store) => store);
   const dispatch = useAppDispatch();
   const loginUid = authData.user?.uid || 0;
-  let initialized = false;
-  let initializing = false;
+  let aliveInter: number = 0;
+  const keepAlive = () => {
+    clearTimeout(aliveInter);
+    //  比15秒多2秒
+    aliveInter = window.setTimeout(() => {
+      // 重启连接
+      stopStreaming();
+      startStreaming();
+    }, 17000);
+  };
+  const startStreaming = async () => {
+    console.log("start streaming", SSE, SSE?.readyState);
 
-  const startStreaming = () => {
-    console.info("sse start streaming", initialized, initializing);
-    if (initialized || initializing) return;
+    if (SSE && (SSE.readyState === EventSource.OPEN || SSE.readyState === EventSource.CONNECTING)) return;
+    const { token = "", refreshToken, expireTime = +new Date() } = authData;
+    //  token 非空
+    if (!token) {
+      console.info("sse start streaming no token", token);
+      return;
+    }
     // 如果token快要过期，先renew
-    const {
-      authData: { token = "" }
-    } = store.getState();
-
+    if (dayjs().isAfter(new Date(expireTime - 20 * 1000))) {
+      renewToken({ token, refresh_token: refreshToken });
+      return;
+    }
     // 开始初始化
-    initializing = true;
     const params: {
       "api-key": string;
       after_mid?: string;
       users_version?: string;
     } = {
-      "api-key": token
+      "api-key": token,
     };
-    //  token 非空
-    if (!token) {
-      initializing = false;
-      return;
-    }
     // 如果afterMid是0，则不传该参数
     if (afterMid !== 0) {
       params.after_mid = `${afterMid}`;
@@ -79,8 +92,8 @@ export default function useStreaming() {
     SSE = new EventSource(`${BASE_URL}/user/events?${getQueryString(params)}`);
 
     SSE.onopen = () => {
-      initializing = false;
-      initialized = true;
+      //todo 
+      opened = true;
     };
     SSE.onerror = (err) => {
       const { readyState } = err.target as EventSource;
@@ -89,32 +102,23 @@ export default function useStreaming() {
       if (readyState === EventSource.OPEN) {
         return;
       }
-      // 正常的关闭
-      if (readyState === EventSource.CLOSED) {
-        initialized = false;
-        return;
-      }
-      // 表示连接还未建立，或者连接断线
-      initializing = false;
-      // 非正常状态，目前未知
-      stopStreaming();
       if (inter) {
         clearTimeout(inter);
       }
-      // 重连
+      // // 重连
       inter = window.setTimeout(() => {
-        initialized = false;
         startStreaming();
       }, 1000);
     };
     SSE.onmessage = (evt) => {
-      initializing = false;
       console.info("sse message", evt.data);
       const data: ServerEvent = JSON.parse(evt.data);
       const { type } = data;
       switch (type) {
-        case "heartbeat":
+        case "heartbeat": {
+          keepAlive();
           console.info("sse heartbeat", loginUid);
+        }
           break;
         case "ready":
           console.info("sse streaming ready");
@@ -289,6 +293,7 @@ export default function useStreaming() {
     console.info("sse stop streaming");
     if (SSE) {
       SSE.close();
+      SSE = undefined;
     }
   };
 
@@ -298,16 +303,18 @@ export default function useStreaming() {
 
   useEffect(() => {
     if (readyPullData) {
-      if (online) {
-        startStreaming();
-      } else {
-        stopStreaming();
-      }
+      // if (online) {
+      startStreaming();
+      // } else {
+      //   stopStreaming();
+      // }
     }
     return () => {
+      console.log("stop from readyPullData");
       stopStreaming();
     };
-  }, [online, readyPullData]);
+  }, [readyPullData]);
+
 
   return {
     setStreamingReady,
