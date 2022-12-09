@@ -1,7 +1,8 @@
-import { useEffect, useState, ChangeEvent, FC } from "react";
+import { useEffect, useState, ChangeEvent, FC, useRef } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
+import { useSendLoginMagicLinkMutation } from "../../../app/services/auth";
 import useInviteLink from "../../hook/useInviteLink";
 import Button from "../styled/Button";
 import Input from "../styled/Input";
@@ -74,7 +75,10 @@ interface Props {
 
 const InviteByEmail: FC<Props> = ({ cid }) => {
   const { t } = useTranslation("chat");
+  const { t: ct } = useTranslation();
   const [email, setEmail] = useState("");
+  const formRef = useRef<HTMLFormElement | null>(null);
+  const [sendMagicLinkByEmail, { isSuccess, isLoading }] = useSendLoginMagicLinkMutation();
   const { enableSMTP, linkCopied, link, copyLink, generateNewLink, generating } =
     useInviteLink(cid);
   useEffect(() => {
@@ -82,9 +86,25 @@ const InviteByEmail: FC<Props> = ({ cid }) => {
       toast.success("Invite Link Copied!");
     }
   }, [linkCopied]);
+  useEffect(() => {
+    if (isSuccess) {
+
+      toast.success("Email Sent!");
+    }
+  }, [isSuccess]);
 
   const handleEmail = (evt: ChangeEvent<HTMLInputElement>) => {
     setEmail(evt.target.value);
+  };
+  const handleSendEmail = () => {
+    if (formRef && formRef.current) {
+      const formEle = formRef.current;
+      if (!formEle.checkValidity()) {
+        formEle.reportValidity();
+      } else {
+        sendMagicLinkByEmail(email);
+      }
+    }
   };
 
   return (
@@ -92,15 +112,19 @@ const InviteByEmail: FC<Props> = ({ cid }) => {
       <div className="invite">
         <label htmlFor="">{t("invite_by_email")}</label>
         <div className="input">
-          <Input
-            value={email}
-            onChange={handleEmail}
-            disabled={!enableSMTP}
-            type="email"
-            placeholder={enableSMTP ? "Enter Email" : t("enable_smtp")}
-          />
-          <Button disabled={!enableSMTP || !email} className="send">
-            {t("action.send", { ns: "common" })}
+          <form ref={formRef} action="/" className="w-full">
+            <Input
+              required
+              value={email}
+              onChange={handleEmail}
+              disabled={!enableSMTP}
+              type="email"
+              name="email"
+              placeholder={enableSMTP ? "Enter Email" : t("enable_smtp")}
+            />
+          </form>
+          <Button disabled={!enableSMTP || !email || isLoading} className="send" onClick={handleSendEmail}>
+            {ct("action.send")}
           </Button>
         </div>
       </div>
@@ -109,7 +133,7 @@ const InviteByEmail: FC<Props> = ({ cid }) => {
         <div className="input">
           <Input readOnly className="invite" placeholder="Generating" value={link} />
           <button className="copy" onClick={copyLink}>
-            {t("action.copy", { ns: "common" })}
+            {ct("action.copy")}
           </button>
         </div>
       </div>
