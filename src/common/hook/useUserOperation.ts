@@ -5,17 +5,16 @@ import { useNavigate, useMatch } from "react-router-dom";
 import { hideAll } from "tippy.js";
 import { useRemoveMembersMutation } from "../../app/services/channel";
 import { useLazyDeleteUserQuery } from "../../app/services/user";
-import useConfig from "./useConfig";
+// import useConfig from "./useConfig";
 import useCopy from "./useCopy";
 import { useAppSelector } from "../../app/store";
-import { AgoraConfig } from "../../types/server";
+// import { AgoraConfig } from "../../types/server";
 interface IProps {
   uid?: number;
   cid?: number;
 }
 const useUserOperation = ({ uid, cid }: IProps) => {
   const [passedUid, setPassedUid] = useState<number | undefined>(undefined);
-  const { values: agoraConfig } = useConfig("agora");
   const isUserDetailPath = useMatch(`/users/${uid}`);
   const [removeUser, { isSuccess: removeUserSuccess }] = useLazyDeleteUserQuery();
   const [removeInChannel, { isSuccess: removeSuccess }] = useRemoveMembersMutation();
@@ -71,10 +70,6 @@ const useUserOperation = ({ uid, cid }: IProps) => {
     navigateTo(`/chat/dm/${uid}`);
   };
 
-  const call = () => {
-    toast.success("Coming Soon...");
-    hideAll();
-  };
   const isAdmin = !!loginUser?.is_admin;
   const loginUid = loginUser?.uid;
   const canDeleteChannel = !!cid && !channel?.is_public && isAdmin;
@@ -83,7 +78,6 @@ const useUserOperation = ({ uid, cid }: IProps) => {
     !channel?.is_public &&
     (isAdmin || channel?.owner == loginUid) &&
     uid != channel?.owner;
-  const canCall: boolean = (agoraConfig as AgoraConfig)?.enabled && loginUid != uid;
   const canRemove: boolean = isAdmin && loginUid != uid && !cid && uid !== 1;
 
   return {
@@ -95,8 +89,6 @@ const useUserOperation = ({ uid, cid }: IProps) => {
     canRemoveFromChannel,
     canCopyEmail: !!user?.email,
     copyEmail,
-    canCall,
-    call
   };
 };
 export default useUserOperation;

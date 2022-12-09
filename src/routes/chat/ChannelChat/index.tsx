@@ -98,53 +98,51 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
         context="channel"
         dropFiles={dropFiles}
         aside={
-          <>
-            <ul className="tools">
-              {(agoraConfig as AgoraConfig)?.enabled && (
-                <li className="tool">
-                  <Tooltip tip="Voice/Video Chat" placement="left">
-                    <IconHeadphone />
-                  </Tooltip>
-                </li>
-              )}
-              <Tooltip tip={t("pin")} placement="left">
-                <Tippy
-                  placement="left-start"
-                  popperOptions={{ strategy: "fixed" }}
-                  offset={[0, 150]}
-                  interactive
-                  trigger="click"
-                  content={<PinList id={cid} />}
-                >
-                  <li className={`tool ${pinCount > 0 ? "badge" : ""}`} data-count={pinCount}>
-                    <IconPin />
-                  </li>
-                </Tippy>
-              </Tooltip>
-              <Tooltip tip={t("fav")} placement="left">
-                <Tippy
-                  placement="left-start"
-                  popperOptions={{ strategy: "fixed" }}
-                  offset={[0, 162]}
-                  interactive
-                  trigger="click"
-                  content={<FavList cid={cid} />}
-                >
-                  <li className={`tool fav`} data-count={pinCount}>
-                    <IconFav />
-                  </li>
-                </Tippy>
-              </Tooltip>
-              <li
-                className={`tool ${membersVisible ? "active" : ""}`}
-                onClick={toggleMembersVisible}
-              >
-                <Tooltip tip={t("channel_members")} placement="left">
-                  <IconPeople />
+          <ul className="tools">
+            {(agoraConfig as AgoraConfig)?.enabled && (
+              <li className="tool">
+                <Tooltip tip="Voice/Video Chat" placement="left">
+                  <IconHeadphone />
                 </Tooltip>
               </li>
-            </ul>
-          </>
+            )}
+            <Tooltip tip={t("pin")} placement="left">
+              <Tippy
+                placement="left-start"
+                popperOptions={{ strategy: "fixed" }}
+                offset={[0, 150]}
+                interactive
+                trigger="click"
+                content={<PinList id={cid} />}
+              >
+                <li className={`tool ${pinCount > 0 ? "badge" : ""}`} data-count={pinCount}>
+                  <IconPin />
+                </li>
+              </Tippy>
+            </Tooltip>
+            <Tooltip tip={t("fav")} placement="left">
+              <Tippy
+                placement="left-start"
+                popperOptions={{ strategy: "fixed" }}
+                offset={[0, 162]}
+                interactive
+                trigger="click"
+                content={<FavList cid={cid} />}
+              >
+                <li className={`tool fav`} data-count={pinCount}>
+                  <IconFav />
+                </li>
+              </Tippy>
+            </Tooltip>
+            <li
+              className={`tool ${membersVisible ? "active" : ""}`}
+              onClick={toggleMembersVisible}
+            >
+              <Tooltip tip={t("channel_members")} placement="left">
+                <IconPeople />
+              </Tooltip>
+            </li>
+          </ul>
         }
         header={
           <StyledHeader className="head">
@@ -156,31 +154,27 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
           </StyledHeader>
         }
         users={
-          membersVisible ? (
-            <>
-              <StyledUsers>
-                {addVisible && (
-                  <div className="add" onClick={toggleAddVisible}>
-                    <img className="icon" src={addIcon} />
-                    <div className="txt">{t("add_channel_members")}</div>
-                  </div>
-                )}
-                {memberIds.map((uid: number) => {
-                  return (
-                    <User
-                      enableContextMenu={true}
-                      cid={cid}
-                      owner={owner == uid}
-                      key={uid}
-                      uid={uid}
-                      dm
-                      popover
-                    />
-                  );
-                })}
-              </StyledUsers>
-            </>
-          ) : null
+          <StyledUsers className={membersVisible ? "flex" : "hidden"}>
+            {addVisible && (
+              <div className="add" onClick={toggleAddVisible}>
+                <img className="icon" src={addIcon} />
+                <div className="txt">{t("add_channel_members")}</div>
+              </div>
+            )}
+            {memberIds.map((uid: number) => {
+              return (
+                <User
+                  enableContextMenu={true}
+                  cid={cid}
+                  owner={owner == uid}
+                  key={uid}
+                  uid={uid}
+                  dm
+                  popover
+                />
+              );
+            })}
+          </StyledUsers>
         }
       >
         <StyledChannelChat id={`VOCECHAT_FEED_channel_${cid}`}>
@@ -220,4 +214,4 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
     </>
   );
 }
-export default memo(ChannelChat);
+export default memo(ChannelChat, (prev, next) => prev.cid == next.cid);

@@ -48,7 +48,7 @@ export const StyledNotification = styled.div`
   }
 `;
 export const StyledUsers = styled.div`
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
   gap: 5px;
   /* todo */

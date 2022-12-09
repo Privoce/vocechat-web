@@ -16,8 +16,6 @@ interface Props {
 const UserContextMenu: FC<Props> = ({ enable = false, uid, cid, visible, hide, children }) => {
   const { t } = useTranslation("member");
   const {
-    canCall,
-    call,
     copyEmail,
     canCopyEmail,
     startChat,
@@ -47,10 +45,6 @@ const UserContextMenu: FC<Props> = ({ enable = false, uid, cid, visible, hide, c
               {
                 title: t("send_msg"),
                 handler: startChat
-              },
-              canCall && {
-                title: t("call"),
-                handler: call
               },
               canCopyEmail && {
                 title: t("copy_email"),
