@@ -162,8 +162,10 @@ export const serverApi = createApi({
         responseHandler: (response: Response) => response.text()
       }),
       transformResponse: (link: string) => {
+        // 确保http开头
+        const _link = link.startsWith("http") ? link : `http://${link}`;
         // 替换掉域名
-        const invite = new URL(link);
+        const invite = new URL(_link);
         return `${location.origin}${invite.pathname}${invite.search}${invite.hash}`;
       }
     }),
