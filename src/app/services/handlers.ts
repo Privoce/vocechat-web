@@ -14,7 +14,7 @@ export const onMessageSendStarted = async (
     type = "text",
     from_uid,
     reply_mid = null,
-    properties = { local_id: +new Date() }
+    properties = { local_id: +new Date(), content_type: "" }
   },
   { dispatch, queryFulfilled },
   from = "channel"
@@ -23,10 +23,11 @@ export const onMessageSendStarted = async (
   if (type == "archive") return;
   // id: who send to ,from_uid: who sent
   // console.log("handlers data", content, type, properties, ignoreLocal, id);
-  const isImage = properties.content_type?.startsWith("image");
+  const isMedia = ["image", "video", "audio"].includes(properties.content_type.split('/')[0]);
+  // const isImage = properties.content_type?.startsWith("image");
   const ts = properties.local_id || +new Date();
   const tmpMsg = {
-    content: isImage ? content.path : content,
+    content: isMedia ? content.path : content,
     content_type: ContentTypes[type],
     created_at: ts,
     properties,

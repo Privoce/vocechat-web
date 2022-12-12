@@ -42,13 +42,15 @@ const messageSlice = createSlice({
     fillMessage(state, action) {
       return Object.assign({ ...initialState }, action.payload);
     },
-    updateMessage(state, action: PayloadAction<{ mid: number; [key: string | number]: any }>) {
+    updateMessage(state, action: PayloadAction<{ mid: number;[key: string | number]: any }>) {
       const { mid, ...rest } = action.payload;
       state[mid] = { ...state[mid], ...rest };
     },
     addMessage(state, action: PayloadAction<MessagePayload>) {
       const data = action.payload;
       const { mid, sending, content_type, content, properties } = data;
+      // console.log("tfile", sending, content, content_type);
+
       // 如果是正发送，并且已存在，则不覆盖
       if (sending && state[mid]) return;
       const isFile = content_type == ContentTypes.file;
@@ -59,15 +61,15 @@ const messageSlice = createSlice({
         if (!sending) {
           data.file_path = content;
           data.content = `${BASE_URL}/resource/file?file_path=${encodeURIComponent(
-            data.file_path
+            content
           )}`;
           data.download = `${BASE_URL}/resource/file?file_path=${encodeURIComponent(
-            data.file_path
+            content
           )}&download=true`;
           data.thumbnail = isPic
             ? `${BASE_URL}/resource/file?file_path=${encodeURIComponent(
-                data.file_path
-              )}&thumbnail=true`
+              content
+            )}&thumbnail=true`
             : "";
         } else if (isPic) {
           data.thumbnail = content;
