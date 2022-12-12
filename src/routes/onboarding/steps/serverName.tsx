@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import StyledInput from "../../../common/component/styled/Input";
 import StyledButton from "../../../common/component/styled/Button";
 import { useTranslation } from "react-i18next";
+import { useWizard } from "react-use-wizard";
 
 const StyledWrapper = styled.div`
   height: 100%;
@@ -49,10 +50,10 @@ const StyledWrapper = styled.div`
 type Props = {
   serverName: string;
   setServerName: (name: string) => void;
-  nextStep: () => void;
 };
-const ServerName: FC<Props> = ({ serverName, setServerName, nextStep }) => {
+const ServerName: FC<Props> = ({ serverName, setServerName }) => {
   const { t } = useTranslation("welcome", { keyPrefix: "onboarding" });
+  const { nextStep } = useWizard();
   return (
     <StyledWrapper>
       <span className="primaryText">{t("new_server")}</span>

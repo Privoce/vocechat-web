@@ -3,6 +3,7 @@ import StyledInput from "../../../common/component/styled/Input";
 import StyledButton from "../../../common/component/styled/Button";
 import useInviteLink from "../../../common/hook/useInviteLink";
 import { useTranslation } from "react-i18next";
+import { useWizard } from "react-use-wizard";
 
 const StyledWrapper = styled.div`
   height: 100%;
@@ -73,10 +74,10 @@ const StyledWrapper = styled.div`
     margin-top: 24px;
   }
 `;
-
-export default function InviteLink({ nextStep }: { nextStep: () => void }) {
+export default function InviteLink() {
   const { t } = useTranslation("welcome", { keyPrefix: "onboarding" });
   const { t: ct } = useTranslation();
+  const { nextStep } = useWizard();
   const { link, linkCopied, copyLink } = useInviteLink();
   return (
     <StyledWrapper>

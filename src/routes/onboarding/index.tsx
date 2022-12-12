@@ -1,41 +1,37 @@
-import React, { FC } from "react";
+import React, { useState } from "react";
 import { Helmet } from "react-helmet";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
+import { useWizard, Wizard } from 'react-use-wizard';
+
 import WelcomePage from "./steps/welcomePage";
 import ServerName from "./steps/serverName";
 import AdminAccount from "./steps/adminAccount";
 import WhoCanSignUp from "./steps/whoCanSignUp";
 import InviteLink from "./steps/inviteLink";
 import DonePage from "./steps/donePage";
-import useServerSetup, { steps } from "./useServerSetup";
+import steps from "./steps";
 import StyledOnboardingPage from "./styled";
 import { useTranslation } from "react-i18next";
 
-interface Props {
-  step: string;
-  setStep: (step: string) => void;
-}
 
-const Navigator: FC<Props> = ({ step, setStep }) => {
-
-  const index = steps.map((value) => value.name).indexOf(step);
-  const canJumpTo = steps.find((value) => value.name === step)?.canJumpTo || [];
+const Navigator = () => {
+  const { activeStep, goToStep } = useWizard();
+  const canJumpTo = steps[activeStep]?.canJumpTo || [];
+  console.log("active step", activeStep);
 
   return (
     <div className="navigator">
       {steps.map((stepToRender, indexToRender) => {
         const clickable = canJumpTo.includes(stepToRender.name);
-        const nodeCls = `node ${indexToRender === index ? "emphasized" : ""} ${indexToRender > index ? "disabled" : ""
+        const nodeCls = `node ${indexToRender === activeStep ? "emphasized" : ""} ${indexToRender > activeStep ? "disabled" : ""
           } ${clickable ? "clickable" : ""}`;
-        const arrowCls = `arrow ${indexToRender >= index ? "disabled" : ""}`;
+        const arrowCls = `arrow ${indexToRender >= activeStep ? "disabled" : ""}`;
         return (
           <React.Fragment key={indexToRender}>
             <span
               className={nodeCls}
               onClick={() => {
                 if (clickable) {
-                  setStep(stepToRender.name);
+                  goToStep(indexToRender);
                 }
               }}
             >
@@ -51,41 +47,22 @@ const Navigator: FC<Props> = ({ step, setStep }) => {
 
 export default function OnboardingPage() {
   const { t } = useTranslation("welcome");
-  const serverSetup = useServerSetup();
+  const [serverName, setServerName] = useState("");
   return (
     <>
       <Helmet>
         <title>{t("onboarding.title")}</title>
       </Helmet>
       <StyledOnboardingPage>
-        <Navigator {...serverSetup} />
-        <Swiper
-          spaceBetween={50}
-          allowTouchMove={false}
-          onSwiper={(swiper) => serverSetup.setSwiper(swiper)}
-        >
-          <SwiperSlide>
-            <WelcomePage {...serverSetup} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <ServerName {...serverSetup} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <AdminAccount {...serverSetup} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <WhoCanSignUp {...serverSetup} />
-          </SwiperSlide>
-          <SwiperSlide>
-            {/* lazy call invite link API  */}
-            {({ isActive }) => {
-              return isActive ? <InviteLink {...serverSetup} /> : null;
-            }}
-          </SwiperSlide>
-          <SwiperSlide>
-            <DonePage {...serverSetup} />
-          </SwiperSlide>
-        </Swiper>
+        <Wizard header={<Navigator />}>
+          <WelcomePage />
+          <ServerName serverName={serverName} setServerName={setServerName} />
+          <AdminAccount serverName={serverName} />
+          <WhoCanSignUp />
+          {/* lazy call invite link API  */}
+          <InviteLink />
+          <DonePage serverName={serverName} />
+        </Wizard>
       </StyledOnboardingPage>
     </>
   );

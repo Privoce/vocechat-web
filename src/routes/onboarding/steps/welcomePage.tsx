@@ -1,7 +1,9 @@
 import styled from "styled-components";
+
 import StyledButton from "../../../common/component/styled/Button";
 import PlayIcon from "../../../assets/icons/play.svg?url";
 import { useTranslation } from "react-i18next";
+import { useWizard } from "react-use-wizard";
 
 const StyledWrapper = styled.div`
   height: 100%;
@@ -44,8 +46,9 @@ const StyledWrapper = styled.div`
   }
 `;
 
-export default function WelcomePage({ nextStep }: { nextStep: () => void }) {
+export default function WelcomePage() {
   const { t } = useTranslation("welcome", { keyPrefix: "onboarding" });
+  const { nextStep } = useWizard();
   return (
     <StyledWrapper>
       <span className="primaryText">{t("welcome")}</span>

@@ -6,6 +6,7 @@ import StyledButton from "../../../common/component/styled/Button";
 import { useGetLoginConfigQuery, useUpdateLoginConfigMutation } from "../../../app/services/server";
 import { WhoCanSignUp } from "../../../types/server";
 import { useTranslation } from "react-i18next";
+import { useWizard } from "react-use-wizard";
 
 const StyledWrapper = styled.div`
   height: 100%;
@@ -40,16 +41,23 @@ const StyledWrapper = styled.div`
   }
 `;
 
-export default function SignUpSetting({ nextStep }: { nextStep: () => void }) {
+export default function SignUpSetting() {
   const { t } = useTranslation("welcome");
-  const { data: loginConfig } = useGetLoginConfigQuery();
+  const { t: st } = useTranslation("setting");
+  const { nextStep } = useWizard();
+  const { data: loginConfig, refetch } = useGetLoginConfigQuery();
   const [updateLoginConfig, { isSuccess, error }] = useUpdateLoginConfigMutation();
 
   const [value, setValue] = useState<WhoCanSignUp>();
+  useEffect(() => {
+    refetch();
+  }, []);
 
   // Sync to `value` when `loginConfig` is fetched
   useEffect(() => {
     if (loginConfig) {
+      console.log("login config", loginConfig.who_can_sign_up);
+
       setValue(loginConfig.who_can_sign_up);
     }
   }, [loginConfig]);
@@ -69,21 +77,27 @@ export default function SignUpSetting({ nextStep }: { nextStep: () => void }) {
     <StyledWrapper>
       <span className="primaryText">{t("onboarding.invite_title")}</span>
       <span className="secondaryText">{t("onboarding.invite_desc")}</span>
-      <StyledRadio
-        options={[t("overview.sign_up.everyone", { ns: "setting" }), t("overview.sign_up.invite", { ns: "setting" })]}
+      {value && <StyledRadio
+        options={[st("overview.sign_up.everyone"), st("overview.sign_up.invite")]}
         values={["EveryOne", "InvitationOnly"]}
         value={value}
         onChange={setValue}
-      />
+      />}
       <StyledButton
         className="button"
         disabled={!value}
         onClick={() => {
+          // nextStep();
           if (loginConfig !== undefined) {
-            updateLoginConfig({
-              ...loginConfig,
-              who_can_sign_up: value
-            });
+            if (loginConfig.who_can_sign_up !== value) {
+
+              updateLoginConfig({
+                ...loginConfig,
+                who_can_sign_up: value
+              });
+            } else {
+              nextStep();
+            }
           }
         }}
       >

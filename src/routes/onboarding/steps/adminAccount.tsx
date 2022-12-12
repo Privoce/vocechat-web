@@ -1,4 +1,4 @@
-import { useEffect, useState, FC } from "react";
+import { useEffect, useState, FC, useRef } from "react";
 import styled from "styled-components";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
@@ -13,6 +13,7 @@ import { useLoginMutation } from "../../../app/services/auth";
 import { updateInitialized } from "../../../app/slices/auth.data";
 import { useAppSelector } from "../../../app/store";
 import { useTranslation } from "react-i18next";
+import { useWizard } from "react-use-wizard";
 
 const StyledWrapper = styled.div`
   height: 100%;
@@ -36,7 +37,9 @@ const StyledWrapper = styled.div`
     margin-bottom: 24px;
   }
 
-  > .input {
+  form {
+    > .input {
+    margin-bottom: 20px;
     width: 360px;
     height: 44px;
     font-weight: 400;
@@ -46,18 +49,13 @@ const StyledWrapper = styled.div`
     border: 1px solid #d0d5dd;
     border-radius: 8px;
     box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
-
     > .inner {
       padding: 0;
       font-weight: 400;
       font-size: 16px;
       line-height: 24px;
     }
-
-    &:not(:nth-last-child(2)) {
-      margin-bottom: 20px;
-    }
-  }
+  }}
 
   > .button {
     width: 360px;
@@ -66,13 +64,13 @@ const StyledWrapper = styled.div`
 `;
 type Props = {
   serverName: string;
-  nextStep: () => void;
 };
-const AdminAccount: FC<Props> = ({ serverName, nextStep }) => {
+const AdminAccount: FC<Props> = ({ serverName }) => {
   const { t } = useTranslation("welcome", { keyPrefix: "onboarding" });
+  const { nextStep } = useWizard();
+  const formRef = useRef<HTMLFormElement | undefined>();
   const loggedIn = useAppSelector((store) => !!store.authData.token);
   const dispatch = useDispatch();
-
   const [createAdmin, { isLoading: isSigningUp, isError: signUpError, isSuccess: signUpOk }] = useCreateAdminMutation();
   const [login, { isLoading: isLoggingIn, isError: loginError, }] = useLoginMutation();
   const { data: serverData } = useGetServerQuery();
@@ -127,50 +125,51 @@ const AdminAccount: FC<Props> = ({ serverName, nextStep }) => {
     <StyledWrapper>
       <span className="primaryText">{t("admin_title")}</span>
       <span className="secondaryText">{t("admin_desc")}</span>
-      <StyledInput
-        className="input"
-        placeholder="Enter your email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <StyledInput
-        className="input"
-        type="password"
-        placeholder="Enter your password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <StyledInput
-        className="input"
-        type="password"
-        placeholder="Confirm your password"
-        value={confirm}
-        onChange={(e) => setConfirm(e.target.value)}
-      />
+      <form ref={formRef} action="/">
+        <StyledInput
+          className="input"
+          placeholder="Enter your email"
+          type={"email"}
+          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <StyledInput
+          className="input"
+          type="password"
+          required
+          minLength={6}
+          placeholder="Enter your password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <StyledInput
+          className="input"
+          type="password"
+          required
+          minLength={6}
+          placeholder="Confirm your password"
+          value={confirm}
+          onChange={(e) => setConfirm(e.target.value)}
+        />
+      </form>
       <StyledButton
         className="button"
         onClick={async () => {
-          // Verification for admin credentials
-          if (email === "") {
-            toast.error("Please enter admin email!");
-            return;
-          } else if (password === "") {
-            toast.error("Please enter admin password!");
-            return;
-          } else if (password.length < 6) {
-            toast.error("Password length greater than 6!");
-            return;
-          } else if (password !== confirm) {
-            toast.error("Two passwords do not match!");
-            return;
+          const formEle = formRef?.current;
+          if (formEle) {
+            if (!formEle.checkValidity()) {
+              formEle.reportValidity();
+              return;
+            }
+            // nextStep();
+            createAdmin({
+              email,
+              name: "Admin",
+              password,
+              gender: 0
+            });
           }
-          createAdmin({
-            email,
-            name: "Admin",
-            password,
-            gender: 0
-          });
-
         }}
       >
         {!(isSigningUp || isLoggingIn || isUpdatingServer) ? t("sign") : "..."}

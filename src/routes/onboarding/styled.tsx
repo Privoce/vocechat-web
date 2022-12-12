@@ -3,7 +3,6 @@ import styled from "styled-components";
 const StyledOnboardingPage = styled.div`
   height: 100vh;
   overflow-y: auto;
-
   > .navigator {
     position: absolute;
     top: 20px;
@@ -38,10 +37,6 @@ const StyledOnboardingPage = styled.div`
         }
       }
     }
-  }
-
-  > .swiper {
-    height: 100%;
   }
 `;
 
