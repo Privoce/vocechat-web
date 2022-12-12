@@ -102,6 +102,17 @@ const baseQueryWithTokenCheck = async (args, api, extraOptions) => {
           }
         }
         break;
+      case 451:
+        {
+          // 证书错误
+          if (api.endpoint !== "login") {
+            // 退出登录
+            api.dispatch(resetAuthData());
+            location.href = "/#/login";
+          }
+          toast.error(result.error.data || "License Error");
+        }
+        break;
       case 500:
       case 503:
         {

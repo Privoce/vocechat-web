@@ -74,8 +74,8 @@ export default function LoginPage() {
             "No associated account found, please contact user admin for an invitation link to join."
           );
           break;
-        case 451:
-          toast.error("License error: Domain incorrect!");
+        // 451有解析错误，暂时先客户端处理
+        case "PARSING_ERROR":
           break;
         default:
           toast.error("Something Error");
