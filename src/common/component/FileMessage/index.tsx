@@ -6,10 +6,12 @@ import useRemoveLocalMessage from "../../hook/useRemoveLocalMessage";
 import useUploadFile from "../../hook/useUploadFile";
 import useSendMessage from "../../hook/useSendMessage";
 import Progress from "./Progress";
-import { getFileIcon, formatBytes, isImage, getImageSize, ImageSize } from "../../utils";
+import { getFileIcon, formatBytes, isImage, getImageSize } from "../../utils";
 import { useAppSelector } from "../../../app/store";
 import IconDownload from "../../../assets/icons/download.svg";
 import IconClose from "../../../assets/icons/close.circle.svg";
+import VideoMessage from "./VideoMessage";
+import AudioMessage from "./AudioMessage";
 
 const isLocalFile = (content: string) => {
   return content.startsWith("blob:");
@@ -41,7 +43,7 @@ const FileMessage: FC<Props> = ({
   thumbnail = "",
   properties = { local_id: 0, name: "", size: 0, content_type: "" }
 }) => {
-  const [imageSize, setImageSize] = useState<ImageSize | null>(null);
+  const [imageSize, setImageSize] = useState(null);
   const [uploadingFile, setUploadingFile] = useState(false);
   const removeLocalMessage = useRemoveLocalMessage({ context, id: to });
   const {
@@ -120,7 +122,7 @@ const FileMessage: FC<Props> = ({
   if (!content || !name) return null;
 
   const sending = uploadingFile || isSending;
-
+  // image
   if (isImage(content_type, size))
     return (
       <ImageMessage
@@ -131,6 +133,26 @@ const FileMessage: FC<Props> = ({
         content={content}
         download={download}
         thumbnail={thumbnail}
+      />
+    );
+  // video
+  if (content_type.startsWith("video") && !sending)
+    return (
+      <VideoMessage
+        size={size}
+        url={content}
+        name={name}
+        download={download}
+      />
+    );
+  // audio
+  if (content_type.startsWith("audio") && !sending)
+    return (
+      <AudioMessage
+        size={size}
+        url={content}
+        name={name}
+        download={download}
       />
     );
   return (

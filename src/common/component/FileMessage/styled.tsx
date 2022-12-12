@@ -22,6 +22,7 @@ const Styled = styled.div`
     .icon {
       width: 36px;
       height: 48px;
+     
     }
     .info {
       display: flex;
@@ -52,6 +53,9 @@ const Styled = styled.div`
     }
     .download {
       white-space: nowrap;
+      svg path{
+        fill: #616161;
+      }
     }
     .cancel {
       cursor: pointer;

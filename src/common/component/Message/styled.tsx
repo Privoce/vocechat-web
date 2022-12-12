@@ -82,6 +82,12 @@ const StyledMsg = styled.div`
         padding: 2px;
         color: #1fe1f9;
       }
+      /* 下载图标颜色 */
+      .download_icon.gray{
+        path{
+            fill: #616161;
+          }
+      }
     }
   }
   &.archive {
