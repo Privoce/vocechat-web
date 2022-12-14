@@ -136,6 +136,7 @@ export default function Reg() {
           placeholder={t("placeholder_pwd")}
         />
         <Input
+          className="large"
           required
           onBlur={handleCompare}
           type="password"
