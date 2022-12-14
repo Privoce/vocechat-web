@@ -36,8 +36,8 @@ function HomePage() {
       guest: store.authData.guest
     };
   });
-  const { loading } = usePreload();
-  if (loading || !ready) {
+  const { success } = usePreload();
+  if (!success || !ready) {
     return <Loading reload={true} fullscreen={true} />;
   }
   const isSettingPage = pathname.startsWith("/setting");

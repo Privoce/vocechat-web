@@ -23,7 +23,7 @@ export const onMessageSendStarted = async (
   if (type == "archive") return;
   // id: who send to ,from_uid: who sent
   // console.log("handlers data", content, type, properties, ignoreLocal, id);
-  const isMedia = ["image", "video", "audio"].includes(properties.content_type.split('/')[0]);
+  const isMedia = properties.content_type ? ["image", "video", "audio"].includes(properties.content_type.split('/')[0]) : false;
   // const isImage = properties.content_type?.startsWith("image");
   const ts = properties.local_id || +new Date();
   const tmpMsg = {

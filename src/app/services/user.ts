@@ -28,11 +28,9 @@ export const userApi = createApi({
         });
       },
       async onQueryStarted(data, { dispatch, queryFulfilled }) {
-        // const local_uid = Number(localStorage.getItem(KEY_UID));
         try {
           const { data: users } = await queryFulfilled;
           dispatch(fillUsers(users));
-          // }
         } catch {
           console.log("get user list error");
         }
