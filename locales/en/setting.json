@@ -10,6 +10,7 @@
     "user": "User",
     "my_account": "My Account",
     "config": "Configuration",
+    "bot": "Bot",
     "firebase": "Firebase",
     "agora": "Agora",
     "smtp": "SMTP",
@@ -77,6 +78,18 @@
       "booking": "Book a time here: ",
       "wechat": "Or, add WeChat for more information:"
     }
+  },
+  "bot": {
+    "enable": "Enable",
+    "tip": "You can send and receive(by webhook) message updates with Bot",
+    "create_title": "Create Bot",
+    "create_desc": "Create a bot to extend your chat",
+    "webhook_title": "Update Webhook URL",
+    "webhook_desc": "Please input a valid URL",
+    "col_name": "Bot Name",
+    "col_api_key": "Bot API Key",
+    "col_webhook": "Webhook URL",
+    "col_opt": "Operations"
   },
   "firebase": {
     "enable": "Enable",
