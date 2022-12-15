@@ -7,8 +7,10 @@
     "general": "通用",
     "overview": "概况",
     "members": "成员",
+    "auto_delete_msg": "自动删除消息",
     "my_account": "我的账号",
     "config": "配置",
+    "bot": "机器人&Webhook",
     "firebase": "Firebase",
     "agora": "Agora",
     "smtp": "SMTP",
@@ -79,6 +81,32 @@
       "booking": "在此与我们预约时间：",
       "wechat": "或者，加微信了解更多："
     }
+  },
+  "bot": {
+    "bot_tip_title": "Bots can send messages to channels.",
+    "bot_tip_desc": "Please note that we do not display a Bot’s API key again after generation. You can always generate a new API key of a Bot by clicking “Get API key” and this won’t nullify the previous API key(s).",
+    "webhook_tip_title": "Webhooks can receive messages in a channel and should a URL provided by you.",
+    "webhook_tip_desc": "Please provide a webhook URL that will return 200.",
+    "manage": "管理",
+    "manage_desc": "Disabling your account means you can recover it at any time after taking this action.",
+    "create_title": "Create Bot",
+    "create_desc": "Create a bot to extend your chat",
+    "webhook_title": "Update Webhook URL",
+    "webhook_desc": "Please input a valid URL",
+    "col_name": "Bot Name",
+    "col_api_key": "Bot API Key",
+    "col_webhook": "Webhook URL",
+    "col_opt": "操作"
+  },
+  "auto_delete_msg": {
+    "title": "在指定时长之后删除消息",
+    "desc": "消息将在客户端和服务端彻底删除",
+    "off": "关闭",
+    "30_seconds": "30 秒",
+    "10_min": "10 分钟",
+    "1_hour": "1 小时",
+    "1_day": "1 天",
+    "1_week": "1 周"
   },
   "firebase": {
     "enable": "开启",
