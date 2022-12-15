@@ -32,6 +32,7 @@ export const resources = {
 } as const;
 i18n.on("languageChanged", (lng) => {
     console.log("changed", lng);
+    // 匹配dayjs的多语言关键字
     dayjs.locale(lng === 'zh' ? "zh-cn" : lng === 'jp' ? "ja" : lng);
 });
 i18n

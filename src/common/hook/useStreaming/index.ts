@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import toast from "react-hot-toast";
-import BASE_URL, { KEY_EXPIRE, KEY_REFRESH_TOKEN, KEY_TOKEN } from "../../../app/config";
+import BASE_URL from "../../../app/config";
 import { setReady } from "../../../app/slices/ui";
 import {
   fillChannels,
@@ -23,6 +23,7 @@ import { ServerEvent, UsersStateEvent } from "../../../types/sse";
 import { isNull, omitBy } from "lodash";
 import { useRenewMutation } from "../../../app/services/auth";
 import dayjs from "dayjs";
+import { getLocalAuthData } from "../../utils";
 
 const getQueryString = (params: { [key: string]: string }) => {
   const sp = new URLSearchParams();
@@ -33,13 +34,7 @@ const getQueryString = (params: { [key: string]: string }) => {
   });
   return sp.toString();
 };
-const getLocalAuthData = () => {
-  return {
-    token: localStorage.getItem(KEY_TOKEN) || "",
-    refreshToken: localStorage.getItem(KEY_REFRESH_TOKEN) || "",
-    expireTime: Number(localStorage.getItem(KEY_EXPIRE) || +new Date())
-  };
-};
+
 let SSE: EventSource | undefined = undefined;
 let connectionIsOpen = false;
 let aliveInter: number = 0;
