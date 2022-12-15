@@ -90,6 +90,7 @@ const useUploadFile = (props?: IProps) => {
           sliceUploadedCountRef.current++;
         } catch (error) {
           console.error("upload file error", error);
+          canceledRef.current = true;
           return;
         }
       }

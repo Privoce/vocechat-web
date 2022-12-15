@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import { updateToken, resetAuthData } from "../slices/auth.data";
 import BASE_URL, { tokenHeader } from "../config";
 import { RootState } from "../store";
+import { getLocalAuthData } from "../../common/utils";
 
 const whiteList = [
   "guestLogin",
@@ -43,8 +44,9 @@ const baseQueryWithTokenCheck = async (args, api, extraOptions) => {
   if (waitingForRenew) {
     await waitingForRenew;
   }
-  // 先检查token是否过期，过期则renew
-  const { token, refreshToken, expireTime = +new Date() } = api.getState().authData;
+  // 先检查token是否过期，过期则renew [从localstorage取]
+  const { token, refreshToken, expireTime } = getLocalAuthData();
+
   let result = null;
   // console.log("base check", whiteList.includes(api.endpoint), api.endpoint);
   if (!whiteList.includes(api.endpoint) && dayjs().isAfter(new Date(expireTime - 20 * 1000))) {
@@ -100,6 +102,11 @@ const baseQueryWithTokenCheck = async (args, api, extraOptions) => {
           if (api.endpoint !== "login") {
             toast.error("Request Not Found");
           }
+        }
+        break;
+      case 413:
+        {
+          toast.error("File size too large");
         }
         break;
       case 451:

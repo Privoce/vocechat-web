@@ -1,4 +1,4 @@
-import BASE_URL, { FILE_IMAGE_SIZE, ContentTypes } from "../app/config";
+import BASE_URL, { FILE_IMAGE_SIZE, ContentTypes, KEY_TOKEN, KEY_REFRESH_TOKEN, KEY_EXPIRE } from "../app/config";
 import IconPdf from "../assets/icons/file.pdf.svg";
 import IconAudio from "../assets/icons/file.audio.svg";
 import IconVideo from "../assets/icons/file.video.svg";
@@ -8,6 +8,13 @@ import IconCode from "../assets/icons/file.code.svg";
 import IconImage from "../assets/icons/file.image.svg";
 import { Archive, ArchiveMessage } from "../types/resource";
 
+export const getLocalAuthData = () => {
+  return {
+    token: localStorage.getItem(KEY_TOKEN) || "",
+    refreshToken: localStorage.getItem(KEY_REFRESH_TOKEN) || "",
+    expireTime: Number(localStorage.getItem(KEY_EXPIRE) || +new Date())
+  };
+};
 export const isImage = (file_type = "", size = 0) => {
   return file_type.startsWith("image") && size <= FILE_IMAGE_SIZE;
 };
