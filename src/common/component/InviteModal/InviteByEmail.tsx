@@ -4,11 +4,13 @@ import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { useSendLoginMagicLinkMutation } from "../../../app/services/auth";
 import useInviteLink from "../../hook/useInviteLink";
+import QRCode from "../QRCode";
 import Button from "../styled/Button";
 import Input from "../styled/Input";
 
 const Styled = styled.div`
   padding: 16px 0;
+  padding-bottom: 0;
   .input {
     position: relative;
     display: flex;
@@ -74,6 +76,7 @@ interface Props {
 }
 
 const InviteByEmail: FC<Props> = ({ cid }) => {
+
   const { t } = useTranslation("chat");
   const { t: ct } = useTranslation();
   const [email, setEmail] = useState("");
@@ -136,6 +139,9 @@ const InviteByEmail: FC<Props> = ({ cid }) => {
             {ct("action.copy")}
           </button>
         </div>
+      </div>
+      <div className="w-44 h-44 my-2">
+        {!generating && <QRCode link={link} />}
       </div>
       <div className="tip">
         {t("invite_link_expire")}

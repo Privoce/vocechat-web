@@ -1,44 +1,10 @@
-import styled from "styled-components";
+import { FC } from "react";
 import useInviteLink from "../hook/useInviteLink";
 import Input from "./styled/Input";
 import Button from "./styled/Button";
-import { FC } from "react";
 import { useTranslation } from "react-i18next";
+import QRCode from "./QRCode";
 
-const StyledWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding-bottom: 32px;
-  .tip {
-    font-weight: 500;
-    font-size: 14px;
-    color: #6b7280;
-    margin-bottom: 8px;
-  }
-  .link {
-    width: 512px;
-    margin-bottom: 12px;
-    position: relative;
-    button {
-      position: absolute;
-      right: 4px;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-    input {
-      padding-right: 75px;
-    }
-  }
-  .sub_tip {
-    margin-left: 4px;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 18px;
-    color: #616161;
-    margin-bottom: 20px;
-  }
-`;
 type Props = {};
 const InviteLink: FC<Props> = () => {
   const { t } = useTranslation("chat");
@@ -48,19 +14,22 @@ const InviteLink: FC<Props> = () => {
   };
 
   return (
-    <StyledWrapper>
-      <span className="tip">{t("share_invite_link")}</span>
-      <div className="link">
-        <Input readOnly className={"large"} placeholder="Generating" value={link} />
-        <Button onClick={copyLink} className="ghost small border_less">
+    <div className="flex flex-col items-start pb-8">
+      <span className="font-semibold text-sm mb-2 text-gray-500">{t("share_invite_link")}</span>
+      <div className="w-[512px] mb-3 relative">
+        <Input readOnly className={"large !pr-16"} placeholder="Generating" value={link} />
+        <Button onClick={copyLink} className="ghost small border_less absolute right-1 top-1/2 -translate-y-1/2">
           {linkCopied ? "Copied" : t("action.copy", { ns: "common" })}
         </Button>
       </div>
-      <span className="sub_tip">{t("invite_link_expire")}</span>
+      <span className="text-xs text-gray-600">{t("invite_link_expire")}</span>
+      <div className="w-44 h-44 my-2">
+        <QRCode link={link} />
+      </div>
       <Button className="ghost" disabled={generating} onClick={handleNewLink}>
         {generating ? `Generating` : t("generate_new_link")}
       </Button>
-    </StyledWrapper>
+    </div>
   );
 };
 
