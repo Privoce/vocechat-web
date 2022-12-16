@@ -117,7 +117,7 @@ const Session: FC<IProps> = ({
             {type == "user" ? (
               <User avatarSize={40} compact interactive={false} uid={id} />
             ) : (
-              <Avatar className="icon" type="channel" name={name} url={icon} />
+              <Avatar className="icon" type="channel" name={name} src={icon} />
             )}
           </div>
           <div className="details">

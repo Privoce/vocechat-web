@@ -91,9 +91,8 @@ const Message: FC<IProps> = ({
       onContextMenu={readOnly ? undefined : handleContextMenuEvent}
       data-msg-mid={mid}
       ref={inviewRef}
-      className={`message ${readOnly ? "readonly" : ""} ${pinInfo ? "pinned" : ""} ${
-        contextMenuVisible ? "contextVisible" : ""
-      } `}
+      className={`message ${readOnly ? "readonly" : ""} ${pinInfo ? "pinned" : ""} ${contextMenuVisible ? "contextVisible" : ""
+        } `}
     >
       <Tippy
         key={_key}
@@ -105,7 +104,7 @@ const Message: FC<IProps> = ({
         content={<Profile uid={fromUid || 0} type="card" cid={context == "user" ? 0 : contextId} />}
       >
         <div className="avatar" data-uid={fromUid} ref={avatarRef}>
-          <Avatar url={currUser?.avatar} name={currUser?.name} />
+          <Avatar src={currUser?.avatar} name={currUser?.name} />
         </div>
       </Tippy>
       <ContextMenu
@@ -118,9 +117,8 @@ const Message: FC<IProps> = ({
       >
         <div
           className="details"
-          data-pin-tip={`pinned by ${
-            pinInfo?.created_by ? usersData[pinInfo.created_by]?.name : ""
-          }`}
+          data-pin-tip={`pinned by ${pinInfo?.created_by ? usersData[pinInfo.created_by]?.name : ""
+            }`}
         >
           <div className="up">
             <span className="name">{currUser?.name || "Deleted User"}</span>

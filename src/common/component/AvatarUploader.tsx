@@ -53,23 +53,32 @@ const StyledWrapper = styled.div`
     }
   }
   .icon {
+    display: none;
     width: 28px;
     height: 28px;
     position: absolute;
     top: 0;
     right: 0;
   }
+  &:hover .icon{
+    display: block;
+  }
 `;
 
+type UID = number;
 interface Props {
+  uid?: UID,
+  className?: string,
   url?: string;
   name?: string;
   type?: "user" | "channel";
   disabled?: boolean;
-  uploadImage: (file: File) => void;
+  uploadImage: (param: File | { uid: number, file: File }) => void;
 }
 
 const AvatarUploader: FC<Props> = ({
+  uid,
+  className = "",
   url = "",
   name = "",
   type = "user",
@@ -83,14 +92,18 @@ const AvatarUploader: FC<Props> = ({
     if (!evt.target.files) return;
     const [file] = Array.from(evt.target.files);
     setUploading(true);
-    await uploadImage(file);
+    if (uid) {
+      await uploadImage({ uid, file });
+    } else {
+      await uploadImage(file);
+    }
     setUploading(false);
   };
 
   return (
-    <StyledWrapper>
+    <StyledWrapper className={className}>
       <div className="avatar">
-        <Avatar type={type} url={url} name={name} />
+        <Avatar type={type} src={url} name={name} className={className} />
         {!disabled && (
           <>
             <div className="tip">{uploading ? t("status.uploading") : t("action.change_avatar")}</div>

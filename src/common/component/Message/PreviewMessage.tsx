@@ -19,7 +19,7 @@ const PreviewMessage: FC<Props> = ({ mid = 0 }) => {
   return (
     <StyledWrapper className={`preview`}>
       <div className="avatar">
-        <Avatar url={avatar} name={name} />
+        <Avatar src={avatar} name={name} />
       </div>
       <div className="details">
         <div className="up">

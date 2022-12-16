@@ -1,17 +1,16 @@
 import { useState, useEffect, memo, SyntheticEvent, FC } from "react";
 import { getInitials, getInitialsAvatar } from "../utils";
 
-interface Props {
-  className?: string;
-  alt?: string;
-  url?: string;
-  name?: string;
+interface Props extends Partial<HTMLImageElement> {
+  // className?: string;
+  // alt?: string;
+  // src?: string;
+  // name?: string;
   type?: "user" | "channel";
 }
 
-const Avatar: FC<Props> = ({ url = "", name = "Deleted User", type = "user", ...rest }) => {
-  const [src, setSrc] = useState("");
-
+const Avatar: FC<Props> = ({ src = "", name = "Deleted User", type = "user", ...rest }) => {
+  const [url, setUrl] = useState("");
   const handleError = (err: SyntheticEvent<HTMLImageElement>) => {
     console.error("load avatar error", err);
     const tmp = getInitialsAvatar({
@@ -19,26 +18,26 @@ const Avatar: FC<Props> = ({ url = "", name = "Deleted User", type = "user", ...
       background: type == "channel" ? "#EAECF0" : undefined,
       foreground: type == "channel" ? "#475467" : undefined
     });
-    setSrc(tmp);
+    setUrl(tmp);
   };
 
   useEffect(() => {
-    if (!url) {
+    if (!src) {
       const tmp = getInitialsAvatar({
         initials: getInitials(name),
         background: type == "channel" ? "#EAECF0" : undefined,
         foreground: type == "channel" ? "#475467" : undefined
       });
-      setSrc(tmp);
+      setUrl(tmp);
     } else {
-      setSrc(url);
+      setUrl(src);
     }
-  }, [url, name]);
-  if (!src) return null;
+  }, [src, name]);
+  if (!url) return null;
 
-  return <img src={src} onError={handleError} {...rest} />;
+  return <img src={url} onError={handleError}  {...rest} />;
 };
 
 export default memo(Avatar, (prev, next) => {
-  return prev.url == next.url;
+  return prev.src == next.src;
 });

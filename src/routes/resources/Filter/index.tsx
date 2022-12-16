@@ -93,7 +93,7 @@ export default function Filter({ filter, updateFilter }) {
           onClick={toggleFilterVisible.bind(null, { from: true })}
         >
           {from && (
-            <Avatar className="avatar" name={userMap[from].name} url={userMap[from].avatar} />
+            <Avatar className="avatar" name={userMap[from].name} src={userMap[from].avatar} />
           )}
           <span className="txt">{t("from")} {from && userMap[from].name}</span>
           <ArrowDown className="arrow" />

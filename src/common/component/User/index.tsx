@@ -58,7 +58,7 @@ const User: FC<Props> = ({
           onContextMenu={enableContextMenu ? handleContextMenuEvent : undefined}
         >
           <div className="avatar">
-            <Avatar url={curr.avatar} name={curr.name} alt="avatar" />
+            <Avatar src={curr.avatar} name={curr.name} alt="avatar" />
             <div className={`status ${online ? "online" : "offline"}`}></div>
           </div>
           {!compact && <span className="name" title={curr?.name}>{curr?.name}</span>}
@@ -88,7 +88,7 @@ const User: FC<Props> = ({
           onContextMenu={enableContextMenu ? handleContextMenuEvent : undefined}
         >
           <div className="avatar">
-            <Avatar url={curr.avatar} name={curr.name} alt="avatar" />
+            <Avatar src={curr.avatar} name={curr.name} alt="avatar" />
             <div className={`status ${online ? "online" : "offline"}`}></div>
           </div>
           {!compact && <span className="name" title={curr?.name}>{curr?.name}</span>}

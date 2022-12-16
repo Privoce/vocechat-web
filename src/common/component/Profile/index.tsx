@@ -47,7 +47,7 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
 
   return (
     <StyledWrapper className={type}>
-      <Avatar className="rounded-full w-20 h-20 object-cover" url={avatar} name={name} />
+      <Avatar className="rounded-full w-20 h-20 object-cover" src={avatar} name={name} />
       <h2 className="text-lg select-text font-bold text-[#1c1c1e]">{name}</h2>
       <span className="text-sm text-[#98a2b3] select-text">{email}</span>
       {/* <p className="intro">{introduction}</p> */}
