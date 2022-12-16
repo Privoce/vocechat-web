@@ -95,13 +95,14 @@
     "create_desc": "Create a bot to extend your chat",
     "webhook_title": "Update Webhook URL",
     "webhook_desc": "Please input a valid URL",
+    "col_avatar": "Avatar",
     "col_name": "Bot Name",
     "col_api_key": "Bot API Key",
     "col_webhook": "Webhook URL",
     "col_opt": "Operations"
   },
   "auto_delete_msg": {
-    "title": "Delete messages data after certain time period.",
+    "title": "Delete messages sent by myself after certain time period. ",
     "desc": "This will remove the messages data stored on both the server and client side.",
     "off": "Off",
     "30_seconds": "30 seconds",
