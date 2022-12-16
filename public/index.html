@@ -1,52 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#527ff1" />
+    <meta name="description" content="Your private chat APP" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/apple-touch-icon.png" />
+    <!-- splash -->
+    <link
+      href="%PUBLIC_URL%/splash/iphone5_splash.png"
+      media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image"
+    />
+    <link
+      href="%PUBLIC_URL%/splash/iphone6_splash.png"
+      media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image"
+    />
+    <link
+      href="%PUBLIC_URL%/splash/iphoneplus_splash.png"
+      media="(device-width: 621px) and (device-height: 1104px) and (-webkit-device-pixel-ratio: 3)"
+      rel="apple-touch-startup-image"
+    />
+    <link
+      href="%PUBLIC_URL%/splash/iphonex_splash.png"
+      media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)"
+      rel="apple-touch-startup-image"
+    />
+    <link
+      href="%PUBLIC_URL%/splash/iphonexr_splash.png"
+      media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image"
+    />
+    <link
+      href="%PUBLIC_URL%/splash/iphonexsmax_splash.png"
+      media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)"
+      rel="apple-touch-startup-image"
+    />
+    <link
+      href="%PUBLIC_URL%/splash/ipad_splash.png"
+      media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image"
+    />
+    <link
+      href="%PUBLIC_URL%/splash/ipadpro1_splash.png"
+      media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image"
+    />
+    <link
+      href="%PUBLIC_URL%/splash/ipadpro3_splash.png"
+      media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image"
+    />
+    <link
+      href="%PUBLIC_URL%/splash/ipadpro2_splash.png"
+      media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image"
+    />
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#527ff1" />
-  <meta name="description" content="Your private chat APP" />
-  <link rel="apple-touch-icon" href="%PUBLIC_URL%/apple-touch-icon.png" />
-  <!-- splash -->
-  <link href="%PUBLIC_URL%/splash/iphone5_splash.png"
-    media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)"
-    rel="apple-touch-startup-image" />
-  <link href="%PUBLIC_URL%/splash/iphone6_splash.png"
-    media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)"
-    rel="apple-touch-startup-image" />
-  <link href="%PUBLIC_URL%/splash/iphoneplus_splash.png"
-    media="(device-width: 621px) and (device-height: 1104px) and (-webkit-device-pixel-ratio: 3)"
-    rel="apple-touch-startup-image" />
-  <link href="%PUBLIC_URL%/splash/iphonex_splash.png"
-    media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)"
-    rel="apple-touch-startup-image" />
-  <link href="%PUBLIC_URL%/splash/iphonexr_splash.png"
-    media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)"
-    rel="apple-touch-startup-image" />
-  <link href="%PUBLIC_URL%/splash/iphonexsmax_splash.png"
-    media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)"
-    rel="apple-touch-startup-image" />
-  <link href="%PUBLIC_URL%/splash/ipad_splash.png"
-    media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)"
-    rel="apple-touch-startup-image" />
-  <link href="%PUBLIC_URL%/splash/ipadpro1_splash.png"
-    media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)"
-    rel="apple-touch-startup-image" />
-  <link href="%PUBLIC_URL%/splash/ipadpro3_splash.png"
-    media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)"
-    rel="apple-touch-startup-image" />
-  <link href="%PUBLIC_URL%/splash/ipadpro2_splash.png"
-    media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)"
-    rel="apple-touch-startup-image" />
-
-  <!-- /splash -->
-  <!--
+    <!-- /splash -->
+    <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
-  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-  <!-- <link rel="manifest" id="my-manifest-placeholder"> -->
-  <!--
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <!-- <link rel="manifest" id="my-manifest-placeholder"> -->
+    <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
       Only files inside the `public` folder can be referenced from the HTML.
@@ -55,80 +74,71 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-  <title>VoceChat WebAPP</title>
-  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/github.min.css"> -->
+    <title>VoceChat WebAPP</title>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/github.min.css"> -->
+    <style>
+      html {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+          Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif !important;
+      }
+    </style>
+  </head>
   <style>
-    html {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif !important;
+    #root-modal,
+    #modal-modal {
+      pointer-events: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    #root-modal > .wrapper,
+    #modal-modal > .wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #root-modal.mask > .wrapper,
+    #modal-modal.mask > .wrapper {
+      background-color: rgba(2, 2, 2, 0.4);
+      pointer-events: all;
+      width: 100vw;
+      height: 100vh;
     }
   </style>
-</head>
-<style>
-  #root-modal,
-  #modal-modal {
-    pointer-events: none;
-    position: fixed;
-    z-index: 999;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-  }
+  <style>
+    /* reset */
+    body {
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+    }
 
-  #root-modal>.wrapper,
-  #modal-modal>.wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+    body.iframe {
+      position: fixed;
+      top: 0;
+    }
 
-  #root-modal.mask>.wrapper,
-  #modal-modal.mask>.wrapper {
-    background-color: rgba(2, 2, 2, .4);
-    pointer-events: all;
-    width: 100vw;
-    height: 100vh;
-  }
-</style>
-<style>
-  /* reset */
-  * {
-    overflow: visible;
-    border: none;
-    outline: none;
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    /* user-select: none; */
-  }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
 
-  body {
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
-  }
+    button {
+      cursor: pointer;
+    }
+  </style>
 
-  body.iframe {
-    position: fixed;
-    top: 0;
-  }
-
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
-
-  button {
-    cursor: pointer;
-  }
-</style>
-
-<body>
-  <noscript>You need to enable JavaScript to run this app.</noscript>
-  <div id="root"></div>
-  <div id="root-modal"></div>
-  <div id="modal-modal"></div>
-  <!--
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <div id="root-modal"></div>
+    <div id="modal-modal"></div>
+    <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
 
@@ -138,12 +148,11 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-</body>
-<script>
-  if (window.location !== window.parent.location) {
-    // The page is in an iframe
-    document.body.classList.add("iframe")
-  }
-</script>
-
+  </body>
+  <script>
+    if (window.location !== window.parent.location) {
+      // The page is in an iframe
+      document.body.classList.add("iframe");
+    }
+  </script>
 </html>
