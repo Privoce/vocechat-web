@@ -93,6 +93,8 @@
     "manage_desc": "Disabling your account means you can recover it at any time after taking this action.",
     "create_title": "Create Bot",
     "create_desc": "Create a bot to extend your chat",
+    "delete_title": "Delete Bot",
+    "delete_desc": "Are you sure to delete the Bot?",
     "webhook_title": "Update Webhook URL",
     "webhook_desc": "Please input a valid URL",
     "col_avatar": "Avatar",
