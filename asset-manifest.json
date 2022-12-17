@@ -1,9 +1,9 @@
 {
   "files": {
-    "main.css": "/static/css/main.b88683f4.css",
-    "main.js": "/static/js/main.dc09a22f.js",
-    "widget.css": "/static/css/widget.b88683f4.css",
-    "widget.js": "/static/js/widget.6a1dcc8a.js",
+    "main.css": "/static/css/main.abb855e0.css",
+    "main.js": "/static/js/main.6ad529af.js",
+    "widget.css": "/static/css/widget.abb855e0.css",
+    "widget.js": "/static/js/widget.7d3fedb9.js",
     "static/js/249.00a70574.chunk.js": "/static/js/249.00a70574.chunk.js",
     "static/js/656.8ef933fa.chunk.js": "/static/js/656.8ef933fa.chunk.js",
     "static/js/601.3d3aa445.chunk.js": "/static/js/601.3d3aa445.chunk.js",
@@ -19,7 +19,7 @@
     "static/js/288.4d5cf3bb.chunk.js": "/static/js/288.4d5cf3bb.chunk.js",
     "static/js/514.e5bbd52a.chunk.js": "/static/js/514.e5bbd52a.chunk.js",
     "static/css/502.298f31c6.chunk.css": "/static/css/502.298f31c6.chunk.css",
-    "static/js/502.7582e9ba.chunk.js": "/static/js/502.7582e9ba.chunk.js",
+    "static/js/502.4c99e3a8.chunk.js": "/static/js/502.4c99e3a8.chunk.js",
     "static/js/351.5f637855.chunk.js": "/static/js/351.5f637855.chunk.js",
     "static/js/447.9ea69957.chunk.js": "/static/js/447.9ea69957.chunk.js",
     "static/js/185.69de0ac1.chunk.js": "/static/js/185.69de0ac1.chunk.js",
@@ -31,7 +31,7 @@
     "static/js/819.2458d7e9.chunk.js": "/static/js/819.2458d7e9.chunk.js",
     "static/css/315.56048bd6.chunk.css": "/static/css/315.56048bd6.chunk.css",
     "static/js/315.6dea87de.chunk.js": "/static/js/315.6dea87de.chunk.js",
-    "static/js/108.2ea44c67.chunk.js": "/static/js/108.2ea44c67.chunk.js",
+    "static/js/108.5df135b0.chunk.js": "/static/js/108.5df135b0.chunk.js",
     "static/js/756.a9dcfae2.chunk.js": "/static/js/756.a9dcfae2.chunk.js",
     "static/js/136.56a5446f.chunk.js": "/static/js/136.56a5446f.chunk.js",
     "static/js/458.15588d9d.chunk.js": "/static/js/458.15588d9d.chunk.js",
@@ -65,7 +65,7 @@
     "static/media/arrow.left.svg?url": "/static/media/arrow.left.92fbb139607631555459.svg"
   },
   "entrypoints": [
-    "static/css/main.b88683f4.css",
-    "static/js/main.dc09a22f.js"
+    "static/css/main.abb855e0.css",
+    "static/js/main.6ad529af.js"
   ]
 }
