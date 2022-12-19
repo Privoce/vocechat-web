@@ -6,7 +6,7 @@ import { fillUsers } from "../slices/users";
 import BASE_URL, { ContentTypes } from "../config";
 import { onMessageSendStarted } from "./handlers";
 import handleChatMessage from "../../common/hook/useStreaming/chat.handler";
-import { AutoDeleteMsgDTO, User, UserCreateDTO, UserDTO, UserForAdmin, UserForAdminDTO } from "../../types/user";
+import { AutoDeleteMsgDTO, BotAPIKey, User, UserCreateDTO, UserDTO, UserForAdmin, UserForAdminDTO } from "../../types/user";
 import { ChatMessage, ContentTypeKey, MuteDTO } from "../../types/message";
 import { RootState } from "../store";
 
@@ -100,6 +100,23 @@ export const userApi = createApi({
     getUserByAdmin: builder.query<UserForAdmin, number>({
       query: (uid) => ({ url: `/admin/user/${uid}` })
     }),
+    // bot operations
+    createBotAPIKey: builder.mutation<void, { uid: number, name: string }>({
+      query: ({ uid, name }) => ({
+        url: `admin/user/bot-api-key/${uid}`,
+        method: "POST",
+        body: { name },
+        responseHandler: (response: Response) => response.text()
+      }),
+
+    }),
+    getBotAPIKeys: builder.query<BotAPIKey[], number>({
+      query: (uid) => ({ url: `/admin/user/bot-api-key/${uid}` })
+    }),
+    deleteBotAPIKey: builder.query<void, { uid: number, kid: number }>({
+      query: ({ uid, kid }) => ({ url: `/admin/user/bot-api-key/${uid}/${kid}`, method: "DELETE" })
+    }),
+    // bot operations end
     updateInfo: builder.mutation<User, UserDTO>({
       query: (data) => ({
         url: `user`,
@@ -157,5 +174,8 @@ export const {
   useUpdateAvatarMutation,
   useGetUsersQuery,
   useLazyGetUsersQuery,
-  useSendMsgMutation
+  useSendMsgMutation,
+  useCreateBotAPIKeyMutation,
+  useLazyDeleteBotAPIKeyQuery,
+  useGetBotAPIKeysQuery
 } = userApi;

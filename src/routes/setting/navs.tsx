@@ -6,6 +6,7 @@ import ConfigSMTP from "./config/SMTP";
 import APIConfig from "./APIConfig";
 import License from "./License/License";
 import Widget from "./Widget";
+import BotConfig from "./BotConfig";
 import APIDocument from "./APIDocument";
 import ManageMembers from "../../common/component/ManageMembers";
 import FAQ from "../../common/component/FAQ";
@@ -35,6 +36,11 @@ const navs = [
   {
     title: "config",
     items: [
+      {
+        name: "bot",
+        component: <BotConfig />,
+        admin: true
+      },
       {
         name: "firebase",
         component: <ConfigFirebase />

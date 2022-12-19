@@ -54,9 +54,12 @@ export default function useStreaming() {
     window.clearTimeout(aliveInter);
     //  比15秒多5秒
     aliveInter = window.setTimeout(() => {
-      // 重启连接
-      stopStreaming();
-      startStreaming();
+      // 有网的情况再试
+      if (navigator.onLine) {
+        // 重启连接
+        stopStreaming();
+        startStreaming();
+      }
     }, timeout ?? 20000);
   };
   const startStreaming = useCallback(
@@ -114,7 +117,7 @@ export default function useStreaming() {
           return;
         }
         // 重连
-        connectionIsOpen = false;
+        // connectionIsOpen = false;
         keepAlive(2000);
       };
       SSE.onmessage = (evt) => {
@@ -306,8 +309,8 @@ export default function useStreaming() {
     if (SSE) {
       SSE.close();
       SSE = undefined;
-      connectionIsOpen = false;
     }
+    connectionIsOpen = false;
   };
 
   useEffect(() => {
