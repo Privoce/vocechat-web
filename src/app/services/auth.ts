@@ -91,8 +91,8 @@ export const authApi = createApi({
           const { data } = await queryFulfilled;
           dispatch(updateToken(data));
         } catch {
-          dispatch(resetAuthData());
-          console.log("renew token error");
+          // dispatch(resetAuthData());
+          console.error("renew token error");
         }
       }
     }),
