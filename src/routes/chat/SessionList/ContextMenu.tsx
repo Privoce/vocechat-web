@@ -69,6 +69,9 @@ const SessionContextMenu: FC<Props> = ({
     const data = channelMuted ? { remove_groups: [id] } : { add_groups: [{ gid: id }] };
     muteChannel(data);
   };
+  const handleDMSetting = () => {
+    navigateTo(`/setting/dm/${id}?f=${pathname}`);
+  };
 
   const items =
     context == "user"
@@ -76,6 +79,10 @@ const SessionContextMenu: FC<Props> = ({
         {
           title: t("action.mark_read"),
           handler: handleReadAll
+        },
+        {
+          title: t("setting"),
+          handler: handleDMSetting
         },
         canCopyEmail && {
           title: t("action.copy_email"),

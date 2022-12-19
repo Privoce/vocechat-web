@@ -6,7 +6,7 @@ import { fillUsers } from "../slices/users";
 import BASE_URL, { ContentTypes } from "../config";
 import { onMessageSendStarted } from "./handlers";
 import handleChatMessage from "../../common/hook/useStreaming/chat.handler";
-import { User, UserDTO, UserForAdmin, UserForAdminDTO } from "../../types/user";
+import { AutoDeleteMsgDTO, User, UserCreateDTO, UserDTO, UserForAdmin, UserForAdminDTO } from "../../types/user";
 import { ChatMessage, ContentTypeKey, MuteDTO } from "../../types/message";
 import { RootState } from "../store";
 
@@ -39,6 +39,13 @@ export const userApi = createApi({
     deleteUser: builder.query<void, number>({
       query: (uid) => ({ url: `/admin/user/${uid}`, method: "DELETE" })
     }),
+    createUser: builder.mutation<UserForAdmin, UserCreateDTO>({
+      query: (data) => ({
+        url: `/admin/user`,
+        body: data,
+        method: "POST"
+      })
+    }),
     updateUser: builder.mutation<UserForAdmin, UserForAdminDTO>({
       query: ({ id, ...rest }) => ({
         url: `/admin/user/${id}`,
@@ -46,6 +53,15 @@ export const userApi = createApi({
         method: "PUT"
       })
     }),
+
+    updateAutoDeleteMsg: builder.mutation<void, AutoDeleteMsgDTO>({
+      query: (data) => ({
+        url: `/user/burn-after-reading`,
+        body: data,
+        method: "POST"
+      })
+    }),
+
     updateMuteSetting: builder.mutation<void, MuteDTO>({
       query: (data) => ({
         url: `/user/mute`,
@@ -71,6 +87,19 @@ export const userApi = createApi({
         body: data
       })
     }),
+    updateAvatarByAdmin: builder.mutation<void, { uid: number, file: File }>({
+      query: ({ uid, file }) => ({
+        headers: {
+          "content-type": "image/png"
+        },
+        url: `admin/user/${uid}/avatar`,
+        method: "POST",
+        body: file
+      })
+    }),
+    getUserByAdmin: builder.query<UserForAdmin, number>({
+      query: (uid) => ({ url: `/admin/user/${uid}` })
+    }),
     updateInfo: builder.mutation<User, UserDTO>({
       query: (data) => ({
         url: `user`,
@@ -78,7 +107,6 @@ export const userApi = createApi({
         body: data
       })
     }),
-
     sendMsg: builder.mutation<
       number,
       { id: number; content: string; type: ContentTypeKey; properties?: object }
@@ -117,6 +145,10 @@ export const userApi = createApi({
 });
 
 export const {
+  useGetUserByAdminQuery,
+  useUpdateAvatarByAdminMutation,
+  useUpdateAutoDeleteMsgMutation,
+  useCreateUserMutation,
   useLazyGetHistoryMessagesQuery,
   useUpdateUserMutation,
   useUpdateMuteSettingMutation,

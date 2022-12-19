@@ -7,9 +7,11 @@
     "general": "General",
     "overview": "Overview",
     "members": "Members",
+    "auto_delete_msg": "Auto-delete Messages",
     "user": "User",
     "my_account": "My Account",
     "config": "Configuration",
+    "bot": "Bot & Webhook",
     "firebase": "Firebase",
     "agora": "Agora",
     "smtp": "SMTP",
@@ -35,6 +37,10 @@
     "visibility": "Channel Visibility",
     "public": "Public",
     "private": "Private"
+  },
+  "dm": {
+    "delete": "Delete User",
+    "delete_desc": "Are you sure want to delete this user?"
   },
   "overview": {
     "name": "Server Name",
@@ -77,6 +83,35 @@
       "booking": "Book a time here: ",
       "wechat": "Or, add WeChat for more information:"
     }
+  },
+  "bot": {
+    "bot_tip_title": "Bots can send messages to channels.",
+    "bot_tip_desc": "Please note that we do not display a Bot’s API key again after generation. You can always generate a new API key of a Bot by clicking “Get API key” and this won’t nullify the previous API key(s).",
+    "webhook_tip_title": "Webhooks can receive messages in a channel and should a URL provided by you.",
+    "webhook_tip_desc": "Please provide a webhook URL that will return 200.",
+    "manage": "Manage",
+    "manage_desc": "Disabling your account means you can recover it at any time after taking this action.",
+    "create_title": "Create Bot",
+    "create_desc": "Create a bot to extend your chat",
+    "delete_title": "Delete Bot",
+    "delete_desc": "Are you sure to delete the Bot?",
+    "webhook_title": "Update Webhook URL",
+    "webhook_desc": "Please input a valid URL",
+    "col_avatar": "Avatar",
+    "col_name": "Bot Name",
+    "col_api_key": "Bot API Key",
+    "col_webhook": "Webhook URL",
+    "col_opt": "Operations"
+  },
+  "auto_delete_msg": {
+    "title": "Delete messages sent by myself after certain time period. ",
+    "desc": "This will remove the messages data stored on both the server and client side.",
+    "off": "Off",
+    "30_seconds": "30 seconds",
+    "10_min": "10 minutes",
+    "1_hour": "1 hour",
+    "1_day": "1 day",
+    "1_week": "1 week"
   },
   "firebase": {
     "enable": "Enable",

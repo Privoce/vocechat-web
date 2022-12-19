@@ -19,6 +19,7 @@ const FavoritesPage = lazy(() => import("./favs"));
 const OnboardingPage = lazy(() => import("./onboarding"));
 const InvitePage = lazy(() => import("./invite"));
 const SettingChannelPage = lazy(() => import("./settingChannel"));
+const SettingDMPage = lazy(() => import("./settingDM"));
 const SettingPage = lazy(() => import("./setting"));
 const ResourceManagement = lazy(() => import("./resources"));
 const GuestLogin = lazy(() => import("./guest"));
@@ -125,6 +126,7 @@ const PageRoutes = () => {
               }
             />
             <Route path="channel/:cid" element={<LazyIt><SettingChannelPage /></LazyIt>} />
+            <Route path="dm/:uid" element={<LazyIt><SettingDMPage /></LazyIt>} />
           </Route>
           <Route
             index

@@ -1,8 +1,7 @@
 import { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import Overview from "./Overview";
-import AutoDeleteMessages from './AutoDeleteMessages';
-import ManageMembers from "../../common/component/ManageMembers";
+import AutoDeleteMessages from '../../common/component/AutoDeleteMessages';
 
 export interface NavItem {
   name: string;
@@ -16,7 +15,7 @@ export interface Nav {
   items: NavItem[];
 }
 
-const useNavs = (cid: number): Nav[] => {
+const useNavs = (uid: number): Nav[] => {
   const { t } = useTranslation("setting");
   return [
     {
@@ -25,18 +24,13 @@ const useNavs = (cid: number): Nav[] => {
         {
           name: "overview",
           title: t("nav.overview"),
-          component: <Overview id={cid} />
+          component: <Overview id={uid} />
         },
         {
           name: "auto_delete_msg",
           title: t("nav.auto_delete_msg"),
-          component: <AutoDeleteMessages id={cid} />
+          component: <AutoDeleteMessages id={uid} type="user" />
         },
-        {
-          name: "members",
-          title: t("nav.members"),
-          component: <ManageMembers cid={cid} />
-        }
       ]
     }
   ];
