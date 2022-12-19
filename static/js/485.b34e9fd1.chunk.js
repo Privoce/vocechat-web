@@ -67,7 +67,7 @@
   &[type="password"] {
     padding-right: 30px;
   }
-`,l=e=>{let{type:t="text",prefix:n="",className:r,...l}=e;const[d,p]=(0,i.useState)(t);return"password"==t?(0,s.jsxs)(a,{className:r,children:[(0,s.jsx)(c,{type:d,className:`inner ${r}`,...l}),(0,s.jsx)("div",{className:"view",onClick:()=>{p((e=>"password"==e?"text":"password"))},children:"password"==d?(0,s.jsx)(o.MBb,{color:"#78787c"}):(0,s.jsx)(o.Rbo,{color:"#78787c"})})]}):n?(0,s.jsxs)(a,{className:r,children:[(0,s.jsx)("span",{className:"prefix",children:n}),(0,s.jsx)(c,{className:`inner ${r}`,type:d,...l})]}):(0,s.jsx)(c,{type:d,className:r,...l})}},15621:(e,t,n)=>{n.d(t,{Z:()=>l});var i=n(70537),o=n(57889),r=n(80683);const s=o.ZP.form`
+`,l=e=>{let{type:t="text",prefix:n="",className:r,...l}=e;const[d,p]=(0,i.useState)(t);return"password"==t?(0,s.jsxs)(a,{className:r,children:[(0,s.jsx)(c,{type:d,autoComplete:"password"==d?"current-password":"on",className:`inner ${r}`,...l}),(0,s.jsx)("div",{className:"view",onClick:()=>{p((e=>"password"==e?"text":"password"))},children:"password"==d?(0,s.jsx)(o.MBb,{color:"#78787c"}):(0,s.jsx)(o.Rbo,{color:"#78787c"})})]}):n?(0,s.jsxs)(a,{className:r,children:[(0,s.jsx)("span",{className:"prefix",children:n}),(0,s.jsx)(c,{className:`inner ${r}`,type:d,...l})]}):(0,s.jsx)(c,{type:d,className:r,...l})}},15621:(e,t,n)=>{n.d(t,{Z:()=>l});var i=n(70537),o=n(57889),r=n(80683);const s=o.ZP.form`
   width: 100%;
   > .option {
     &:not(:last-child) {

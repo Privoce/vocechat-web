@@ -122,7 +122,7 @@
   &[type="password"] {
     padding-right: 30px;
   }
-`,c=e=>{let{type:t="text",prefix:i="",className:o,...c}=e;const[d,p]=(0,n.useState)(t);return"password"==t?(0,a.jsxs)(r,{className:o,children:[(0,a.jsx)(l,{type:d,className:`inner ${o}`,...c}),(0,a.jsx)("div",{className:"view",onClick:()=>{p((e=>"password"==e?"text":"password"))},children:"password"==d?(0,a.jsx)(s.MBb,{color:"#78787c"}):(0,a.jsx)(s.Rbo,{color:"#78787c"})})]}):i?(0,a.jsxs)(r,{className:o,children:[(0,a.jsx)("span",{className:"prefix",children:i}),(0,a.jsx)(l,{className:`inner ${o}`,type:d,...c})]}):(0,a.jsx)(l,{type:d,className:o,...c})}},40698:(e,t,i)=>{i.d(t,{Z:()=>a});var n=i(57889),s=i(80683);const o=n.ZP.div`
+`,c=e=>{let{type:t="text",prefix:i="",className:o,...c}=e;const[d,p]=(0,n.useState)(t);return"password"==t?(0,a.jsxs)(r,{className:o,children:[(0,a.jsx)(l,{type:d,autoComplete:"password"==d?"current-password":"on",className:`inner ${o}`,...c}),(0,a.jsx)("div",{className:"view",onClick:()=>{p((e=>"password"==e?"text":"password"))},children:"password"==d?(0,a.jsx)(s.MBb,{color:"#78787c"}):(0,a.jsx)(s.Rbo,{color:"#78787c"})})]}):i?(0,a.jsxs)(r,{className:o,children:[(0,a.jsx)("span",{className:"prefix",children:i}),(0,a.jsx)(l,{className:`inner ${o}`,type:d,...c})]}):(0,a.jsx)(l,{type:d,className:o,...c})}},40698:(e,t,i)=>{i.d(t,{Z:()=>a});var n=i(57889),s=i(80683);const o=n.ZP.div`
   padding: 32px;
   filter: drop-shadow(0px 25px 50px rgba(31, 41, 55, 0.25));
   border-radius: 8px;

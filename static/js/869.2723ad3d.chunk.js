@@ -355,7 +355,7 @@
   &[type="password"] {
     padding-right: 30px;
   }
-`,d=e=>{let{type:i="text",prefix:t="",className:s,...d}=e;const[c,p]=(0,n.useState)(i);return"password"==i?(0,a.jsxs)(o,{className:s,children:[(0,a.jsx)(r,{type:c,className:`inner ${s}`,...d}),(0,a.jsx)("div",{className:"view",onClick:()=>{p((e=>"password"==e?"text":"password"))},children:"password"==c?(0,a.jsx)(l.MBb,{color:"#78787c"}):(0,a.jsx)(l.Rbo,{color:"#78787c"})})]}):t?(0,a.jsxs)(o,{className:s,children:[(0,a.jsx)("span",{className:"prefix",children:t}),(0,a.jsx)(r,{className:`inner ${s}`,type:c,...d})]}):(0,a.jsx)(r,{type:c,className:s,...d})}},48540:(e,i,t)=>{t.d(i,{Z:()=>n});const n=t(57889).ZP.label`
+`,d=e=>{let{type:i="text",prefix:t="",className:s,...d}=e;const[c,p]=(0,n.useState)(i);return"password"==i?(0,a.jsxs)(o,{className:s,children:[(0,a.jsx)(r,{type:c,autoComplete:"password"==c?"current-password":"on",className:`inner ${s}`,...d}),(0,a.jsx)("div",{className:"view",onClick:()=>{p((e=>"password"==e?"text":"password"))},children:"password"==c?(0,a.jsx)(l.MBb,{color:"#78787c"}):(0,a.jsx)(l.Rbo,{color:"#78787c"})})]}):t?(0,a.jsxs)(o,{className:s,children:[(0,a.jsx)("span",{className:"prefix",children:t}),(0,a.jsx)(r,{className:`inner ${s}`,type:c,...d})]}):(0,a.jsx)(r,{type:c,className:s,...d})}},48540:(e,i,t)=>{t.d(i,{Z:()=>n});const n=t(57889).ZP.label`
   font-weight: 500;
   font-size: 14px;
   line-height: 20px;
