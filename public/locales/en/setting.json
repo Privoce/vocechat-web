@@ -75,13 +75,12 @@
     "value": "License Value",
     "renew": "Renew License",
     "update": "Update Manually",
-    "update_placeholder": "Please Input the new license value",
+    "update_placeholder": "Please input the new license value",
     "renew_select": "Please select the price",
     "tip": {
       "title": "A chance to get a free license upgrade!",
-      "user_test": "Getting a free license upgrade by joining our User Test Session",
+      "user_test": "Get a free license upgrade through a 25 min user testing",
       "booking": "Book a time here: ",
-      "wechat": "Or, add WeChat for more information:"
     }
   },
   "bot": {
