@@ -25,6 +25,7 @@
     "yes": "Yes",
     "delete_channel": "Delete Channel",
     "remove": "Remove",
+    "remove_user": "Remove User",
     "edit": "Edit",
     "edit_msg": "Edit Message",
     "add_reaction": "Add to Reaction",
