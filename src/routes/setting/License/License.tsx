@@ -24,7 +24,7 @@ const Item = ({ label, data, foldable = false, ...rest }: ItemProps) => {
 
 };
 export default function License() {
-  const { t } = useTranslation("setting");
+  const { t, i18n } = useTranslation("setting");
   const { license: licenseInfo, reachLimit, upsertLicense, upserting, upserted } = useLicense();
   const [modalVisible, setModalVisible] = useState(false);
   const [updateVisible, setUpdateVisible] = useState(false);
@@ -57,14 +57,13 @@ export default function License() {
         </div>
         <div className="flex flex-col gap-4 bg-primary-500 text-white rounded drop-shadow-xl p-5">
           <h2 className="text-2xl font-bold">{t("license.tip.title")} 🎁</h2>
-          <p className="text-base flex flex-col"><span>
-            {t("license.tip.user_test")}
-          </span>
+          <p className="text-base flex flex-col">
             <span>
-              {t("license.tip.booking")} <a className="underline text-lg text-green-200" href="https://calendly.com/hansu/han-meeting" target="_blank" rel="noopener noreferrer">https://calendly.com/hansu/han-meeting</a>
+              {t("license.tip.user_test")}
             </span>
             <span>
-              {t("license.tip.wechat")}<em className="text-lg text-green-200">Privoce</em>
+              {t("license.tip.contact")}
+              {i18n.language.startsWith("zh") ? "Privoce" : <a className="underline text-lg text-green-200" href="https://calendly.com/hansu/han-meeting" target="_blank" rel="noopener noreferrer">https://calendly.com/hansu/han-meeting</a>}
             </span>
           </p>
         </div>
