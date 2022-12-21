@@ -83,7 +83,7 @@
   },
   "bot": {
     "bot_tip_title": "使用机器人向频道里发送消息",
-    "bot_tip_desc": "Please note that we do not display a Bot’s API key again after generation. You can always generate a new API key of a Bot by clicking “Get API key” and this won’t nullify the previous API key(s).",
+    "bot_tip_desc": "Please note that we do not display a Bot’s API key again after generation. You can always generate a new API key of a Bot by clicking “Add API Key” and this won’t nullify the previous API key(s).",
     "webhook_tip_title": "Webhooks can receive messages in a channel and should a URL provided by you.",
     "webhook_tip_desc": "请提供一个有效的Webhook URL：GET 请求响应 200即为有效。",
     "manage": "管理",

@@ -85,7 +85,7 @@
   },
   "bot": {
     "bot_tip_title": "Bots can send messages to channels.",
-    "bot_tip_desc": "Please note that we do not display a Bot’s API key again after generation. You can always generate a new API key of a Bot by clicking “Get API key” and this won’t nullify the previous API key(s).",
+    "bot_tip_desc": "Please note that we do not display a Bot’s API key again after generation. You can always generate a new API key of a Bot by clicking “Add API Key” and this won’t nullify the previous API key(s).",
     "webhook_tip_title": "Webhooks can receive messages in a channel and should a URL provided by you.",
     "webhook_tip_desc": "Please provide a webhook URL that will return 200.",
     "manage": "Manage",
