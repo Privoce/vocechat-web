@@ -59,7 +59,7 @@ export default function useMessageFeed({ context = "channel", id }: Props) {
   const pageRef = useRef<PageInfo | null>(null);
   const containerRef = useRef<HTMLElement | null>(null);
   const [hasMore, setHasMore] = useState(true);
-  const [appends, setAppends] = useState([]);
+  const [appends, setAppends] = useState<number[]>([]);
   const [items, setItems] = useState<number[]>([]);
   const loadMoreMsgsFromServer = context == "channel" ? loadMoreChannelMsgs : loadMoreDmMsgs;
   const { mids, messageData, loginUid } = useAppSelector((store) => {
@@ -71,6 +71,8 @@ export default function useMessageFeed({ context = "channel", id }: Props) {
     };
   });
   useEffect(() => {
+    // curScrollPos = 0;
+    // oldScroll = 0;
     listRef.current = [];
     pageRef.current = null;
     setItems([]);
@@ -87,17 +89,18 @@ export default function useMessageFeed({ context = "channel", id }: Props) {
     }
   }, [items, context, id]);
   useEffect(() => {
+    //过滤掉本地消息
     const serverMids = mids.filter((id: number) => {
       const ts = +new Date();
       return Math.abs(ts - id) > 10 * 1000;
     });
-    if (listRef.current.length == 0 && serverMids.length) {
+    if (listRef.current.length == 0 && serverMids.length > 0) {
       //   初次
       const pageInfo = getFeedWithPagination({
         mids: serverMids,
         isLast: true
       });
-      // console.log("pull up 2", pageInfo);
+      console.log("pull up first", pageInfo, serverMids);
       pageRef.current = pageInfo;
       listRef.current = pageInfo.ids;
       setItems(listRef.current);
@@ -109,7 +112,7 @@ export default function useMessageFeed({ context = "channel", id }: Props) {
         return Number(a) - Number(b);
       });
       const appends = sorteds.filter((s: number) => s > lastMid);
-      // console.log("appends", appends, sorteds, lastMid, mids);
+      console.log("pull up appends", appends, sorteds, lastMid, mids);
       if (appends.length) {
         setAppends(appends);
         const [newestMsgId] = appends.slice(-1);
@@ -133,7 +136,7 @@ export default function useMessageFeed({ context = "channel", id }: Props) {
   }, [mids, messageData, loginUid]);
   const pullUp = async () => {
     const currPageInfo = pageRef.current;
-    // console.log("pull up", currPageInfo);
+    console.log("pull up", currPageInfo);
     // 第一页
     if (currPageInfo && currPageInfo.isFirst) {
       const [firstMid] = currPageInfo.ids;
@@ -165,7 +168,7 @@ export default function useMessageFeed({ context = "channel", id }: Props) {
     setTimeout(
       () => {
         setItems(listRef.current);
-        // console.log("pull up", currPageInfo, listRef.current);
+        console.log("pull up timeout", currPageInfo, listRef.current);
         setHasMore(pageInfo.pageNumber !== 1);
         const container = containerRef.current;
         if (container) {
@@ -173,7 +176,7 @@ export default function useMessageFeed({ context = "channel", id }: Props) {
           oldScroll = container.scrollHeight - container.clientHeight;
         }
       },
-      currPageInfo?.isLast ? 10 : 800
+      currPageInfo?.isLast ? 10 : 500
     );
   };
   const pullDown = () => {

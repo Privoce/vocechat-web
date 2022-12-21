@@ -109,7 +109,7 @@ const Input: FC<Props> = ({ type = "text", prefix = "", className, ...rest }) =>
 
   return type == "password" ? (
     <StyledWrapper className={className}>
-      <StyledInput type={inputType} className={`inner ${className}`} {...rest} />
+      <StyledInput type={inputType} autoComplete={inputType == "password" ? "current-password" : "on"} className={`inner ${className}`} {...rest} />
       <div className="view" onClick={togglePasswordVisible}>
         {inputType == "password" ? <HiEyeOff color="#78787c" /> : <HiEye color="#78787c" />}
       </div>

@@ -9,9 +9,10 @@ import { useTranslation } from "react-i18next";
 let from: string = "";
 
 export default function DMSetting() {
-  const { t } = useTranslation("setting");
+  // const { t } = useTranslation("setting");
+  const { t: ct } = useTranslation();
   const { uid = 0 } = useParams();
-  const { loginUser, user } = useAppSelector((store) => {
+  const { loginUser } = useAppSelector((store) => {
     return {
       loginUser: store.authData.user,
       user: uid ? store.users.byId[+uid] : undefined
@@ -48,7 +49,7 @@ export default function DMSetting() {
         navs={navs}
         dangers={[
           canDelete && {
-            title: t("action.remove"),
+            title: ct("action.remove_user"),
             handler: toggleDeleteConfirm
           }
         ]}
