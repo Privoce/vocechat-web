@@ -13,6 +13,7 @@ type Props = {
     from: number,
     to: number
 }
+let isComposing = false;
 const MessageInput = (props: Props) => {
     const { from, to } = props;
     const { sendMessage } = useSendMessage({
@@ -34,6 +35,12 @@ const MessageInput = (props: Props) => {
                     value={content}
                     placeholder="Type and press enter"
                     onChange={e => setContent(e.target.value)}
+                    onCompositionStart={() => {
+                        isComposing = true;
+                    }}
+                    onCompositionEnd={() => {
+                        isComposing = false;
+                    }}
                     onInput={() => {
                         const element = ref.current;
                         if (!element) return;
@@ -42,7 +49,7 @@ const MessageInput = (props: Props) => {
                         element.style.height = `${element.scrollHeight + 2}px`;
                     }}
                     onKeyDown={e => {
-                        if (!e.shiftKey && e.key === 'Enter') {
+                        if (!e.shiftKey && e.key === 'Enter' && !isComposing) {
                             // e.stopPropagation();
                             e.preventDefault();
                             if (content.trim().length === 0) return;
