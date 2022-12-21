@@ -2,6 +2,7 @@ import { FC, memo } from "react";
 import { useNavigate } from "react-router-dom";
 import Tippy from "@tippyjs/react";
 import IconOwner from "../../../assets/icons/owner.svg";
+import IconBot from "../../../assets/icons/bot.svg";
 import Avatar from "../Avatar";
 import Profile from "../Profile";
 import ContextMenu from "./ContextMenu";
@@ -63,6 +64,7 @@ const User: FC<Props> = ({
           </div>
           {!compact && <span className="name" title={curr?.name}>{curr?.name}</span>}
           {owner && <IconOwner />}
+          {curr.is_bot && <IconBot className="!w-5 !h-5" />}
         </StyledWrapper>
       </ContextMenu>
     );
@@ -93,6 +95,7 @@ const User: FC<Props> = ({
           </div>
           {!compact && <span className="name" title={curr?.name}>{curr?.name}</span>}
           {owner && <IconOwner />}
+          {curr.is_bot && <IconBot className="!w-5 !h-5" />}
         </StyledWrapper>
       </Tippy>
     </ContextMenu>

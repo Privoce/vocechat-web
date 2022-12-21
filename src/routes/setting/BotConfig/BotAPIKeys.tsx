@@ -4,8 +4,10 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useGetBotAPIKeysQuery } from '../../../app/services/user';
 import IconDelete from '../../../assets/icons/delete.svg';
+import IconAdd from '../../../assets/icons/add.svg';
 import CreateAPIKeyModal from './CreateAPIKeyModal';
 import DeleteAPIKeyModal from './DeleteAPIKeyModal';
+import clsx from 'clsx';
 
 type Props = {
     uid: number
@@ -34,22 +36,20 @@ const BotAPIKeys = ({ uid }: Props) => {
         setDeleteApiKey(param);
     };
     if (!data) return null;
+    const colWidths = ["w-20", "w-[166px]", "w-36", "w-15", "w-10"];
     return (
         <div className='flex flex-col gap-2 items-start'>
-            <button onClick={toggleCreateModal.bind(null, uid)} type='button' className="rounded-full bg-green-50 text-green-600 text-xs py-0.5 px-2">
-                New API Key
-            </button>
-            {data.length > 0 ? <div className='border-t border-solid border-b border-gray-200 py-2'>
+            <div className='border-t border-solid border-b border-gray-100 py-2 w-full'>
                 <table className="min-w-full table-auto font-mono">
                     <thead >
                         <tr >
-                            {[t("col_key_name"), t('col_key_value'), t('col_key_create_time'), t('col_key_last_used'), ""].map(title => <th key={title} scope="col" className="text-xs text-gray-900 px-1 text-left pb-2">
+                            {[t("col_key_name"), t('col_key_value'), t('col_key_create_time'), t('col_key_last_used'), ""].map((title, idx) => <th key={title} scope="col" className={clsx(`text-xs text-gray-900 px-1 text-left pb-2`, colWidths[idx])}>
                                 {title}
                             </th>)}
                         </tr>
                     </thead>
                     <tbody>
-                        {data.map(ak => {
+                        {data.length > 0 ? data.map(ak => {
                             const { id, name, key, created_at, last_used } = ak;
                             return <tr key={id} className="group" >
                                 <td className={tdClass}>
@@ -62,7 +62,6 @@ const BotAPIKeys = ({ uid }: Props) => {
                                     {dayjs(created_at).format("YYYY-MM-DD HH:mm:ss")}
                                 </td>
                                 <td className={tdClass}>
-
                                     {last_used ? dayjs(last_used).format("YYYY-MM-DD HH:mm:ss") : "Unused"}
                                 </td>
                                 <td className={`${tdClass} invisible group-hover:visible`}>
@@ -71,9 +70,17 @@ const BotAPIKeys = ({ uid }: Props) => {
                                     </button>
                                 </td>
                             </tr>;
-                        })}
+                        }) : <tr>
+                            <td colSpan={5} className='w-full text-center text-xs text-gray-400 pt-4'>
+                                No API Key Yet
+                            </td>
+                        </tr>}
                     </tbody>
-                </table></div> : null}
+                </table>
+                <button onClick={toggleCreateModal.bind(null, uid)} className="text-green-600 text-xs py-0.5 flex items-center gap-1 m-auto my-2 bg-green-50 rounded-full px-2 ">
+                    <IconAdd className="!w-4 !h-4 fill-green-600" /> Add API Key
+                </button>
+            </div>
             {currentUid && <CreateAPIKeyModal uid={currentUid} closeModal={toggleCreateModal.bind(null, undefined)} />}
             {deleteApiKey && <DeleteAPIKeyModal uid={deleteApiKey.uid} kid={deleteApiKey.kid} closeModal={toggleDeleteModal.bind(null, undefined)} />}
         </div>

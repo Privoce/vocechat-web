@@ -106,7 +106,7 @@ export const userApi = createApi({
         url: `admin/user/bot-api-key/${uid}`,
         method: "POST",
         body: { name },
-        responseHandler: (response: Response) => response.text()
+        // responseHandler: (response: Response) => response.text()
       }),
 
     }),

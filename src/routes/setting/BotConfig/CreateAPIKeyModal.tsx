@@ -14,7 +14,7 @@ type Props = {
 }
 const CreateAPIKeyModal = ({ closeModal, uid }: Props) => {
     const { copy } = useCopy();
-    const [createBotAPIKey, { error, isSuccess, isLoading, data }] = useCreateBotAPIKeyMutation();
+    const [createBotAPIKey, { error, isSuccess, isLoading, data = "" }] = useCreateBotAPIKeyMutation();
     const formRef = useRef(null);
     const { t } = useTranslation("setting", { keyPrefix: "bot" });
     const { t: ct } = useTranslation();
@@ -25,7 +25,6 @@ const CreateAPIKeyModal = ({ closeModal, uid }: Props) => {
         if (!formEle.checkValidity()) {
             formEle.reportValidity();
             return;
-
         }
         createBotAPIKey({
             uid,

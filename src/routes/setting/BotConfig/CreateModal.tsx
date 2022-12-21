@@ -73,7 +73,7 @@ const CreateModal = ({ closeModal }: Props) => {
                         <Button className="cancel" onClick={closeModal}>
                             {ct("action.cancel")}
                         </Button>
-                        <Button onClick={handleCreateBot}>{isLoading ? "Updating" : ct("action.done")}</Button>
+                        <Button onClick={handleCreateBot}>{isLoading ? "Creating" : ct("action.done")}</Button>
                     </>
                 }
             >
@@ -83,7 +83,7 @@ const CreateModal = ({ closeModal }: Props) => {
                         <Input name={"name"} required placeholder='Please input bot name'></Input>
                     </div>
                     <div className="flex flex-col gap-1 w-full">
-                        <label htmlFor={"webhook_url"} className="text-sm text-[#6b7280]">Webhook URL</label>
+                        <label htmlFor={"webhook_url"} className="text-sm text-[#6b7280]">Webhook URL (Optional)</label>
                         <Input name={"webhook_url"} type="url" placeholder='Please input webhook url'></Input>
                     </div>
                 </form>

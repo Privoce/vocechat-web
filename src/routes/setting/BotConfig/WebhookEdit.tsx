@@ -58,22 +58,30 @@ const WebhookEdit = ({ uid }: Props) => {
     };
     const handleCancelEdit = () => {
         setEditable(false);
+        const form = formRef.current;
+        if (form) {
+            const input = form.querySelector("input");
+            input!.value = data?.webhook_url || "";
+        }
     };
     return (
         <div>
             {(url || editable || updateSuccess) ?
                 <div className="flex gap-2">
-                    <form action="/" ref={formRef} >
+                    <form action="/" ref={formRef} onSubmit={(evt) => {
+                        evt.preventDefault();
+                        handleEdit();
+                    }}>
                         <input readOnly={!editable} required autoFocus type="url" name='webhook' defaultValue={url} className={clsx("text-sm text-gray-500 px-2 py-1", editable ? "border border-solid border-gray-200 bg-gray-50" : "bg-transparent")} />
                     </form>
                     <button type='button' disabled={isUpdating} onClick={handleEdit}>
                         {isUpdating ? <Orbit size={16} /> : editable ?
-                            <IconSave />
+                            <IconSave className="stroke-gray-500 !w-5 !h-5" />
 
-                            : <IconEdit />}
+                            : <IconEdit className="fill-gray-500 !w-5 !h-5" />}
                     </button>
                     {editable && !isUpdating && <button type='button' disabled={isUpdating} onClick={handleCancelEdit}>
-                        <IconCancel className="!w-6 !h-6" />
+                        <IconCancel className="!w-5 !h-5 fill-gray-500" />
                     </button>}
                 </div>
                 :

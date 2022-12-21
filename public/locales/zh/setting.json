@@ -83,19 +83,19 @@
   },
   "bot": {
     "bot_tip_title": "使用机器人向频道里发送消息",
-    "bot_tip_desc": "Please note that we do not display a Bot’s API key again after generation. You can always generate a new API key of a Bot by clicking “Get API key” and this won’t nullify the previous API key(s).",
+    "bot_tip_desc": "Please note that we do not display a Bot’s API key again after generation. You can always generate a new API key of a Bot by clicking “Add API Key” and this won’t nullify the previous API key(s).",
     "webhook_tip_title": "Webhooks can receive messages in a channel and should a URL provided by you.",
     "webhook_tip_desc": "请提供一个有效的Webhook URL：GET 请求响应 200即为有效。",
     "manage": "管理",
-    "manage_desc": "Disabling your account means you can recover it at any time after taking this action.",
+    "manage_desc": "机器人一旦删除，所有与其相关的接口也立即失效，包括Webhook。",
     "create_title": "创建机器人",
     "create_desc": "Create a bot to extend your chat",
     "webhook_title": "更新Webhook",
     "webhook_desc": "请输入有效的URL",
     "col_avatar": "头像",
     "col_name": "名称",
-    "col_api_key": "API Key",
-    "col_webhook": "Webhook 地址",
+    "col_api_key": "密钥（用于向本Server传送信息）",
+    "col_webhook": "Webhook接收地址（用于接收本Server推送的信息）",
     "col_opt": "操作"
   },
   "auto_delete_msg": {

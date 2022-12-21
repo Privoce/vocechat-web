@@ -22,7 +22,7 @@ const Tip = ({ title, desc }: TipProps) => {
     <p className="text-gray-500">{desc}</p>
   </div>;
 };
-const tdClass = "px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 align-top";
+const tdClass = "p-6 whitespace-nowrap text-sm font-medium text-gray-900 align-top";
 type WebhookParams = { webhook?: string, uid: number };
 type DeleteParams = { name: string, uid: number };
 export default function BotConfig() {
@@ -75,16 +75,19 @@ export default function BotConfig() {
               {bots.map(bot => {
                 const { uid, name, avatar } = bot;
                 return <tr key={uid} className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
-                  <td className="px-4 py-2 flex flex-col gap-1 items-start">
+                  <td className="px-4 py-2">
                     <AvatarUploader uid={uid} url={avatar} uploadImage={updateAvatar} name={name} className="!w-14 !h-14" />
-                    <span className='text-xs text-gray-500'>
+
+                  </td>
+                  <td className={`${tdClass}`}>
+                    <div>
+                      {name}
+                    </div>
+                    <div className='text-xs text-gray-500'>
                       #{uid}
-                    </span>
+                    </div>
                   </td>
-                  <td className={tdClass}>
-                    {name}
-                  </td>
-                  <td className={tdClass}>
+                  <td className={`${tdClass} py-2`}>
                     <BotAPIKeys uid={uid} />
                   </td>
                   <td className={tdClass}>
