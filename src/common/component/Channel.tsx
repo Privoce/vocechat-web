@@ -69,7 +69,14 @@ const Channel: FC<Props> = ({ interactive = true, id, compact = false, avatarSiz
       className={`${interactive ? "interactive" : ""} ${compact ? "compact" : ""}`}
     >
       <div className="avatar">
-        <Avatar type="channel" src={icon} name={"#"} alt="avatar" />
+        <Avatar
+          width={avatarSize}
+          height={avatarSize}
+          type="channel"
+          src={icon}
+          name={"#"}
+          alt="avatar"
+        />
       </div>
       {!compact && (
         <div className="name">

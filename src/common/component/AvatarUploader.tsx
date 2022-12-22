@@ -60,20 +60,20 @@ const StyledWrapper = styled.div`
     top: 0;
     right: 0;
   }
-  &:hover .icon{
+  &:hover .icon {
     display: block;
   }
 `;
 
 type UID = number;
 interface Props {
-  uid?: UID,
-  className?: string,
+  uid?: UID;
+  className?: string;
   url?: string;
   name?: string;
   type?: "user" | "channel";
   disabled?: boolean;
-  uploadImage: (param: File | { uid: number, file: File }) => void;
+  uploadImage: (param: File | { uid: number; file: File }) => void;
 }
 
 const AvatarUploader: FC<Props> = ({
@@ -103,10 +103,12 @@ const AvatarUploader: FC<Props> = ({
   return (
     <StyledWrapper className={className}>
       <div className="avatar">
-        <Avatar type={type} src={url} name={name} className={className} />
+        <Avatar width={96} height={96} type={type} src={url} name={name} className={className} />
         {!disabled && (
           <>
-            <div className="tip">{uploading ? t("status.uploading") : t("action.change_avatar")}</div>
+            <div className="tip">
+              {uploading ? t("status.uploading") : t("action.change_avatar")}
+            </div>
             <input
               multiple={false}
               onChange={handleUpload}
