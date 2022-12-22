@@ -100,6 +100,7 @@ export default function Reg() {
   const googleLogin = enableGoogleLogin && clientId;
   // magic token 没有并且没有开放注册
   if (whoCanSignUp !== "EveryOne" && !magicToken)
+    // todo: i18n
     return <>Sign up method is updated to Invitation Link Only</>;
   const { email, password, confirmPassword } = input;
   if (data?.mail_is_sent) return <EmailNextTip />;
@@ -148,7 +149,7 @@ export default function Reg() {
           placeholder={t("placeholder_confirm_pwd")}
         ></Input>
         <Button type="submit" disabled={isLoading}>
-          {isLoading ? "Signing Up" : t("sign_up")}
+          {isLoading ? t('signing_up') : t("sign_up")}
         </Button>
       </form>
       <hr className="or" />
