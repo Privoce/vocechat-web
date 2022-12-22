@@ -16,5 +16,5 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src", "src/types/*.d.ts", "src/locales/*.d.ts"]
+  "include": ["src", "src/types/*.d.ts", "src/locales/*.d.ts", "src/i18next.d.ts"]
 }

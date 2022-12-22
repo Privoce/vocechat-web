@@ -1,11 +1,11 @@
-import { useState, useEffect, memo, SyntheticEvent, FC } from "react";
+import { useState, useEffect, memo, SyntheticEvent, FC, ImgHTMLAttributes } from "react";
 import { getInitials, getInitialsAvatar } from "../utils";
 
-interface Props extends Partial<HTMLImageElement> {
+interface Props extends ImgHTMLAttributes<HTMLImageElement> {
   // className?: string;
   // alt?: string;
   // src?: string;
-  // name?: string;
+  name?: string;
   type?: "user" | "channel";
 }
 
@@ -35,7 +35,7 @@ const Avatar: FC<Props> = ({ src = "", name = "Deleted User", type = "user", ...
   }, [src, name]);
   if (!url) return null;
 
-  return <img src={url} onError={handleError}  {...rest} />;
+  return <img src={url} onError={handleError} {...rest} />;
 };
 
 export default memo(Avatar, (prev, next) => {

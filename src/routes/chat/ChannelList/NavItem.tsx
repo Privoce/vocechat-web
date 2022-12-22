@@ -60,7 +60,9 @@ const NavItem: FC<IProps> = ({ id, setFiles, toggleRemoveConfirm }) => {
       navigate(`/setting/channel/${id}?f=${pathname}`);
     }
   };
-  const [{ isActive }, drop] = useDrop(() => ({
+
+  // todo: type check
+  const [{ isActive }, drop] = useDrop<any, unknown, { isActive: boolean }>(() => ({
     accept: [NativeTypes.FILE],
     drop({ dataTransfer }) {
       if (dataTransfer.files.length) {
