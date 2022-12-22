@@ -100,7 +100,6 @@ export default function useMessageFeed({ context = "channel", id }: Props) {
         mids: serverMids,
         isLast: true
       });
-      console.log("pull up first", pageInfo, serverMids);
       pageRef.current = pageInfo;
       listRef.current = pageInfo.ids;
       setItems(listRef.current);
@@ -112,7 +111,6 @@ export default function useMessageFeed({ context = "channel", id }: Props) {
         return Number(a) - Number(b);
       });
       const appends = sorteds.filter((s: number) => s > lastMid);
-      console.log("pull up appends", appends, sorteds, lastMid, mids);
       if (appends.length) {
         setAppends(appends);
         const [newestMsgId] = appends.slice(-1);
@@ -136,7 +134,6 @@ export default function useMessageFeed({ context = "channel", id }: Props) {
   }, [mids, messageData, loginUid]);
   const pullUp = async () => {
     const currPageInfo = pageRef.current;
-    console.log("pull up", currPageInfo);
     // 第一页
     if (currPageInfo && currPageInfo.isFirst) {
       const [firstMid] = currPageInfo.ids;

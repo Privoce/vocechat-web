@@ -30,7 +30,6 @@ const whiteList = [
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
   prepareHeaders: (headers, { getState, endpoint }) => {
-    console.info("req", endpoint);
     const { token } = (getState() as RootState).authData;
     if (token && !whiteList.includes(endpoint)) {
       headers.set(tokenHeader, token);
