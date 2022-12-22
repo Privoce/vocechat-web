@@ -52,6 +52,7 @@ const StyledWrapper = styled.div`
     height: 1px;
     background-color: #e4e7ec;
     margin: 26px 0;
+    overflow: visible;
     &:after {
       padding: 4px;
       background-color: #fff;

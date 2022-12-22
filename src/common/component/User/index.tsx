@@ -9,6 +9,7 @@ import ContextMenu from "./ContextMenu";
 import StyledWrapper from "./styled";
 import useContextMenu from "../../hook/useContextMenu";
 import { useAppSelector } from "../../../app/store";
+import clsx from "clsx";
 
 interface Props {
   uid: number;
@@ -54,17 +55,17 @@ const User: FC<Props> = ({
       >
         <StyledWrapper
           size={avatarSize}
-          className={`${interactive ? "interactive" : ""} ${compact ? "compact" : ""}`}
+          className={`${interactive ? "interactive" : ""} ${compact ? "compact" : ""} relative`}
           onDoubleClick={dm ? handleDoubleClick : undefined}
           onContextMenu={enableContextMenu ? handleContextMenuEvent : undefined}
         >
           <div className="avatar">
             <Avatar src={curr.avatar} name={curr.name} alt="avatar" />
-            <div className={`status ${online ? "online" : "offline"}`}></div>
+            {!curr.is_bot && <div className={`status ${online ? "online" : "offline"}`}></div>}
           </div>
           {!compact && <span className="name" title={curr?.name}>{curr?.name}</span>}
           {owner && <IconOwner />}
-          {curr.is_bot && <IconBot className="!w-5 !h-5" />}
+          {curr.is_bot && <IconBot className={clsx(compact && "absolute -top-1 -right-1", "!w-4 !h-4")} />}
         </StyledWrapper>
       </ContextMenu>
     );
@@ -95,7 +96,7 @@ const User: FC<Props> = ({
           </div>
           {!compact && <span className="name" title={curr?.name}>{curr?.name}</span>}
           {owner && <IconOwner />}
-          {curr.is_bot && <IconBot className="!w-5 !h-5" />}
+          {curr.is_bot && <IconBot className="!w-4 !h-4" />}
         </StyledWrapper>
       </Tippy>
     </ContextMenu>
