@@ -63,7 +63,7 @@ const ForwardedMessage: FC<Props> = ({ context, to, from_uid, id }) => {
                 <StyledMsg className="archive" key={idx}>
                   {user && (
                     <div className="avatar">
-                      <Avatar width={40} height={40} src={user.avatar} name={user.name} />
+                      <Avatar width={24} height={24} src={user.avatar} name={user.name} />
                     </div>
                   )}
                   <div className="details">
