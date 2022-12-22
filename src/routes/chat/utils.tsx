@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode } from "react";
+import React from "react";
 import dayjs from "dayjs";
 import styled from "styled-components";
 import reactStringReplace from "react-string-replace";

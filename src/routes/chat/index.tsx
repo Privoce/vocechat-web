@@ -1,7 +1,5 @@
-// import React from 'react';
 import { memo, useState } from "react";
 import { useParams } from "react-router-dom";
-
 import StyledWrapper from "./styled";
 import BlankPlaceholder from "../../common/component/BlankPlaceholder";
 import Server from "../../common/component/Server";
