@@ -93,9 +93,17 @@ export default function Filter({ filter, updateFilter }) {
           onClick={toggleFilterVisible.bind(null, { from: true })}
         >
           {from && (
-            <Avatar className="avatar" name={userMap[from].name} src={userMap[from].avatar} />
+            <Avatar
+              width={16}
+              height={16}
+              className="avatar"
+              name={userMap[from].name}
+              src={userMap[from].avatar}
+            />
           )}
-          <span className="txt">{t("from")} {from && userMap[from].name}</span>
+          <span className="txt">
+            {t("from")} {from && userMap[from].name}
+          </span>
           <ArrowDown className="arrow" />
         </div>
       </Tippy>

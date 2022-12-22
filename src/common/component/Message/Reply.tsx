@@ -177,7 +177,13 @@ const Reply: FC<ReplyProps> = ({ mid, interactive = true }) => {
       onClick={interactive ? handleClick : undefined}
     >
       <div className="user">
-        <Avatar className="avatar" src={currUser.avatar} name={currUser.name} />
+        <Avatar
+          width={16}
+          height={16}
+          className="avatar"
+          src={currUser.avatar}
+          name={currUser.name}
+        />
         <span className="name">{currUser.name}</span>
       </div>
       <div className="content">{renderContent(data)}</div>

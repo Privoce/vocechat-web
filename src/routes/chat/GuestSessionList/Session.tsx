@@ -41,7 +41,7 @@ const Session: FC<IProps> = ({ id, mid }) => {
     <li className="session">
       <NavLink className={`nav`} to={`/chat/channel/${id}`}>
         <div className="icon">
-          <Avatar className="icon" type="channel" name={name} src={icon} />
+          <Avatar width={40} height={40} className="icon" type="channel" name={name} src={icon} />
         </div>
         <div className="details">
           <div className="up">

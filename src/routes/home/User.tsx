@@ -31,7 +31,7 @@ const User: FC<Props> = ({ uid }) => {
     <StyledWrapper>
       <NavLink to={`/setting?nav=my_account&f=${pathname}`}>
         <div className="avatar">
-          <Avatar src={user.avatar} name={user.name} />
+          <Avatar width={32} height={32} src={user.avatar} name={user.name} />
         </div>
       </NavLink>
     </StyledWrapper>

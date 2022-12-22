@@ -62,7 +62,11 @@ const User: FC<Props> = ({
             <Avatar src={curr.avatar} name={curr.name} alt="avatar" />
             <div className={`status ${online ? "online" : "offline"}`}></div>
           </div>
-          {!compact && <span className="name" title={curr?.name}>{curr?.name}</span>}
+          {!compact && (
+            <span className="name" title={curr?.name}>
+              {curr?.name}
+            </span>
+          )}
           {owner && <IconOwner />}
           {curr.is_bot && <IconBot className="!w-5 !h-5" />}
         </StyledWrapper>
@@ -90,10 +94,20 @@ const User: FC<Props> = ({
           onContextMenu={enableContextMenu ? handleContextMenuEvent : undefined}
         >
           <div className="avatar">
-            <Avatar src={curr.avatar} name={curr.name} alt="avatar" />
+            <Avatar
+              width={avatarSize}
+              height={avatarSize}
+              src={curr.avatar}
+              name={curr.name}
+              alt="avatar"
+            />
             <div className={`status ${online ? "online" : "offline"}`}></div>
           </div>
-          {!compact && <span className="name" title={curr?.name}>{curr?.name}</span>}
+          {!compact && (
+            <span className="name" title={curr?.name}>
+              {curr?.name}
+            </span>
+          )}
           {owner && <IconOwner />}
           {curr.is_bot && <IconBot className="!w-5 !h-5" />}
         </StyledWrapper>
