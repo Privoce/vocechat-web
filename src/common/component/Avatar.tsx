@@ -16,6 +16,7 @@ function getFontSize(width: number): number {
   if (width <= 24) return 12;
   if (width <= 32) return 16;
   if (width <= 40) return 18;
+  if (width <= 56) return 22;
   if (width <= 80) return 48;
   return 64;
 }

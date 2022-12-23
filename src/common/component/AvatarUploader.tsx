@@ -4,9 +4,9 @@ import Avatar from "./Avatar";
 import uploadIcon from "../../assets/icons/upload.image.svg?url";
 import { useTranslation } from "react-i18next";
 
-const StyledWrapper = styled.div`
-  width: 96px;
-  height: 96px;
+const StyledWrapper = styled.div<{ size: number }>`
+  width: ${({ size }) => `${size}px`};
+  height: ${({ size }) => `${size}px`};
   position: relative;
   cursor: pointer;
   .avatar {
@@ -67,6 +67,7 @@ const StyledWrapper = styled.div`
 
 type UID = number;
 interface Props {
+  size?: number;
   uid?: UID;
   className?: string;
   url?: string;
@@ -77,6 +78,7 @@ interface Props {
 }
 
 const AvatarUploader: FC<Props> = ({
+  size = 96,
   uid,
   className = "",
   url = "",
@@ -101,9 +103,9 @@ const AvatarUploader: FC<Props> = ({
   };
 
   return (
-    <StyledWrapper className={className}>
+    <StyledWrapper size={size} className={className}>
       <div className="avatar">
-        <Avatar width={96} height={96} type={type} src={url} name={name} className={className} />
+        <Avatar width={size} height={size} type={type} src={url} name={name} className={className} />
         {!disabled && (
           <>
             <div className="tip">

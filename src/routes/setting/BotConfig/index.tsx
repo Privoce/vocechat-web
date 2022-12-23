@@ -78,7 +78,7 @@ export default function BotConfig() {
                 const { uid, name, avatar } = bot;
                 return <tr key={uid} className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
                   <td className="px-4 py-2">
-                    <AvatarUploader uid={uid} url={avatar} uploadImage={updateAvatar} name={name} className="!w-14 !h-14" />
+                    <AvatarUploader uid={uid} url={avatar} uploadImage={updateAvatar} name={name} size={56} />
 
                   </td>
                   <td className={`${tdClass}`}>
