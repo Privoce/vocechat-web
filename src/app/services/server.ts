@@ -1,5 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import BASE_URL, { PAYMENT_URL_PREFIX } from "../config";
+import BASE_URL, { ContentTypes, PAYMENT_URL_PREFIX } from "../config";
 import { updateInfo } from "../slices/server";
 import baseQuery from "./base.query";
 import { RootState } from "../store";
@@ -18,6 +18,8 @@ import {
   RenewLicense,
   RenewLicenseResponse
 } from "../../types/server";
+import { Channel } from "../../types/channel";
+import { ContentTypeKey } from "../../types/message";
 
 const defaultExpireDuration = 2 * 24 * 60 * 60;
 
@@ -224,7 +226,29 @@ export const serverApi = createApi({
         method: "PUT",
         body: { license }
       })
-    })
+    }),
+    getBotRelatedChannels: builder.query<Channel[], { api_key: string, public_only?: boolean }>({
+      query: ({ api_key, public_only = false }) => ({
+        url: public_only ? `/bot?public_only=${public_only}` : `/bot`,
+        headers: {
+          "x-api-key": api_key
+        },
+      })
+    }),
+    sendMessageByBot: builder.mutation<number, { uid?: number, cid?: number, api_key: string, content: string, type?: ContentTypeKey, properties?: object }>({
+      query: ({ uid, cid, api_key, type = "text", properties, content }) => ({
+        headers: {
+          "x-api-key": api_key,
+          "content-type": ContentTypes[type],
+          "X-Properties": properties
+            ? btoa(unescape(encodeURIComponent(JSON.stringify(properties))))
+            : ""
+        },
+        url: cid ? `/bot/send_to_group/${cid}` : `/bot/send_to_user/${uid}`,
+        method: "POST",
+        body: content
+      })
+    }),
   })
 });
 

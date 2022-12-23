@@ -7,6 +7,7 @@ import { useAppSelector } from '../../../app/store';
 import AvatarUploader from '../../../common/component/AvatarUploader';
 import Button from '../../../common/component/styled/Button';
 import IconDelete from '../../../assets/icons/delete.svg';
+// import IconTest from '../../../assets/icons/test.svg';
 import CreateModal from './CreateModal';
 import WebhookEdit from './WebhookEdit';
 import WebhookModal from './WebhookModal';
@@ -32,6 +33,7 @@ export default function BotConfig() {
   const [currDeleteParams, setCurrDeleteParams] = useState<DeleteParams | undefined>(undefined);
   const bots = useAppSelector(store => Object.values(store.users.byId).filter(u => !!u.is_bot));
   const { t } = useTranslation("setting", { keyPrefix: "bot" });
+  const { t: ct } = useTranslation();
 
   const toggleCreateModalVisible = () => {
     setCreateModalVisible(prev => !prev);
@@ -104,7 +106,11 @@ export default function BotConfig() {
             </tbody>
           </table>
         </div>
-        <Button onClick={toggleCreateModalVisible} className="ghost small">Add</Button>
+        <Button onClick={toggleCreateModalVisible} className="ghost small">{ct("action.add")}</Button>
+        {/* <div className="flex gap-4">
+          <Button onClick={toggleCreateModalVisible} className="small">{ct("action.add")}</Button>
+          <Button onClick={toggleCreateModalVisible} className="ghost small stroke-slate-200 fill-gray-200"> Test API Key</Button>
+        </div> */}
 
       </div>
       {createModalVisible && <CreateModal closeModal={toggleCreateModalVisible} />}

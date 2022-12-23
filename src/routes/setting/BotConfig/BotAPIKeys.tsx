@@ -40,7 +40,7 @@ const BotAPIKeys = ({ uid }: Props) => {
     return (
         <div className='flex flex-col gap-2 items-start'>
             <div className='border-t border-solid border-b border-gray-100 py-2 w-full'>
-                <table className="min-w-full table-auto font-mono">
+                <table className="min-w-full table-fixed font-mono">
                     <thead >
                         <tr >
                             {[t("col_key_name"), t('col_key_value'), t('col_key_create_time'), t('col_key_last_used'), ""].map((title, idx) => <th key={title} scope="col" className={clsx(`text-xs text-gray-900 px-1 text-left pb-2`, colWidths[idx])}>
@@ -71,14 +71,14 @@ const BotAPIKeys = ({ uid }: Props) => {
                                 </td>
                             </tr>;
                         }) : <tr>
-                            <td colSpan={5} className='w-full text-center text-xs text-gray-400 pt-4'>
-                                No API Key Yet
+                            <td colSpan={4} className='text-center text-xs text-gray-400 py-2'>
+                                {t("no_api_key")}
                             </td>
                         </tr>}
                     </tbody>
                 </table>
                 <button onClick={toggleCreateModal.bind(null, uid)} className="text-green-600 text-xs py-0.5 flex items-center gap-1 m-auto my-2 bg-green-50 rounded-full px-2 ">
-                    <IconAdd className="!w-4 !h-4 fill-green-600" /> Add API Key
+                    <IconAdd className="!w-4 !h-4 fill-green-600" /> {t("add_api_key")}
                 </button>
             </div>
             {currentUid && <CreateAPIKeyModal uid={currentUid} closeModal={toggleCreateModal.bind(null, undefined)} />}
