@@ -9,6 +9,7 @@ import ContextMenu from "./ContextMenu";
 import StyledWrapper from "./styled";
 import useContextMenu from "../../hook/useContextMenu";
 import { useAppSelector } from "../../../app/store";
+import clsx from "clsx";
 
 interface Props {
   uid: number;
@@ -54,7 +55,7 @@ const User: FC<Props> = ({
       >
         <StyledWrapper
           size={avatarSize}
-          className={`${interactive ? "interactive" : ""} ${compact ? "compact" : ""}`}
+          className={`${interactive ? "interactive" : ""} ${compact ? "compact" : ""} relative`}
           onDoubleClick={dm ? handleDoubleClick : undefined}
           onContextMenu={enableContextMenu ? handleContextMenuEvent : undefined}
         >
@@ -74,7 +75,7 @@ const User: FC<Props> = ({
             </span>
           )}
           {owner && <IconOwner />}
-          {curr.is_bot && <IconBot className="!w-5 !h-5" />}
+          {curr.is_bot && <IconBot className={clsx(compact && "absolute -top-1 -right-1", "!w-4 !h-4")} />}
         </StyledWrapper>
       </ContextMenu>
     );
@@ -115,7 +116,7 @@ const User: FC<Props> = ({
             </span>
           )}
           {owner && <IconOwner />}
-          {curr.is_bot && <IconBot className="!w-5 !h-5" />}
+          {curr.is_bot && <IconBot className="!w-4 !h-4" />}
         </StyledWrapper>
       </Tippy>
     </ContextMenu>

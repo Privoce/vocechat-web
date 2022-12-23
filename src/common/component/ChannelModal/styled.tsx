@@ -33,6 +33,7 @@ const StyledWrapper = styled.div`
       flex-direction: column;
       height: calc(100% - 52px - 10px);
       overflow-y: scroll;
+      overflow-x: hidden;
       .user {
         cursor: pointer;
         display: flex;

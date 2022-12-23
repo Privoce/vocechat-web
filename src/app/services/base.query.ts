@@ -24,7 +24,9 @@ const whiteList = [
   "getMetamaskNonce",
   "renew",
   "getInitialized",
-  "createAdmin"
+  "createAdmin",
+  "getBotRelatedChannels",
+  "sendMessageByBot"
 ];
 
 const baseQuery = fetchBaseQuery({
