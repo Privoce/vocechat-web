@@ -21,7 +21,7 @@
     "license": "License",
     "about": "About",
     "api_doc": "API Document",
-    "faq": "FAQ",
+    "version": "About Version",
     "terms": "Terms & Privacy",
     "feedback": "Feedback"
   },
@@ -177,7 +177,7 @@
     "param_open_width": "The width while widget opened",
     "param_open_height": "The height while widget opened"
   },
-  "faq": {
+  "version": {
     "client_version": "Client Version",
     "server_version": "Server Version",
     "build_time": "Build Timestamp"

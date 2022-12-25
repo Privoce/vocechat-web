@@ -2,8 +2,8 @@ import { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { useGetServerVersionQuery } from "../../app/services/server";
 type Props = {};
-const FAQ: FC<Props> = () => {
-  const { t } = useTranslation("setting", { keyPrefix: "faq" });
+const Version: FC<Props> = () => {
+  const { t } = useTranslation("setting", { keyPrefix: "version" });
   const { data: serverVersion } = useGetServerVersionQuery();
   return (
     <div className="flex flex-col gap-3">
@@ -13,4 +13,4 @@ const FAQ: FC<Props> = () => {
     </div>
   );
 };
-export default FAQ;
+export default Version;

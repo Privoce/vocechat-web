@@ -20,7 +20,7 @@
     "license": "证书",
     "about": "关于",
     "api_doc": "API 文档",
-    "faq": "常见问题",
+    "version": "版本信息",
     "terms": "隐私声明",
     "feedback": "反馈"
   },
@@ -173,7 +173,7 @@
     "param_open_width": "挂件打开态的宽度",
     "param_open_height": "挂件打开态的高度"
   },
-  "faq": {
+  "version": {
     "client_version": "客户端版本",
     "server_version": "服务器端版本",
     "build_time": "构建时间戳"

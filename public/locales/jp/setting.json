@@ -18,7 +18,7 @@
     "license": "ライセンス",
     "about": "このアプリについて",
     "api_doc": "APIドキュメント",
-    "faq": "FAQ",
+    "version": "About Version",
     "terms": "プライバシーに関する説明",
     "feedback": "フィードバック"
   },
@@ -129,7 +129,7 @@
     "param_open_width": "ウィジェット開きままの幅",
     "param_open_height": "ウィジェット開きままの高さ"
   },
-  "faq": {
+  "version": {
     "client_version": "クライアントバージョン",
     "server_version": "サーバーバージョン",
     "build_time": "ビルド時間"

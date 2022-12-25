@@ -9,7 +9,7 @@ import Widget from "./Widget";
 import BotConfig from "./BotConfig";
 import APIDocument from "./APIDocument";
 import ManageMembers from "../../common/component/ManageMembers";
-import FAQ from "../../common/component/FAQ";
+import Version from "../../common/component/Version";
 // import ConfigAgora from "./config/Agora";
 import { useAppSelector } from "../../app/store";
 import { useTranslation } from "react-i18next";
@@ -80,8 +80,8 @@ const navs = [
         component: <APIDocument />
       },
       {
-        name: "faq",
-        component: <FAQ />
+        name: "version",
+        component: <Version />
       },
       {
         name: "terms",
@@ -92,9 +92,10 @@ const navs = [
         component: <ul className="flex flex-col gap-2 text-lg">
           <li>Email: <strong className="font-bold">han@privoce.com</strong></li>
           <li>Wechat: <strong className="font-bold">Privoce</strong></li>
-          <li>Github:
+          <li>Github:&nbsp;
             <strong className="font-bold">
-              <a className="text-[#06b6d4] underline underline-offset-2" href="https://github.com/Privoce/vocechat-web/issues" target="_blank" rel="noopener noreferrer">vocechat-web/issues</a> </strong>
+              <a className="text-[#06b6d4] underline underline-offset-2" href="https://github.com/Privoce/vocechat-web/issues" target="_blank" rel="noopener noreferrer">vocechat-web/issues</a>
+            </strong>
           </li>
         </ul>
       }
