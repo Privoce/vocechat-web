@@ -25,7 +25,6 @@ const RegWithUsername: FC = () => {
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const query = new URLSearchParams(location.search);
-  // const githubCode = query.get("gcode");
   // todo: check if query param exists
   const token = query.get("magic_token") as string;
   useEffect(() => {

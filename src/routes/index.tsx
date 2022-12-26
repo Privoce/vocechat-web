@@ -87,10 +87,7 @@ const PageRoutes = () => {
           }
         >
           <Route index element={<LazyIt><RegPage /></LazyIt>} />
-          <Route path="set_name">
-            <Route index element={<LazyIt><RegWithUsernamePage /></LazyIt>} />
-            <Route path=":from" element={<LazyIt><RegWithUsernamePage /></LazyIt>} />
-          </Route>
+          <Route path="set_name/:from?" element={<LazyIt><RegWithUsernamePage /></LazyIt>} />
         </Route>
         <Route
           path="/email_login"
