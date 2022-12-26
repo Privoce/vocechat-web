@@ -3,7 +3,7 @@ import Button from "../../common/component/styled/Button";
 
 export const StyledSocialButton = styled(Button)`
   width: 100%;
-  margin-bottom: 16px;
+  /* margin-bottom: 16px; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -63,6 +63,7 @@ const StyledWrapper = styled.div`
       height: 1px;
       background-color: #e4e7ec;
       margin: 26px 0;
+      overflow: visible;
       &:after {
         padding: 4px;
         background-color: #fff;

@@ -8,6 +8,7 @@ import Button from "../../common/component/styled/Button";
 import { useSendLoginMagicLinkMutation } from "../../app/services/auth";
 import SentTip from "./SentTip";
 import { useTranslation } from "react-i18next";
+import SocialLoginButtons from "../login/SocialLoginButtons";
 
 export default function SendMagicLinkPage() {
   const { t } = useTranslation("auth");
@@ -91,6 +92,9 @@ export default function SendMagicLinkPage() {
               </Button>
             </form>
             <hr className="or" />
+            <div className="flex flex-col gap-3 py-3">
+              <SocialLoginButtons />
+            </div>
             <Button onClick={handlePwdPath}>{t("login.password")}</Button>
           </>
         )}

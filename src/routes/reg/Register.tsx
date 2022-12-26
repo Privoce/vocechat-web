@@ -6,12 +6,10 @@ import Button from "../../common/component/styled/Button";
 import { useLazyCheckEmailQuery, useSendRegMagicLinkMutation } from "../../app/services/auth";
 import EmailNextTip from "./EmailNextStepTip";
 import SignInLink from "./SignInLink";
-import { useGetLoginConfigQuery } from "../../app/services/server";
-import useGithubAuthConfig from "../../common/hook/useGithubAuthConfig";
-import useGoogleAuthConfig from "../../common/hook/useGoogleAuthConfig";
-import GoogleLoginButton from "../../common/component/GoogleLoginButton";
-import GithubLoginButton from "../../common/component/GithubLoginButton";
+
 import { useTranslation } from "react-i18next";
+import { useGetLoginConfigQuery } from "../../app/services/server";
+import SocialLoginButtons from "../login/SocialLoginButtons";
 
 interface AuthForm {
   email: string;
@@ -24,6 +22,8 @@ export default function Reg() {
   const [sendRegMagicLink, { isLoading: signingUp, data, isSuccess }] =
     useSendRegMagicLinkMutation();
   const [checkEmail, { isLoading: checkingEmail }] = useLazyCheckEmailQuery();
+  const { data: loginConfig, isSuccess: loginConfigSuccess } = useGetLoginConfigQuery();
+
   // const navigateTo = useNavigate();
   const [magicToken, setMagicToken] = useState("");
   const [input, setInput] = useState<AuthForm>({
@@ -87,17 +87,10 @@ export default function Reg() {
       return { ...prev };
     });
   };
-
-  const { clientId } = useGoogleAuthConfig();
-  const { config: githubAuthConfig } = useGithubAuthConfig();
-  const { data: loginConfig, isSuccess: loginConfigSuccess } = useGetLoginConfigQuery();
   if (!loginConfigSuccess) return null;
   const {
-    github: enableGithubLogin,
-    google: enableGoogleLogin,
     who_can_sign_up: whoCanSignUp
   } = loginConfig;
-  const googleLogin = enableGoogleLogin && clientId;
   // magic token 没有并且没有开放注册
   if (whoCanSignUp !== "EveryOne" && !magicToken)
     // todo: i18n
@@ -153,11 +146,8 @@ export default function Reg() {
         </Button>
       </form>
       <hr className="or" />
-      <div className="flex flex-col gap-3">
-        {googleLogin && <GoogleLoginButton type="register" clientId={clientId} />}
-        {enableGithubLogin && (
-          <GithubLoginButton type="register" client_id={githubAuthConfig?.client_id} />
-        )}
+      <div className="flex flex-col gap-3 py-3">
+        <SocialLoginButtons />
       </div>
       <SignInLink token={magicToken} />
     </>

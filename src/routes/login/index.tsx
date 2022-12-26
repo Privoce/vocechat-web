@@ -4,8 +4,7 @@ import toast from "react-hot-toast";
 import BASE_URL from "../../app/config";
 // import web3 from "web3";
 import StyledWrapper from "./styled";
-import MetamaskLoginButton from "./MetamaskLoginButton";
-import OidcLoginButton from "./OidcLoginButton";
+
 import Input from "../../common/component/styled/Input";
 import Button from "../../common/component/styled/Button";
 import MagicLinkLogin from "./MagicLinkLogin";
@@ -13,18 +12,15 @@ import SignUpLink from "./SignUpLink";
 import { useLoginMutation } from "../../app/services/auth";
 import { useGetLoginConfigQuery, useGetSMTPStatusQuery } from "../../app/services/server";
 import useGoogleAuthConfig from "../../common/hook/useGoogleAuthConfig";
-import useGithubAuthConfig from "../../common/hook/useGithubAuthConfig";
-import GoogleLoginButton from "../../common/component/GoogleLoginButton";
-import GithubLoginButton from "../../common/component/GithubLoginButton";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useTranslation } from "react-i18next";
+import SocialLoginButtons from "./SocialLoginButtons";
 
 export default function LoginPage() {
   const { t } = useTranslation("auth");
   const { data: enableSMTP } = useGetSMTPStatusQuery();
   const [login, { isSuccess, isLoading, error }] = useLoginMutation();
   const { clientId } = useGoogleAuthConfig();
-  const { config: githubAuthConfig } = useGithubAuthConfig();
   const { data: loginConfig, isSuccess: loginConfigSuccess } = useGetLoginConfigQuery();
   const [input, setInput] = useState({
     email: "",
@@ -162,12 +158,10 @@ export default function LoginPage() {
         <div className="btns">
 
           {enableMagicLink && <MagicLinkLogin />}
-          {googleLogin && <GoogleLoginButton clientId={clientId} />}
-          {enableGithubLogin && <GithubLoginButton client_id={githubAuthConfig?.client_id} />}
-          {enableMetamaskLogin && <MetamaskLoginButton login={login} />}
-          {oidc.length > 0 && <OidcLoginButton issuers={oidc} />}
+
+          <SocialLoginButtons />
         </div>
-        {whoCanSignUp === "EveryOne" && <SignUpLink />}
+        {whoCanSignUp === "EveryOne" && <SignUpLink smtp={enableSMTP} />}
       </div>
     </StyledWrapper>
   );
