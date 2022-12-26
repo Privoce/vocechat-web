@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { formatBytes } from '../../utils';
 import IconDownload from "../../../assets/icons/download.svg";
 import IconVideo from "../../../assets/icons/file.video.svg";
@@ -11,12 +11,16 @@ type Props = {
 }
 
 const VideoMessage = ({ url, name, size, download }: Props) => {
+    const videoRef = useRef<HTMLVideoElement>(null);
     const [playing, setPlaying] = useState(false);
     const _size = formatBytes(size);
     const handlePlaying = () => {
         setPlaying(true);
     };
     const handlePause = () => {
+        if (videoRef && videoRef.current) {
+            if (videoRef.current.seeking) return;
+        }
         setPlaying(false);
     };
     return (
@@ -36,7 +40,7 @@ const VideoMessage = ({ url, name, size, download }: Props) => {
                     </div>
                 </>
             }
-            <video onPlaying={handlePlaying} onPause={handlePause} src={url} controls className="absolute left-0 top-0 w-full h-full object-cover z-10" />
+            <video ref={videoRef} onPlaying={handlePlaying} onPause={handlePause} src={url} controls className="absolute left-0 top-0 w-full h-full object-cover z-10" />
         </div>
     );
 };
