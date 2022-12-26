@@ -227,11 +227,10 @@ export const normalizeArchiveData = (
         thumbnail_id,
         avatar: user.avatar
       });
-      user.avatar = avatarUrl;
       return {
         source,
         from_mid: mid,
-        user,
+        user: { ...user, avatar: avatarUrl },
         content: transformedContent,
         content_type,
         properties,

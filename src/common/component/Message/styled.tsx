@@ -92,10 +92,6 @@ const StyledMsg = styled.div`
   }
   &.archive {
     gap: 8px;
-    .avatar {
-      width: 24px;
-      height: 24px;
-    }
     > .details {
       gap: 0;
       .up .name {
