@@ -16,6 +16,7 @@ import ContextMenu from "./ContextMenu";
 import useContextMenu from "../../hook/useContextMenu";
 import usePinMessage from "../../hook/usePinMessage";
 import { useAppSelector } from "../../../app/store";
+import ExpireTimer from "./ExpireTimer";
 
 interface IProps {
   readOnly?: boolean;
@@ -50,6 +51,19 @@ const Message: FC<IProps> = ({
     setEdit((prev) => !prev);
   };
 
+  useEffect(() => {
+    if (!read) {
+      // 标记已读
+      const data =
+        context == "user"
+          ? { users: [{ uid: +contextId, mid }] }
+          : { groups: [{ gid: +contextId, mid }] };
+      if (updateReadIndex) {
+        updateReadIndex(data);
+      }
+    }
+  }, [mid, read]);
+
   const {
     reply_mid,
     from_uid: fromUid,
@@ -60,20 +74,10 @@ const Message: FC<IProps> = ({
     download,
     content_type = "text/plain",
     edited,
-    properties
+    properties,
+    expires_in = 0
   } = message;
 
-  useEffect(() => {
-    if (!read) {
-      const data =
-        context == "user"
-          ? { users: [{ uid: +contextId, mid }] }
-          : { groups: [{ gid: +contextId, mid }] };
-      if (updateReadIndex) {
-        updateReadIndex(data);
-      }
-    }
-  }, [mid, read]);
 
   const reactions = reactionMessageData[mid];
   const currUser = usersData[fromUid || 0];
@@ -85,15 +89,15 @@ const Message: FC<IProps> = ({
   const pinInfo = getPinInfo(mid);
   // return null;
   const _key = properties?.local_id || mid;
+  const showExpire = (expires_in ?? 0) > 0;
   return (
     <StyledWrapper
       key={_key}
       onContextMenu={readOnly ? undefined : handleContextMenuEvent}
       data-msg-mid={mid}
       ref={inviewRef}
-      className={`message ${readOnly ? "readonly" : ""} ${pinInfo ? "pinned" : ""} ${
-        contextMenuVisible ? "contextVisible" : ""
-      } `}
+      className={`message ${readOnly ? "readonly" : ""} ${showExpire ? "auto_delete" : ""} ${pinInfo ? "pinned" : ""} ${contextMenuVisible ? "contextVisible" : ""
+        } `}
     >
       <Tippy
         key={_key}
@@ -118,9 +122,8 @@ const Message: FC<IProps> = ({
       >
         <div
           className="details"
-          data-pin-tip={`pinned by ${
-            pinInfo?.created_by ? usersData[pinInfo.created_by]?.name : ""
-          }`}
+          data-pin-tip={`pinned by ${pinInfo?.created_by ? usersData[pinInfo.created_by]?.name : ""
+            }`}
         >
           <div className="up">
             <span className="name">{currUser?.name || "Deleted User"}</span>
@@ -160,6 +163,13 @@ const Message: FC<IProps> = ({
         </div>
       </ContextMenu>
 
+      {showExpire && (
+        <ExpireTimer
+          mid={message.mid}
+          expires_in={expires_in ?? 0}
+          create_at={time ?? 0}
+        />
+      )}
       {!edit && !readOnly && (
         <Commands
           context={context}

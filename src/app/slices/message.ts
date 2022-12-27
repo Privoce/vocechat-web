@@ -12,6 +12,7 @@ export interface MessagePayload {
   content: string;
   expires_in?: number | null;
   properties?: {
+    local_id?: number;
     content_type: string;
     size: number;
   };
@@ -75,7 +76,7 @@ const messageSlice = createSlice({
           data.thumbnail = content;
         }
       }
-      state[mid] = data;
+      state[mid] = { ...state[mid], ...data };
     },
     removeMessage(state, action: PayloadAction<number | number[]>) {
       const mids = Array.isArray(action.payload) ? action.payload : [action.payload];
