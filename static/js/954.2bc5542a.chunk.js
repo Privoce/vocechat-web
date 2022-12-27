@@ -291,6 +291,9 @@
   &[data-highlight="true"] {
     background: #f5f6f7;
   }
+  &.auto_delete {
+    background: #f1d1ca50;
+  }
   &.pinned {
     background: #ecfdff;
   }
