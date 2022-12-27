@@ -1,7 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 // import toast from "react-hot-toast";
 import baseQuery from "./base.query";
-import { updateMute } from "../slices/footprint";
+import { updateAutoDeleteSetting, updateMute } from "../slices/footprint";
 import { fillUsers } from "../slices/users";
 import BASE_URL, { ContentTypes } from "../config";
 import { onMessageSendStarted } from "./handlers";
@@ -59,7 +59,22 @@ export const userApi = createApi({
         url: `/user/burn-after-reading`,
         body: data,
         method: "POST"
-      })
+      }),
+      async onQueryStarted(data, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          if (data.users) {
+            // users
+            dispatch(updateAutoDeleteSetting({ burn_after_reading_users: data.users }));
+          }
+          if (data.groups) {
+            // channel
+            dispatch(updateAutoDeleteSetting({ burn_after_reading_groups: data.groups }));
+          }
+        } catch {
+          console.log("update auto delete message setting error");
+        }
+      }
     }),
 
     updateMuteSetting: builder.mutation<void, MuteDTO>({

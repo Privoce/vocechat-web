@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { MuteDTO } from "../../types/message";
+import { AutoDeleteMessageSettingDTO, AutoDeleteMsgForGroup, AutoDeleteMsgForUser, AutoDeleteSettingForChannels, AutoDeleteSettingForUsers } from "../../types/sse";
 
 export interface State {
   usersVersion: number;
@@ -8,6 +9,8 @@ export interface State {
   readChannels: { [gid: number]: number };
   muteUsers: { [uid: number]: { expired_in?: number } | undefined };
   muteChannels: { [gid: number]: { expired_in?: number } | undefined };
+  autoDeleteMsgUsers: AutoDeleteMsgForUser[];
+  autoDeleteMsgChannels: AutoDeleteMsgForGroup[];
 }
 
 const initialState: State = {
@@ -16,7 +19,9 @@ const initialState: State = {
   readUsers: {},
   readChannels: {},
   muteUsers: {},
-  muteChannels: {}
+  muteChannels: {},
+  autoDeleteMsgUsers: [],
+  autoDeleteMsgChannels: [],
 };
 
 const footprintSlice = createSlice({
@@ -33,7 +38,9 @@ const footprintSlice = createSlice({
         readUsers = {},
         readChannels = {},
         muteUsers = {},
-        muteChannels = {}
+        muteChannels = {},
+        autoDeleteMsgUsers = [],
+        autoDeleteMsgChannels = []
       } = action.payload;
       return {
         usersVersion,
@@ -41,7 +48,9 @@ const footprintSlice = createSlice({
         readUsers,
         readChannels,
         muteUsers,
-        muteChannels
+        muteChannels,
+        autoDeleteMsgUsers,
+        autoDeleteMsgChannels
       };
     },
     updateUsersVersion(state, action: PayloadAction<number>) {
@@ -49,6 +58,45 @@ const footprintSlice = createSlice({
     },
     updateAfterMid(state, action: PayloadAction<number>) {
       state.afterMid = action.payload;
+    },
+    updateAutoDeleteSetting(state, action: PayloadAction<AutoDeleteMessageSettingDTO>) {
+      const payload = action.payload;
+      Object.keys(payload).forEach((key) => {
+        switch (key) {
+          case "burn_after_reading_users": {
+            const updates = (payload as AutoDeleteSettingForUsers).burn_after_reading_users;
+            updates.map(item => {
+              const { uid } = item;
+              const idx = state.autoDeleteMsgUsers.findIndex(tmp => tmp.uid == uid);
+              if (idx !== -1) {
+                // update
+                state.autoDeleteMsgUsers[idx] = item;
+              } else {
+                // add
+                state.autoDeleteMsgUsers.push(item);
+              }
+            });
+            break;
+          }
+          case "burn_after_reading_groups": {
+            const updates = (payload as AutoDeleteSettingForChannels).burn_after_reading_groups;
+            updates.map(item => {
+              const { gid } = item;
+              const idx = state.autoDeleteMsgChannels.findIndex(tmp => tmp.gid == gid);
+              if (idx !== -1) {
+                // update
+                state.autoDeleteMsgChannels[idx] = item;
+              } else {
+                // add
+                state.autoDeleteMsgChannels.push(item);
+              }
+            });
+            break;
+          }
+          default:
+            break;
+        }
+      });
     },
     updateMute(state, action: PayloadAction<MuteDTO>) {
       const payload = action.payload || {};
@@ -111,7 +159,8 @@ export const {
   updateUsersVersion,
   updateReadChannels,
   updateReadUsers,
-  updateMute
+  updateMute,
+  updateAutoDeleteSetting
 } = footprintSlice.actions;
 
 export default footprintSlice.reducer;

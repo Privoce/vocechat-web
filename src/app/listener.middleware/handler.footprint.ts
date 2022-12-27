@@ -39,6 +39,12 @@ export default async function handler({ operation, data = {}, payload }: Params)
         await table?.setItem("readUsers", data.readUsers);
       }
       break;
+    case "updateAutoDeleteSetting":
+      {
+        await table?.setItem("autoDeleteMsgUsers", data.autoDeleteMsgUsers || []);
+        await table?.setItem("autoDeleteMsgChannels", data.autoDeleteMsgChannels || []);
+      }
+      break;
     default:
       break;
   }

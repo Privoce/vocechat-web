@@ -13,7 +13,8 @@ import {
   updateUsersVersion,
   updateReadChannels,
   updateReadUsers,
-  updateMute
+  updateMute,
+  updateAutoDeleteSetting
 } from "../../../app/slices/footprint";
 import { updateUsersByLogs, updateUsersStatus } from "../../../app/slices/users";
 import { resetAuthData, updateLoginUser } from "../../../app/slices/auth.data";
@@ -176,6 +177,22 @@ export default function useStreaming() {
                   if (arr && arr.length) {
                     const _key = key.endsWith("users") ? "remove_users" : "remove_groups";
                     dispatch(updateMute({ [_key]: arr }));
+                  }
+                }
+                break;
+              case "burn_after_reading_users":
+                {
+                  const arr = data[key];
+                  if (arr) {
+                    dispatch(updateAutoDeleteSetting({ burn_after_reading_users: arr }));
+                  }
+                }
+                break;
+              case "burn_after_reading_groups":
+                {
+                  const arr = data[key];
+                  if (arr) {
+                    dispatch(updateAutoDeleteSetting({ burn_after_reading_groups: arr }));
                   }
                 }
                 break;

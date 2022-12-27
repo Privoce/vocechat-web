@@ -46,17 +46,28 @@ export interface MuteChannel {
   gid: number;
   expired_at: number;
 }
-
+export type AutoDeleteMsgForUser = {
+  uid: number; expires_in: number | null
+}
+export type AutoDeleteMsgForGroup = {
+  gid: number; expires_in: number | null
+}
 export interface UserSettingsEvent {
   type: "user_settings";
   mute_users?: MuteUser[];
   mute_groups?: MuteChannel[];
   read_index_users?: { uid: number; mid: number }[];
   read_index_groups?: { gid: number; mid: number }[];
-  burn_after_reading_users?: { uid: number; expires_in: number }[];
-  burn_after_reading_groups?: { gid: number; expires_in: number }[];
+  burn_after_reading_users?: AutoDeleteMsgForUser[];
+  burn_after_reading_groups?: AutoDeleteMsgForGroup[];
 }
-
+export type AutoDeleteSettingForUsers = {
+  burn_after_reading_users: AutoDeleteMsgForUser[]
+}
+export type AutoDeleteSettingForChannels = {
+  burn_after_reading_groups: AutoDeleteMsgForGroup[]
+}
+export type AutoDeleteMessageSettingDTO = AutoDeleteSettingForUsers | AutoDeleteSettingForChannels
 export interface UserSettingsChangedEvent {
   type: "user_settings_changed";
   from_device?: string;
@@ -66,8 +77,8 @@ export interface UserSettingsChangedEvent {
   remove_mute_groups?: number[];
   read_index_users?: { uid: number; mid: number }[];
   read_index_groups?: { gid: number; mid: number }[];
-  burn_after_reading_users?: { uid: number; expires_in: number }[];
-  burn_after_reading_groups?: { gid: number; expires_in: number }[];
+  burn_after_reading_users?: AutoDeleteMsgForUser[];
+  burn_after_reading_groups?: AutoDeleteMsgForGroup[];
 }
 
 export interface RelatedGroupsEvent {

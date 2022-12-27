@@ -3,6 +3,7 @@ import { toast } from 'react-hot-toast';
 
 import { useTranslation } from "react-i18next";
 import { useUpdateAutoDeleteMsgMutation } from "../../app/services/user";
+import { useAppSelector } from '../../app/store';
 import SaveTip from "./SaveTip";
 import StyledRadio from "./styled/Radio";
 
@@ -10,11 +11,15 @@ import StyledRadio from "./styled/Radio";
 type Props = {
     id: number,
     type?: "user" | "channel",
-    expires_in?: number
+    // expires_in?: number
 }
-const AutoDeleteMessages = ({ id, type = "channel", expires_in = 0 }: Props) => {
+const AutoDeleteMessages = ({ id, type = "channel" }: Props) => {
+    const setting = useAppSelector(store => type == "channel" ?
+        store.footprint.autoDeleteMsgChannels.find(item => item.gid == id)
+        :
+        store.footprint.autoDeleteMsgUsers.find(item => item.uid == id));
     const [updateSetting, { isSuccess }] = useUpdateAutoDeleteMsgMutation();
-    const [value, setValue] = useState(expires_in);
+    const [value, setValue] = useState<number>(setting?.expires_in ?? 0);
     const { t } = useTranslation("setting", { keyPrefix: "auto_delete_msg" });
     const options = [
         { title: t("off"), value: 0 },
@@ -29,7 +34,7 @@ const AutoDeleteMessages = ({ id, type = "channel", expires_in = 0 }: Props) => 
         updateSetting(dto);
     };
     const handleReset = () => {
-        setValue(expires_in);
+        setValue(setting?.expires_in ?? 0);
     };
     const handleChange = (val: number) => {
         setValue(val);
@@ -39,7 +44,7 @@ const AutoDeleteMessages = ({ id, type = "channel", expires_in = 0 }: Props) => 
             toast.success("Update Successfully!");
         }
     }, [isSuccess]);
-
+    const originalVal = setting?.expires_in ?? 0;
     return (
         <section className="max-w-[512px] h-full relative">
             <div className="text-sm">
@@ -50,11 +55,11 @@ const AutoDeleteMessages = ({ id, type = "channel", expires_in = 0 }: Props) => 
                 <StyledRadio
                     options={options.map(({ title }) => title)}
                     values={options.map(({ value }) => value)}
-                    value={value}
+                    value={value || 0}
                     onChange={handleChange}
                 />
             </div>
-            {expires_in !== value && <SaveTip saveHandler={handleSave} resetHandler={handleReset} />}
+            {originalVal !== value && <SaveTip saveHandler={handleSave} resetHandler={handleReset} />}
         </section>
     );
 };
