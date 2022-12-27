@@ -65,3 +65,9 @@ For more server hosting instructions, see our documentation: https://doc.voce.ch
 ## License
 
 [GPL v3](https://github.com/Privoce/vocechat-web/blob/main/LICENSE)
+
+## Thanks all the contributors
+
+<a href="https://github.com/privoce/vocechat-web/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=privoce/vocechat-web" />
+</a>

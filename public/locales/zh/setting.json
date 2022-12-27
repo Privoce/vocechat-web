@@ -94,6 +94,8 @@
     "create_desc": "给你的机器人一个名字，同时也可以设置Webhook URL，用以接收推送的数据。",
     "create_key_title": "创建机器人API Key",
     "create_key_desc": "使用API Key授权机器人与VoceChat数据流通",
+    "create_key_warning": "关闭该弹窗后，密钥将不再可见，请确保复制保存！",
+    "key_copy_and_close": "复制并关闭",
     "delete_title": "删除机器人",
     "delete_desc": "确定删除该机器人？",
     "delete_key_title": "删除机器人API Key",
