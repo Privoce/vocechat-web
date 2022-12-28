@@ -1,31 +1,47 @@
 import dayjs from 'dayjs';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { removeMessage } from '../../../app/slices/message';
+import { removeChannelMsg } from '../../../app/slices/message.channel';
+import { removeUserMsg } from '../../../app/slices/message.user';
 import IconTimer from '../../../assets/icons/timer.svg';
 type Props = {
+    context: "user" | "channel",
+    contextId: number,
     mid: number;
-    expires_in: number;
-    create_at: number;
+    expiresIn: number;
+    createAt: number;
 };
 
-const ExpireTimer: FC<Props> = ({ mid, create_at, expires_in }) => {
+const ExpireTimer: FC<Props> = ({ mid, createAt, expiresIn, context, contextId }) => {
     const [countdown, setCountdown] = useState<number | undefined>();
     const dispatch = useDispatch();
+    const clearMsgFromClient = useCallback(
+        () => {
+            if (context == "user") {
+                dispatch(removeUserMsg({ mid, id: contextId }));
+            } else {
+                dispatch(removeChannelMsg({ mid, id: contextId }));
+
+            }
+            dispatch(removeMessage(mid));
+        },
+        [context, contextId, mid],
+    );
+
     useEffect(() => {
-        if (expires_in > 0 && create_at > 0) {
-            const expire_time = create_at + expires_in * 1000;
+        if (expiresIn > 0 && createAt > 0) {
+            const expire_time = createAt + expiresIn * 1000;
             if (dayjs().isAfter(new Date(expire_time))) {
                 // 已过期，立即删除
-                dispatch(removeMessage(mid));
-                // dispatch()
+                clearMsgFromClient();
 
             } else {
                 // 倒计时
                 setCountdown(Math.floor((expire_time - new Date().getTime()) / 1000));
             }
         }
-    }, [expires_in, create_at, mid]);
+    }, [expiresIn, createAt]);
     useEffect(() => {
         let timer = 0;
         if (typeof countdown !== "undefined") {
@@ -39,8 +55,7 @@ const ExpireTimer: FC<Props> = ({ mid, create_at, expires_in }) => {
             } else {
                 // 倒计时结束
                 console.log("countdown over", mid, countdown);
-
-                dispatch(removeMessage(mid));
+                clearMsgFromClient();
             }
         }
         return () => {

@@ -166,8 +166,10 @@ const Message: FC<IProps> = ({
       {showExpire && (
         <ExpireTimer
           mid={message.mid}
-          expires_in={expires_in ?? 0}
-          create_at={time ?? 0}
+          context={context}
+          contextId={contextId}
+          expiresIn={expires_in ?? 0}
+          createAt={time ?? 0}
         />
       )}
       {!edit && !readOnly && (

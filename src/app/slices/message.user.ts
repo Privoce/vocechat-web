@@ -38,7 +38,7 @@ const userMsgSlice = createSlice({
         state.ids.push(+id);
       }
     },
-    removeUserMsg(state, action) {
+    removeUserMsg(state, action: PayloadAction<{ id: number, mid: number }>) {
       const { id, mid } = action.payload;
       if (state.byId[id]) {
         const idx = state.byId[id].findIndex((i: number) => i == mid);

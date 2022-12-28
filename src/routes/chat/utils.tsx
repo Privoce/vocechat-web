@@ -147,7 +147,7 @@ type Params = {
   selectMode: boolean;
   read?: boolean;
   updateReadIndex?: (param: any) => void;
-  prev: object | null;
+  prev?: object | null;
   curr: object | null;
   contextId: number;
   context: "user" | "channel";
@@ -157,7 +157,7 @@ export const renderMessageFragment = ({
   selectMode = false,
   read = true,
   updateReadIndex,
-  prev = null,
+  prev,
   curr = null,
   contextId = 0,
   context = "user"
@@ -167,9 +167,10 @@ export const renderMessageFragment = ({
   const local_id = curr.properties?.local_id;
   let divider = null;
   let time = dayjs(created_at).format("YYYY/MM/DD");
-  if (!prev) {
+  if (!prev && typeof prev !== 'undefined') {
+    // 首条信息
     divider = time;
-  } else {
+  } else if (prev) {
     let { created_at: prev_created_at } = prev;
     if (!dayjs(prev_created_at).isSame(created_at, "day")) {
       divider = time;

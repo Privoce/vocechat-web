@@ -7,6 +7,7 @@ const StyledDivider = styled.hr`
   border: 0;
   border-top: 1px solid #e3e5e8;
   margin: 25px 0;
+  overflow: visible;
   &:before {
     background: #fff;
     padding: 2px 4px;
