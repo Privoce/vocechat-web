@@ -1,7 +1,8 @@
-// import { useState } from 'react';
+import { useState } from 'react';
 import { formatBytes } from '../../utils';
 import IconDownload from "../../../assets/icons/download.svg";
 import IconAudio from "../../../assets/icons/file.audio.svg";
+import clsx from 'clsx';
 
 type Props = {
     url: string,
@@ -11,6 +12,10 @@ type Props = {
 }
 
 const AudioMessage = ({ url, name, size, download }: Props) => {
+    const [canPlay, setCanPlay] = useState(false);
+    const handleCanPlay = () => {
+        setCanPlay(true);
+    };
     const _size = formatBytes(size);
     return (
         <div className='w-96 flex flex-col gap-2 px-3 py-2 rounded-md border border-solid border-gray-300 overflow-hidden bg-[#f1f3f4]'>
@@ -24,7 +29,7 @@ const AudioMessage = ({ url, name, size, download }: Props) => {
                 </div>
                 <a href={download} className="mt-2"><IconDownload className="download_icon gray" /></a>
             </div>
-            <audio src={url} controls className="w-full object-cover z-10" />
+            <audio src={url} onCanPlay={handleCanPlay} controls className={clsx("w-full object-cover z-10", canPlay ? "" : "hidden")} />
         </div>
     );
 };

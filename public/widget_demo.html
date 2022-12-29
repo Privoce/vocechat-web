@@ -8,6 +8,24 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
 
-  <body class="w-sreen h-screen bg-slate-800 text-stone-50"></body>
+  <body class="w-sreen h-screen flex justify-center items-center bg-slate-800 text-stone-50">
+    <div class="w-96 flex flex-col gap-2">
+      <div class="flex flex-col gap-1">
+        <h2 class="text-gray-100">S3:</h2>
+        <video class="w-full h-full object-cover" controls>
+          <source src="https://s.voce.chat/demo/how_to_install_vocechat.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <div class="flex flex-col gap-1">
+        <h2 class="text-gray-100">VoceChat:</h2>
+        <video class="w-full h-full object-cover" controls>
+          <source
+            src="https://dev.voce.chat/api/resource/file?file_path=2022%2F12%2F29%2F6803d8ad-8857-464b-a0a3-5d0f45bc1682"
+            type="video/mp4"
+          />
+        </video>
+      </div>
+    </div>
+  </body>
   <script src="/widget.js" data-host-id="1" async></script>
 </html>
