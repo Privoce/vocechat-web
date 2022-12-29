@@ -11,6 +11,7 @@ import IconDelete from '../../../assets/icons/delete.svg';
 import CreateModal from './CreateModal';
 import WebhookEdit from './WebhookEdit';
 import WebhookModal from './WebhookModal';
+import TestAPIKeyModal from './TestAPIKeyModal';
 import DeleteModal from './DeleteModal';
 import BotAPIKeys from './BotAPIKeys';
 import { toast } from 'react-hot-toast';
@@ -27,6 +28,7 @@ const tdClass = "p-6 whitespace-nowrap text-sm font-medium text-gray-900 align-t
 type WebhookParams = { webhook?: string, uid: number };
 type DeleteParams = { name: string, uid: number };
 export default function BotConfig() {
+  const [testAPIKeyModalVisible, setTestAPIKeyModalVisible] = useState(false);
   const [updateAvatar, { isSuccess: updateAvatarSuccess }] = useUpdateAvatarByAdminMutation();
   const [createModalVisible, setCreateModalVisible] = useState(false);
   const [currWebhookParams, setCurrWebhookParams] = useState<WebhookParams | undefined>(undefined);
@@ -35,6 +37,9 @@ export default function BotConfig() {
   const { t } = useTranslation("setting", { keyPrefix: "bot" });
   const { t: ct } = useTranslation();
 
+  const toggleTestAPIKeyModalVisible = () => {
+    setTestAPIKeyModalVisible(prev => !prev);
+  };
   const toggleCreateModalVisible = () => {
     setCreateModalVisible(prev => !prev);
   };
@@ -106,16 +111,17 @@ export default function BotConfig() {
             </tbody>
           </table>
         </div>
-        <Button onClick={toggleCreateModalVisible} className="ghost small">{ct("action.add")}</Button>
-        {/* <div className="flex gap-4">
+        {/* <Button onClick={toggleCreateModalVisible} className="ghost small">{ct("action.add")}</Button> */}
+        <div className="flex gap-4">
           <Button onClick={toggleCreateModalVisible} className="small">{ct("action.add")}</Button>
-          <Button onClick={toggleCreateModalVisible} className="ghost small stroke-slate-200 fill-gray-200"> Test API Key</Button>
-        </div> */}
+          <Button onClick={toggleTestAPIKeyModalVisible} className="ghost small stroke-slate-200 fill-gray-200"> Test API Key</Button>
+        </div>
 
       </div>
       {createModalVisible && <CreateModal closeModal={toggleCreateModalVisible} />}
       {currWebhookParams && <WebhookModal closeModal={toggleWebhookModalVisible} {...currWebhookParams} />}
       {currDeleteParams && <DeleteModal closeModal={toggleDeleteModalVisible} {...currDeleteParams} />}
+      {testAPIKeyModalVisible && <TestAPIKeyModal closeModal={toggleTestAPIKeyModalVisible} />}
     </>
   );
 }

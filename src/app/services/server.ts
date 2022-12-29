@@ -283,5 +283,7 @@ export const {
   useCheckLicenseMutation,
   useGetLicenseQuery,
   useGetLicensePaymentUrlMutation,
-  useLazyGetGeneratedLicenseQuery
+  useLazyGetGeneratedLicenseQuery,
+  useLazyGetBotRelatedChannelsQuery,
+  useSendMessageByBotMutation
 } = serverApi;
