@@ -1,10 +1,10 @@
 import { FC, FormEvent } from "react";
 import styled from "styled-components";
 import usePinMessage from "../../../common/hook/usePinMessage";
-import PreviewMessage from "../../../common/component/Message/PreviewMessage";
 import IconSurprise from "../../../assets/icons/emoji.surprise.svg";
 import IconClose from "../../../assets/icons/close.svg";
 import { useTranslation } from "react-i18next";
+import PinnedMessage from "../../../common/component/PinnedMessage";
 const Styled = styled.div`
   padding: 16px;
   background: #f9fafb;
@@ -98,7 +98,6 @@ const PinList: FC<Props> = ({ id }: Props) => {
   return (
     <Styled>
       <h4 className="head">{t("pinned_msg")}({pins.length})</h4>
-
       {noPins ? (
         <div className="none">
           <IconSurprise />
@@ -106,13 +105,13 @@ const PinList: FC<Props> = ({ id }: Props) => {
         </div>
       ) : (
         <ul className="list">
-          {pins.map(({ mid }) => {
+          {pins.map((data) => {
             return (
-              <li key={mid} className="pin">
-                <PreviewMessage mid={mid} />
+              <li key={data.mid} className="pin">
+                <PinnedMessage data={data} />
                 <div className="opts">
                   {canPin && (
-                    <button className="btn" data-mid={mid} onClick={handleUnpin}>
+                    <button className="btn" data-mid={data.mid} onClick={handleUnpin}>
                       <IconClose />
                     </button>
                   )}

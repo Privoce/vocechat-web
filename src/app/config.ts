@@ -43,6 +43,12 @@ export const ContentTypes = {
   formData: "multipart/form-data",
   json: "application/json"
 };
+export const MessageTypes = {
+  text: "text/plain",
+  markdown: "text/markdown",
+  file: "vocechat/file",
+  archive: "vocechat/archive",
+};
 export const firebaseConfig = {
   apiKey: "AIzaSyCc3VuCJZgzQLIH2wrYdQzsUOc1DuZiIOA",
   authDomain: "vocechatdev.firebaseapp.com",

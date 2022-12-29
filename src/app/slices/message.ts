@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import BASE_URL, { ContentTypes } from "../config";
-import { isImage } from "../../common/utils";
+// import  { ContentTypes } from "../config";
+import { normalizeFileMessage } from "../../common/utils";
 import { ContentType } from "../../types/message";
 export interface MessagePayload {
   mid: number;
   from_uid?: number;
   read?: boolean;
   created_at?: number;
-  sending: boolean;
+  sending?: boolean;
   content_type: ContentType;
   content: string;
   expires_in?: number | null;
@@ -49,34 +49,18 @@ const messageSlice = createSlice({
     },
     addMessage(state, action: PayloadAction<MessagePayload>) {
       const data = action.payload;
-      const { mid, sending, content_type, content, properties } = data;
+      const { mid, sending } = data;
       // console.log("tfile", sending, content, content_type);
 
       // 如果是正发送，并且已存在，则不覆盖
       if (sending && state[mid]) return;
-      const isFile = content_type == ContentTypes.file;
-      // image
-      const props = properties;
-      const isPic = isImage(props?.content_type, props?.size);
-      if (isFile) {
-        if (!sending) {
-          data.file_path = content;
-          data.content = `${BASE_URL}/resource/file?file_path=${encodeURIComponent(
-            content
-          )}`;
-          data.download = `${BASE_URL}/resource/file?file_path=${encodeURIComponent(
-            content
-          )}&download=true`;
-          data.thumbnail = isPic
-            ? `${BASE_URL}/resource/file?file_path=${encodeURIComponent(
-              content
-            )}&thumbnail=true`
-            : "";
-        } else if (isPic) {
-          data.thumbnail = content;
-        }
+      // 文件类消息的处理
+      const normalized = normalizeFileMessage(data);
+      if (normalized) {
+        state[mid] = { ...state[mid], ...data, ...normalized };
+      } else {
+        state[mid] = { ...state[mid], ...data };
       }
-      state[mid] = { ...state[mid], ...data };
     },
     removeMessage(state, action: PayloadAction<number | number[]>) {
       const mids = Array.isArray(action.payload) ? action.payload : [action.payload];

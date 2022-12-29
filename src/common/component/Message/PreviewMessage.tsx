@@ -14,8 +14,8 @@ const PreviewMessage: FC<Props> = ({ mid = 0 }) => {
     return { msg: store.message[mid], usersData: store.users.byId };
   });
   if (!msg) return null;
-  const { from_uid, created_at, content_type, content, thumbnail = "", properties } = msg;
-  const { name, avatar } = usersData[from_uid || 0] || {};
+  const { from_uid = 0, created_at, content_type, content, thumbnail = "", properties } = msg;
+  const { name, avatar } = usersData[from_uid] ?? {};
   return (
     <StyledWrapper className={`preview`}>
       <div className="avatar">

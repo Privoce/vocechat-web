@@ -7,6 +7,8 @@ import IconDoc from "../assets/icons/file.doc.svg";
 import IconCode from "../assets/icons/file.code.svg";
 import IconImage from "../assets/icons/file.image.svg";
 import { Archive, ArchiveMessage } from "../types/resource";
+import { MessagePayload } from "../app/slices/message";
+import { PinnedMessage } from "../types/channel";
 
 export const getLocalAuthData = () => {
   return {
@@ -180,6 +182,33 @@ export const getFileIcon = (type: string, name = "") => {
       break;
   }
   return icon;
+};
+export const normalizeFileMessage = (data: MessagePayload) => {
+  const { properties, content, sending = false, content_type } = data;
+  const isFile = content_type == ContentTypes.file;
+  const isPic = isImage(properties?.content_type, properties?.size);
+  let res: null | { file_path?: string, content?: string, download?: string, thumbnail: string } = null;
+  if (isFile) {
+    if (!sending) {
+      res = {
+        file_path: content,
+        content: `${BASE_URL}/resource/file?file_path=${encodeURIComponent(
+          content
+        )}`,
+        download: `${BASE_URL}/resource/file?file_path=${encodeURIComponent(
+          content
+        )}&download=true`,
+        thumbnail: isPic
+          ? `${BASE_URL}/resource/file?file_path=${encodeURIComponent(
+            content
+          )}&thumbnail=true`
+          : ""
+      };
+    } else if (isPic) {
+      res = { thumbnail: content };
+    }
+  }
+  return res;
 };
 export const normalizeArchiveData = (
   data: Archive | null,
