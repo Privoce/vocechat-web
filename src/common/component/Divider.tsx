@@ -1,36 +1,12 @@
-import styled from "styled-components";
 import { FC } from "react";
-
-const StyledDivider = styled.hr`
-  display: block;
-  position: relative;
-  border: 0;
-  border-top: 1px solid #e3e5e8;
-  margin: 25px 0;
-  overflow: visible;
-  &:before {
-    background: #fff;
-    padding: 2px 4px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate3d(-50%, -50%, 0);
-    content: attr(data-content);
-    font-style: normal;
-    font-weight: 600;
-    font-size: 12px;
-    line-height: 18px;
-    color: #78787c;
-  }
-`;
-
 interface Props {
   content: string;
 }
 
 const Divider: FC<Props> = ({ content }) => {
-  if (!content) return null;
-  return <StyledDivider data-content={content}></StyledDivider>;
+  return <div className="relative border-none h-[1px] bg-[#e3e5e8] my-6 overflow-visible">
+    <span className="p-1 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-xs text-gray-500 font-semibold bg-white">{content}</span>
+  </div>;
 };
 
 export default Divider;

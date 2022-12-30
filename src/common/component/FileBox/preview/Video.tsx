@@ -1,24 +1,13 @@
 import React, { FC } from "react";
-import styled from "styled-components";
-
-const Styled = styled.div`
-  height: 218px;
-  video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-`;
-
 interface Props {
   url: string;
 }
 
 const Video: FC<Props> = ({ url }) => {
   return (
-    <Styled>
-      <video controls src={url} />
-    </Styled>
+    <div className="h-[218px]">
+      <video className="w-full h-full object-cover" controls src={url} />
+    </div>
   );
 };
 

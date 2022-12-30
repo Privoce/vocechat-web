@@ -1,19 +1,4 @@
 import { FC } from "react";
-import styled from "styled-components";
-
-const Styled = styled.div`
-  background: #ecfdff;
-  border-radius: 4px;
-  height: 8px;
-  overflow: hidden;
-  .progress {
-    transition: all 0.25s ease;
-    height: 8px;
-    background: #088ab2;
-    border-radius: 4px;
-  }
-`;
-
 interface Props {
   value: number;
   width?: string;
@@ -21,9 +6,9 @@ interface Props {
 
 const Progress: FC<Props> = ({ value, width = "100%" }) => {
   return (
-    <Styled style={{ width }}>
-      <div className="progress" style={{ width: `${value}%` }}></div>
-    </Styled>
+    <div className="bg-[#ecfdff] rounded h-2 overflow-hidden" style={{ width }}>
+      <div className="h-2 bg-[#088ab2] rounded transition-all" style={{ width: `${value}%` }}></div>
+    </div>
   );
 };
 

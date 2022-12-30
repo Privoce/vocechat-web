@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { NavLink, useLocation } from "react-router-dom";
 import Tippy from "@tippyjs/react";
 import addIcon from "../../assets/icons/add.svg?url";
@@ -7,50 +6,6 @@ import AddEntriesMenu from "./AddEntriesMenu";
 import { useAppSelector } from "../../app/store";
 import { useTranslation } from "react-i18next";
 
-const StyledWrapper = styled.div`
-  min-height: 56px;
-  position: relative;
-  padding: 10px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  .server {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    .logo {
-      width: 32px;
-      height: 32px;
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 50%;
-      }
-    }
-    .info {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      .name {
-        font-weight: 700;
-        font-size: 14px;
-        line-height: 100%;
-        color: #374151;
-      }
-      .desc {
-        font-weight: 400;
-        font-size: 12px;
-        line-height: 100%;
-        color: #78787c;
-      }
-    }
-  }
-  .add {
-    cursor: pointer;
-  }
-`;
 type Props = {
   readonly?: boolean;
 };
@@ -67,42 +22,42 @@ export default function Server({ readonly = false }: Props) {
   const { name, description, logo } = server;
   if (readonly)
     return (
-      <StyledWrapper>
-        <div className="server">
-          <div className="logo">
-            <img alt={`${name} logo`} src={logo} />
+      <div className="relative flex items-center justify-between gap-2 px-4 py-2">
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8">
+            <img alt={`${name} logo`} className="w-full h-full object-cover rounded-full" src={logo} />
           </div>
-          <div className="info">
-            <h3 className="name" title={description}>
+          <div className="flex flex-col gap-1">
+            <h3 className="text-sm text-gray-600" title={description}>
               {name}
             </h3>
-            <span className="desc">{userCount} {t("members")}</span>
+            <span className="text-xs text-gray-500">{userCount} {t("members")}</span>
           </div>
         </div>
-      </StyledWrapper>
+      </div>
     );
 
   return (
-    <StyledWrapper>
+    <div className="relative flex items-center justify-between gap-2 px-4 py-2">
       <NavLink to={`/setting?f=${pathname}`}>
-        <div className="server">
-          <div className="logo">
-            <img alt={`${name} logo`} src={logo} />
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8">
+            <img alt={`${name} logo`} className="w-full h-full object-cover rounded-full" src={logo} />
           </div>
-          <div className="info">
-            <h3 className="name" title={description}>
+          <div className="flex flex-col gap-1">
+            <h3 className="text-sm text-gray-600 font-bold" title={description}>
               {name}
             </h3>
-            <span className="desc">{userCount} {t("members")}</span>
+            <span className="text-xs text-gray-500">{userCount} {t("members")}</span>
           </div>
         </div>
       </NavLink>
 
       <Tooltip tip={t("more")} placement="bottom">
         <Tippy interactive placement="bottom-end" trigger="click" content={<AddEntriesMenu />}>
-          <img src={addIcon} alt="add icon" className="add" />
+          <img src={addIcon} alt="add icon" className="cursor-pointer" />
         </Tippy>
       </Tooltip>
-    </StyledWrapper>
+    </div>
   );
 }
