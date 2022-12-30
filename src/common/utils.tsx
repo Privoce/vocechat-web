@@ -8,7 +8,6 @@ import IconCode from "../assets/icons/file.code.svg";
 import IconImage from "../assets/icons/file.image.svg";
 import { Archive, ArchiveMessage } from "../types/resource";
 import { MessagePayload } from "../app/slices/message";
-import { PinnedMessage } from "../types/channel";
 
 export const getLocalAuthData = () => {
   return {
@@ -268,4 +267,60 @@ export const normalizeArchiveData = (
       };
     }
   );
+};
+// https://github.com/gabe0x02/version_compare/blob/20d79649da39febc883350f441ee0bd6f1a6b1e6/version_compare.js
+export const compareVersion = (v1: string, v2: string, options?: { lexicographical: boolean, zeroExtend: boolean }) => {
+  //remove anything after - 1.1.2-3-a4agbr-dirty
+  function cropDash(s: string) {
+    let idx = s.indexOf('-');
+    if (idx !== -1) {
+      s = s.substring(0, idx);
+    }
+    return s;
+  }
+  v1 = cropDash(v1);
+  v2 = cropDash(v2);
+  let lexicographical = options && options.lexicographical,
+    zeroExtend = options && options.zeroExtend,
+    v1parts = v1.split('.'),
+    v2parts = v2.split('.');
+  function isValidPart(x) {
+    return (lexicographical ? /^\d+[A-Za-z]*$/ : /^\d+$/).test(x);
+  }
+
+  if (!v1parts.every(isValidPart) || !v2parts.every(isValidPart)) {
+    return NaN;
+  }
+
+  if (zeroExtend) {
+    while (v1parts.length < v2parts.length) v1parts.push("0");
+    while (v2parts.length < v1parts.length) v2parts.push("0");
+  }
+
+  if (!lexicographical) {
+    v1parts = v1parts.map(Number);
+    v2parts = v2parts.map(Number);
+  }
+
+  for (var i = 0; i < v1parts.length; ++i) {
+    if (v2parts.length == i) {
+      return 1;
+    }
+
+    if (v1parts[i] == v2parts[i]) {
+      continue;
+    }
+    else if (v1parts[i] > v2parts[i]) {
+      return 1;
+    }
+    else {
+      return -1;
+    }
+  }
+
+  if (v1parts.length != v2parts.length) {
+    return -1;
+  }
+
+  return 0;
 };

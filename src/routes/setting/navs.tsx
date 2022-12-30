@@ -13,6 +13,7 @@ import Version from "../../common/component/Version";
 // import ConfigAgora from "./config/Agora";
 import { useAppSelector } from "../../app/store";
 import { useTranslation } from "react-i18next";
+import ServerVersionChecker from "../../common/component/ServerVersionChecker";
 
 const navs = [
   {
@@ -38,7 +39,7 @@ const navs = [
     items: [
       {
         name: "bot",
-        component: <BotConfig />,
+        component: <ServerVersionChecker version="0.3.2"><BotConfig /></ServerVersionChecker>,
         admin: true
       },
       {
