@@ -69,7 +69,7 @@ const MarkdownOverrides = createGlobalStyle`
       display: block;
     }
 
-    ul {
+    ul{
       white-space: nowrap;
       margin-top: 0;
       margin-bottom: 10px;
@@ -78,6 +78,14 @@ const MarkdownOverrides = createGlobalStyle`
         margin-left: -14px;
         background-color: #475467;
       }
+    }
+    ol li{
+      display: flex;
+      flex-direction: column;
+    }
+    li ol{
+      display: flex;
+      flex-direction: column;
     }
     ul,
     ol {
