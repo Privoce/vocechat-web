@@ -91,6 +91,7 @@
     "webhook_tip_title": "Webhooks can receive messages in a channel and should a URL provided by you.",
     "webhook_tip_desc": "Please provide a webhook URL that will return 200.",
     "manage": "Manage",
+    "how_to_use": "How To Use",
     "manage_desc": "You can delete a bot anytime, the bot user will be removed immediately and all APIs will be nullified.",
     "create_title": "Create Bot",
     "create_desc": "Give your bot a name. You can also add an endpoint webhook URL to receive data.",
