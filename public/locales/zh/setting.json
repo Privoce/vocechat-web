@@ -89,6 +89,7 @@
     "webhook_tip_title": "Webhook是一个用以接收VoceChat推送数据的URL地址",
     "webhook_tip_desc": "请提供一个有效的Webhook URL：GET 请求响应 200即为有效。我们会使用POST推送数据。",
     "manage": "管理",
+    "how_to_use": "使用文档",
     "manage_desc": "机器人一旦删除，所有与其相关的接口也立即失效，包括Webhook。",
     "create_title": "创建机器人",
     "create_desc": "给你的机器人一个名字，同时也可以设置Webhook URL，用以接收推送的数据。",

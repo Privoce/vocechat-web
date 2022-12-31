@@ -50,7 +50,7 @@ const TestAPIKeyModal = ({ closeModal }: Props) => {
     return (
         <Modal id="modal-modal">
             <StyledModal
-                title={`Input API Key`}
+                title={key ? "" : `Input API Key`}
                 buttons={
                     <>
                         <Button className="cancel" onClick={closeModal}>
