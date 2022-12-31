@@ -37,7 +37,9 @@ const CreateAPIKeyModal = ({ closeModal, uid }: Props) => {
                 case 406:
                     toast.error("Invalid Webhook URL!");
                     break;
-
+                case 409:
+                    toast.error("Name Already Exists!");
+                    break;
                 default:
                     break;
             }
