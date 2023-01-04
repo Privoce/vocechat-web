@@ -5,9 +5,11 @@ const BASE_URL = process.env.REACT_APP_RELEASE
   : `https://dev.voce.chat/api`;
 let prices = [
   {
+    mode: "subscription",
+    sub_type: "year", //day month year
     title: "VoceChat Pro",
     limit: 100,
-    pid: "price_1LkICIGGoUDRyc3jqrdPEnkY",
+    pid: "price_1MMMWAGGoUDRyc3jIsMay5Rs",
     desc: "User Limit: 100"
   },
   {
@@ -26,7 +28,15 @@ export const LicensePriceList =
         limit: 99999,
         pid: "price_1LkQGpGGoUDRyc3jGTh3GYHw",
         desc: "test price"
-      }
+      },
+      {
+        title: "VoceChat Pro",
+        limit: 100,
+        pid: "price_1MMNNCGGoUDRyc3jSIGIsb3C",
+        desc: "test subscription price",
+        mode: "subscription",
+        sub_type: "year", //day month year
+      },
     ]
     : prices;
 export const PAYMENT_URL_PREFIX =

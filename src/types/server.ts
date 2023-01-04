@@ -74,6 +74,7 @@ export interface LicenseMetadata {
   domain: string | string[];
 }
 export interface RenewLicense {
+  mode: "payment" | "subscription",
   priceId: string;
   metadata: LicenseMetadata;
   cancel_url: string;
