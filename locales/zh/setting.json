@@ -124,6 +124,9 @@
     "1_week": "1 周"
   },
   "firebase": {
+    "disable": "禁用",
+    "use_official": "使用官方配置",
+    "custom": "自定义",
     "enable": "开启",
     "token_url": "Token 地址",
     "project_id": "项目 ID",
