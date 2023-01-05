@@ -15,14 +15,14 @@ interface IOptions {
   official: string,
   custom: string
 }
-const Options: IOptions = {
-  disable: "Disable",
-  official: "Use Official Configuration",
-  custom: "Custom"
-};
 export default function ConfigFirebase() {
   const { values, setValues, updateConfig, changed, reset } = useConfig("firebase");
   const { t } = useTranslation("setting");
+  const Options: IOptions = {
+    disable: t("firebase.disable"),
+    official: t("firebase.use_official"),
+    custom: t("firebase.custom")
+  };
   let select: keyof IOptions | "" = "";
   if (values) {
     const {

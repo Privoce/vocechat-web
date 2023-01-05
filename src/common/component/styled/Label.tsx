@@ -1,10 +1,9 @@
-import styled from "styled-components";
+import { LabelHTMLAttributes, ReactNode } from "react";
 
-const StyledLabel = styled.label`
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 20px;
-  color: #6b7280;
-`;
-
+type Props = LabelHTMLAttributes<HTMLLabelElement> & { children?: ReactNode }
+const StyledLabel = ({ children, className = '', ...rest }: Props) => {
+  return <label className={`text-gray-500 text-sm ${className}`} {...rest}>
+    {children}
+  </label>;
+};
 export default StyledLabel;

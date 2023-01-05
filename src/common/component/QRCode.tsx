@@ -20,9 +20,8 @@ const QRCode = ({ link }: Props) => {
                 src: logo,
                 x: undefined,
                 y: undefined,
-                height: 28,
-                width: 28,
-
+                height: 80,
+                width: 80,
                 excavate: true,
             }} />
     );

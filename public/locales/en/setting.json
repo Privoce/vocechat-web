@@ -126,6 +126,9 @@
     "1_week": "1 week"
   },
   "firebase": {
+    "disable": "Disable",
+    "use_official": "Use Official Configuration",
+    "custom": "Custom",
     "enable": "Enable",
     "token_url": "Token Url",
     "project_id": "Project ID",
