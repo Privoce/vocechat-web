@@ -23,7 +23,7 @@ const AutoDeleteMessages = ({ id, type = "channel" }: Props) => {
     const { t } = useTranslation("setting", { keyPrefix: "auto_delete_msg" });
     const options = [
         { title: t("off"), value: 0 },
-        { title: t("30_seconds"), value: 30 },
+        { title: t("5_min"), value: 5 * 60 },
         { title: t("10_min"), value: 10 * 60 },
         { title: t("1_hour"), value: 60 * 60 },
         { title: t("1_day"), value: 24 * 60 * 60 },

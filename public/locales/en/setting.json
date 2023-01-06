@@ -119,7 +119,7 @@
     "title": "Delete messages sent by myself after certain time period. ",
     "desc": "This will remove the messages data stored on both the server and client side.",
     "off": "Off",
-    "30_seconds": "30 seconds",
+    "5_min": "5 minutes",
     "10_min": "10 minutes",
     "1_hour": "1 hour",
     "1_day": "1 day",
