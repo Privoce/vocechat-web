@@ -1,4 +1,5 @@
 // call `organization` in backend
+import { PriceType } from "./common";
 import { User } from "./user";
 
 export interface Server {
@@ -74,7 +75,7 @@ export interface LicenseMetadata {
   domain: string | string[];
 }
 export interface RenewLicense {
-  mode: "payment" | "subscription",
+  type: PriceType,
   priceId: string;
   metadata: LicenseMetadata;
   cancel_url: string;

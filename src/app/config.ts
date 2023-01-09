@@ -1,29 +1,35 @@
 // const BASE_URL = `${location.origin}/api`;
+
+import { Price } from "../types/common";
+
 // const BASE_URL = `http://localhost:3333/api`;
 const BASE_URL = process.env.REACT_APP_RELEASE
   ? `${location.origin}/api`
   : `https://dev.voce.chat/api`;
-let prices = [
+
+let prices: Price[] = [
   {
-    mode: "subscription",
-    sub_type: "year", //day month year
+    type: "subscription",
+    // sub_type: "year", //day month year
     title: "VoceChat Pro",
     limit: 100,
-    pid: "price_1MMMWAGGoUDRyc3jIsMay5Rs",
+    pid: "price_1MN8C7GGoUDRyc3jos06bCqM",
     desc: "User Limit: 100"
   },
   {
+    type: "payment",
     title: "VoceChat Supreme",
     limit: 99999,
     pid: "price_1M5VoGGGoUDRyc3j6xhQou6D",
     desc: "User Limit: No Limit"
   }
 ];
-export const LicensePriceList =
+export const LicensePriceList: Price[] =
   process.env.NODE_ENV === "development"
     ? [
       ...prices,
       {
+        type: "payment",
         title: "VoceChat Enterprise",
         limit: 99999,
         pid: "price_1LkQGpGGoUDRyc3jGTh3GYHw",
@@ -34,8 +40,8 @@ export const LicensePriceList =
         limit: 100,
         pid: "price_1MMNNCGGoUDRyc3jSIGIsb3C",
         desc: "test subscription price",
-        mode: "subscription",
-        sub_type: "year", //day month year
+        type: "subscription",
+        sub_dur: "year", //day month year
       },
     ]
     : prices;
