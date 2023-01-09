@@ -48,5 +48,15 @@
     "uploading": "Uploading"
   },
   "new_version": "<0>New Version</0> Available",
-  "mobile_app": "Check out our <0>Mobile APP</0>"
+  "mobile_app": "Check out our <0>Mobile APP</0>",
+  "price": {
+    "pro": {
+      "title": "VoceChat Pro",
+      "desc": "User Limit: 100"
+    },
+    "supreme": {
+      "title": "VoceChat Supreme",
+      "desc": "User Limit: No Limit"
+    }
+  }
 }

@@ -1,5 +1,4 @@
-// const BASE_URL = `${location.origin}/api`;
-
+import i18n from '../i18n';
 import { Price } from "../types/common";
 
 // const BASE_URL = `http://localhost:3333/api`;
@@ -11,26 +10,27 @@ let prices: Price[] = [
   {
     type: "subscription",
     // sub_type: "year", //day month year
-    title: "VoceChat Pro",
+    title: i18n.t("price.pro.title"),
     limit: 100,
     pid: "price_1MN8C7GGoUDRyc3jos06bCqM",
-    desc: "User Limit: 100"
+    desc: i18n.t("price.pro.desc"),
   },
   {
     type: "payment",
-    title: "VoceChat Supreme",
+    title: i18n.t("price.supreme.title"),
     limit: 99999,
     pid: "price_1M5VoGGGoUDRyc3j6xhQou6D",
-    desc: "User Limit: No Limit"
+    desc: i18n.t("price.supreme.desc"),
   }
 ];
 export const LicensePriceList: Price[] =
   process.env.NODE_ENV === "development"
+    // 开发环境加入两个测试价格
     ? [
       ...prices,
       {
         type: "payment",
-        title: "VoceChat Enterprise",
+        title: "Test VoceChat Enterprise",
         limit: 99999,
         pid: "price_1LkQGpGGoUDRyc3jGTh3GYHw",
         desc: "test price"
@@ -49,7 +49,7 @@ export const PAYMENT_URL_PREFIX =
   process.env.NODE_ENV === "production"
     ? `https://vera.nicegoodthings.com`
     : `http://localhost:4000`;
-export const CACHE_VERSION = `0.3.1`;
+export const CACHE_VERSION = `0.3.32`;
 export const GuestRoutes = ["/", "/chat", "/chat/channel/:channel_id"];
 export const ContentTypes = {
   text: "text/plain",
