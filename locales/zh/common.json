@@ -50,5 +50,15 @@
     "uploading": "上传中"
   },
   "new_version": "有<0>新版本</0>",
-  "mobile_app": "欢迎下载使用<0>手机APP</0>"
+  "mobile_app": "欢迎下载使用<0>手机APP</0>",
+  "price": {
+    "pro": {
+      "title": "VoceChat 专业版",
+      "desc": "用户数限制: 100人"
+    },
+    "supreme": {
+      "title": "VoceChat 终极版",
+      "desc": "用户数限制: 无限制"
+    }
+  }
 }
