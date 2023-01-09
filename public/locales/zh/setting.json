@@ -79,7 +79,12 @@
       "title": "一个获取免费升级的机会！",
       "user_test": "通过blog文章或社交媒体分享使用体验，获取免费升级的机会",
       "contact": "加微信获得："
-    }
+    },
+    "payment_success": "付款成功",
+    "back_home": "回到首页",
+    "tip_renewing": "正在更新证书，请勿关闭窗口！",
+    "tip_renewed": "证书更新成功！",
+    "tip_renew_error": "无效的Stripe ID"
   },
   "bot": {
     "add_api_key": "新增API Key",

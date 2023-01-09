@@ -8,6 +8,7 @@ import StyledWrapper from "./styled";
 // 该页面服务于一些第三方服务的回调，比如stripe付款成功的回调，GitHub登录成功的回调
 export default function CallbackPage() {
   const { type = "", payload = "" } = useParams();
+  // stripe 付款成功
   if (type == "payment_success") {
     return (
       <StyledWrapper>
@@ -15,6 +16,7 @@ export default function CallbackPage() {
       </StyledWrapper>
     );
   }
+  // github授权成功
   if (type == "github") {
     const query = new URLSearchParams(location.search);
     const code = query.get("code") ?? "";

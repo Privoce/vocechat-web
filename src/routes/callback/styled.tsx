@@ -1,13 +1,10 @@
-import styled from "styled-components";
+import { DOMAttributes, ReactNode } from "react";
 
-const StyledWrapper = styled.div`
-  display: flex;
-  width: 100vw;
-  height: 100vh;
-  justify-content: center;
-  align-items: center;
-  word-break: break-word;
-  line-height: 1.5;
-`;
+const StyledWrapper = ({ children }: DOMAttributes<HTMLDivElement> & { children?: ReactNode }) => {
+
+  return <div className="flex w-screen h-screen items-center justify-center break-words leading-normal">
+    {children}
+  </div>;
+};
 
 export default StyledWrapper;

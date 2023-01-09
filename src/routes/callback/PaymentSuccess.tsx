@@ -1,39 +1,17 @@
 import { useEffect } from "react";
-import styled from "styled-components";
 import { useLazyGetGeneratedLicenseQuery } from "../../app/services/server";
 import useLicense from "../../common/hook/useLicense";
 import Button from "../../common/component/styled/Button";
 import checkIcon from "../../assets/icons/check.png";
 import { useNavigate } from "react-router-dom";
-const Styled = styled.section`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 24px;
-  width: 512px;
-  background: #f3f4f6;
-  border-radius: 20px;
-  .check {
-    width: 120px;
-    height: 120px;
-  }
-  .head {
-    font-weight: bold;
-    font-size: 32px;
-    padding-top: 20px;
-  }
-  .desc {
-    font-size: 18px;
-    color: #999;
-    padding: 0 0 30px 0;
-  }
-`;
+import { useTranslation } from "react-i18next";
 
 type Props = {
   sid: string;
 };
 
 const PaymentSuccess = ({ sid }: Props) => {
+  const { t } = useTranslation("setting", { keyPrefix: "license" });
   const navigateTo = useNavigate();
   const { upsertLicense, upserting, upserted } = useLicense();
   const [getGeneratedLicense, { data, isError, isLoading, isSuccess }] =
@@ -53,18 +31,18 @@ const PaymentSuccess = ({ sid }: Props) => {
     navigateTo("/");
   };
   return (
-    <Styled>
-      <img className="check" src={checkIcon} alt="check icon" />
-      <h1 className="head">Payment Success!</h1>
-      <p className="desc">
-        {upserting ? "Renewing the License, do not close the window!" : ""}
-        {upserted ? "Renew the License Successfully!" : ""}
-        {isError ? "Invalided Stripe Session ID" : ""}
+    <section className="flex flex-col items-center bg-slate-100 rounded-2xl w-[512px] p-6">
+      <img className="w-28 h-28" src={checkIcon} alt="check icon" />
+      <h1 className="font-bold text-3xl pt-5">{t("payment_success")}</h1>
+      <p className="text-lg pb-7 mt-2 text-gray-400">
+        {upserting ? t("tip_renewing") : ""}
+        {upserted ? t("tip_renewed") : ""}
+        {isError ? t("tip_renew_error") : ""}
       </p>
       <Button disabled={isLoading || upserting} className="back" onClick={handleBack}>
-        Back Home
+        {t("back_home")}
       </Button>
-    </Styled>
+    </section>
   );
 };
 

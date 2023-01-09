@@ -81,7 +81,12 @@
       "title": "A chance to get a free license upgrade!",
       "user_test": "Get a free license upgrade through a 25 min user testing",
       "contact": "Book a time here: "
-    }
+    },
+    "payment_success": "Payment Success!",
+    "back_home": "Back Home",
+    "tip_renewing": "Renewing the License, do not close the window!",
+    "tip_renewed": "Renew the License Successfully!",
+    "tip_renew_error": "Invalided Stripe Session ID"
   },
   "bot": {
     "add_api_key": "Add API Key",
