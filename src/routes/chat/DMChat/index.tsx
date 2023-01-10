@@ -4,9 +4,6 @@ import Tippy from "@tippyjs/react";
 import FavList from "../FavList";
 import Tooltip from "../../../common/component/Tooltip";
 import FavIcon from "../../../assets/icons/bookmark.svg";
-// import searchIcon from "../../../assets/icons/search.svg?url";
-// import IconHeadphone from "../../../assets/icons/headphone.svg";
-// import useChatScroll from "../../../common/hook/useChatScroll";
 import { useReadMessageMutation } from "../../../app/services/message";
 import User from "../../../common/component/User";
 import Layout from "../Layout";
@@ -40,8 +37,6 @@ const DMChat: FC<Props> = ({ uid = 0, dropFiles }) => {
       messageData: store.message
     };
   });
-  // const ref = useChatScroll(msgIds);
-
   if (!currUser) return null;
   const readIndex = footprint.readUsers[uid];
   const feeds = [...msgIds, ...appends];
@@ -51,35 +46,22 @@ const DMChat: FC<Props> = ({ uid = 0, dropFiles }) => {
       context="user"
       dropFiles={dropFiles}
       aside={
-        <>
-          <ul className="tools">
-            {/*<li className="tool">
-              <IconHeadphone />
-            </li>
-             <li className="tool">
-              <img src={alertIcon} alt="opt icon" />
-            </li> */}
-            <Tooltip tip="Saved Items" placement="left">
-              <Tippy
-                placement="left-start"
-                popperOptions={{ strategy: "fixed" }}
-                offset={[0, 180]}
-                interactive
-                trigger="click"
-                content={<FavList uid={uid} />}
-              >
-                <li className={`tool fav`}>
-                  <FavIcon />
-                </li>
-              </Tippy>
-            </Tooltip>
-            {/* <li className="tool fav">
-              <FavIcon />
-            </li> */}
-          </ul>
-          {/* <hr className="divider" /> */}
-          {/* Third Apps */}
-        </>
+        <ul className="tools">
+          <Tooltip tip="Saved Items" placement="left">
+            <Tippy
+              placement="left-start"
+              popperOptions={{ strategy: "fixed" }}
+              offset={[0, 180]}
+              interactive
+              trigger="click"
+              content={<FavList uid={uid} />}
+            >
+              <li className={`tool fav`}>
+                <FavIcon />
+              </li>
+            </Tippy>
+          </Tooltip>
+        </ul>
       }
       header={
         <StyledHeader className="head">

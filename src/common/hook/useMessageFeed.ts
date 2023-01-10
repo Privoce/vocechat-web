@@ -176,16 +176,12 @@ export default function useMessageFeed({ context = "channel", id }: Props) {
       currPageInfo?.isLast ? 10 : 500
     );
   };
-  const pullDown = () => {
-    // 向下加载
-  };
 
   return {
     mids,
     appends,
     hasMore,
     pullUp,
-    pullDown,
     list: items
   };
 }

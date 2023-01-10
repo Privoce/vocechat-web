@@ -15,11 +15,9 @@ import User from "../../../common/component/User";
 import Layout from "../Layout";
 import { renderMessageFragment } from "../utils";
 import EditIcon from "../../../assets/icons/edit.svg";
-// import alertIcon from "../../../assets/icons/alert.svg?url";
 import IconFav from "../../../assets/icons/bookmark.svg";
 import IconPeople from "../../../assets/icons/people.svg";
 import IconPin from "../../../assets/icons/pin.svg";
-// import searchIcon from "../../../assets/icons/search.svg?url";
 import IconHeadphone from "../../../assets/icons/headphone.svg";
 
 import addIcon from "../../../assets/icons/add.svg?url";
@@ -53,7 +51,6 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
   const [addMemberModalVisible, setAddMemberModalVisible] = useState(false);
   const {
     selects,
-    // msgIds,
     userIds,
     data,
     messageData,
@@ -64,7 +61,6 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
       selects: store.ui.selectMessages[`channel_${cid}`],
       footprint: store.footprint,
       loginUser: store.authData.user,
-      // msgIds: store.channelMessage[cid] || [],
       userIds: store.users.ids,
       data: store.channels.byId[cid],
       messageData: store.message || {}
@@ -192,7 +188,6 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
               )}
             </div>
           )}
-          {/* <div className="feed"> */}
           {feeds.map((mid, idx) => {
             const curr = messageData[mid];
             if (!curr) return null;

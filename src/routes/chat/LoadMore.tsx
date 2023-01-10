@@ -34,8 +34,8 @@ const LoadMore: FC<Props> = ({ pullUp = null }) => {
     };
   }, [ref, pullUp]);
   return (
-    <div className="mt-20 flex justify-center items-center w-full py-7" ref={ref}>
-      <Waveform size={24} lineWeight={5} speed={1} color="#ccc" />
+    <div className="mt-2 flex justify-center items-center w-full py-2" ref={ref}>
+      <Waveform size={18} lineWeight={4} speed={1} color="#ccc" />
     </div>
   );
 };
