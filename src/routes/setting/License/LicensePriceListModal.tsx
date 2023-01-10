@@ -6,7 +6,7 @@ import Button from "../../../common/component/styled/Button";
 import StyledRadio from "../../../common/component/styled/Radio";
 
 import { useGetLicensePaymentUrlMutation } from "../../../app/services/server";
-import { LicensePriceList } from "../../../app/config";
+import { getLicensePriceList } from "../../../app/config";
 import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
 import { PriceSubscriptionDuration, PriceType } from "../../../types/common";
@@ -36,6 +36,7 @@ const getExpireDay = (sub_dur: PriceSubscriptionDuration) => {
   };
   return res.format("YYYY-MM-DD");
 };
+const LicensePriceList = getLicensePriceList();
 const LicensePriceListModal: FC<Props> = ({ closeModal }) => {
   const { t } = useTranslation("setting");
   const { t: ct } = useTranslation();

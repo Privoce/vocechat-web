@@ -10,24 +10,44 @@ let prices: Price[] = [
   {
     type: "subscription",
     // sub_type: "year", //day month year
-    title: i18n.t("price.pro.title"),
+    title: "Pro",
     limit: 100,
     pid: "price_1MN8C7GGoUDRyc3jos06bCqM",
-    desc: i18n.t("price.pro.desc"),
+    desc: "Pro Desc",
   },
   {
     type: "payment",
-    title: i18n.t("price.supreme.title"),
+    title: "supreme",
     limit: 99999,
     pid: "price_1M5VoGGGoUDRyc3j6xhQou6D",
-    desc: i18n.t("price.supreme.desc"),
+    desc: "supreme desc",
   }
 ];
-export const LicensePriceList: Price[] =
-  process.env.NODE_ENV === "development"
+export const getLicensePriceList = () => {
+  const ps = prices.map((p, idx) => {
+    switch (idx) {
+      // pro
+      case 0: {
+        p.title = i18n.t("price.pro.title");
+        p.desc = i18n.t("price.pro.desc");
+      }
+        break;
+      // supreme
+      case 1: {
+        p.title = i18n.t("price.supreme.title");
+        p.desc = i18n.t("price.supreme.desc");
+      }
+        break;
+
+      default:
+        break;
+    }
+    return p;
+  });
+  return process.env.NODE_ENV === "development"
     // 开发环境加入两个测试价格
     ? [
-      ...prices,
+      ...ps,
       {
         type: "payment",
         title: "Test VoceChat Enterprise",
@@ -44,7 +64,8 @@ export const LicensePriceList: Price[] =
         sub_dur: "year", //day month year
       },
     ]
-    : prices;
+    : ps;
+};
 export const PAYMENT_URL_PREFIX =
   process.env.NODE_ENV === "production"
     ? `https://vera.nicegoodthings.com`
