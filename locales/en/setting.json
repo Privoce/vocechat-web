@@ -58,6 +58,10 @@
       "enable": "Enable",
       "disable": "Disabled"
     },
+    "url": {
+      "title": "Update Frontend URL",
+      "desc": "Update the frontend url"
+    },
     "lang": {
       "title": "Language",
       "desc": "Setting the language",
