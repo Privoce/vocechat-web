@@ -51,7 +51,7 @@ const StyledButton = styled.button`
   }
   &.border_less {
     box-shadow: none;
-    border: none;
+    border: none !important;
   }
   &.cancel {
     border: 1px solid #e5e7eb;

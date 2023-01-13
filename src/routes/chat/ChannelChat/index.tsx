@@ -35,6 +35,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
   const { t } = useTranslation("chat");
   const { values: agoraConfig } = useConfig("agora");
   const {
+    pulling,
     list: msgIds,
     appends,
     hasMore,
@@ -175,7 +176,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
       >
         <StyledChannelChat id={`VOCECHAT_FEED_channel_${cid}`}>
           {hasMore ? (
-            <LoadMore pullUp={pullUp} />
+            <LoadMore pullUp={pullUp} pulling={pulling} />
           ) : (
             <div className="info">
               <h2 className="title">{t("welcome_channel", { name })}</h2>

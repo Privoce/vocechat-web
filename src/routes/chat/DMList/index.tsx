@@ -26,9 +26,9 @@ const DMList: FC<Props> = ({ uids, setDropFiles }) => {
   const sessions = uids.map((uid) => {
     const mids = userMessage[uid] || [];
     if (mids.length == 0) {
-      return { lastMid: 0, unreads: 0, uid };
+      return { lastMid: null, unreads: 0, uid };
     }
-    const lastMid = [...mids].pop() || 0;
+    const lastMid = [...mids].pop();
     const readIndex = readUsers[uid];
     const { unreads = 0 } = getUnreadCount({
       mids,

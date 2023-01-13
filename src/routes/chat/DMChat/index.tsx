@@ -18,6 +18,7 @@ type Props = {
 };
 const DMChat: FC<Props> = ({ uid = 0, dropFiles }) => {
   const {
+    pulling,
     list: msgIds,
     appends,
     hasMore,
@@ -70,7 +71,7 @@ const DMChat: FC<Props> = ({ uid = 0, dropFiles }) => {
       }
     >
       <StyledDMChat id={`VOCECHAT_FEED_user_${uid}`}>
-        {hasMore ? <LoadMore pullUp={pullUp} /> : null}
+        {hasMore ? <LoadMore pullUp={pullUp} pulling={pulling} /> : null}
         {[...feeds].map((mid, idx) => {
           const curr = messageData[mid];
           const prev = idx == 0 ? null : messageData[feeds[idx - 1]];
