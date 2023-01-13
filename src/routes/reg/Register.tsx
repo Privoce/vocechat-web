@@ -147,7 +147,7 @@ export default function Reg() {
       </form>
       <hr className="or" />
       <div className="flex flex-col gap-3 py-3">
-        <SocialLoginButtons />
+        <SocialLoginButtons type="register" />
       </div>
       <SignInLink token={magicToken} />
     </>

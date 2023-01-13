@@ -9,10 +9,13 @@ import MetamaskLoginButton from "./MetamaskLoginButton";
 import OidcLoginButton from "./OidcLoginButton";
 import { useLoginMutation } from '../../app/services/auth';
 import { LoginConfig } from '../../types/server';
+import { AuthType } from '../../types/common';
 
-// type Props = {}
+type Props = {
+    type?: AuthType
+}
 
-const SocialLoginButtons = () => {
+const SocialLoginButtons = ({ type = "login" }: Props) => {
     const [login, { isSuccess }] = useLoginMutation();
     const { config: githubAuthConfig } = useGithubAuthConfig();
     const { data: loginConfig, isSuccess: loginConfigSuccess } = useGetLoginConfigQuery();
@@ -34,12 +37,12 @@ const SocialLoginButtons = () => {
     const googleLogin = enableGoogleLogin && !!clientId;
     return (
         <>
-            {googleLogin && <GoogleLoginButton type="register" clientId={clientId} />}
+            {googleLogin && <GoogleLoginButton type={type} clientId={clientId} />}
             {enableGithubLogin && (
-                <GithubLoginButton type="register" client_id={githubAuthConfig?.client_id} />
+                <GithubLoginButton type={type} client_id={githubAuthConfig?.client_id} />
             )}
-            {enableMetamaskLogin && <MetamaskLoginButton login={login} />}
-            {oidc.length > 0 && <OidcLoginButton issuers={oidc} />}
+            {enableMetamaskLogin && <MetamaskLoginButton type={type} login={login} />}
+            {oidc.length > 0 && <OidcLoginButton type={type} issuers={oidc} />}
         </>
     );
 };

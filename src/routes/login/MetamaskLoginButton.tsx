@@ -7,12 +7,15 @@ import { StyledSocialButton } from "./styled";
 import Onboarding from "@metamask/onboarding";
 import { LoginCredential } from "../../types/auth";
 import { useTranslation } from "react-i18next";
+import { AuthType } from "../../types/common";
 // import toast from "react-hot-toast";
 
 export default function MetamaskLoginButton({
-  login
+  login,
+  type = "login"
 }: {
   login: (params: LoginCredential) => void;
+  type?: AuthType
 }) {
   const { t } = useTranslation("auth");
   const [requesting, setRequesting] = useState(false);
@@ -93,7 +96,7 @@ export default function MetamaskLoginButton({
   return (
     <StyledSocialButton disabled={requesting} onClick={handleMetamaskLogin}>
       <img className="icon" src={metamaskSvg} alt="meta mask icon" />
-      {t("login.metamask")}
+      {type == "login" ? t("login.metamask") : t("reg.metamask")}
     </StyledSocialButton>
   );
 }
