@@ -33,6 +33,7 @@
     "set_name": "Set Name",
     "admin_account": "Admin Account",
     "who_sign_up": "Who Can Sign Up",
-    "invites": "Invites"
+    "invites": "Invites",
+    "update_domain_tip": "Incorrect link domain?Please update it here:"
   }
 }

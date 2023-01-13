@@ -195,6 +195,12 @@ export const serverApi = createApi({
         body: data
       })
     }),
+    updateFrontendUrl: builder.mutation<void, string>({
+      query: (url) => ({
+        url: `/admin/system/update_frontend_url?frontend_url=${encodeURIComponent(url)}`,
+        method: "POST",
+      })
+    }),
     getLicense: builder.query<LicenseResponse, void>({
       query: () => ({
         url: `/license`
@@ -285,5 +291,6 @@ export const {
   useGetLicensePaymentUrlMutation,
   useLazyGetGeneratedLicenseQuery,
   useLazyGetBotRelatedChannelsQuery,
-  useSendMessageByBotMutation
+  useSendMessageByBotMutation,
+  useUpdateFrontendUrlMutation
 } = serverApi;

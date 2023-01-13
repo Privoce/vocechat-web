@@ -1,98 +1,61 @@
-import styled from "styled-components";
 import StyledInput from "../../../common/component/styled/Input";
 import StyledButton from "../../../common/component/styled/Button";
 import useInviteLink from "../../../common/hook/useInviteLink";
 import { useTranslation } from "react-i18next";
 import { useWizard } from "react-use-wizard";
+import { ChangeEvent, useState, useEffect } from "react";
+import { useUpdateFrontendUrlMutation } from "../../../app/services/server";
+import { toast } from "react-hot-toast";
+import InfoIcon from '../../../assets/icons/info.svg';
+import ServerVersionChecker from "../../../common/component/ServerVersionChecker";
 
-const StyledWrapper = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  > .primaryText {
-    text-align: center;
-    font-weight: 700;
-    font-size: 24px;
-    line-height: 30px;
-    margin-bottom: 8px;
-  }
-
-  > .secondaryText {
-    text-align: center;
-    font-size: 14px;
-    line-height: 20px;
-    margin-bottom: 40px;
-  }
-
-  > .tip {
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 20px;
-    color: #475467;
-    margin-bottom: 8px;
-  }
-
-  > .link {
-    position: relative;
-    background: #ffffff;
-    border: 1px solid #f4f4f5;
-    box-shadow: 0 1px 2px rgba(31, 41, 55, 0.08);
-    border-radius: 4px;
-    width: 374px;
-    display: flex;
-
-    > input {
-      border: none;
-      box-shadow: none;
-      padding: 11px 0 11px 8px;
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 20px;
-      color: #78787c;
-    }
-
-    > button {
-      padding: 0 8px;
-      font-weight: 500;
-      font-size: 14px;
-      line-height: 20px;
-      color: #22ccee;
-      transition: color 150ms ease-in-out;
-
-      &:hover {
-        color: #088ab2;
-      }
-    }
-  }
-
-  > .button {
-    width: 124px;
-    height: 44px;
-    margin-top: 24px;
-  }
-`;
 export default function InviteLink() {
+  const [updateUrl, { isSuccess, isLoading }] = useUpdateFrontendUrlMutation();
   const { t } = useTranslation("welcome", { keyPrefix: "onboarding" });
   const { t: ct } = useTranslation();
   const { nextStep } = useWizard();
-  const { link, linkCopied, copyLink } = useInviteLink();
+  const { link, linkCopied, copyLink, generateNewLink } = useInviteLink();
+  const [frontUrl, setFrontUrl] = useState(location.origin);
+  const handleUpdateUrl = (evt: ChangeEvent<HTMLInputElement>) => {
+    setFrontUrl(evt.target.value);
+  };
+  const updateFrontUrl = () => {
+    updateUrl(frontUrl);
+  };
+  useEffect(() => {
+    if (isSuccess) {
+      generateNewLink();
+      toast.success("Update Successfully!");
+    }
+  }, [isSuccess]);
   return (
-    <StyledWrapper>
-      <span className="primaryText">{t("invite_title")}</span>
-      <span className="secondaryText">{t("last_tip")}</span>
-      <span className="tip">{t("last_desc")}</span>
-      <div className="link">
-        <StyledInput className="large" readOnly placeholder="Generating" value={link} />
-        <StyledButton onClick={copyLink} className="ghost small border_less">
+    <div className="h-full flex flex-col items-center justify-center relative">
+      <span className="text-2xl mb-2 font-bold">{t("invite_title")}</span>
+      <span className="text-sm mb-10 text-gray-400">{t("last_tip")}</span>
+      <span className="text-sm text-gray-500 mb-2 font-semibold">{t("last_desc")}</span>
+      <div className="w-[400px] rounded shadow-md flex border border-solid border-gray-100">
+        <StyledInput className="large !border-none !shadow-none" readOnly placeholder="Generating" value={link} />
+        <StyledButton onClick={copyLink} className="ghost small border_less !px-2 hover:!text-[#088ab2]">
           {linkCopied ? "Copied" : ct("action.copy")}
         </StyledButton>
       </div>
-      <StyledButton className="button" onClick={nextStep}>
+      <StyledButton className="w-32 h-11 mt-6" onClick={nextStep}>
         {t("done")}
       </StyledButton>
-    </StyledWrapper>
+      <ServerVersionChecker version="0.3.2" empty={true}>
+        <div className="absolute left-1/2 -translate-x-1/2 bottom-8 border-2 border-solid border-[#67E3F9] bg-[#F5FEFF] rounded-lg px-2 py-3 flex justify-start gap-4">
+          <InfoIcon />
+          <div className="flex flex-col items-start gap-2">
+            <span className="text-sm text-[#0E7090] mb-1">{t("update_domain_tip")}</span>
+            <div className="w-[400px] rounded flex gap-2">
+              <StyledInput type={"url"} className="!shadow-none !bg-transparent" placeholder="Frontend URL" value={frontUrl} onChange={handleUpdateUrl} />
+              <StyledButton disabled={!frontUrl || isLoading} onClick={updateFrontUrl} className="small ">
+                {ct("action.update")}
+              </StyledButton>
+            </div>
+          </div>
+        </div>
+      </ServerVersionChecker>
+    </div>
   );
 }

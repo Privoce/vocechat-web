@@ -6,7 +6,8 @@ import { useAppSelector } from "../../../app/store";
 import { LoginConfig, WhoCanSignUp } from "../../../types/server";
 import useConfig from "../../../common/hook/useConfig";
 import Server from './server';
-import Language from './language';
+import Language from './Language';
+import FrontendURL from "./FrontendURL";
 
 const StyledWrapper = styled.div`
   position: relative;
@@ -130,8 +131,10 @@ export default function Overview() {
               }}
             />
           </div>
+          <FrontendURL />
         </>
       )}
+
       <Language />
     </StyledWrapper>
   );

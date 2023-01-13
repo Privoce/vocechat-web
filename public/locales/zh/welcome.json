@@ -33,6 +33,7 @@
     "set_name": "设置名称",
     "admin_account": "管理员账号",
     "who_sign_up": "注册权限",
-    "invites": "邀请"
+    "invites": "邀请",
+    "update_domain_tip": "链接域名有问题？可在此更新设置："
   }
 }

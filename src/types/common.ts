@@ -1,6 +1,7 @@
 export interface EntityId {
   id: number;
 }
+export type AuthType = "register" | "login";
 export type PriceType = "subscription" | "payment";
 export type PriceSubscriptionDuration = "month" | "quarter" | "year";
 export type Price = {
