@@ -35,7 +35,7 @@ export const channelApi = createApi({
         }
       }
     }),
-    createChannel: builder.mutation<Channel | number, CreateChannelDTO>({
+    createChannel: builder.mutation<{ gid: number, created_at: number } | number, CreateChannelDTO>({
       query: (data) => ({
         url: "group",
         method: "POST",
