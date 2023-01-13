@@ -33,7 +33,7 @@ const ChannelModal: FC<Props> = ({ personal = false, closeModal }) => {
   });
 
   const { users, input, updateInput } = useFilteredUsers();
-  const [createChannel, { isSuccess, isError, isLoading, data: newChannelId }] =
+  const [createChannel, { isSuccess, isError, isLoading, data: newChannel }] =
     useCreateChannelMutation();
 
   const handleToggle = () => {
@@ -63,12 +63,13 @@ const ChannelModal: FC<Props> = ({ personal = false, closeModal }) => {
   }, [isError]);
 
   useEffect(() => {
-    if (isSuccess) {
+    if (isSuccess && newChannel) {
       toast.success("create new channel success");
       closeModal();
-      navigateTo(`/chat/channel/${newChannelId}`);
+      const id = typeof newChannel == 'object' ? newChannel.gid : newChannel;
+      navigateTo(`/chat/channel/${id}`);
     }
-  }, [isSuccess, newChannelId]);
+  }, [isSuccess, newChannel]);
 
   const handleNameInput = (evt: ChangeEvent<HTMLInputElement>) => {
     setData((prev) => ({ ...prev, name: evt.target.value }));
