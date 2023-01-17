@@ -67,14 +67,6 @@ const Styled = styled.div`
           display: flex;
           background: none;
           border: none;
-          svg {
-            width: 16px;
-            height: 16px;
-            path {
-              fill-opacity: 1;
-              fill: #667085;
-            }
-          }
         }
       }
       &:hover .opts {
@@ -112,7 +104,7 @@ const PinList: FC<Props> = ({ id }: Props) => {
                 <div className="opts">
                   {canPin && (
                     <button className="btn" data-mid={data.mid} onClick={handleUnpin}>
-                      <IconClose />
+                      <IconClose className="fill-slate-900" />
                     </button>
                   )}
                 </div>

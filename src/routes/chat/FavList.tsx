@@ -7,81 +7,16 @@ import useFavMessage from "../../common/hook/useFavMessage";
 import { useTranslation } from "react-i18next";
 
 const Styled = styled.div`
-  padding: 16px;
-  background: #f9fafb;
-  filter: drop-shadow(0px 25px 50px rgba(31, 41, 55, 0.25));
-  border-radius: 12px;
-  min-width: 500px;
-  max-height: 500px;
-  overflow: auto;
-  > .head {
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 24px;
-    color: #344054;
-    margin-bottom: 16px;
-  }
-  > .none {
-    padding: 16px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    align-items: center;
-    .tip {
-      width: 240px;
-      font-weight: 600;
-      font-size: 16px;
-      line-height: 24px;
-      text-align: center;
-      color: #475467;
-    }
-  }
-  > .list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    .fav {
-      position: relative;
-      border: 1px solid #f2f4f7;
-      border-radius: var(--br);
-      .favorite {
-        background: none;
-        .down img {
-          width: 100% !important;
-          height: auto !important;
-        }
+    .favorite {
+      background: none;
+      &:hover{
+        background: #f5f6f7;
       }
-      > .opts {
-        visibility: hidden;
-        display: flex;
-        align-items: center;
-        gap: 4px;
-        position: absolute;
-        top: 8px;
-        right: 8px;
-        padding: 4px;
-        border: 1px solid rgba(0, 0, 0, 0.08);
-        border-radius: 6px;
-        .btn {
-          display: flex;
-          background: none;
-          border: none;
-          svg {
-            width: 24px;
-            height: 24px;
-            path {
-              fill: #667085;
-              fill-opacity: 1;
-            }
-          }
-        }
-      }
-      &:hover .opts {
-        visibility: visible;
+      .down img {
+        width: 100% !important;
+        height: auto !important;
       }
     }
-  }
 `;
 type Props = { cid?: number; uid?: number };
 const FavList: FC<Props> = ({ cid = null, uid = null }) => {
@@ -94,22 +29,22 @@ const FavList: FC<Props> = ({ cid = null, uid = null }) => {
   };
   const noFavs = favorites.length == 0;
   return (
-    <Styled>
-      <h4 className="head">{t('fav_msg')}({favorites.length})</h4>
+    <Styled className="p-4 bg-slate-50 rounded-xl min-w-[500px] max-h-[500px] overflow-auto drop-shadow-[0px_25px_50px_rgba(31,_41,_55,_0.25)]">
+      <h4 className="font-bold text-base text-gray-600 mb-4">{t('fav_msg')}({favorites.length})</h4>
       {noFavs ? (
-        <div className="none">
+        <div className="flex flex-col gap-2 w-full items-center p-4">
           <IconSurprise />
-          <div className="tip">{t("fav_empty_tip")}</div>
+          <div className="w-60 text-base text-gray-600 text-center font-bold">{t("fav_empty_tip")}</div>
         </div>
       ) : (
-        <ul className="list">
+        <ul className="flex flex-col gap-2">
           {favorites.map(({ id }) => {
             return (
-              <li key={id} className="fav">
+              <li key={id} className="relative border border-solid border-slate-200 rounded-md group">
                 <FavoredMessage id={id} />
-                <div className="opts">
-                  <button className="btn" data-id={id} onClick={handleRemove}>
-                    <IconRemove />
+                <div className="flex items-center absolute top-2 right-2 border border-solid border-gray-300 rounded-md overflow-hidden invisible group-hover:visible">
+                  <button className="flex justify-center items-center w-6 h-6 p-1" data-id={id} onClick={handleRemove}>
+                    <IconRemove className="fill-slate-900" />
                   </button>
                 </div>
               </li>
