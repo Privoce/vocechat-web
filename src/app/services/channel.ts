@@ -42,12 +42,23 @@ export const channelApi = createApi({
         body: data
       })
     }),
-    changeChannelType: builder.mutation<number, { is_public: boolean, id: number }>({
-      query: ({ id, is_public }) => ({
+    changeChannelType: builder.mutation<number, { is_public: boolean, id: number, members?: number[] }>({
+      query: ({ id, is_public, members }) => ({
         url: `group/${id}/change_type`,
         method: "POST",
-        body: { is_public }
-      })
+        body: members ? { is_public, members } : { is_public }
+      }),
+      async onQueryStarted({ id, is_public, members }, { dispatch, queryFulfilled, getState }) {
+        try {
+          await queryFulfilled;
+          // 后面有可能删掉的临时逻辑：及时更新members
+          const userIds = (getState() as RootState).users.ids;
+          const mbs = is_public ? [] : members ?? userIds;
+          dispatch(updateChannel({ gid: id, members: mbs }));
+        } catch {
+          console.error("channel update failed");
+        }
+      }
     }),
     updateChannel: builder.mutation<void, ChannelDTO>({
       query: ({ id, ...data }) => ({
@@ -89,7 +100,7 @@ export const channelApi = createApi({
         url: gid
           ? `/group/create_reg_magic_link?expired_in=3600&max_times=1&gid=${gid}`
           : `/group/create_reg_magic_link?expired_in=3600&max_times=1`,
-        responseHandler: (response: Response) => response.text()
+        responseHandler: "text"
       }),
       transformResponse: (link: string) => {
         // 确保http开头
