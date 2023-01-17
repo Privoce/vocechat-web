@@ -53,7 +53,7 @@ const LicensePriceListModal: FC<Props> = ({ closeModal }) => {
         user_limit: Number(user_limit),
         expire: type == "subscription" ? getExpireDay(sub_dur) : getExpireDay("year"),
         // 本地，则*通配符
-        domain: location.hostname.startsWith("localhost") ? "*" : location.hostname
+        domain: location.host.startsWith("localhost") ? "*" : location.host
       },
       cancel_url: location.href,
       success_url: `${location.origin}/#/cb/payment_success`
