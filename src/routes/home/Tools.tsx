@@ -82,7 +82,7 @@ const Tools: React.FC<Props> = ({ expand = true }) => {
           <div className="logo">
             <IoLogoGithub size={40} className="icon" />
           </div>
-          {expand && <h2 className="title animate__animated animate__fadeIn">Github</h2>}
+          {expand && <h2 className="title animate__animated animate__fadeIn">GitHub</h2>}
         </li>
         <li className="tool add">
           <div className="logo">

@@ -142,14 +142,14 @@ export default function Logins() {
               disabled={!github}
               data-key={"client_id"}
               onChange={handleGithubAuthChange}
-              placeholder="Github Client ID"
+              placeholder="GitHub Client ID"
               value={githubAuthConfig?.client_id}
             />
             <Input
               disabled={!github}
               data-key={"client_secret"}
               onChange={handleGithubAuthChange}
-              placeholder="Github Client Secret"
+              placeholder="GitHub Client Secret"
               value={githubAuthConfig?.client_secret}
             />
           </div>

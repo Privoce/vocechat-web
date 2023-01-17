@@ -53,7 +53,7 @@ const GithubCallback: FC<Props> = ({ code, from = "webapp" }) => {
     if (error) return <span>Something Error</span>;
     return <section className='flex flex-col gap-3 justify-center items-center'>
         {isSuccess && from == 'widget' && <h1>Please close this window and return widget window</h1>}
-        <span className='text-3xl text-green-600 font-bold'>{isLoading ? "Github Logging in..." : "Github Login Success!"}</span>
+        <span className='text-3xl text-green-600 font-bold'>{isLoading ? "GitHub Logging in..." : "GitHub Login Success!"}</span>
     </section>;
 };
 
