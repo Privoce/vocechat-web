@@ -32,12 +32,16 @@ registerRoute(
     if (request.mode !== "navigate") {
       return false;
     } // If this is a URL that starts with /_, skip.
-
-    if (url.pathname.startsWith("/_") || url.pathname.startsWith("/api/swagger")) {
+    const urlPath = url.pathname;
+    // 忽略swagger文档 与 本地语言文件
+    if (urlPath.startsWith("/api/swagger") || urlPath.startsWith("/locales/")) {
+      return false;
+    }
+    if (urlPath.startsWith("/_")) {
       return false;
     } // If this looks like a URL for a resource, because it contains // a file extension, skip.
 
-    if (url.pathname.match(fileExtensionRegexp)) {
+    if (urlPath.match(fileExtensionRegexp)) {
       return false;
     } // Return true to signal that we want to use the handler.
 
@@ -58,18 +62,6 @@ registerRoute(
       // Ensure that once this runtime cache reaches a maximum size the
       // least-recently used images are removed.
       new ExpirationPlugin({ maxEntries: 50 })
-    ]
-  })
-);
-// 缓存多语言文件
-registerRoute(
-  ({ url }) => url.pathname.startsWith("/locales/"),
-  new StaleWhileRevalidate({
-    cacheName: "locales",
-    plugins: [
-      // Ensure that once this runtime cache reaches a maximum size the
-      // least-recently used images are removed.
-      new ExpirationPlugin({ maxEntries: 100, maxAgeSeconds: 5 * 60 })
     ]
   })
 );
