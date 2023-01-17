@@ -27,5 +27,6 @@
   "invite_link_expire": "Invite link expires in 48 hours",
   "generate_new_link": "Generate New Link",
 
-  "send_to": "Send To"
+  "send_to": "Send To",
+  "edited": "edited"
 }

@@ -47,7 +47,7 @@
       "title": "注册设置",
       "desc": "允许什么方式注册",
       "everyone": "每个人",
-      "invite": "邀请连接"
+      "invite": "邀请链接"
     },
     "guest_mode": {
       "title": "访客模式",
@@ -158,11 +158,11 @@
   "login": {
     "password": "密码登录",
     "password_desc": "允许用户使用密码登录",
-    "magic_link": "邀请连接",
+    "magic_link": "邀请链接",
     "magic_link_desc": "允许用户使用邀请链接登录",
     "google": "谷歌登录",
     "google_desc": "允许用户谷歌登录",
-    "github": "Github",
+    "github": "GitHub",
     "github_desc": "允许用户使用GitHub登录",
     "metamask": "Metamask",
     "metamask_desc": "允许用户使用Metamask登录",

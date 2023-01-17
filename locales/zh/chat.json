@@ -28,5 +28,6 @@
   "invite_link_expire": "邀请链接有效期：48小时",
   "generate_new_link": "生成新邀请链接",
 
-  "send_to": "发送至"
+  "send_to": "发送至",
+  "edited": "已编辑"
 }
