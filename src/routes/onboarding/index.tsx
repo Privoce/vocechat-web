@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { Helmet } from "react-helmet";
 import { useWizard, Wizard } from 'react-use-wizard';
 
-import WelcomePage from "./steps/welcomePage";
-import ServerName from "./steps/serverName";
-import AdminAccount from "./steps/adminAccount";
-import WhoCanSignUp from "./steps/whoCanSignUp";
-import InviteLink from "./steps/inviteLink";
-import DonePage from "./steps/donePage";
+import WelcomePage from "./steps/welcome-page";
+import ServerName from "./steps/server-name";
+import AdminAccount from "./steps/admin-account";
+import WhoCanSignUp from "./steps/who-can-sign-up";
+import InviteLink from "./steps/invite-link";
+import DonePage from "./steps/done-page";
 import steps from "./steps";
 import StyledOnboardingPage from "./styled";
 import { useTranslation } from "react-i18next";
