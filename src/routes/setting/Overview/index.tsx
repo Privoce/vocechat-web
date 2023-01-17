@@ -8,6 +8,7 @@ import useConfig from "../../../common/hook/useConfig";
 import Server from './server';
 import Language from './Language';
 import FrontendURL from "./FrontendURL";
+import ServerVersionChecker from "../../../common/component/ServerVersionChecker";
 
 const StyledWrapper = styled.div`
   position: relative;
@@ -88,14 +89,9 @@ export default function Overview() {
     const guest = v === "true";
     updateLoginConfig({ ...loginConfig, guest });
   };
-
-
-
   if (!loginConfig) return null;
-
   const { who_can_sign_up: whoCanSignUp, guest = false } = loginConfig as LoginConfig;
   const isAdmin = loginUser?.is_admin;
-
   return (
     <StyledWrapper>
       <Server />
@@ -125,16 +121,15 @@ export default function Overview() {
               values={["true", "false"]}
               value={String(guest)}
               onChange={(v) => {
-                console.log("wtff", v);
-
                 handleGuestToggle(v);
               }}
             />
           </div>
-          <FrontendURL />
+          <ServerVersionChecker version="0.3.3" empty={true}>
+            <FrontendURL />
+          </ServerVersionChecker>
         </>
       )}
-
       <Language />
     </StyledWrapper>
   );
