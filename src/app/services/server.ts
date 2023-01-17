@@ -42,7 +42,7 @@ export const serverApi = createApi({
     getThirdPartySecret: builder.query<string, void>({
       query: () => ({
         url: `/admin/system/third_party_secret`,
-        responseHandler: (response: Response) => response.text()
+        responseHandler: "text"
       }),
       keepUnusedDataFor: 0
     }),
@@ -50,7 +50,7 @@ export const serverApi = createApi({
       query: () => ({
         url: `/admin/system/third_party_secret`,
         method: "POST",
-        responseHandler: (response: Response) => response.text()
+        responseHandler: "text"
       })
     }),
     getServerVersion: builder.query<string, void>({
@@ -59,7 +59,7 @@ export const serverApi = createApi({
           accept: "text/plain"
         },
         url: `/admin/system/version`,
-        responseHandler: (response: Response) => response.text()
+        responseHandler: "text"
       })
     }),
     getFirebaseConfig: builder.query<FirebaseConfig, void>({
@@ -161,7 +161,7 @@ export const serverApi = createApi({
           accept: "text/plain"
         },
         url: `/admin/system/create_invite_link?expired_in=${expired_in}`,
-        responseHandler: (response: Response) => response.text()
+        responseHandler: "text"
       }),
       transformResponse: (link: string) => {
         // 确保http开头
@@ -195,10 +195,20 @@ export const serverApi = createApi({
         body: data
       })
     }),
+    getFrontendUrl: builder.query<string, void>({
+      query: () => ({
+        url: `/admin/system/frontend_url`,
+        responseHandler: "text"
+      })
+    }),
     updateFrontendUrl: builder.mutation<void, string>({
       query: (url) => ({
-        url: `/admin/system/update_frontend_url?frontend_url=${encodeURIComponent(url)}`,
+        url: `/admin/system/update_frontend_url`,
         method: "POST",
+        headers: {
+          "content-type": 'text/plain',
+        },
+        body: url
       })
     }),
     getLicense: builder.query<LicenseResponse, void>({
@@ -292,5 +302,6 @@ export const {
   useLazyGetGeneratedLicenseQuery,
   useLazyGetBotRelatedChannelsQuery,
   useSendMessageByBotMutation,
-  useUpdateFrontendUrlMutation
+  useUpdateFrontendUrlMutation,
+  useGetFrontendUrlQuery
 } = serverApi;

@@ -136,7 +136,7 @@ export const authApi = createApi({
         },
         url: `user/send_login_magic_link?email=${encodeURIComponent(email)}`,
         method: "POST",
-        responseHandler: (response: Response) => response.text()
+        responseHandler: "text"
       })
     }),
     sendRegMagicLink: builder.mutation<
