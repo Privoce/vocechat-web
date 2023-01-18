@@ -47,6 +47,12 @@
   "status": {
     "uploading": "Uploading"
   },
+  "tip": {
+    "update": "Update Successfully!",
+    "delete": "Delete Successfully!",
+    "login": "Login Successfully!",
+    "logout": "Logout Successfully!"
+  },
   "new_version": "<0>New Version</0> Available",
   "mobile_app": "Check out our <0>Mobile APP</0>",
   "price": {

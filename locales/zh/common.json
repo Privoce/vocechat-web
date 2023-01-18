@@ -49,6 +49,12 @@
   "status": {
     "uploading": "上传中"
   },
+  "tip": {
+    "update": "更新成功!",
+    "delete": "删除成功!",
+    "login": "登录成功!",
+    "logout": "退出成功!"
+  },
   "new_version": "有<0>新版本</0>",
   "mobile_app": "欢迎下载使用<0>手机APP</0>",
   "price": {
