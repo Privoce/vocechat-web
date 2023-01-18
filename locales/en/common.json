@@ -64,5 +64,11 @@
       "title": "VoceChat Supreme",
       "desc": "User Limit: No Limit"
     }
+  },
+  "server_update": {
+    "version_needed": "This function needs server version:<0>{{version}}</0> at least 🚨",
+    "current_version": "Your current version:<0>{{version}}</0>",
+    "update_tip": "Please upgrade the Server!",
+    "howto": "How to Update VoceChat Server"
   }
 }

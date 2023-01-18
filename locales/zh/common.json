@@ -66,5 +66,11 @@
       "title": "VoceChat 终极版",
       "desc": "用户数限制: 无限制"
     }
+  },
+  "server_update": {
+    "version_needed": "支持该特性的最低Server版本:<0>{{version}}</0>",
+    "current_version": "当前的Server版本:<0>{{version}}</0>",
+    "update_tip": "请升级后端服务！",
+    "howto": "如何升级后端服务"
   }
 }
