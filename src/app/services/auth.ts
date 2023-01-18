@@ -2,7 +2,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { nanoid } from "@reduxjs/toolkit";
 import baseQuery from "./base.query";
 import { setAuthData, updateToken, resetAuthData, updateInitialized } from "../slices/auth.data";
-import BASE_URL, { KEY_DEVICE_ID, KEY_LOCAL_MAGIC_TOKEN } from "../config";
+import BASE_URL, { KEY_DEVICE_ID, KEY_DEVICE_TOKEN, KEY_LOCAL_MAGIC_TOKEN } from "../config";
 import {
   AuthData,
   CredentialResponse,
@@ -13,11 +13,12 @@ import {
 
 const getDeviceId = () => {
   let d = localStorage.getItem(KEY_DEVICE_ID);
+  let dt = localStorage.getItem(KEY_DEVICE_TOKEN) || "";
   if (!d) {
     d = `web:${nanoid()}`;
     localStorage.setItem(KEY_DEVICE_ID, d);
   }
-  return d;
+  return { device: d, device_token: dt };
 };
 
 export const authApi = createApi({
@@ -30,8 +31,8 @@ export const authApi = createApi({
         method: "POST",
         body: {
           credential,
-          device: getDeviceId(),
-          device_token: "test"
+          device: getDeviceId().device,
+          device_token: getDeviceId().device_token
         }
       }),
       transformResponse: (data: AuthData) => {

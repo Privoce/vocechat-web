@@ -1,11 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { initializeApp } from "firebase/app";
 import { getToken, getMessaging } from "firebase/messaging";
-import { firebaseConfig } from "../../../app/config";
+import { firebaseConfig, KEY_DEVICE_TOKEN } from "../../../app/config";
 let requesting = false;
 let error = false;
 const useDeviceToken = (vapidKey: string) => {
   const [token, setToken] = useState<string>("");
+  useEffect(() => {
+    if (token) {
+      localStorage.setItem(KEY_DEVICE_TOKEN, token);
+    }
+  }, [token]);
+
   // https only
   if (navigator.serviceWorker) {
     const messaging = getMessaging(initializeApp(firebaseConfig));
@@ -31,7 +37,7 @@ const useDeviceToken = (vapidKey: string) => {
         console.error("An error occurred while retrieving token. ", err);
       });
   }
-  return token as string;
+  return token;
 };
 
 export default useDeviceToken;

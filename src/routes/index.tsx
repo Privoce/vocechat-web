@@ -32,6 +32,8 @@ import Meta from "../common/component/Meta";
 // import ChatPage from "./chat";
 import LazyIt from './lazy';
 import store, { useAppSelector } from "../app/store";
+import useDeviceToken from "../common/component/Notification/useDeviceToken";
+import { vapidKey } from "../app/config";
 let toastId: string;
 const PageRoutes = () => {
   const {
@@ -40,6 +42,8 @@ const PageRoutes = () => {
   } = useAppSelector((store) => {
     return { ui: store.ui, fileMessages: store.fileMessage };
   }, isEqual);
+  // 提前获取device token
+  useDeviceToken(vapidKey);
 
   // 掉线检测
   useEffect(() => {
