@@ -2,6 +2,7 @@ import React from "react";
 import Linkit from "react-linkify";
 import dayjs from "dayjs";
 import reactStringReplace from "react-string-replace";
+import i18n from '../../../i18n';
 import { ContentTypes } from "../../../app/config";
 import Mention from "./Mention";
 import ForwardedMessage from "./ForwardedMessage";
@@ -9,6 +10,7 @@ import MarkdownRender from "../MarkdownRender";
 import FileMessage from "../FileMessage";
 import URLPreview from "./URLPreview";
 import { ContentType } from "../../../types/message";
+
 type Props = {
   context: "user" | "channel";
   to?: number;
@@ -57,7 +59,7 @@ const renderContent = ({
           </Linkit>
           {edited && (
             <span className="edited" title={dayjs(+edited).format("YYYY-MM-DD h:mm:ss A")}>
-              (edited)
+              ({i18n.t("edited", { ns: "chat" })})
             </span>
           )}
         </>
