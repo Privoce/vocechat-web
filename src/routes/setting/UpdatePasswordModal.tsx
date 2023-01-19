@@ -36,6 +36,7 @@ interface BaseForm {
 
 const ProfileBasicEditModal: FC<Props> = ({ closeModal }) => {
   const { t } = useTranslation("member");
+  const { t: ct } = useTranslation();
   const { data } = useGetCredentialsQuery();
   const [input, setInput] = useState<BaseForm>({
     current: "",
@@ -63,7 +64,7 @@ const ProfileBasicEditModal: FC<Props> = ({ closeModal }) => {
   useEffect(() => {
     if (isSuccess) {
       // todo
-      toast.success("update password successfully");
+      toast.success(ct("tip.update"));
       closeModal();
     }
   }, [isSuccess]);

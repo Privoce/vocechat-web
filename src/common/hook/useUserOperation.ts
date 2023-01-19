@@ -8,12 +8,14 @@ import { useLazyDeleteUserQuery } from "../../app/services/user";
 // import useConfig from "./useConfig";
 import useCopy from "./useCopy";
 import { useAppSelector } from "../../app/store";
+import { useTranslation } from "react-i18next";
 // import { AgoraConfig } from "../../types/server";
 interface IProps {
   uid?: number;
   cid?: number;
 }
 const useUserOperation = ({ uid, cid }: IProps) => {
+  const { t: ct } = useTranslation();
   const [passedUid, setPassedUid] = useState<number | undefined>(undefined);
   const isUserDetailPath = useMatch(`/users/${uid}`);
   const [removeUser, { isSuccess: removeUserSuccess }] = useLazyDeleteUserQuery();
@@ -34,7 +36,7 @@ const useUserOperation = ({ uid, cid }: IProps) => {
 
   useEffect(() => {
     if (removeSuccess || removeUserSuccess) {
-      toast.success("Remove Successfully");
+      toast.success(ct("tip.delete"));
       if (removeUserSuccess && isUserDetailPath) {
         navigateTo(`/users`);
       }

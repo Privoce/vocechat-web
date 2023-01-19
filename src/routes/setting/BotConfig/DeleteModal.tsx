@@ -21,7 +21,7 @@ const DeleteModal = ({ closeModal, uid, name }: Props) => {
     };
     useEffect(() => {
         if (isSuccess) {
-            toast.success("Delete Bot Successfully!");
+            toast.success(ct("tip.delete"));
             closeModal();
         }
     }, [isSuccess]);

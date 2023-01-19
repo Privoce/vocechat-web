@@ -23,7 +23,7 @@ const DeleteConfirmModal: FC<Props> = ({ id, closeModal }) => {
 
   useEffect(() => {
     if (isSuccess) {
-      toast.success("delete channel successfully!");
+      toast.success(ct("tip.delete"));
       closeModal();
       navigateTo("/chat");
     }

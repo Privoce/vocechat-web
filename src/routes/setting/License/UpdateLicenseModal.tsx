@@ -28,7 +28,7 @@ const UpdateLicenseModal: FC<Props> = ({ closeModal, updateLicense, updating, up
   };
   useEffect(() => {
     if (updated) {
-      toast.success("Update Successfully!");
+      toast.success(ct("tip.update"));
       closeModal();
     }
   }, [updated]);

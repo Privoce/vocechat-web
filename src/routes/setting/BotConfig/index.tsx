@@ -53,7 +53,7 @@ export default function BotConfig() {
   };
   useEffect(() => {
     if (updateAvatarSuccess) {
-      toast.success("Update Bot Avatar Successfully!");
+      toast.success(ct("tip.update"));
     }
   }, [updateAvatarSuccess]);
 

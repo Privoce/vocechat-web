@@ -1,41 +1,8 @@
-import { FC } from "react";
-import styled, { keyframes } from "styled-components";
+import { FC, useState, useEffect } from "react";
+import clsx from "clsx";
 import { Ring } from "@uiball/loaders";
 import Button from "./styled/Button";
 import useLogout from "../hook/useLogout";
-
-const DelayVisible = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`;
-
-const StyledWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  align-items: center;
-  justify-content: center;
-
-  &.fullscreen {
-    width: 100vw;
-    height: 100vh;
-  }
-
-  .reload {
-    opacity: 0;
-
-    &.visible {
-      animation: ${DelayVisible} 1s forwards;
-      animation-delay: 30s;
-    }
-  }
-`;
 
 interface Props {
   reload?: boolean;
@@ -43,19 +10,32 @@ interface Props {
 }
 
 const Loading: FC<Props> = ({ reload = false, fullscreen = false }) => {
+  const [reloadVisible, setReloadVisible] = useState(false);
   const { clearLocalData } = useLogout();
   const handleReload = () => {
     clearLocalData();
     location.reload();
   };
+  useEffect(() => {
+    let inter = 0;
+    if (reload) {
+      inter = window.setTimeout(() => {
+        setReloadVisible(true);
+      }, 30 * 1000);
+
+    }
+    return () => {
+      clearTimeout(inter);
+    };
+  }, [reload]);
 
   return (
-    <StyledWrapper className={fullscreen ? "fullscreen" : ""}>
+    <div className={clsx("w-full h-full flex flex-col items-center justify-center gap-4", fullscreen ? "w-screen h-screen" : "")}>
       <Ring size={40} lineWeight={5} speed={2} color="black" />
-      <Button className={`reload danger ${reload ? "visible" : ""}`} onClick={handleReload}>
+      <Button className={clsx(`danger`, reloadVisible ? "visible" : "invisible")} onClick={handleReload}>
         Reload
       </Button>
-    </StyledWrapper>
+    </div>
   );
 };
 

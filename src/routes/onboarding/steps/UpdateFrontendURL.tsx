@@ -31,7 +31,7 @@ const UpdateFrontendURL = ({ refreshInviteLink }: Props) => {
     useEffect(() => {
         if (isSuccess) {
             refreshInviteLink();
-            toast.success("Update Successfully!");
+            toast.success(ct("tip.update"));
         }
     }, [isSuccess]);
     return (

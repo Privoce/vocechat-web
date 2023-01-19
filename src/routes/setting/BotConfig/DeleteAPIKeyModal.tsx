@@ -21,7 +21,7 @@ const DeleteAPIKeyModal = ({ closeModal, uid, kid }: Props) => {
     };
     useEffect(() => {
         if (isSuccess) {
-            toast.success("Delete API Key Successfully!");
+            toast.success(ct("tip.delete"));
             closeModal();
         }
     }, [isSuccess]);

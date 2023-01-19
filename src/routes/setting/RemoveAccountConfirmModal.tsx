@@ -16,7 +16,6 @@ const RemoveConfirmModal: FC<Props> = ({ closeModal }) => {
   const handleRemove = async () => {
     try {
       await removeCurrentAccount();
-      // toast.success("Remove Account Successfully!");
     } catch (error) {
       toast.error("Remove Account Failed!");
     }

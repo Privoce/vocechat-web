@@ -50,7 +50,7 @@ const LogoutConfirmModal: FC<Props> = ({ closeModal }) => {
       if (clearLocal) {
         clearLocalData();
       }
-      toast.success("Logout Successfully");
+      toast.success(ct("tip.logout"));
     }
   }, [exited, clearLocal]);
 

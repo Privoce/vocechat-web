@@ -49,17 +49,6 @@ const StyledWrapper = styled.div`
     &.loading .image img {
       filter: blur(2px);
     }
-
-    .origin {
-      font-weight: bold;
-      font-size: 14px;
-      color: #aaa;
-
-      &:hover {
-        text-decoration: underline;
-        color: #fff;
-      }
-    }
   }
 `;
 
@@ -117,13 +106,12 @@ const ImagePreviewModal: FC<Props> = ({ download = true, data, closeModal }) => 
             <img
               src={url}
               alt="preview"
-              className={`animate__animated animate__fadeIn animate__faster`}
             />
           </div>
           {download && (
             <a
               // onClick={handleDownload}
-              className="origin"
+              className="font-semibold text-sm text-gray-600 hover:underline hover:text-white"
               download={name}
               type={type}
               href={downloadLink || originUrl}

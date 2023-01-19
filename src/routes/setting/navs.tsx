@@ -39,7 +39,7 @@ const navs = [
     items: [
       {
         name: "bot",
-        component: <ServerVersionChecker version="0.3.2"><BotConfig /></ServerVersionChecker>,
+        component: <ServerVersionChecker version="0.3.4"><BotConfig /></ServerVersionChecker>,
         admin: true
       },
       {

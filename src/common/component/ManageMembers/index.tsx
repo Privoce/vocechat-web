@@ -33,7 +33,7 @@ const ManageMembers: FC<Props> = ({ cid }) => {
 
   useEffect(() => {
     if (updateSuccess) {
-      toast.success("Update Successfully");
+      toast.success(ct("tip.update"));
     }
   }, [updateSuccess]);
 

@@ -21,6 +21,7 @@ const AutoDeleteMessages = ({ id, type = "channel" }: Props) => {
     const [updateSetting, { isSuccess }] = useUpdateAutoDeleteMsgMutation();
     const [value, setValue] = useState<number>(setting?.expires_in ?? 0);
     const { t } = useTranslation("setting", { keyPrefix: "auto_delete_msg" });
+    const { t: ct } = useTranslation();
     const options = [
         { title: t("off"), value: 0 },
         { title: t("5_min"), value: 5 * 60 },
@@ -41,7 +42,7 @@ const AutoDeleteMessages = ({ id, type = "channel" }: Props) => {
     };
     useEffect(() => {
         if (isSuccess) {
-            toast.success("Update Successfully!");
+            toast.success(ct("tip.update"));
         }
     }, [isSuccess]);
     const originalVal = setting?.expires_in ?? 0;

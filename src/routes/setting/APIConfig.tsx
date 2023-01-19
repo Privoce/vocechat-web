@@ -72,7 +72,7 @@ export default function APIConfig() {
   useEffect(() => {
     if (isSuccess) {
       hideAll();
-      toast.success("Update API Secret Successfully!");
+      toast.success(ct("tip.update"));
     }
   }, [isSuccess]);
   const handleToggle = (val: { third_party: boolean }) => {

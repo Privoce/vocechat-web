@@ -61,12 +61,13 @@ interface Props {
 
 const GoogleLoginInner: FC<Props> = ({ type = "login", loaded, loadError }) => {
   const { t } = useTranslation("auth");
+  const { t: ct } = useTranslation();
   const [login, { isSuccess, isLoading, error }] = useLoginMutation();
   //拿本地存的magic token
   const magic_token = localStorage.getItem(KEY_LOCAL_MAGIC_TOKEN);
   useEffect(() => {
     if (isSuccess) {
-      toast.success("Login Successfully");
+      toast.success(ct("tip.login"));
       // navigateTo("/");
     }
   }, [isSuccess]);

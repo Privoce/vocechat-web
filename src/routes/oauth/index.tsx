@@ -6,8 +6,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useLoginMutation } from "../../app/services/auth";
 import toast from "react-hot-toast";
 import { setAuthData } from "../../app/slices/auth.data";
+import { useTranslation } from "react-i18next";
 
 export default function OAuthPage() {
+  const { t: ct } = useTranslation();
   const [login, { data, isSuccess, isError }] = useLoginMutation();
   const { token } = useParams();
   const [loading, setLoading] = useState(true);
@@ -36,7 +38,7 @@ export default function OAuthPage() {
     if (isSuccess && data) {
       setLoading(false);
       // 更新本地认证信息
-      toast.success("Login Successfully");
+      toast.success(ct("tip.login"));
       dispatch(setAuthData(data));
       navigateTo("/");
     }

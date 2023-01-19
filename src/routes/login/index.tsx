@@ -18,6 +18,7 @@ import SocialLoginButtons from "./SocialLoginButtons";
 
 export default function LoginPage() {
   const { t } = useTranslation("auth");
+  const { t: ct } = useTranslation();
   const { data: enableSMTP } = useGetSMTPStatusQuery();
   const [login, { isSuccess, isLoading, error }] = useLoginMutation();
   const { clientId } = useGoogleAuthConfig();
@@ -82,7 +83,7 @@ export default function LoginPage() {
   }, [error]);
   useEffect(() => {
     if (isSuccess) {
-      toast.success("Login Successfully");
+      toast.success(ct("tip.login"));
       // navigateTo("/");
     }
   }, [isSuccess]);

@@ -127,7 +127,7 @@ export default function MyAccount() {
 
   useEffect(() => {
     if (uploadSuccess) {
-      toast.success("update avatar successfully!");
+      toast.success(ct("tip.update"));
     }
   }, [uploadSuccess]);
 

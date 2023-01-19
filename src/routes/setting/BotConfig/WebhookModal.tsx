@@ -38,7 +38,7 @@ const WebhookModal = ({ uid, webhook, closeModal }: Props) => {
     };
     useEffect(() => {
         if (isSuccess) {
-            toast.success("Update Webhook URL Successfully!");
+            toast.success(ct("tip.update"));
             closeModal();
         }
     }, [isSuccess]);

@@ -8,8 +8,10 @@ import Button from "../../common/component/styled/Button";
 import { useLoginMutation, useCheckMagicTokenValidMutation } from "../../app/services/auth";
 import ExpiredTip from "./ExpiredTip";
 import { useRegisterMutation } from "../../app/services/auth";
+import { useTranslation } from "react-i18next";
 
 const RegWithUsername: FC = () => {
+  const { t: ct } = useTranslation();
   const [checkTokenInvalid, { data: isTokenValid, isLoading: checkingToken }] =
     useCheckMagicTokenValidMutation();
   const [
@@ -62,7 +64,7 @@ const RegWithUsername: FC = () => {
     const data = loginData || regData;
     if (isSuccess && data) {
       // 更新本地认证信息
-      toast.success("Login Successfully");
+      toast.success(ct("tip.login"));
       dispatch(setAuthData(data));
       // tricky
       location.href = `/#/`;

@@ -22,7 +22,7 @@ const Index = () => {
     const [updateUrl, { isLoading, isSuccess }] = useUpdateFrontendUrlMutation();
     useEffect(() => {
         if (isSuccess) {
-            toast.success("Update Successfully!");
+            toast.success(ct("tip.update"));
         }
     }, [isSuccess]);
     useEffect(() => {

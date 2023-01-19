@@ -47,7 +47,7 @@ const ProfileBasicEditModal: FC<Props> = ({
   useEffect(() => {
     if (isSuccess) {
       // todo
-      toast.success("update user info successfully");
+      toast.success(t("tip.update"));
       closeModal();
     }
   }, [isSuccess]);

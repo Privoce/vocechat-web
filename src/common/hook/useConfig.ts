@@ -12,6 +12,7 @@ import {
   useLazyGetLoginConfigQuery
 } from "../../app/services/server";
 import { AgoraConfig, FirebaseConfig, LoginConfig, SMTPConfig } from "../../types/server";
+import { useTranslation } from "react-i18next";
 // config: smtp agora login firebase
 type ConfigType = "smtp" | "agora" | "login" | "firebase";
 type ConfigMap = Record<ConfigType, AgoraConfig | FirebaseConfig | LoginConfig | SMTPConfig>;
@@ -19,6 +20,7 @@ type valuesOf<T> = T[keyof T];
 let originalValue: valuesOf<ConfigMap> | undefined = undefined;
 // type valueOf<T,config as ConfigType> = T[config];
 export default function useConfig(config: keyof ConfigMap = "smtp") {
+  const { t: ct } = useTranslation();
   const [changed, setChanged] = useState(false);
   const [values, setValues] = useState<valuesOf<ConfigMap> | undefined>(undefined);
   const [updateLoginConfig, { isSuccess: LoginUpdated, isLoading: LoginUpdating }] = useUpdateLoginConfigMutation();
@@ -77,7 +79,7 @@ export default function useConfig(config: keyof ConfigMap = "smtp") {
 
   useEffect(() => {
     if (updated) {
-      toast.success("Configuration Updated!");
+      toast.success(ct("tip.update"));
       // setChanged(false);
       refetch();
     }

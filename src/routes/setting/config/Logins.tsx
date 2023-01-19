@@ -15,6 +15,7 @@ import { useTranslation } from "react-i18next";
 
 export default function Logins() {
   const { t } = useTranslation("setting", { keyPrefix: "login" });
+  const { t: ct } = useTranslation();
   const {
     changed: clientIdChanged,
     clientId,
@@ -37,14 +38,14 @@ export default function Logins() {
       // 更新google client id
       await updateClientIdToServer();
       if (!changed) {
-        toast.success("Configuration Updated!");
+        toast.success(ct("tip.update"));
       }
     }
     if (github && githubChanged) {
       // github config
       await updateGithubAuthConfigToServer();
       if (!changed) {
-        toast.success("Configuration Updated!");
+        toast.success(ct("tip.update"));
       }
     }
   };

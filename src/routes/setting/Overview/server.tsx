@@ -12,6 +12,7 @@ import { useAppSelector } from '../../../app/store';
 
 const Index = () => {
     const { t } = useTranslation("setting");
+    const { t: ct } = useTranslation();
     const { loginUser, server } = useAppSelector((store) => {
         return { loginUser: store.authData.user, server: store.server };
     });
@@ -42,7 +43,7 @@ const Index = () => {
     }, [server]);
     useEffect(() => {
         if (uploadSuccess) {
-            toast.success("Update logo successfully!");
+            toast.success(ct("tip.update"));
         }
     }, [uploadSuccess]);
     useEffect(() => {

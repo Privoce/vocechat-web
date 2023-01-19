@@ -50,6 +50,7 @@ const StyledWrapper = styled.div`
 `;
 export default function Overview({ id = 0 }) {
   const { t } = useTranslation("setting", { keyPrefix: "channel" });
+  const { t: ct } = useTranslation();
   const { loginUser, channel } = useAppSelector((store) => {
     return {
       loginUser: store.authData.user,
@@ -105,13 +106,13 @@ export default function Overview({ id = 0 }) {
 
   useEffect(() => {
     if (updated) {
-      toast.success("Channel updated!");
+      toast.success(ct("tip.update"));
       refetch();
     }
   }, [updated]);
   useEffect(() => {
     if (changeTypeSuccess) {
-      toast.success("Change channel visibility successfully!");
+      toast.success(ct("tip.update"));
     }
   }, [changeTypeSuccess]);
 

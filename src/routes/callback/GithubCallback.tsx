@@ -3,12 +3,14 @@ import { KEY_LOCAL_MAGIC_TOKEN } from "../../app/config";
 import { useLoginMutation } from "../../app/services/auth";
 import toast from "react-hot-toast";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
+import { useTranslation } from 'react-i18next';
 
 export type GithubLoginSource = "widget" | "webapp"
 type Props = {
     code: string, from?: GithubLoginSource
 }
 const GithubCallback: FC<Props> = ({ code, from = "webapp" }) => {
+    const { t: ct } = useTranslation();
     //拿本地存的magic token
     const magic_token = localStorage.getItem(KEY_LOCAL_MAGIC_TOKEN);
     const [login, { isLoading, isSuccess, error }] = useLoginMutation();
@@ -23,7 +25,7 @@ const GithubCallback: FC<Props> = ({ code, from = "webapp" }) => {
     }, [code]);
     useEffect(() => {
         if (isSuccess) {
-            toast.success("Login Successfully");
+            toast.success(ct("tip.login"));
             // 通知widget
             if (from == 'widget') {
                 localStorage.setItem("widget", `${new Date().getTime()}`);
