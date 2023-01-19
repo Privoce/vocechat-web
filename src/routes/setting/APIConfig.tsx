@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import styled from "styled-components";
 import Tippy from "@tippyjs/react";
 import toast from "react-hot-toast";
 import { hideAll } from "tippy.js";
@@ -14,52 +13,6 @@ import useConfig from "../../common/hook/useConfig";
 import { LoginConfig } from "../../types/server";
 import { useTranslation } from "react-i18next";
 
-const StyledConfirm = styled.div`
-  padding: 12px;
-  border-radius: 10px;
-  border: 1px solid orange;
-  background-color: #fff;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 250px;
-  .tip {
-    color: orange;
-    font-size: 12px;
-    line-height: 1.5;
-  }
-  .btns {
-    display: flex;
-    width: 100%;
-    justify-content: flex-end;
-    gap: 14px;
-  }
-`;
-const Styled = styled.div`
-  max-width: 500px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 15px;
-  > .input {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-    label {
-      white-space: nowrap;
-      font-size: 14px;
-      color: #555;
-    }
-  }
-  > .tip {
-    font-size: 12px;
-    color: #999;
-    line-height: 1.5;
-  }
-`;
 
 export default function APIConfig() {
   const { t } = useTranslation("setting");
@@ -79,14 +32,15 @@ export default function APIConfig() {
     updateConfig({ ...values, ...val });
   };
   const thirdParty = (values as LoginConfig)?.third_party;
+
   return (
-    <Styled>
+    <div className="max-w-[500px] flex flex-col gap-4 items-start">
       <Toggle
         onClick={handleToggle.bind(null, { third_party: !thirdParty })}
         data-checked={thirdParty}
       />
-      <div className="input">
-        <label htmlFor="secret"> {t("third_app.key")}:</label>
+      <div className="w-full flex flex-col items-start gap-2">
+        <label htmlFor="secret" className="text-sm text-gray-500"> {t("third_app.key")}:</label>
         <Input disabled={!thirdParty} type="password" id="secret" value={updatedSecret || data} />
       </div>
       <Tippy
@@ -94,26 +48,26 @@ export default function APIConfig() {
         placement="right-start"
         trigger="click"
         content={
-          <StyledConfirm>
-            <div className="tip">
+          <div className="p-3 rounded-lg border border-orange-400 border-solid flex flex-col gap-3 w-[250px] bg-white">
+            <div className="text-orange-500 text-xs">
               {t("third_app.update_tip")}
             </div>
-            <div className="btns">
-              <Button onClick={() => hideAll()} className="cancel small">
+            <div className="flex justify-end gap-3 w-full">
+              <Button onClick={() => hideAll()} className="cancel mini">
                 {ct("action.cancel")}
               </Button>
-              <Button disabled={isLoading} className="small danger" onClick={() => updateSecret()}>
+              <Button disabled={isLoading} className="mini danger" onClick={() => updateSecret()}>
                 {ct("action.yes")}
               </Button>
             </div>
-          </StyledConfirm>
+          </div>
         }
       >
         <Button disabled={!thirdParty}> {t("third_app.update")}</Button>
       </Tippy>
-      <div className="tip">
+      <div className="text-xs text-orange-400">
         {t("third_app.key_tip")}
       </div>
-    </Styled>
+    </div>
   );
 }

@@ -1,44 +1,5 @@
+import clsx from "clsx";
 import { FC, ReactNode } from "react";
-import styled from "styled-components";
-
-const Styled = styled.div`
-  padding: 32px;
-  filter: drop-shadow(0px 25px 50px rgba(31, 41, 55, 0.25));
-  border-radius: 8px;
-  background-color: #fff;
-  min-width: 440px;
-  &.compact {
-    padding: 16px;
-    min-width: 406px;
-    .title,
-    .desc {
-      text-align: left;
-    }
-  }
-  .title {
-    text-align: center;
-    font-weight: 600;
-    font-size: 20px;
-    color: #374151;
-    margin-bottom: 16px;
-  }
-  .desc {
-    text-align: center;
-    font-weight: normal;
-    font-size: 14px;
-    line-height: 20px;
-    color: #6b7280;
-    margin-bottom: 8px;
-  }
-  .btns {
-    padding-top: 16px;
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    gap: 16px;
-    align-items: center;
-  }
-`;
 
 interface Props {
   title?: string;
@@ -46,16 +7,17 @@ interface Props {
   buttons?: ReactNode;
   children?: ReactNode;
   className?: string;
+  compact?: boolean
 }
 
-const StyledModal: FC<Props> = ({ title = "", description = "", buttons, children, ...props }) => {
+const StyledModal: FC<Props> = ({ compact = false, title = "", description = "", buttons, children, className }) => {
   return (
-    <Styled {...props}>
-      {title && <h3 className="title">{title}</h3>}
-      {description && <p className="desc">{description}</p>}
+    <div className={clsx("rounded-lg bg-white drop-shadow", compact ? "p-4 min-w-[406] text-left" : "p-8 min-w-[440px] text-center", className)} >
+      {title && <h3 className="text-xl text-gray-600 mb-4 font-semibold">{title}</h3>}
+      {description && <p className="text-sm text-gray-400 mb-2">{description}</p>}
       {children}
-      {buttons && <div className="btns">{buttons}</div>}
-    </Styled>
+      {buttons && <div className="pt-4 w-full flex justify-end gap-4 items-center">{buttons}</div>}
+    </div>
   );
 };
 
