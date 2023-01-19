@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { useLazyGetHistoryMessagesQuery } from "../../app/services/channel";
 import { useLazyGetHistoryMessagesQuery as useLazyGetDMHistoryMsg } from "../../app/services/user";
 import { useAppSelector } from "../../app/store";
@@ -83,16 +83,40 @@ export default function useMessageFeed({ context = "channel", id }: Props) {
     setAppends([]);
     setPulling(false);
   }, [context, id]);
+
   useEffect(() => {
-    // 处理自动滚动
-    if (items.length > 0) {
-      let wrapper = containerRef.current = document.querySelector(`#VOCECHAT_FEED_${context}_${id}`);
-      if (wrapper) {
-        const newScroll = wrapper.scrollHeight - wrapper.clientHeight;
-        wrapper.scrollTop = curScrollPos + (newScroll - oldScroll);
+    const currentItems = listRef.current;
+    // const [lastMid=Infinity]=currentItems.slice(-1)
+    //过滤掉本地(以及后来追加的消息?)
+    const serverMids = mids.filter((id: number) => {
+      // 如果是本地消息，id是时间戳
+      const ts = +new Date();
+      return Math.abs(ts - id) > 10 * 1000;
+    });
+    if (serverMids.length > 0) {
+      if (currentItems.length == 0) {
+        //初次
+        const pageInfo = getFeedWithPagination({
+          mids: serverMids,
+          isLast: true
+        });
+        pageRef.current = pageInfo;
+        listRef.current = pageInfo.ids;
+        setItems(pageInfo.ids);
+        // console.log("message pageInfo", serverMids, pageInfo);
+      } else {
+        const container = containerRef.current;
+        if (container) {
+          const loadMoreEle = container.querySelector("[data-load-more]");
+          console.log("effected by pull server data", loadMoreEle, isElementVisible(loadMoreEle));
+          if (isElementVisible(loadMoreEle)) {
+            // 有更新：来自于拉取历史消息，拉取下一页数据
+            loadMore();
+          }
+        }
       }
     }
-  }, [items, context, id]);
+  }, [mids]);
 
   useEffect(() => {
     //处理追加：来自于其它人的实时消息以及自己发的
@@ -121,40 +145,17 @@ export default function useMessageFeed({ context = "channel", id }: Props) {
       }
     }
   }, [mids, messageData, loginUid]);
-
   useEffect(() => {
-    const currentItems = listRef.current;
-    // const [lastMid=Infinity]=currentItems.slice(-1)
-    //过滤掉本地(以及后来追加的消息?)
-    const serverMids = mids.filter((id: number) => {
-      // 如果是本地消息，id是时间戳
-      const ts = +new Date();
-      return Math.abs(ts - id) > 10 * 1000;
-    });
-    if (serverMids.length > 0) {
-      if (currentItems.length == 0) {
-        //初次
-        const pageInfo = getFeedWithPagination({
-          mids: serverMids,
-          isLast: true
-        });
-        pageRef.current = pageInfo;
-        listRef.current = pageInfo.ids;
-        setItems(pageInfo.ids);
-        // console.log("message pageInfo", serverMids, pageInfo);
-      } else {
-        const container = containerRef.current;
-        if (container) {
-          const loadMoreEle = container.querySelector("[data-load-more]");
-          if (isElementVisible(loadMoreEle)) {
-            // 有更新：来自于拉取历史消息，拉取下一页数据
-            console.log("effected by pull server data");
-            loadMore();
-          }
-        }
+    // 处理自动滚动
+    if (items.length > 0) {
+      let wrapper = containerRef.current = document.querySelector(`#VOCECHAT_FEED_${context}_${id}`);
+      if (wrapper) {
+        const newScroll = wrapper.scrollHeight - wrapper.clientHeight;
+        wrapper.scrollTop = curScrollPos + (newScroll - oldScroll);
       }
     }
-  }, [mids]);
+  }, [items, context, id]);
+
   const loadMore = () => {
     console.log("load more start", mids, listRef.current, pageRef.current);
     const currPageInfo = pageRef.current;
@@ -192,26 +193,29 @@ export default function useMessageFeed({ context = "channel", id }: Props) {
     );
     setPulling(false);
   };
-  const pullUp = async () => {
+  const pullUp = useCallback(
+    async () => {
 
-    setPulling(true);
-    const currPageInfo = pageRef.current;
-    console.log("pull up start", currPageInfo);
-    // 本地数据的第一页
-    if (currPageInfo && currPageInfo.isFirst || (!currPageInfo && mids.length == 0)) {
-      const [firstMid] = currPageInfo ? currPageInfo.ids : [0];
-      const { data: newList } = await loadMoreMsgsFromServer({
-        mid: firstMid,
-        id
-      });
-      if (newList?.length == 0) {
-        // 只有在这里，才可以把load more去掉
-        setHasMore(false);
+      setPulling(true);
+      const currPageInfo = pageRef.current;
+      console.log("pull up start", currPageInfo);
+      // 本地数据的第一页
+      if (currPageInfo && currPageInfo.isFirst || (!currPageInfo && mids.length == 0)) {
+        const [firstMid] = currPageInfo ? currPageInfo.ids : [0];
+        const { data: newList } = await loadMoreMsgsFromServer({
+          mid: firstMid,
+          id
+        });
+        if (newList?.length == 0) {
+          // 只有在这里，才可以把has more去掉
+          setHasMore(false);
+        }
+        return;
       }
-      return;
-    }
-    loadMore();
-  };
+      loadMore();
+    },
+    [context, id],
+  );
 
   return {
     pulling,

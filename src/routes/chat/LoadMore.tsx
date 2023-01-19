@@ -1,4 +1,4 @@
-import { memo, useEffect, FC } from "react";
+import { useEffect, FC } from "react";
 import { Waveform } from "@uiball/loaders";
 import { useInViewRef } from "rooks";
 
@@ -19,6 +19,7 @@ const LoadMore: FC<Props> = ({ pullUp = null, pulling }) => {
     </div>
   );
 };
-export default memo(LoadMore, (prev, next) => {
-  return prev.pulling === next.pulling;
-});
+export default LoadMore;
+// export default memo(LoadMore, (prev, next) => {
+//   return prev.pulling === next.pulling;
+// });

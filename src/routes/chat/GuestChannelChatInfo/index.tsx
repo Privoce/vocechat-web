@@ -17,7 +17,8 @@ export default function GuestChannelChat({ cid = 0 }: Props) {
     list: msgIds,
     appends,
     hasMore,
-    pullUp
+    pullUp,
+    pulling
   } = useMessageFeed({
     context: "channel",
     id: cid
@@ -50,7 +51,7 @@ export default function GuestChannelChat({ cid = 0 }: Props) {
       >
         <StyledChannelChat id={`VOCECHAT_FEED_channel_${cid}`}>
           {hasMore ? (
-            <LoadMore pullUp={pullUp} />
+            <LoadMore pullUp={pullUp} pulling={pulling} />
           ) : (
             <div className="info">
               <h2 className="title">{t("welcome_channel", { name })}</h2>
