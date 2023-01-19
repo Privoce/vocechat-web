@@ -1,10 +1,9 @@
 import i18n from "i18next";
 import dayjs from "dayjs";
 import { initReactI18next } from "react-i18next";
-import Backend from "i18next-http-backend";
+import Backend, { HttpBackendOptions } from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 import common from "../public/locales/en/common.json";
-
 import auth from "../public/locales/en/auth.json";
 import member from "../public/locales/en/member.json";
 import chat from "../public/locales/en/chat.json";
@@ -12,7 +11,7 @@ import fav from "../public/locales/en/fav.json";
 import welcome from "../public/locales/en/welcome.json";
 import setting from "../public/locales/en/setting.json";
 import file from "../public/locales/en/file.json";
-
+import pkg from '../package.json';
 // don't want to use this?
 // have a look at the Quick start guide
 // for passing in lng and translations on init
@@ -46,7 +45,7 @@ i18n
   .use(initReactI18next)
   // init i18next
   // for all options read: https://www.i18next.com/overview/configuration-options
-  .init({
+  .init<HttpBackendOptions>({
     ns: ["common", "chat", "member", "setting", "fav", "file", "welcome", "auth"],
     defaultNS,
     load: "languageOnly",
@@ -60,7 +59,11 @@ i18n
     interpolation: {
       escapeValue: false // not needed for react as it escapes by default
     },
-    returnNull: false
+    returnNull: false,
+    // for backend middleware
+    backend: {
+      queryStringParams: { v: pkg.version },
+    }
   });
 
 export default i18n;
