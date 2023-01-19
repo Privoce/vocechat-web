@@ -60,11 +60,13 @@
   "price": {
     "pro": {
       "title": "VoceChat 专业版",
-      "desc": "用户数限制: 100人"
+      "desc": "用户数限制: 100人",
+      "price": "¥12/年"
     },
     "supreme": {
       "title": "VoceChat 终极版",
-      "desc": "用户数限制: 无限制"
+      "desc": "用户数限制: 无限制",
+      "price": "¥3500/年"
     }
   },
   "server_update": {

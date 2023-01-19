@@ -6,6 +6,7 @@ import LicensePriceListModal from "./LicensePriceListModal";
 import clsx from "clsx";
 import { useTranslation } from "react-i18next";
 import UpdateLicenseModal from "./UpdateLicenseModal";
+import Tippy from "@tippyjs/react";
 
 interface ItemProps extends HTMLAttributes<HTMLSpanElement> { label: string, data?: string | number | string[], foldable?: boolean }
 const Item = ({ label, data, foldable = false, ...rest }: ItemProps) => {
@@ -25,6 +26,7 @@ const Item = ({ label, data, foldable = false, ...rest }: ItemProps) => {
 };
 export default function License() {
   const { t, i18n } = useTranslation("setting");
+  const { t: ct } = useTranslation();
   const { license: licenseInfo, reachLimit, upsertLicense, upserting, upserted } = useLicense();
   const [modalVisible, setModalVisible] = useState(false);
   const [updateVisible, setUpdateVisible] = useState(false);

@@ -6,6 +6,7 @@ export type PriceType = "subscription" | "payment";
 export type PriceSubscriptionDuration = "month" | "quarter" | "year";
 export type Price = {
   title: string,
+  price: string,
   limit: number,
   pid: string,
   desc: string,

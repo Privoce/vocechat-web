@@ -4,7 +4,7 @@ import Logins from "./config/Logins";
 import ConfigFirebase from "./config/Firebase";
 import ConfigSMTP from "./config/SMTP";
 import APIConfig from "./APIConfig";
-import License from "./License/License";
+import License from "./License";
 import Widget from "./Widget";
 import BotConfig from "./BotConfig";
 import APIDocument from "./APIDocument";

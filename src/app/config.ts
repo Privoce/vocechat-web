@@ -9,6 +9,7 @@ const BASE_URL = process.env.REACT_APP_RELEASE
 let prices: Price[] = [
   {
     type: "subscription",
+    price: "",
     sub_dur: "year",
     // sub_type: "year", //day month year
     title: "Pro",
@@ -18,6 +19,7 @@ let prices: Price[] = [
   },
   {
     type: "payment",
+    price: "",
     title: "supreme",
     limit: 99999,
     pid: "price_1M5VoGGGoUDRyc3j6xhQou6D",
@@ -31,12 +33,14 @@ export const getLicensePriceList = () => {
       case 0: {
         p.title = i18n.t("price.pro.title");
         p.desc = i18n.t("price.pro.desc");
+        p.price = i18n.t("price.pro.price");
       }
         break;
       // supreme
       case 1: {
         p.title = i18n.t("price.supreme.title");
         p.desc = i18n.t("price.supreme.desc");
+        p.price = i18n.t("price.supreme.price");
       }
         break;
 
@@ -51,6 +55,7 @@ export const getLicensePriceList = () => {
       ...ps,
       {
         type: "payment",
+        price: "1",
         title: "Test VoceChat Enterprise",
         limit: 99999,
         pid: "price_1LkQGpGGoUDRyc3jGTh3GYHw",
@@ -58,6 +63,7 @@ export const getLicensePriceList = () => {
       },
       {
         title: "VoceChat Pro",
+        price: "1",
         limit: 100,
         pid: "price_1MMNNCGGoUDRyc3jSIGIsb3C",
         desc: "test subscription price",

@@ -58,11 +58,13 @@
   "price": {
     "pro": {
       "title": "VoceChat Pro",
-      "desc": "User Limit: 100"
+      "desc": "User Limit: 100",
+      "price": "¥12/year"
     },
     "supreme": {
       "title": "VoceChat Supreme",
-      "desc": "User Limit: No Limit"
+      "desc": "User Limit: No Limit",
+      "price": "$499/year"
     }
   },
   "server_update": {
