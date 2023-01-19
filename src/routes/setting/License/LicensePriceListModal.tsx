@@ -90,7 +90,6 @@ const LicensePriceListModal: FC<Props> = ({ closeModal }) => {
           values={LicensePriceList.map(({ pid, limit, type = "payment", sub_dur = "month" }) => `${pid}|${limit}|${type}|${sub_dur}`)}
           value={selectPrice}
           onChange={(v) => {
-            console.log("wtff", v);
             handlePriceSelect(v);
           }}
         />
