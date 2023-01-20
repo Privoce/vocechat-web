@@ -23,7 +23,7 @@ const Mention = ({ uid, popover = true, cid, textOnly = false }: Props) => {
   const usersData = useAppSelector((store) => store.users.byId);
   const user = usersData[uid];
   if (!user) return null;
-  if (textOnly) return `@${user.name}`;
+  if (textOnly) return <>{`@${user.name}`}</>;
   if (!popover) return <Styled>{`@${user.name}`}</Styled>;
   return (
     <Tippy

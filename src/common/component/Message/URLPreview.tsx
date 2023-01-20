@@ -99,12 +99,18 @@ export default function URLPreview({ url = "" }) {
   );
   useEffect(() => {
     const getMetaData = async (url: string) => {
+      let defaultFavIcon = "";
+      try {
+        defaultFavIcon = `${new URL(url).origin}/favicon.ico`;
+      } catch {
+        defaultFavIcon = `${location.origin}/favicon.ico`;
+      }
       // todo
       const { data } = await getInfo(url);
       const title = data?.title || data?.site_name || "";
       const description = data?.description || "";
       const ogImage = data?.images.find((i) => !!i.url)?.url || "";
-      const favicon = data?.favicon_url || `${new URL(url).origin}/favicon.ico`;
+      const favicon = data?.favicon_url || defaultFavIcon;
       setFavicon(favicon);
       setData({ title, description, ogImage });
       // console.log("wtf url", data);

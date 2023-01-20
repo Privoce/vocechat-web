@@ -1,4 +1,5 @@
-// import React from 'react';
+// import { MouseEvent, useState } from 'react';
+// import { useTranslation } from 'react-i18next';
 import Linkify from "linkify-react";
 import 'linkify-plugin-mention';
 import URLPreview from './Message/URLPreview';
@@ -14,18 +15,23 @@ type Props = {
 }
 
 const LinkifyText = ({ url = true, mention = true, mentionTextOnly = false, mentionPopOver = true, text, cid }: Props) => {
-
+    // const { t } = useTranslation();
+    // const 
     return (
         <Linkify options={
             {
+                // attributes: {
+                //     onClick: handleLinkClick
+                // },
                 render: {
-                    url: ({ content }) => {
+                    url: ({ content, attributes: { href: link } }) => {
+                        console.log("attr", link);
                         if (!url) return <>{content}</>;
                         return <>
-                            <a className="link" target="_blank" href={content} rel="noreferrer">
+                            <a className="link" target="_blank" href={link} rel="noreferrer">
                                 {content}
                             </a>
-                            {!content.startsWith("mailto") && <URLPreview url={content} />}
+                            {!link.startsWith("mailto") && <URLPreview url={link} />}
                         </>;
                     },
                     mention: ({ content }) => {
