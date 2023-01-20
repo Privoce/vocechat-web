@@ -1,10 +1,9 @@
 import React, { MouseEvent, FC } from "react";
 import styled from "styled-components";
-import reactStringReplace from "react-string-replace";
 import MarkdownRender from "../MarkdownRender";
-import Mention from "./Mention";
 import { ContentTypes } from "../../../app/config";
 import { getFileIcon, isImage } from "../../utils";
+import LinkifyText from '../LinkifyText';
 
 import Avatar from "../Avatar";
 import { useAppSelector } from "../../../app/store";
@@ -104,15 +103,7 @@ const renderContent = (data) => {
     case ContentTypes.text:
       res = (
         <span className="txt">
-          {reactStringReplace(
-            content,
-            // eslint-disable-next-line no-useless-escape
-            /(\s{1}\@[0-9]+\s{1})/g,
-            (match, idx) => {
-              const uid = match.trim().slice(1);
-              return <Mention key={idx} uid={+uid} popover={false} />;
-            }
-          )}
+          <LinkifyText text={content} url={false} mentionTextOnly={true} mentionPopOver={false} />
         </span>
       );
       break;

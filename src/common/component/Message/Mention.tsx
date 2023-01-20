@@ -24,15 +24,15 @@ const Mention = ({ uid, popover = true, cid, textOnly = false }: Props) => {
   const user = usersData[uid];
   if (!user) return null;
   if (textOnly) return `@${user.name}`;
+  if (!popover) return <Styled>{`@${user.name}`}</Styled>;
   return (
     <Tippy
-      disabled={!popover}
       interactive
       placement="top"
       trigger="click"
       content={<Profile uid={uid} type="card" cid={cid} />}
     >
-      <Styled className={popover ? "clickable" : ""}>{`@${user.name}`}</Styled>
+      <Styled className="clickable">{`@${user.name}`}</Styled>
     </Tippy>
   );
 };

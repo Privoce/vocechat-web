@@ -1,6 +1,4 @@
-import reactStringReplace from "react-string-replace";
 import styled from "styled-components";
-import Mention from "../Message/Mention";
 import { ContentTypes } from "../../../app/config";
 import MarkdownRender from "../MarkdownRender";
 import closeIcon from "../../../assets/icons/close.circle.svg?url";
@@ -9,6 +7,7 @@ import { getFileIcon, isImage } from "../../utils";
 import useSendMessage from "../../hook/useSendMessage";
 import { useAppSelector } from "../../../app/store";
 import { MessagePayload } from "../../../app/slices/message";
+import LinkifyText from "../LinkifyText";
 
 const Styled = styled.div`
   background-color: #f3f4f6;
@@ -82,10 +81,11 @@ const renderContent = (data: MessagePayload) => {
   let res = null;
   switch (content_type) {
     case ContentTypes.text:
-      res = reactStringReplace(content, /(\s{1}@[0-9]+\s{1})/g, (match, idx) => {
-        const uid = match.trim().slice(1);
-        return <Mention popover={false} key={idx} uid={+uid} />;
-      });
+      res = <LinkifyText text={content} url={false} mentionTextOnly={true} />;
+      // res = reactStringReplace(content, /(\s{1}@[0-9]+\s{1})/g, (match, idx) => {
+      //   const uid = match.trim().slice(1);
+      //   return <Mention popover={false} key={idx} uid={+uid} />;
+      // });
       break;
     case ContentTypes.markdown:
       res = (

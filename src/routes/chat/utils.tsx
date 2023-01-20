@@ -1,7 +1,6 @@
 import React from "react";
 import dayjs from "dayjs";
 import styled from "styled-components";
-import reactStringReplace from "react-string-replace";
 import { useDispatch } from "react-redux";
 import { isImage } from "../../common/utils";
 import { ContentTypes } from "../../app/config";
@@ -9,8 +8,8 @@ import Checkbox from "../../common/component/styled/Checkbox";
 import Divider from "../../common/component/Divider";
 import Message from "../../common/component/Message";
 import { updateSelectMessages } from "../../app/slices/ui";
-import Mention from "../../common/component/Message/Mention";
 import { useAppSelector } from "../../app/store";
+import LinkifyText from "../../common/component/LinkifyText";
 
 export function getUnreadCount({
   mids = [],
@@ -57,10 +56,7 @@ export const renderPreviewMessage = (message = null) => {
   switch (content_type) {
     case ContentTypes.text:
       {
-        res = reactStringReplace(content, /(\s{1}@[0-9]+\s{1})/g, (match, idx) => {
-          const uid = match.trim().slice(1);
-          return <Mention key={idx} uid={+uid} textOnly={true} />;
-        });
+        res = <LinkifyText text={content} url={false} mentionTextOnly={true} />;
       }
       break;
     case ContentTypes.markdown:

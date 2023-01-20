@@ -1,15 +1,12 @@
-import React from "react";
-import Linkit from "react-linkify";
+// import React from "react";
 import dayjs from "dayjs";
-import reactStringReplace from "react-string-replace";
 import i18n from '../../../i18n';
 import { ContentTypes } from "../../../app/config";
-import Mention from "./Mention";
 import ForwardedMessage from "./ForwardedMessage";
 import MarkdownRender from "../MarkdownRender";
 import FileMessage from "../FileMessage";
-import URLPreview from "./URLPreview";
 import { ContentType } from "../../../types/message";
+import LinkifyText from '../LinkifyText';
 
 type Props = {
   context: "user" | "channel";
@@ -40,23 +37,7 @@ const renderContent = ({
     case ContentTypes.text:
       ctn = (
         <>
-          <Linkit
-            componentDecorator={(decoratedHref, decoratedText, key) => (
-              <React.Fragment key={key}>
-                <a className="link" target="_blank" href={decoratedHref} key={key} rel="noreferrer">
-                  {decoratedText}
-                </a>
-                {!decoratedHref.startsWith("mailto") && <URLPreview url={decoratedHref} />}
-              </React.Fragment>
-            )}
-          >
-            {reactStringReplace(content, /(\s{1}@[0-9]+\s{1})/g, (match, idx) => {
-              const uid = match.trim().slice(1);
-              return <Mention key={idx} uid={+uid} cid={to} />;
-            })}
-            {/* {content.replace(/\s{1}\@[1-9]+\s{1}/g,)} */}
-            {/* {new RegExp(/\s{1}\@[1-9]+\s{1}/g).exec(content)} */}
-          </Linkit>
+          <LinkifyText text={content} cid={to} />
           {edited && (
             <span className="edited" title={dayjs(+edited).format("YYYY-MM-DD h:mm:ss A")}>
               ({i18n.t("edited", { ns: "chat" })})

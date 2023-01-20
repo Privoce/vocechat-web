@@ -1,5 +1,6 @@
 import { ChangeEvent, FC, useState } from "react";
 import toast from "react-hot-toast";
+import * as linkify from 'linkifyjs';
 import Modal from "../../../common/component/Modal";
 import StyledModal from "../../../common/component/styled/Modal";
 import Button from "../../../common/component/styled/Button";
@@ -49,6 +50,10 @@ const LicensePriceListModal: FC<Props> = ({ closeModal }) => {
     `${LicensePriceList[0].pid}|${LicensePriceList[0].limit}|${LicensePriceList[0].type}|${LicensePriceList[0].sub_dur || ""}`
   );
   const handleRenew = async () => {
+    if (!linkify.test(host)) {
+      toast.error("Invalid Host");
+      return;
+    }
     const [priceId, user_limit, type, sub_dur = "month"] = selectPrice.split("|") as [string, string, PriceType, PriceSubscriptionDuration];
     const metadata = {
       user_limit: Number(user_limit),
