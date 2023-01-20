@@ -87,7 +87,7 @@
     "tip_renewed": "证书更新成功！",
     "tip_renew_error": "无效的Stripe ID",
     "tip_domain": "证书与域名以及端口相绑定，请确认或修改：",
-    "tip_port": "端口号80，443，可不填",
+    "tip_port": "端口号80，443，不用填",
     "tip_confirm": "开始支付"
   },
   "bot": {
