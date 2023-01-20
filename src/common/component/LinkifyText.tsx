@@ -20,10 +20,15 @@ const LinkifyText = ({ url = true, mention = true, mentionTextOnly = false, ment
     return (
         <Linkify options={
             {
-                // attributes: {
-                //     onClick: handleLinkClick
-                // },
                 render: {
+                    email: ({ content, attributes: { href: link } }) => {
+                        if (mentionTextOnly) return <>
+                            {content}
+                        </>;
+                        return <a className="link" href={link} rel="noreferrer">
+                            {content}
+                        </a>;
+                    },
                     url: ({ content, attributes: { href: link } }) => {
                         console.log("attr", link);
                         if (!url) return <>{content}</>;
@@ -31,7 +36,7 @@ const LinkifyText = ({ url = true, mention = true, mentionTextOnly = false, ment
                             <a className="link" target="_blank" href={link} rel="noreferrer">
                                 {content}
                             </a>
-                            {!link.startsWith("mailto") && <URLPreview url={link} />}
+                            <URLPreview url={link} />
                         </>;
                     },
                     mention: ({ content }) => {
