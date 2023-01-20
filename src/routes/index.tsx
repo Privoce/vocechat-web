@@ -3,6 +3,7 @@ import { Route, Routes, HashRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import toast from "react-hot-toast";
 import { isEqual } from "lodash";
+
 import NotFoundPage from "./404";
 // import Welcome from './Welcome'
 // const HomePage = lazy(() => import("./home"));
@@ -28,14 +29,15 @@ const HomePage = lazy(() => import("./home"));
 import RequireAuth from "../common/component/RequireAuth";
 import RequireNoAuth from "../common/component/RequireNoAuth";
 import Meta from "../common/component/Meta";
-// import HomePage from "./home";
-// import ChatPage from "./chat";
 import LazyIt from './lazy';
 import store, { useAppSelector } from "../app/store";
 import useDeviceToken from "../common/component/Notification/useDeviceToken";
 import { vapidKey } from "../app/config";
+import useTabBroadcast from "../common/hook/useTabBroadcast";
+import InactiveScreen from "../common/component/InactiveScreen";
 let toastId: string;
 const PageRoutes = () => {
+
   const {
     ui: { online },
     fileMessages
@@ -198,6 +200,13 @@ const PageRoutes = () => {
 };
 
 export default function ReduxRoutes() {
+  const { tabActive } = useTabBroadcast();
+  if (!tabActive) return (
+    <Provider store={store}>
+      <Meta />
+      <InactiveScreen />
+    </Provider>
+  );
   return (
     <Provider store={store}>
       <Meta />

@@ -20,6 +20,7 @@
     "@udecode/plate": "16.8",
     "@uiball/loaders": "^1.2.6",
     "bfj": "^7.0.2",
+    "broadcast-channel": "^4.20.2",
     "browserslist": "^4.21.4",
     "clsx": "^1.2.1",
     "copy-image-clipboard": "^2.1.2",

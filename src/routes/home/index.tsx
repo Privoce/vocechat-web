@@ -1,5 +1,7 @@
 import { memo } from "react";
 import { Outlet, NavLink, useLocation, useMatch } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+
 import StyledWrapper from "./styled";
 import User from "./User";
 // import Tools from "./Tools";
@@ -15,7 +17,6 @@ import UserIcon from "../../assets/icons/user.svg";
 import FavIcon from "../../assets/icons/bookmark.svg";
 import FolderIcon from "../../assets/icons/folder.svg";
 import { useAppSelector } from "../../app/store";
-import { useTranslation } from "react-i18next";
 // const routes = ["/setting", "/setting/channel/:cid"];
 function HomePage() {
   const { t } = useTranslation();

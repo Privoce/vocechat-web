@@ -277,6 +277,8 @@ export default function useStreaming() {
   }, [afterMid, usersVersion]);
 
   const stopStreaming = () => {
+    // 先清掉定时器
+    window.clearTimeout(aliveInter);
     if (SSE) {
       SSE.close();
       SSE = undefined;
