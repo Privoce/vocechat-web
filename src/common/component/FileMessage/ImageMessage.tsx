@@ -1,37 +1,6 @@
 import { useState, useEffect, FC } from "react";
-import styled from "styled-components";
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css";
+import { Ping } from '@uiball/loaders';
 import { getDefaultSize } from "../../utils";
-
-const Styled = styled.div`
-  position: relative;
-  width: fit-content;
-  height: fit-content;
-  > img {
-    max-width: 480px;
-    cursor: zoom-in;
-    object-fit: cover;
-  }
-  .overlay {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.4);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    .progress {
-      width: 15px;
-      height: 15px;
-      .CircularProgressbar-path {
-        stroke: #444;
-      }
-    }
-  }
-`;
 
 type Props = {
   uploading: boolean;
@@ -65,20 +34,19 @@ const ImageMessage: FC<Props> = ({
   }, [thumbnail]);
 
   return (
-    <Styled>
+    <div className="relative w-fit h-fit">
       {uploading && (
-        <div className="overlay">
-          <div className="progress">
-            <CircularProgressbar
-              value={progress}
-              strokeWidth={50}
-              styles={buildStyles({ strokeLinecap: "butt" })}
-            />
-          </div>
+        <div className="absolute left-0 top-0 w-full h-full bg-white/40 flex flex-col justify-center items-center gap-1">
+          <Ping
+            size={45}
+            speed={2}
+            color="#666"
+          />
+          <span className="text-xs text-gray-600">{progress}%</span>
         </div>
       )}
       <img
-        className="img preview"
+        className="max-w-[480px] cursor-zoom-in object-cover preview"
         style={{
           width: width ? `${width}px` : "",
           height: height ? `${height}px` : ""
@@ -88,7 +56,7 @@ const ImageMessage: FC<Props> = ({
         data-download={download}
         src={url}
       />
-    </Styled>
+    </div>
   );
 };
 
