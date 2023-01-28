@@ -44,7 +44,8 @@
     "mute": "静默通知",
     "unmute": "取消静默",
     "mark_read": "标记已读",
-    "hide_session": "隐藏会话"
+    "hide_session": "隐藏会话",
+    "reload": "刷新页面"
   },
   "status": {
     "uploading": "上传中"
@@ -74,5 +75,9 @@
     "current_version": "当前的Server版本:<0>{{version}}</0>",
     "update_tip": "请升级后端服务！",
     "howto": "如何升级后端服务"
+  },
+  "inactive": {
+    "title": "VoceChat只允许活跃一个标签页",
+    "desc": "刷新页面继续或者关闭该页面"
   }
 }
