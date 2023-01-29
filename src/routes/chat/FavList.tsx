@@ -5,7 +5,7 @@ import IconSurprise from "../../assets/icons/emoji.surprise.svg";
 import IconRemove from "../../assets/icons/close.svg";
 import useFavMessage from "../../common/hook/useFavMessage";
 import { useTranslation } from "react-i18next";
-
+// 覆盖样式
 const Styled = styled.div`
     .favorite {
       background: none;

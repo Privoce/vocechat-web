@@ -10,7 +10,7 @@ import ChannelModal from "../../common/component/ChannelModal";
 import SessionList from "./SessionList";
 import { useAppSelector } from "../../app/store";
 import GuestBlankPlaceholder from "./GuestBlankPlaceholder";
-import GuestChannelChatInfo from "./GuestChannelChatInfo";
+import GuestChannelChat from "./GuestChannelChat";
 import GuestSessionList from "./GuestSessionList";
 function ChatPage() {
   const [channelModalVisible, setChannelModalVisible] = useState(false);
@@ -32,11 +32,11 @@ function ChatPage() {
     sessionUids.findIndex((i) => i == user_id) > -1
       ? undefined
       : {
-          key: `user_${user_id}`,
-          unreads: 0,
-          id: +user_id,
-          type: "user" as "user" | "channel"
-        };
+        key: `user_${user_id}`,
+        unreads: 0,
+        id: +user_id,
+        type: "user" as "user" | "channel"
+      };
   // console.log("temp uid", tmpUid);
   const placeholderVisible = channel_id == 0 && user_id == 0;
   return (
@@ -54,7 +54,7 @@ function ChatPage() {
           {placeholderVisible && (isGuest ? <GuestBlankPlaceholder /> : <BlankPlaceholder />)}
           {channel_id !== 0 &&
             (isGuest ? (
-              <GuestChannelChatInfo cid={+channel_id} />
+              <GuestChannelChat cid={+channel_id} />
             ) : (
               <ChannelChat cid={+channel_id} />
             ))}

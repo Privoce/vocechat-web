@@ -28,7 +28,7 @@ const DMList: FC<Props> = ({ uids, setDropFiles }) => {
     if (mids.length == 0) {
       return { lastMid: null, unreads: 0, uid };
     }
-    const lastMid = [...mids].pop();
+    const lastMid = [...mids].sort().pop();
     const readIndex = readUsers[uid];
     const { unreads = 0 } = getUnreadCount({
       mids,

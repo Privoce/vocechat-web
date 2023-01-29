@@ -29,7 +29,7 @@ const SessionList: FC<Props> = () => {
       if (!mids || mids.length == 0) {
         return { key: `channel_${id}`, unreads: 0, id, type: "channel" };
       }
-      const mid = [...mids].pop();
+      const mid = [...mids].sort().pop();
       return { key: `channel_${id}`, id, mid, type: "channel" };
     });
     const tmps = [...(cSessions as ChatSession[])].sort((a, b) => {

@@ -2,34 +2,10 @@
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import { resetAuthData } from "../../app/slices/auth.data";
 import { useAppSelector } from "../../app/store";
 import Button from "../../common/component/styled/Button";
 import useLogout from "../../common/hook/useLogout";
-const Styled = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  .title {
-    font-style: normal;
-    font-weight: 700;
-    font-size: 30px;
-    line-height: 38px;
-    color: #344054;
-  }
-  .details {
-    display: flex;
-    flex-direction: column;
-    .desc {
-      margin: 12px 0;
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 20px;
-      color: #98a2b3;
-    }
-  }
-`;
 // type Props = {};
 
 const GuestBlankPlaceholder = () => {
@@ -44,13 +20,13 @@ const GuestBlankPlaceholder = () => {
     navigateTo("/login");
   };
   return (
-    <Styled>
-      <h2 className="title">{t("welcome", { name: serverName })}</h2>
-      <div className="details">
-        <span className="desc">{t("guest_login_tip")}</span>
+    <section className="flex flex-col items-center">
+      <h2 className="text-3xl text-gray-600 font-bold ">{t("welcome", { name: serverName })}</h2>
+      <div className="flex flex-col">
+        <span className="text-gray-400 my-3 text-sm">{t("guest_login_tip")}</span>
         <Button onClick={handleSignIn} className="small">{t("sign_in")}</Button>
       </div>
-    </Styled>
+    </section>
   );
 };
 
