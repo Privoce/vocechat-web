@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 export default function SignInLink({ token }: { token?: string }) {
   const { t } = useTranslation("auth");
+  const navigate = useNavigate();
   const handleSignIn = () => {
-    location.href = "/#/login";
+    navigate("/login");
   };
   useEffect(() => {
     const isMobile = "ontouchstart" in document.documentElement;
