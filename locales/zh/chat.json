@@ -29,5 +29,6 @@
   "generate_new_link": "生成新邀请链接",
 
   "send_to": "发送至",
-  "edited": "已编辑"
+  "edited": "已编辑",
+  "license_tip": "您的使用人数已达证书限制上限，请升级证书或者联系管理员！"
 }

@@ -28,5 +28,6 @@
   "generate_new_link": "Generate New Link",
 
   "send_to": "Send To",
-  "edited": "edited"
+  "edited": "edited",
+  "license_tip": "Your license has reached the limit, upgrade the License or contact the Admin!"
 }
