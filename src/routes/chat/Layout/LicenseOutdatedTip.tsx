@@ -1,4 +1,5 @@
 // import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../../../common/component/styled/Button";
@@ -25,6 +26,7 @@ const Styled = styled.div`
 // type Props = {};
 
 const LicenseUpgradeTip = () => {
+  const { t } = useTranslation("chat");
   const navigateTo = useNavigate();
   const handleRedirect = () => {
     navigateTo("/setting?nav=license");
@@ -34,7 +36,7 @@ const LicenseUpgradeTip = () => {
     <Styled>
       <span className="txt">
         <i className="hand">🚨</i>
-        Your license has reached the limit, upgrade the License or contact the Admin!
+        {t("license_tip")}
       </span>
       <Button onClick={handleRedirect} className="small">{`Upgrade License`}</Button>
     </Styled>
