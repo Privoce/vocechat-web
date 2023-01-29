@@ -8,7 +8,7 @@ import Textarea from "../../../common/component/styled/Textarea";
 import { useTranslation } from "react-i18next";
 interface Props {
   closeModal: () => void;
-  updateLicense: (param: string) => void;
+  updateLicense: (param: string) => Promise<any>;
   updated: boolean;
   updating: boolean
   // domain: string;
@@ -19,9 +19,11 @@ const UpdateLicenseModal: FC<Props> = ({ closeModal, updateLicense, updating, up
   const { t } = useTranslation("setting");
   const { t: ct } = useTranslation();
 
-  const handleRenew = () => {
-    updateLicense(value);
-
+  const handleRenew = async () => {
+    const updateSuccess = await updateLicense(value);
+    if (typeof updateSuccess == "boolean" && !updateSuccess) {
+      toast.error("Check License Invalid!");
+    }
   };
   const handleLicenseUpdate = (evt: ChangeEvent<HTMLTextAreaElement>) => {
     setValue(evt.target.value);

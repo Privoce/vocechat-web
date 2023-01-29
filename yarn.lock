@@ -3103,13 +3103,6 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-linkify@^1.0.1":
-  version "1.0.1"
-  resolved "https://mirrors.cloud.tencent.com/npm/@types%2freact-linkify/-/react-linkify-1.0.1.tgz#4ece351faef22bfde1280b6d9ace5e88683a74d4"
-  integrity sha512-qPxYwjB41ezoKdLXs0MrQ1FnhF3apyyxf3J7WVQQCBu/GyZQAW7Y3TY4317jdh0450QJ4fLqj0rnhIJvFZOamQ==
-  dependencies:
-    "@types/react" "*"
-
 "@types/react-syntax-highlighter@^15.5.6":
   version "15.5.6"
   resolved "https://mirrors.cloud.tencent.com/npm/@types%2freact-syntax-highlighter/-/react-syntax-highlighter-15.5.6.tgz#77c95e6b74d2be23208fcdcf187b93b47025f1b1"

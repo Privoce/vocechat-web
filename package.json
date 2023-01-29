@@ -1,6 +1,6 @@
 {
   "name": "vocechat-web",
-  "version": "0.3.37",
+  "version": "0.3.38",
   "private": true,
   "homepage": "https://voce.chat",
   "dependencies": {
@@ -123,7 +123,6 @@
     "@types/emoji-mart": "^3.0.9",
     "@types/masonry-layout": "^4.2.5",
     "@types/react-helmet": "^6.1.6",
-    "@types/react-linkify": "^1.0.1",
     "@types/react-syntax-highlighter": "^15.5.6",
     "@types/styled-components": "^5.1.26",
     "@typescript-eslint/eslint-plugin": "^5.49.0",
