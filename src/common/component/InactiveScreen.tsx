@@ -1,4 +1,5 @@
 import { FC, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import useStreaming from "../hook/useStreaming";
 // import clsx from "clsx";
 import Button from "./styled/Button";
@@ -7,6 +8,7 @@ interface Props {
 }
 
 const InactiveScreen: FC<Props> = () => {
+  const { t } = useTranslation();
   const { stopStreaming } = useStreaming();
   // const [reloadVisible, setReloadVisible] = useState(false);
   useEffect(() => {
@@ -21,11 +23,11 @@ const InactiveScreen: FC<Props> = () => {
     location.reload();
   };
   return (
-    <div className="w-screen h-screen bg-orange-200/50 flex justify-center items-center text-4xl font-bold">
+    <div className="w-screen h-screen flex justify-center items-center text-4xl font-bold">
       <div className="flex flex-col items-center gap-2">
-        <h1 className="text-4xl font-bold">Only one active tab is allowed for VoceChat</h1>
-        <p className="text-gray-400 text-base font-semibold" >Please reload this page to continue using this tab or close it</p>
-        <Button className="mt-4" onClick={handleReload}>RELOAD</Button>
+        <h1 className="text-4xl font-bold">{t("inactive.title")}</h1>
+        <p className="text-gray-400 text-base font-semibold" >{t("inactive.desc")}</p>
+        <Button className="mt-4 uppercase" onClick={handleReload}>{t("action.reload")}</Button>
       </div>
 
     </div>

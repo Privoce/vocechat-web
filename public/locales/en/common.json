@@ -42,7 +42,8 @@
     "mute": "Mute",
     "unmute": "Unmute",
     "mark_read": "Mark As Read",
-    "hide_session": "Hide Session"
+    "hide_session": "Hide Session",
+    "reload": "reload"
   },
   "status": {
     "uploading": "Uploading"
@@ -72,5 +73,9 @@
     "current_version": "Your current version:<0>{{version}}</0>",
     "update_tip": "Please upgrade the Server!",
     "howto": "How to Update VoceChat Server"
+  },
+  "inactive": {
+    "title": "Only one active tab is allowed for VoceChat",
+    "desc": "Please reload this page to continue using this tab or close it"
   }
 }
