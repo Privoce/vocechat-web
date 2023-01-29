@@ -79,16 +79,6 @@ const Styled = styled.ul`
           }
         }
       }
-      &.muted {
-        .up .name,
-        .up .time,
-        .down .msg {
-          color: #d0d5dd;
-        }
-        .down .badge {
-          background: #bfbfbf;
-        }
-      }
     }
   }
 `;
