@@ -218,7 +218,16 @@ module.exports = function (webpackEnv) {
           }
         }),
         // This is only used in production mode
-        new CssMinimizerPlugin()
+        new CssMinimizerPlugin({
+          minimizerOptions: {
+            preset: [
+              "default",
+              {
+                discardComments: { removeAll: true }
+              }
+            ]
+          }
+        })
       ]
     },
     resolve: {
