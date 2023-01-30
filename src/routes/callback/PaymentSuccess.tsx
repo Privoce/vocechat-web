@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useLazyGetGeneratedLicenseQuery } from "../../app/services/server";
 import useLicense from "../../common/hook/useLicense";
 import Button from "../../common/component/styled/Button";
-import checkIcon from "../../assets/icons/check.png";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -32,7 +31,7 @@ const PaymentSuccess = ({ sid }: Props) => {
   };
   return (
     <section className="flex flex-col items-center bg-slate-100 rounded-2xl w-[512px] p-6">
-      <img className="w-28 h-28" src={checkIcon} alt="check icon" />
+      <img className="w-28 h-28" src="https://s.voce.chat/web_client/assets/img/check.png" alt="check icon" />
       <h1 className="font-bold text-3xl pt-5">{t("payment_success")}</h1>
       <p className="text-lg pb-7 mt-2 text-gray-400">
         {upserting ? t("tip_renewing") : ""}
