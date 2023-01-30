@@ -1,34 +1,10 @@
 import { useState, useRef, useEffect } from "react";
-import styled from "styled-components";
 import { useOutsideClick } from "rooks";
 import Tooltip from "../Tooltip";
 import { Picker } from 'emoji-mart';
 import SmileIcon from "../../../assets/icons/emoji.smile.svg";
+import clsx from "clsx";
 
-const Styled = styled.div`
-  position: relative;
-  width: fit-content;
-  display: flex;
-  align-items: center;
-  > .emoji {
-    cursor: pointer;
-    user-select: none;
-  }
-  > svg {
-    width: 22px;
-    height: 22px;
-  }
-  > .picker {
-    display: none;
-    position: absolute;
-    top: -20px;
-    left: -20px;
-    transform: translateY(-100%);
-    &.visible {
-      display: block;
-    }
-  }
-`;
 
 export default function EmojiPicker({ selectEmoji }: { selectEmoji: (e: string) => void }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -75,12 +51,12 @@ export default function EmojiPicker({ selectEmoji }: { selectEmoji: (e: string) 
 
   return (
     <Tooltip placement="top" tip="Emojis" disabled={visible}>
-      <Styled>
-        <div ref={ref} className={`picker ${visible ? "visible" : ""}`}>
+      <div className="relative w-fit flex items-center">
+        <div ref={ref} className={clsx(`absolute -top-5 -left-5 -translate-y-full`, visible ? 'block' : 'hidden')}>
           {/* emoji picker */}
         </div>
-        <SmileIcon data-emoji="toggler" className="emoji" onClick={togglePickerVisible} />
-      </Styled>
+        <SmileIcon data-emoji="toggler" className="cursor-pointer select-none !w-[22px] !h-[22px]" onClick={togglePickerVisible} />
+      </div>
     </Tooltip>
   );
 }

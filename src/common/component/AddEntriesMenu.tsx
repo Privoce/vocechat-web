@@ -1,5 +1,4 @@
 import { useState } from "react";
-import styled from "styled-components";
 import { hideAll } from "tippy.js";
 import { useAppSelector } from "../../app/store";
 import IconInvite from "../../assets/icons/add.person.svg";
@@ -10,38 +9,6 @@ import UsersModal from "./UsersModal";
 import InviteModal from "./InviteModal";
 import { useTranslation } from "react-i18next";
 
-const Styled = styled.ul`
-  z-index: 999;
-  user-select: none;
-  box-shadow: 0 24px 48px -12px rgba(16, 24, 40, 0.18);
-  border-radius: 12px;
-  color: #616161;
-  background: #fff;
-  display: flex;
-  flex-direction: column;
-  padding: 4px;
-  .item {
-    border-radius: 3px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 20px;
-    cursor: pointer;
-    padding: 10px 8px;
-    &:hover {
-      background: rgba(116, 127, 141, 0.2);
-    }
-    .icon {
-      width: 20px;
-      height: 20px;
-      path {
-        fill: #475467;
-      }
-    }
-  }
-`;
 export default function AddEntriesMenu() {
   const { t } = useTranslation();
   const currentUser = useAppSelector((store) => store.authData.user);
@@ -74,29 +41,32 @@ export default function AddEntriesMenu() {
   const handleCloseModal = () => {
     setChannelModalVisible(false);
   };
+
+  const itemClass = "rounded flex items-center gap-2 text-sm font-semibold cursor-pointer px-2 py-2.5 hover:bg-gray-800/20";
+  const iconClass = "w-5 h-5";
   return (
     <>
-      <Styled>
+      <ul className="flex flex-col rounded-xl drop-shadow p-1 select-none text-gray-500 bg-white">
         {/* temp remove public channel */}
         {currentUser?.is_admin && (
-          <li className="item" onClick={handleOpenChannelModal.bind(null, false)}>
-            <ChannelIcon className="icon" />
+          <li className={itemClass} onClick={handleOpenChannelModal.bind(null, false)}>
+            <ChannelIcon className={iconClass} />
             {t("action.new_channel")}
           </li>
         )}
-        <li className="item" onClick={handleOpenChannelModal.bind(null, true)}>
-          <ChannelIcon personal={true} className="icon" />
+        <li className={itemClass} onClick={handleOpenChannelModal.bind(null, true)}>
+          <ChannelIcon personal={true} className={iconClass} />
           {t("action.new_private_channel")}
         </li>
-        <li className="item" onClick={toggleUsersModalVisible}>
-          <IconMention className="icon" />
+        <li className={itemClass} onClick={toggleUsersModalVisible}>
+          <IconMention className={iconClass} />
           {t("action.new_msg")}
         </li>
-        <li className="item" onClick={toggleInviteModalVisible}>
-          <IconInvite className="icon" />
+        <li className={itemClass} onClick={toggleInviteModalVisible}>
+          <IconInvite className={iconClass} />
           {t("action.invite_people")}
         </li>
-      </Styled>
+      </ul>
       {channelModalVisible && <ChannelModal personal={isPrivate} closeModal={handleCloseModal} />}
       {usersModalVisible && <UsersModal closeModal={toggleUsersModalVisible} />}
       {inviteModalVisible && <InviteModal closeModal={toggleInviteModalVisible} />}

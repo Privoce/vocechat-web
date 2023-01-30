@@ -1,6 +1,5 @@
 import { useEffect, useState, FC } from "react";
 import toast from "react-hot-toast";
-import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Modal from "../Modal";
 import useLeaveChannel from "../../hook/useLeaveChannel";
@@ -8,29 +7,7 @@ import StyledModal from "../styled/Modal";
 import Button from "../styled/Button";
 import User from "../User";
 import { useTranslation } from "react-i18next";
-
-const UserList = styled.ul`
-  display: flex;
-  flex-direction: column;
-  max-height: 260px;
-  padding: 16px 0;
-  overflow-y: scroll;
-  .user {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    padding: 0 8px;
-    width: -webkit-fill-available;
-    &:hover,
-    &.selected {
-      background: rgba(116, 127, 141, 0.1);
-    }
-    > a {
-      width: 100%;
-    }
-  }
-`;
-
+import clsx from "clsx";
 interface Props {
   id: number;
   closeModal: () => void;
@@ -90,19 +67,19 @@ const TransferOwnerModal: FC<Props> = ({ id, closeModal, withLeave = true }) => 
           </>
         }
       >
-        <UserList>
+        <ul className="flex flex-col max-h-[260px] py-4 overflow-y-scroll">
           {otherMembers.map((id) => {
             return (
               <li
                 key={id}
-                className={`user ${uid == id ? "selected" : ""}`}
+                className={clsx(`cursor-pointer flex items-center px-2 hover:bg-gray-500/10`, uid == id ? "bg-gray-500/10" : "")}
                 onClick={handleSelectUser.bind(null, id)}
               >
                 <User uid={id} interactive={false} />
               </li>
             );
           })}
-        </UserList>
+        </ul>
       </StyledModal>
     </Modal>
   );

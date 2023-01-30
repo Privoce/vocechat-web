@@ -34,8 +34,6 @@ const StyledSocialButton = styled(Button)`
     }
   }
   > .hide {
-    /* z-index: 1; */
-    /* opacity: 0; */
     left: 0;
     top: 0;
     position: absolute;

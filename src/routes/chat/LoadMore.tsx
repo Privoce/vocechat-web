@@ -14,7 +14,7 @@ const LoadMore: FC<Props> = ({ pullUp = null, pulling }) => {
     }
   }, [inView, pullUp, pulling]);
   return (
-    <div data-load-more className="mt-2 flex justify-center items-center w-full py-2" ref={myRef}>
+    <div data-load-more className="mt-2 flex-center w-full py-2" ref={myRef}>
       <Waveform size={18} lineWeight={4} speed={1} color="#ccc" />
     </div>
   );

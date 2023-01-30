@@ -58,7 +58,7 @@ const Operations: FC<Props> = ({ context, id }) => {
   // const 
   return (
     <>
-      <div className="relative p-4 flex items-center justify-center gap-8 shadow-md">
+      <div className="relative p-4 flex-center gap-8 shadow-md">
         <button className="p-2 bg-slate-100 rounded hover:bg-slate-300" onClick={toggleForwardModal}>
           <IconForward />
         </button>

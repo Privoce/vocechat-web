@@ -9,8 +9,8 @@ import WhoCanSignUp from "./steps/who-can-sign-up";
 import InviteLink from "./steps/invite-link";
 import DonePage from "./steps/done-page";
 import steps from "./steps";
-import StyledOnboardingPage from "./styled";
 import { useTranslation } from "react-i18next";
+import clsx from "clsx";
 
 
 const Navigator = () => {
@@ -19,12 +19,11 @@ const Navigator = () => {
   console.log("active step", activeStep);
 
   return (
-    <div className="navigator">
+    <div className="absolute top-5 w-full flex justify-center gap-2 z-10">
       {steps.map((stepToRender, indexToRender) => {
         const clickable = canJumpTo.includes(stepToRender.name);
-        const nodeCls = `node ${indexToRender === activeStep ? "emphasized" : ""} ${indexToRender > activeStep ? "disabled" : ""
-          } ${clickable ? "clickable" : ""}`;
-        const arrowCls = `arrow ${indexToRender >= activeStep ? "disabled" : ""}`;
+        const itemClass = clsx(`text-sm text-gray-600`, clickable && "cursor-pointer hover:text-gray-500", indexToRender === activeStep && "font-bold text-black", indexToRender >= activeStep && "text-gray-400");
+        const nodeCls = `${itemClass}`;
         return (
           <React.Fragment key={indexToRender}>
             <span
@@ -37,7 +36,7 @@ const Navigator = () => {
             >
               {stepToRender.label}
             </span>
-            {indexToRender !== steps.length - 1 && <span className={arrowCls}>→</span>}
+            {indexToRender !== steps.length - 1 && <span className={nodeCls}>→</span>}
           </React.Fragment>
         );
       })}
@@ -53,7 +52,7 @@ export default function OnboardingPage() {
       <Helmet>
         <title>{t("onboarding.title")}</title>
       </Helmet>
-      <StyledOnboardingPage>
+      <div className="h-screen overflow-y-auto">
         <Wizard header={<Navigator />}>
           <WelcomePage />
           <ServerName serverName={serverName} setServerName={setServerName} />
@@ -63,7 +62,7 @@ export default function OnboardingPage() {
           <InviteLink />
           <DonePage serverName={serverName} />
         </Wizard>
-      </StyledOnboardingPage>
+      </div>
     </>
   );
 }

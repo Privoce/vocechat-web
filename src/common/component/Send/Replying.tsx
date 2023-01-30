@@ -96,7 +96,7 @@ const renderContent = (data: MessagePayload) => {
       break;
     case ContentTypes.file:
       {
-        const { content_type, name, size } = properties;
+        const { content_type = "", name, size } = properties || {};
         const image = isImage(content_type, size);
         // console.log("replying data", content_type, size, image);
         if (image) {
@@ -136,7 +136,7 @@ export default function Replying({
     removeReplying();
   };
   if (!msg) return null;
-  const { from_uid } = msg;
+  const { from_uid = 0 } = msg;
   const user = usersData[from_uid];
   return (
     <Styled className="reply">

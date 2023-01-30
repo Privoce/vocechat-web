@@ -9,7 +9,7 @@ const StyledWrapper = styled.div`
   > .left {
     background-color: #fff;
     position: relative;
-    display: flex;
+    /* display: flex; */
     flex-direction: column;
     min-width: 268px;
     box-shadow: inset -1px 0px 0px rgba(0, 0, 0, 0.05);
@@ -64,10 +64,6 @@ const StyledWrapper = styled.div`
           &:hover,
           &.active {
             background: rgba(116, 127, 141, 0.1);
-          }
-
-          .avatar {
-            /* todo */
           }
           .details {
             display: flex;
@@ -149,6 +145,7 @@ const StyledWrapper = styled.div`
       }
     }
   }
+
   > .right {
     border-radius: 0 16px 16px 0;
     width: 100%;
@@ -160,6 +157,7 @@ const StyledWrapper = styled.div`
       justify-content: center;
     }
   }
+  
 `;
 
 export default StyledWrapper;

@@ -9,7 +9,6 @@ import Textarea from "../../../common/component/styled/Textarea";
 import SaveTip from '../../../common/component/SaveTip';
 import { useAppSelector } from '../../../app/store';
 
-
 const Index = () => {
     const { t } = useTranslation("setting");
     const { t: ct } = useTranslation();
@@ -62,8 +61,8 @@ const Index = () => {
     if (!loginUser || !serverValues) return null;
     return (
         <>
-            <div className="logo">
-                <div className="preview">
+            <div className="flex gap-4">
+                <div className="w-24 h-24">
                     <LogoUploader
                         disabled={!isAdmin}
                         url={uploadSuccess ? `${logo}?t=${+new Date()}` : logo}
@@ -72,15 +71,15 @@ const Index = () => {
                     />
                 </div>
                 {isAdmin && (
-                    <div className="upload">
-                        <div className="tip">
+                    <div className="flex flex-col justify-between items-start">
+                        <div className="text-sm text-gray-600">
                             {t("overview.upload_desc")}
                         </div>
                     </div>
                 )}
             </div>
-            <div className="inputs">
-                <div className="input">
+            <div className="flex flex-col items-start gap-6 mb-16">
+                <div className="w-full flex flex-col items-start gap-2">
                     <Label htmlFor="name">{t("overview.name")}</Label>
                     <Input
                         disabled={!isAdmin}
@@ -92,7 +91,7 @@ const Index = () => {
                         placeholder="Server Name"
                     />
                 </div>
-                <div className="input">
+                <div className="w-full flex flex-col items-start gap-2">
                     <Label htmlFor="desc">{t("overview.desc")}</Label>
                     <Textarea
                         disabled={!isAdmin}
@@ -107,7 +106,6 @@ const Index = () => {
                 </div>
             </div>
             {changed && <SaveTip saveHandler={handleUpdateServer} resetHandler={handleReset} />}
-
         </>
     );
 };

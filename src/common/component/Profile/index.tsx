@@ -4,11 +4,11 @@ import Tippy from "@tippyjs/react";
 import IconMessage from "../../../assets/icons/message.svg";
 import IconMore from "../../../assets/icons/more.svg";
 import Avatar from "../Avatar";
-import StyledWrapper from "./styled";
 import StyledMenu from "../styled/Menu";
 import useUserOperation from "../../hook/useUserOperation";
 import { useAppSelector } from "../../../app/store";
 import { useTranslation } from "react-i18next";
+import clsx from "clsx";
 
 interface Props {
   uid: number;
@@ -42,11 +42,13 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
     avatar
     // introduction = "This guy has nothing to introduce",
   } = data;
-  const canRemoveFromServer = type == "embed" && canRemove;
+  const isCard = type == 'card';
+  const canRemoveFromServer = !isCard && canRemove;
   const hasMore = email || canRemoveFromChannel || canRemoveFromServer;
-
+  const iconClass = `cursor-pointer flex flex-col items-center gap-1 rounded-lg w-32 text-primary-400 bg-slate-100 text-sm pt-3.5 pb-3`;
+  const containerClass = clsx(`flex-center flex-col w-[432px] gap-1 z-[998] mt-20 select-none`, isCard && "p-4 w-[280px] bg-white drop-shadow rounded-md");
   return (
-    <StyledWrapper className={type}>
+    <div className={containerClass}>
       <Avatar
         width={80}
         height={80}
@@ -57,11 +59,11 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
       <h2 className="text-lg select-text font-bold text-[#1c1c1e]">{name}</h2>
       <span className="text-sm text-[#98a2b3] select-text">{email}</span>
       {/* <p className="intro">{introduction}</p> */}
-      <ul className="icons">
+      <ul className={clsx("mt-6 flex items-center gap-2", isCard && "pb-0.5")}>
         <NavLink to={`/chat/dm/${uid}`}>
-          <li className="icon chat">
+          <li className={`${iconClass} icon chat`}>
             <IconMessage />
-            <span className="txt">{t("send_msg")}</span>
+            <span>{t("send_msg")}</span>
           </li>
         </NavLink>
         {/* <NavLink to={`#`}> */}
@@ -93,13 +95,13 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
             </StyledMenu>
           }
         >
-          <li className={`icon more ${hasMore ? "" : "disabled"}`}>
-            <IconMore />
-            <span className="txt">{ct("more")}</span>
+          <li className={`${iconClass} icon ${hasMore ? "" : "text-gray-500"}`}>
+            <IconMore className={hasMore ? "fill-primary-500" : ""} />
+            <span >{ct("more")}</span>
           </li>
         </Tippy>
       </ul>
-    </StyledWrapper>
+    </div>
   );
 };
 

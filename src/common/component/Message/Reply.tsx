@@ -7,6 +7,7 @@ import LinkifyText from '../LinkifyText';
 
 import Avatar from "../Avatar";
 import { useAppSelector } from "../../../app/store";
+import { MessagePayload } from "../../../app/slices/message";
 const Styled = styled.div`
   display: flex;
   align-items: flex-start;
@@ -96,7 +97,7 @@ const Styled = styled.div`
   }
 `;
 
-const renderContent = (data) => {
+const renderContent = (data: MessagePayload) => {
   const { content_type, content, thumbnail, properties } = data;
   let res = null;
   switch (content_type) {
@@ -116,7 +117,7 @@ const renderContent = (data) => {
       break;
     case ContentTypes.file:
       {
-        const { content_type, name, size } = properties;
+        const { content_type = "", name, size } = properties || {};
         const icon = getFileIcon(content_type, name);
         if (isImage(content_type, size)) {
           res = <img className="pic" src={thumbnail} />;

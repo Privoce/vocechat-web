@@ -1,56 +1,8 @@
 import { useRef, useState, useEffect, FC } from "react";
-import styled, { keyframes } from "styled-components";
 import { useOutsideClick, useKey } from "rooks";
 import { Ring } from "@uiball/loaders";
 import Modal from "./Modal";
 
-const AniFadeIn = keyframes`
-  from {
-    background: transparent;
-  }
-  to {
-    background: rgba(1, 1, 1, 0.9);
-  }
-`;
-
-const StyledWrapper = styled.div`
-  transition: all 0.5s ease;
-  width: 100vw;
-  height: 100vh;
-  animation: ${AniFadeIn} 0.3s ease-in-out forwards;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  .box {
-    position: relative;
-    transition: all 0.2s ease;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    gap: 10px;
-
-    > .loading {
-      position: absolute;
-      top: 40%;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    > .image {
-      overflow: auto;
-
-      img {
-        max-width: 70vw;
-        max-height: 80vh;
-      }
-    }
-
-    &.loading .image img {
-      filter: blur(2px);
-    }
-  }
-`;
 
 export interface PreviewImageData {
   originUrl: string;
@@ -100,10 +52,11 @@ const ImagePreviewModal: FC<Props> = ({ download = true, data, closeModal }) => 
   const { originUrl, downloadLink, name, type } = data;
   return (
     <Modal>
-      <StyledWrapper>
-        <div className={`box ${loading ? "loading" : ""}`} ref={wrapperRef}>
-          <div className="image">
+      <div className="w-screen h-screen flex-center bg-black/90">
+        <div className={`relative flex flex-col justify-start gap-3 ${loading ? "absolute top-1/3 left-1/2 -translate-x-1/2" : ""}`} ref={wrapperRef}>
+          <div className="overflow-auto">
             <img
+              className={`max-w-[70vw] max-h-[80vh] ${loading ? "blur-sm" : ""}`}
               src={url}
               alt="preview"
             />
@@ -126,7 +79,7 @@ const ImagePreviewModal: FC<Props> = ({ download = true, data, closeModal }) => 
             </div>
           )}
         </div>
-      </StyledWrapper>
+      </div>
     </Modal>
   );
 };

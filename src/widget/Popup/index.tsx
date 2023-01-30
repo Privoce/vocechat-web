@@ -25,7 +25,7 @@ const Index = ({ handleClose, hostId }: Props) => {
             {/* message list */}
             <main id='MESSAGE_LIST_CONTAINER' className="relative flex-1 overflow-y-auto scroll-smooth">
                 {/* placeholder */}
-                <div className="flex items-center h-10 justify-center"></div>
+                <div className="flex-center h-10"></div>
                 <Welcome needLogin={notLogin} />
                 {notLogin ? null : <MessageFeed hostId={hostId} />}
             </main>

@@ -46,7 +46,7 @@ function ChatPage() {
       )}
       {usersModalVisible && <UsersModal closeModal={toggleUsersModalVisible} />}
       <StyledWrapper className={isGuest ? "guest" : ""}>
-        <div className="left">
+        <div className="left hidden md:flex">
           <Server readonly={isGuest} />
           {isGuest ? <GuestSessionList /> : <SessionList tempSession={tmpSession} />}
         </div>

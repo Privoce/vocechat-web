@@ -1,11 +1,5 @@
 import { useState, useEffect, ChangeEvent } from "react";
-import styled from "styled-components";
-const StyledTest = styled.div`
-  display: flex;
-  gap: 16px;
-  white-space: nowrap;
-  margin-top: 24px;
-`;
+
 import { useSendTestEmailMutation } from "../../../app/services/server";
 import iconQuestion from "../../../assets/icons/question.svg?url";
 import useConfig from "../../../common/hook/useConfig";
@@ -135,7 +129,7 @@ export default function ConfigSMTP() {
           {t("how_to")}
         </a>
       </div>
-      <StyledTest>
+      <div className="flex gap-4 whitespace-nowrap mt-6">
         <Input
           type={"email"}
           disabled={!enabled}
@@ -147,7 +141,7 @@ export default function ConfigSMTP() {
         <Button disabled={!enabled || !testEmail} onClick={handleTestClick}>
           {t("send_test_email")}
         </Button>
-      </StyledTest>
+      </div>
       {changed && <SaveTip saveHandler={handleUpdate} resetHandler={reset} />}
       {/* <button onClick={handleUpdate} className="btn">update</button> */}
     </StyledContainer>

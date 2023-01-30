@@ -43,7 +43,7 @@ const FavList: FC<Props> = ({ cid = null, uid = null }) => {
               <li key={id} className="relative border border-solid border-slate-200 rounded-md group">
                 <FavoredMessage id={id} />
                 <div className="flex items-center absolute top-2 right-2 border border-solid border-gray-300 rounded-md overflow-hidden invisible group-hover:visible">
-                  <button className="flex justify-center items-center w-6 h-6 p-1" data-id={id} onClick={handleRemove}>
+                  <button className="flex-center w-6 h-6 p-1" data-id={id} onClick={handleRemove}>
                     <IconRemove className="fill-slate-900" />
                   </button>
                 </div>

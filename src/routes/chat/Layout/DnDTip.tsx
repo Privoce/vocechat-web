@@ -10,7 +10,7 @@ const DnDTip = ({ context, name }: Props) => {
 
   return (
     <div
-      className={`flex justify-center items-center absolute left-0 top-0 w-full h-full bg-black/50`}
+      className={`flex-center absolute left-0 top-0 w-full h-full bg-black/50`}
     >
       <div className={`p-4 drop-shadow-md rounded-lg bg-primary-300`}>
         <div className="p-4 pt-16 border-2 border-dashed border-[#a5f3fc] rounded-md flex flex-col items-center text-white">

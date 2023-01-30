@@ -1,16 +1,9 @@
 import { FC, ReactElement, useEffect, useState } from "react";
-import styled from "styled-components";
 import StyledMsg from "./styled";
 import renderContent from "./renderContent";
 import Avatar from "../Avatar";
 import useFavMessage from "../../hook/useFavMessage";
 
-const StyledFav = styled.div`
-  display: flex;
-  flex-direction: column;
-  border-radius: var(--br);
-  background-color: #f4f4f5;
-`;
 type Props = {
   id?: string;
 };
@@ -25,7 +18,7 @@ const FavoredMessage: FC<Props> = ({ id = "" }) => {
     const favorite_mids = messages.map(({ from_mid }) => +from_mid) || [];
 
     setMsgs(
-      <StyledFav data-favorite-mids={favorite_mids.join(",")} className="favorite">
+      <div data-favorite-mids={favorite_mids.join(",")} className="favorite flex flex-col rounded-md bg-slate-200">
         <div className="list">
           {messages.map((msg, idx) => {
             const { user = {}, download, content, content_type, properties, thumbnail } = msg;
@@ -54,7 +47,7 @@ const FavoredMessage: FC<Props> = ({ id = "" }) => {
             );
           })}
         </div>
-      </StyledFav>
+      </div>
     );
   }, [favorites, id]);
 

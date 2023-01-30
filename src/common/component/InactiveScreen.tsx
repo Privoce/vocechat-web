@@ -23,7 +23,7 @@ const InactiveScreen: FC<Props> = () => {
     location.reload();
   };
   return (
-    <div className="w-screen h-screen flex justify-center items-center text-4xl font-bold">
+    <div className="w-screen h-screen flex-center text-4xl font-bold">
       <div className="flex flex-col items-center gap-2">
         <h1 className="text-4xl font-bold">{t("inactive.title")}</h1>
         <p className="text-gray-400 text-base font-semibold" >{t("inactive.desc")}</p>

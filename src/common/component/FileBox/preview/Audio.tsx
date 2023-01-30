@@ -14,7 +14,7 @@ const Audio: FC<Props> = ({ url }) => {
 
   if (!url) return null;
   return (
-    <div className="flex items-center justify-center h-full">
+    <div className="flex-center h-full">
       {err ? (
         <div className="p-[18px] text-base text-gray-500">Unable to play this audio</div>
       ) : (

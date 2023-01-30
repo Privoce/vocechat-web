@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-
-import StyledWrapper from "./styled";
 import { useNavigate, useParams } from "react-router-dom";
 import { useLoginMutation } from "../../app/services/auth";
 import toast from "react-hot-toast";
@@ -45,9 +43,9 @@ export default function OAuthPage() {
   }, [isSuccess, data]);
 
   return (
-    <StyledWrapper>
+    <div className="flex-center h-screen">
       {loading ? "loading" : ""}
       {error}
-    </StyledWrapper>
+    </div>
   );
 }

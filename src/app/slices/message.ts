@@ -12,6 +12,7 @@ export interface MessagePayload {
   content: string;
   expires_in?: number | null;
   properties?: {
+    name?: string;
     local_id?: number;
     content_type: string;
     size: number;

@@ -156,7 +156,7 @@ function FavsPage() {
               </h4>
               <div className="relative group">
                 <FavoredMessage key={id} id={id} />
-                <button className="absolute top-2 right-2 flex justify-center items-center w-6 h-6 p-1 border border-solid border-slate-200 rounded invisible group-hover:visible" data-id={id} onClick={handleRemove} >
+                <button className="absolute top-2 right-2 flex-center w-6 h-6 p-1 border border-solid border-slate-200 rounded invisible group-hover:visible" data-id={id} onClick={handleRemove} >
                   <IconRemove className="fill-slate-900" />
                 </button>
               </div>

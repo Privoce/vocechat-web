@@ -14,7 +14,7 @@ interface Props {
   type?: "chat" | "user";
 }
 const classes = {
-  box: "w-[200px] h-[200px] cursor-pointer bg-[#f9fafb] rounded-3xl flex flex-col justify-center items-center gap-4",
+  box: "w-[200px] h-[200px] cursor-pointer bg-[#f9fafb] rounded-3xl flex-center flex-col gap-4",
   boxIcon: "w-10 h-10",
   boxTip: "px-5 text-sm text-[#475467] font-bold text-center"
 };

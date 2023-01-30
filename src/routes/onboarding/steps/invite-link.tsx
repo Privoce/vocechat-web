@@ -14,7 +14,7 @@ export default function InviteLink() {
   const { link, linkCopied, copyLink, generateNewLink } = useInviteLink();
 
   return (
-    <div className="h-full flex flex-col items-center justify-center relative">
+    <div className="h-full flex-center flex-col relative">
       <span className="text-2xl mb-2 font-bold">{t("invite_title")}</span>
       <span className="text-sm mb-10 text-gray-400">{t("last_tip")}</span>
       <span className="text-sm text-gray-500 mb-2 font-semibold">{t("last_desc")}</span>

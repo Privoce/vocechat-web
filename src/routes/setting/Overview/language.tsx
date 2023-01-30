@@ -10,12 +10,10 @@ const Index = () => {
         i18n.changeLanguage(v);
     };
     return (
-        <div className="setting">
-            <p className="label">{t("overview.lang.title")}</p>
-            <p className="tip">
-                <span className="txt">
-                    {t("overview.lang.desc")}
-                </span>
+        <div className="text-sm">
+            <p className="font-semibold">{t("overview.lang.title")}</p>
+            <p className="flex justify-between w-full text-gray-400 mb-2">
+                {t("overview.lang.desc")}
             </p>
             <StyledRadio
                 options={[t("overview.lang.en"), t("overview.lang.zh"), t("overview.lang.jp")]}

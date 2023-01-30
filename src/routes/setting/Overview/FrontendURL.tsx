@@ -32,14 +32,12 @@ const Index = () => {
     }, [getUrlSuccess, data]);
     // if(!fetch)
     return (
-        <div className="setting">
-            <p className="label">{t("overview.url.title")}</p>
-            <p className="tip">
-                <span className="txt">
-                    {t("overview.url.desc")}
-                </span>
+        <div className="text-sm">
+            <p className="font-semibold">{t("overview.url.title")}</p>
+            <p className="flex justify-between w-full text-gray-400">
+                {t("overview.url.desc")}
             </p>
-            <div className="flex items-center gap-4 mt-4">
+            <div className="flex items-center gap-4 mt-2">
 
                 <StyledInput placeholder='frontend url' value={url} onChange={handleChange} />
                 <StyledButton disabled={!url || isLoading} className='' onClick={handleUpdate}> {ct("action.update")}</StyledButton>
