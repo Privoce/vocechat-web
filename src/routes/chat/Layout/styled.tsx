@@ -100,46 +100,6 @@ const Styled = styled.article`
       }
     }
   }
-  .drag_tip {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    visibility: hidden;
-    &.visible {
-      visibility: visible;
-    }
-    .box {
-      padding: 16px;
-      filter: drop-shadow(0px 25px 50px rgba(31, 41, 55, 0.25));
-      border-radius: 8px;
-      background: #52edff;
-      .inner {
-        padding: 16px;
-        padding-top: 64px;
-        border: 2px dashed #a5f3fc;
-        border-radius: 6px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        color: #fff;
-        .head {
-          font-weight: 600;
-          font-size: 20px;
-          line-height: 30px;
-        }
-        .intro {
-          font-weight: normal;
-          font-size: 14px;
-          line-height: 20px;
-        }
-      }
-    }
-  }
+ 
 `;
 export default Styled;

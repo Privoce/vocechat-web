@@ -6,12 +6,13 @@ import Send from "../../../common/component/Send";
 import Styled from "./styled";
 import Operations from "./Operations";
 import useUploadFile from "../../../common/hook/useUploadFile";
-import { ChatPrefixes } from "../../../app/config";
+
 import { useAppSelector } from "../../../app/store";
 import LoginTip from "./LoginTip";
 import useLicense from "../../../common/hook/useLicense";
 import LicenseUpgradeTip from "./LicenseOutdatedTip";
-import { useTranslation } from "react-i18next";
+// import { useTranslation } from "react-i18next";
+import DnDTip from "./DnDTip";
 
 interface Props {
   readonly?: boolean;
@@ -34,7 +35,7 @@ const Layout: FC<Props> = ({
   context = "channel",
   to
 }) => {
-  const { t } = useTranslation('chat');
+  // const { t } = useTranslation('chat');
   const { reachLimit } = useLicense();
   const { addStageFile } = useUploadFile({ context, id: to });
   const messagesContainer = useRef<HTMLDivElement>(null);
@@ -125,17 +126,8 @@ const Layout: FC<Props> = ({
           {users && <div className="members">{users}</div>}
           {aside && <div className="aside">{aside}</div>}
         </main>
-        {!readonly && (
-          <div
-            className={`drag_tip ${isActive ? "visible animate__animated animate__fadeIn" : ""}`}
-          >
-            <div className={`box ${isActive ? "animate__animated animate__bounceIn" : ""}`}>
-              <div className="inner">
-                <h4 className="head">{`${t("send_to")} ${ChatPrefixes[context]}${name}`}</h4>
-                <span className="intro">Photos accept jpg, png, max size limit to 10M.</span>
-              </div>
-            </div>
-          </div>
+        {!readonly && isActive && (
+          <DnDTip context={context} name={name} />
         )}
       </Styled>
     </>

@@ -1,5 +1,4 @@
 import { FC, useState } from "react";
-import styled from "styled-components";
 import { useKey } from "rooks";
 import toast from "react-hot-toast";
 import useDeleteMessage from "../../../common/hook/useDeleteMessage";
@@ -13,33 +12,6 @@ import ForwardModal from "../../../common/component/ForwardModal";
 import DeleteMessageConfirmModal from "../../../common/component/DeleteMessageConfirm";
 import { useAppDispatch, useAppSelector } from "../../../app/store";
 
-const Styled = styled.div`
-  position: relative;
-  padding: 16px;
-  display: flex;
-  gap: 32px;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.05);
-  .opt {
-    padding: 8px;
-    background: #f2f4f7;
-    border-radius: var(--br);
-    &:disabled svg path {
-      fill: #ccc;
-    }
-    &:hover {
-      background: #eaecf0;
-    }
-  }
-  .close {
-    cursor: pointer;
-    position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-`;
 type Props = {
   context: "user" | "channel";
   id: number;
@@ -83,20 +55,21 @@ const Operations: FC<Props> = ({ context, id }) => {
   });
   const canDel = canDelete(mids);
 
+  // const 
   return (
     <>
-      <Styled>
-        <button className="opt" onClick={toggleForwardModal}>
+      <div className="relative p-4 flex items-center justify-center gap-8 shadow-md">
+        <button className="p-2 bg-slate-100 rounded hover:bg-slate-300" onClick={toggleForwardModal}>
           <IconForward />
         </button>
-        <button className="opt" onClick={handleFav}>
+        <button className="p-2 bg-slate-100 rounded hover:bg-slate-300" onClick={handleFav}>
           <IconBookmark />
         </button>
-        <button className="opt" disabled={!canDel} onClick={toggleDeleteModal.bind(null, false)}>
+        <button className="p-2 bg-slate-100 rounded hover:bg-slate-300" disabled={!canDel} onClick={toggleDeleteModal.bind(null, false)}>
           <IconDelete />
         </button>
-        <IconClose className="close" onClick={handleClose} />
-      </Styled>
+        <IconClose className="cursor-pointer absolute right-5 top-1/2 -translate-y-1/2" onClick={handleClose} />
+      </div>
       {forwardModalVisible && <ForwardModal mids={mids} closeModal={toggleForwardModal} />}
       {deleteModalVisible && (
         <DeleteMessageConfirmModal mids={mids} closeModal={toggleDeleteModal} />
