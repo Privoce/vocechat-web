@@ -123,8 +123,8 @@ const Layout: FC<Props> = ({
               {selects && <Operations context={context} id={to} />}
             </div>
           </div>
-          {users && <div className="members">{users}</div>}
-          {aside && <div className="aside">{aside}</div>}
+          {users && <div className="members hidden md:block">{users}</div>}
+          {aside && <div className="aside !hidden md:!block">{aside}</div>}
         </main>
         {!readonly && isActive && (
           <DnDTip context={context} name={name} />

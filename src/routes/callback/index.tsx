@@ -1,7 +1,14 @@
+import { DOMAttributes, ReactNode } from "react";
 import { useParams } from "react-router-dom";
 import PaymentSuccess from "./PaymentSuccess";
 import GithubCallback, { GithubLoginSource } from "./GithubCallback";
-import StyledWrapper from "./styled";
+
+const StyledWrapper = ({ children }: DOMAttributes<HTMLDivElement> & { children?: ReactNode }) => {
+
+  return <div className="flex-center w-screen h-screen break-words leading-normal">
+    {children}
+  </div>;
+};
 // type Props = {
 //   type: "payment_success";
 // };

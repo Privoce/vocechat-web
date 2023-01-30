@@ -1,5 +1,6 @@
 import { memo, useState } from "react";
 import { useParams } from "react-router-dom";
+import clsx from "clsx";
 import StyledWrapper from "./styled";
 import BlankPlaceholder from "../../common/component/BlankPlaceholder";
 import Server from "../../common/component/Server";
@@ -12,7 +13,9 @@ import { useAppSelector } from "../../app/store";
 import GuestBlankPlaceholder from "./GuestBlankPlaceholder";
 import GuestChannelChat from "./GuestChannelChat";
 import GuestSessionList from "./GuestSessionList";
+import IconList from '../../assets/icons/list.svg';
 function ChatPage() {
+  const [sessionListVisible, setSessionListVisible] = useState(false);
   const [channelModalVisible, setChannelModalVisible] = useState(false);
   const [usersModalVisible, setUsersModalVisible] = useState(false);
   const { channel_id = 0, user_id = 0 } = useParams();
@@ -27,6 +30,9 @@ function ChatPage() {
   };
   const toggleChannelModalVisible = () => {
     setChannelModalVisible((prev) => !prev);
+  };
+  const toggleSessionList = () => {
+    setSessionListVisible(prev => !prev);
   };
   const tmpSession =
     sessionUids.findIndex((i) => i == user_id) > -1
@@ -45,10 +51,13 @@ function ChatPage() {
         <ChannelModal closeModal={toggleChannelModalVisible} personal={true} />
       )}
       {usersModalVisible && <UsersModal closeModal={toggleUsersModalVisible} />}
-      <StyledWrapper className={isGuest ? "guest" : ""}>
-        <div className="left hidden md:flex">
+      <StyledWrapper className={`${isGuest ? "!pr-1" : ""} md:!pr-12`}>
+        <div className={clsx("left !fixed top-0 left-0 z-40 transition-all md:!relative md:translate-x-0 md:overflow-auto", sessionListVisible ? "translate-x-0" : "-translate-x-full")}>
           <Server readonly={isGuest} />
           {isGuest ? <GuestSessionList /> : <SessionList tempSession={tmpSession} />}
+          <button className="absolute top-1/2 -right-[24px] z-50 p-2 rounded-full bg-slate-300/80 md:hidden" onClick={toggleSessionList}>
+            <IconList />
+          </button>
         </div>
         <div className={`right ${placeholderVisible ? "placeholder" : ""}`}>
           {placeholderVisible && (isGuest ? <GuestBlankPlaceholder /> : <BlankPlaceholder />)}

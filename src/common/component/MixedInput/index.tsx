@@ -19,7 +19,6 @@ import {
 import { createComboboxPlugin } from "@udecode/plate-combobox";
 import { ReactEditor } from "slate-react";
 import useUploadFile from "../../hook/useUploadFile";
-import Styled from "./styled";
 import { CONFIG } from "./config";
 import User from "../User";
 import { useAppSelector } from "../../../app/store";
@@ -56,12 +55,12 @@ const Plugins: FC<Props> = ({
   const editableRef = useRef(null);
   const initialProps = {
     ...CONFIG.editableProps,
-    className: "box",
+    className: "flex flex-col gap-2",
     placeholder
   };
   const plateEditor = getPlateEditorRef(`${TEXT_EDITOR_PREFIX}_${id}`);
   useEffect(() => {
-    const handlePasteEvent = (evt: ClipboardEvent) => {
+    const handlePasteEvent = (evt: ClipboardEvent<Window>) => {
       const files = [...evt.clipboardData.files];
       if (files.length) {
         const filesData = files.map((file) => {
@@ -80,7 +79,6 @@ const Plugins: FC<Props> = ({
       //   updateDraft(plateEditor.children);
       // }
     };
-    // window.addEventListener("paste")
   }, [id, updateDraft]);
 
   useKey(
@@ -117,21 +115,21 @@ const Plugins: FC<Props> = ({
   const plugins = createPlugins(
     enableMentions
       ? pluginArr.concat([
-          createComboboxPlugin(),
-          createMentionPlugin({
-            options: {
-              createMentionNode: (item) => {
-                // console.log("mention", item);
-                const {
-                  text,
-                  data: { uid }
-                } = item;
-                return { value: `@${text}`, uid };
-              },
-              insertSpaceAfterMention: true
-            }
-          })
-        ])
+        createComboboxPlugin(),
+        createMentionPlugin({
+          options: {
+            createMentionNode: (item) => {
+              // console.log("mention", item);
+              const {
+                text,
+                data: { uid }
+              } = item;
+              return { value: `@${text}`, uid };
+            },
+            insertSpaceAfterMention: true
+          }
+        })
+      ])
       : pluginArr,
     {
       components
@@ -174,12 +172,12 @@ const Plugins: FC<Props> = ({
       const arr = tmps.map((tmp) => {
         return Array.isArray(tmp)
           ? {
-              type: "text",
-              content: tmp.map((t) => t.content).join("\n"),
-              properties: {
-                mentions: tmp.map((t) => t.properties?.mentions || []).flat()
-              }
+            type: "text",
+            content: tmp.map((t) => t.content).join("\n"),
+            properties: {
+              mentions: tmp.map((t) => t.properties?.mentions || []).flat()
             }
+          }
           : tmp;
       });
       const msgs = arr.filter(({ content }) => !!content);
@@ -188,8 +186,9 @@ const Plugins: FC<Props> = ({
     [msgs]
   );
 
+
   return (
-    <Styled className="input" ref={editableRef}>
+    <div className="input max-h-[50vh] overflow-auto text-sm text-gray-600" ref={editableRef}>
       <Plate
         id={`${TEXT_EDITOR_PREFIX}_${id}`}
         onChange={handleChange}
@@ -222,7 +221,7 @@ const Plugins: FC<Props> = ({
           />
         ) : null}
       </Plate>
-    </Styled>
+    </div>
   );
 };
 

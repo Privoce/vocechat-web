@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const StyledMsg = styled.div`
+width: 100%;
   position: relative;
   display: flex;
   align-items: flex-start;

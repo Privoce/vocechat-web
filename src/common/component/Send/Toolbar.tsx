@@ -1,5 +1,4 @@
 import { ChangeEvent, useRef, FC } from "react";
-import styled from "styled-components";
 import Tooltip from "../Tooltip";
 import AddIcon from "../../../assets/icons/add.solid.svg";
 import MarkdownIcon from "../../../assets/icons/markdown.svg";
@@ -8,41 +7,6 @@ import ExitFullscreenIcon from "../../../assets/icons/fullscreen.exit.svg";
 import useUploadFile from "../../hook/useUploadFile";
 import { useTranslation } from "react-i18next";
 
-const Styled = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 10px;
-  &.markdown .add {
-    display: none;
-  }
-  .md {
-    cursor: pointer;
-    display: flex;
-    gap: 14px;
-    .markdown path {
-      fill: #22ccee;
-    }
-  }
-  .add {
-    cursor: pointer;
-    position: relative;
-    width: 24px;
-    height: 24px;
-    label {
-      opacity: 0;
-      cursor: pointer;
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      input {
-        display: none;
-      }
-    }
-  }
-`;
 type Props = {
   toggleMarkdownFullscreen: () => void;
   fullscreen: boolean;
@@ -79,13 +43,14 @@ const Toolbar: FC<Props> = ({
     // setFiles([...evt.target.files]);
   };
 
+  const isMarkdown = mode == 'markdown';
   return (
-    <Styled className={mode}>
-      <div className="md">
+    <div className={`flex flex-col items-center justify-end gap-2.5 md:flex-row`}>
+      <div className="cursor-pointer flex gap-3.5">
         <Tooltip placement="top" tip="Markdown">
-          <MarkdownIcon className={mode} onClick={toggleMode} />
+          <MarkdownIcon className="fill-[#22ccee]" onClick={toggleMode} />
         </Tooltip>
-        {mode == "markdown" &&
+        {isMarkdown &&
           (fullscreen ? (
             <Tooltip placement="top" tip="Exit Fullscreen">
               <ExitFullscreenIcon onClick={toggleMarkdownFullscreen} />
@@ -96,11 +61,12 @@ const Toolbar: FC<Props> = ({
             </Tooltip>
           ))}
       </div>
-      <Tooltip placement="top" tip={t("action.upload")}>
-        <div className="add">
+      {!isMarkdown && <Tooltip placement="top" tip={t("action.upload")}>
+        <div className="cursor-pointer relative w-6 h-6">
           <AddIcon />
-          <label htmlFor="file">
+          <label htmlFor="file" className=" cursor-pointer absolute left-0 top-0 w-full h-full opacity-0">
             <input
+              className="hidden"
               size={24}
               ref={fileInputRef}
               multiple={true}
@@ -111,8 +77,8 @@ const Toolbar: FC<Props> = ({
             />
           </label>
         </div>
-      </Tooltip>
-    </Styled>
+      </Tooltip>}
+    </div>
   );
 };
 export default Toolbar;

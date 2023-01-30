@@ -1,6 +1,5 @@
 import React from "react";
 import dayjs from "dayjs";
-import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { isImage } from "../../common/utils";
 import { ContentTypes } from "../../app/config";
@@ -86,38 +85,6 @@ export const renderPreviewMessage = (message = null) => {
   }
   return res;
 };
-const StyledWrapper = styled.div`
-  position: relative;
-  width: 100%;
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  > .overlay {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
-  }
-  > .check {
-    display: none;
-    margin-top: 18px;
-    margin-left: 8px;
-  }
-  > .message {
-    flex: 1;
-  }
-  &.select {
-    &:hover {
-      border-radius: var(--br);
-      background: #f5f6f7;
-    }
-    > .check {
-      display: block;
-    }
-  }
-`;
 
 const MessageWrapper = ({ selectMode = false, context, id, mid, children, ...rest }) => {
   const dispatch = useDispatch();
@@ -129,13 +96,13 @@ const MessageWrapper = ({ selectMode = false, context, id, mid, children, ...res
     dispatch(updateSelectMessages({ context, id, operation, data: mid }));
   };
   return (
-    <StyledWrapper className={selectMode ? "select" : ""} {...rest}>
-      <Checkbox className="check" checked={selected} />
+    <div className={`flex items-start gap-2 relative w-full ${selectMode ? "hover:bg-slate-100" : ""}`} {...rest}>
+      {selectMode && <Checkbox className="!mt-4 !ml-2" checked={selected} />}
       {children}
       {selectMode && (
-        <div className="overlay" onClick={selectMode ? toggleSelect : undefined}></div>
+        <div className="absolute left-0 top-0 w-full h-full cursor-pointer" onClick={selectMode ? toggleSelect : undefined}></div>
       )}
-    </StyledWrapper>
+    </div>
   );
 };
 type Params = {

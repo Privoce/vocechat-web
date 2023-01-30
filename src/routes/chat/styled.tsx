@@ -2,10 +2,9 @@ import styled from "styled-components";
 const StyledWrapper = styled.div`
   display: flex;
   height: 100%;
-  padding: 8px 48px 10px 0;
-  &.guest {
-    padding-right: 0;
-  }
+  padding-top: 8px;
+  padding-bottom: 10px;
+  padding-right: 4px;
   > .left {
     background-color: #fff;
     position: relative;
@@ -14,7 +13,7 @@ const StyledWrapper = styled.div`
     min-width: 268px;
     box-shadow: inset -1px 0px 0px rgba(0, 0, 0, 0.05);
     height: 100%;
-    overflow: auto;
+    /* overflow: auto; */
     border-radius: 16px 0 0 16px;
     .list {
       margin: 12px 8px;
