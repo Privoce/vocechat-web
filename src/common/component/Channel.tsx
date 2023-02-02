@@ -1,50 +1,8 @@
 import { FC } from "react";
-import styled from "styled-components";
 import Avatar from "./Avatar";
 import { useAppSelector } from "../../app/store";
+import clsx from "clsx";
 
-const StyledWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 8px;
-  padding: 8px;
-  border-radius: 8px;
-  user-select: none;
-  &.compact {
-    padding: 0;
-  }
-  &.interactive {
-    &:hover,
-    &.active {
-      background: rgba(116, 127, 141, 0.1);
-    }
-  }
-  .avatar {
-    cursor: pointer;
-    width: ${({ size }: { size: number }) => `${size}px`};
-    height: ${({ size }: { size: number }) => `${size}px`};
-    position: relative;
-    img {
-      border-radius: 50%;
-      width: 100%;
-      height: 100%;
-    }
-  }
-  .name {
-    display: flex;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 20px;
-    color: #52525b;
-    .txt {
-      max-width: 140px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-  }
-`;
 
 interface Props {
   interactive?: boolean;
@@ -63,12 +21,12 @@ const Channel: FC<Props> = ({ interactive = true, id, compact = false, avatarSiz
 
   if (!channel) return null;
   const { name, members = [], is_public, icon } = channel;
+
   return (
-    <StyledWrapper
-      size={avatarSize}
-      className={`${interactive ? "interactive" : ""} ${compact ? "compact" : ""}`}
+    <div
+      className={clsx(`flex items-center justify-start gap-2 p-2 rounded-lg select-none`, compact && "p-0", interactive && "hover:bg-gray-500/10")}
     >
-      <div className="avatar">
+      <div className={`cursor-pointer relative`} style={{ width: `${avatarSize}px`, height: `${avatarSize}px` }}>
         <Avatar
           width={avatarSize}
           height={avatarSize}
@@ -76,14 +34,15 @@ const Channel: FC<Props> = ({ interactive = true, id, compact = false, avatarSiz
           src={icon}
           name={"#"}
           alt="avatar"
+          className="!w-full !h-full rounded-full"
         />
       </div>
       {!compact && (
-        <div className="name">
-          <span className="txt">{name}</span> ({is_public ? totalMemberCount : members.length})
+        <div className="flex text-sm text-gray-500 font-semibold">
+          <span className="max-w-[140px] whitespace-nowrap overflow-hidden text-ellipsis">{name}</span> ({is_public ? totalMemberCount : members.length})
         </div>
       )}
-    </StyledWrapper>
+    </div>
   );
 };
 

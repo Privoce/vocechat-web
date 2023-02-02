@@ -1,50 +1,7 @@
 import { FC } from "react";
-import styled from "styled-components";
 import Modal from "../Modal";
 import IconClose from "../../../assets/icons/close.svg";
 import Button from "../styled/Button";
-
-const Styled = styled.div`
-  position: relative;
-  margin-top: 15px;
-  pointer-events: all;
-  width: 406px;
-  padding: 16px;
-  border-radius: 6px;
-  background: #fff;
-  box-shadow: 0 25px 50px rgba(31, 41, 55, 0.25);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  .tip {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    color: #344054;
-    .title {
-      font-weight: 600;
-      font-size: 16px;
-      line-height: 24px;
-    }
-    .desc {
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 20px;
-    }
-  }
-  .btns {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    gap: 16px;
-  }
-  .close {
-    cursor: pointer;
-    position: absolute;
-    top: 16px;
-    right: 16px;
-  }
-`;
 
 interface Props {
   handleInstall?: () => void;
@@ -54,13 +11,13 @@ interface Props {
 const Prompt: FC<Props> = ({ handleInstall, closePrompt }) => {
   return (
     <Modal mask={false}>
-      <Styled>
-        <IconClose className="close" onClick={closePrompt} />
-        <div className="tip">
-          <h2 className="title">Install web app on desktop?</h2>
-          <p className="desc">Add to desktop for quick access to this app.</p>
+      <div className="relative pointer-events-auto mt-4 w-[406px] p-4 rounded-md bg-white shadow-md flex flex-col gap-3">
+        <IconClose className="absolute top-4 right-4 cursor-pointer" onClick={closePrompt} />
+        <div className="flex flex-col gap-4 text-gray-600">
+          <h2 className="font-semibold">Install web app on desktop?</h2>
+          <p className="text-sm">Add to desktop for quick access to this app.</p>
         </div>
-        <div className="btns">
+        <div className="w-full flex justify-end gap-4">
           <Button className="ghost cancel small" onClick={closePrompt}>
             Cancel
           </Button>
@@ -68,7 +25,7 @@ const Prompt: FC<Props> = ({ handleInstall, closePrompt }) => {
             Install
           </Button>
         </div>
-      </Styled>
+      </div>
     </Modal>
   );
 };

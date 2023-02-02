@@ -4,7 +4,7 @@ import useMessageFeed from "../../../common/hook/useMessageFeed";
 import ChannelIcon from "../../../common/component/ChannelIcon";
 import Layout from "../Layout";
 import { renderMessageFragment } from "../utils";
-import { StyledChannelChat, StyledHeader } from "./styled";
+import { StyledChannelChat } from "./styled";
 import LoadMore from "../LoadMore";
 import { useAppSelector } from "../../../app/store";
 import { useTranslation } from "react-i18next";
@@ -40,13 +40,13 @@ export default function GuestChannelChat({ cid = 0 }: Props) {
         to={cid}
         context="channel"
         header={
-          <StyledHeader className="head">
-            <div className="txt">
+          <header className="head flex items-center h-full justify-center md:justify-between">
+            <div className="flex items-center gap-1 text-base">
               <ChannelIcon personal={!is_public} />
-              <span className="title">{name}</span>
-              <span className="desc">{description}</span>
+              <span className="text-gray-800">{name}</span>
+              <span className="ml-2 text-gray-500">{description}</span>
             </div>
-          </StyledHeader>
+          </header>
         }
       >
         <StyledChannelChat id={`VOCECHAT_FEED_channel_${cid}`}>

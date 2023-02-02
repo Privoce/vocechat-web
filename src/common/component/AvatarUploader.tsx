@@ -1,69 +1,8 @@
 import { ChangeEvent, FC, useState } from "react";
-import styled from "styled-components";
 import Avatar from "./Avatar";
 import uploadIcon from "../../assets/icons/upload.image.svg?url";
 import { useTranslation } from "react-i18next";
-
-const StyledWrapper = styled.div<{ size: number }>`
-  width: ${({ size }) => `${size}px`};
-  height: ${({ size }) => `${size}px`};
-  position: relative;
-  cursor: pointer;
-  .avatar {
-    overflow: hidden;
-    position: relative;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background-color: #eee;
-    img {
-      object-fit: cover;
-      width: 100%;
-      height: 100%;
-    }
-    input[type="file"] {
-      cursor: pointer;
-      display: block;
-      opacity: 0;
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-    }
-    .tip {
-      white-space: nowrap;
-      padding: 4px;
-      display: none;
-      justify-content: center;
-      align-items: center;
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: rgba(0, 0, 0, 0.5);
-      color: #fff;
-      font-weight: bold;
-      font-size: 12px;
-      line-height: 18px;
-    }
-    &:hover .tip {
-      display: flex;
-    }
-  }
-  .icon {
-    display: none;
-    width: 28px;
-    height: 28px;
-    position: absolute;
-    top: 0;
-    right: 0;
-  }
-  &:hover .icon {
-    display: block;
-  }
-`;
+import clsx from "clsx";
 
 type UID = number;
 interface Props {
@@ -102,16 +41,18 @@ const AvatarUploader: FC<Props> = ({
     setUploading(false);
   };
 
+
   return (
-    <StyledWrapper size={size} className={className}>
-      <div className="avatar">
-        <Avatar width={size} height={size} type={type} src={url} name={name} className={className} />
+    <div style={{ width: `${size}px`, height: `${size}px` }} className={clsx(className, "relative group")}>
+      <div className="group overflow-hidden relative w-full h-full rounded-full bg-gray-50">
+        <Avatar width={size} height={size} type={type} src={url} name={name} className={`${className} object-cover w-full h-full`} />
         {!disabled && (
           <>
-            <div className="tip">
+            <div className="flex-center flex-col whitespace-nowrap hidden group-hover:flex p-1 absolute top-0 left-0 right-0 bottom-0 bg-black/50 text-white font-bold text-xs">
               {uploading ? t("status.uploading") : t("action.change_avatar")}
             </div>
             <input
+              className="opacity-0 absolute top-0 left-0 right-0 bottom-0 block cursor-pointer"
               multiple={false}
               onChange={handleUpload}
               type="file"
@@ -122,8 +63,8 @@ const AvatarUploader: FC<Props> = ({
           </>
         )}
       </div>
-      {!disabled && <img src={uploadIcon} alt="icon" className="icon" />}
-    </StyledWrapper>
+      {!disabled && <img src={uploadIcon} alt="icon" className="hidden w-7 h-7 absolute top-0 right-0 group-hover:block" />}
+    </div>
   );
 };
 

@@ -7,7 +7,6 @@ import FavIcon from "../../../assets/icons/bookmark.svg";
 import { useReadMessageMutation } from "../../../app/services/message";
 import User from "../../../common/component/User";
 import Layout from "../Layout";
-import { StyledHeader, StyledDMChat } from "./styled";
 import LoadMore from "../LoadMore";
 import { renderMessageFragment } from "../utils";
 import useMessageFeed from "../../../common/hook/useMessageFeed";
@@ -65,12 +64,12 @@ const DMChat: FC<Props> = ({ uid = 0, dropFiles }) => {
         </ul>
       }
       header={
-        <StyledHeader className="head">
+        <header className="head h-full flex items-center justify-between">
           <User interactive={false} uid={currUser.uid} />
-        </StyledHeader>
+        </header>
       }
     >
-      <StyledDMChat id={`VOCECHAT_FEED_user_${uid}`}>
+      <article id={`VOCECHAT_FEED_user_${uid}`} className="w-full h-full px-4 py-4.5 overflow-auto">
         {hasMore ? <LoadMore pullUp={pullUp} pulling={pulling} /> : null}
         {[...feeds].map((mid, idx) => {
           const curr = messageData[mid];
@@ -86,7 +85,7 @@ const DMChat: FC<Props> = ({ uid = 0, dropFiles }) => {
             context: "user"
           });
         })}
-      </StyledDMChat>
+      </article>
     </Layout>
   );
 };

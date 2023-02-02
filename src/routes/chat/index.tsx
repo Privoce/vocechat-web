@@ -14,6 +14,7 @@ import GuestBlankPlaceholder from "./GuestBlankPlaceholder";
 import GuestChannelChat from "./GuestChannelChat";
 import GuestSessionList from "./GuestSessionList";
 import IconList from '../../assets/icons/list.svg';
+import IconClose from '../../assets/icons/close.svg';
 function ChatPage() {
   const [sessionListVisible, setSessionListVisible] = useState(false);
   const [channelModalVisible, setChannelModalVisible] = useState(false);
@@ -51,13 +52,14 @@ function ChatPage() {
         <ChannelModal closeModal={toggleChannelModalVisible} personal={true} />
       )}
       {usersModalVisible && <UsersModal closeModal={toggleUsersModalVisible} />}
-      <StyledWrapper className={`${isGuest ? "!pr-1" : ""} md:!pr-12`}>
+      <StyledWrapper className={`${isGuest ? "!pr-1 !pt-0" : ""} md:!pr-12`}>
+        {sessionListVisible && <div onClick={toggleSessionList} className="z-30 fixed top-0 left-4 w-screen h-screen bg-black/50 transition-all backdrop-blur-sm"></div>}
         <div className={clsx("left !fixed top-0 left-0 z-40 transition-all md:!relative md:translate-x-0 md:overflow-auto", sessionListVisible ? "translate-x-0" : "-translate-x-full")}>
           <Server readonly={isGuest} />
           {isGuest ? <GuestSessionList /> : <SessionList tempSession={tmpSession} />}
-          <button className="absolute top-1/2 -right-[24px] z-50 p-2 rounded-full bg-slate-300/80 md:hidden" onClick={toggleSessionList}>
+          {sessionListVisible ? null : <button className="absolute top-2 -right-[52px] z-50 p-2 bg-none  md:hidden" onClick={toggleSessionList}>
             <IconList />
-          </button>
+          </button>}
         </div>
         <div className={`right ${placeholderVisible ? "placeholder" : ""}`}>
           {placeholderVisible && (isGuest ? <GuestBlankPlaceholder /> : <BlankPlaceholder />)}

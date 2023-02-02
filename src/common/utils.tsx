@@ -160,7 +160,7 @@ export function sliceFile(file: File | null, chunksAmount: number) {
 
   return chunks;
 }
-export const getFileIcon = (type: string, name = "") => {
+export const getFileIcon = (type: string, name = "", className = "icon") => {
   let icon = null;
 
   const checks = {
@@ -176,27 +176,27 @@ export const getFileIcon = (type: string, name = "") => {
   switch (true) {
     case checks.image.test(_type):
       {
-        icon = <IconImage className="icon" />;
+        icon = <IconImage className={className} />;
       }
       break;
     case checks.pdf.test(_type):
-      icon = <IconPdf className="icon" />;
+      icon = <IconPdf className={className} />;
       break;
     case checks.code.test(_type):
-      icon = <IconCode className="icon" />;
+      icon = <IconCode className={className} />;
       break;
     case checks.doc.test(_type):
-      icon = <IconDoc className="icon" />;
+      icon = <IconDoc className={className} />;
       break;
     case checks.audio.test(_type):
-      icon = <IconAudio className="icon" />;
+      icon = <IconAudio className={className} />;
       break;
     case checks.video.test(_type):
-      icon = <IconVideo className="icon" />;
+      icon = <IconVideo className={className} />;
       break;
 
     default:
-      icon = <IconUnknown className="icon" />;
+      icon = <IconUnknown className={className} />;
       break;
   }
   return icon;

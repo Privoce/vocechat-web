@@ -1,5 +1,4 @@
 import { useEffect, useState, FC, useRef } from "react";
-import styled from "styled-components";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import StyledInput from "../../../common/component/styled/Input";
@@ -15,53 +14,6 @@ import { useAppSelector } from "../../../app/store";
 import { useTranslation } from "react-i18next";
 import { useWizard } from "react-use-wizard";
 
-const StyledWrapper = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  > .primaryText {
-    text-align: center;
-    font-weight: 700;
-    font-size: 24px;
-    line-height: 30px;
-    margin-bottom: 8px;
-  }
-
-  > .secondaryText {
-    text-align: center;
-    font-size: 14px;
-    line-height: 20px;
-    margin-bottom: 24px;
-  }
-
-  form {
-    > .input {
-    margin-bottom: 20px;
-    width: 360px;
-    height: 44px;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    padding: 10px 14px;
-    border: 1px solid #d0d5dd;
-    border-radius: 8px;
-    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
-    > .inner {
-      padding: 0;
-      font-weight: 400;
-      font-size: 16px;
-      line-height: 24px;
-    }
-  }}
-
-  > .button {
-    width: 360px;
-    margin-top: 24px;
-  }
-`;
 type Props = {
   serverName: string;
 };
@@ -122,12 +74,12 @@ const AdminAccount: FC<Props> = ({ serverName }) => {
   }, [isUpdatedServer]);
 
   return (
-    <StyledWrapper>
-      <span className="primaryText">{t("admin_title")}</span>
-      <span className="secondaryText">{t("admin_desc")}</span>
-      <form ref={formRef} action="/">
+    <div className="h-full flex-center flex-col text-center w-[360px] m-auto">
+      <span className="text-2xl mb-2 font-bold">{t("admin_title")}</span>
+      <span className="text-sm mb-6">{t("admin_desc")}</span>
+      <form ref={formRef} action="/" className="flex flex-col gap-2 w-full">
         <StyledInput
-          className="input"
+          className="large"
           placeholder="Enter your email"
           type={"email"}
           required
@@ -135,7 +87,7 @@ const AdminAccount: FC<Props> = ({ serverName }) => {
           onChange={(e) => setEmail(e.target.value)}
         />
         <StyledInput
-          className="input"
+          className="large"
           type="password"
           required
           minLength={6}
@@ -144,7 +96,7 @@ const AdminAccount: FC<Props> = ({ serverName }) => {
           onChange={(e) => setPassword(e.target.value)}
         />
         <StyledInput
-          className="input"
+          className="large"
           type="password"
           required
           minLength={6}
@@ -154,7 +106,7 @@ const AdminAccount: FC<Props> = ({ serverName }) => {
         />
       </form>
       <StyledButton
-        className="button"
+        className="mt-6 w-full"
         onClick={async () => {
           const formEle = formRef?.current;
           if (formEle) {
@@ -174,7 +126,7 @@ const AdminAccount: FC<Props> = ({ serverName }) => {
       >
         {!(isSigningUp || isLoggingIn || isUpdatingServer) ? t("sign") : "..."}
       </StyledButton>
-    </StyledWrapper>
+    </div>
   );
 };
 export default AdminAccount;

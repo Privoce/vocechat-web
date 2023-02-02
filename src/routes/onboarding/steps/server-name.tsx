@@ -1,52 +1,10 @@
 import { FC } from "react";
-import styled from "styled-components";
 import toast from "react-hot-toast";
 import StyledInput from "../../../common/component/styled/Input";
 import StyledButton from "../../../common/component/styled/Button";
 import { useTranslation } from "react-i18next";
 import { useWizard } from "react-use-wizard";
 
-const StyledWrapper = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  > .primaryText {
-    text-align: center;
-    font-weight: 700;
-    font-size: 24px;
-    line-height: 30px;
-    margin-bottom: 8px;
-  }
-
-  > .secondaryText {
-    width: 360px;
-    text-align: center;
-    font-size: 14px;
-    line-height: 20px;
-    margin-bottom: 24px;
-    color: #667085;
-  }
-
-  > .input {
-    width: 360px;
-    height: 44px;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    padding: 10px 14px;
-    border: 1px solid #d0d5dd;
-    border-radius: 8px;
-    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
-  }
-
-  > .button {
-    width: 360px;
-    margin-top: 24px;
-  }
-`;
 type Props = {
   serverName: string;
   setServerName: (name: string) => void;
@@ -54,20 +12,21 @@ type Props = {
 const ServerName: FC<Props> = ({ serverName, setServerName }) => {
   const { t } = useTranslation("welcome", { keyPrefix: "onboarding" });
   const { nextStep } = useWizard();
+
   return (
-    <StyledWrapper>
-      <span className="primaryText">{t("new_server")}</span>
-      <span className="secondaryText">
+    <div className="h-full flex-center flex-col text-center w-[360px] m-auto">
+      <span className="text-2xl mb-2 font-bold">{t("new_server")}</span>
+      <span className="text-sm mb-6 text-gray-400 ">
         {t("server_desc")}
       </span>
       <StyledInput
-        className="input"
+        className="h-11 px-3.5 py-2.5 border-gray-300 rounded-lg shadow"
         placeholder={t("placeholder_server")}
         value={serverName}
         onChange={(e) => setServerName(e.target.value)}
       />
       <StyledButton
-        className="button"
+        className="w-full mt-6"
         onClick={() => {
           // Verification for space name
           if (serverName === "") {
@@ -79,7 +38,7 @@ const ServerName: FC<Props> = ({ serverName, setServerName }) => {
       >
         {t("create_server")}
       </StyledButton>
-    </StyledWrapper>
+    </div>
   );
 };
 export default ServerName;

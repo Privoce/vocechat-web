@@ -2,13 +2,13 @@ import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import BASE_URL from "../../app/config";
-import StyledWrapper from "./styled";
 import Input from "../../common/component/styled/Input";
 import Button from "../../common/component/styled/Button";
 import { useSendLoginMagicLinkMutation } from "../../app/services/auth";
 import SentTip from "./SentTip";
 import { useTranslation } from "react-i18next";
 import SocialLoginButtons from "../login/SocialLoginButtons";
+import Divider from "../../common/component/Divider";
 
 export default function SendMagicLinkPage() {
   const { t } = useTranslation("auth");
@@ -62,20 +62,19 @@ export default function SendMagicLinkPage() {
     setEmail("");
     setSent(false);
   };
-
   return (
-    <StyledWrapper>
-      <div className="form">
+    <div className="flex-center h-screen">
+      <div className="py-8 px-10 shadow rounded-xl">
         {sent ? (
           <SentTip email={email} reset={handleReset} />
         ) : (
           <>
-            <div className="tips">
-              <img src={`${BASE_URL}/resource/organization/logo`} alt="logo" className="logo" />
-              <h2 className="title">{t("login.title")}</h2>
-              <span className="desc">{t("placeholder_email")}</span>
+            <div className="flex flex-col items-center">
+              <img src={`${BASE_URL}/resource/organization/logo`} alt="logo" className="w-14 h-14 mb-7 rounded-full" />
+              <h2 className="font-semibold text-2xl text-gray-800 mb-2">{t("login.title")}</h2>
+              <span className="text-center text-gray-500 mb-6">{t("placeholder_email")}</span>
             </div>
-            <form onSubmit={handleLogin}>
+            <form onSubmit={handleLogin} className="flex flex-col gap-5 w-[360px]">
               <Input
                 type="email"
                 className="large"
@@ -91,14 +90,14 @@ export default function SendMagicLinkPage() {
                 {isLoading ? "Sending" : t("continue")}
               </Button>
             </form>
-            <hr className="or" />
+            <Divider content="or" />
             <div className="flex flex-col gap-3 py-3">
               <SocialLoginButtons />
             </div>
-            <Button onClick={handlePwdPath}>{t("login.password")}</Button>
+            <Button onClick={handlePwdPath} className="flex">{t("login.password")}</Button>
           </>
         )}
       </div>
-    </StyledWrapper>
+    </div>
   );
 }

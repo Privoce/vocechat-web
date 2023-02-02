@@ -21,7 +21,7 @@ import IconPin from "../../../assets/icons/pin.svg";
 import IconHeadphone from "../../../assets/icons/headphone.svg";
 
 import addIcon from "../../../assets/icons/add.svg?url";
-import { StyledUsers, StyledChannelChat, StyledHeader } from "./styled";
+import { StyledUsers, StyledChannelChat } from "./styled";
 import InviteModal from "../../../common/component/InviteModal";
 import LoadMore from "../LoadMore";
 import { useAppSelector } from "../../../app/store";
@@ -142,13 +142,13 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
           </ul>
         }
         header={
-          <StyledHeader className="head">
-            <div className="txt">
+          <header className="head flex items-center h-full justify-center md:justify-between">
+            <div className="flex items-center gap-1 text-base">
               <ChannelIcon personal={!is_public} />
-              <span className="title">{name}</span>
-              <span className="desc">{description}</span>
+              <span className="text-gray-800">{name}</span>
+              <span className="ml-2 text-gray-500">{description}</span>
             </div>
-          </StyledHeader>
+          </header>
         }
         users={
           <StyledUsers className={membersVisible ? "flex" : "hidden"}>

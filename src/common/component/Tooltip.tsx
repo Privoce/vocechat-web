@@ -1,43 +1,18 @@
-// import React from 'react'
-import Tippy, { TippyProps } from "@tippyjs/react";
-import styled from "styled-components";
 import { FC } from "react";
+import Tippy, { TippyProps } from "@tippyjs/react";
+import clsx from "clsx";
 
-const StyledTip = styled.div`
-  position: relative;
-  background: #fff;
-  padding: 8px 12px;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 18px;
-  color: #1d2939;
-  border-radius: var(--br);
-  box-shadow: 0 12px 16px -4px rgba(16, 24, 40, 0.08), 0px 4px 6px -2px rgba(16, 24, 40, 0.03);
-  &::after {
-    background-color: inherit;
-    position: absolute;
-    content: "";
-    width: 12px;
-    height: 12px;
-    border-radius: 1px;
-    transform-origin: center;
-  }
-  &.right::after {
-    left: 0;
-    top: 50%;
-    transform: translate3d(-50%, -50%, 0) rotate(45deg);
-  }
-  &.top::after {
-    left: 50%;
-    bottom: 0;
-    transform: translate3d(-50%, 50%, 0) rotate(45deg);
-  }
-  &.bottom::after {
-    top: 0;
-    left: 50%;
-    transform: translate3d(-50%, -50%, 0) rotate(45deg);
-  }
-`;
+
+const Triangle: FC<Pick<TippyProps, "placement">> = ({ placement }) => {
+  if (placement == "left") return null;
+  const cls = clsx("w-3 h-3 bg-inherit absolute rounded-[1px] origin-center rotate-45",
+    placement == "right" && "left-0 top-1/2 -translate-x-1/2 -translate-y-1/2",
+    placement == "top" && "left-1/2 bottom-0 -translate-x-1/2 translate-y-1/2",
+    placement == "bottom" && "top-0 left-1/2 -translate-x-1/2 -translate-y-1/2",
+
+  );
+  return <i className={cls}></i>;
+};
 
 type Props = {
   tip: string;
@@ -52,7 +27,10 @@ const Tooltip: FC<Props> = ({ tip = "", placement = "right", delay = null, child
       duration={delay ? defaultDuration : 0}
       delay={delay ?? [150, 0]}
       placement={placement}
-      content={<StyledTip className={placement}>{tip}</StyledTip>}
+      content={<div className="relative bg-white px-3 py-2 text-xs rounded-lg drop-shadow text-gray-700">
+        <Triangle placement={placement} />
+        {tip}
+      </div>}
       {...rest}
     >
       {children}

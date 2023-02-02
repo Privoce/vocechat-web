@@ -1,22 +1,7 @@
 import { FC } from "react";
-import styled from "styled-components";
 import { NavLink, useLocation } from "react-router-dom";
 import Avatar from "../../common/component/Avatar";
 import { useAppSelector } from "../../app/store";
-
-const StyledWrapper = styled.div`
-  padding: 10px 12px;
-  .avatar {
-    width: 32px;
-    height: 32px;
-    img {
-      object-fit: cover;
-      border-radius: 50%;
-      width: 100%;
-      height: 100%;
-    }
-  }
-`;
 
 interface Props {
   uid: number;
@@ -28,13 +13,13 @@ const User: FC<Props> = ({ uid }) => {
   if (!user) return null;
 
   return (
-    <StyledWrapper>
+    <div className="px-3 py-2.5 invisible md:visible">
       <NavLink to={`/setting?nav=my_account&f=${pathname}`}>
-        <div className="avatar">
-          <Avatar width={32} height={32} src={user.avatar} name={user.name} />
+        <div className="w-8 h-8">
+          <Avatar className=" object-cover w-full h-full" width={32} height={32} src={user.avatar} name={user.name} />
         </div>
       </NavLink>
-    </StyledWrapper>
+    </div>
   );
 };
 

@@ -34,7 +34,7 @@ const Avatar: FC<Props> = ({
   } else {
     return (
       <div
-        className="rounded-full flex-center"
+        className={`rounded-full flex-center ${rest.className || ""}`}
         style={{
           width,
           height,

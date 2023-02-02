@@ -3,21 +3,10 @@ import "prismjs/themes/prism.css";
 import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css";
 //@ts-ignore
 import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight-all.js";
-
 import { Viewer } from "@toast-ui/react-editor";
-import styled from "styled-components";
+
 import ImagePreviewModal, { PreviewImageData } from "./ImagePreviewModal";
 
-const Styled = styled.div`
-  * {
-    user-select: text;
-  }
-  .toastui-editor-contents {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-`;
 
 interface IProps {
   content: string;
@@ -60,9 +49,9 @@ const MarkdownRender: FC<IProps> = ({ content }) => {
       {previewImage && (
         <ImagePreviewModal download={false} data={previewImage} closeModal={closePreviewModal} />
       )}
-      <Styled ref={mdContainer}>
+      <div ref={mdContainer} id="MARKDOWN_CONTAINER">
         <Viewer initialValue={content} plugins={[codeSyntaxHighlight]}></Viewer>
-      </Styled>
+      </div>
     </>
   );
 };

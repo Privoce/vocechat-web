@@ -6,7 +6,6 @@ import IconBot from "../../../assets/icons/bot.svg";
 import Avatar from "../Avatar";
 import Profile from "../Profile";
 import ContextMenu from "./ContextMenu";
-import StyledWrapper from "./styled";
 import useContextMenu from "../../hook/useContextMenu";
 import { useAppSelector } from "../../../app/store";
 import clsx from "clsx";
@@ -44,6 +43,11 @@ const User: FC<Props> = ({
   };
   if (!curr) return null;
   const online = curr.online || curr.uid == loginUid;
+  const containerClass = clsx(`relative flex items-center justify-start gap-2 p-2 rounded-lg select-none `, interactive && "hover:bg-gray-500/10", compact && "p-0");
+  const nameClass = clsx(`text-sm text-gray-500 max-w-[190px] overflow-hidden text-ellipsis font-semibold`);
+  const statusClass = clsx(`absolute -bottom-0.5 -right-1.5 w-3 h-3 box-content rounded-full border-[2px] border-solid border-white`,
+    online ? "bg-[#22c55e]" : "bg-[#a1a1aa]",
+    compact && "w-3.5 h-3.5");
   if (!popover)
     return (
       <ContextMenu
@@ -53,30 +57,30 @@ const User: FC<Props> = ({
         visible={contextMenuVisible}
         hide={hideContextMenu}
       >
-        <StyledWrapper
-          size={avatarSize}
-          className={`${interactive ? "interactive" : ""} ${compact ? "compact" : ""} relative`}
+        <div
+          className={containerClass}
           onDoubleClick={dm ? handleDoubleClick : undefined}
           onContextMenu={enableContextMenu ? handleContextMenuEvent : undefined}
         >
-          <div className="avatar">
+          <div className="cursor-pointer relative" style={{ width: `${avatarSize}px`, height: `${avatarSize}px` }}>
             <Avatar
+              className="w-full h-full rounded-full object-cover"
               width={avatarSize}
               height={avatarSize}
               src={curr.avatar}
               name={curr.name}
               alt="avatar"
             />
-            <div className={`status ${online ? "online" : "offline"}`}></div>
+            <div className={statusClass}></div>
           </div>
           {!compact && (
-            <span className="name" title={curr?.name}>
+            <span className={nameClass} title={curr?.name}>
               {curr?.name}
             </span>
           )}
           {owner && <IconOwner />}
           {curr.is_bot && <IconBot className={clsx(compact && "absolute -top-1 -right-1", "!w-4 !h-4")} />}
-        </StyledWrapper>
+        </div>
       </ContextMenu>
     );
   return (
@@ -94,30 +98,30 @@ const User: FC<Props> = ({
         trigger="click"
         content={<Profile uid={uid} type="card" cid={cid} />}
       >
-        <StyledWrapper
-          size={avatarSize}
-          className={`${interactive ? "interactive" : ""} ${compact ? "compact" : ""}`}
+        <div
+          className={containerClass}
           onDoubleClick={dm ? handleDoubleClick : undefined}
           onContextMenu={enableContextMenu ? handleContextMenuEvent : undefined}
         >
-          <div className="avatar">
+          <div className="cursor-pointer relative" style={{ width: `${avatarSize}px`, height: `${avatarSize}px` }}>
             <Avatar
+              className="w-full h-full rounded-full object-cover"
               width={avatarSize}
               height={avatarSize}
               src={curr.avatar}
               name={curr.name}
               alt="avatar"
             />
-            <div className={`status ${online ? "online" : "offline"}`}></div>
+            <div className={statusClass}></div>
           </div>
           {!compact && (
-            <span className="name" title={curr?.name}>
+            <span className={nameClass} title={curr?.name}>
               {curr?.name}
             </span>
           )}
           {owner && <IconOwner />}
           {curr.is_bot && <IconBot className="!w-4 !h-4" />}
-        </StyledWrapper>
+        </div>
       </Tippy>
     </ContextMenu>
   );

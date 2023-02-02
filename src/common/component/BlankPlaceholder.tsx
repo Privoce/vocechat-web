@@ -14,7 +14,7 @@ interface Props {
   type?: "chat" | "user";
 }
 const classes = {
-  box: "w-[200px] h-[200px] cursor-pointer bg-[#f9fafb] rounded-3xl flex-center flex-col gap-4",
+  box: "w-[150px] md:w-[200px] h-[150px] md:h-[200px] cursor-pointer bg-[#f9fafb] rounded-3xl flex-center flex-col gap-4",
   boxIcon: "w-10 h-10",
   boxTip: "px-5 text-sm text-[#475467] font-bold text-center"
 };
@@ -45,7 +45,7 @@ const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
             {t("desc")}
           </p>
         </div>
-        <div className="grid grid-cols-2 grid-rows-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 grid-rows-2 gap-2 md:gap-6 mt-auto">
           <div className={classes.box} onClick={toggleInviteModalVisible}>
             <IconInvite className={classes.boxIcon} />
             <div className={classes.boxTip}>{t("invite")}</div>

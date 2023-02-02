@@ -5,7 +5,6 @@ import Button from "../styled/Button";
 import Input from "../styled/Input";
 import Channel from "../Channel";
 import User from "../User";
-// import Channel from "../Channel";
 import Reply from "../Message/Reply";
 import StyledWrapper from "./styled";
 import useForwardMessage from "../../hook/useForwardMessage";

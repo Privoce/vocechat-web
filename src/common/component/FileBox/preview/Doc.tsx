@@ -1,15 +1,4 @@
 import { useState, useEffect, FC } from "react";
-import styled from "styled-components";
-
-const Styled = styled.div`
-  background-color: #fff;
-  height: 218px;
-  padding: 15px 15px 0 15px;
-  line-height: 1.4;
-  overflow: scroll;
-  white-space: pre-wrap;
-  word-break: break-all;
-`;
 
 interface Props {
   url: string;
@@ -28,7 +17,7 @@ const Doc: FC<Props> = ({ url }) => {
   }, [url]);
   if (!content) return null;
 
-  return <Styled>{content}</Styled>;
+  return <div className="bg-white h-[218px] p-[15px] pb-0 whitespace-pre-wrap break-all">{content}</div>;
 };
 
 export default Doc;

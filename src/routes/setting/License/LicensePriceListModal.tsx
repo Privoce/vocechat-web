@@ -44,7 +44,7 @@ const LicensePriceListModal: FC<Props> = ({ closeModal }) => {
   const { t } = useTranslation("setting");
   const { t: ct } = useTranslation();
   const [getUrl, { isLoading, isSuccess }] = useGetLicensePaymentUrlMutation();
-  const [host, setHost] = useState(location.host);
+  const [host, setHost] = useState(location.hostname);
   const [popUpVisible, setPopUpVisible] = useState(false);
   const [selectPrice, setSelectPrice] = useState(
     `${LicensePriceList[0].pid}|${LicensePriceList[0].limit}|${LicensePriceList[0].type}|${LicensePriceList[0].sub_dur || ""}`

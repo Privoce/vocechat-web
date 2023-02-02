@@ -1,27 +1,5 @@
 import styled from "styled-components";
-export const StyledHeader = styled.header`
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  .txt {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    .title {
-      font-size: 16px;
-      line-height: 24px;
-      color: #1c1c1e;
-    }
-    .desc {
-      margin-left: 8px;
-      font-weight: normal;
-      font-size: 16px;
-      line-height: 24px;
-      color: #616161;
-    }
-  }
-`;
+
 export const StyledNotification = styled.div`
   padding: 3px 8px;
   font-style: normal;

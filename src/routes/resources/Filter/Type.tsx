@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import IconPdf from "../../../assets/icons/file.pdf.svg";
 import IconAudio from "../../../assets/icons/file.audio.svg";
 import IconVideo from "../../../assets/icons/file.video.svg";
@@ -9,73 +8,34 @@ import IconImage from "../../../assets/icons/file.image.svg";
 import CheckSign from "../../../assets/icons/check.sign.svg";
 import { FC } from "react";
 
-const Styled = styled.div`
-  padding: 12px;
-  background: #ffffff;
-  min-width: 200px;
-  overflow: auto;
-  box-shadow: 0 24px 48px -12px rgba(16, 24, 40, 0.18);
-  border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  position: relative;
-  > .list {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    .type {
-      position: relative;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 600;
-      font-size: 14px;
-      line-height: 20px;
-      color: #475467;
-      .icon {
-        width: 15px;
-        height: auto;
-      }
-      .check {
-        position: absolute;
-        right: 0;
-        top: 50%;
-        transform: translateY(-50%);
-      }
-    }
-  }
-`;
 export const FileTypes = {
   doc: {
     title: "Documents",
-    icon: <IconDoc className="icon" />
+    icon: <IconDoc className="w-4 h-auto" />
   },
   pdf: {
     title: "PDFs",
-    icon: <IconPdf className="icon" />
+    icon: <IconPdf className="w-4 h-auto" />
   },
   image: {
     title: "Images",
-    icon: <IconImage className="icon" />
+    icon: <IconImage className="w-4 h-auto" />
   },
   audio: {
     title: "Audio",
-    icon: <IconAudio className="icon" />
+    icon: <IconAudio className="w-4 h-auto" />
   },
   video: {
     title: "Videos",
-    icon: <IconVideo className="icon" />
+    icon: <IconVideo className="w-4 h-auto" />
   },
   code: {
     title: "Code Snippets",
-    icon: <IconCode className="icon" />
+    icon: <IconCode className="w-4 h-auto" />
   },
   unknown: {
     title: "Unknown Files",
-    icon: <IconUnknown className="icon" />
+    icon: <IconUnknown className="w-4 h-auto" />
   }
 };
 type Props = {
@@ -86,23 +46,24 @@ const Type: FC<Props> = ({ select = "", updateFilter }) => {
   const handleClick = (type?: string) => {
     updateFilter({ type });
   };
+
   return (
-    <Styled>
-      <ul className="list">
-        <li className="type" onClick={handleClick.bind(null, undefined)}>
+    <div className="p-3 bg-white min-w-[100px] overflow-auto shadow-md rounded-lg flex flex-col items-start relative">
+      <ul className="w-full flex flex-col gap-4">
+        <li className="flex justify-between" onClick={handleClick.bind(null, undefined)}>
           Any Type
           {!select && <CheckSign className="check" />}
         </li>
         {Object.entries(FileTypes).map(([type, { title, icon }]) => {
           return (
-            <li key={title} className="type" onClick={handleClick.bind(null, type)}>
+            <li key={title} className="relative cursor-pointer flex items-center gap-2 text-sm text-gray-500 font-semibold" onClick={handleClick.bind(null, type)}>
               {icon} {title}
-              {select == type && <CheckSign className="check" />}
+              {select == type && <CheckSign className="absolute right-0 left-1/2 -translate-y-1/2" />}
             </li>
           );
         })}
       </ul>
-    </Styled>
+    </div>
   );
 };
 export default Type;

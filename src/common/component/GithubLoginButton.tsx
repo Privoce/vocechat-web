@@ -1,23 +1,8 @@
 import { FC, useEffect } from "react";
 import IconGithub from "../../assets/icons/github.svg";
-import styled from "styled-components";
 import Button from "./styled/Button";
 import { useTranslation } from "react-i18next";
 
-const StyledSocialButton = styled(Button)`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  color: #344054;
-  border: 1px solid #d0d5dd;
-  background: none !important;
-  .icon {
-    width: 24px;
-    height: 24px;
-  }
-`;
 
 type Props = {
   source?: "widget" | "webapp",
@@ -60,10 +45,10 @@ const GithubLoginButton: FC<Props> = ({ type = "login", source = "webapp", clien
   };
 
   return (
-    <StyledSocialButton onClick={handleGithubLogin}>
-      <IconGithub className="icon" />
+    <Button className="flex-center gap-3 ghost !text-gray-600 !border-[#d0d5dd]" onClick={handleGithubLogin}>
+      <IconGithub className="w-6 h-6" />
       {` ${type === "login" ? t("login.github") : t("reg.github")}`}
-    </StyledSocialButton>
+    </Button>
   );
 };
 export default GithubLoginButton;

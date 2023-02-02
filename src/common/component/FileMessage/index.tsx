@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from "react";
 import dayjs from "dayjs";
-import Styled from "./styled";
 import ImageMessage from "./ImageMessage";
 import useRemoveLocalMessage from "../../hook/useRemoveLocalMessage";
 import useUploadFile from "../../hook/useUploadFile";
@@ -12,6 +11,7 @@ import IconDownload from "../../../assets/icons/download.svg";
 import IconClose from "../../../assets/icons/close.circle.svg";
 import VideoMessage from "./VideoMessage";
 import AudioMessage from "./AudioMessage";
+import clsx from "clsx";
 
 const isLocalFile = (content: string) => {
   return content.startsWith("blob:");
@@ -117,7 +117,7 @@ const FileMessage: FC<Props> = ({
     removeLocalMessage(properties.local_id);
   };
   if (!properties) return null;
-  const icon = getFileIcon(content_type, name);
+  const icon = getFileIcon(content_type, name, "w-9 h-auto");
 
   if (!content || !name) return null;
 
@@ -156,21 +156,21 @@ const FileMessage: FC<Props> = ({
       />
     );
   return (
-    <Styled className={`file_message ${sending ? "sending" : ""}`}>
-      <div className="basic">
+    <div className={clsx(`file_message bg-slate-50 border border-solid border-gray-300 box-border w-[370px] h-[66px] rounded-md`, sending && "opacity-90")}>
+      <div className="p-2 flex items-center justify-between gap-2">
         {icon}
-        <div className="info">
-          <span className="name">{name}</span>
-          <span className="details">
+        <div className="flex flex-col gap-1 w-full overflow-hidden">
+          <span className="font-semibold text-sm text-gray-800 whitespace-nowrap text-ellipsis">{name}</span>
+          <span className="whitespace-nowrap text-xs text-gray-500 flex gap-4">
             {sending ? (
               <Progress value={progress} width={"80%"} />
             ) : (
               <>
-                <i className="size">{formatBytes(size)}</i>
-                <i className="time">{dayjs(created_at).fromNow()}</i>
+                <i>{formatBytes(size)}</i>
+                <i>{dayjs(created_at).fromNow()}</i>
                 {fromUser && (
-                  <i className="from">
-                    by <strong>{fromUser.name}</strong>
+                  <i>
+                    by <strong className="font-bold">{fromUser.name}</strong>
                   </i>
                 )}
               </>
@@ -178,14 +178,14 @@ const FileMessage: FC<Props> = ({
           </span>
         </div>
         {sending ? (
-          <IconClose className="cancel" onClick={handleCancel} />
+          <IconClose className="cursor-pointer" onClick={handleCancel} />
         ) : (
-          <a className="download" download={name} href={`${content}&download=true`}>
-            <IconDownload />
+          <a className="whitespace-nowrap" download={name} href={`${content}&download=true`}>
+            <IconDownload className="fill-gray-500" />
           </a>
         )}
       </div>
-    </Styled>
+    </div>
   );
 };
 

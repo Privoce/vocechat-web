@@ -1,5 +1,4 @@
 import { useState, useEffect, ChangeEvent } from "react";
-import styled from "styled-components";
 import toast from "react-hot-toast";
 import {
   useChangeChannelTypeMutation,
@@ -13,41 +12,11 @@ import Label from "../../common/component/styled/Label";
 import Radio from "../../common/component/styled/Radio";
 import Textarea from "../../common/component/styled/Textarea";
 import SaveTip from "../../common/component/SaveTip";
-import channelIcon from "../../assets/icons/channel.svg?url";
+import IconChannel from "../../assets/icons/channel.svg";
 import { useAppSelector } from "../../app/store";
 import { Channel } from "../../types/channel";
 import { useTranslation } from "react-i18next";
 
-const StyledWrapper = styled.div`
-  position: relative;
-  width: 512px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  .inputs {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 24px;
-    .input {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 8px;
-      .name {
-        padding-left: 36px;
-        background-image: url(${channelIcon});
-        background-size: 20px;
-        background-position-x: 8px;
-        background-position-y: 8px;
-        background-repeat: no-repeat;
-      }
-
-    }
-  }
-`;
 export default function Overview({ id = 0 }) {
   const { t } = useTranslation("setting", { keyPrefix: "channel" });
   const { t: ct } = useTranslation();
@@ -119,16 +88,16 @@ export default function Overview({ id = 0 }) {
   if (!values || !id) return null;
   const { name, description } = values;
   const readOnly = !loginUser?.is_admin && channel?.owner != loginUser?.uid;
-
+  const inputClass = `w-full flex flex-col items-start gap-2 relative`;
   return (
-    <StyledWrapper>
+    <div className="relative w-[512px] flex flex-col gap-6 h-full">
       <AvatarUploader type="channel" url={channel?.icon} name={name} uploadImage={updateIcon} />
-      <div className="inputs">
-        <div className="input">
+      <div className="flex flex-col gap-6 items-start">
+        <div className={inputClass}>
           <Label htmlFor="name">{t("name")}</Label>
           <Input
             disabled={readOnly}
-            className="name"
+            className="!pl-8"
             data-type="name"
             onChange={handleChange}
             value={name}
@@ -136,8 +105,9 @@ export default function Overview({ id = 0 }) {
             id="name"
             placeholder={t("name")}
           />
+          <IconChannel className="absolute bottom-2.5 left-2" />
         </div>
-        <div className="input">
+        <div className={inputClass}>
           <Label htmlFor="desc">{t("topic")}</Label>
           <Textarea
             disabled={readOnly}
@@ -149,7 +119,7 @@ export default function Overview({ id = 0 }) {
             id="name"
             placeholder={t("topic_placeholder")} />
         </div>
-        {!readOnly && <div className="input">
+        {!readOnly && <div className={inputClass}>
           <Label htmlFor="desc">{t("visibility")}</Label>
           <Radio
             options={[t("public"), t("private")]}
@@ -164,6 +134,6 @@ export default function Overview({ id = 0 }) {
         </div>}
       </div>
       {changed && <SaveTip saveHandler={handleUpdate} resetHandler={handleReset} />}
-    </StyledWrapper>
+    </div>
   );
 }

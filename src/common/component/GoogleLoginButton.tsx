@@ -1,54 +1,12 @@
 import { FC, useEffect, useState } from "react";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import toast from "react-hot-toast";
-import styled from "styled-components";
 import { KEY_LOCAL_MAGIC_TOKEN } from "../../app/config";
 import IconGoogle from "../../assets/icons/google.svg";
 import Button from "./styled/Button";
 import { useLoginMutation } from "../../app/services/auth";
 import { useTranslation } from "react-i18next";
 
-const StyledSocialButton = styled(Button)`
-  position: relative;
-  width: 100%;
-  background: white !important;
-  border: 1px solid #d0d5dd;
-  color: #344054;
-  height: 46px;
-  overflow: hidden;
-  .mask {
-    background: inherit;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    z-index: 998;
-    height: 40px;
-    .icon {
-      width: 24px;
-      height: 24px;
-    }
-  }
-  > .hide {
-    left: 0;
-    top: 0;
-    position: absolute;
-    width: 100%;
-    iframe {
-      width: 100% !important;
-    }
-  }
-  &:hover {
-     .hide {
-      opacity: 0;
-      z-index: 999;
-    }
-  }
-`;
 
 interface Props {
   loadError?: boolean;
@@ -86,16 +44,16 @@ const GoogleLoginInner: FC<Props> = ({ type = "login", loaded, loadError }) => {
   }, [error]);
 
   return (
-    <StyledSocialButton disabled={!loaded || isLoading}>
-      <div className="mask">
-        <IconGoogle className="icon" />
+    <Button className="group relative w-full !bg-white !text-gray-600 !h-[46px] overflow-hidden !border !border-solid !border-[#d0d5dd]" disabled={!loaded || isLoading}>
+      <div className="absolute left-0 top-0 w-full flex-center gap-3 z-[998] h-10 bg-inherit">
+        <IconGoogle className="w-6 h-6" />
         {loadError
           ? "Script Load Error!"
           : loaded
             ? `${type === "login" ? t("login.google") : t("reg.google")}`
             : `Initializing`}
       </div>
-      <div className="hide">
+      <div className="absolute left-0 top-0 w-full group-hover:opacity-0 group-hover:z-[999]">
         <GoogleLogin
           width="360px"
           onSuccess={(res) => {
@@ -107,7 +65,7 @@ const GoogleLoginInner: FC<Props> = ({ type = "login", loaded, loadError }) => {
           }}
         />
       </div>
-    </StyledSocialButton>
+    </Button>
   );
 };
 

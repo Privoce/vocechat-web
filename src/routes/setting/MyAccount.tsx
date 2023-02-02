@@ -1,105 +1,14 @@
 import { useEffect, useState, MouseEvent } from "react";
-import styled from "styled-components";
 import toast from "react-hot-toast";
 import { useUpdateAvatarMutation } from "../../app/services/user";
 import AvatarUploader from "../../common/component/AvatarUploader";
+import Button from "../../common/component/styled/Button";
 import ProfileBasicEditModal from "./ProfileBasicEditModal";
 import RemoveAccountConfirmModal from "./RemoveAccountConfirmModal";
 import UpdatePasswordModal from "./UpdatePasswordModal";
 import { useAppSelector } from "../../app/store";
 import { useTranslation } from "react-i18next";
 
-const StyledWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  .card {
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 512px;
-    background: #f3f4f6;
-    border-radius: 20px;
-    .name {
-      margin-top: 8px;
-      margin-bottom: 64px;
-      font-weight: bold;
-      font-size: 18px;
-      line-height: 28px;
-      color: #27272a;
-      .uid {
-        font-weight: normal;
-        color: #52525b;
-      }
-    }
-    .row {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 24px;
-      .info {
-        display: flex;
-        flex-direction: column;
-        .label {
-          font-weight: 600;
-          font-size: 12px;
-          line-height: 20px;
-          text-transform: uppercase;
-          color: #52525b;
-        }
-        .txt {
-          font-weight: 500;
-          font-size: 14px;
-          line-height: 20px;
-          color: #52525b;
-          .gray {
-            color: #78787c;
-          }
-        }
-      }
-      .btn {
-        background: #1fe1f9;
-        border: 1px solid #1fe1f9;
-      }
-    }
-  }
-  .danger {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    .head {
-      font-weight: bold;
-      font-size: 16px;
-      line-height: 24px;
-      color: #374151;
-    }
-    .desc {
-      font-weight: normal;
-      font-size: 12px;
-      line-height: 18px;
-      color: #616161;
-      margin-bottom: 16px;
-    }
-    .btn {
-      background: #ef4444;
-      border: 1px solid #ef4444;
-    }
-  }
-  .btn {
-    color: #fff;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 20px;
-    padding: 8px 14px;
-    background: #1fe1f9;
-    border: 1px solid #1fe1f9;
-    box-sizing: border-box;
-    box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
-    border-radius: 8px;
-  }
-`;
 type EditField = "name" | "email" | "";
 export default function MyAccount() {
   const { t } = useTranslation("member");
@@ -151,51 +60,49 @@ export default function MyAccount() {
   const { uid, avatar, name, email } = loginUser;
   return (
     <>
-      <StyledWrapper>
-        <div className="card">
+      <div className="flex flex-col items-start gap-8">
+        <div className="p-6 flex flex-col items-center w-[512px] bg-slate-100 rounded-2xl">
           <AvatarUploader url={avatar} name={name} uploadImage={uploadAvatar} />
-          <div className="name">
-            {name} <span className="uid">#{uid}</span>
+          <div className="mt-2 mb-16 font-bold text-lg text-gray-800">
+            {name} <span className="font-normal text-gray-500">#{uid}</span>
           </div>
-          <div className="row">
-            <div className="info">
-              <span className="label">{t("username")}</span>
-              <span className="txt">
-                {name} <span className="gray"> #{uid}</span>
+          <div className="w-full flex justify-between mb-6">
+            <div className="flex flex-col text-gray-500">
+              <span className="text-xs uppercase  font-semibold">{t("username")}</span>
+              <span className="text-sm ">
+                {name} <span className="text-gray-600"> #{uid}</span>
               </span>
             </div>
-            <button data-edit="name" onClick={handleBasicEdit} className="btn">
+            <Button data-edit="name" onClick={handleBasicEdit} className="">
               {ct("action.edit")}
-            </button>
+            </Button>
           </div>
-          <div className="row">
-            <div className="info">
-              <span className="label">{t("email")}</span>
-              <span className="txt">{email}</span>
+          <div className="w-full flex justify-between mb-6">
+            <div className="flex flex-col text-gray-500">
+              <span className="text-xs uppercase  font-semibold">{t("email")}</span>
+              <span className="text-sm">{email}</span>
             </div>
-            <button data-edit="email" onClick={handleBasicEdit} className="btn">
+            <Button data-edit="email" onClick={handleBasicEdit}>
               {ct("action.edit")}
-            </button>
+            </Button>
           </div>
-          <div className="row">
-            <div className="info">
-              <span className="label">{t("password")}</span>
-              <span className="txt">*********</span>
+          <div className="w-full flex justify-between mb-6">
+            <div className="flex flex-col text-gray-500">
+              <span className="text-xs uppercase  font-semibold">{t("password")}</span>
+              <span className="text-sm">*********</span>
             </div>
-            <button onClick={togglePasswordModal} className="btn">
+            <Button onClick={togglePasswordModal}>
               {ct("action.edit")}
-            </button>
+            </Button>
           </div>
         </div>
         {/* uid 1 是初始账户，不能删 */}
         {uid != 1 && (
-          <div className="danger">
-            <button className="btn" onClick={toggleRemoveAccountModalVisible}>
-              {t("delete_account")}
-            </button>
-          </div>
+          <Button className="danger" onClick={toggleRemoveAccountModalVisible}>
+            {t("delete_account")}
+          </Button>
         )}
-      </StyledWrapper>
+      </div>
       {editModal && (
         <ProfileBasicEditModal
           type={editModal == "email" ? "email" : "text"}

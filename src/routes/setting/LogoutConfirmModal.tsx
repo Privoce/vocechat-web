@@ -1,5 +1,4 @@
 import { ChangeEvent, FC, useEffect, useState } from "react";
-import styled from "styled-components";
 import toast from "react-hot-toast";
 import Modal from "../../common/component/Modal";
 import StyledModal from "../../common/component/styled/Modal";
@@ -8,25 +7,6 @@ import Checkbox from "../../common/component/styled/Checkbox";
 import useLogout from "../../common/hook/useLogout";
 import { useTranslation } from "react-i18next";
 
-const StyledConfirm = styled(StyledModal)`
-  .clear {
-    font-weight: normal;
-    font-size: 14px;
-    line-height: 20px;
-    color: #6b7280;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    .txt {
-      cursor: pointer;
-      color: orange;
-      margin-right: 12px;
-    }
-    input {
-      cursor: pointer;
-    }
-  }
-`;
 
 interface Props {
   closeModal: () => void;
@@ -56,7 +36,7 @@ const LogoutConfirmModal: FC<Props> = ({ closeModal }) => {
 
   return (
     <Modal id="modal-modal">
-      <StyledConfirm
+      <StyledModal
         title={t("logout.title")}
         description={t("logout.desc")}
         buttons={
@@ -68,13 +48,13 @@ const LogoutConfirmModal: FC<Props> = ({ closeModal }) => {
           </>
         }
       >
-        <div className="clear">
-          <label htmlFor="clear_cb" className="txt">
+        <div className="text-sm text-gray-400 flex justify-end items-center">
+          <label htmlFor="clear_cb" className="cursor-pointer text-orange-500 mr-3">
             {t("logout.clear_local")}
           </label>
-          <Checkbox name="clear_cb" checked={clearLocal} onChange={handleCheck} />
+          <Checkbox className=" cursor-pointer" name="clear_cb" checked={clearLocal} onChange={handleCheck} />
         </div>
-      </StyledConfirm>
+      </StyledModal>
     </Modal>
   );
 };

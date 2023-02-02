@@ -8,39 +8,6 @@ import { WhoCanSignUp } from "../../../types/server";
 import { useTranslation } from "react-i18next";
 import { useWizard } from "react-use-wizard";
 
-const StyledWrapper = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  > .primaryText {
-    text-align: center;
-    font-weight: 700;
-    font-size: 24px;
-    line-height: 30px;
-    margin-bottom: 8px;
-  }
-
-  > .secondaryText {
-    text-align: center;
-    font-size: 14px;
-    line-height: 20px;
-    margin-bottom: 24px;
-  }
-
-  > form {
-    width: 512px;
-  }
-
-  > .button {
-    width: 124px;
-    height: 44px;
-    margin-top: 24px;
-  }
-`;
-
 export default function SignUpSetting() {
   const { t } = useTranslation("welcome");
   const { t: st } = useTranslation("setting");
@@ -73,10 +40,22 @@ export default function SignUpSetting() {
     if (isSuccess) nextStep();
   }, [isSuccess]);
 
+  const StyledWrapper = styled.div`
+  /* > form {
+    width: 512px;
+  }
+
+  > .button {
+    width: 124px;
+    height: 44px;
+    margin-top: 24px;
+  } */
+`;
+
   return (
-    <StyledWrapper>
-      <span className="primaryText">{t("onboarding.invite_title")}</span>
-      <span className="secondaryText">{t("onboarding.invite_desc")}</span>
+    <StyledWrapper className="h-full flex-center flex-col text-center w-[512px] m-auto">
+      <span className="font-bold text-2xl mb-2">{t("onboarding.invite_title")}</span>
+      <span className="text-sm mb-6">{t("onboarding.invite_desc")}</span>
       {value && <StyledRadio
         options={[st("overview.sign_up.everyone"), st("overview.sign_up.invite")]}
         values={["EveryOne", "InvitationOnly"]}
@@ -84,7 +63,7 @@ export default function SignUpSetting() {
         onChange={setValue}
       />}
       <StyledButton
-        className="button"
+        className="w-32 mt-6"
         disabled={!value}
         onClick={() => {
           // nextStep();
