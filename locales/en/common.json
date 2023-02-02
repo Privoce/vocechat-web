@@ -43,7 +43,8 @@
     "unmute": "Unmute",
     "mark_read": "Mark As Read",
     "hide_session": "Hide Session",
-    "reload": "reload"
+    "reload": "reload",
+    "download_origin": "Download original"
   },
   "status": {
     "uploading": "Uploading"
