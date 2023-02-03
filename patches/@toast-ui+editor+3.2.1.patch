@@ -1,0 +1,52 @@
+diff --git a/node_modules/@toast-ui/editor/dist/esm/index.js b/node_modules/@toast-ui/editor/dist/esm/index.js
+index 1c1ea71..abcf356 100644
+--- a/node_modules/@toast-ui/editor/dist/esm/index.js
++++ b/node_modules/@toast-ui/editor/dist/esm/index.js
+@@ -15124,7 +15124,7 @@ function registerTagWhitelistIfPossible(tagName) {
+     }
+ }
+ function sanitizeHTML(html, options) {
+-    return purify.sanitize(html, __assign$1({ ADD_TAGS: whiteTagList, ADD_ATTR: ['rel', 'target', 'hreflang', 'type'], FORBID_TAGS: [
++    return purify.sanitize(html, __assign$1({ ADD_TAGS: Array.from(new Set([...whiteTagList,"iframe"])), ADD_ATTR: ['rel', 'target', 'hreflang', 'type'], FORBID_TAGS: [
+             'input',
+             'script',
+             'textarea',
+diff --git a/node_modules/@toast-ui/editor/dist/esm/indexViewer.js b/node_modules/@toast-ui/editor/dist/esm/indexViewer.js
+index c9a7af9..dc478d5 100644
+--- a/node_modules/@toast-ui/editor/dist/esm/indexViewer.js
++++ b/node_modules/@toast-ui/editor/dist/esm/indexViewer.js
+@@ -11539,7 +11539,7 @@ function registerTagWhitelistIfPossible(tagName) {
+     }
+ }
+ function sanitizeHTML(html, options) {
+-    return purify.sanitize(html, __assign$1({ ADD_TAGS: whiteTagList, ADD_ATTR: ['rel', 'target', 'hreflang', 'type'], FORBID_TAGS: [
++    return purify.sanitize(html, __assign$1({ ADD_TAGS: Array.from(new Set([...whiteTagList,"iframe"])), ADD_ATTR: ['rel', 'target', 'hreflang', 'type'], FORBID_TAGS: [
+             'input',
+             'script',
+             'textarea',
+diff --git a/node_modules/@toast-ui/editor/dist/toastui-editor-viewer.js b/node_modules/@toast-ui/editor/dist/toastui-editor-viewer.js
+index a7071f8..3b70f9e 100644
+--- a/node_modules/@toast-ui/editor/dist/toastui-editor-viewer.js
++++ b/node_modules/@toast-ui/editor/dist/toastui-editor-viewer.js
+@@ -12848,7 +12848,7 @@ function htmlSanitizer_registerTagWhitelistIfPossible(tagName) {
+     }
+ }
+ function sanitizeHTML(html, options) {
+-    return purify_default().sanitize(html, tslib_es6_assign({ ADD_TAGS: whiteTagList, ADD_ATTR: ['rel', 'target', 'hreflang', 'type'], FORBID_TAGS: [
++    return purify_default().sanitize(html, tslib_es6_assign({ ADD_TAGS: Array.from(new Set([...whiteTagList,"iframe"])), ADD_ATTR: ['rel', 'target', 'hreflang', 'type'], FORBID_TAGS: [
+             'input',
+             'script',
+             'textarea',
+diff --git a/node_modules/@toast-ui/editor/dist/toastui-editor.js b/node_modules/@toast-ui/editor/dist/toastui-editor.js
+index af9b32a..b8ea81d 100644
+--- a/node_modules/@toast-ui/editor/dist/toastui-editor.js
++++ b/node_modules/@toast-ui/editor/dist/toastui-editor.js
+@@ -16379,7 +16379,7 @@ function registerTagWhitelistIfPossible(tagName) {
+     }
+ }
+ function sanitizeHTML(html, options) {
+-    return purify_default().sanitize(html, __assign({ ADD_TAGS: whiteTagList, ADD_ATTR: ['rel', 'target', 'hreflang', 'type'], FORBID_TAGS: [
++    return purify_default().sanitize(html, __assign({ ADD_TAGS: Array.from(new Set([...whiteTagList,"iframe"])), ADD_ATTR: ['rel', 'target', 'hreflang', 'type'], FORBID_TAGS: [
+             'input',
+             'script',
+             'textarea',
