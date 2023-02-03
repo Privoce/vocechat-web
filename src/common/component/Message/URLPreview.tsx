@@ -31,6 +31,12 @@ export default function URLPreview({ url = "" }) {
   const handleFavError = () => {
     setFavicon("");
   };
+  const handleOGImageError = () => {
+    setData(prev => {
+      if (!prev) return prev;
+      return { ...prev, ogImage: "" };
+    });
+  };
   if (!url || !data || !data.title) return null;
   const { title, description, ogImage } = data;
 
@@ -41,7 +47,7 @@ export default function URLPreview({ url = "" }) {
       <h3 className={`text-base text-primary-500 w-full ${dotsClass}`}>{title}</h3>
       <p className={`text-xs text-gray-400 mb-2 w-full ${dotsClass}`}>{description}</p>
       <div className="w-full h-[180px]">
-        <img className="w-full h-full object-cover" src={ogImage} alt="og image" />
+        <img className="w-full h-full object-cover" onError={handleOGImageError} src={ogImage} alt="og image" />
       </div>
     </a>
   ) : (
