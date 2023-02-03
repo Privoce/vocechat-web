@@ -123,8 +123,5 @@ export const KEY_AFTER_MID = "VOCECHAT_AFTER_MID";
 export const KEY_PWA_INSTALLED = "VOCECHAT_PWA_INSTALLED";
 export const KEY_LOCAL_MAGIC_TOKEN = "VOCECHAT_LOCAL_MAGIC_TOKEN";
 export const Emojis = ["👍", "❤️", "😄", "👀", "👎", "🎉", "🙁", "🚀"];
-export const Views = {
-  item: "item",
-  grid: "grid"
-};
+
 export default BASE_URL;

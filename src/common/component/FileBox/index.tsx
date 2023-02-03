@@ -86,9 +86,8 @@ const FileBox: FC<Props> = ({
   const withPreview = preview && previewContent;
   return (
     <Styled
-      className={`file_box ${flex ? "flex" : ""} ${withPreview ? "preview" : ""} ${
-        file_type.startsWith("audio") ? "audio" : ""
-      }`}
+      className={`file_box ${flex ? "flex" : ""} ${withPreview ? "preview" : ""} ${file_type.startsWith("audio") ? "audio" : ""
+        }`}
     >
       <div className="basic">
         {icon}
@@ -103,7 +102,7 @@ const FileBox: FC<Props> = ({
           </span>
         </div>
         <a className="download" download={name} href={`${content}&download=true`}>
-          <IconDownload />
+          <IconDownload className="fill-gray-500" />
         </a>
       </div>
       {withPreview && <div className="preview">{previewContent}</div>}

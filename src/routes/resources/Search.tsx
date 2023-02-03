@@ -1,31 +1,7 @@
+import clsx from "clsx";
 import { ChangeEvent, FC } from "react";
 import { useTranslation } from "react-i18next";
-import styled from "styled-components";
-import iconSearch from "../../assets/icons/search.svg?url";
-
-const Styled = styled.div`
-  width: 100%;
-  padding: 6px 16px;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-  &.embed {
-    padding: 6px 8px;
-    box-shadow: none;
-  }
-  .search {
-    outline: none;
-    background-color: rgba(0, 0, 0, 0.08);
-    border-radius: 25px;
-    padding: 10px 8px 10px 36px;
-    color: #a1a1aa;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 20px;
-    background-image: url(${iconSearch});
-    background-repeat: no-repeat;
-    background-position: 8px center;
-  }
-`;
-
+import IconSearch from "../../assets/icons/search.svg";
 interface Props {
   value?: string;
   updateSearchValue?: (value: string) => void;
@@ -41,9 +17,10 @@ const Search: FC<Props> = ({ value = "", updateSearchValue = null, embed = false
   };
 
   return (
-    <Styled className={embed ? "embed" : ""}>
-      <input value={value} onChange={handleChange} className="search" placeholder={`${t("action.search")}...`} />
-    </Styled>
+    <div className={clsx(`relative w-full py-1.5 px-4 shadow`, embed && "py-2 shadow-none")}>
+      <IconSearch className="absolute left-6 top-1/2 -translate-y-1/2" />
+      <input value={value} onChange={handleChange} className="bg-black/5 rounded-full text-sm text-gray-500 py-2.5 pl-9" placeholder={`${t("action.search")}...`} />
+    </div>
   );
 };
 

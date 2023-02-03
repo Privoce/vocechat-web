@@ -34,7 +34,6 @@ const StyledWrapper = styled.div`
 const StyledInput = styled.input`
   width: 100%;
   background: #ffffff;
-
   font-weight: normal;
   font-size: 14px;
   line-height: 20px;

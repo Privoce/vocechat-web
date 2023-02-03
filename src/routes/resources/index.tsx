@@ -1,13 +1,12 @@
 // @ts-nocheck
 import { useState, useEffect, useRef, memo } from "react";
 import Masonry from "masonry-layout";
-import Styled from "./styled";
-import { Views } from "../../app/config";
 import View from "./View";
 import Search from "./Search";
 import Filter from "./Filter";
 import FileBox from "../../common/component/FileBox";
 import { useAppSelector } from "../../app/store";
+import clsx from "clsx";
 const checkFilter = (data, filter, channelMessage) => {
   let selected = true;
   const { mid, file_type, created_at, from_uid, properties } = data;
@@ -60,7 +59,7 @@ function ResourceManagement({ fileMessages }) {
   };
 
   useEffect(() => {
-    if (view == Views.grid && listContainerRef) {
+    if (view == "grid" && listContainerRef) {
       const container = listContainerRef.current;
       if (!container) return;
       const cWidth = container.getBoundingClientRect().width - 16 * 2;
@@ -72,7 +71,7 @@ function ResourceManagement({ fileMessages }) {
         // options
         fitWidth: true,
         gutter,
-        itemSelector: ".file_box"
+        itemSelector: ".grid-box"
         // columnWidth: 200
       });
     } else {
@@ -83,14 +82,17 @@ function ResourceManagement({ fileMessages }) {
   }, [view, filter]);
 
   return (
-    <Styled>
+    <div className="h-screen overflow-y-scroll flex flex-col items-start my-2 mr-6 rounded-2xl bg-white">
       <Search value={filter.name} updateSearchValue={handleUpdateSearch} />
       <div className="divider"></div>
-      <div className="opts">
+      <div className="flex justify-between w-full px-4 py-5">
         <Filter filter={filter} updateFilter={updateFilter} />
         <View view={view} />
       </div>
-      <div className={`list ${view}`} ref={listContainerRef}>
+      <div className={clsx(`w-full h-full px-4 overflow-scroll flex`,
+        view == "item" && 'gap-2 flex-col',
+        view == "grid" && "flex-wrap"
+      )} ref={listContainerRef}>
         {fileMessages.map((id) => {
           const data = message[id];
           if (!data) return null;
@@ -99,21 +101,23 @@ function ResourceManagement({ fileMessages }) {
           const { mid, content, created_at, from_uid, properties } = data;
           const { name, content_type, size } = properties ?? {};
           return (
-            <FileBox
-              preview={view == Views.grid}
-              flex={view == Views.item}
-              key={mid}
-              file_type={content_type}
-              content={content}
-              created_at={created_at}
-              from_uid={from_uid}
-              size={size}
-              name={name}
-            />
+            <div key={mid} className="grid-box mb-2">
+              <FileBox
+                preview={view == "grid"}
+                flex={view == "item"}
+                key={mid}
+                file_type={content_type}
+                content={content}
+                created_at={created_at}
+                from_uid={from_uid}
+                size={size}
+                name={name}
+              />
+            </div>
           );
         })}
       </div>
-    </Styled>
+    </div>
   );
 }
 

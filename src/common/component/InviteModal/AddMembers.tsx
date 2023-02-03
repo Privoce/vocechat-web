@@ -1,5 +1,4 @@
 import { useState, useEffect, FC, MouseEvent, ChangeEvent } from "react";
-import styled from "styled-components";
 import toast from "react-hot-toast";
 import Button from "../styled/Button";
 import Input from "../styled/Input";
@@ -9,88 +8,6 @@ import { useAddMembersMutation } from "../../../app/services/channel";
 import CloseIcon from "../../../assets/icons/close.svg";
 import useFilteredUsers from "../../hook/useFilteredUsers";
 import { useAppSelector } from "../../../app/store";
-
-const Styled = styled.div`
-  padding-top: 16px;
-  > .filter {
-    width: 376px;
-    min-height: 40px;
-    padding: 6px 8px;
-    display: flex;
-    align-items: center;
-    margin-bottom: 12px;
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    box-shadow: 0 1px 2px rgba(31, 41, 55, 0.08);
-    border-radius: 4px;
-    .selects {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 5px;
-      width: 100%;
-      overflow: scroll;
-      &::-webkit-scrollbar {
-        width: 0; /* Remove scrollbar space */
-        height: 0; /* Remove scrollbar space */
-        background: transparent; /* Optional: just make scrollbar invisible */
-      }
-      .select {
-        padding: 4px 6px;
-        background: #52edff;
-        border-radius: 4px;
-        font-weight: 600;
-        font-size: 14px;
-        line-height: 20px;
-        color: #ffffff;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 5px;
-        .close {
-          cursor: pointer;
-          width: 12px;
-          height: 12px;
-          path {
-            fill: #fff;
-            fill-opacity: 1;
-          }
-        }
-      }
-      .input {
-        width: fit-content;
-      }
-    }
-  }
-  .users {
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 20px;
-    max-height: 364px;
-    overflow: scroll;
-    .user {
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      padding: 4px 8px;
-      width: -webkit-fill-available;
-      border-radius: 8px;
-      &:hover {
-        background: rgba(116, 127, 141, 0.1);
-      }
-      > div {
-        width: 100%;
-      }
-    }
-  }
-  > .btn {
-    width: 100%;
-    margin-top: 16px;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 20px;
-  }
-`;
 
 interface Props {
   cid?: number;
@@ -138,34 +55,34 @@ const AddMembers: FC<Props> = ({ cid = 0, closeModal }) => {
   const userIds = users.map((u) => u?.uid || 0);
 
   return (
-    <Styled>
-      <div className="filter">
-        <ul className="selects">
+    <div className="pt-4">
+      <div className="flex items-center w-[376px] min-h-[40px] px-2 py-1.5 mb-3 border border-solid border-slate-100 shadow rounded">
+        <ul className="flex items-center flex-wrap gap-1 w-full overflow-scroll">
           {selects.map((uid) => {
             return (
-              <li className="select" key={uid}>
+              <li className="px-1.5 py-1 rounded text-sm bg-primary-300 text-white flex items-center justify-between gap-1" key={uid}>
                 {userData[uid]?.name}
-                <CloseIcon data-uid={uid} onClick={toggleCheckMember} className="close" />
+                <CloseIcon data-uid={uid} onClick={toggleCheckMember} className="cursor-pointer w-3 h-3 fill-white" />
               </li>
             );
           })}
           <Input
             autoFocus
             type="text"
-            className="input none"
+            className="!w-fit none"
             value={input}
             onChange={handleFilterInput}
           />
         </ul>
       </div>
-      <ul className="users">
+      <ul className="flex flex-col pb-5 max-h-[364px] overflow-scroll">
         {userIds.map((uid) => {
           const added = uids.includes(uid);
           return (
             <li
               key={uid}
               data-uid={uid}
-              className="user"
+              className="cursor-pointer flex items-center px-2 py-1 rounded-lg hover:bg-slate-400/20"
               onClick={added ? undefined : toggleCheckMember}
             >
               <StyledCheckbox
@@ -180,10 +97,10 @@ const AddMembers: FC<Props> = ({ cid = 0, closeModal }) => {
           );
         })}
       </ul>
-      <Button disabled={selects.length == 0 || isAdding} className="btn" onClick={handleAddMembers}>
+      <Button disabled={selects.length == 0 || isAdding} className="flex mt-4 justify-center" onClick={handleAddMembers}>
         {isAdding ? `Adding` : "Add"} to #{channel.name}
       </Button>
-    </Styled>
+    </div>
   );
 };
 

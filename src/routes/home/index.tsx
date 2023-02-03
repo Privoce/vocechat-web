@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 
 import StyledWrapper from "./styled";
 import User from "./User";
-// import Tools from "./Tools";
 import Loading from "../../common/component/Loading";
 import Menu from "./Menu";
 import usePreload from "../../common/hook/usePreload";

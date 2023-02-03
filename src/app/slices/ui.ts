@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Views } from "../config";
 
+export type ListView = "item" | "grid"
 export interface State {
   online: boolean;
   ready: boolean;
   inputMode: "text";
   menuExpand: boolean;
   // todo
-  fileListView: string;
+  fileListView: ListView;
   uploadFiles: {
     [key: string]: {
       name: string;
@@ -30,7 +30,7 @@ const initialState: State = {
   ready: false,
   inputMode: "text",
   menuExpand: false,
-  fileListView: Views.grid,
+  fileListView: "grid",
   uploadFiles: {},
   selectMessages: {},
   draftMarkdown: {},

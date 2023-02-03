@@ -2,7 +2,6 @@ import { MouseEvent } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { updateFileListView } from "../../app/slices/ui";
-import { Views } from "../../app/config";
 import IconList from "../../assets/icons/file.list.svg";
 import IconGrid from "../../assets/icons/file.grid.svg";
 
@@ -35,20 +34,20 @@ const Styled = styled.ul`
   }
 `;
 
-export default function View({ view = Views.item }) {
+export default function View({ view = "item" }) {
   const dispatch = useDispatch();
   const handleChangeView = (evt: MouseEvent<HTMLLIElement>) => {
     const { view: clickView } = evt.currentTarget.dataset;
     if (clickView == view) return;
-    dispatch(updateFileListView(view == Views.item ? Views.grid : Views.item));
+    dispatch(updateFileListView(view == "item" ? "grid" : "item"));
   };
 
   return (
     <Styled className={view}>
-      <li className="view item" data-view={Views.item} onClick={handleChangeView}>
+      <li className="view item" data-view={"item"} onClick={handleChangeView}>
         <IconList />
       </li>
-      <li className="view grid" data-view={Views.grid} onClick={handleChangeView}>
+      <li className="view grid" data-view={"grid"} onClick={handleChangeView}>
         <IconGrid />
       </li>
     </Styled>
