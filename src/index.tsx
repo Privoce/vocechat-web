@@ -3,7 +3,6 @@
 import { Suspense } from 'react';
 import ReactDOM from "react-dom/client";
 import toast, { Toaster } from "react-hot-toast";
-import { Reset } from "styled-reset";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import "./assets/index.css";
@@ -21,7 +20,6 @@ const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
 
 root.render(
   <Suspense fallback="loading">
-    <Reset />
     <Toaster />
     <DndProvider backend={HTML5Backend}>
       <ReduxRoutes />
