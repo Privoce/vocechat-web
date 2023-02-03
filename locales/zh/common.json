@@ -46,6 +46,7 @@
     "mark_read": "标记已读",
     "hide_session": "隐藏会话",
     "reload": "刷新页面",
+    "install": "安装",
     "download_origin": "下载原图"
   },
   "status": {
@@ -55,7 +56,9 @@
     "update": "更新成功!",
     "delete": "删除成功!",
     "login": "登录成功!",
-    "logout": "退出成功!"
+    "logout": "退出成功!",
+    "pwa_install_title": "安装到桌面？",
+    "pwa_install_desc": "使用桌面访问，更便捷！"
   },
   "new_version": "有<0>新版本</0>",
   "mobile_app": "欢迎下载使用<0>手机APP</0>",
