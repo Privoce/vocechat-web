@@ -1,75 +1,11 @@
 import { useEffect, useState, ChangeEvent, FC, useRef } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
-import styled from "styled-components";
 import { useSendLoginMagicLinkMutation } from "../../../app/services/auth";
 import useInviteLink from "../../hook/useInviteLink";
 import QRCode from "../QRCode";
 import Button from "../styled/Button";
 import Input from "../styled/Input";
-
-const Styled = styled.div`
-  padding: 16px 0;
-  padding-bottom: 0;
-  .input {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    > .copy {
-      position: absolute;
-      right: 4px;
-      top: 50%;
-      transform: translateY(-50%);
-      padding-right: 8px;
-      background: none;
-      font-weight: 500;
-      font-size: 14px;
-      line-height: 20px;
-      color: #22ccee;
-      &:hover {
-        color: #088ab2;
-      }
-    }
-    input {
-      padding-right: 80px;
-      &.invite {
-        padding-right: 50px;
-      }
-    }
-  }
-  > .invite {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    margin-bottom: 16px;
-  }
-  > .link {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-bottom: 12px;
-  }
-  label {
-    color: #6b7280;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 20px;
-  }
-  > .tip {
-    color: #344054;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 18px;
-    button {
-      margin-left: 4px;
-      background: none;
-      border: none;
-      color: #22ccee;
-    }
-  }
-`;
 
 interface Props {
   cid?: number;
@@ -111,12 +47,13 @@ const InviteByEmail: FC<Props> = ({ cid }) => {
   };
 
   return (
-    <Styled>
-      <div className="invite">
-        <label htmlFor="">{t("invite_by_email")}</label>
-        <div className="input">
+    <div className="pt-4">
+      <div className="flex flex-col gap-4 mb-6">
+        <label className="text-sm text-gray-400" htmlFor="">{t("invite_by_email")}</label>
+        <div className="relative flex items-center gap-2">
           <form ref={formRef} action="/" className="w-full">
             <Input
+              className="!pr-20"
               required
               value={email}
               onChange={handleEmail}
@@ -131,11 +68,11 @@ const InviteByEmail: FC<Props> = ({ cid }) => {
           </Button>
         </div>
       </div>
-      <div className="link">
-        <label htmlFor="">{t("send_invite_link")}</label>
-        <div className="input">
-          <Input readOnly className="invite" placeholder="Generating" value={link} />
-          <button className="copy" onClick={copyLink}>
+      <div className="flex flex-col gap-2 mb-3">
+        <label className="text-sm text-gray-400" htmlFor="">{t("send_invite_link")}</label>
+        <div className="relative flex items-center gap-2">
+          <Input readOnly className="!pr-[50px]" placeholder="Generating" value={link} />
+          <button className="absolute right-1 top-1/2 -translate-y-1/2 pr-2 text-sm text-primary-400 hover:text-primary-600" onClick={copyLink}>
             {ct("action.copy")}
           </button>
         </div>
@@ -143,13 +80,13 @@ const InviteByEmail: FC<Props> = ({ cid }) => {
       <div className="w-44 h-44 my-2">
         {!generating && <QRCode link={link} />}
       </div>
-      <div className="tip">
+      <div className="text-xs text-gray-600">
         {t("invite_link_expire")}
-        <button disabled={generating} className="new" onClick={() => generateNewLink()}>
+        <button disabled={generating} className="text-primary-400 ml-1" onClick={() => generateNewLink()}>
           {t("generate_new_link")}
         </button>
       </div>
-    </Styled>
+    </div>
   );
 };
 
