@@ -2,6 +2,7 @@ import { useRef, useState, useEffect, FC } from "react";
 import { useOutsideClick, useKey } from "rooks";
 import { Ring } from "@uiball/loaders";
 import Modal from "./Modal";
+import { useTranslation } from "react-i18next";
 
 
 export interface PreviewImageData {
@@ -19,6 +20,7 @@ interface Props {
 }
 
 const ImagePreviewModal: FC<Props> = ({ download = true, data, closeModal }) => {
+  const { t } = useTranslation();
   const [url, setUrl] = useState(data?.thumbnail);
   const [loading, setLoading] = useState(true);
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -53,7 +55,7 @@ const ImagePreviewModal: FC<Props> = ({ download = true, data, closeModal }) => 
   return (
     <Modal>
       <div className="w-screen h-screen flex-center bg-black/90">
-        <div className={`relative flex flex-col justify-start gap-3 ${loading ? "absolute top-1/3 left-1/2 -translate-x-1/2" : ""}`} ref={wrapperRef}>
+        <div className={`relative flex flex-col justify-start gap-3`} ref={wrapperRef}>
           <div className="overflow-auto">
             <img
               className={`max-w-[70vw] max-h-[80vh] ${loading ? "blur-sm" : ""}`}
@@ -70,11 +72,11 @@ const ImagePreviewModal: FC<Props> = ({ download = true, data, closeModal }) => 
               href={downloadLink || originUrl}
               rel="noreferrer"
             >
-              Download original
+              {t("action.download_origin")}
             </a>
           )}
           {loading && (
-            <div className="loading">
+            <div className="absolute top-[40%] left-1/2 -translate-x-1/2">
               <Ring />
             </div>
           )}

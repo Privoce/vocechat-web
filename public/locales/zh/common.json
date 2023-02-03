@@ -45,7 +45,8 @@
     "unmute": "取消静默",
     "mark_read": "标记已读",
     "hide_session": "隐藏会话",
-    "reload": "刷新页面"
+    "reload": "刷新页面",
+    "download_origin": "下载原图"
   },
   "status": {
     "uploading": "上传中"
