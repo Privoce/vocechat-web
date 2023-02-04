@@ -68,6 +68,13 @@
       "en": "English",
       "zh": "中文",
       "jp": "日本語"
+    },
+    "theme": {
+      "title": "Theme",
+      "desc": "Setting the theme",
+      "auto": "Auto",
+      "dark": "Dark",
+      "light": "Light"
     }
   },
   "license": {

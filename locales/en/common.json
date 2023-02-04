@@ -45,7 +45,8 @@
     "hide_session": "Hide Session",
     "reload": "reload",
     "install": "Install",
-    "download_origin": "Download original"
+    "download_origin": "Download original",
+    "close": "Close"
   },
   "status": {
     "uploading": "Uploading"
@@ -55,6 +56,7 @@
     "delete": "Delete Successfully!",
     "login": "Login Successfully!",
     "logout": "Logout Successfully!",
+    "pin": "Pin Message Successfully!",
     "pwa_install_title": "Install web app on desktop?",
     "pwa_install_desc": "Add to desktop for quick access to this app."
   },

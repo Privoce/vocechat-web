@@ -47,7 +47,8 @@
     "hide_session": "隐藏会话",
     "reload": "刷新页面",
     "install": "安装",
-    "download_origin": "下载原图"
+    "download_origin": "下载原图",
+    "close": "关闭"
   },
   "status": {
     "uploading": "上传中"
@@ -57,6 +58,7 @@
     "delete": "删除成功!",
     "login": "登录成功!",
     "logout": "退出成功!",
+    "pin": "消息置顶成功!",
     "pwa_install_title": "安装到桌面？",
     "pwa_install_desc": "使用桌面访问，更便捷！"
   },
