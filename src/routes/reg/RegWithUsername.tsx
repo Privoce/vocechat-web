@@ -98,14 +98,14 @@ const RegWithUsername: FC = () => {
   const isSuccess = loginSuccess || regSuccess;
   return (
     <>
-      <div className="tips">
-        <h2 className="title">What’s your name</h2>
-        <span className="desc">
+      <div className="flex-center flex-col pb-6">
+        <h2 className="font-semibold text-2xl text-gray-800 dark:text-white mb-2">What’s your name</h2>
+        <span className="text-gray-400 dark:text-gray-100">
           Enter a name or handle so people know how you’d like to be called. Your name will only be
           visible to others in spaces you joined.
         </span>
       </div>
-      <form onSubmit={handleAuth}>
+      <form className="flex flex-col gap-5 min-w-[360px]" onSubmit={handleAuth}>
         <Input
           className="large"
           name="username"

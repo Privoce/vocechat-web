@@ -6,7 +6,7 @@ const Version: FC<Props> = () => {
   const { t } = useTranslation("setting", { keyPrefix: "version" });
   const { data: serverVersion } = useGetServerVersionQuery();
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 dark:text-white">
       <div className="item">{t("client_version")}: {process.env.VERSION}</div>
       <div className="item">{t("server_version")}: {serverVersion}</div>
       <div className="item">{t("build_time")}: {process.env.REACT_APP_BUILD_TIME}</div>

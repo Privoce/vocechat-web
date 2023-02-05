@@ -26,7 +26,7 @@ function UsersPage() {
   if (!users) return null;
   return (
     <StyledWrapper>
-      <div className="left">
+      <div className="left dark:!bg-[#1F2A37]">
         <Search input={input} updateInput={updateInput} />
         <div className="list">
           <nav className="nav">
@@ -40,7 +40,7 @@ function UsersPage() {
           </nav>
         </div>
       </div>
-      <div className={`right ${!user_id ? "placeholder" : ""}`}>
+      <div className={`right ${!user_id ? "placeholder" : ""} dark:!bg-[#384250]`}>
         {user_id ? <Profile uid={+user_id} /> : <BlankPlaceholder type="user" />}
       </div>
     </StyledWrapper>

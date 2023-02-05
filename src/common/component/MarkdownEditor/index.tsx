@@ -5,10 +5,9 @@ import "prismjs/themes/prism.css";
 import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css";
 import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight-all.js";
 
-import StyledWrapper from "./styled";
 import useUploadFile from "../../hook/useUploadFile";
-
 import Button from "../styled/Button";
+
 type Props = {
   updateDraft?: (draft: string) => void;
   initialValue: string;
@@ -62,7 +61,7 @@ const MarkdownEditor: FC<Props> = ({
     }
   };
   return (
-    <StyledWrapper className="input">
+    <div className="input md-editor">
       <Editor
         initialValue={initialValue}
         plugins={[codeSyntaxHighlight]}
@@ -78,7 +77,7 @@ const MarkdownEditor: FC<Props> = ({
       <Button className="send small" onClick={send}>
         Send
       </Button>
-    </StyledWrapper>
+    </div>
   );
 };
 export default MarkdownEditor;

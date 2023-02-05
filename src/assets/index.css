@@ -26,6 +26,43 @@
   .checkbox:checked::before {
     transform: scale(1);
   }
+  /*  markdown editor */
+  .md-editor {
+    position: relative;
+    width: 100%;
+    width: -webkit-fill-available;
+    margin-top: 16px;
+  }
+  .md-editor > div {
+    transition: height 0.5s ease 0s;
+  }
+  .md-editor .toastui-editor-defaultUI {
+    border-bottom: none;
+    border-radius: 0;
+    border-top: 1px solid #d0d5dd;
+    border-left: none;
+    border-right: none;
+  }
+  .md-editor .toastui-editor {
+    padding: 16px 0;
+  }
+  .md-editor .toastui-editor [contenteditable="true"] {
+    padding: 0;
+  }
+  .md-editor .toastui-editor-md-preview {
+    padding-top: 16px;
+  }
+  .md-editor .toastui-editor-md-preview .toastui-editor-contents {
+    padding: 0;
+  }
+  .md-editor .toastui-editor-toolbar {
+    display: none;
+  }
+  .md-editor .send {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+  }
 }
 /* 全局设置滚动条 */
 ::-webkit-scrollbar-thumb {
@@ -36,6 +73,9 @@
   background: transparent;
   width: 5px;
   height: 5px;
+}
+html.dark ::-webkit-scrollbar-thumb {
+  background: #1c1c1e;
 }
 
 :root {

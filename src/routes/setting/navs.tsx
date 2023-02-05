@@ -86,11 +86,11 @@ const navs = [
       },
       {
         name: "terms",
-        component: "Terms & Privacy"
+        component: <div className="dark:text-white">Terms & Privacy</div>
       },
       {
         name: "feedback",
-        component: <ul className="flex flex-col gap-2 text-lg">
+        component: <ul className="flex flex-col gap-2 text-lg dark:text-white">
           <li>Email: <strong className="font-bold">han@privoce.com</strong></li>
           <li>Wechat: <strong className="font-bold">Privoce</strong></li>
           <li>GitHub:&nbsp;

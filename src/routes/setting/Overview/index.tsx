@@ -7,6 +7,7 @@ import useConfig from "../../../common/hook/useConfig";
 import Server from './server';
 import Language from './Language';
 import FrontendURL from "./FrontendURL";
+// import DarkMode from "./DarkMode";
 import ServerVersionChecker from "../../../common/component/ServerVersionChecker";
 
 export default function Overview() {
@@ -33,7 +34,7 @@ export default function Overview() {
       {isAdmin && (
         <>
           <div className="text-sm">
-            <p className="font-semibold">{t("overview.sign_up.title")}</p>
+            <p className="dark:text-gray-100 font-semibold">{t("overview.sign_up.title")}</p>
             <p className="flex justify-between w-full text-gray-400 mb-2">{t("overview.sign_up.desc")}</p>
             <StyledRadio
               options={[t("overview.sign_up.everyone"), t("overview.sign_up.invite")]}
@@ -45,7 +46,7 @@ export default function Overview() {
             />
           </div>
           <div className="text-sm">
-            <p className="font-semibold">{t("overview.guest_mode.title")}</p>
+            <p className="dark:text-gray-100 font-semibold">{t("overview.guest_mode.title")}</p>
             <p className="flex justify-between w-full text-gray-400 mb-2">
               <span className="txt">
                 {t("overview.guest_mode.desc")}
@@ -66,6 +67,7 @@ export default function Overview() {
         </>
       )}
       <Language />
+      {/* <DarkMode /> */}
     </div>
   );
 }

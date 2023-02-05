@@ -30,7 +30,7 @@ const Loading: FC<Props> = ({ reload = false, fullscreen = false }) => {
   }, [reload]);
 
   return (
-    <div className={clsx("w-full h-full flex-center flex-col gap-4", fullscreen ? "w-screen h-screen" : "")}>
+    <div className={clsx("w-full h-full flex-center flex-col gap-4 dark:bg-gray-800/80", fullscreen ? "w-screen h-screen" : "")}>
       <Ring size={40} lineWeight={5} speed={2} color="black" />
       <Button className={clsx(`danger`, reloadVisible ? "visible" : "invisible")} onClick={handleReload}>
         Reload

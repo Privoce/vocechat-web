@@ -72,7 +72,7 @@ const Index = () => {
                 </div>
                 {isAdmin && (
                     <div className="flex flex-col justify-between items-start">
-                        <div className="text-sm text-gray-600">
+                        <div className="text-sm text-gray-600 dark:text-gray-100">
                             {t("overview.upload_desc")}
                         </div>
                     </div>
@@ -80,7 +80,7 @@ const Index = () => {
             </div>
             <div className="flex flex-col items-start gap-6 mb-16">
                 <div className="w-full flex flex-col items-start gap-2">
-                    <Label htmlFor="name">{t("overview.name")}</Label>
+                    <Label className='dark:text-gray-100' htmlFor="name">{t("overview.name")}</Label>
                     <Input
                         disabled={!isAdmin}
                         data-type="name"
@@ -92,7 +92,7 @@ const Index = () => {
                     />
                 </div>
                 <div className="w-full flex flex-col items-start gap-2">
-                    <Label htmlFor="desc">{t("overview.desc")}</Label>
+                    <Label className='dark:text-gray-100' htmlFor="desc">{t("overview.desc")}</Label>
                     <Textarea
                         disabled={!isAdmin}
                         data-type="description"

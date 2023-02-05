@@ -1,9 +1,9 @@
 // @ts-nocheck
 import { useState, useEffect, FC } from "react";
 import dayjs from "dayjs";
+import clsx from "clsx";
 import { renderPreviewMessage } from "../../chat/utils";
 import Avatar from "../../../common/component/Avatar";
-import IconLock from "../../../assets/icons/lock.svg";
 import { NavLink } from "react-router-dom";
 import { useAppSelector } from "../../../app/store";
 
@@ -35,25 +35,25 @@ const Session: FC<IProps> = ({ id, mid }) => {
   }, [id, mid, userData, channelData]);
   if (!data) return null;
   const previewMsg = messageData[mid] || {};
-  const { name, icon, is_public } = data;
+  const { name, icon } = data;
 
   return (
     <li className="session">
-      <NavLink className={`nav`} to={`/chat/channel/${id}`}>
-        <div className="icon">
+      <NavLink className={({ isActive: linkActive }) => clsx(`nav flex gap-2 rounded-lg p-2 w-full hover:bg-gray-500/20`, linkActive && "bg-gray-500/20")} to={`/chat/channel/${id}`}>
+        <div className="flex bg-slate-50 rounded-full">
           <Avatar width={40} height={40} className="icon" type="channel" name={name} src={icon} />
         </div>
-        <div className="details">
-          <div className="up">
-            <span className={`name ${previewMsg.created_at ? "" : "only_title"}`}>
-              {name} {!is_public && <IconLock />}
+        <div className="w-full flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className={clsx(`flex items-center gap-2 font-semibold text-sm text-gray-500 dark:text-white whitespace-nowrap overflow-hidden text-ellipsis`, previewMsg.created_at && "max-w-[190px]")}>
+              {name}
             </span>
-            <span className="time">
+            <span className="text-xs text-gray-600 whitespace-nowrap overflow-hidden max-w-[80px] text-ellipsis">
               {previewMsg.created_at ? dayjs(previewMsg.created_at).fromNow() : null}
             </span>
           </div>
-          <div className="down">
-            <span className="msg">{renderPreviewMessage(previewMsg)}</span>
+          <div className="flex items-center justify-between">
+            <span className="text-xs text-gray-500 whitespace-nowrap overflow-hidden w-36 text-ellipsis">{renderPreviewMessage(previewMsg)}</span>
           </div>
         </div>
       </NavLink>

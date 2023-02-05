@@ -1,30 +1,5 @@
 import styled from "styled-components";
 
-export const StyledNotification = styled.div`
-  padding: 3px 8px;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 12px;
-  line-height: 18px;
-  color: #fff;
-  position: absolute;
-  top: 0;
-  left: 10px;
-  width: 900px;
-  height: 24px;
-  background: linear-gradient(135deg, #3c8ce7 0%, #00eaff 100%);
-  border-radius: 0px 0px 8px 8px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  .clear {
-    cursor: pointer;
-    color: inherit;
-    border: none;
-    background: none;
-    outline: none;
-  }
-`;
 export const StyledUsers = styled.div`
   /* display: flex; */
   flex-direction: column;

@@ -3,11 +3,10 @@ import { useState, useEffect, useRef } from "react";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import { useLazyGetMetamaskNonceQuery } from "../../app/services/auth";
 import metamaskSvg from "../../assets/icons/metamask.svg?url";
-import { StyledSocialButton } from "./styled";
-import Onboarding from "@metamask/onboarding";
 import { LoginCredential } from "../../types/auth";
 import { useTranslation } from "react-i18next";
 import { AuthType } from "../../types/common";
+import Button from "../../common/component/styled/Button";
 // import toast from "react-hot-toast";
 
 export default function MetamaskLoginButton({
@@ -21,7 +20,7 @@ export default function MetamaskLoginButton({
   const [requesting, setRequesting] = useState(false);
   const [accounts, setAccounts] = useState([]);
   const [getNonce] = useLazyGetMetamaskNonceQuery();
-  const onboarding = useRef<Onboarding | undefined>();
+  const onboarding = useRef<MetaMaskOnboarding | undefined>();
 
   useEffect(() => {
     if (!onboarding.current) {
@@ -94,9 +93,9 @@ export default function MetamaskLoginButton({
     }
   };
   return (
-    <StyledSocialButton disabled={requesting} onClick={handleMetamaskLogin}>
-      <img className="icon" src={metamaskSvg} alt="meta mask icon" />
+    <Button className="flex ghost flex-center gap-2 !text-gray-600 !border-slate-200 dark:!text-gray-100" disabled={requesting} onClick={handleMetamaskLogin}>
+      <img className="w-6 h-6" src={metamaskSvg} alt="meta mask icon" />
       {type == "login" ? t("login.metamask") : t("reg.metamask")}
-    </StyledSocialButton>
+    </Button>
   );
 }

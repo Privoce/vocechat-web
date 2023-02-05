@@ -1,53 +1,9 @@
 import { FC } from "react";
-import styled from "styled-components";
 import Search from "../Search";
 import CheckSign from "../../../assets/icons/check.sign.svg";
 import User from "../../../common/component/User";
 import useFilteredUsers from "../../../common/hook/useFilteredUsers";
 
-const Styled = styled.div`
-  padding: 0 4px 4px 4px;
-  background: #ffffff;
-  max-height: 300px;
-  overflow: auto;
-  box-shadow: 0 24px 48px -12px rgba(16, 24, 40, 0.18);
-  border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  position: relative;
-  > .search {
-    z-index: 1;
-    background-color: #fff;
-    position: sticky;
-    top: 0;
-    input {
-      z-index: 2;
-    }
-  }
-  > .list {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    .user {
-      position: relative;
-      cursor: pointer;
-      &.none {
-        padding: 10px;
-        font-weight: 600;
-        font-size: 14px;
-        line-height: 20px;
-        color: #616161;
-      }
-      .check {
-        position: absolute;
-        right: 6px;
-        top: 50%;
-        transform: translateY(-50%);
-      }
-    }
-  }
-`;
 type Props = {
   select: number;
   updateFilter: (param: { from?: number }) => void;
@@ -59,25 +15,25 @@ const From: FC<Props> = ({ select = "", updateFilter }) => {
   };
 
   return (
-    <Styled>
-      <div className="search">
+    <div className="rounded-lg p-1 pt-0 bg-white dark:bg-gray-800 overflow-auto max-h-[300px] flex flex-col items-start relative drop-shadow">
+      <div className="bg-white sticky top-0 z-10">
         <Search embed={true} value={input} updateSearchValue={updateInput} />
       </div>
-      <ul className="list">
-        <li className="user none" onClick={handleClick.bind(null, undefined)}>
+      <ul className="w-full flex flex-col">
+        <li className="relative cursor-pointer p-2.5 font-semibold text-sm text-gray-500" onClick={handleClick.bind(null, undefined)}>
           Anyone
-          {!select && <CheckSign className="check" />}
+          {!select && <CheckSign className="absolute right-1.5 top-1/2 -translate-y-1/2" />}
         </li>
         {users.map(({ uid }) => {
           return (
-            <li key={uid} className="user" onClick={handleClick.bind(null, uid)}>
+            <li key={uid} className="relative cursor-pointer" onClick={handleClick.bind(null, uid)}>
               <User uid={uid} interactive={true} />
-              {select == uid && <CheckSign className="check" />}
+              {select == uid && <CheckSign className="absolute right-1.5 top-1/2 -translate-y-1/2" />}
             </li>
           );
         })}
       </ul>
-    </Styled>
+    </div>
   );
 };
 export default From;

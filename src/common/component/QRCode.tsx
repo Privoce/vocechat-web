@@ -10,7 +10,7 @@ const QRCode = ({ link }: Props) => {
     const logo = useAppSelector(store => store.server.logo);
     return (
         <QRCodeCanvas value={link}
-            className="rounded border border-solid border-gray-200 p-1 !w-full !h-full"
+            className="rounded border border-solid border-gray-200 dark:border-gray-100 p-1 !w-full !h-full"
             size={512}
             bgColor={"#fff"}
             fgColor={"#22ccee"}

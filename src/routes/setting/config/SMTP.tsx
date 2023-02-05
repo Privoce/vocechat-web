@@ -57,11 +57,11 @@ export default function ConfigSMTP() {
     <StyledContainer>
       <div className="inputs">
         <div className="input row">
-          <Label>{t("enable")}</Label>
+          <Label className="dark:text-gray-200">{t("enable")}</Label>
           <Toggle onClick={toggleEnable} data-checked={enabled}></Toggle>
         </div>
         <div className="input">
-          <Label htmlFor="name">{t("host")}</Label>
+          <Label className="dark:text-gray-200" htmlFor="name">{t("host")}</Label>
           <Input
             disabled={!enabled}
             data-type="host"
@@ -72,7 +72,7 @@ export default function ConfigSMTP() {
           />
         </div>
         <div className="input">
-          <Label htmlFor="desc">{t("port")}</Label>
+          <Label className="dark:text-gray-200" htmlFor="desc">{t("port")}</Label>
           <Input
             disabled={!enabled}
             type={"number"}
@@ -84,7 +84,7 @@ export default function ConfigSMTP() {
           />
         </div>
         <div className="input">
-          <Label htmlFor="desc">{t("from")}</Label>
+          <Label className="dark:text-gray-200" htmlFor="desc">{t("from")}</Label>
           <Input
             disabled={!enabled}
             data-type="from"
@@ -95,7 +95,7 @@ export default function ConfigSMTP() {
           />
         </div>
         <div className="input">
-          <Label htmlFor="desc">{t("username")}</Label>
+          <Label className="dark:text-gray-200" htmlFor="desc">{t("username")}</Label>
           <Input
             disabled={!enabled}
             data-type="username"
@@ -106,7 +106,7 @@ export default function ConfigSMTP() {
           />
         </div>
         <div className="input">
-          <Label htmlFor="desc">{t("password")}</Label>
+          <Label className="dark:text-gray-200" htmlFor="desc">{t("password")}</Label>
           <Input
             type={"password"}
             disabled={!enabled}

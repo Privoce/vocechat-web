@@ -21,7 +21,7 @@ type Props = {
 //     </table>;
 // };
 type DeleteAPIKeyProps = { uid: number, kid: number }
-const tdClass = "p-1 whitespace-nowrap text-xs text-gray-500 align-middle px-1";
+const tdClass = "p-1 whitespace-nowrap text-xs text-gray-500 dark:text-gray-200 align-middle px-1";
 const BotAPIKeys = ({ uid }: Props) => {
     const { t } = useTranslation("setting", { keyPrefix: "bot" });
     const [currentUid, setCurrentUid] = useState<number | undefined>();
@@ -39,11 +39,11 @@ const BotAPIKeys = ({ uid }: Props) => {
     const colWidths = ["w-20", "w-[166px]", "w-36", "w-15", "w-10"];
     return (
         <div className='flex flex-col gap-2 items-start'>
-            <div className='border-t border-solid border-b border-gray-100 py-2 w-full'>
+            <div className='border-t border-solid border-b border-gray-100 dark:border-gray-500 py-2 w-full'>
                 <table className="min-w-full table-fixed font-mono">
                     <thead >
                         <tr >
-                            {[t("col_key_name"), t('col_key_value'), t('col_key_create_time'), t('col_key_last_used'), ""].map((title, idx) => <th key={title} scope="col" className={clsx(`text-xs text-gray-900 px-1 text-left pb-2`, colWidths[idx])}>
+                            {[t("col_key_name"), t('col_key_value'), t('col_key_create_time'), t('col_key_last_used'), ""].map((title, idx) => <th key={title} scope="col" className={clsx(`text-xs text-gray-900 dark:text-gray-50 px-1 text-left pb-2`, colWidths[idx])}>
                                 {title}
                             </th>)}
                         </tr>

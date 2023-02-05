@@ -72,7 +72,7 @@ const WebhookEdit = ({ uid }: Props) => {
                         evt.preventDefault();
                         handleEdit();
                     }}>
-                        <input readOnly={!editable} required autoFocus type="url" name='webhook' defaultValue={url} className={clsx("text-sm text-gray-500 px-2 py-1", editable ? "border border-solid border-gray-200 bg-gray-50" : "bg-transparent")} />
+                        <input readOnly={!editable} required autoFocus type="url" name='webhook' defaultValue={url} className={clsx("text-sm text-gray-500 dark:text-gray-100 px-2 py-1", editable ? "border border-solid border-gray-200 bg-gray-50" : "bg-transparent")} />
                     </form>
                     <button type='button' disabled={isUpdating} onClick={handleEdit}>
                         {isUpdating ? <Orbit size={16} /> : editable ?

@@ -87,7 +87,7 @@ export default function ConfigFirebase() {
       />
       {<fieldset className="inputs" disabled={select !== "custom"}>
         <div className="input">
-          <Label htmlFor="name">{t("firebase.token_url")}</Label>
+          <Label htmlFor="name" className="dark:text-gray-200">{t("firebase.token_url")}</Label>
           <Input
             data-type="token_url"
             onChange={handleChange}
@@ -97,7 +97,7 @@ export default function ConfigFirebase() {
           />
         </div>
         <div className="input">
-          <Label htmlFor="desc">{t("firebase.project_id")}</Label>
+          <Label htmlFor="desc" className="dark:text-gray-200">{t("firebase.project_id")}</Label>
           <Input
             data-type="project_id"
             onChange={handleChange}
@@ -107,7 +107,7 @@ export default function ConfigFirebase() {
           />
         </div>
         <div className="input">
-          <Label htmlFor="desc">{t("firebase.private_key")}</Label>
+          <Label htmlFor="desc" className="dark:text-gray-200">{t("firebase.private_key")}</Label>
           <Textarea
             rows={10}
             spellCheck={false}
@@ -119,7 +119,7 @@ export default function ConfigFirebase() {
           />
         </div>
         <div className="input">
-          <Label htmlFor="desc">{t("firebase.client_email")}</Label>
+          <Label htmlFor="desc" className="dark:text-gray-200">{t("firebase.client_email")}</Label>
           <Input
             data-type="client_email"
             onChange={handleChange}

@@ -40,7 +40,7 @@ export default function APIConfig() {
         data-checked={thirdParty}
       />
       <div className="w-full flex flex-col items-start gap-2">
-        <label htmlFor="secret" className="text-sm text-gray-500"> {t("third_app.key")}:</label>
+        <label htmlFor="secret" className="text-sm text-gray-500 dark:text-gray-100"> {t("third_app.key")}:</label>
         <Input disabled={!thirdParty} type="password" id="secret" value={updatedSecret || data} />
       </div>
       <Tippy

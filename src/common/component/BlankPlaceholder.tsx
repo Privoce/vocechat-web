@@ -14,9 +14,9 @@ interface Props {
   type?: "chat" | "user";
 }
 const classes = {
-  box: "w-[150px] md:w-[200px] h-[150px] md:h-[200px] cursor-pointer bg-[#f9fafb] rounded-3xl flex-center flex-col gap-4",
+  box: "w-[150px] md:w-[200px] h-[150px] md:h-[200px] cursor-pointer bg-[#f9fafb] dark:bg-gray-800 rounded-3xl flex-center flex-col gap-4",
   boxIcon: "w-10 h-10",
-  boxTip: "px-5 text-sm text-[#475467] font-bold text-center"
+  boxTip: "px-5 text-sm text-[#475467] dark:text-gray-100 font-bold text-center"
 };
 const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
   const { t } = useTranslation("welcome");
@@ -38,14 +38,14 @@ const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
   const chatHandler = type == "chat" ? toggleChannelModalVisible : toggleUserListVisible;
   return (
     <>
-      <div className="flex flex-col gap-8 -mt-[50px]">
+      <div className="flex flex-col gap-8 -mt-[50px] dark:bg-[#384250]">
         <div className="flex flex-col gap-2 items-center">
-          <h2 className="text-3xl text-[#344054] font-bold">{t("title", { name: server.name })}</h2>
+          <h2 className="text-3xl text-[#344054] dark:text-white font-bold">{t("title", { name: server.name })}</h2>
           <p className="text-sm text-[#98a2b3] max-w-[424px] text-center">
             {t("desc")}
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 grid-rows-2 gap-2 md:gap-6 mt-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 grid-rows-2 gap-2 md:gap-6 m-auto">
           <div className={classes.box} onClick={toggleInviteModalVisible}>
             <IconInvite className={classes.boxIcon} />
             <div className={classes.boxTip}>{t("invite")}</div>

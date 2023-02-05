@@ -1,12 +1,11 @@
 import { Outlet } from "react-router-dom";
-import StyledWrapper from "./styled";
 
 export default function RegContainer() {
   return (
-    <StyledWrapper>
-      <div className="form">
+    <div className="flex-center h-screen dark:bg-[#384250]">
+      <div className="py-8 px-10 shadow-md rounded-xl">
         <Outlet />
       </div>
-    </StyledWrapper>
+    </div>
   );
 }

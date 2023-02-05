@@ -1,6 +1,5 @@
 import { FC } from "react";
 import { useState, useEffect } from "react";
-import Styled from "./styled";
 import Session from "./Session";
 import DeleteChannelConfirmModal from "../../settingChannel/DeleteConfirmModal";
 import InviteModal from "../../../common/component/InviteModal";
@@ -65,10 +64,9 @@ const SessionList: FC<Props> = ({ tempSession }) => {
     userMessage,
     tempSession
   ]);
-
   return (
     <>
-      <Styled>
+      <ul className="flex flex-col gap-0.5 p-2 overflow-auto h-[calc(100vh_-_56px_-_16px_-_8px)]">
         {sessions.map((s) => {
           const { key, type, id, mid = 0 } = s;
           return (
@@ -82,7 +80,7 @@ const SessionList: FC<Props> = ({ tempSession }) => {
             />
           );
         })}
-      </Styled>
+      </ul>
       {!!deleteId && (
         <DeleteChannelConfirmModal
           id={deleteId}

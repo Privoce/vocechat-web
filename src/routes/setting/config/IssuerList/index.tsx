@@ -1,12 +1,11 @@
 import { ChangeEvent, FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import Select, { Option } from "../../../../common/component/styled/Select";
 import Button from "../../../../common/component/styled/Button";
 import Input from "../../../../common/component/styled/Input";
 import Toggle from "../../../../common/component/styled/Toggle";
 import options from "./items.json";
-import Styled from "./styled";
 import IconMinus from "../../../../assets/icons/minus.circle.svg";
-import { useTranslation } from "react-i18next";
 
 interface Issuer {
   domain: string;
@@ -32,32 +31,31 @@ const IssuerList: FC<Props> = ({ issuers = [], onChange }) => {
     (!newDomain && !select?.value) ||
     !select?.title ||
     issuers.some((issuer) => issuer.domain === newDomain);
-
   return (
-    <Styled>
-      <ul className="issuers">
+    <div className="py-4 w-full flex flex-col gap-4">
+      <ul className="flex flex-col gap-4">
         {issuers.map(({ enable, favicon, domain }) => {
           return (
-            <li key={domain} className="issuer">
-              <div className="left">
+            <li key={domain} className="flex items-center justify-between gap-10">
+              <div className="flex-1 flex items-center justify-between">
                 <IconMinus
-                  className="remove"
+                  className="cursor-pointer"
                   onClick={() => {
                     onChange(issuers.filter((issuer) => issuer.domain !== domain));
                   }}
                 />
-                <div className="data">
-                  {Boolean(favicon) && <img src={favicon} alt="logo" className="icon" />}
+                <div className="flex items-center justify-between gap-4">
+                  {Boolean(favicon) && <img src={favicon} alt="logo" className="w-8 h-8" />}
                   <Input
                     readOnly
                     value={domain}
                     prefix="https://"
                     placeholder="Issuer Domain"
-                    className="url"
+                    className="w-[280px]"
                   />
                 </div>
               </div>
-              <div className="right">
+              <div className="w-14 flex justify-end">
                 <Toggle
                   data-checked={enable}
                   onClick={() => {
@@ -74,8 +72,8 @@ const IssuerList: FC<Props> = ({ issuers = [], onChange }) => {
           );
         })}
 
-        <li className="issuer add">
-          <div className="left">
+        <li className="flex items-center justify-between gap-10 cursor-pointer">
+          <div className="flex-1 flex items-center justify-between">
             <Select
               options={options.map((option) => ({
                 ...option,
@@ -84,18 +82,18 @@ const IssuerList: FC<Props> = ({ issuers = [], onChange }) => {
               current={select}
               updateSelect={setSelect}
             />
-            <div className="data">
+            <div className="flex items-center justify-between gap-4">
               <Input
                 onChange={handleNewDomain}
                 readOnly={!!select?.value}
                 value={select?.value || newDomain}
                 prefix="https://"
                 placeholder="domain.com"
-                className="url"
+                className="w-[280px]"
               />
             </div>
           </div>
-          <div className="right">
+          <div className="w-14 flex justify-end">
             <Button
               disabled={disableBtn}
               onClick={() => {
@@ -119,7 +117,7 @@ const IssuerList: FC<Props> = ({ issuers = [], onChange }) => {
         </li>
       </ul>
       {/* <IconPlus className="add" /> */}
-    </Styled>
+    </div>
   );
 };
 

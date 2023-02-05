@@ -17,7 +17,7 @@ export default function MagicLinkLogin({ smtp = false }: Props) {
   };
 
   return (
-    <div className="flex gap-1 mt-7 text-sm text-[#667085] justify-center">
+    <div className="flex gap-1 mt-7 text-sm text-[#667085] dark:text-gray-100 justify-center">
       <span>{t("login.no_account")}</span>
       <a className="text-[#22d3ee] cursor-pointer" onClick={handleSignUp}>{t("sign_up")}</a>
     </div>

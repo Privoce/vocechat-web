@@ -6,6 +6,7 @@ import Button from "../../common/component/styled/Button";
 import { useLazyCheckEmailQuery, useSendRegMagicLinkMutation } from "../../app/services/auth";
 import EmailNextTip from "./EmailNextStepTip";
 import SignInLink from "./SignInLink";
+import Divider from "../../common/component/Divider";
 
 import { useTranslation } from "react-i18next";
 import { useGetLoginConfigQuery } from "../../app/services/server";
@@ -101,13 +102,13 @@ export default function Reg() {
 
   return (
     <>
-      <div className="tips">
-        <img src={`${BASE_URL}/resource/organization/logo`} alt="logo" className="logo" />
-        <h2 className="title">{t("reg.title")}</h2>
-        <span className="desc">{t("reg.desc")}</span>
+      <div className="flex-center flex-col pb-6">
+        <img src={`${BASE_URL}/resource/organization/logo`} alt="logo" className="w-14 h-14 mb-7 rounded-full" />
+        <h2 className="font-semibold text-2xl text-gray-800 dark:text-white mb-2">{t("reg.title")}</h2>
+        <span className="text-gray-400 dark:text-gray-100">{t("reg.desc")}</span>
       </div>
 
-      <form onSubmit={handleReg} autoSave={"false"} autoComplete={"true"}>
+      <form className="flex flex-col gap-5 min-w-[360px]" onSubmit={handleReg} autoSave={"false"} autoComplete={"true"}>
         <Input
           className="large"
           name="email"
@@ -145,7 +146,7 @@ export default function Reg() {
           {isLoading ? t('signing_up') : t("sign_up")}
         </Button>
       </form>
-      <hr className="or" />
+      <Divider content="OR" />
       <div className="flex flex-col gap-3 py-3">
         <SocialLoginButtons type="register" />
       </div>

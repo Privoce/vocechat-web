@@ -5,14 +5,14 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 const Row = ({ paramKey, paramDefault, remarks }: { paramKey: string, paramDefault: string | number, remarks: string }) => {
-  return <tr className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
-    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+  return <tr className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-50 border-b transition duration-300 ease-in-out hover:bg-gray-100">
+    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
       {paramKey}
     </td>
-    <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+    <td className="text-sm font-light px-6 py-4 whitespace-nowrap">
       {paramDefault}
     </td>
-    <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+    <td className="text-sm font-light px-6 py-4 whitespace-nowrap">
       {remarks}
     </td>
   </tr>;
@@ -22,23 +22,23 @@ export default function Widget() {
   // const disableBtn = !reachLimit;
   return (
     <div className="flex flex-col justify-start items-start">
-      <div className="text-gray-600 ">
+      <div className="text-gray-600 dark:text-gray-100">
         {t('tip')}
       </div>
-      <label htmlFor="code" className="text-gray-500 text-sm mt-5">
+      <label htmlFor="code" className="text-gray-500 dark:text-white text-sm mt-5">
         {t('code')}:
       </label>
       <SyntaxHighlighter id="code" language="html" style={vscDarkPlus} className="rounded">
         {`<!-- ${t('code_comment')} -->\n<script \n  data-host-id="1" \n  data-close-width="48" \n  data-close-height="48" \n  data-open-width="380" \n  data-open-height="680" \n  src="${location.origin}/widget.js" \n  async \n/>`}
       </SyntaxHighlighter>
-      <div className="text-gray-500 text-sm mt-5 mb-2">
+      <div className="text-gray-500 dark:text-white text-sm mt-5 mb-2">
         {t('config')}:
       </div>
-      <div className="w-[700px] border border-solid border-gray-300 rounded overflow-hidden">
+      <div className="w-[700px] border border-solid border-gray-300 dark:border-gray-400 rounded overflow-hidden">
         <table className="min-w-full table-auto">
-          <thead className="border-b bg-gray-50">
+          <thead className="border-b bg-gray-50 dark:bg-gray-500">
             <tr>
-              {[t('param_key'), t('default_value'), t('remark')].map(title => <th key={title} scope="col" className="text-sm font-bold text-gray-900 px-6 py-4 text-left">
+              {[t('param_key'), t('default_value'), t('remark')].map(title => <th key={title} scope="col" className="text-sm font-bold text-gray-900 dark:text-white px-6 py-4 text-left">
                 {title}
               </th>)}
             </tr>
@@ -67,9 +67,9 @@ export default function Widget() {
             }
             ].map(row => <Row key={row.paramKey} {...row} />)}
           </tbody>
-          <tfoot className="border-t border-solid border-gray-200" >
+          <tfoot className="border-t border-solid border-gray-200 dark:border-gray-50 dark:bg-gray-500" >
             <tr>
-              <td colSpan={3} className="text-gray-400 px-5 py-3 text-sm">
+              <td colSpan={3} className="text-gray-400 dark:text-white px-5 py-3 text-sm">
                 * All the parameters are optional, and prefixed by <i className="bg-gray-700 text-white px-1">data-</i>
               </td>
             </tr>

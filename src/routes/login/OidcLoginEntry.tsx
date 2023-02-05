@@ -1,7 +1,7 @@
 import { useEffect, FC } from "react";
 import { useGetOpenidMutation } from "../../app/services/auth";
+import Button from "../../common/component/styled/Button";
 import { OIDCConfig } from "../../types/auth";
-import { StyledSocialButton } from "./styled";
 
 const OidcLoginEntry: FC<{ issuer: OIDCConfig }> = ({ issuer }) => {
   const [getOpenId, { data, isLoading, isSuccess }] = useGetOpenidMutation();
@@ -21,10 +21,10 @@ const OidcLoginEntry: FC<{ issuer: OIDCConfig }> = ({ issuer }) => {
   }, [data, isSuccess]);
 
   return (
-    <StyledSocialButton disabled={isLoading || isSuccess} onClick={handleSolidLogin}>
-      {!!issuer.favicon && <img src={issuer.favicon} className="icon" alt="icon" />}
+    <Button className="flex text-gray-800 dark:text-gray-100 flex-center gap-3" disabled={isLoading || isSuccess} onClick={handleSolidLogin}>
+      {!!issuer.favicon && <img src={issuer.favicon} className="w-6 h-6" alt="icon" />}
       {isLoading ? `Loading...` : `Login with ${issuer.domain}`}
-    </StyledSocialButton>
+    </Button>
   );
 };
 export default OidcLoginEntry;

@@ -49,8 +49,8 @@ const AutoDeleteMessages = ({ id, type = "channel" }: Props) => {
     return (
         <section className="max-w-[512px] h-full relative">
             <div className="text-sm">
-                <h2 >{t("title")}</h2>
-                <p className="text-gray-500">{t("desc")}</p>
+                <h2 className='dark:text-white' >{t("title")}</h2>
+                <p className="text-gray-500 dark:text-gray-400">{t("desc")}</p>
             </div>
             <div className="mt-4">
                 <StyledRadio

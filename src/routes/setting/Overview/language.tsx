@@ -11,7 +11,7 @@ const Index = () => {
     };
     return (
         <div className="text-sm">
-            <p className="font-semibold">{t("overview.lang.title")}</p>
+            <p className="dark:text-gray-100 font-semibold">{t("overview.lang.title")}</p>
             <p className="flex justify-between w-full text-gray-400 mb-2">
                 {t("overview.lang.desc")}
             </p>

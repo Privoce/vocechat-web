@@ -137,7 +137,7 @@ const Send: FC<IProps> = ({
     context == "channel" ? (channelsData[id]?.is_public ? uids : channelsData[id]?.members) : [];
   return (
     <StyledSend
-      className={`send ${mode} ${markdownFullscreen ? "fullscreen" : ""} ${replying_mid ? "reply" : ""
+      className={`send dark:bg-[#4D5761] ${mode} ${markdownFullscreen ? "fullscreen" : ""} ${replying_mid ? "reply" : ""
         } ${context}`}
     >
       {replying_mid && <Replying context={context} mid={replying_mid} id={id} />}

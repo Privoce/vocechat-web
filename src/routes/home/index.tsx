@@ -57,7 +57,7 @@ function HomePage() {
     <>
       <Manifest />
       {!guest && <Notification />}
-      <StyledWrapper className={guest ? "guest" : ""}>
+      <StyledWrapper className={`dark:!bg-[#121926] ${guest ? "guest" : ""}`}>
         {!guest && (
           <div className={`col left`}>
             {loginUid && <User uid={loginUid} />}

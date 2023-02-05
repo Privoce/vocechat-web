@@ -20,11 +20,11 @@ type TipProps = { title: string, desc: string };
 const Tip = ({ title, desc }: TipProps) => {
 
   return <div className="flex flex-col text-sm">
-    <h2 className="">{title}</h2>
-    <p className="text-gray-500">{desc}</p>
+    <h2 className="dark:text-white">{title}</h2>
+    <p className="text-gray-500 dark:text-gray-400">{desc}</p>
   </div>;
 };
-const tdClass = "p-6 whitespace-nowrap text-sm font-medium text-gray-900 align-top";
+const tdClass = "p-6 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100 align-top";
 type WebhookParams = { webhook?: string, uid: number };
 type DeleteParams = { name: string, uid: number };
 export default function BotConfig() {
@@ -65,19 +65,19 @@ export default function BotConfig() {
           <Tip title={t("webhook_tip_title")} desc={t("webhook_tip_desc")} />
         </div>
         <div className="flex flex-col gap-1">
-          <h2 className='font-semibold flex gap-4 items-center'>
+          <h2 className='font-semibold flex gap-4 items-center dark:text-white'>
             {t("manage")}
             <a href="https://doc.voce.chat/bot-and-webhook" target="_blank" className="text-sm text-blue-400 underline-offset-1 underline" rel="noopener noreferrer">
               🔗 {t("how_to_use")}
             </a>
           </h2>
-          <p className='text-gray-500 text-xs'>{t("manage_desc")}</p>
+          <p className='text-gray-500 dark:text-gray-400 text-xs'>{t("manage_desc")}</p>
         </div>
         <div className="w-fit  overflow-hidden">
           <table className="min-w-full table-auto">
-            <thead className="border-b bg-gray-50">
+            <thead className="border-b dark:border-b-gray-500 bg-gray-50 dark:bg-gray-600">
               <tr>
-                {[t("col_avatar"), t('col_name'), t('col_api_key'), t('col_webhook'), t('col_opt')].map(title => <th key={title} scope="col" className="text-sm font-bold text-gray-900 px-6 py-4 text-left">
+                {[t("col_avatar"), t('col_name'), t('col_api_key'), t('col_webhook'), t('col_opt')].map(title => <th key={title} scope="col" className="text-sm font-bold text-gray-900 dark:text-gray-100 px-6 py-4 text-left">
                   {title}
                 </th>)}
               </tr>
@@ -85,10 +85,9 @@ export default function BotConfig() {
             <tbody>
               {bots.map(bot => {
                 const { uid, name, avatar } = bot;
-                return <tr key={uid} className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
+                return <tr key={uid} className="bg-white dark:bg-gray-800 border-b dark:border-b-gray-500 transition duration-300 ease-in-out hover:bg-gray-100">
                   <td className="px-4 py-2">
                     <AvatarUploader uid={uid} url={avatar} uploadImage={updateAvatar} name={name} size={56} />
-
                   </td>
                   <td className={`${tdClass}`}>
                     <div>

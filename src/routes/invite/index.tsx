@@ -1,11 +1,12 @@
 import { useState, useEffect, FormEvent, ChangeEvent, FC } from "react";
-import StyledWrapper from "./styled";
 import { Navigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import BASE_URL from "../../app/config";
 import { useRegisterMutation } from "../../app/services/auth";
 import { useCheckMagicTokenValidMutation } from "../../app/services/auth";
 import { useAppSelector } from "../../app/store";
+import StyledButton from "../../common/component/styled/Button";
+import Input from "../../common/component/styled/Input";
 
 interface AuthForm {
   name: string;
@@ -117,15 +118,16 @@ const InvitePage: FC = () => {
   if (!valid) return <>invite token expires or invalid</>;
 
   return (
-    <StyledWrapper>
-      <div className="form animate__animated animate__fadeInDown animate__faster">
-        <div className="tips">
-          <img src={`${BASE_URL}/resource/organization/logo`} alt="logo" className="logo" />
-          <h2 className="title">Sign Up to VoceChat</h2>
-          <span className="desc">Please enter your details.</span>
+    <div className="flex-center h-screen dark:bg-[#384250]">
+      <div className="py-8 px-10 shadow-md rounded-xl">
+        <div className="flex-center flex-col pb-6">
+          <img src={`${BASE_URL}/resource/organization/logo`} alt="logo" className="w-14 h-14 mb-7 rounded-full" />
+          <h2 className="font-semibold text-2xl text-gray-800 dark:text-white mb-2">Sign Up to VoceChat</h2>
+          <span className="text-gray-400 dark:text-gray-100">Please enter your details.</span>
         </div>
-        <form onSubmit={handleReg}>
-          <input
+        <form className="flex flex-col gap-5 min-w-[360px]" onSubmit={handleReg}>
+          <Input
+            className="large"
             name="name"
             value={name}
             required
@@ -133,7 +135,8 @@ const InvitePage: FC = () => {
             data-type="name"
             onChange={handleInput}
           />
-          <input
+          <Input
+            className="large"
             name="email"
             value={email}
             required
@@ -141,7 +144,8 @@ const InvitePage: FC = () => {
             data-type="email"
             onChange={handleInput}
           />
-          <input
+          <Input
+            className="large"
             type="password"
             value={password}
             name="password"
@@ -150,7 +154,8 @@ const InvitePage: FC = () => {
             onChange={handleInput}
             placeholder="Enter your password"
           />
-          <input
+          <Input
+            className="large"
             type="password"
             value={secondPwd}
             name="password"
@@ -160,12 +165,12 @@ const InvitePage: FC = () => {
             onChange={handleSecondPwdInput}
             placeholder="Enter your password again"
           />
-          <button disabled={isLoading || isSuccess} className="btn" type="submit">
+          <StyledButton disabled={isLoading || isSuccess} className="flex justify-center" type="submit">
             Sign Up
-          </button>
+          </StyledButton>
         </form>
       </div>
-    </StyledWrapper>
+    </div>
   );
 };
 

@@ -49,7 +49,7 @@ const InviteByEmail: FC<Props> = ({ cid }) => {
   return (
     <div className="pt-4">
       <div className="flex flex-col gap-4 mb-6">
-        <label className="text-sm text-gray-400" htmlFor="">{t("invite_by_email")}</label>
+        <label className="text-sm text-gray-400 dark:text-gray-100" htmlFor="">{t("invite_by_email")}</label>
         <div className="relative flex items-center gap-2">
           <form ref={formRef} action="/" className="w-full">
             <Input
@@ -69,7 +69,7 @@ const InviteByEmail: FC<Props> = ({ cid }) => {
         </div>
       </div>
       <div className="flex flex-col gap-2 mb-3">
-        <label className="text-sm text-gray-400" htmlFor="">{t("send_invite_link")}</label>
+        <label className="text-sm text-gray-400 dark:text-gray-100" htmlFor="">{t("send_invite_link")}</label>
         <div className="relative flex items-center gap-2">
           <Input readOnly className="!pr-[50px]" placeholder="Generating" value={link} />
           <button className="absolute right-1 top-1/2 -translate-y-1/2 pr-2 text-sm text-primary-400 hover:text-primary-600" onClick={copyLink}>
@@ -80,7 +80,7 @@ const InviteByEmail: FC<Props> = ({ cid }) => {
       <div className="w-44 h-44 my-2">
         {!generating && <QRCode link={link} />}
       </div>
-      <div className="text-xs text-gray-600">
+      <div className="text-xs text-gray-600 dark:text-gray-200">
         {t("invite_link_expire")}
         <button disabled={generating} className="text-primary-400 ml-1" onClick={() => generateNewLink()}>
           {t("generate_new_link")}

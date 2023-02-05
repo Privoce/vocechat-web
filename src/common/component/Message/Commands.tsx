@@ -1,6 +1,5 @@
 import { useState, useRef, FC } from "react";
 import { useDispatch } from "react-redux";
-import styled from "styled-components";
 import Tippy from "@tippyjs/react";
 import { hideAll } from "tippy.js";
 import toast from "react-hot-toast";
@@ -21,47 +20,7 @@ import IconDelete from "../../../assets/icons/delete.svg";
 import moreIcon from "../../../assets/icons/more.svg?url";
 import useMessageOperation from "./useMessageOperation";
 import { useTranslation } from "react-i18next";
-
-const StyledCmds = styled.ul`
-  z-index: 999;
-  position: absolute;
-  right: 10px;
-  top: 0;
-  transform: translateY(-50%);
-  display: flex;
-  align-items: center;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 6px;
-  background-color: #fff;
-  visibility: hidden;
-  &.visible {
-    visibility: visible;
-  }
-  .cmd {
-    display: flex;
-    cursor: pointer;
-    padding: 4px;
-    &:hover {
-      background-color: #f3f4f6;
-    }
-    img,
-    svg {
-      width: 24px;
-      height: 24px;
-    }
-    &.fav {
-      svg path {
-        fill: #667085;
-      }
-    }
-  }
-  > .picker {
-    position: absolute;
-    left: -10px;
-    top: 0;
-    transform: translateX(-100%);
-  }
-`;
+import clsx from "clsx";
 type Props = {
   context: "user" | "channel";
   contextId: number;
@@ -124,9 +83,20 @@ const Commands: FC<Props> = ({ context = "user", contextId = 0, mid = 0, toggleE
     }
   };
 
+
+  // const StyledCmds = styled.ul`
+  //   > .picker {
+  //     position: absolute;
+  //     left: -10px;
+  //     top: 0;
+  //     transform: translateX(-100%);
+  //   }
+  // `;
   return (
     <>
-      <StyledCmds ref={cmdsRef} className={`cmds ${tippyVisible ? "visible" : ""}`}>
+      <ul
+        ref={cmdsRef}
+        className={clsx(`cmds bg-white dark:bg-gray-900 rounded-md z-[999] absolute right-2.5 top-0 -translate-y-1/2 flex items-center border border-solid border-black/10 invisible`, tippyVisible && '!visible')}>
         <Tippy
           onShow={handleTippyVisible.bind(null, true)}
           onHide={handleTippyVisible.bind(null, false)}
@@ -135,29 +105,29 @@ const Commands: FC<Props> = ({ context = "user", contextId = 0, mid = 0, toggleE
           trigger="click"
           content={<ReactionPicker mid={mid} hidePicker={hideAll} />}
         >
-          <li className="cmd">
+          <li className="flex cursor-pointer p-1 hover:bg-[#f3f4f6] dark:hover:bg-gray-800">
             <Tooltip placement="top" tip={t("action.add_reaction")}>
-              <img src={reactIcon} className="toggler" alt="icon emoji" />
+              <img src={reactIcon} className="toggler w-6 h-6" alt="icon emoji" />
             </Tooltip>
           </li>
         </Tippy>
         {canEdit && (
-          <li className="cmd" onClick={toggleEditMessage}>
+          <li className="flex cursor-pointer p-1 hover:bg-[#f3f4f6] dark:hover:bg-gray-800" onClick={toggleEditMessage}>
             <Tooltip placement="top" tip={t("action.edit")}>
-              <img src={editIcon} alt="icon edit" />
+              <img src={editIcon} className="w-6 h-6" alt="icon edit" />
             </Tooltip>
           </li>
         )}
         {canReply && (
-          <li className="cmd" onClick={handleReply}>
+          <li className="flex cursor-pointer p-1 hover:bg-[#f3f4f6] dark:hover:bg-gray-800" onClick={handleReply}>
             <Tooltip placement="top" tip={t("action.reply")}>
-              <img src={replyIcon} alt="icon reply" />
+              <img src={replyIcon} className="w-6 h-6" alt="icon reply" />
             </Tooltip>
           </li>
         )}
-        <li className="cmd fav" onClick={handleAddFav}>
+        <li className="flex cursor-pointer p-1 hover:bg-[#f3f4f6] dark:hover:bg-gray-800" onClick={handleAddFav}>
           <Tooltip placement="top" tip={t("action.add_to_fav")}>
-            <IconBookmark />
+            <IconBookmark className="fill-[#667085] w-6 h-6" />
           </Tooltip>
         </li>
         <Tippy
@@ -196,13 +166,13 @@ const Commands: FC<Props> = ({ context = "user", contextId = 0, mid = 0, toggleE
             />
           }
         >
-          <li className="cmd">
+          <li className="flex cursor-pointer p-1 hover:bg-[#f3f4f6] dark:hover:bg-gray-800">
             <Tooltip placement="top" tip={t("more")}>
               <img src={moreIcon} alt="icon more" />
             </Tooltip>
           </li>
         </Tippy>
-      </StyledCmds>
+      </ul>
       {PinModal}
       {ForwardModal}
       {DeleteModal}

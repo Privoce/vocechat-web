@@ -48,17 +48,17 @@ const Type: FC<Props> = ({ select = "", updateFilter }) => {
   };
 
   return (
-    <div className="p-3 bg-white min-w-[100px] overflow-auto shadow-md rounded-lg flex flex-col items-start relative">
+    <div className="p-3 bg-white min-w-[180px] overflow-auto shadow-md rounded-lg flex flex-col items-start relative">
       <ul className="w-full flex flex-col gap-4">
-        <li className="flex justify-between" onClick={handleClick.bind(null, undefined)}>
+        <li className="relative cursor-pointer flex items-center gap-4 text-gray-500 font-semibold text-sm" onClick={handleClick.bind(null, undefined)}>
           Any Type
-          {!select && <CheckSign className="check" />}
+          {!select && <CheckSign className="absolute right-0 top-1/2 -translate-y-1/2" />}
         </li>
         {Object.entries(FileTypes).map(([type, { title, icon }]) => {
           return (
             <li key={title} className="relative cursor-pointer flex items-center gap-2 text-sm text-gray-500 font-semibold" onClick={handleClick.bind(null, type)}>
               {icon} {title}
-              {select == type && <CheckSign className="absolute right-0 left-1/2 -translate-y-1/2" />}
+              {select == type && <CheckSign className="absolute right-0 top-1/2 -translate-y-1/2" />}
             </li>
           );
         })}

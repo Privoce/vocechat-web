@@ -45,8 +45,8 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
   const isCard = type == 'card';
   const canRemoveFromServer = !isCard && canRemove;
   const hasMore = email || canRemoveFromChannel || canRemoveFromServer;
-  const iconClass = `cursor-pointer flex flex-col items-center gap-1 rounded-lg w-32 text-primary-400 bg-slate-100 text-sm pt-3.5 pb-3`;
-  const containerClass = clsx(`flex-center flex-col w-[432px] gap-1 z-[998] mt-20 select-none`, isCard && "p-4 w-[280px] bg-white drop-shadow rounded-md");
+  const iconClass = `cursor-pointer flex flex-col items-center gap-1 rounded-lg w-32 text-primary-400 bg-slate-100 dark:bg-gray-700 text-sm pt-3.5 pb-3`;
+  const containerClass = clsx(`flex-center flex-col w-[432px] gap-1 z-[99] mt-20 select-none`, isCard && "p-4 w-[280px] bg-white dark:bg-gray-800 drop-shadow rounded-md");
   return (
     <div className={containerClass}>
       <Avatar
@@ -56,8 +56,8 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
         src={avatar}
         name={name}
       />
-      <h2 className="text-lg select-text font-bold text-[#1c1c1e]">{name}</h2>
-      <span className="text-sm text-[#98a2b3] select-text">{email}</span>
+      <h2 className="text-lg select-text font-bold text-[#1c1c1e] dark:text-white">{name}</h2>
+      <span className="text-sm text-[#98a2b3] dark:text-gray-200 select-text">{email}</span>
       {/* <p className="intro">{introduction}</p> */}
       <ul className={clsx("mt-6 flex items-center gap-2", isCard && "pb-0.5")}>
         <NavLink to={`/chat/dm/${uid}`}>

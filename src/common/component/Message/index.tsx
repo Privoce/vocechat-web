@@ -96,7 +96,7 @@ const Message: FC<IProps> = ({
       onContextMenu={readOnly ? undefined : handleContextMenuEvent}
       data-msg-mid={mid}
       ref={inviewRef}
-      className={`message ${readOnly ? "readonly" : ""} ${showExpire ? "auto_delete" : ""} ${pinInfo ? "pinned" : ""} ${contextMenuVisible ? "contextVisible" : ""
+      className={`message dark:hover:!bg-gray-800 ${readOnly ? "readonly" : ""} ${showExpire ? "auto_delete" : ""} ${pinInfo ? "pinned" : ""} ${contextMenuVisible ? "contextVisible" : ""
         } `}
     >
       <Tippy
@@ -133,14 +133,14 @@ const Message: FC<IProps> = ({
               placement="top"
               tip={dayjsTime.format("YYYY-MM-DD h:mm:ss A")}
             >
-              <i className="time">
+              <time className="time">
                 {timePrefix
                   ? `${timePrefix} ${dayjsTime.format("h:mm A")}`
                   : dayjsTime.format("YYYY-MM-DD h:mm:ss A")}
-              </i>
+              </time>
             </Tooltip>
           </div>
-          <div className={`down ${sending ? "sending" : ""}`}>
+          <div className={`down dark:!text-white ${sending ? "sending" : ""}`}>
             {reply_mid && <Reply key={reply_mid} mid={reply_mid} />}
             {edit ? (
               <EditMessage mid={mid} cancelEdit={toggleEditMessage} />

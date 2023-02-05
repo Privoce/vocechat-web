@@ -28,7 +28,7 @@ export default function Server({ readonly = false }: Props) {
             <img alt={`${name} logo`} className="w-full h-full object-cover rounded-full" src={logo} />
           </div>
           <div className="flex flex-col gap-1">
-            <h3 className="text-sm text-gray-600" title={description}>
+            <h3 className="text-sm text-gray-600 dark:text-gray-100" title={description}>
               {name}
             </h3>
             <span className="text-xs text-gray-500">{userCount} {t("members")}</span>
@@ -45,7 +45,7 @@ export default function Server({ readonly = false }: Props) {
             <img alt={`${name} logo`} className="w-full h-full object-cover rounded-full" src={logo} />
           </div>
           <div className="flex flex-col gap-1">
-            <h3 className="text-sm text-gray-600 font-bold" title={description}>
+            <h3 className="text-sm text-gray-600 font-bold dark:text-gray-100" title={description}>
               {name}
             </h3>
             <span className="text-xs text-gray-500">{userCount} {t("members")}</span>

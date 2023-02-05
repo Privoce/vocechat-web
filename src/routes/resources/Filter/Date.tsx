@@ -1,42 +1,6 @@
 import { FC } from "react";
-import styled from "styled-components";
 import CheckSign from "../../../assets/icons/check.sign.svg";
 
-const Styled = styled.div`
-  padding: 12px;
-  background: #ffffff;
-  min-width: 200px;
-  overflow: auto;
-  box-shadow: 0px 24px 48px -12px rgba(16, 24, 40, 0.18);
-  border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  position: relative;
-  > .list {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    .date {
-      position: relative;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      color: #616161;
-      font-weight: 600;
-      font-size: 14px;
-      line-height: 20px;
-      .check {
-        position: absolute;
-        right: 0;
-        top: 50%;
-        transform: translateY(-50%);
-      }
-    }
-  }
-`;
 
 export const Dates = {
   today: {
@@ -66,22 +30,22 @@ const DateFilter: FC<Props> = ({ select = "", updateFilter }) => {
   };
 
   return (
-    <Styled>
-      <ul className="list">
-        <li className="date" onClick={handleClick.bind(null, undefined)}>
+    <div className="p-3 bg-white min-w-[200px] overflow-auto rounded-lg flex flex-col items-start relative drop-shadow">
+      <ul className="w-full flex flex-col gap-4">
+        <li className="relative cursor-pointer flex items-center gap-4 text-gray-500 font-semibold text-sm" onClick={handleClick.bind(null, undefined)}>
           Any Time
-          {!select && <CheckSign className="check" />}
+          {!select && <CheckSign className="absolute right-0 top-1/2 -translate-y-1/2" />}
         </li>
         {Object.entries(Dates).map(([_key, { title }]) => {
           return (
-            <li key={title} className="date" onClick={handleClick.bind(null, _key)}>
+            <li key={title} className="relative cursor-pointer flex items-center gap-4 text-gray-500 font-semibold text-sm" onClick={handleClick.bind(null, _key)}>
               {title}
-              {select == _key && <CheckSign className="check" />}
+              {select == _key && <CheckSign className="absolute right-0 -top-1/2 -translate-y-1/2" />}
             </li>
           );
         })}
       </ul>
-    </Styled>
+    </div>
   );
 };
 export default DateFilter;

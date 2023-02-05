@@ -1,6 +1,5 @@
 import { FC } from "react";
 import { useState, useEffect } from "react";
-import Styled from "./styled";
 import Session from "./Session";
 import { useAppSelector } from "../../../app/store";
 export interface ChatSession {
@@ -41,12 +40,12 @@ const SessionList: FC<Props> = () => {
   }, [channelIDs, channelMessage, readChannels, readUsers, loginUid, userMessage]);
 
   return (
-    <Styled>
+    <ul className="flex flex-col gap-0.5 p-2 overflow-auto h-[calc(100vh_-_56px_-_16px_-_8px)]">
       {sessions.map((s) => {
         const { key, id, mid = 0 } = s;
         return <Session key={key} id={id} mid={mid} />;
       })}
-    </Styled>
+    </ul>
   );
 };
 export default SessionList;

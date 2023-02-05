@@ -62,6 +62,13 @@
     "lang": {
       "title": "语言",
       "desc": "设置界面语言"
+    },
+    "theme": {
+      "title": "主题",
+      "desc": "设置主题模式",
+      "auto": "自动",
+      "dark": "黑夜模式",
+      "light": "白天模式"
     }
   },
   "license": {

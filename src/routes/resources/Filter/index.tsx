@@ -1,5 +1,4 @@
 import { useState } from "react";
-import styled from "styled-components";
 import Tippy from "@tippyjs/react";
 import Avatar from "../../../common/component/Avatar";
 import FilterDate, { Dates } from "./Date";
@@ -9,41 +8,12 @@ import FilterType, { FileTypes } from "./Type";
 import ArrowDown from "../../../assets/icons/arrow.down.svg";
 import { useAppSelector } from "../../../app/store";
 import { useTranslation } from "react-i18next";
+import clsx from "clsx";
 
-const Styled = styled.div`
-  /* padding: 20px 0; */
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  .filter {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    border: 1px solid #d0d5dd;
-    box-sizing: border-box;
-    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
-    border-radius: var(--br);
-    padding: 7px 12px;
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 18px;
-    &.selected {
-      border: none;
-      color: #fff;
-      background-color: #22ccee;
-      .arrow path {
-        stroke: #fff;
-      }
-    }
-    .avatar {
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-    }
-  }
-`;
+const getClass = (selected: boolean) => {
 
+  return clsx(`cursor-pointer flex items-center gap-2 border border-solid box-border shadow rounded-lg py-2 px-3 text-xs`, selected && 'text-white bg-primary-400');
+};
 export default function Filter({ filter, updateFilter }) {
   const { t } = useTranslation("file");
   const [filtersVisible, setFiltersVisible] = useState({
@@ -79,8 +49,9 @@ export default function Filter({ filter, updateFilter }) {
     from: fromVisible
   } = filtersVisible;
 
+
   return (
-    <Styled>
+    <div className="flex items-center gap-2">
       <Tippy
         interactive
         onClickOutside={toggleFilterVisible.bind(null, { from: false })}
@@ -89,14 +60,14 @@ export default function Filter({ filter, updateFilter }) {
         content={<FilterFrom select={filter.from} updateFilter={handleUpdateFilter} />}
       >
         <div
-          className={`filter ${from && "selected"}`}
+          className={getClass(from)}
           onClick={toggleFilterVisible.bind(null, { from: true })}
         >
           {from && (
             <Avatar
               width={16}
               height={16}
-              className="avatar"
+              className="w-4 h-4 rounded-full"
               name={userMap[from].name}
               src={userMap[from].avatar}
             />
@@ -115,7 +86,7 @@ export default function Filter({ filter, updateFilter }) {
         content={<FilterChannel select={filter.channel} updateFilter={handleUpdateFilter} />}
       >
         <div
-          className={`filter ${channel && "selected"}`}
+          className={getClass(channel)}
           onClick={toggleFilterVisible.bind(null, { channel: true })}
         >
           <span className="txt">{channel ? `In ${channelMap[channel].name}` : t("channel")}</span>
@@ -130,7 +101,7 @@ export default function Filter({ filter, updateFilter }) {
         content={<FilterType select={filter.type} updateFilter={handleUpdateFilter} />}
       >
         <div
-          className={`filter ${type && "selected"}`}
+          className={getClass(type)}
           onClick={toggleFilterVisible.bind(null, { type: true })}
         >
           <span className="txt">{type ? FileTypes[type].title : t("type")}</span>
@@ -145,13 +116,13 @@ export default function Filter({ filter, updateFilter }) {
         content={<FilterDate select={filter.date} updateFilter={handleUpdateFilter} />}
       >
         <div
-          className={`filter ${date && "selected"}`}
+          className={getClass(date)}
           onClick={toggleFilterVisible.bind(null, { date: true })}
         >
           <span className="txt">{date ? Dates[date].title : t("date")}</span>
           <ArrowDown className="arrow" />
         </div>
       </Tippy>
-    </Styled>
+    </div>
   );
 }

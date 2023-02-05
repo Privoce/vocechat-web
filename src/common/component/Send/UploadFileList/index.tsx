@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Styled from "./styled";
 import { useMixedEditor } from "../../MixedInput";
 import EditFileDetailsModal from "./EditFileDetails";
 import { getFileIcon, formatBytes } from "../../../utils";
@@ -43,6 +42,7 @@ export default function UploadFileList({
   }, [stageFiles.length]);
 
   if (!context || !id || !stageFiles || stageFiles.length == 0) return null;
+
   return (
     <>
       {editInfo && (
@@ -53,21 +53,21 @@ export default function UploadFileList({
         />
       )}
 
-      <Styled>
+      <ul className="w-full overflow-auto flex justify-start p-4 pt-6 bg-gray-200 dark:bg-gray-800 rounded-t-lg">
         {stageFiles.map(({ name, url, size, type }, idx: number) => {
           return (
-            <li className="file" key={url}>
-              <div className="preview">
-                {type.startsWith("image") ? <img src={url} alt="image" /> : getFileIcon(type, name)}
+            <li className="group relative flex flex-col bg-gray-100 dark:bg-gray-700 rounded p-2" key={url}>
+              <div className="flex-center w-40 h-40">
+                {type.startsWith("image") ? <img className="w-full h-full object-cover" src={url} alt="image" /> : getFileIcon(type, name)}
               </div>
-              <h4 className="name">{name}</h4>
-              <span className="size">{formatBytes(size)}</span>
-              <ul className="opts">
-                <li className="opt edit" onClick={handleOpenEditModal.bind(null, idx)}>
+              <h4 className="w-40 mt-4 mb-0.5 font-semibold text-sm text-gray-800 dark:text-gray-100 whitespace-nowrap overflow-hidden text-ellipsis">{name}</h4>
+              <span className="text-xs text-gray-500">{formatBytes(size)}</span>
+              <ul className="invisible group-hover:visible bg-inherit border border-solid border-black/10 box-border rounded-md flex items-center absolute -right-5 -top-2.5">
+                <li className="p-1 cursor-pointer edit" onClick={handleOpenEditModal.bind(null, idx)}>
                   <EditIcon />
                 </li>
                 <li
-                  className="opt delete"
+                  className="p-1 cursor-pointer delete"
                   data-index={idx}
                   onClick={removeStageFile.bind(null, idx)}
                 >
@@ -77,7 +77,7 @@ export default function UploadFileList({
             </li>
           );
         })}
-      </Styled>
+      </ul>
     </>
   );
 }

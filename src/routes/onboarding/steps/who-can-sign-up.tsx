@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import styled from "styled-components";
 import StyledRadio from "../../../common/component/styled/Radio";
 import StyledButton from "../../../common/component/styled/Button";
 import { useGetLoginConfigQuery, useUpdateLoginConfigMutation } from "../../../app/services/server";
@@ -40,20 +39,9 @@ export default function SignUpSetting() {
     if (isSuccess) nextStep();
   }, [isSuccess]);
 
-  const StyledWrapper = styled.div`
-  /* > form {
-    width: 512px;
-  }
-
-  > .button {
-    width: 124px;
-    height: 44px;
-    margin-top: 24px;
-  } */
-`;
 
   return (
-    <StyledWrapper className="h-full flex-center flex-col text-center w-[512px] m-auto">
+    <div className="h-full flex-center flex-col text-center w-[512px] m-auto">
       <span className="font-bold text-2xl mb-2">{t("onboarding.invite_title")}</span>
       <span className="text-sm mb-6">{t("onboarding.invite_desc")}</span>
       {value && <StyledRadio
@@ -82,6 +70,6 @@ export default function SignUpSetting() {
       >
         {t("onboarding.confirm")}
       </StyledButton>
-    </StyledWrapper>
+    </div>
   );
 }

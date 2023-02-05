@@ -3,7 +3,6 @@ import { useState, useEffect, FormEvent, ChangeEvent } from "react";
 import toast from "react-hot-toast";
 import BASE_URL from "../../app/config";
 // import web3 from "web3";
-import StyledWrapper from "./styled";
 
 import Input from "../../common/component/styled/Input";
 import Button from "../../common/component/styled/Button";
@@ -15,6 +14,7 @@ import useGoogleAuthConfig from "../../common/hook/useGoogleAuthConfig";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useTranslation } from "react-i18next";
 import SocialLoginButtons from "./SocialLoginButtons";
+import Divider from "../../common/component/Divider";
 
 export default function LoginPage() {
   const { t } = useTranslation("auth");
@@ -122,15 +122,16 @@ export default function LoginPage() {
   const hasDivider =
     enableMagicLink || googleLogin || enableMetamaskLogin || oidc.length > 0 || enableGithubLogin;
 
+
   return (
-    <StyledWrapper>
-      <div className="form">
-        <div className="tips">
-          <img src={`${BASE_URL}/resource/organization/logo`} alt="logo" className="logo" />
-          <h2 className="title">{t("login.title")}</h2>
-          <span className="desc">{t("login.desc")}</span>
+    <div className="flex-center h-screen dark:bg-[#384250]">
+      <div className="py-8 px-10 shadow-md rounded-xl">
+        <div className="flex-center flex-col pb-6">
+          <img src={`${BASE_URL}/resource/organization/logo`} alt="logo" className="w-14 h-14 mb-7 rounded-full" />
+          <h2 className="font-semibold text-2xl text-gray-800 dark:text-white mb-2">{t("login.title")}</h2>
+          <span className="text-gray-400 dark:text-gray-100">{t("login.desc")}</span>
         </div>
-        <form onSubmit={handleLogin}>
+        <form className="flex flex-col gap-5 min-w-[360px]" onSubmit={handleLogin}>
           <Input
             className="large"
             name="email"
@@ -155,8 +156,8 @@ export default function LoginPage() {
             {isLoading ? "Signing" : t("sign_in")}
           </Button>
         </form>
-        {hasDivider && <hr className="or" />}
-        <div className="btns">
+        {hasDivider && <Divider content="OR" />}
+        <div className="flex flex-col gap-4">
 
           {enableMagicLink && <MagicLinkLogin />}
 
@@ -164,6 +165,6 @@ export default function LoginPage() {
         </div>
         {whoCanSignUp === "EveryOne" && <SignUpLink smtp={enableSMTP} />}
       </div>
-    </StyledWrapper>
+    </div>
   );
 }

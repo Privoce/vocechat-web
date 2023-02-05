@@ -8,5 +8,5 @@ export default function MagicLinkLogin() {
     // signIn();
   };
 
-  return <Button className="w-full mb-4" onClick={handleGoogleLogin}>Sign in with Magic Link</Button>;
+  return <Button className="w-full" onClick={handleGoogleLogin}>Sign in with Magic Link</Button>;
 }

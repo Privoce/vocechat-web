@@ -2,7 +2,6 @@ import styled from "styled-components";
 const Styled = styled.article`
   position: relative;
   width: 100%;
-  background: #fff;
   border-top-right-radius: 16px;
   border-bottom-right-radius: 16px;
   > .head {
@@ -21,7 +20,6 @@ const Styled = styled.article`
     > .chat {
       border-bottom-right-radius: 16px;
       width: 100%;
-      background-color: #fff;
       display: flex;
       flex-direction: column;
       padding: 0;

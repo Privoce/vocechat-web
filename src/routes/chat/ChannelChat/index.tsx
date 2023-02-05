@@ -145,7 +145,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
           <header className="head flex items-center h-full justify-center md:justify-between">
             <div className="flex items-center gap-1 text-base">
               <ChannelIcon personal={!is_public} />
-              <span className="text-gray-800">{name}</span>
+              <span className="text-gray-800 dark:text-white">{name}</span>
               <span className="ml-2 text-gray-500">{description}</span>
             </div>
           </header>
@@ -155,7 +155,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
             {addVisible && (
               <div className="add" onClick={toggleAddVisible}>
                 <img className="icon" src={addIcon} />
-                <div className="txt">{t("add_channel_members")}</div>
+                <div className="txt dark:!text-gray-50">{t("add_channel_members")}</div>
               </div>
             )}
             {memberIds.map((uid: number) => {
@@ -179,8 +179,8 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
             <LoadMore pullUp={pullUp} pulling={pulling} />
           ) : (
             <div className="info">
-              <h2 className="title">{t("welcome_channel", { name })}</h2>
-              <p className="desc">{t("welcome_desc", { name })} </p>
+              <h2 className="title dark:text-white">{t("welcome_channel", { name })}</h2>
+              <p className="desc dark:!text-gray-300">{t("welcome_desc", { name })} </p>
               {loginUser?.is_admin && (
                 <NavLink to={`/setting/channel/${cid}?f=${pathname}`} className="edit">
                   <EditIcon className="icon" />

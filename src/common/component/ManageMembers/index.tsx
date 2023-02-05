@@ -4,7 +4,6 @@ import { hideAll } from "tippy.js";
 import toast from "react-hot-toast";
 import { useUpdateUserMutation } from "../../../app/services/user";
 import User from "../User";
-import StyledWrapper from "./styled";
 import StyledMenu from "../styled/Menu";
 import InviteLink from "../InviteLink";
 import moreIcon from "../../../assets/icons/more.svg?url";
@@ -54,16 +53,16 @@ const ManageMembers: FC<Props> = ({ cid }) => {
   const channel = cid ? channels.byId[cid] : null;
   const uids = channel ? (channel.is_public ? users.ids : channel.members) : users.ids;
   return (
-    <StyledWrapper>
+    <section className="flex flex-col w-full">
       {loginUser?.is_admin && <InviteLink />}
-      <div className="intro">
-        <h4 className="title">{t("manage_members")}</h4>
-        <p className="desc">
+      <div className="flex flex-col mb-10">
+        <h4 className="font-bold text-gray-600 dark:text-white">{t("manage_members")}</h4>
+        <p className="text-gray-500 dark:text-gray-100 text-xs">
           {t("manage_tip")}
         </p>
       </div>
 
-      <ul className="members">
+      <ul className="flex flex-col gap-1 w-[512px] mb-44">
         {uids.map((uid) => {
           const currUser = users.byId[uid];
           if (!currUser) return null;
@@ -75,18 +74,18 @@ const ManageMembers: FC<Props> = ({ cid }) => {
           const canRemoveFromChannel =
             channel && channel.owner == loginUser?.uid && loginUser?.uid != uid;
           return (
-            <li key={uid} className="member">
-              <div className="left">
+            <li key={uid} className="w-full flex items-center justify-between px-3 py-2 rounded-md hover:bg-slate-50 dark:hover:bg-gray-800">
+              <div className="flex gap-4">
                 <User compact uid={uid} interactive={false} />
-                <div className="info">
-                  <span className="name">
+                <div className="flex flex-col">
+                  <span className="font-bold text-sm text-gray-600 dark:text-white flex items-center gap-1">
                     {name} {owner && <IconOwner />}
                   </span>
-                  <span className="email">{email}</span>
+                  <span className="text-xs text-gray-500 dark:text-slate-50">{email}</span>
                 </div>
               </div>
-              <div className="right">
-                <span className="role">
+              <div className="flex items-center gap-7">
+                <span className="text-xs text-right text-gray-500 dark:text-slate-100 flex items-center gap-1">
                   {is_admin ? t("admin") : t("user")}
                   {switchRoleVisible && (
                     <Tippy
@@ -120,7 +119,7 @@ const ManageMembers: FC<Props> = ({ cid }) => {
                         </StyledMenu>
                       }
                     >
-                      <IconArrowDown className="icon" />
+                      <IconArrowDown className="cursor-pointer dark:fill-slate-50" />
                     </Tippy>
                   )}
                 </span>
@@ -130,7 +129,7 @@ const ManageMembers: FC<Props> = ({ cid }) => {
                     placement="right-start"
                     trigger="click"
                     content={
-                      <StyledMenu className="menu">
+                      <StyledMenu className="min-w-30">
                         {email && (
                           <li className="item" onClick={copyEmail.bind(null, email)}>
                             {ct("action.copy_email")}
@@ -149,8 +148,8 @@ const ManageMembers: FC<Props> = ({ cid }) => {
                       </StyledMenu>
                     }
                   >
-                    <div className="opts">
-                      <img className="dots" src={moreIcon} alt="dots icon" />
+                    <div className="relative w-6 h-6">
+                      <img className="cursor-pointer" src={moreIcon} alt="dots icon" />
                     </div>
                   </Tippy>
                 )}
@@ -159,7 +158,7 @@ const ManageMembers: FC<Props> = ({ cid }) => {
           );
         })}
       </ul>
-    </StyledWrapper>
+    </section>
   );
 };
 export default ManageMembers;

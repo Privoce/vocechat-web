@@ -6,14 +6,10 @@ const StyledWrapper = styled.div`
   padding-bottom: 10px;
   padding-right: 4px;
   > .left {
-    background-color: #fff;
-    position: relative;
-    /* display: flex; */
     flex-direction: column;
     min-width: 268px;
     box-shadow: inset -1px 0px 0px rgba(0, 0, 0, 0.05);
     height: 100%;
-    /* overflow: auto; */
     border-radius: 16px 0 0 16px;
     .list {
       margin: 12px 8px;
@@ -149,7 +145,6 @@ const StyledWrapper = styled.div`
     border-radius: 0 16px 16px 0;
     width: 100%;
     &.placeholder {
-      background-color: #fff;
       height: 100%;
       display: flex;
       align-items: center;

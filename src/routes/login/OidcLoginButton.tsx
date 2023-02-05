@@ -1,68 +1,49 @@
 /* eslint-disable no-undef */
 import { FC, useState } from "react";
-import styled from "styled-components";
 import StyledModal from "../../common/component/styled/Modal";
 import Modal from "../../common/component/Modal";
-import { StyledSocialButton } from "./styled";
 import StyledButton from "../../common/component/styled/Button";
 import OidcLoginEntry from "./OidcLoginEntry";
 import { OIDCConfig } from "../../types/auth";
 import { useTranslation } from "react-i18next";
 import { AuthType } from "../../types/common";
-
-const StyledOidcLoginModal = styled(StyledModal)`
-  text-align: center;
-  padding: 32px 32px 16px;
-
-  > *:first-child {
-    margin-bottom: 32px;
-  }
-
-  > .button {
-    > .icon {
-      width: 24px;
-      height: 24px;
-    }
-
-    &.buttonCancel {
-      color: #8f8f8f;
-    }
-  }
-`;
+import Button from "../../common/component/styled/Button";
 interface IProps {
   issuers?: OIDCConfig[];
   type?: AuthType
 }
 const OidcLoginButton: FC<IProps> = ({ issuers, type = "login" }) => {
   const { t } = useTranslation("auth");
+  const { t: ct } = useTranslation();
   const [modal, setModal] = useState(false);
   if (!issuers) return null;
   return (
     <>
-      <StyledSocialButton
+      <Button
+        className="flex ghost flex-center gap-2 !text-gray-600 !border-slate-200 dark:!text-gray-100"
         onClick={() => {
           setModal(true);
         }}
       >
         {type == "login" ? t("login.oidc") : t("reg.oidc")}
-      </StyledSocialButton>
+      </Button>
       {modal && (
         <Modal id="modal-modal">
-          <StyledOidcLoginModal title="Login with OIDC">
+          <StyledModal className="text-center " title="Login with OIDC">
             {issuers
               .filter((issuer) => issuer.enable)
               .map((issuer, index) => (
                 <OidcLoginEntry issuer={issuer} key={index} />
               ))}
             <StyledButton
-              className="border_less ghost buttonCancel"
+              className="border_less ghost text-gray-500 dark:text-white"
               onClick={() => {
                 setModal(false);
               }}
             >
-              Close
+              {ct("action.close")}
             </StyledButton>
-          </StyledOidcLoginModal>
+          </StyledModal>
         </Modal>
       )}
     </>

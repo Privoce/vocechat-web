@@ -1,15 +1,16 @@
 // @ts-nocheck
 import { useState, useEffect, FC } from "react";
+import clsx from "clsx";
 import dayjs from "dayjs";
 import { useDrop } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
+import { useNavigate, NavLink } from "react-router-dom";
 import ContextMenu from "./ContextMenu";
 import getUnreadCount, { renderPreviewMessage } from "../utils";
 import User from "../../../common/component/User";
 import Avatar from "../../../common/component/Avatar";
 import IconLock from "../../../assets/icons/lock.svg";
 import useContextMenu from "../../../common/hook/useContextMenu";
-import { useNavigate, NavLink } from "react-router-dom";
 import useUploadFile from "../../../common/hook/useUploadFile";
 import { useAppSelector } from "../../../app/store";
 
@@ -95,7 +96,6 @@ const Session: FC<IProps> = ({
     messageData,
     loginUid
   });
-
   return (
     <li className="session">
       <ContextMenu
@@ -109,11 +109,11 @@ const Session: FC<IProps> = ({
       >
         <NavLink
           ref={drop}
-          className={`nav ${isActive ? "drop_over" : ""} ${muted ? "muted" : ""}`}
+          className={({ isActive: linkActive }) => clsx(`nav flex gap-2 rounded-lg p-2 w-full hover:bg-gray-500/20`, isActive && "shadow-[inset_0_0_0_2px_#52edff]", linkActive && "bg-gray-500/20")}
           to={type == "user" ? `/chat/dm/${id}` : `/chat/channel/${id}`}
           onContextMenu={handleContextMenuEvent}
         >
-          <div className="icon">
+          <div className="flex bg-slate-50 rounded-full">
             {type == "user" ? (
               <User avatarSize={40} compact interactive={false} uid={id} />
             ) : (
@@ -127,21 +127,21 @@ const Session: FC<IProps> = ({
               />
             )}
           </div>
-          <div className="details">
-            <div className="up">
-              <span className={`name ${previewMsg.created_at ? "" : "only_title"}`}>
+          <div className="w-full flex flex-col justify-between">
+            <div className="flex items-center justify-between">
+              <span className={clsx(`flex items-center gap-2 font-semibold text-sm text-gray-500 dark:text-white whitespace-nowrap overflow-hidden text-ellipsis`, previewMsg.created_at && "max-w-[190px]")}>
                 {name} {!is_public && <IconLock />}
               </span>
-              <span className="time">
+              <span className="text-xs text-gray-600 whitespace-nowrap overflow-hidden max-w-[80px] text-ellipsis">
                 {previewMsg.created_at ? dayjs(previewMsg.created_at).fromNow() : null}
               </span>
             </div>
-            <div className="down">
-              <span className="msg">{renderPreviewMessage(previewMsg)}</span>
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-gray-500 whitespace-nowrap overflow-hidden w-36 text-ellipsis">{renderPreviewMessage(previewMsg)}</span>
               {unreads > 0 && (
-                <i className={`badge ${unreads > 99 ? "dot" : ""}`}>
+                <strong className={clsx(`text-white h-5 min-w-[20px] bg-primary-400 font-bold text-[10px] rounded-[10px] flex-center`, unreads > 99 && 'w-1.5 h-1.5 p-0 min-w-[unset]', muted && "bg-gray-500")}>
                   {unreads > 99 ? null : unreads}
-                </i>
+                </strong>
               )}
             </div>
           </div>
