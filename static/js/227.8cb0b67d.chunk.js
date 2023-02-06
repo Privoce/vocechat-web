@@ -1,4 +1,4 @@
-"use strict";(globalThis.webpackChunkvocechat_web=globalThis.webpackChunkvocechat_web||[]).push([[227],{17237:(e,a,s)=>{s.d(a,{Z:()=>d});var r=s(70537),o=s(40182),t=s(57889),n=s(80683);const i=t.ZP.div`
+"use strict";(globalThis.webpackChunkvocechat_web=globalThis.webpackChunkvocechat_web||[]).push([[227],{17237:(e,a,s)=>{s.d(a,{Z:()=>d});var r=s(70537),o=s(40182),t=s(87442),n=s(80683);const i=t.ZP.div`
   width: 100%;
   position: relative;
   display: flex;
