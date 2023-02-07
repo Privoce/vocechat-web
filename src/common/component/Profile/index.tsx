@@ -4,7 +4,6 @@ import Tippy from "@tippyjs/react";
 import IconMessage from "../../../assets/icons/message.svg";
 import IconMore from "../../../assets/icons/more.svg";
 import Avatar from "../Avatar";
-import StyledMenu from "../styled/Menu";
 import useUserOperation from "../../hook/useUserOperation";
 import { useAppSelector } from "../../../app/store";
 import { useTranslation } from "react-i18next";
@@ -76,7 +75,7 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
           trigger="click"
           hideOnClick={true}
           content={
-            <StyledMenu>
+            <ul className="context-menu">
               {canCopyEmail && (
                 <li className="item" onClick={copyEmail.bind(undefined, email)}>
                   {t("copy_email")}
@@ -92,7 +91,7 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
                   {t("remove")}
                 </li>
               )}
-            </StyledMenu>
+            </ul>
           }
         >
           <li className={`${iconClass} icon ${hasMore ? "" : "text-gray-500"}`}>

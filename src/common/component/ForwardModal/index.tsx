@@ -1,25 +1,26 @@
 import { useState, MouseEvent, ChangeEvent, FC } from "react";
-// import toast from "react-hot-toast";
+import toast from "react-hot-toast";
+
 import Modal from "../Modal";
 import Button from "../styled/Button";
 import Input from "../styled/Input";
 import Channel from "../Channel";
 import User from "../User";
 import Reply from "../Message/Reply";
-import StyledWrapper from "./styled";
 import useForwardMessage from "../../hook/useForwardMessage";
 import useSendMessage from "../../hook/useSendMessage";
 import useFilteredChannels from "../../hook/useFilteredChannels";
 import useFilteredUsers from "../../hook/useFilteredUsers";
 import CloseIcon from "../../../assets/icons/close.circle.svg";
 import StyledCheckbox from "../styled/Checkbox";
-import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 interface IProps {
   mids: number[];
   closeModal: () => void;
 }
 
 const ForwardModal: FC<IProps> = ({ mids, closeModal }) => {
+  const { t } = useTranslation();
   const [appendText, setAppendText] = useState("");
   const { sendMessages } = useSendMessage();
   const { forwardMessage, forwarding } = useForwardMessage();
@@ -74,16 +75,17 @@ const ForwardModal: FC<IProps> = ({ mids, closeModal }) => {
     (selectedChannels.length == 0 && selectedMembers.length == 0) || forwarding;
   return (
     <Modal>
-      <StyledWrapper>
-        <div className="left">
-          <div className="search">
+      <div className="flex max-h-[514px] min-h-[400px] bg-white drop-shadow rounded-lg overflow-hidden">
+        <div className="w-[271px] shadow-[inset_-1px_0px_0px_rgba(0,_0,_0,_0.1)] overflow-y-scroll bg-inherit">
+          <div className="sticky top-0 bg-inherit z-[90] p-4 w-[calc(100%_-_1px)]">
             <input
+              className="px-2 py-2.5 text-sm bg-black/10 rounded-lg w-full"
               value={input}
               onChange={handleSearchChange}
               placeholder="Search user or channel"
             />
           </div>
-          <ul className="users">
+          <ul className="flex flex-col pb-5">
             {channels &&
               channels.map((c) => {
                 const { gid } = c;
@@ -93,7 +95,7 @@ const ForwardModal: FC<IProps> = ({ mids, closeModal }) => {
                     key={gid}
                     data-type="channel"
                     data-id={gid}
-                    className="user channel"
+                    className="cursor-pointer flex items-center px-4 rounded hover:bg-gray-600/10"
                     onClick={toggleCheck}
                   >
                     <StyledCheckbox readOnly checked={checked} name="cb" id="cb" />
@@ -110,7 +112,7 @@ const ForwardModal: FC<IProps> = ({ mids, closeModal }) => {
                     key={uid}
                     data-id={uid}
                     data-type="user"
-                    className="user"
+                    className="cursor-pointer flex items-center px-4 rounded hover:bg-gray-600/10"
                     onClick={toggleCheck}
                   >
                     <StyledCheckbox readOnly checked={checked} name="cb" id="cb" />
@@ -120,15 +122,15 @@ const ForwardModal: FC<IProps> = ({ mids, closeModal }) => {
               })}
           </ul>
         </div>
-        <div className={`right`}>
-          <h3 className="title">Send To {selectedCount}</h3>
-          <ul className="selected">
+        <div className={`flex flex-col items-start p-4 box-border`}>
+          <h3 className="font-semibold text-sm text-gray-700 mb-4">Send To {selectedCount}</h3>
+          <ul className="w-full h-[260px] py-2.5 overflow-y-scroll">
             {selectedChannels.map((cid) => {
               return (
-                <li key={cid} className="item">
+                <li key={cid} className="relative">
                   <Channel key={cid} id={cid} interactive={false} />
                   <CloseIcon
-                    className="remove"
+                    className="cursor-pointer absolute right-1 top-1/2 -translate-y-1/2"
                     onClick={removeSelected.bind(null, cid, "channel")}
                   />
                 </li>
@@ -143,27 +145,27 @@ const ForwardModal: FC<IProps> = ({ mids, closeModal }) => {
               );
             })}
           </ul>
-          <div className="msgs">
+          <div className="rounded-lg p-2 max-h-[200px] overflow-auto bg-slate-100 w-[280px] mb-1">
             {mids.map((mid) => (
               <Reply key={mid} mid={mid} interactive={false} />
             ))}
           </div>
           <Input
-            className="input"
+            className="mb-8"
             placeholder="Leave a message"
             value={appendText}
             onChange={updateAppendText}
           ></Input>
-          <div className="btns">
+          <div className="w-full flex items-center justify-end gap-4">
             <Button onClick={closeModal} className="normal cancel">
-              Cancel
+              {t('action.cancel')}
             </Button>
             <Button className="normal" disabled={sendButtonDisabled} onClick={handleForward}>
               Send To {selectedCount == 0 ? null : `(${selectedCount})`}
             </Button>
           </div>
         </div>
-      </StyledWrapper>
+      </div>
     </Modal>
   );
 };

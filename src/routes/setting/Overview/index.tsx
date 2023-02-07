@@ -7,7 +7,7 @@ import useConfig from "../../../common/hook/useConfig";
 import Server from './server';
 import Language from './Language';
 import FrontendURL from "./FrontendURL";
-// import DarkMode from "./DarkMode";
+import DarkMode from "./DarkMode";
 import ServerVersionChecker from "../../../common/component/ServerVersionChecker";
 
 export default function Overview() {
@@ -67,7 +67,7 @@ export default function Overview() {
         </>
       )}
       <Language />
-      {/* <DarkMode /> */}
+      <DarkMode />
     </div>
   );
 }

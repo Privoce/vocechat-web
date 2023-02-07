@@ -1,4 +1,4 @@
-import { FC, ImgHTMLAttributes } from "react";
+import { FC, ImgHTMLAttributes, useEffect, useState } from "react";
 import { getInitials } from "../utils";
 
 interface Props extends ImgHTMLAttributes<HTMLImageElement> {
@@ -29,26 +29,34 @@ const Avatar: FC<Props> = ({
   height,
   ...rest
 }) => {
-  if (src && src.length !== 0) {
-    return <img src={src} {...rest} />;
-  } else {
-    return (
-      <div
-        className={`rounded-full flex-center ${rest.className || ""}`}
-        style={{
-          width,
-          height,
-          fontSize: getFontSize(width),
-          fontWeight: 400,
-          fontFamily: "'Lato', 'Lato-Regular', 'Helvetica Neue'",
-          background: type === "channel" ? "#EAECF0" : "#4c99e9",
-          color: type === "channel" ? "#475467" : "#FFFFFF"
-        }}
-      >
-        {getInitials(name)}
-      </div>
-    );
+  const [avatarSrc, setAvatarSrc] = useState("");
+  useEffect(() => {
+    if (!src) {
+      setAvatarSrc(src);
+    }
+  }, [src]);
+  const handleError = () => {
+    setAvatarSrc("");
+  };
+  if (avatarSrc) {
+    return <img src={avatarSrc} onError={handleError} {...rest} />;
   }
+  return (
+    <div
+      className={`rounded-full flex-center ${rest.className || ""}`}
+      style={{
+        width,
+        height,
+        fontSize: getFontSize(width),
+        fontWeight: 400,
+        fontFamily: "'Lato', 'Lato-Regular', 'Helvetica Neue'",
+        background: type === "channel" ? "#EAECF0" : "#4c99e9",
+        color: type === "channel" ? "#475467" : "#FFFFFF"
+      }}
+    >
+      {getInitials(name)}
+    </div>
+  );
 };
 
 export default Avatar;

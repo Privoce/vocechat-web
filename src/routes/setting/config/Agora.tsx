@@ -1,4 +1,3 @@
-import StyledContainer from "./StyledContainer";
 import Input from "../../../common/component/styled/Input";
 import Textarea from "../../../common/component/styled/Textarea";
 import Label from "../../../common/component/styled/Label";
@@ -35,11 +34,11 @@ export default function ConfigAgora() {
   } = values as AgoraConfig;
 
   return (
-    <StyledContainer>
+    <div className="setting-container">
       <div className="inputs">
         <div className="input row">
           <Label>Enable</Label>
-          <Toggle onClick={toggleEnable} data-checked={enabled}></Toggle>
+          <Toggle onClick={toggleEnable} checked={enabled}></Toggle>
         </div>
         <div className="input">
           <Label htmlFor="url">Agora Url</Label>
@@ -111,6 +110,6 @@ export default function ConfigAgora() {
       </div>
       {changed && <SaveTip saveHandler={handleUpdate} resetHandler={reset} />}
       {/* <button onClick={handleUpdate} className="btn">update</button> */}
-    </StyledContainer>
+    </div>
   );
 }

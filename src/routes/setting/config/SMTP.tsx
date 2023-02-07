@@ -1,17 +1,16 @@
 import { useState, useEffect, ChangeEvent } from "react";
+import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 import { useSendTestEmailMutation } from "../../../app/services/server";
 import iconQuestion from "../../../assets/icons/question.svg?url";
 import useConfig from "../../../common/hook/useConfig";
-import StyledContainer from "./StyledContainer";
 import Input from "../../../common/component/styled/Input";
 import Button from "../../../common/component/styled/Button";
 import Toggle from "../../../common/component/styled/Toggle";
 import Label from "../../../common/component/styled/Label";
 import SaveTip from "../../../common/component/SaveTip";
-import toast from "react-hot-toast";
 import { SMTPConfig } from "../../../types/server";
-import { useTranslation } from "react-i18next";
 
 export default function ConfigSMTP() {
   const { t } = useTranslation("setting", { keyPrefix: "smtp" });
@@ -54,11 +53,11 @@ export default function ConfigSMTP() {
   if (!values) return null;
   const { host, port, from, username, password, enabled = false } = values as SMTPConfig;
   return (
-    <StyledContainer>
+    <div className="setting-container">
       <div className="inputs">
         <div className="input row">
           <Label className="dark:text-gray-200">{t("enable")}</Label>
-          <Toggle onClick={toggleEnable} data-checked={enabled}></Toggle>
+          <Toggle onClick={toggleEnable} checked={enabled}></Toggle>
         </div>
         <div className="input">
           <Label className="dark:text-gray-200" htmlFor="name">{t("host")}</Label>
@@ -144,6 +143,6 @@ export default function ConfigSMTP() {
       </div>
       {changed && <SaveTip saveHandler={handleUpdate} resetHandler={reset} />}
       {/* <button onClick={handleUpdate} className="btn">update</button> */}
-    </StyledContainer>
+    </div>
   );
 }

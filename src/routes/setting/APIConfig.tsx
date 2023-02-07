@@ -37,7 +37,7 @@ export default function APIConfig() {
     <div className="max-w-[500px] flex flex-col gap-4 items-start">
       <Toggle
         onClick={handleToggle.bind(null, { third_party: !thirdParty })}
-        data-checked={thirdParty}
+        checked={thirdParty}
       />
       <div className="w-full flex flex-col items-start gap-2">
         <label htmlFor="secret" className="text-sm text-gray-500 dark:text-gray-100"> {t("third_app.key")}:</label>

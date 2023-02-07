@@ -2,7 +2,6 @@ import { memo } from "react";
 import { Outlet, NavLink, useLocation, useMatch } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-import StyledWrapper from "./styled";
 import User from "./User";
 import Loading from "../../common/component/Loading";
 import Menu from "./Menu";
@@ -52,49 +51,62 @@ function HomePage() {
   // 有点绕
   const chatNav = isChatHomePath ? "/chat" : chatPath || "/chat";
   const userNav = userPath || "/users";
-
+  const linkClass = `flex items-center gap-2.5 px-3 py-2 font-semibold text-sm text-gray-600 rounded-lg hover:bg-black/10`;
   return (
     <>
       <Manifest />
       {!guest && <Notification />}
-      <StyledWrapper className={`dark:!bg-[#121926] ${guest ? "guest" : ""}`}>
+      <div className={`flex w-screen h-screen  dark:bg-[#121926]`}>
         {!guest && (
-          <div className={`col left`}>
+          <div className={`h-full flex flex-col items-center relative w-16 transition-all`}>
             {loginUid && <User uid={loginUid} />}
-            <nav className="link_navs">
+            <nav className="flex flex-col gap-1 px-3 py-6">
               <NavLink
                 className={() => {
-                  return `link ${isChattingPage ? "active" : ""}`;
+                  return `${linkClass} ${isChattingPage ? "bg-primary-400" : ""}`;
                 }}
                 to={chatNav}
               >
-                <Tooltip tip={t("chat")}>
-                  <ChatIcon />
-                </Tooltip>
+                {({ isActive }) => {
+                  return <Tooltip tip={t("chat")}>
+                    <ChatIcon className={isActive ? "fill-white" : ""} />
+                  </Tooltip>;
+                }}
+
               </NavLink>
-              <NavLink className="link" to={userNav}>
-                <Tooltip tip={t("members")}>
-                  <UserIcon />
-                </Tooltip>
+              <NavLink className={({ isActive }) => `${linkClass} ${isActive ? 'bg-primary-400' : ""}`} to={userNav}>
+                {({ isActive }) => {
+                  return <Tooltip tip={t("members")}>
+                    <UserIcon className={isActive ? "fill-white" : ""} />
+                  </Tooltip>;
+                }}
+
               </NavLink>
-              <NavLink className="link" to={"/favs"}>
-                <Tooltip tip={t("favs")}>
-                  <FavIcon />
-                </Tooltip>
+              <NavLink className={({ isActive }) => `${linkClass} ${isActive ? 'bg-primary-400' : ""}`} to={"/favs"}>
+                {({ isActive }) => {
+                  return <Tooltip tip={t("favs")}>
+                    <FavIcon className={isActive ? "fill-white" : ""} />
+                  </Tooltip>;
+                }}
+
+
               </NavLink>
-              <NavLink className="link" to={"/files"}>
-                <Tooltip tip={t("files")}>
-                  <FolderIcon />
-                </Tooltip>
+              <NavLink className={({ isActive }) => `${linkClass} ${isActive ? 'bg-primary-400' : ""}`} to={"/files"}>
+                {({ isActive }) => {
+                  return <Tooltip tip={t("files")}>
+                    <FolderIcon className={isActive ? "fill-white" : ""} />
+                  </Tooltip>;
+                }}
+
               </NavLink>
             </nav>
             <Menu />
           </div>
         )}
-        <div className="col right">
+        <div className="h-full flex flex-col w-full">
           <Outlet />
         </div>
-      </StyledWrapper>
+      </div>
     </>
   );
 }

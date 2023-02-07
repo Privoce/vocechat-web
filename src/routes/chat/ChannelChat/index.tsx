@@ -21,7 +21,6 @@ import IconPin from "../../../assets/icons/pin.svg";
 import IconHeadphone from "../../../assets/icons/headphone.svg";
 
 import addIcon from "../../../assets/icons/add.svg?url";
-import { StyledUsers, StyledChannelChat } from "./styled";
 import InviteModal from "../../../common/component/InviteModal";
 import LoadMore from "../LoadMore";
 import { useAppSelector } from "../../../app/store";
@@ -151,11 +150,11 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
           </header>
         }
         users={
-          <StyledUsers className={membersVisible ? "flex" : "hidden"}>
+          <div className={`flex-col gap-1 w-[226px] h-[calc(100vh_-_56px_-_22px)] overflow-y-scroll p-2 shadow-[inset_1px_0px_0px_rgba(0,_0,_0,_0.1)] ${membersVisible ? "flex" : "hidden"}`}>
             {addVisible && (
-              <div className="add" onClick={toggleAddVisible}>
-                <img className="icon" src={addIcon} />
-                <div className="txt dark:!text-gray-50">{t("add_channel_members")}</div>
+              <div className="cursor-pointer flex items-center justify-start gap-1 select-none rounded-lg p-2.5 hover:bg-gray-500/10" onClick={toggleAddVisible}>
+                <img className="w-6 h-6" src={addIcon} />
+                <div className="font-semibold text-sm text-gray-600 dark:text-gray-50">{t("add_channel_members")}</div>
               </div>
             )}
             {memberIds.map((uid: number) => {
@@ -171,19 +170,19 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
                 />
               );
             })}
-          </StyledUsers>
+          </div>
         }
       >
-        <StyledChannelChat id={`VOCECHAT_FEED_channel_${cid}`}>
+        <article className="py-4.5 px-4 w-full h-full overflow-x-hidden overflow-y-auto" id={`VOCECHAT_FEED_channel_${cid}`}>
           {hasMore ? (
             <LoadMore pullUp={pullUp} pulling={pulling} />
           ) : (
-            <div className="info">
-              <h2 className="title dark:text-white">{t("welcome_channel", { name })}</h2>
-              <p className="desc dark:!text-gray-300">{t("welcome_desc", { name })} </p>
+            <div className="pt-14 flex flex-col items-start gap-2">
+              <h2 className="font-bold text-4xl dark:text-white">{t("welcome_channel", { name })}</h2>
+              <p className="text-gray-600 dark:text-gray-300">{t("welcome_desc", { name })} </p>
               {loginUser?.is_admin && (
-                <NavLink to={`/setting/channel/${cid}?f=${pathname}`} className="edit">
-                  <EditIcon className="icon" />
+                <NavLink to={`/setting/channel/${cid}?f=${pathname}`} className="flex items-center gap-1 bg-clip-text text-fill-transparent bg-gradient-to-r from-[#3c8ce7] to-primary-400 ">
+                  <EditIcon className="w-4 h-4 fill-[#3c8ce7]" />
                   {t("edit_channel")}
                 </NavLink>
               )}
@@ -205,7 +204,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
               context: "channel"
             });
           })}
-        </StyledChannelChat>
+        </article>
       </Layout>
     </>
   );

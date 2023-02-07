@@ -29,14 +29,14 @@ export const ReactionMap = {
   "🚀": ":rocket:",
 };
 const emojis: Emojis = {
-  "👍": <EmojiThumbUp className="emoji" />,
-  "👎": <EmojiThumbDown className="emoji" />,
-  "😄": <EmojiSmile className="emoji" />,
-  "👀": <EmojiLook className="emoji" />,
-  "🚀": <EmojiRocket className="emoji" />,
-  "❤️": <EmojiHeart className="emoji" />,
-  "🙁": <EmojiUnhappy className="emoji" />,
-  "🎉": <EmojiCelebrate className="emoji" />
+  "👍": <EmojiThumbUp className="emoji w-full h-full min-w-[16px] min-h-[16px]" />,
+  "👎": <EmojiThumbDown className="emoji w-full h-full min-w-[16px] min-h-[16px]" />,
+  "😄": <EmojiSmile className="emoji w-full h-full min-w-[16px] min-h-[16px]" />,
+  "👀": <EmojiLook className="emoji w-full h-full min-w-[16px] min-h-[16px]" />,
+  "🚀": <EmojiRocket className="emoji w-full h-full min-w-[16px] min-h-[16px]" />,
+  "❤️": <EmojiHeart className="emoji w-full h-full min-w-[16px] min-h-[16px]" />,
+  "🙁": <EmojiUnhappy className="emoji w-full h-full min-w-[16px] min-h-[16px]" />,
+  "🎉": <EmojiCelebrate className="emoji w-full h-full min-w-[16px] min-h-[16px]" />
 };
 
 interface Props {

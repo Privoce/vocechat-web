@@ -1,5 +1,4 @@
 import React, { MouseEvent, FC } from "react";
-import styled from "styled-components";
 import MarkdownRender from "../MarkdownRender";
 import { ContentTypes } from "../../../app/config";
 import { getFileIcon, isImage } from "../../utils";
@@ -8,94 +7,6 @@ import LinkifyText from '../LinkifyText';
 import Avatar from "../Avatar";
 import { useAppSelector } from "../../../app/store";
 import { MessagePayload } from "../../../app/slices/message";
-const Styled = styled.div`
-  display: flex;
-  align-items: flex-start;
-  padding: 8px;
-  background: #e5e7eb;
-  border-radius: var(--br);
-  gap: 8px;
-  margin-bottom: 4px;
-
-  &.clickable {
-    cursor: pointer;
-  }
-
-  .user {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    white-space: nowrap;
-
-    .avatar {
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-    }
-
-    .name {
-      font-style: normal;
-      font-weight: 500;
-      font-size: 14px;
-      line-height: 20px;
-      color: #06b6d4;
-    }
-  }
-
-  .content {
-    overflow: hidden;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 20px;
-    color: #616161;
-    display: flex;
-    align-items: center;
-
-    .txt {
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 1;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      word-wrap: break-word;
-      word-break: break-all;
-    }
-
-    .md {
-      position: relative;
-      max-height: 152px;
-      overflow: hidden;
-
-      &:after {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        content: "";
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0) 63.54%, #e5e7eb 93.09%);
-      }
-    }
-
-    .pic {
-      display: inherit;
-      width: 40px;
-      height: 40px;
-      object-fit: cover;
-    }
-
-    .icon {
-      width: 15px;
-      height: 20px;
-    }
-
-    .file_name {
-      margin-left: 5px;
-      font-size: 10px;
-      color: #555;
-    }
-  }
-`;
 
 const renderContent = (data: MessagePayload) => {
   const { content_type, content, thumbnail, properties } = data;
@@ -103,14 +14,14 @@ const renderContent = (data: MessagePayload) => {
   switch (content_type) {
     case ContentTypes.text:
       res = (
-        <span className="txt">
+        <span className="text-ellipsis overflow-hidden break-words break-all text-gray-800">
           <LinkifyText text={content} url={false} mentionTextOnly={true} mentionPopOver={false} />
         </span>
       );
       break;
     case ContentTypes.markdown:
       res = (
-        <div className="md">
+        <div className="max-h-[152px] overflow-hidden">
           <MarkdownRender content={content} />
         </div>
       );
@@ -118,14 +29,14 @@ const renderContent = (data: MessagePayload) => {
     case ContentTypes.file:
       {
         const { content_type = "", name, size } = properties || {};
-        const icon = getFileIcon(content_type, name);
+        const icon = getFileIcon(content_type, name, "w-4 h-5");
         if (isImage(content_type, size)) {
-          res = <img className="pic" src={thumbnail} />;
+          res = <img className="w-10 h-10 object-cover" src={thumbnail} />;
         } else {
           res = (
             <>
               {icon}
-              <span className="file_name">{name}</span>
+              <span className="ml-1 text-[10px] text-gray-500">{name}</span>
             </>
           );
         }
@@ -161,25 +72,26 @@ const Reply: FC<ReplyProps> = ({ mid, interactive = true }) => {
   if (!data) return null;
   const currUser = users[data.from_uid || 0];
   if (!currUser) return null;
+
   return (
-    <Styled
+    <div
       key={mid}
       data-mid={mid}
-      className={`reply ${interactive ? "clickable" : ""}`}
+      className={`flex items-start p-2 bg-gray-100 rounded-lg gap-2 mb-1 ${interactive ? "cursor-pointer" : "!bg-transparent"}`}
       onClick={interactive ? handleClick : undefined}
     >
-      <div className="user">
+      <div className="flex items-center gap-1 whitespace-nowrap">
         <Avatar
           width={16}
           height={16}
-          className="avatar"
+          className="w-4 h-4 rounded-full"
           src={currUser.avatar}
           name={currUser.name}
         />
-        <span className="name">{currUser.name}</span>
+        <span className="text-sm text-primary-500">{currUser.name}</span>
       </div>
-      <div className="content">{renderContent(data)}</div>
-    </Styled>
+      <div className="text-sm flex items-center text-gray-400 overflow-hidden">{renderContent(data)}</div>
+    </div>
   );
 };
 

@@ -66,7 +66,7 @@ const ProfileBasicEditModal: FC<Props> = ({
         }
       >
         <form ref={formRef} className="flex flex-col gap-2 w-full" action="/">
-          <label htmlFor={valueKey} className="text-sm text-[#6b7280]">{label}</label>
+          <label htmlFor={valueKey} className="text-sm text-left text-gray-500">{label}</label>
           <Input name={valueKey} value={input} onChange={handleChange} type={type} required></Input>
         </form>
       </StyledModal>

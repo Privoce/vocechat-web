@@ -1,5 +1,4 @@
 import { ChangeEvent } from "react";
-import StyledContainer from "./StyledContainer";
 import Input from "../../../common/component/styled/Input";
 import Textarea from "../../../common/component/styled/Textarea";
 import Label from "../../../common/component/styled/Label";
@@ -78,7 +77,7 @@ export default function ConfigFirebase() {
     client_email,
   } = values as FirebaseConfig;
   return (
-    <StyledContainer>
+    <div className="setting-container">
       <StyledRadio
         options={Object.values(Options)}
         values={Object.keys(Options)}
@@ -131,6 +130,6 @@ export default function ConfigFirebase() {
       </fieldset>
       }
       {changed && <SaveTip saveHandler={handleUpdate} resetHandler={handleReset} />}
-    </StyledContainer>
+    </div>
   );
 }

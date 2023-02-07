@@ -4,7 +4,6 @@ import { hideAll } from "tippy.js";
 import toast from "react-hot-toast";
 import { useUpdateUserMutation } from "../../../app/services/user";
 import User from "../User";
-import StyledMenu from "../styled/Menu";
 import InviteLink from "../InviteLink";
 import moreIcon from "../../../assets/icons/more.svg?url";
 import IconOwner from "../../../assets/icons/owner.svg";
@@ -93,7 +92,7 @@ const ManageMembers: FC<Props> = ({ cid }) => {
                       placement="bottom-end"
                       trigger="click"
                       content={
-                        <StyledMenu className="menu">
+                        <ul className="context-menu">
                           <li
                             className="item sb"
                             onClick={handleToggleRole.bind(null, {
@@ -116,7 +115,7 @@ const ManageMembers: FC<Props> = ({ cid }) => {
                             {t("user")}
                             {!is_admin && <IconCheck className="icon" />}
                           </li>
-                        </StyledMenu>
+                        </ul>
                       }
                     >
                       <IconArrowDown className="cursor-pointer dark:fill-slate-50" />
@@ -129,7 +128,7 @@ const ManageMembers: FC<Props> = ({ cid }) => {
                     placement="right-start"
                     trigger="click"
                     content={
-                      <StyledMenu className="min-w-30">
+                      <ul className="min-w-30 context-menu">
                         {email && (
                           <li className="item" onClick={copyEmail.bind(null, email)}>
                             {ct("action.copy_email")}
@@ -145,7 +144,7 @@ const ManageMembers: FC<Props> = ({ cid }) => {
                             {ct("action.remove")}
                           </li>
                         )}
-                      </StyledMenu>
+                      </ul>
                     }
                   >
                     <div className="relative w-6 h-6">

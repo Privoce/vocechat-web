@@ -1,40 +1,9 @@
 import { FC } from "react";
-import styled from "styled-components";
 import { useReactMessageMutation } from "../../../app/services/message";
 import { Emojis } from "../../../app/config";
 import Emoji from "../ReactionItem";
 import { useAppSelector } from "../../../app/store";
 
-const StyledPicker = styled.div`
-  background: none;
-  z-index: 999;
-  .emojis {
-    padding: 4px;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-    background: #fff;
-    filter: drop-shadow(0px 25px 50px rgba(31, 41, 55, 0.25));
-    border-radius: 12px;
-    &.reacting {
-      opacity: 0.6;
-    }
-    .wrapper {
-      display: flex;
-      cursor: pointer;
-      border-radius: 8px;
-      padding: 4px;
-      &:hover,
-      &.reacted {
-        background-color: #f5f6f7;
-      }
-      > .emoji {
-        width: 16px;
-        height: 16px;
-      }
-    }
-  }
-`;
 type Props = {
   mid: number;
   hidePicker: () => void;
@@ -52,15 +21,14 @@ const ReactionPicker: FC<Props> = ({ mid, hidePicker }) => {
     hidePicker();
   };
   return (
-    <StyledPicker>
-      <ul className={`emojis ${isLoading ? "reacting" : ""}`}>
+    <div className="z-[999]">
+      <ul className={`p-1 grid grid-cols-[repeat(4,_1fr)] gap-2 bg-white dark:bg-gray-900 drop-shadow-md rounded-xl ${isLoading ? "opacity-60" : ""}`}>
         {Emojis.map((emoji) => {
           let reacted =
             reactionData[emoji] && reactionData[emoji].findIndex((id) => id == currUid) > -1;
-
           return (
             <li
-              className={`wrapper ${reacted ? "reacted" : ""}`}
+              className={`flex-center cursor-pointer rounded-lg p-4 hover:bg-gray-50 w-4 h-4 ${reacted ? "bg-gray-50" : ""}`}
               key={emoji}
               onClick={handleReact.bind(null, emoji)}
             >
@@ -69,7 +37,7 @@ const ReactionPicker: FC<Props> = ({ mid, hidePicker }) => {
           );
         })}
       </ul>
-    </StyledPicker>
+    </div>
   );
 };
 export default ReactionPicker;

@@ -57,7 +57,7 @@ const IssuerList: FC<Props> = ({ issuers = [], onChange }) => {
               </div>
               <div className="w-14 flex justify-end">
                 <Toggle
-                  data-checked={enable}
+                  checked={enable}
                   onClick={() => {
                     onChange(
                       issuers.map((issuer) => ({

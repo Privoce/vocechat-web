@@ -41,7 +41,7 @@ const LogoutConfirmModal: FC<Props> = ({ closeModal }) => {
         description={t("logout.desc")}
         buttons={
           <>
-            <Button onClick={closeModal}>{ct("action.cancel")}</Button>
+            <Button className="cancel" onClick={closeModal}>{ct("action.cancel")}</Button>
             <Button onClick={handleLogout} className="danger">
               {exiting ? "Logging out" : ct("action.logout")}
             </Button>

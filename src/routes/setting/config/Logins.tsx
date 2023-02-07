@@ -1,6 +1,5 @@
 import { ChangeEvent } from "react";
 import toast from "react-hot-toast";
-import StyledContainer from "./StyledContainer";
 import Toggle from "../../../common/component/styled/Toggle";
 import Label from "../../../common/component/styled/Label";
 import Input from "../../../common/component/styled/Input";
@@ -71,7 +70,7 @@ export default function Logins() {
   const valuesChanged = clientIdChanged || changed || githubChanged;
 
   return (
-    <StyledContainer>
+    <div className="setting-container">
       <div className="inputs">
         <div className="input">
           <div className="row">
@@ -83,7 +82,7 @@ export default function Logins() {
             </div>
             <Toggle
               onClick={handleToggle.bind(null, { password: !password })}
-              data-checked={password}
+              checked={password}
             ></Toggle>
           </div>
         </div>
@@ -97,7 +96,7 @@ export default function Logins() {
             </div>
             <Toggle
               onClick={handleToggle.bind(null, { magic_link: !magic_link })}
-              data-checked={magic_link}
+              checked={magic_link}
             ></Toggle>
           </div>
         </div>
@@ -112,7 +111,7 @@ export default function Logins() {
             </div>
             <Toggle
               onClick={handleToggle.bind(null, { google: !google })}
-              data-checked={google}
+              checked={google}
             ></Toggle>
           </div>
           <div className="row">
@@ -135,7 +134,7 @@ export default function Logins() {
             </div>
             <Toggle
               onClick={handleToggle.bind(null, { github: !github })}
-              data-checked={github}
+              checked={github}
             ></Toggle>
           </div>
           <div className="row inputs">
@@ -166,7 +165,7 @@ export default function Logins() {
             </div>
             <Toggle
               onClick={handleToggle.bind(null, { metamask: !metamask })}
-              data-checked={metamask}
+              checked={metamask}
             ></Toggle>
           </div>
         </div>
@@ -194,6 +193,6 @@ export default function Logins() {
         </div>
       </div>
       {valuesChanged && <SaveTip saveHandler={handleUpdate} resetHandler={reset} />}
-    </StyledContainer>
+    </div>
   );
 }

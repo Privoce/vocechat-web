@@ -24,15 +24,6 @@ const Styled = styled.article`
       flex-direction: column;
       padding: 0;
       height: calc(100vh - 56px - 18px);
-      > .send {
-        padding: 0 16px 16px 16px;
-        &.selecting {
-          padding: 0;
-          > .send {
-            display: none;
-          }
-        }
-      }
     }
     .members {
       box-shadow: inset 0px 10px 2px -10px rgba(0, 0, 0, 0.1);
@@ -52,8 +43,7 @@ const Styled = styled.article`
         height: 1px;
         margin: 18px auto;
       }
-      .tools,
-      .apps {
+      .tools {
         display: flex;
         flex-direction: column;
       }
@@ -92,9 +82,6 @@ const Styled = styled.article`
             color: #ffffff;
           }
         }
-      }
-      .apps {
-        gap: 15px;
       }
     }
   }

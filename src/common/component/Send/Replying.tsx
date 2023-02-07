@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { ContentTypes } from "../../../app/config";
 import MarkdownRender from "../MarkdownRender";
 import closeIcon from "../../../assets/icons/close.circle.svg?url";
@@ -9,73 +8,6 @@ import { useAppSelector } from "../../../app/store";
 import { MessagePayload } from "../../../app/slices/message";
 import LinkifyText from "../LinkifyText";
 
-const Styled = styled.div`
-  background-color: #f3f4f6;
-  z-index: 999;
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 16px;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-  width: 100%;
-  padding: 12px 16px;
-  .prefix {
-    white-space: nowrap;
-    color: #667085;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 20px;
-    em {
-      font-weight: bold;
-      color: #363f53;
-    }
-  }
-  .content {
-    white-space: normal;
-    color: #616161;
-    overflow: hidden;
-    padding-right: 30px;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 20px;
-    > .pic {
-      width: 40px;
-      height: 40px;
-      object-fit: cover;
-    }
-    .md {
-      position: relative;
-      max-height: 100px;
-      overflow: hidden;
-      &:after {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        content: "";
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0) 63.54%, #f3f4f6 93.09%);
-      }
-    }
-    .icon {
-      width: 15px;
-      height: 20px;
-    }
-    .name {
-      margin-left: 5px;
-      font-size: 10px;
-      color: #555;
-    }
-  }
-  .close {
-    background: none;
-    position: absolute;
-    top: 16px;
-    right: 16px;
-  }
-`;
 const renderContent = (data: MessagePayload) => {
   const { content_type, content, thumbnail = "", properties } = data;
   let res = null;
@@ -87,9 +19,10 @@ const renderContent = (data: MessagePayload) => {
       //   return <Mention popover={false} key={idx} uid={+uid} />;
       // });
       break;
+
     case ContentTypes.markdown:
       res = (
-        <div className="md">
+        <div className="max-h-[100px] overflow-auto">
           <MarkdownRender content={content} />
         </div>
       );
@@ -100,13 +33,13 @@ const renderContent = (data: MessagePayload) => {
         const image = isImage(content_type, size);
         // console.log("replying data", content_type, size, image);
         if (image) {
-          res = <img className="pic" src={thumbnail || pictureIcon} />;
+          res = <img className="w-10 h-10 object-cover" src={thumbnail || pictureIcon} />;
         } else {
-          const icon = getFileIcon(content_type, name);
+          const icon = getFileIcon(content_type, name, "icon w-4 h-5");
           res = (
             <>
               {icon}
-              <span className="name">{name}</span>
+              <span className="ml-1 text-[10px] text-gray-400">{name}</span>
             </>
           );
         }
@@ -118,7 +51,6 @@ const renderContent = (data: MessagePayload) => {
   // console.log("replying data", data);
   return res;
 };
-
 export default function Replying({
   context,
   id,
@@ -138,15 +70,16 @@ export default function Replying({
   if (!msg) return null;
   const { from_uid = 0 } = msg;
   const user = usersData[from_uid];
+
   return (
-    <Styled className="reply">
-      <div className="prefix">
-        Replying to <em>{user?.name}</em>
+    <div className="reply bg-gray-100 z-[999] flex items-start justify-start gap-4 rounded-t-lg w-full px-4 py-3 text-sm">
+      <div className="whitespace-nowrap text-gray-400 ">
+        Replying to <span className="font-bold text-gray-600">{user?.name}</span>
       </div>
-      <div className="content">{renderContent(msg)}</div>
-      <button className="close" onClick={removeReply}>
+      <div className="text-gray-500 overflow-hidden pr-7 ">{renderContent(msg)}</div>
+      <button className="absolute top-4 right-4 cursor-pointer" onClick={removeReply}>
         <img src={closeIcon} alt="close icon" />
       </button>
-    </Styled>
+    </div>
   );
 }

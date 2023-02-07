@@ -2,7 +2,6 @@ import { FC, useState } from "react";
 import Tippy from "@tippyjs/react";
 import IconSelect from "../../../assets/icons/check.sign.svg";
 import IconArrow from "../../../assets/icons/arrow.down.svg";
-import Menu from "./Menu";
 import { useTranslation } from "react-i18next";
 
 
@@ -42,7 +41,7 @@ const Select: FC<Props> = ({ options = [], updateSelect = null, current = null }
       placement="bottom"
       interactive
       content={
-        <Menu>
+        <ul className="context-menu">
           {options.map(({ title, value, selected, underline }) => {
             return (
               <li
@@ -56,7 +55,7 @@ const Select: FC<Props> = ({ options = [], updateSelect = null, current = null }
               </li>
             );
           })}
-        </Menu>
+        </ul>
       }
     >
       <div className="select-none border border-solid border-slate-200 p-2 flex items-center gap-2" onClick={toggleVisible}>

@@ -139,18 +139,18 @@ const ChannelModal: FC<Props> = ({ personal = false, closeModal }) => {
               ? t("create_private_channel_desc")
               : t("create_channel_desc")}
           </p>
-          <div className="w-full flex flex-col justify-start gap-2 mb-8.5">
+          <div className="w-full flex flex-col justify-start gap-2 mb-8">
             <span className="text-gray-400 text-sm font-normal">{t("channel_name")}</span>
             <div className="relative">
               <input className="text-gray-600 rounded p-2 pl-9 border border-solid border-gray-300 w-full" onChange={handleNameInput} value={name} placeholder="new channel" />
               <ChannelIcon personal={!is_public} className="absolute left-2 top-1/2 -translate-y-1/2" />
             </div>
           </div>
-          <div className="w-full flex items-center justify-between mb-12.5">
+          <div className="w-full flex items-center justify-between mb-12">
             <span className="text-gray-400 text-sm">{t("private_channel")}</span>
             <StyledToggle
-              data-checked={!is_public}
-              data-disabled={!loginUser?.is_admin}
+              checked={!is_public}
+              disabled={!loginUser?.is_admin}
               onClick={handleToggle}
             />
           </div>

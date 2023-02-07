@@ -1,5 +1,4 @@
 import { useEffect, useState, FC, ReactElement } from "react";
-import styled from "styled-components";
 import StyledMsg from "./styled";
 import renderContent from "./renderContent";
 import Avatar from "../Avatar";
@@ -7,29 +6,6 @@ import IconForward from "../../../assets/icons/forward.svg";
 import useNormalizeMessage from "../../hook/useNormalizeMessage";
 import { useTranslation } from "react-i18next";
 
-const StyledForward = styled.div`
-  display: flex;
-  flex-direction: column;
-  border-radius: var(--br);
-  background-color: #f4f4f5;
-  > .tip {
-    padding: 8px 8px 0 8px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    .icon {
-      width: 16px;
-      height: 16px;
-      path {
-        fill: #98a2b3;
-      }
-    }
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 18px;
-    color: #98a2b3;
-  }
-`;
 type Props = {
   context: "user" | "channel";
   to: number;
@@ -45,15 +21,14 @@ const ForwardedMessage: FC<Props> = ({ context, to, from_uid, id }) => {
       normalizeMessage(id);
     }
   }, [id]);
-
   useEffect(() => {
     if (messages) {
       const forward_mids = messages.map(({ from_mid }) => from_mid) || [];
       // console.log("fff", messages);
       setForwards(
-        <StyledForward data-forwarded-mids={forward_mids.join(",")}>
-          <h4 className="tip">
-            <IconForward className="icon" />
+        <div data-forwarded-mids={forward_mids.join(",")} className="flex flex-col rounded-lg bg-gray-100">
+          <h4 className="p-2 pb-0 flex items-center gap-1 text-gray-500 text-xs">
+            <IconForward className="w-4 h-4 fill-gray-500" />
             {t("action.forward")}
           </h4>
           <div className="list">
@@ -87,7 +62,7 @@ const ForwardedMessage: FC<Props> = ({ context, to, from_uid, id }) => {
               );
             })}
           </div>
-        </StyledForward>
+        </div>
       );
     }
   }, [messages, context, to, from_uid]);

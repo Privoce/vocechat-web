@@ -30,8 +30,9 @@
   .md-editor {
     position: relative;
     width: 100%;
-    width: -webkit-fill-available;
+    /* width: -webkit-fill-available; */
     margin-top: 16px;
+    grid-column: span 2;
   }
   .md-editor > div {
     transition: height 0.5s ease 0s;
@@ -62,6 +63,147 @@
     position: absolute;
     bottom: 15px;
     right: 15px;
+  }
+  /* setting container */
+  .setting-container {
+    position: relative;
+    width: 512px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .setting-container .inputs {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+  }
+  .setting-container .inputs .input {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .setting-container .inputs .input .row {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .setting-container .inputs .input .row.inputs {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .setting-container .inputs .input .row .title {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .setting-container .inputs .input .row .title .txt {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+  }
+  .setting-container .inputs .input .row .title .txt .icon {
+    cursor: pointer;
+  }
+  .setting-container .inputs .input .row .title .desc {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: #667085;
+  }
+  .setting-container .tip {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .setting-container .tip .link {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    color: #06b6d4;
+  }
+  /* context menu */
+  .context-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 4px;
+    background-color: #fff;
+    box-shadow: 0 20px 25px 20px rgba(31, 41, 55, 0.1), 0 10px 10px rgba(31, 41, 55, 0.04);
+    border-radius: 12px;
+    min-width: 200px;
+  }
+  .context-menu .item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    white-space: nowrap;
+    cursor: pointer;
+    border-radius: 6px;
+    padding: 6px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    color: #616161;
+  }
+  .context-menu .item .icon {
+    width: 20px;
+    height: 20px;
+  }
+  .context-menu .item .icon path {
+    fill: #475467;
+  }
+  .context-menu .item.sb {
+    justify-content: space-between;
+  }
+  .context-menu .item:hover {
+    background-color: #22ccee;
+    color: #fff;
+  }
+  .context-menu .item:hover .icon path {
+    fill: #fff;
+  }
+  .context-menu .item.bottom_line {
+    margin-bottom: 9px;
+  }
+  .context-menu .item.bottom_line:before {
+    position: absolute;
+    content: "";
+    left: 6px;
+    bottom: -4px;
+    display: block;
+    padding: 0 6px;
+    box-sizing: border-box;
+    width: calc(88%);
+    height: 1px;
+    background-color: #f2f4f7;
+  }
+  .context-menu .item.danger {
+    color: #a11043;
+  }
+  .context-menu .item.danger:hover {
+    background-color: #b42318;
+    color: #fff;
+  }
+  .context-menu .item[data-disabled="true"] {
+    color: #a4a8b3;
+  }
+  .context-menu .item[data-disabled="true"] .icon path {
+    fill: #a4a8b3;
+  }
+  /* text fill transparent */
+  .text-fill-transparent {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-fill-color: transparent;
   }
 }
 /* 全局设置滚动条 */

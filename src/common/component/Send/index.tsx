@@ -1,10 +1,12 @@
 import { useEffect, useState, FC } from "react";
+import clsx from "clsx";
+import { useTranslation } from "react-i18next";
 import useSendMessage from "../../hook/useSendMessage";
 import useAddLocalFileMessage from "../../hook/useAddLocalFileMessage";
 import { updateInputMode } from "../../../app/slices/ui";
 import { ContentTypes, ChatPrefixes } from "../../../app/config";
 
-import StyledSend from "./styled";
+// import StyledSend from "./styled";
 import UploadFileList from "./UploadFileList";
 import Replying from "./Replying";
 import Toolbar from "./Toolbar";
@@ -15,7 +17,6 @@ import MixedInput, { useMixedEditor } from "../MixedInput";
 import useDraft from "../../hook/useDraft";
 import useUploadFile from "../../hook/useUploadFile";
 import { useAppDispatch, useAppSelector } from "../../../app/store";
-import { useTranslation } from "react-i18next";
 
 const Modes = {
   text: "text",
@@ -135,15 +136,16 @@ const Send: FC<IProps> = ({
   const placeholder = `${t("send_to")} ${ChatPrefixes[context]}${name} `;
   const members =
     context == "channel" ? (channelsData[id]?.is_public ? uids : channelsData[id]?.members) : [];
+  const isMarkdownMode = mode == Modes.markdown;
   return (
-    <StyledSend
-      className={`send dark:bg-[#4D5761] ${mode} ${markdownFullscreen ? "fullscreen" : ""} ${replying_mid ? "reply" : ""
-        } ${context}`}
+    <div
+      className={clsx(`send relative bg-gray-200 rounded-lg w-full dark:bg-[#4D5761] ${mode} ${markdownFullscreen ? "fullscreen" : ""} ${replying_mid ? "reply" : ""
+        } ${context}`, isMarkdownMode && markdownFullscreen && '-mt-9')}
     >
       {replying_mid && <Replying context={context} mid={replying_mid} id={id} />}
       {mode == Modes.text && <UploadFileList context={context} id={id} />}
 
-      <div className={`send_box ${mode}`}>
+      <div className={clsx(`flex justify-between items-start gap-4 px-4 py-3.5`, isMarkdownMode && `grid grid-cols-[1fr_1fr] grid-rows-[auto_auto] gap-0`)}>
         <EmojiPicker selectEmoji={insertEmoji} />
         {mode == Modes.text && (
           <MixedInput
@@ -174,7 +176,7 @@ const Send: FC<IProps> = ({
           />
         )}
       </div>
-    </StyledSend>
+    </div>
   );
 };
 

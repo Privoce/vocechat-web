@@ -1,67 +1,5 @@
 import { useState, useId, FC } from "react";
-import styled from "styled-components";
 
-const StyledForm = styled.form`
-  width: 100%;
-  > .option {
-    &:not(:last-child) {
-      margin-bottom: 8px;
-    }
-
-    > input[type="radio"] {
-      display: none;
-
-      & + .box {
-        background: #ffffff;
-        border: 1px solid #d0d5dd;
-        box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
-        border-radius: 8px;
-        transition: all ease-in-out 250ms;
-
-        & > label {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          font-weight: 400;
-          font-size: 16px;
-          line-height: 24px;
-          color: #667085;
-          cursor: pointer;
-          user-select: none;
-          transition: all ease-in-out 250ms;
-
-          &:before {
-            content: "";
-            display: inline-block;
-            width: 14px;
-            height: 14px;
-            border-radius: 8px;
-            background: #ffffff;
-            box-shadow: inset 0 0 0 4px #ffffff;
-            border: 1px solid #d0d5dd;
-            margin: 14px 8px 14px 14px;
-            transition: all ease-in-out 500ms;
-          }
-        }
-      }
-
-      &:checked + .box {
-        background: #22ccee;
-        border: 1px solid #d0d5dd;
-
-        & > label {
-          color: #ffffff;
-
-          &:before {
-            background: #ffffff;
-            box-shadow: inset 0 0 0 4px #22ccee;
-            border: 1px solid #ffffff;
-          }
-        }
-      }
-    }
-  }
-`;
 type Props = {
   options: string[];
   values: (string | number)[];
@@ -84,12 +22,12 @@ const Radio: FC<Props> = ({
 
   const [fallbackValue, setFallbackValue] = useState(defaultValue);
   const _value = value !== VALUE_NOT_SET ? value : fallbackValue;
-
   return (
-    <StyledForm>
+    <form className="w-full flex flex-col gap-2">
       {options.map((item, index) => (
-        <div className="option" key={index}>
+        <div className="relative bg-transparent" key={index}>
           <input
+            className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer peer z-50"
             type="radio"
             checked={(values !== VALUES_NOT_SET ? values.indexOf(_value) : _value) === index}
             onChange={() => {
@@ -105,12 +43,16 @@ const Radio: FC<Props> = ({
             }}
             id={`${id}-${index}`}
           />
-          <div className="box">
-            <label htmlFor={`${id}-${index}`}>{item}</label>
+          <div className="drop-shadow px-2 py-3 border border-solid border-[#d0d5dd] rounded-lg w-full h-full bg-white peer-checked:bg-primary-400 text-sm text-gray-500  peer-checked:text-white">
+            <label className="ml-6" htmlFor={`${id}-${index}`}>{item}</label>
+          </div>
+          <div className="absolute top-1/2 left-3 -translate-y-1/2 w-3.5 h-3.5 rounded-full border border-gray-400 peer-checked:hidden"></div>
+          <div className="absolute top-1/2 left-3 -translate-y-1/2 w-3.5 h-3.5 rounded-full border border-white invisible peer-checked:visible flex-center">
+            <div className="w-2 h-2 bg-white rounded-full"></div>
           </div>
         </div>
       ))}
-    </StyledForm>
+    </form>
   );
 };
 export default Radio;

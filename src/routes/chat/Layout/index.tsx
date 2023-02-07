@@ -13,6 +13,7 @@ import useLicense from "../../../common/hook/useLicense";
 import LicenseUpgradeTip from "./LicenseOutdatedTip";
 // import { useTranslation } from "react-i18next";
 import DnDTip from "./DnDTip";
+import clsx from "clsx";
 
 interface Props {
   readonly?: boolean;
@@ -112,13 +113,15 @@ const Layout: FC<Props> = ({
         <main className="main" ref={messagesContainer}>
           <div className="chat">
             {children}
-            <div className={`send ${selects ? "selecting" : ""}`}>
+            <div className={`p-4 pt-0 ${selects ? "selecting" : ""}`}>
               {readonly ? (
                 <LoginTip />
               ) : reachLimit ? (
                 <LicenseUpgradeTip />
               ) : (
-                <Send key={to} id={to} context={context} />
+                <div className={clsx(`flex justify-center`, selects && "hidden")}>
+                  <Send key={to} id={to} context={context} />
+                </div>
               )}
               {selects && <Operations context={context} id={to} />}
             </div>

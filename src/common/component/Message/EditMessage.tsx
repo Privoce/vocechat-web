@@ -1,51 +1,10 @@
 import { useState, useRef, useEffect, ChangeEvent, KeyboardEvent, FC } from "react";
-import styled from "styled-components";
 import TextareaAutosize from "react-textarea-autosize";
 import { useKey } from "rooks";
 import { useEditMessageMutation } from "../../../app/services/message";
 import { ContentTypes } from "../../../app/config";
 import { useAppSelector } from "../../../app/store";
 
-const StyledWrapper = styled.div`
-  width: 100%;
-  .input {
-    background: #e5e7eb;
-    border-radius: 8px;
-    padding: 16px;
-    textarea {
-      outline: none;
-      width: 100%;
-      background: none;
-      resize: unset;
-      user-select: text;
-      color: #374151;
-      font-weight: normal;
-      font-size: 14px;
-      line-height: 20px;
-      word-break: break-all;
-      white-space: break-spaces;
-    }
-  }
-  .opts {
-    padding: 4px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    .opt {
-      font-weight: normal;
-      font-size: 12px;
-      line-height: 18px;
-      button {
-        padding: 0 4px;
-        font-size: inherit;
-        line-height: inherit;
-        background: none;
-        cursor: pointer;
-        color: #06b6d4;
-      }
-    }
-  }
-`;
 type Props = {
   mid: number;
   cancelEdit: () => void;
@@ -97,9 +56,10 @@ const EditMessage: FC<Props> = ({ mid, cancelEdit }) => {
   };
   if (!msg) return null;
 
+
   return (
-    <StyledWrapper>
-      <div className="input">
+    <div className="w-full">
+      <div className="bg-gray-200 rounded-lg p-4">
         <TextareaAutosize
           autoFocus
           onFocus={(e) =>
@@ -109,7 +69,7 @@ const EditMessage: FC<Props> = ({ mid, cancelEdit }) => {
             )
           }
           ref={inputRef}
-          className="content"
+          className="content w-full resize-none bg-transparent text-gray-800 text-sm break-all"
           maxRows={8}
           minRows={1}
           onKeyDown={handleInputKeydown}
@@ -118,15 +78,15 @@ const EditMessage: FC<Props> = ({ mid, cancelEdit }) => {
           placeholder={`Edit Message`}
         />
       </div>
-      <div className="opts">
-        <span className="opt">
-          esc to <button onClick={cancelEdit}>cancel</button>
+      <div className="flex items-center p-1 gap-4 text-xs">
+        <span>
+          esc to <button className="text-primary-500 cursor-pointer px-1" onClick={cancelEdit}>cancel</button>
         </span>
-        <span className="opt">
-          enter to <button onClick={handleSave}>{isEditing ? "saving" : `save`}</button>
+        <span>
+          enter to <button className="text-primary-500 cursor-pointer px-1" onClick={handleSave}>{isEditing ? "saving" : `save`}</button>
         </span>
       </div>
-    </StyledWrapper>
+    </div>
   );
 };
 export default EditMessage;

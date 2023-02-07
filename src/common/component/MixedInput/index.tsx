@@ -188,7 +188,7 @@ const Plugins: FC<Props> = ({
 
 
   return (
-    <div className="input max-h-[50vh] overflow-auto text-sm text-gray-600 dark:text-white" ref={editableRef}>
+    <div className="input w-full max-h-[50vh] overflow-auto text-sm text-gray-600 dark:text-white" ref={editableRef}>
       <Plate
         id={`${TEXT_EDITOR_PREFIX}_${id}`}
         onChange={handleChange}

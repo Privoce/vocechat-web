@@ -1,6 +1,6 @@
 import { FC, ReactElement } from "react";
 import dayjs from "dayjs";
-import Styled from "./styled";
+import clsx from "clsx";
 import {
   VideoPreview,
   AudioPreview,
@@ -80,33 +80,33 @@ const FileBox: FC<Props> = ({
   content
 }) => {
   const fromUser = useAppSelector((store) => store.users.byId[from_uid]);
-  const icon = getFileIcon(file_type, name);
+  const icon = getFileIcon(file_type, name, "icon w-9 h-12");
   if (!content || !fromUser || !name) return null;
   const previewContent = renderPreview({ file_type, content, name });
   const withPreview = preview && previewContent;
+
   return (
-    <Styled
-      className={`file_box ${flex ? "flex" : ""} ${withPreview ? "preview" : ""} ${file_type.startsWith("audio") ? "audio" : ""
-        }`}
+    <div
+      className={clsx(`h-[66px] rounded-md border border-solid border-gray-300 bg-gray-100`, flex ? "w-full" : "w-[370px]", withPreview && "relative overflow-hidden h-[281px]", file_type.startsWith("audio") && "h-[125px]")}
     >
-      <div className="basic">
+      <div className="w-full p-2 flex items-center justify-between gap-2">
         {icon}
-        <div className="info">
-          <span className="name">{name}</span>
-          <span className="details">
-            <i className="size">{formatBytes(size)}</i>
-            <i className="time">{dayjs(created_at).fromNow()}</i>
-            <i className="from">
-              by <strong>{fromUser.name}</strong>
-            </i>
-          </span>
+        <div className="flex flex-col gap-1 w-full overflow-hidden">
+          <span className="font-semibold text-sm text-gray-800 whitespace-nowrap text-ellipsis">{name}</span>
+          <em className="text-xs text-gray-500 flex gap-4 not-italic">
+            <span className="size">{formatBytes(size)}</span>
+            <span className="time">{dayjs(created_at).fromNow()}</span>
+            <span>
+              by <strong className="font-bold">{fromUser.name}</strong>
+            </span>
+          </em>
         </div>
-        <a className="download" download={name} href={`${content}&download=true`}>
+        <a className="whitespace-nowrap" download={name} href={`${content}&download=true`}>
           <IconDownload className="fill-gray-500" />
         </a>
       </div>
-      {withPreview && <div className="preview">{previewContent}</div>}
-    </Styled>
+      {withPreview && <div className="h-[calc(100%_-_64px)] overflow-hidden">{previewContent}</div>}
+    </div>
   );
 };
 

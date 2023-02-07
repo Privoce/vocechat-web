@@ -1,108 +1,13 @@
 import { FC } from "react";
-import styled from "styled-components";
 import Tippy from "@tippyjs/react";
 import { hideAll } from "tippy.js";
 import ReactionItem, { Emojis, ReactionMap } from "../ReactionItem";
 import ReactionPicker from "./ReactionPicker";
 import Tooltip from "../Tooltip";
 import { useReactMessageMutation } from "../../../app/services/message";
-import addEmojiIcon from "../../../assets/icons/add.emoji.svg?url";
+import IconAddEmoji from "../../../assets/icons/add.emoji.svg";
 import { useAppSelector } from "../../../app/store";
 
-const StyledWrapper = styled.span`
-  position: relative;
-  margin-top: 8px;
-  margin-bottom: 4px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  width: fit-content;
-  .reaction {
-    cursor: pointer;
-    background-color: #ecfdff;
-    border-radius: 6px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    padding: 4px;
-    > .emoji {
-      > * {
-        display: flex;
-      }
-    }
-    &:hover {
-      background-color: #cff9fe;
-    }
-    &.reacted {
-      box-shadow: inset 0 0 0 1px #06aed4;
-      background-color: #a5f0fc;
-    }
-
-    > .count {
-      font-weight: 400;
-      font-size: 12px;
-      line-height: 16px;
-      color: #06aed4;
-    }
-  }
-  > .add {
-    visibility: hidden;
-    width: 24px;
-    height: 24px;
-    background-color: #ecfdff;
-    border-radius: 6px;
-    border: none;
-    background-image: url(${addEmojiIcon});
-    background-size: 16px;
-    background-repeat: no-repeat;
-    background-position: center;
-    &:hover {
-      background-color: #cff9fe;
-    }
-  }
-  &:hover > .add {
-    visibility: visible;
-  }
-`;
-const StyledDetails = styled.div`
-  position: relative;
-  background: #ffffff;
-  border-radius: var(--br);
-  box-shadow: 0px 12px 16px -4px rgba(16, 24, 40, 0.08), 0px 4px 6px -2px rgba(16, 24, 40, 0.03);
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  padding: 8px;
-  &:after {
-    content: "";
-    display: block;
-    width: 12px;
-    height: 12px;
-    background-color: #fff;
-    border-radius: 1px;
-    position: absolute;
-    bottom: -6px;
-    left: calc(50% - 6px);
-    transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
-  }
-  &.first:after {
-    left: calc(50% - 16px);
-  }
-  .emoji {
-    width: 32px;
-    height: 32px;
-  }
-  .desc {
-    display: flex;
-    flex-direction: column;
-    width: 140px;
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 18px;
-    color: #1d2939;
-  }
-`;
 
 const ReactionDetails = ({
   uids = [],
@@ -123,15 +28,15 @@ const ReactionDetails = ({
       ? `${names.join(", ")} and ${names.length - 3} others reacted with`
       : `${names.join(", ")} reacted with`;
   return (
-    <StyledDetails className={index == 0 ? "first" : ""}>
-      <div className="emoji">
+    <div className={`relative bg-white rounded-lg shadow flex items-start gap-2 p-2 ${index == 0 ? "first" : ""}`}>
+      <div className="w-8 h-8">
         <ReactionItem native={emoji} />
       </div>
-      <div className="desc">
+      <div className="flex flex-col w-[140px] text-xs text-gray-800">
         <span>{prefixDesc}</span>
         <span>{ReactionMap[emoji]}</span>
       </div>
-    </StyledDetails>
+    </div>
   );
 };
 type Props = {
@@ -152,15 +57,15 @@ const Reaction: FC<Props> = ({ mid, reactions = null, readOnly = false }) => {
     reactWithEmoji({ mid, action: emoji });
   };
   if (!reactions || Object.entries(reactions).length == 0) return null;
+
   return (
-    <StyledWrapper className="reactions">
+    <span className="group relative mt-2 mb-1 flex items-center gap-1 w-fit">
       {Object.entries(reactions).map(([reaction, uids], idx) => {
         const reacted = uids.findIndex((id: number) => id == currUid) > -1;
         return uids.length > 0 ? (
           <span
             onClick={readOnly ? undefined : handleReact.bind(null, reaction)}
-            className={`reaction ${reacted ? "reacted" : ""}`}
-            // data-count={count > 1 ? count : ""}
+            className={`cursor-pointer rounded-md relative flex items-center gap-1 p-1 hover:bg-[#cff9fe] ${reacted ? "shadow-[inset_0_0_0_1px_#06aed4] bg-[#a5f0fc]" : ""}`}
             key={reaction}
           >
             <Tippy
@@ -176,7 +81,7 @@ const Reaction: FC<Props> = ({ mid, reactions = null, readOnly = false }) => {
               </i>
             </Tippy>
 
-            {uids.length > 1 ? <em className="count">{`${uids.length}`} </em> : null}
+            {uids.length > 1 ? <em className="text-primary-600 text-xs">{`${uids.length}`} </em> : null}
           </span>
         ) : null;
       })}
@@ -188,11 +93,13 @@ const Reaction: FC<Props> = ({ mid, reactions = null, readOnly = false }) => {
             trigger="click"
             content={<ReactionPicker mid={mid} hidePicker={hideAll} />}
           >
-            <button className="add"></button>
+            <button className="invisible group-hover:visible w-6 h-6 bg-[#ecfdff] hover:bg-[#cff9fe] rounded-md flex-center">
+              <IconAddEmoji className={'w-4 h-4'} />
+            </button>
           </Tippy>
         </Tooltip>
       )}
-    </StyledWrapper>
+    </span>
   );
 };
 export default Reaction;

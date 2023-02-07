@@ -17,10 +17,19 @@ import NewVersion from "./common/component/NewVersion";
 import './i18n';
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
-
+// dark mode
+const isDarkMode = localStorage.theme === 'dark';
+const isLightMode = localStorage.theme === 'light';
+if (isDarkMode || (!isLightMode && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+  document.documentElement.classList.add('dark');
+} else {
+  document.documentElement.classList.remove('dark');
+}
 root.render(
   <Suspense fallback="loading">
-    <Toaster />
+    <Toaster toastOptions={{
+      className: "dark:!bg-gray-800 dark:!text-gray-50"
+    }} />
     <DndProvider backend={HTML5Backend}>
       <ReduxRoutes />
     </DndProvider>

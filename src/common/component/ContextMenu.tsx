@@ -1,5 +1,4 @@
 import { FC, ReactElement } from "react";
-import StyledMenu from "./styled/Menu";
 
 export interface Item {
   title: string;
@@ -16,7 +15,7 @@ interface Props {
 
 const ContextMenu: FC<Props> = ({ items = [], hideMenu = null }) => {
   return (
-    <StyledMenu>
+    <ul className="context-menu">
       {items.map((item) => {
         // if (!item) return null;
         const {
@@ -49,7 +48,7 @@ const ContextMenu: FC<Props> = ({ items = [], hideMenu = null }) => {
           </li>
         );
       })}
-    </StyledMenu>
+    </ul>
   );
 };
 
