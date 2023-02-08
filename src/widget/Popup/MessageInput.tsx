@@ -1,20 +1,17 @@
 import { useRef, useState, memo } from 'react';
 import clsx from 'clsx';
 import useSendMessage from '../../common/hook/useSendMessage';
+import { useTheme } from '../ThemeContext';
 
 
-const textareaClassName = clsx(
-    'px-2.5 py-1.5 text-sm rounded-md w-full block',
-    'min-h-[32px] max-h-[92px] h-8 resize-none overflow-y-auto',
-    'ring-1 ring-gray-200 focus:ring-2 focus:ring-[#1fe1f9]',
-    'focus:outline-none',
-);
+
 type Props = {
     from: number,
     to: number
 }
 let isComposing = false;
 const MessageInput = (props: Props) => {
+    const { color } = useTheme();
     const { from, to } = props;
     const { sendMessage } = useSendMessage({
         from,
@@ -24,6 +21,12 @@ const MessageInput = (props: Props) => {
 
     const [content, setContent] = useState('');
     const ref = useRef<HTMLTextAreaElement>(null);
+    const textareaClassName = clsx(
+        'px-2.5 py-1.5 text-sm rounded-md w-full block',
+        'min-h-[32px] max-h-[92px] h-8 resize-none overflow-y-auto',
+        `ring-1 ring-gray-200 focus:ring-2 focus:ring-[${color}]`,
+        'focus:outline-none',
+    );
     return (
         <div className="relative border-t border-gray-300 w-full">
             <div className={'px-3 py-2 min-h-[48px]'}>
