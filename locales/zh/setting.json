@@ -190,6 +190,7 @@
     "default_value": "默认值",
     "remark": "备注",
     "param_host": "指定和谁聊天(用户ID)",
+    "param_theme_color": "挂件的主题色",
     "param_close_width": "挂件关闭态的宽度",
     "param_close_height": "挂件关闭态的高度",
     "param_open_width": "挂件打开态的宽度",
