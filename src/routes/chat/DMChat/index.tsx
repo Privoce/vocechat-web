@@ -46,7 +46,7 @@ const DMChat: FC<Props> = ({ uid = 0, dropFiles }) => {
       context="user"
       dropFiles={dropFiles}
       aside={
-        <ul className="tools">
+        <ul className="flex flex-col gap-6">
           <Tooltip tip="Saved Items" placement="left">
             <Tippy
               placement="left-start"
@@ -56,15 +56,15 @@ const DMChat: FC<Props> = ({ uid = 0, dropFiles }) => {
               trigger="click"
               content={<FavList uid={uid} />}
             >
-              <li className={`tool fav`}>
-                <FavIcon />
+              <li className={`relative cursor-pointer fav`}>
+                <FavIcon className="fill-gray-500" />
               </li>
             </Tippy>
           </Tooltip>
         </ul>
       }
       header={
-        <header className="head h-full flex items-center justify-between">
+        <header className="box-border h-14 px-5 border-b border-b-black/10 flex items-center justify-between">
           <User interactive={false} uid={currUser.uid} />
         </header>
       }

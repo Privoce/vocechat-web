@@ -8,7 +8,6 @@ import FavList from "../FavList";
 import { useReadMessageMutation } from "../../../app/services/message";
 import { updateRememberedNavs } from "../../../app/slices/ui";
 import useMessageFeed from "../../../common/hook/useMessageFeed";
-import useConfig from "../../../common/hook/useConfig";
 import ChannelIcon from "../../../common/component/ChannelIcon";
 import Tooltip from "../../../common/component/Tooltip";
 import User from "../../../common/component/User";
@@ -18,13 +17,11 @@ import EditIcon from "../../../assets/icons/edit.svg";
 import IconFav from "../../../assets/icons/bookmark.svg";
 import IconPeople from "../../../assets/icons/people.svg";
 import IconPin from "../../../assets/icons/pin.svg";
-import IconHeadphone from "../../../assets/icons/headphone.svg";
 
-import addIcon from "../../../assets/icons/add.svg?url";
+import IconAdd from "../../../assets/icons/add.svg";
 import InviteModal from "../../../common/component/InviteModal";
 import LoadMore from "../LoadMore";
 import { useAppSelector } from "../../../app/store";
-import { AgoraConfig } from "../../../types/server";
 import { useTranslation } from "react-i18next";
 type Props = {
   cid?: number;
@@ -32,7 +29,6 @@ type Props = {
 };
 function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
   const { t } = useTranslation("chat");
-  const { values: agoraConfig } = useConfig("agora");
   const {
     pulling,
     list: msgIds,
@@ -86,6 +82,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
   const readIndex = footprint.readChannels[cid];
   const pinCount = data?.pinned_messages?.length || 0;
   const feeds = [...msgIds, ...appends];
+  const toolClass = `relative cursor-pointer`;
   return (
     <>
       {addMemberModalVisible && <InviteModal cid={cid} closeModal={toggleAddVisible} />}
@@ -94,14 +91,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
         context="channel"
         dropFiles={dropFiles}
         aside={
-          <ul className="tools">
-            {(agoraConfig as AgoraConfig)?.enabled && (
-              <li className="tool">
-                <Tooltip tip="Voice/Video Chat" placement="left">
-                  <IconHeadphone />
-                </Tooltip>
-              </li>
-            )}
+          <ul className="flex flex-col gap-6">
             <Tooltip tip={t("pin")} placement="left">
               <Tippy
                 placement="left-start"
@@ -111,8 +101,9 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
                 trigger="click"
                 content={<PinList id={cid} />}
               >
-                <li className={`tool ${pinCount > 0 ? "badge" : ""}`} data-count={pinCount}>
-                  <IconPin />
+                <li className={`${toolClass}`}>
+                  {pinCount > 0 ? <span className="absolute -top-2 -right-2 flex-center w-4 h-4 rounded-full bg-primary-400 text-white font-bold text-[10px]">{pinCount}</span> : null}
+                  <IconPin className="fill-gray-500" />
                 </li>
               </Tippy>
             </Tooltip>
@@ -125,23 +116,23 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
                 trigger="click"
                 content={<FavList cid={cid} />}
               >
-                <li className={`tool fav`} data-count={pinCount}>
-                  <IconFav />
+                <li className={`${toolClass}`}>
+                  <IconFav className="fill-gray-500" />
                 </li>
               </Tippy>
             </Tooltip>
             <li
-              className={`tool ${membersVisible ? "active" : ""}`}
+              className={`${toolClass}`}
               onClick={toggleMembersVisible}
             >
               <Tooltip tip={t("channel_members")} placement="left">
-                <IconPeople />
+                <IconPeople className={membersVisible ? "fill-gray-600" : ""} />
               </Tooltip>
             </li>
           </ul>
         }
         header={
-          <header className="head flex items-center h-full justify-center md:justify-between">
+          <header className="box-border h-14 px-5 border-solid border-b border-b-black/10 flex items-center justify-center md:justify-between">
             <div className="flex items-center gap-1 text-base">
               <ChannelIcon personal={!is_public} />
               <span className="text-gray-800 dark:text-white">{name}</span>
@@ -153,7 +144,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
           <div className={`flex-col gap-1 w-[226px] h-[calc(100vh_-_56px_-_22px)] overflow-y-scroll p-2 shadow-[inset_1px_0px_0px_rgba(0,_0,_0,_0.1)] ${membersVisible ? "flex" : "hidden"}`}>
             {addVisible && (
               <div className="cursor-pointer flex items-center justify-start gap-1 select-none rounded-lg p-2.5 hover:bg-gray-500/10" onClick={toggleAddVisible}>
-                <img className="w-6 h-6" src={addIcon} />
+                <IconAdd className="w-6 h-6 dark:fill-slate-300" />
                 <div className="font-semibold text-sm text-gray-600 dark:text-gray-50">{t("add_channel_members")}</div>
               </div>
             )}

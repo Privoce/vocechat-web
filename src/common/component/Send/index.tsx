@@ -145,7 +145,7 @@ const Send: FC<IProps> = ({
       {replying_mid && <Replying context={context} mid={replying_mid} id={id} />}
       {mode == Modes.text && <UploadFileList context={context} id={id} />}
 
-      <div className={clsx(`flex justify-between items-start gap-4 px-4 py-3.5`, isMarkdownMode && `grid grid-cols-[1fr_1fr] grid-rows-[auto_auto] gap-0`)}>
+      <div className={clsx(`flex justify-between items-center gap-4 px-4 py-3.5`, isMarkdownMode && `grid grid-cols-[1fr_1fr] grid-rows-[auto_auto] gap-0`)}>
         <EmojiPicker selectEmoji={insertEmoji} />
         {mode == Modes.text && (
           <MixedInput

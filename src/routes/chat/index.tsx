@@ -1,7 +1,7 @@
 import { memo, useState } from "react";
 import { useParams } from "react-router-dom";
 import clsx from "clsx";
-import StyledWrapper from "./styled";
+
 import BlankPlaceholder from "../../common/component/BlankPlaceholder";
 import Server from "../../common/component/Server";
 import ChannelChat from "./ChannelChat";
@@ -14,7 +14,7 @@ import GuestBlankPlaceholder from "./GuestBlankPlaceholder";
 import GuestChannelChat from "./GuestChannelChat";
 import GuestSessionList from "./GuestSessionList";
 import IconList from '../../assets/icons/list.svg';
-// import IconClose from '../../assets/icons/close.svg';
+
 function ChatPage() {
   const [sessionListVisible, setSessionListVisible] = useState(false);
   const [channelModalVisible, setChannelModalVisible] = useState(false);
@@ -46,22 +46,23 @@ function ChatPage() {
       };
   // console.log("temp uid", tmpUid);
   const placeholderVisible = channel_id == 0 && user_id == 0;
+
   return (
     <>
       {channelModalVisible && (
         <ChannelModal closeModal={toggleChannelModalVisible} personal={true} />
       )}
       {usersModalVisible && <UsersModal closeModal={toggleUsersModalVisible} />}
-      <StyledWrapper className={`${isGuest ? "!pr-1 !pt-0" : ""} md:!pr-12 `}>
+      <div className={`flex h-full pt-2 pb-2.5 pr-1 ${isGuest ? "!pr-1 !pt-0" : ""} md:!pr-12 `}>
         {sessionListVisible && <div onClick={toggleSessionList} className="z-30 fixed top-0 left-4 w-screen h-screen bg-black/50 transition-all backdrop-blur-sm"></div>}
-        <div className={clsx("left fixed md:relative top-0 left-0 z-40 transition-all  md:overflow-auto bg-white dark:!bg-[#1F2A37]", sessionListVisible ? "max-md:translate-x-0" : "max-md:-translate-x-full")}>
+        <div className={clsx("flex-col rounded-l-2xl min-w-[268px] h-full border border-solid border-r-black/5 dark:border-none box-border fixed md:relative top-0 left-0 z-40 transition-all md:overflow-auto bg-white dark:!bg-[#1F2A37]", sessionListVisible ? "max-md:translate-x-0" : "max-md:-translate-x-full")}>
           <Server readonly={isGuest} />
           {isGuest ? <GuestSessionList /> : <SessionList tempSession={tmpSession} />}
           {sessionListVisible ? null : <button className="absolute top-2 -right-[52px] z-50 p-2 bg-none  md:hidden" onClick={toggleSessionList}>
             <IconList className="dark:stroke-gray-300" />
           </button>}
         </div>
-        <div className={`right ${placeholderVisible ? "placeholder" : ""} bg-white dark:!bg-[#384250]`}>
+        <div className={`rounded-r-2xl w-full ${placeholderVisible ? "h-full flex-center" : ""} bg-white dark:!bg-[#384250]`}>
           {placeholderVisible && (isGuest ? <GuestBlankPlaceholder /> : <BlankPlaceholder />)}
           {channel_id !== 0 &&
             (isGuest ? (
@@ -71,7 +72,7 @@ function ChatPage() {
             ))}
           {user_id !== 0 && <DMChat uid={+user_id} />}
         </div>
-      </StyledWrapper>
+      </div>
     </>
   );
 }

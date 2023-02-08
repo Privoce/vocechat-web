@@ -1,5 +1,4 @@
 import { FC, ReactElement, useEffect, useState } from "react";
-import StyledMsg from "./styled";
 import renderContent from "./renderContent";
 import Avatar from "../Avatar";
 import useFavMessage from "../../hook/useFavMessage";
@@ -18,22 +17,22 @@ const FavoredMessage: FC<Props> = ({ id = "" }) => {
     const favorite_mids = messages.map(({ from_mid }) => +from_mid) || [];
 
     setMsgs(
-      <div data-favorite-mids={favorite_mids.join(",")} className="favorite flex flex-col rounded-md bg-slate-200">
+      <div data-favorite-mids={favorite_mids.join(",")} className="favorite flex flex-col rounded-md bg-slate-50 dark:bg-slate-800">
         <div className="list">
           {messages.map((msg, idx) => {
             const { user = {}, download, content, content_type, properties, thumbnail } = msg;
             return (
-              <StyledMsg className="archive" key={idx}>
+              <div className="w-full relative flex items-start gap-3 px-2 py-1 my-2 rounded-lg dark:hover:bg-gray-800" key={idx}>
                 {user && (
-                  <div className="avatar">
+                  <div className="">
                     <Avatar width={40} height={40} src={user.avatar} name={user.name} />
                   </div>
                 )}
-                <div className="details">
-                  <div className="up">
-                    <span className="name">{user?.name || "Deleted User"}</span>
+                <div className="w-full flex flex-col gap-2 text-sm">
+                  <div className="flex items-center gap-2 font-semibold">
+                    <span className="text-gray-600 dark:text-gray-400">{user?.name || "Deleted User"}</span>
                   </div>
-                  <div className="down">
+                  <div className="select-text text-gray-800 break-all whitespace-pre-wrap dark:text-white">
                     {renderContent({
                       download,
                       content,
@@ -43,7 +42,7 @@ const FavoredMessage: FC<Props> = ({ id = "" }) => {
                     })}
                   </div>
                 </div>
-              </StyledMsg>
+              </div>
             );
           })}
         </div>

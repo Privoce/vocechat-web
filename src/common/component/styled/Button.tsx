@@ -17,7 +17,7 @@ const StyledButton = ({ children, className = '', ...rest }: Props) => {
     isSmall && "!py-2",
     noBorder && "!shadow-none border-none",
     isMini && "!px-2.5 !py-1 !text-xs",
-    isDanger && "bg-red-700 disabled:bg-gray-300 hover:bg-red-700/80",
+    isDanger && "bg-red-500 disabled:bg-gray-300 hover:bg-red-500/80 active:bg-red-700",
     className
   )} {...rest}>
     {children}

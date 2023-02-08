@@ -1,80 +1,7 @@
+import clsx from "clsx";
 import { useState, FC, DetailedHTMLProps, InputHTMLAttributes } from "react";
-import { HiEye, HiEyeOff } from "react-icons/hi";
-import styled from "styled-components";
-
-const StyledWrapper = styled.div`
-  width: 100%;
-  position: relative;
-  display: flex;
-  overflow: hidden;
-  border-radius: 4px;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0px 1px 2px rgba(31, 41, 55, 0.08);
-
-  .prefix {
-    padding: 8px 16px;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 20px;
-    color: #9ca3af;
-    background: #f3f4f6;
-    border-right: 1px solid #e5e7eb;
-  }
-
-  .view {
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    cursor: pointer;
-  }
-`;
-
-// todo: check ime problem
-const StyledInput = styled.input`
-  width: 100%;
-  background: #ffffff;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 20px;
-  color: #333;
-  padding: 8px;
-  outline: none;
-
-  &:not(.inner) {
-    border-radius: 4px;
-    border: 1px solid #e5e7eb;
-    box-shadow: 0px 1px 2px rgba(31, 41, 55, 0.08);
-  }
-
-  &.large {
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 20px;
-    padding: 11px 8px;
-  }
-
-  &.none {
-    outline: none;
-    border: none;
-    background: none;
-    box-shadow: none;
-  }
-
-  &:disabled {
-    color: #78787c;
-    background-color: #f9fafb;
-  }
-
-  &::placeholder {
-    color: #d1d5db;
-  }
-
-  &[type="password"] {
-    padding-right: 30px;
-  }
-`;
-
+import IconEyeOpen from "../../../assets/icons/eye.open.svg";
+import IconEyeClose from "../../../assets/icons/eye.close.svg";
 interface Props
   extends DetailedHTMLProps<
     Pick<
@@ -100,26 +27,36 @@ interface Props
   ref?: any;
 }
 
-const Input: FC<Props> = ({ type = "text", prefix = "", className, ...rest }) => {
+const Input: FC<Props> = ({ type = "text", prefix = "", className = "", ...rest }) => {
   const [inputType, setInputType] = useState(type);
   const togglePasswordVisible = () => {
     setInputType((prev) => (prev == "password" ? "text" : "password"));
   };
 
+  const isLarge = className.includes("large");
+  const isNone = className.includes("none");
+  // const noInner=!className.includes("inner");
+  const isPwd = type == "password";
+  const inputClass = clsx(`w-full bg-white dark:bg-gray-800 text-sm text-gray-800 dark:text-gray-200 p-2 outline-none disabled:text-gray-500 disabled:bg-gray-100 dark:disabled:text-gray-500 dark:disabled:bg-gray-800/50 placeholder:text-gray-400`,
+    // noInner && 'rounded border border-gray-200 shadow',
+    isLarge && 'py-3',
+    isNone && "border-none bg-transparent shadow-none",
+    isPwd && "pr-[30px]"
+  );
   return type == "password" ? (
-    <StyledWrapper className={className}>
-      <StyledInput type={inputType} autoComplete={inputType == "password" ? "current-password" : "on"} className={`inner ${className}`} {...rest} />
-      <div className="view" onClick={togglePasswordVisible}>
-        {inputType == "password" ? <HiEyeOff color="#78787c" /> : <HiEye color="#78787c" />}
+    <div className={`w-full relative flex overflow-hidden rounded border border-gray-300 dark:border-gray-500 shadow ${className}`}>
+      <input type={inputType} autoComplete={inputType == "password" ? "current-password" : "on"} className={`${inputClass} ${className}`} {...rest} />
+      <div className="absolute top-1/2 right-2.5 -translate-y-1/2 cursor-pointer" onClick={togglePasswordVisible}>
+        {inputType == "password" ? <IconEyeClose className="fill-gray-500" /> : <IconEyeOpen className="fill-gray-500" />}
       </div>
-    </StyledWrapper>
+    </div>
   ) : prefix ? (
-    <StyledWrapper className={className}>
-      <span className="prefix">{prefix}</span>
-      <StyledInput className={`inner ${className}`} type={inputType} {...rest} />
-    </StyledWrapper>
+    <div className={`w-full relative flex overflow-hidden rounded border border-gray-300 dark:border-gray-500 shadow ${className}`}>
+      <span className="px-4 py-2 text-sm text-gray-500 dark:text-gray-300 bg-gray-200 dark:bg-gray-800 border dark:border-gray-600">{prefix}</span>
+      <input className={`${inputClass} ${className}`} type={inputType} {...rest} />
+    </div>
   ) : (
-    <StyledInput type={inputType} className={className} {...rest} />
+    <input type={inputType} className={`${inputClass} rounded border border-gray-200 dark:border-gray-400 shadow ${className}`} {...rest} />
   );
 };
 

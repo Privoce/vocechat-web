@@ -1,6 +1,6 @@
 import { useState, useEffect, FC } from "react";
 import { Ping } from '@uiball/loaders';
-import { getDefaultSize } from "../../utils";
+// import { getDefaultSize } from "../../utils";
 
 type Props = {
   uploading: boolean;
@@ -20,7 +20,7 @@ const ImageMessage: FC<Props> = ({
   properties
 }) => {
   const [url, setUrl] = useState(thumbnail);
-  const { width = 0, height = 0 } = getDefaultSize(properties);
+  // const { width = 0, height = 0 } = getDefaultSize(properties);
   useEffect(() => {
     const newUrl = thumbnail;
     const img = new Image();
@@ -36,21 +36,21 @@ const ImageMessage: FC<Props> = ({
   return (
     <div className="relative w-fit h-fit">
       {uploading && (
-        <div className="absolute left-0 top-0 w-full h-full bg-white/40 flex flex-col justify-center items-center gap-1">
+        <div className="absolute left-0 top-0 w-full h-full bg-white/50 flex flex-col justify-center items-center gap-1">
           <Ping
             size={45}
             speed={2}
-            color="#666"
+            color="#555"
           />
-          <span className="text-xs text-gray-600">{progress}%</span>
+          <span className="text-xs text-gray-500">{progress}%</span>
         </div>
       )}
       <img
-        className="max-w-[480px] cursor-zoom-in object-cover preview"
-        style={{
-          width: width ? `${width}px` : "",
-          height: height ? `${height}px` : ""
-        }}
+        className="w-full h-auto max-w-[480px] cursor-zoom-in object-cover preview"
+        // style={{
+        //   width: width ? `${width}px` : "",
+        //   height: height ? `${height}px` : ""
+        // }}
         data-meta={JSON.stringify(properties)}
         data-origin={content}
         data-download={download}

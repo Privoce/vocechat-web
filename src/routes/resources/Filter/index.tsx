@@ -11,8 +11,7 @@ import { useTranslation } from "react-i18next";
 import clsx from "clsx";
 
 const getClass = (selected: boolean) => {
-
-  return clsx(`cursor-pointer flex items-center gap-2 border border-solid box-border shadow rounded-lg py-2 px-3 text-xs`, selected && 'text-white bg-primary-400');
+  return clsx(`cursor-pointer flex items-center gap-2 border border-solid dark:border-gray-400 box-border shadow rounded-lg py-2 px-3 text-xs text-gray-900 dark:text-gray-200`, selected && 'text-white bg-primary-400');
 };
 export default function Filter({ filter, updateFilter }) {
   const { t } = useTranslation("file");
@@ -75,7 +74,7 @@ export default function Filter({ filter, updateFilter }) {
           <span className="txt">
             {t("from")} {from && userMap[from].name}
           </span>
-          <ArrowDown className="arrow" />
+          <ArrowDown className="dark:stroke-gray-400" />
         </div>
       </Tippy>
       <Tippy
@@ -90,7 +89,7 @@ export default function Filter({ filter, updateFilter }) {
           onClick={toggleFilterVisible.bind(null, { channel: true })}
         >
           <span className="txt">{channel ? `In ${channelMap[channel].name}` : t("channel")}</span>
-          <ArrowDown className="arrow" />
+          <ArrowDown className="dark:stroke-gray-400" />
         </div>
       </Tippy>
       <Tippy
@@ -105,7 +104,7 @@ export default function Filter({ filter, updateFilter }) {
           onClick={toggleFilterVisible.bind(null, { type: true })}
         >
           <span className="txt">{type ? FileTypes[type].title : t("type")}</span>
-          <ArrowDown className="arrow" />
+          <ArrowDown className="dark:stroke-gray-400" />
         </div>
       </Tippy>
       <Tippy
@@ -120,7 +119,7 @@ export default function Filter({ filter, updateFilter }) {
           onClick={toggleFilterVisible.bind(null, { date: true })}
         >
           <span className="txt">{date ? Dates[date].title : t("date")}</span>
-          <ArrowDown className="arrow" />
+          <ArrowDown className="dark:stroke-gray-400" />
         </div>
       </Tippy>
     </div>

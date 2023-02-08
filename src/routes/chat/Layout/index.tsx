@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect, FC, ReactElement } from "react";
 import { useDrop } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
+import clsx from "clsx";
 import ImagePreviewModal from "../../../common/component/ImagePreviewModal";
 import Send from "../../../common/component/Send";
-import Styled from "./styled";
 import Operations from "./Operations";
 import useUploadFile from "../../../common/hook/useUploadFile";
 
@@ -13,7 +13,6 @@ import useLicense from "../../../common/hook/useLicense";
 import LicenseUpgradeTip from "./LicenseOutdatedTip";
 // import { useTranslation } from "react-i18next";
 import DnDTip from "./DnDTip";
-import clsx from "clsx";
 
 interface Props {
   readonly?: boolean;
@@ -104,14 +103,13 @@ const Layout: FC<Props> = ({
     );
   }, []);
   const name = context == "channel" ? channelsData[to]?.name : usersData[to]?.name;
-
   return (
     <>
       {previewImage && <ImagePreviewModal data={previewImage} closeModal={closePreviewModal} />}
-      <Styled ref={drop} className={`${readonly ? "readonly" : ""}`}>
+      <article ref={drop} className={`relative w-full rounded-r-2xl`}>
         {header}
-        <main className="main" ref={messagesContainer}>
-          <div className="chat">
+        <main className="h-full w-full flex items-start justify-between relative" ref={messagesContainer}>
+          <div className="rounded-br-2xl w-full flex flex-col h-[calc(100vh_-_56px_-_18px)]">
             {children}
             <div className={`p-4 pt-0 ${selects ? "selecting" : ""}`}>
               {readonly ? (
@@ -126,13 +124,13 @@ const Layout: FC<Props> = ({
               {selects && <Operations context={context} id={to} />}
             </div>
           </div>
-          {users && <div className="members hidden md:block">{users}</div>}
-          {aside && <div className="aside !hidden md:!block">{aside}</div>}
+          {users && <div className="shadow-[inset_0px_10px_2px_-10px_rgba(0,_0,_0,_0.1)] hidden md:block">{users}</div>}
+          {aside && <div className={clsx("p-3 absolute right-0 -top-14 translate-x-full flex-col hidden md:flex")}>{aside}</div>}
         </main>
         {!readonly && isActive && (
           <DnDTip context={context} name={name} />
         )}
-      </Styled>
+      </article>
     </>
   );
 };

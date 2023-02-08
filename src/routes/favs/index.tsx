@@ -145,7 +145,7 @@ function FavsPage() {
           ] = messages;
           const tip = <span className={clsx("inline-flex items-center gap-1 mr-2")}>
             {gid ? <><IconChannel className="w-3 h-3" /> {channelData[gid]?.name}</> : <>
-              From <strong className="font-bold text-gray-800">{userData[uid]?.name}</strong>
+              From <strong className="font-bold text-gray-800 dark:text-gray-100">{userData[uid]?.name}</strong>
             </>}
           </span>;
           return (
@@ -156,8 +156,8 @@ function FavsPage() {
               </h4>
               <div className="relative group">
                 <FavoredMessage key={id} id={id} />
-                <button className="absolute top-2 right-2 flex-center w-6 h-6 p-1 border border-solid border-slate-200 rounded invisible group-hover:visible" data-id={id} onClick={handleRemove} >
-                  <IconRemove className="fill-slate-900" />
+                <button className="absolute top-2 right-2 flex-center w-6 h-6 p-1 border border-solid border-slate-200 dark:border-slate-700 rounded invisible group-hover:visible" data-id={id} onClick={handleRemove} >
+                  <IconRemove className="fill-slate-900 dark:fill-slate-100" />
                 </button>
               </div>
             </div>

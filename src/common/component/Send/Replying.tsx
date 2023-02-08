@@ -72,9 +72,9 @@ export default function Replying({
   const user = usersData[from_uid];
 
   return (
-    <div className="reply bg-gray-100 z-[999] flex items-start justify-start gap-4 rounded-t-lg w-full px-4 py-3 text-sm">
+    <div className="reply bg-gray-100 dark:bg-gray-700 z-[999] flex items-start justify-start gap-4 rounded-t-lg w-full px-4 py-3 text-sm">
       <div className="whitespace-nowrap text-gray-400 ">
-        Replying to <span className="font-bold text-gray-600">{user?.name}</span>
+        Replying to <span className="font-bold text-gray-600 dark:text-gray-400">{user?.name}</span>
       </div>
       <div className="text-gray-500 overflow-hidden pr-7 ">{renderContent(msg)}</div>
       <button className="absolute top-4 right-4 cursor-pointer" onClick={removeReply}>

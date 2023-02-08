@@ -129,15 +129,15 @@ const Session: FC<IProps> = ({
           </div>
           <div className="w-full flex flex-col justify-between">
             <div className="flex items-center justify-between">
-              <span className={clsx(`flex items-center gap-2 font-semibold text-sm text-gray-500 dark:text-white whitespace-nowrap overflow-hidden text-ellipsis`, previewMsg.created_at && "max-w-[190px]")}>
-                {name} {!is_public && <IconLock />}
+              <span className={clsx(`flex items-center gap-1 font-semibold text-sm text-gray-500 dark:text-white whitespace-nowrap overflow-hidden text-ellipsis`, previewMsg.created_at && "max-w-[190px]")}>
+                {name} {!is_public && <IconLock className="dark:fill-gray-400" />}
               </span>
-              <span className="text-xs text-gray-600 whitespace-nowrap overflow-hidden max-w-[80px] text-ellipsis">
+              <span className="text-xs text-gray-600 dark:text-gray-400 whitespace-nowrap overflow-hidden max-w-[80px] text-ellipsis">
                 {previewMsg.created_at ? dayjs(previewMsg.created_at).fromNow() : null}
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-xs text-gray-500 whitespace-nowrap overflow-hidden w-36 text-ellipsis">{renderPreviewMessage(previewMsg)}</span>
+              <span className="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap overflow-hidden w-36 text-ellipsis">{renderPreviewMessage(previewMsg)}</span>
               {unreads > 0 && (
                 <strong className={clsx(`text-white h-5 min-w-[20px] bg-primary-400 font-bold text-[10px] rounded-[10px] flex-center`, unreads > 99 && 'w-1.5 h-1.5 p-0 min-w-[unset]', muted && "bg-gray-500")}>
                   {unreads > 99 ? null : unreads}

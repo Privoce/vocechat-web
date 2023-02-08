@@ -36,7 +36,7 @@ const StyledSettingContainer: FC<PropsWithChildren<Props>> = ({
             <ul key={title} data-title={title} className="flex flex-col gap-0.5 mb-9 before:pl-3 before:content-[attr(data-title)] before:font-bold before:text-xs before:text-gray-400">
               {items.map(({ name, title }) => {
                 return (
-                  <li key={name} className={clsx(`text-sm text-gray-700 whitespace-nowrap dark:text-gray-200  rounded hover:bg-[#e7e5e4] dark:hover:bg-slate-500/20`, name == nav?.name && "bg-[#e7e5e4] dark:bg-slate-500/20")}>
+                  <li key={name} className={clsx(`text-sm font-semibold text-gray-600 whitespace-nowrap dark:text-gray-200  rounded hover:bg-[#e7e5e4] dark:hover:bg-slate-500/20`, name == nav?.name && "bg-[#e7e5e4] dark:bg-slate-500/20")}>
                     <NavLink to={`${pathname}?nav=${name}`} className="block px-3 py-1">{title}</NavLink>
                   </li>
                 );
@@ -50,7 +50,7 @@ const StyledSettingContainer: FC<PropsWithChildren<Props>> = ({
               if (typeof d === "boolean" || !d) return null;
               const { title, handler } = d;
               return (
-                <li key={title} onClick={handler} className="text-sm text-white dark:text-gray-200 rounded cursor-pointer py-1.5 px-3 bg-[#ef4444] hover:bg-red-600">
+                <li key={title} onClick={handler} className="text-sm text-red-500 dark:text-red-400 rounded cursor-pointer py-1.5 px-3">
                   {title}
                 </li>
               );

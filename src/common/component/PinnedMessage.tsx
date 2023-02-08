@@ -1,7 +1,6 @@
 import dayjs from "dayjs";
 import renderContent from "./Message/renderContent";
 import Avatar from "./Avatar";
-import StyledWrapper from "./Message/styled";
 import { useAppSelector } from "../../app/store";
 import { FC } from "react";
 import { PinnedMessage } from "../../types/channel";
@@ -23,16 +22,16 @@ const PinnedMessageView: FC<Props> = ({ data }) => {
   const { created_at, content_type, content, properties, thumbnail = "" } = { ...data, ...normalized };
   const { name, avatar } = usersData[created_by] ?? {};
   return (
-    <StyledWrapper className={`preview`}>
-      <div className="avatar">
+    <div className="w-full relative flex items-start gap-3 p-2 my-2 rounded-lg">
+      <div>
         <Avatar width={40} height={40} src={avatar} name={name} />
       </div>
-      <div className="details">
-        <div className="up">
-          <span className="name">{name}</span>
-          <i className="time">{dayjs(created_at).format("YYYY-MM-DD h:mm:ss A")}</i>
+      <div className="w-full flex flex-col items-start gap-1  text-sm">
+        <div className="flex items-center gap-2 font-semibold">
+          <span className="text-gray-500 dark:text-gray-400">{name}</span>
+          <time className="text-xs text-gray-400">{dayjs(created_at).format("YYYY-MM-DD h:mm:ss A")}</time>
         </div>
-        <div className={`down`}>
+        <div className={`select-text text-gray-600 break-all whitespace-pre-wrap dark:text-white`}>
           {renderContent({
             content_type,
             content,
@@ -42,7 +41,7 @@ const PinnedMessageView: FC<Props> = ({ data }) => {
           })}
         </div>
       </div>
-    </StyledWrapper>
+    </div>
   );
 };
 

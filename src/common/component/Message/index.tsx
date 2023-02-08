@@ -1,13 +1,13 @@
 import React, { useRef, useState, useEffect, FC } from "react";
 import dayjs from "dayjs";
+import Tippy from "@tippyjs/react";
+import clsx from "clsx";
 
 import useInView from "./useInView";
-import Tippy from "@tippyjs/react";
 import Reaction from "./Reaction";
 import Reply from "./Reply";
 import Profile from "../Profile";
 import Avatar from "../Avatar";
-import StyledWrapper from "./styled";
 import Commands from "./Commands";
 import EditMessage from "./EditMessage";
 import renderContent from "./renderContent";
@@ -91,13 +91,16 @@ const Message: FC<IProps> = ({
   const _key = properties?.local_id || mid;
   const showExpire = (expires_in ?? 0) > 0;
   return (
-    <StyledWrapper
+    <div
       key={_key}
       onContextMenu={readOnly ? undefined : handleContextMenuEvent}
       data-msg-mid={mid}
       ref={inviewRef}
-      className={`message dark:hover:!bg-gray-800 ${readOnly ? "readonly" : ""} ${showExpire ? "auto_delete" : ""} ${pinInfo ? "pinned" : ""} ${contextMenuVisible ? "contextVisible" : ""
-        } `}
+      className={clsx(`group w-full relative flex items-start gap-4 px-2 py-1 my-2 rounded-lg dark:hover:bg-gray-800 hover:bg-gray-50`,
+        readOnly && "hover:bg-transparent",
+        showExpire && "bg-red-200",
+        pinInfo && "bg-cyan-50 dark:bg-cyan-800 pt-7"
+      )}
     >
       <Tippy
         key={_key}
@@ -108,7 +111,7 @@ const Message: FC<IProps> = ({
         trigger="click"
         content={<Profile uid={fromUid || 0} type="card" cid={context == "user" ? 0 : contextId} />}
       >
-        <div className="avatar" data-uid={fromUid} ref={avatarRef}>
+        <div className="cursor-pointer" data-uid={fromUid} ref={avatarRef}>
           <Avatar width={40} height={40} src={currUser?.avatar} name={currUser?.name} />
         </div>
       </Tippy>
@@ -121,26 +124,29 @@ const Message: FC<IProps> = ({
         hide={hideContextMenu}
       >
         <div
-          className="details"
+          className={clsx("w-full flex flex-col gap-2", pinInfo && "relative")}
           data-pin-tip={`pinned by ${pinInfo?.created_by ? usersData[pinInfo.created_by]?.name : ""
             }`}
         >
-          <div className="up">
-            <span className="name">{currUser?.name || "Deleted User"}</span>
+          {pinInfo && <span className="absolute left-0 -top-1 -translate-y-full text-xs text-gray-400">
+            {`pinned by ${pinInfo.created_by ? usersData[pinInfo.created_by]?.name : ""}`}
+          </span>}
+          <div className="flex items-center gap-2 font-semibold">
+            <span className="text-primary-500 text-sm">{currUser?.name || "Deleted User"}</span>
             <Tooltip
               delay={200}
               disabled={!timePrefix || readOnly}
               placement="top"
               tip={dayjsTime.format("YYYY-MM-DD h:mm:ss A")}
             >
-              <time className="time">
+              <time className="text-gray-400 text-xs">
                 {timePrefix
                   ? `${timePrefix} ${dayjsTime.format("h:mm A")}`
                   : dayjsTime.format("YYYY-MM-DD h:mm:ss A")}
               </time>
             </Tooltip>
           </div>
-          <div className={`down dark:!text-white ${sending ? "sending" : ""}`}>
+          <div className={`select-text text-gray-800 text-sm break-all whitespace-pre-wrap dark:!text-white ${sending ? "opacity-90" : ""}`}>
             {reply_mid && <Reply key={reply_mid} mid={reply_mid} />}
             {edit ? (
               <EditMessage mid={mid} cancelEdit={toggleEditMessage} />
@@ -180,7 +186,7 @@ const Message: FC<IProps> = ({
           toggleEditMessage={toggleEditMessage}
         />
       )}
-    </StyledWrapper>
+    </div>
   );
 };
 export default React.memo(Message, (prevs, nexts) => {

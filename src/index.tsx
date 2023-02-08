@@ -9,7 +9,6 @@ import "./assets/index.css";
 import "./common/DayjsSetting";
 import "./common/TippySetting";
 import { register } from "./serviceWorkerRegistration";
-import MarkdownStyleOverride from "./common/component/MarkdownStyleOverride";
 import MobileAppTip from "./common/component/MobileAppTip";
 import ReduxRoutes from "./routes";
 import NewVersion from "./common/component/NewVersion";
@@ -33,7 +32,6 @@ root.render(
     <DndProvider backend={HTML5Backend}>
       <ReduxRoutes />
     </DndProvider>
-    <MarkdownStyleOverride />
     <MobileAppTip />
   </Suspense>
 );

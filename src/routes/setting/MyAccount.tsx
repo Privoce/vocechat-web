@@ -61,7 +61,7 @@ export default function MyAccount() {
   return (
     <>
       <div className="flex flex-col items-start gap-8">
-        <div className="p-6 flex flex-col items-center w-[512px] bg-slate-100 dark:bg-gray-800 rounded-2xl">
+        <div className="p-6 flex flex-col items-center w-[512px] bg-gray-100 dark:bg-gray-800 rounded-2xl">
           <AvatarUploader url={avatar} name={name} uploadImage={uploadAvatar} />
           <div className="mt-2 mb-16 font-bold text-lg text-gray-800 dark:text-white">
             {name} <span className="font-normal text-gray-500">#{uid}</span>

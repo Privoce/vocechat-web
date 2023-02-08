@@ -229,10 +229,70 @@ html.dark ::-webkit-scrollbar-thumb {
   ---channel-text-color: #1c1c1e;
   ---msg-text-color: #374151;
 }
-/* overrides */
+/* markdown overrides */
 
 #MARKDOWN_CONTAINER .toastui-editor-contents {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+}
+[class^="toastui-editor-"] .toastui-editor-md-container {
+  border-bottom: none;
+}
+[class^="toastui-editor-"] .toastui-editor-md-container .toastui-editor-md-preview {
+  padding-right: 0;
+  padding-left: 8px;
+}
+[class^="toastui-editor-"] .toastui-editor-md-container .toastui-editor-md-splitter {
+  background-color: #d0d5dd;
+}
+[class^="toastui-editor-"] .toastui-editor-md-container .ProseMirror {
+  height: 100%;
+}
+[class^="toastui-editor-"] .ProseMirror,
+[class^="toastui-editor-"] p,
+[class^="toastui-editor-"] .toastui-editor.md-mode {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #475467;
+  margin: 0 0 16px;
+  word-break: break-all;
+}
+[class^="toastui-editor-"] a {
+  background-color: transparent;
+}
+[class^="toastui-editor-"] pre {
+  width: 100%;
+  width: -webkit-fill-available;
+}
+[class^="toastui-editor-"] img {
+  cursor: pointer;
+  max-width: 300px;
+  display: block;
+}
+[class^="toastui-editor-"] ul {
+  white-space: nowrap;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+[class^="toastui-editor-"] ul > li:before {
+  margin-top: 10px !important;
+  margin-left: -14px;
+  background-color: #475467;
+}
+[class^="toastui-editor-"] ol li {
+  display: flex;
+  flex-direction: column;
+}
+[class^="toastui-editor-"] li ol {
+  display: flex;
+  flex-direction: column;
+}
+[class^="toastui-editor-"] ul,
+[class^="toastui-editor-"] ol {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #475467;
 }

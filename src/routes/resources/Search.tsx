@@ -19,7 +19,7 @@ const Search: FC<Props> = ({ value = "", updateSearchValue = null, embed = false
   return (
     <div className={clsx(`relative w-full py-1.5 px-4 shadow`, embed && "py-2 shadow-none")}>
       <IconSearch className="absolute left-6 top-1/2 -translate-y-1/2" />
-      <input value={value} onChange={handleChange} className="bg-black/5 rounded-full text-sm text-gray-500 py-2.5 pl-9" placeholder={`${t("action.search")}...`} />
+      <input value={value} onChange={handleChange} className="bg-black/5 dark:bg-black/20 rounded-full text-sm text-gray-500 py-2.5 pl-9" placeholder={`${t("action.search")}...`} />
     </div>
   );
 };

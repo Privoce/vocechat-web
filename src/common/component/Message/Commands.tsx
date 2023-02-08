@@ -96,7 +96,7 @@ const Commands: FC<Props> = ({ context = "user", contextId = 0, mid = 0, toggleE
     <>
       <ul
         ref={cmdsRef}
-        className={clsx(`cmds bg-white dark:bg-gray-900 rounded-md z-[999] absolute right-2.5 top-0 -translate-y-1/2 flex items-center border border-solid border-black/10 invisible`, tippyVisible && '!visible')}>
+        className={clsx(`bg-white dark:bg-gray-900 rounded-md z-[999] absolute right-2.5 top-0 -translate-y-1/2 flex items-center border border-solid border-black/10 invisible group-hover:visible`, tippyVisible && '!visible')}>
         <Tippy
           onShow={handleTippyVisible.bind(null, true)}
           onHide={handleTippyVisible.bind(null, false)}
