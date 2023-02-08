@@ -17,7 +17,10 @@ const Index = ({ needLogin = false }: Props) => {
         <div className="pl-14">
           <div className="rounded-lg" style={{ maxWidth: 'min(((100vw - 56px) - 20px) - 64px, 360px)' }}>
             <div className="text-md text-gray-900 px-3 py-1.5 bg-gray-100 rounded-lg mb-1.5">
-              👋 Hi there, Nice to meet you! Please login before we have a nice talk 👇
+              {needLogin ?
+                `👋 Hi there, Nice to meet you! Please login before we have a nice talk 👇`
+                :
+                `👋 Hi there, Nice to meet you! `}
             </div>
           </div>
         </div>

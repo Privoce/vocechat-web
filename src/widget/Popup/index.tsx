@@ -9,11 +9,10 @@ import useSSE from '../useSSE';
 
 type Props = {
     hostId: number,
-    themeColor?: string,
     handleClose: () => void
 }
 
-const Index = ({ handleClose, hostId, themeColor }: Props) => {
+const Index = ({ handleClose, hostId }: Props) => {
     // 建立SSE连接
     useSSE();
     const { user: loginUser, token, guest: isGuest } = useAppSelector(store => store.authData);
@@ -22,7 +21,7 @@ const Index = ({ handleClose, hostId, themeColor }: Props) => {
     const notLogin = !token || isGuest;
     return (
         <aside className="flex flex-col bg-white w-full h-full rounded-md overflow-hidden">
-            <Header themeColor={themeColor} handleClose={handleClose} />
+            <Header handleClose={handleClose} />
             {/* message list */}
             <main id='MESSAGE_LIST_CONTAINER' className="relative flex-1 overflow-y-auto scroll-smooth">
                 {/* placeholder */}

@@ -18,7 +18,9 @@ const styles = {
   boxShadow: `rgb(0 0 0 / 25%) 0px 25px 50px -12px`
 };
 Object.assign(wrapper.style, styles);
-wrapper.src = `${new URL(_src).origin}/widget.html?host=${hostId}&themeColor=${themeColor}`;
+wrapper.src = `${new URL(_src).origin}/widget.html?host=${hostId}&themeColor=${encodeURIComponent(
+  themeColor
+)}`;
 wrapper.width = closeWidth;
 wrapper.height = closeHeight;
 wrapper.frameborder = 0;
