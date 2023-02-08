@@ -156,22 +156,22 @@ const FileMessage: FC<Props> = ({
       />
     );
   return (
-    <div className={clsx(`file_message bg-slate-50 border border-solid border-gray-300 box-border w-[370px] h-[66px] rounded-md`, sending && "opacity-90")}>
+    <div className={clsx(`file_message bg-slate-50 dark:bg-slate-900 border border-solid border-gray-300 dark:border-gray-500 box-border w-[370px] h-[66px] rounded-md`, sending && "opacity-90")}>
       <div className="p-2 flex items-center justify-between gap-2">
         {icon}
         <div className="flex flex-col gap-1 w-full overflow-hidden">
-          <span className="font-semibold text-sm text-gray-800 whitespace-nowrap text-ellipsis">{name}</span>
-          <span className="whitespace-nowrap text-xs text-gray-500 flex gap-4">
+          <span className="font-semibold text-sm text-gray-800 dark:text-gray-100 whitespace-nowrap text-ellipsis">{name}</span>
+          <span className="whitespace-nowrap text-xs text-gray-500 dark:text-gray-300 flex gap-4">
             {sending ? (
               <Progress value={progress} width={"80%"} />
             ) : (
               <>
-                <i>{formatBytes(size)}</i>
-                <i>{dayjs(created_at).fromNow()}</i>
+                <strong>{formatBytes(size)}</strong>
+                <strong>{dayjs(created_at).fromNow()}</strong>
                 {fromUser && (
-                  <i>
+                  <strong>
                     by <strong className="font-bold">{fromUser.name}</strong>
-                  </i>
+                  </strong>
                 )}
               </>
             )}
@@ -181,7 +181,7 @@ const FileMessage: FC<Props> = ({
           <IconClose className="cursor-pointer" onClick={handleCancel} />
         ) : (
           <a className="whitespace-nowrap" download={name} href={`${content}&download=true`}>
-            <IconDownload className="fill-gray-500" />
+            <IconDownload className="fill-gray-500 dark:fill-gray-400" />
           </a>
         )}
       </div>

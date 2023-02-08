@@ -44,14 +44,14 @@ const Input: FC<Props> = ({ type = "text", prefix = "", className = "", ...rest 
     isPwd && "pr-[30px]"
   );
   return type == "password" ? (
-    <div className={`w-full relative flex overflow-hidden rounded border border-gray-300 dark:border-gray-500 shadow ${className}`}>
+    <div className={`w-full relative flex overflow-hidden rounded border border-gray-300 dark:border-gray-400 shadow ${className}`}>
       <input type={inputType} autoComplete={inputType == "password" ? "current-password" : "on"} className={`${inputClass} ${className}`} {...rest} />
       <div className="absolute top-1/2 right-2.5 -translate-y-1/2 cursor-pointer" onClick={togglePasswordVisible}>
         {inputType == "password" ? <IconEyeClose className="fill-gray-500" /> : <IconEyeOpen className="fill-gray-500" />}
       </div>
     </div>
   ) : prefix ? (
-    <div className={`w-full relative flex overflow-hidden rounded border border-gray-300 dark:border-gray-500 shadow ${className}`}>
+    <div className={`w-full relative flex overflow-hidden rounded border border-gray-300 dark:border-gray-400 shadow ${className}`}>
       <span className="px-4 py-2 text-sm text-gray-500 dark:text-gray-300 bg-gray-200 dark:bg-gray-800 border dark:border-gray-600">{prefix}</span>
       <input className={`${inputClass} ${className}`} type={inputType} {...rest} />
     </div>

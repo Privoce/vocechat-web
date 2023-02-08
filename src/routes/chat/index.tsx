@@ -55,7 +55,7 @@ function ChatPage() {
       {usersModalVisible && <UsersModal closeModal={toggleUsersModalVisible} />}
       <div className={`flex h-full pt-2 pb-2.5 pr-1 ${isGuest ? "!pr-1 !pt-0" : ""} md:!pr-12 `}>
         {sessionListVisible && <div onClick={toggleSessionList} className="z-30 fixed top-0 left-4 w-screen h-screen bg-black/50 transition-all backdrop-blur-sm"></div>}
-        <div className={clsx("flex-col rounded-l-2xl min-w-[268px] h-full border border-solid border-r-black/5 dark:border-none box-border fixed md:relative top-0 left-0 z-40 transition-all md:overflow-auto bg-white dark:!bg-[#1F2A37]", sessionListVisible ? "max-md:translate-x-0" : "max-md:-translate-x-full")}>
+        <div className={clsx("flex-col rounded-l-2xl min-w-[268px] h-full shadow-[rgb(0_0_0_/_10%)_-1px_0px_0px_inset] fixed md:relative top-0 left-0 z-40 transition-all md:overflow-auto bg-white dark:!bg-[#1F2A37]", sessionListVisible ? "max-md:translate-x-0" : "max-md:-translate-x-full")}>
           <Server readonly={isGuest} />
           {isGuest ? <GuestSessionList /> : <SessionList tempSession={tmpSession} />}
           {sessionListVisible ? null : <button className="absolute top-2 -right-[52px] z-50 p-2 bg-none  md:hidden" onClick={toggleSessionList}>

@@ -124,7 +124,7 @@ const Layout: FC<Props> = ({
               {selects && <Operations context={context} id={to} />}
             </div>
           </div>
-          {users && <div className="shadow-[inset_0px_10px_2px_-10px_rgba(0,_0,_0,_0.1)] hidden md:block">{users}</div>}
+          {users && <div className="hidden md:block">{users}</div>}
           {aside && <div className={clsx("p-3 absolute right-0 -top-14 translate-x-full flex-col hidden md:flex")}>{aside}</div>}
         </main>
         {!readonly && isActive && (

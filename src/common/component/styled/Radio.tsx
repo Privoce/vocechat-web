@@ -43,10 +43,10 @@ const Radio: FC<Props> = ({
             }}
             id={`${id}-${index}`}
           />
-          <div className="drop-shadow px-2 py-3 border border-gray-300 dark:border-gray-400 rounded-lg w-full h-full bg-white dark:bg-gray-800 peer-checked:bg-primary-400 text-sm text-gray-500 dark:text-gray-300  peer-checked:text-white">
+          <div className="drop-shadow px-2 py-3 border border-solid border-gray-300 dark:border-gray-400 rounded-lg w-full h-full bg-white dark:bg-gray-800 peer-checked:bg-primary-400 text-sm text-gray-500 dark:text-gray-300  peer-checked:text-white">
             <label className="ml-6" htmlFor={`${id}-${index}`}>{item}</label>
           </div>
-          <div className="absolute top-1/2 left-3 -translate-y-1/2 w-3.5 h-3.5 rounded-full border border-gray-300 peer-checked:hidden"></div>
+          <div className="absolute top-1/2 left-3 -translate-y-1/2 w-3.5 h-3.5 rounded-full border border-solid border-gray-300 peer-checked:hidden"></div>
           <div className="absolute top-1/2 left-3 -translate-y-1/2 w-3.5 h-3.5 rounded-full border border-solid border-white invisible peer-checked:visible flex-center">
             <div className="w-1 h-1 bg-white rounded-full"></div>
           </div>

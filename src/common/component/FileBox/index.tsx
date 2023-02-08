@@ -87,12 +87,12 @@ const FileBox: FC<Props> = ({
 
   return (
     <div
-      className={clsx(`h-[66px] rounded-md border border-solid border-gray-300 bg-gray-100`, flex ? "w-full" : "w-[370px]", withPreview && "relative overflow-hidden h-[281px]", file_type.startsWith("audio") && "h-[125px]")}
+      className={clsx(`h-[66px] rounded-md border border-solid border-gray-300 dark:border-gray-500 bg-gray-100 dark:bg-gray-900`, flex ? "w-full" : "w-[370px]", withPreview && "relative overflow-hidden h-[281px]", file_type.startsWith("audio") && "h-[125px]")}
     >
       <div className="w-full p-2 flex items-center justify-between gap-2">
         {icon}
         <div className="flex flex-col gap-1 w-full overflow-hidden">
-          <span className="font-semibold text-sm text-gray-800 whitespace-nowrap text-ellipsis">{name}</span>
+          <span className="font-semibold text-sm text-gray-800 dark:text-gray-200 whitespace-nowrap text-ellipsis">{name}</span>
           <em className="text-xs text-gray-500 flex gap-4 not-italic">
             <span className="size">{formatBytes(size)}</span>
             <span className="time">{dayjs(created_at).fromNow()}</span>
@@ -102,7 +102,7 @@ const FileBox: FC<Props> = ({
           </em>
         </div>
         <a className="whitespace-nowrap" download={name} href={`${content}&download=true`}>
-          <IconDownload className="fill-gray-500" />
+          <IconDownload className="fill-gray-500 dark:fill-gray-300" />
         </a>
       </div>
       {withPreview && <div className="h-[calc(100%_-_64px)] overflow-hidden">{previewContent}</div>}

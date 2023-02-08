@@ -132,8 +132,8 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
           </ul>
         }
         header={
-          <header className="box-border h-14 px-5 border-solid border-b border-b-black/10 flex items-center justify-center md:justify-between">
-            <div className="flex items-center gap-1 text-base">
+          <header className="h-14 px-5  flex items-center justify-center md:justify-between shadow-[inset_0_-1px_0_rgb(0_0_0_/_10%)]">
+            <div className="flex items-center gap-1">
               <ChannelIcon personal={!is_public} />
               <span className="text-gray-800 dark:text-white">{name}</span>
               <span className="ml-2 text-gray-500">{description}</span>
