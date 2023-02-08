@@ -3,7 +3,8 @@ const {
   closeWidth = 48,
   closeHeight = 48,
   openWidth = 380,
-  openHeight = 680
+  openHeight = 680,
+  themeColor = "#1fe1f9"
 } = document.currentScript.dataset;
 const _src = document.currentScript.src;
 const wrapper = document.createElement("iframe");
@@ -17,7 +18,7 @@ const styles = {
   boxShadow: `rgb(0 0 0 / 25%) 0px 25px 50px -12px`
 };
 Object.assign(wrapper.style, styles);
-wrapper.src = `${new URL(_src).origin}/widget.html?host=${hostId}`;
+wrapper.src = `${new URL(_src).origin}/widget.html?host=${hostId}&themeColor=${themeColor}`;
 wrapper.width = closeWidth;
 wrapper.height = closeHeight;
 wrapper.frameborder = 0;

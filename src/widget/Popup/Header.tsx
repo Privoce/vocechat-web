@@ -4,12 +4,13 @@ import IconClose from './close.svg';
 
 type Props = {
   handleClose: () => void;
+  themeColor?: string
 };
 
-const Index: FC<Props> = ({ handleClose }) => {
+const Index: FC<Props> = ({ handleClose, themeColor = "#1fe1f9" }) => {
   const { name, logo } = useAppSelector(store => store.server);
   return (
-    <header className="relative flex justify-between items-center h-14 px-4 bg-[#1fe1f9]">
+    <header className="relative flex justify-between items-center h-14 px-4" style={{ backgroundColor: themeColor }}>
       <div className="relative w-8 h-8">
         <img src={logo} alt="logo" className="w-full h-full rounded-full" />
       </div>

@@ -195,6 +195,7 @@
     "default_value": "Default Value",
     "remark": "Remarks",
     "param_host": "Assign the user chatting with visitor(User ID)",
+    "param_theme_color": "The theme color of widget",
     "param_close_width": "The width while widget closed",
     "param_close_height": "The height while widget closed",
     "param_open_width": "The width while widget opened",

@@ -8,8 +8,9 @@ import './i18n';
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 const hostId = new URLSearchParams(location.search).get("host");
+const themeColor = new URLSearchParams(location.search).get("themeColor") || "#1fe1f9";
 root.render(
   hostId ? <Provider store={store}>
-    <Widget hostId={Number(hostId)} />
+    <Widget hostId={Number(hostId)} themeColor={themeColor} />
   </Provider> : null
 );
