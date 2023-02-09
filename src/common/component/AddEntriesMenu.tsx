@@ -42,11 +42,11 @@ export default function AddEntriesMenu() {
     setChannelModalVisible(false);
   };
 
-  const itemClass = "rounded flex items-center gap-2 text-sm font-semibold cursor-pointer px-2 py-2.5 hover:bg-gray-800/20";
-  const iconClass = "w-5 h-5";
+  const itemClass = "rounded flex items-center gap-2 text-sm font-semibold cursor-pointer px-2 py-2.5 hover:bg-gray-800/20 dark:hover:bg-gray-200/20";
+  const iconClass = "w-5 h-5 dark:fill-gray-300";
   return (
     <>
-      <ul className="flex flex-col rounded-xl drop-shadow p-1 select-none text-gray-500 bg-white">
+      <ul className="flex flex-col rounded-xl drop-shadow p-1 select-none text-gray-500 dark:text-gray-300 bg-white dark:bg-black">
         {/* temp remove public channel */}
         {currentUser?.is_admin && (
           <li className={itemClass} onClick={handleOpenChannelModal.bind(null, false)}>

@@ -23,7 +23,7 @@ const AudioMessage = ({ url, name, size, download }: Props) => {
                 <div className="flex gap-2 ">
                     <IconAudio className="w-9 h-auto" />
                     <div className="flex flex-col gap-1 text-sm text-gray-700">
-                        <span title={name} className='font-bold whitespace-nowrap text-ellipsis w-[240px] overflow-hidden'>{name}</span>
+                        <span title={name} className='font-bold w-[240px] truncate'>{name}</span>
                         <span>{_size}</span>
                     </div>
                 </div>

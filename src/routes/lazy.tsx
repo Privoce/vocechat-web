@@ -1,4 +1,4 @@
-import {  ReactNode, Suspense, FC } from "react";
+import { ReactNode, Suspense, FC } from "react";
 import Loading from "../common/component/Loading";
 
 type Props = {
@@ -7,7 +7,7 @@ type Props = {
 
 const Lazy: FC<Props> = ({ children }) => {
   return (
-    <Suspense fallback={<Loading />}>
+    <Suspense fallback={<Loading fullscreen={true} />}>
       {children}
     </Suspense>
   );

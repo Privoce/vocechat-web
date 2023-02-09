@@ -111,8 +111,8 @@ const Message: FC<IProps> = ({
         trigger="click"
         content={<Profile uid={fromUid || 0} type="card" cid={context == "user" ? 0 : contextId} />}
       >
-        <div className="cursor-pointer" data-uid={fromUid} ref={avatarRef}>
-          <Avatar width={40} height={40} src={currUser?.avatar} name={currUser?.name} />
+        <div className="cursor-pointer w-10 h-10 flex-shrink-0" data-uid={fromUid} ref={avatarRef}>
+          <Avatar className="w-10 h-10 rounded-full object-cover" width={40} height={40} src={currUser?.avatar} name={currUser?.name} />
         </div>
       </Tippy>
       <ContextMenu

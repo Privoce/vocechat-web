@@ -1,6 +1,6 @@
 {
   "name": "vocechat-web",
-  "version": "0.3.39",
+  "version": "0.3.40",
   "private": true,
   "homepage": "https://voce.chat",
   "dependencies": {

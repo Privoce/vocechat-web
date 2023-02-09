@@ -56,7 +56,7 @@ function HomePage() {
     <>
       <Manifest />
       {!guest && <Notification />}
-      <div className={`flex w-screen h-screen bg-[#e5e7eb] dark:bg-[#121926]`}>
+      <div className={`vocechat-container flex w-screen h-screen bg-[#e5e7eb] dark:bg-[#121926]`}>
         {!guest && (
           <div className={`h-full flex flex-col items-center relative w-16 bg-transparent transition-all`}>
             {loginUid && <User uid={loginUid} />}

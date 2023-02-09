@@ -45,12 +45,12 @@ const StyledSettingContainer: FC<PropsWithChildren<Props>> = ({
           );
         })}
         {dangers.length ? (
-          <ul className="flex flex-col gap-2 mb-9">
+          <ul className="flex flex-col gap-2 mb-9 text-sm font-semibold text-red-500 dark:text-red-400">
             {dangers.map((d) => {
               if (typeof d === "boolean" || !d) return null;
               const { title, handler } = d;
               return (
-                <li key={title} onClick={handler} className="text-sm text-red-500 dark:text-red-400 rounded cursor-pointer py-1.5 px-3">
+                <li key={title} onClick={handler} className="rounded cursor-pointer py-1.5 px-3">
                   {title}
                 </li>
               );

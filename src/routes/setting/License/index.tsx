@@ -10,7 +10,7 @@ import UpdateLicenseModal from "./UpdateLicenseModal";
 
 interface ItemProps extends HTMLAttributes<HTMLSpanElement> { label: string, data?: string | number | string[], foldable?: boolean }
 const Item = ({ label, data, foldable = false, ...rest }: ItemProps) => {
-  const infoClass = clsx("font-bold w-full cursor-pointer", foldable ? " overflow-hidden text-ellipsis" : "whitespace-pre-wrap break-all");
+  const infoClass = clsx("font-bold w-full cursor-pointer", foldable ? "truncate" : "whitespace-pre-wrap break-all");
   if (!data) return null;
   return <div className="whitespace-nowrap  flex flex-col items-start justify-start text-lg">
     <span className="text-sm text-gray-400 dark:text-white">{label}</span>

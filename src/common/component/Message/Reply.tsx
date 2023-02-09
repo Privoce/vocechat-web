@@ -14,7 +14,7 @@ const renderContent = (data: MessagePayload) => {
   switch (content_type) {
     case ContentTypes.text:
       res = (
-        <span className="text-ellipsis overflow-hidden break-words break-all text-gray-800 dark:text-gray-100">
+        <span className="truncate break-words break-all text-gray-800 dark:text-gray-100">
           <LinkifyText text={content} url={false} mentionTextOnly={true} mentionPopOver={false} />
         </span>
       );

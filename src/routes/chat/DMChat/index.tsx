@@ -64,7 +64,7 @@ const DMChat: FC<Props> = ({ uid = 0, dropFiles }) => {
         </ul>
       }
       header={
-        <header className="box-border h-14 px-5 border-b border-b-black/10 flex items-center justify-between">
+        <header className="box-border h-14 px-5 flex items-center justify-between shadow-[inset_0_-1px_0_rgb(0_0_0_/_10%)]">
           <User interactive={false} uid={currUser.uid} />
         </header>
       }

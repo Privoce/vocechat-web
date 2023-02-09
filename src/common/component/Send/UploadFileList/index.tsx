@@ -60,7 +60,7 @@ export default function UploadFileList({
               <div className="flex-center w-40 h-40">
                 {type.startsWith("image") ? <img className="w-full h-full object-cover" src={url} alt="image" /> : getFileIcon(type, name)}
               </div>
-              <h4 className="w-40 mt-4 mb-0.5 font-semibold text-sm text-gray-800 dark:text-gray-100 whitespace-nowrap overflow-hidden text-ellipsis">{name}</h4>
+              <h4 className="w-40 mt-4 mb-0.5 font-semibold text-sm text-gray-800 dark:text-gray-100 truncate">{name}</h4>
               <span className="text-xs text-gray-500">{formatBytes(size)}</span>
               <ul className="invisible group-hover:visible bg-inherit border border-solid border-black/10 box-border rounded-md flex items-center absolute -right-5 -top-2.5">
                 <li className="p-1 cursor-pointer edit" onClick={handleOpenEditModal.bind(null, idx)}>

@@ -92,7 +92,7 @@ const FileBox: FC<Props> = ({
       <div className="w-full p-2 flex items-center justify-between gap-2">
         {icon}
         <div className="flex flex-col gap-1 w-full overflow-hidden">
-          <span className="font-semibold text-sm text-gray-800 dark:text-gray-200 whitespace-nowrap text-ellipsis">{name}</span>
+          <span className="font-semibold text-sm text-gray-800 dark:text-gray-200 truncate">{name}</span>
           <em className="text-xs text-gray-500 flex gap-4 not-italic">
             <span className="size">{formatBytes(size)}</span>
             <span className="time">{dayjs(created_at).fromNow()}</span>

@@ -45,15 +45,15 @@ const Session: FC<IProps> = ({ id, mid }) => {
         </div>
         <div className="w-full flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className={clsx(`flex items-center gap-2 font-semibold text-sm text-gray-500 dark:text-white whitespace-nowrap overflow-hidden text-ellipsis`, previewMsg.created_at && "max-w-[190px]")}>
+            <span className={clsx(`flex items-center gap-2 font-semibold text-sm text-gray-500 dark:text-white truncate`, previewMsg.created_at && "max-w-[190px]")}>
               {name}
             </span>
-            <span className="text-xs text-gray-600 whitespace-nowrap overflow-hidden max-w-[80px] text-ellipsis">
+            <span className="text-xs text-gray-600 max-w-[80px] truncate">
               {previewMsg.created_at ? dayjs(previewMsg.created_at).fromNow() : null}
             </span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-xs text-gray-500 whitespace-nowrap overflow-hidden w-36 text-ellipsis">{renderPreviewMessage(previewMsg)}</span>
+            <span className="text-xs text-gray-500 w-36 truncate">{renderPreviewMessage(previewMsg)}</span>
           </div>
         </div>
       </NavLink>

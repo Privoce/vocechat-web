@@ -41,7 +41,7 @@ export default function URLPreview({ url = "" }) {
   const { title, description, ogImage } = data;
 
   const containerClass = `flex items-center border border-solid border-gray-300 box-border rounded-md w-[380px]`;
-  const dotsClass = `overflow-hidden whitespace-nowrap text-ellipsis`;
+  const dotsClass = `truncate`;
   return ogImage ? (
     <a className={`${containerClass} flex-col !items-start p-3`} href={url} target="_blank" rel="noreferrer">
       <h3 className={`text-base text-primary-500 w-full ${dotsClass}`}>{title}</h3>

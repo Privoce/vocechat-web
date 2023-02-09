@@ -156,11 +156,11 @@ const FileMessage: FC<Props> = ({
       />
     );
   return (
-    <div className={clsx(`file_message bg-slate-50 dark:bg-slate-900 border border-solid border-gray-300 dark:border-gray-500 box-border w-[370px] h-[66px] rounded-md`, sending && "opacity-90")}>
-      <div className="p-2 flex items-center justify-between gap-2">
+    <div className={clsx(`file_message bg-slate-50 dark:bg-slate-900 border border-solid border-gray-300 dark:border-gray-500 box-border w-[370px] rounded-md`, sending && "opacity-90")}>
+      <div className="px-2 py-3 flex items-center justify-between gap-2">
         {icon}
         <div className="flex flex-col gap-1 w-full overflow-hidden">
-          <span className="font-semibold text-sm text-gray-800 dark:text-gray-100 whitespace-nowrap text-ellipsis">{name}</span>
+          <span className="font-semibold text-sm text-gray-800 dark:text-gray-100 truncate">{name}</span>
           <span className="whitespace-nowrap text-xs text-gray-500 dark:text-gray-300 flex gap-4">
             {sending ? (
               <Progress value={progress} width={"80%"} />

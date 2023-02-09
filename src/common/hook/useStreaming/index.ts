@@ -64,7 +64,10 @@ export default function useStreaming() {
     }, timeout ?? 20000);
   };
   const startStreaming = useCallback(async () => {
-    if (connectionIsOpen) return;
+    if (connectionIsOpen) {
+      console.log("connection is open, return");
+      return;
+    };
     window.clearTimeout(aliveInter);
     if (SSE && (SSE.readyState === EventSource.OPEN || SSE.readyState === EventSource.CONNECTING))
       return;
@@ -116,7 +119,6 @@ export default function useStreaming() {
         return;
       }
       // 重连
-      // connectionIsOpen = false;
       keepAlive(2000);
     };
     SSE.onmessage = (evt) => {

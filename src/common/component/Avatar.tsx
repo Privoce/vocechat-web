@@ -31,7 +31,7 @@ const Avatar: FC<Props> = ({
 }) => {
   const [avatarSrc, setAvatarSrc] = useState("");
   useEffect(() => {
-    if (!src) {
+    if (src) {
       setAvatarSrc(src);
     }
   }, [src]);
