@@ -2,11 +2,13 @@ import { useRef, useEffect, FC } from "react";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import { Editor } from "@toast-ui/react-editor";
 import "prismjs/themes/prism.css";
+import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
 import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css";
 import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight-all.js";
 
 import useUploadFile from "../../hook/useUploadFile";
 import Button from "../styled/Button";
+import { isDarkMode } from "../../utils";
 
 type Props = {
   updateDraft?: (draft: string) => void;
@@ -24,12 +26,13 @@ const MarkdownEditor: FC<Props> = ({
   sendMarkdown,
   setEditorInstance
 }) => {
-  const editorRef = useRef<Editor | undefined>(undefined);
+  const editorRef = useRef<Editor>();
   const { uploadFile } = useUploadFile();
   // const [pHolder, setPHolder] = useState(placeholder);
   useEffect(() => {
     const editor = editorRef?.current;
     if (editor) {
+
       const editorInstance = editor.getInstance();
       editorInstance.removeHook("addImageBlobHook");
       editorInstance.addHook("addImageBlobHook", async (blob, callback) => {
@@ -73,6 +76,7 @@ const MarkdownEditor: FC<Props> = ({
         height={height}
         initialEditType="markdown"
         useCommandShortcut={true}
+        theme={isDarkMode() ? "dark" : "light"}
       />
       <Button className="send small" onClick={send}>
         Send

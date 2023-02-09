@@ -1,11 +1,13 @@
 import { useEffect, useState, useRef, FC } from "react";
 import "prismjs/themes/prism.css";
+import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
 import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css";
 //@ts-ignore
 import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight-all.js";
 import { Viewer } from "@toast-ui/react-editor";
 
 import ImagePreviewModal, { PreviewImageData } from "./ImagePreviewModal";
+import { isDarkMode } from "../utils";
 
 
 interface IProps {
@@ -50,7 +52,7 @@ const MarkdownRender: FC<IProps> = ({ content }) => {
         <ImagePreviewModal download={false} data={previewImage} closeModal={closePreviewModal} />
       )}
       <div ref={mdContainer} id="MARKDOWN_CONTAINER">
-        <Viewer initialValue={content} plugins={[codeSyntaxHighlight]}></Viewer>
+        <Viewer initialValue={content} plugins={[codeSyntaxHighlight]} theme={isDarkMode() ? "dark" : "light"}></Viewer>
       </div>
     </>
   );

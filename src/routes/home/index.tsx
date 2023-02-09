@@ -58,7 +58,7 @@ function HomePage() {
       {!guest && <Notification />}
       <div className={`vocechat-container flex w-screen h-screen bg-[#e5e7eb] dark:bg-[#121926]`}>
         {!guest && (
-          <div className={`h-full flex flex-col items-center relative w-16 bg-transparent transition-all`}>
+          <div className={`h-full flex flex-col items-center relative w-16 bg-[#e5e7eb] dark:bg-[#121926] transition-all`}>
             {loginUid && <User uid={loginUid} />}
             <nav className="flex flex-col gap-1 px-3 py-6">
               <NavLink

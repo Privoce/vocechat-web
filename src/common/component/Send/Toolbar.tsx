@@ -48,22 +48,22 @@ const Toolbar: FC<Props> = ({
     <div className={`flex flex-col items-center justify-end gap-2.5 md:flex-row`}>
       <div className="cursor-pointer flex gap-3.5">
         <Tooltip placement="top" tip="Markdown">
-          <MarkdownIcon className="fill-[#22ccee]" onClick={toggleMode} />
+          <MarkdownIcon className={isMarkdown ? "fill-[#22ccee]" : "dark:fill-gray-300"} onClick={toggleMode} />
         </Tooltip>
         {isMarkdown &&
           (fullscreen ? (
             <Tooltip placement="top" tip="Exit Fullscreen">
-              <ExitFullscreenIcon onClick={toggleMarkdownFullscreen} />
+              <ExitFullscreenIcon onClick={toggleMarkdownFullscreen} className="dark:fill-gray-300" />
             </Tooltip>
           ) : (
             <Tooltip placement="top" tip="Fullscreen">
-              <FullscreenIcon onClick={toggleMarkdownFullscreen} />
+              <FullscreenIcon onClick={toggleMarkdownFullscreen} className="dark:fill-gray-300" />
             </Tooltip>
           ))}
       </div>
       {!isMarkdown && <Tooltip placement="top" tip={t("action.upload")}>
         <div className="cursor-pointer relative w-6 h-6">
-          <AddIcon />
+          <AddIcon className="dark:fill-gray-300" />
           <label htmlFor="file" className=" cursor-pointer absolute left-0 top-0 w-full h-full opacity-0">
             <input
               className="hidden"

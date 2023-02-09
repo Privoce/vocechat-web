@@ -14,12 +14,11 @@ import ReduxRoutes from "./routes";
 import NewVersion from "./common/component/NewVersion";
 // import i18n (needs to be bundled ;)) 
 import './i18n';
+import { isDarkMode } from './common/utils';
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 // dark mode
-const isDarkMode = localStorage.theme === 'dark';
-const isLightMode = localStorage.theme === 'light';
-if (isDarkMode || (!isLightMode && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+if (isDarkMode()) {
   document.documentElement.classList.add('dark');
 } else {
   document.documentElement.classList.remove('dark');

@@ -11,7 +11,7 @@ import { useTranslation } from "react-i18next";
 import clsx from "clsx";
 
 const getClass = (selected: boolean) => {
-  return clsx(`cursor-pointer flex items-center gap-2 border border-solid dark:border-gray-400 box-border shadow rounded-lg py-2 px-3 text-xs text-gray-900 dark:text-gray-200`, selected && 'text-white bg-primary-400');
+  return clsx(`cursor-pointer flex items-center gap-2 border border-solid border-gray-300 dark:border-gray-400 shadow rounded-lg py-2 px-3 text-xs text-gray-900 dark:text-gray-200`, selected && 'text-white bg-primary-400');
 };
 export default function Filter({ filter, updateFilter }) {
   const { t } = useTranslation("file");
