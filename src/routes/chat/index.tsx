@@ -53,16 +53,16 @@ function ChatPage() {
         <ChannelModal closeModal={toggleChannelModalVisible} personal={true} />
       )}
       {usersModalVisible && <UsersModal closeModal={toggleUsersModalVisible} />}
-      <div className={`flex h-full pt-2 pb-2.5 pr-1 ${isGuest ? "px-1" : "md:pr-12"}`}>
+      <div className={clsx(`flex h-full md:pt-2 md:pb-2.5 md:pr-1`, isGuest ? "guest-container md:px-1" : "md:pr-12")}>
         {sessionListVisible && <div onClick={toggleSessionList} className="z-30 fixed top-0 left-4 w-screen h-screen bg-black/50 transition-all backdrop-blur-sm"></div>}
-        <div className={clsx("flex-col rounded-l-2xl min-w-[268px] h-full shadow-[rgb(0_0_0_/_10%)_-1px_0px_0px_inset] fixed md:relative top-0 left-0 z-40 transition-all md:overflow-auto bg-white dark:!bg-[#1F2A37]", sessionListVisible ? "max-md:translate-x-0" : "max-md:-translate-x-full")}>
+        <div className={clsx("left-container flex-col md:rounded-l-2xl max-w-[250px] md:min-w-[268px] h-full shadow-[rgb(0_0_0_/_10%)_-1px_0px_0px_inset] fixed md:relative top-0 left-0 z-40 transition-all md:overflow-auto bg-white dark:!bg-[#1F2A37]", sessionListVisible ? "max-md:translate-x-0" : "max-md:-translate-x-full")}>
           <Server readonly={isGuest} />
           {isGuest ? <GuestSessionList /> : <SessionList tempSession={tmpSession} />}
           {sessionListVisible ? null : <button className="absolute top-2 -right-[52px] z-50 p-2 bg-none  md:hidden" onClick={toggleSessionList}>
             <IconList className="dark:stroke-gray-300" />
           </button>}
         </div>
-        <div className={`rounded-r-2xl w-full ${placeholderVisible ? "h-full flex-center" : ""} bg-white dark:!bg-[#384250]`}>
+        <div className={`right-container md:rounded-r-2xl w-full ${placeholderVisible ? "h-full flex-center" : ""} bg-white dark:!bg-[#384250]`}>
           {placeholderVisible && (isGuest ? <GuestBlankPlaceholder /> : <BlankPlaceholder />)}
           {channel_id !== 0 &&
             (isGuest ? (

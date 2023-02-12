@@ -127,13 +127,17 @@
       width: 100%;
       height: 100%;
     }
-
+    /* iframe 样式覆盖 */
     body.iframe {
       position: fixed;
       top: 0;
     }
-    body.iframe #root .vocechat-container {
-      background: transparent !important;
+    body.iframe .guest-container {
+      padding: 0;
+    }
+    body.iframe .guest-container .left-container,
+    body.iframe .guest-container .right-container {
+      border-radius: 0;
     }
 
     a {
