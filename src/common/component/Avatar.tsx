@@ -39,7 +39,7 @@ const Avatar: FC<Props> = ({
     setAvatarSrc("");
   };
   if (avatarSrc) {
-    return <img src={avatarSrc} onError={handleError} {...rest} />;
+    return <img width={width} height={height} src={avatarSrc} onError={handleError} {...rest} />;
   }
   return (
     <div
