@@ -1,11 +1,10 @@
 import { FC, useEffect, useState } from "react";
-import dayjs from "dayjs";
 import ImageMessage from "./ImageMessage";
 import useRemoveLocalMessage from "../../hook/useRemoveLocalMessage";
 import useUploadFile from "../../hook/useUploadFile";
 import useSendMessage from "../../hook/useSendMessage";
 import Progress from "./Progress";
-import { getFileIcon, formatBytes, isImage, getImageSize } from "../../utils";
+import { getFileIcon, formatBytes, isImage, getImageSize, fromNowTime } from "../../utils";
 import { useAppSelector } from "../../../app/store";
 import IconDownload from "../../../assets/icons/download.svg";
 import IconClose from "../../../assets/icons/close.circle.svg";
@@ -167,7 +166,7 @@ const FileMessage: FC<Props> = ({
             ) : (
               <>
                 <strong>{formatBytes(size)}</strong>
-                <strong>{dayjs(created_at).fromNow()}</strong>
+                <strong>{fromNowTime(created_at)}</strong>
                 {fromUser && (
                   <strong>
                     by <strong className="font-bold">{fromUser.name}</strong>

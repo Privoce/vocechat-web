@@ -1,7 +1,6 @@
 // @ts-nocheck
 import { useState, useEffect, FC } from "react";
 import clsx from "clsx";
-import dayjs from "dayjs";
 import { useDrop } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
 import { useNavigate, NavLink } from "react-router-dom";
@@ -13,6 +12,7 @@ import IconLock from "../../../assets/icons/lock.svg";
 import useContextMenu from "../../../common/hook/useContextMenu";
 import useUploadFile from "../../../common/hook/useUploadFile";
 import { useAppSelector } from "../../../app/store";
+import { fromNowTime } from "../../../common/utils";
 
 interface IProps {
   type?: "user" | "channel";
@@ -135,8 +135,8 @@ const Session: FC<IProps> = ({
                 </i>
                 {!is_public && <IconLock className="dark:fill-gray-400" />}
               </span>
-              <span className={clsx("text-xs text-gray-600 dark:text-gray-400 max-w-[80px] truncate")}>
-                {previewMsg.created_at ? dayjs(previewMsg.created_at).fromNow() : null}
+              <span className={clsx("text-xs text-gray-500 dark:text-gray-400 max-w-[80px] truncate font-semibold")}>
+                {fromNowTime(previewMsg.created_at)}
               </span>
             </div>
             <div className="flex items-center justify-between">

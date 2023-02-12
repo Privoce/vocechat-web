@@ -1,5 +1,4 @@
 import { FC, ReactElement } from "react";
-import dayjs from "dayjs";
 import clsx from "clsx";
 import {
   VideoPreview,
@@ -9,7 +8,7 @@ import {
   CodePreview,
   DocPreview
 } from "./preview";
-import { getFileIcon, formatBytes } from "../../utils";
+import { getFileIcon, formatBytes, fromNowTime } from "../../utils";
 import IconDownload from "../../../assets/icons/download.svg";
 import { useAppSelector } from "../../../app/store";
 
@@ -95,7 +94,7 @@ const FileBox: FC<Props> = ({
           <span className="font-semibold text-sm text-gray-800 dark:text-gray-200 truncate">{name}</span>
           <em className="text-xs text-gray-500 flex gap-4 not-italic">
             <span className="size">{formatBytes(size)}</span>
-            <span className="time">{dayjs(created_at).fromNow()}</span>
+            <span className="time">{fromNowTime(created_at)}</span>
             <span>
               by <strong className="font-bold">{fromUser.name}</strong>
             </span>

@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import BASE_URL, { FILE_IMAGE_SIZE, ContentTypes, KEY_TOKEN, KEY_REFRESH_TOKEN, KEY_EXPIRE } from "../app/config";
 import IconPdf from "../assets/icons/file.pdf.svg";
 import IconAudio from "../assets/icons/file.audio.svg";
@@ -383,4 +384,10 @@ export const isDarkMode = () => {
 
   return isDarkMode || (!isLightMode && window.matchMedia('(prefers-color-scheme: dark)').matches);
 
+};
+
+export const fromNowTime = (ts?: number) => {
+  if (!ts) return null;
+  const currTS = + new Date();
+  return dayjs(ts > currTS ? currTS : ts).fromNow();
 };

@@ -1,11 +1,11 @@
 // @ts-nocheck
 import { useState, useEffect, FC } from "react";
-import dayjs from "dayjs";
 import clsx from "clsx";
 import { renderPreviewMessage } from "../../chat/utils";
 import Avatar from "../../../common/component/Avatar";
 import { NavLink } from "react-router-dom";
 import { useAppSelector } from "../../../app/store";
+import { fromNowTime } from "../../../common/utils";
 
 interface IProps {
   id: number;
@@ -49,7 +49,7 @@ const Session: FC<IProps> = ({ id, mid }) => {
               {name}
             </span>
             <span className="text-xs text-gray-600 max-w-[80px] truncate">
-              {previewMsg.created_at ? dayjs(previewMsg.created_at).fromNow() : null}
+              {fromNowTime(previewMsg.created_at)}
             </span>
           </div>
           <div className="flex items-center justify-between">
