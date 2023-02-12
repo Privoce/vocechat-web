@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useState, useCallback } from "react";
 import toast from "react-hot-toast";
 import BASE_URL from "../../../app/config";
 import { setReady } from "../../../app/slices/ui";
@@ -36,11 +36,11 @@ const getQueryString = (params: { [key: string]: string }) => {
   return sp.toString();
 };
 
-let SSE: EventSource | undefined = undefined;
-let connectionIsOpen = false;
-let aliveInter: number = 0;
+let SSE: EventSource | undefined;
+// let connectionIsOpen = false;
+// let opened = false; //标识SSE打开过
+let aliveInter: number | ReturnType<typeof setTimeout> = 0;
 export default function useStreaming() {
-  const opened = useRef(false);
   const [renewToken] = useRenewMutation();
   const [streamingReady, setStreamingReady] = useState(false);
   const {
@@ -52,28 +52,39 @@ export default function useStreaming() {
   const loginUid = user?.uid || 0;
 
   const keepAlive = (timeout?: number) => {
-    window.clearTimeout(aliveInter);
+    console.info("debug SSE: start new keepalive");
+    clearTimeout(aliveInter);
     //  比15秒多5秒
-    aliveInter = window.setTimeout(() => {
+    const countdown = timeout ?? 20000;
+    console.info("debug SSE: clear prev timeout", aliveInter);
+    aliveInter = setTimeout(() => {
+      console.info("debug SSE: start reconnect");
       // 有网的情况再试
       if (navigator.onLine) {
+        console.info("debug SSE: start reconnect onLine");
         // 重启连接
+        console.info("debug SSE: stopStreaming at timeout");
         stopStreaming();
         startStreaming();
       }
-    }, timeout ?? 20000);
+    }, countdown);
+    console.info("debug SSE: start new timeout", aliveInter);
   };
   const startStreaming = useCallback(async () => {
-    if (connectionIsOpen) {
-      console.log("connection is open, return");
+    // if (connectionIsOpen) {
+    //   console.log("connection is open, return");
+    //   return;
+    // };
+    console.info("debug SSE: clear timeout at startStreaming", aliveInter);
+    clearTimeout(aliveInter);
+    if (SSE && (SSE.readyState === EventSource.OPEN || SSE.readyState === EventSource.CONNECTING)) {
+      console.info("debug SSE: SSE not disconnect");
       return;
-    };
-    window.clearTimeout(aliveInter);
-    if (SSE && (SSE.readyState === EventSource.OPEN || SSE.readyState === EventSource.CONNECTING))
-      return;
+    }
     const { token, refreshToken, expireTime } = getLocalAuthData();
     //  token 非空
     if (!token) {
+      console.info("debug SSE: token empty");
       return;
     }
     let _token = token;
@@ -108,8 +119,8 @@ export default function useStreaming() {
 
     SSE.onopen = () => {
       //todo
-      opened.current = true;
-      connectionIsOpen = true;
+      // opened = true;
+      // connectionIsOpen = true;
     };
     SSE.onerror = (err) => {
       const { readyState } = err.target as EventSource;
@@ -280,22 +291,23 @@ export default function useStreaming() {
 
   const stopStreaming = () => {
     // 先清掉定时器
-    window.clearTimeout(aliveInter);
+    console.info("debug SSE: clear timeout at stopStreaming", aliveInter);
+    clearTimeout(aliveInter);
     if (SSE) {
       SSE.close();
       SSE = undefined;
     }
-    connectionIsOpen = false;
+    // connectionIsOpen = false;
   };
 
   useEffect(() => {
     // 确保只执行一次
-    const hasOpened = opened.current;
-    if (streamingReady && !hasOpened) {
+    if (streamingReady) {
       startStreaming();
     }
     return () => {
-      if (streamingReady && !hasOpened) {
+      if (streamingReady) {
+        console.info("debug SSE: stopStreaming at effect");
         stopStreaming();
       }
     };

@@ -12,6 +12,7 @@ const InactiveScreen: FC<Props> = () => {
   const { stopStreaming } = useStreaming();
   // const [reloadVisible, setReloadVisible] = useState(false);
   useEffect(() => {
+    console.info("debug SSE: stopStreaming at inactive screen");
     stopStreaming();
     const currTitle = document.title;
     document.title = `[INACTIVE] ${currTitle}`;
