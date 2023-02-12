@@ -207,6 +207,9 @@
   background: #ddd;
   border-radius: 4px;
 }
+::-webkit-scrollbar-corner {
+  display: none;
+}
 ::-webkit-scrollbar {
   background: transparent;
   width: 5px;
