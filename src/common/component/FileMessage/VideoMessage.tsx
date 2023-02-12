@@ -37,7 +37,7 @@ const VideoMessage = ({ url, name, size, download }: Props) => {
     };
     const tipClass = 'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2';
     return (
-        <div className='w-96 h-52 relative rounded-md border border-solid border-gray-300 overflow-hidden group'>
+        <div className='w-64 h-32 md:w-96 md:h-52 relative rounded-md border border-solid border-gray-300 overflow-hidden group'>
             <div className="absolute top-0 left-0 w-full h-full bg-black/40 z-20 group-hover:hidden"></div>
             <div className="absolute top-0 left-0 w-full flex justify-between z-30 px-3 py-2 overflow-hidden group-hover:bg-black/20">
                 <div className="flex gap-2 ">

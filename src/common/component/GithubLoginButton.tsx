@@ -45,7 +45,7 @@ const GithubLoginButton: FC<Props> = ({ type = "login", source = "webapp", clien
   };
 
   return (
-    <Button className="flex-center gap-3 ghost !text-gray-600 dark:!text-gray-100 !border-[#d0d5dd]" onClick={handleGithubLogin}>
+    <Button className="flex-center gap-3 ghost" onClick={handleGithubLogin}>
       <IconGithub className="w-6 h-6" />
       {` ${type === "login" ? t("login.github") : t("reg.github")}`}
     </Button>

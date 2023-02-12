@@ -21,7 +21,7 @@ const OidcLoginEntry: FC<{ issuer: OIDCConfig }> = ({ issuer }) => {
   }, [data, isSuccess]);
 
   return (
-    <Button className="flex text-gray-800 dark:text-gray-100 flex-center gap-3" disabled={isLoading || isSuccess} onClick={handleSolidLogin}>
+    <Button className="flex flex-center gap-3" disabled={isLoading || isSuccess} onClick={handleSolidLogin}>
       {!!issuer.favicon && <img src={issuer.favicon} className="w-6 h-6" alt="icon" />}
       {isLoading ? `Loading...` : `Login with ${issuer.domain}`}
     </Button>

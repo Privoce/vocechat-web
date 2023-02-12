@@ -20,7 +20,7 @@ const OidcLoginButton: FC<IProps> = ({ issuers, type = "login" }) => {
   return (
     <>
       <Button
-        className="flex ghost flex-center gap-2 !text-gray-600 !border-slate-200 dark:!text-gray-100"
+        className="flex ghost flex-center gap-2"
         onClick={() => {
           setModal(true);
         }}
@@ -30,13 +30,15 @@ const OidcLoginButton: FC<IProps> = ({ issuers, type = "login" }) => {
       {modal && (
         <Modal id="modal-modal">
           <StyledModal className="text-center " title="Login with OIDC">
-            {issuers
-              .filter((issuer) => issuer.enable)
-              .map((issuer, index) => (
-                <OidcLoginEntry issuer={issuer} key={index} />
-              ))}
+            <div className="flex flex-col gap-2">
+              {issuers
+                .filter((issuer) => issuer.enable)
+                .map((issuer, index) => (
+                  <OidcLoginEntry issuer={issuer} key={index} />
+                ))}
+            </div>
             <StyledButton
-              className="border_less ghost text-gray-500 dark:text-white"
+              className="border_less ghost"
               onClick={() => {
                 setModal(false);
               }}

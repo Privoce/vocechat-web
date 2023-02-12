@@ -21,8 +21,8 @@ const LoginTip = () => {
 
   return (
     <div className="flex items-center justify-between bg-slate-200/80 dark:bg-gray-800 rounded-lg w-full p-4">
-      <span className="text-base text-[#98a2b3] dark:text-gray-100">
-        <i className="mr-2 text-lg">👋</i>
+      <span className="text-xs md:text-base text-[#98a2b3] dark:text-gray-100">
+        <i className="mr-2 text-xs md:text-lg ">👋</i>
         {t("sign_in_tip")}
       </span>
       <Button onClick={handleSignIn} className="small">{ct("action.login")}</Button>

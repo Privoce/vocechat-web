@@ -27,17 +27,17 @@ const StyledSettingContainer: FC<PropsWithChildren<Props>> = ({
   const { pathname } = useLocation();
   return (
     <div className="w-screen h-screen flex">
-      <div className="max-h-screen min-w-[212px] overflow-scroll px-4 py-8 bg-[#f5f6f7] dark:bg-[#1F2A37]">
-        <h2 onClick={closeModal} className="flex gap-2 items-center cursor-pointer mb-8 font-bold text-gray-800 dark:text-white">
+      <div className="h-screen min-w-[120px] md:min-w-[212px] overflow-scroll px-4 py-8 bg-[#f5f6f7] dark:bg-[#1F2A37]">
+        <h2 onClick={closeModal} className="flex gap-2 items-center text-sm md:text-base cursor-pointer mb-8 font-bold text-gray-800 dark:text-white">
           <IconBack className="dark:fill-gray-400" /> {title}
         </h2>
         {navs.map(({ title, items }) => {
           return (
-            <ul key={title} data-title={title} className="flex flex-col gap-0.5 mb-9 before:pl-3 before:content-[attr(data-title)] before:font-bold before:text-xs before:text-gray-400">
+            <ul key={title} data-title={title} className="flex flex-col gap-0.5 mb-9 before:md:pl-3 before:content-[attr(data-title)] before:font-bold before:text-xs before:text-gray-400">
               {items.map(({ name, title }) => {
                 return (
-                  <li key={name} className={clsx(`text-sm font-semibold text-gray-600 whitespace-nowrap dark:text-gray-200  rounded hover:bg-[#e7e5e4] dark:hover:bg-slate-500/20`, name == nav?.name && "bg-[#e7e5e4] dark:bg-slate-500/20")}>
-                    <NavLink to={`${pathname}?nav=${name}`} className="block px-3 py-1">{title}</NavLink>
+                  <li key={name} className={clsx(`text-xs md:text-sm font-semibold text-gray-600 whitespace-nowrap dark:text-gray-200  rounded hover:bg-[#e7e5e4] dark:hover:bg-slate-500/20`, name == nav?.name && "bg-[#e7e5e4] dark:bg-slate-500/20")}>
+                    <NavLink to={`${pathname}?nav=${name}`} className="block md:px-3 py-1">{title}</NavLink>
                   </li>
                 );
               })}
@@ -45,12 +45,12 @@ const StyledSettingContainer: FC<PropsWithChildren<Props>> = ({
           );
         })}
         {dangers.length ? (
-          <ul className="flex flex-col gap-2 mb-9 text-sm font-semibold text-red-500 dark:text-red-400">
+          <ul className="flex flex-col gap-2 mb-9 text-xs md:text-sm font-semibold text-red-500 dark:text-red-400">
             {dangers.map((d) => {
               if (typeof d === "boolean" || !d) return null;
               const { title, handler } = d;
               return (
-                <li key={title} onClick={handler} className="rounded cursor-pointer py-1.5 px-3">
+                <li key={title} onClick={handler} className="rounded cursor-pointer py-1.5 md:px-3">
                   {title}
                 </li>
               );

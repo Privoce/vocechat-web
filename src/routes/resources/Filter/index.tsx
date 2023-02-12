@@ -11,7 +11,7 @@ import { useTranslation } from "react-i18next";
 import clsx from "clsx";
 
 const getClass = (selected: boolean) => {
-  return clsx(`cursor-pointer flex items-center gap-2 border border-solid border-gray-300 dark:border-gray-400 shadow rounded-lg py-2 px-3 text-xs text-gray-900 dark:text-gray-200`, selected && 'text-white bg-primary-400');
+  return clsx(`cursor-pointer flex items-center gap-2 shadow rounded-lg py-2 px-3 text-xs text-gray-900 dark:text-gray-200`, selected ? 'text-white bg-primary-400' : 'border border-solid border-gray-300 dark:border-gray-400 ');
 };
 export default function Filter({ filter, updateFilter }) {
   const { t } = useTranslation("file");
@@ -66,7 +66,7 @@ export default function Filter({ filter, updateFilter }) {
             <Avatar
               width={16}
               height={16}
-              className="w-4 h-4 rounded-full"
+              className="rounded-full"
               name={userMap[from].name}
               src={userMap[from].avatar}
             />

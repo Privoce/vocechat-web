@@ -127,11 +127,11 @@ export default function LoginPage() {
     <div className="flex-center h-screen dark:bg-[#384250]">
       <div className="py-8 px-10 shadow-md rounded-xl">
         <div className="flex-center flex-col pb-6">
-          <img src={`${BASE_URL}/resource/organization/logo`} alt="logo" className="w-14 h-14 mb-7 rounded-full" />
-          <h2 className="font-semibold text-2xl text-gray-800 dark:text-white mb-2">{t("login.title")}</h2>
+          <img src={`${BASE_URL}/resource/organization/logo`} alt="logo" className="w-14 h-14 mb-3 md:mb-7 rounded-full" />
+          <h2 className="font-semibold text-2xl text-gray-800 dark:text-white md:mb-2">{t("login.title")}</h2>
           <span className="text-gray-400 dark:text-gray-100">{t("login.desc")}</span>
         </div>
-        <form className="flex flex-col gap-5 min-w-[360px]" onSubmit={handleLogin}>
+        <form className="flex flex-col gap-5 w-[320px] md:min-w-[360px] " onSubmit={handleLogin}>
           <Input
             className="large"
             name="email"
