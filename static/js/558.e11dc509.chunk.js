@@ -1,1 +1,0 @@
-"use strict";(globalThis.webpackChunkvocechat_web=globalThis.webpackChunkvocechat_web||[]).push([[558],{79558:(e,a,c)=>{c.r(a),c.d(a,{default:()=>h});var s=c(15924),d=c(80683);function h(){return(0,d.jsx)("div",{className:"flex-center h-screen dark:bg-[#384250]",children:(0,d.jsx)("div",{className:"py-8 px-10 shadow-md rounded-xl",children:(0,d.jsx)(s.j3,{})})})}}}]);
