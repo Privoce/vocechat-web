@@ -18,9 +18,7 @@
     "license": "ライセンス",
     "about": "このアプリについて",
     "api_doc": "APIドキュメント",
-    "version": "About Version",
-    "terms": "プライバシーに関する説明",
-    "feedback": "フィードバック"
+    "version": "Version"
   },
   "channel": {
     "leave": "チャンネルを離れる",

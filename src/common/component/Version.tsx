@@ -8,11 +8,16 @@ const Version: FC<Props> = () => {
   const { data: serverVersion } = useGetServerVersionQuery();
   const ts = (process.env.REACT_APP_BUILD_TIME ?? 0) as number;
   return (
-    <div className="flex flex-col gap-3 dark:text-white">
-      <div className="item">{t("client_version")}: {process.env.VERSION}</div>
-      <div className="item">{t("server_version")}: {serverVersion}</div>
-      <div className="item">{t("build_time")}: {ts} ({dayjs(ts * 1000).fromNow()})</div>
-    </div>
+    <ul className="flex flex-col gap-2 dark:text-white">
+      <li>{t("client_version")}: {process.env.VERSION}</li>
+      <li>{t("server_version")}: {serverVersion}</li>
+      <li>{t("build_time")}: {ts}  <span className="text-gray-700 dark:text-gray-300">({dayjs(ts * 1000).fromNow()})</span></li>
+      <li>GitHub:&nbsp;
+        <strong className="font-bold">
+          <a className="text-[#06b6d4] underline underline-offset-2" href="https://github.com/Privoce/vocechat-web/issues" target="_blank" rel="noopener noreferrer">vocechat-web/issues</a>
+        </strong>
+      </li>
+    </ul>
   );
 };
 export default Version;

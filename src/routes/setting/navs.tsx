@@ -83,22 +83,6 @@ const navs = [
       {
         name: "version",
         component: <Version />
-      },
-      {
-        name: "terms",
-        component: <div className="dark:text-white">Terms & Privacy</div>
-      },
-      {
-        name: "feedback",
-        component: <ul className="flex flex-col gap-2 text-lg dark:text-white">
-          <li>Email: <strong className="font-bold">han@privoce.com</strong></li>
-          <li>Wechat: <strong className="font-bold">Privoce</strong></li>
-          <li>GitHub:&nbsp;
-            <strong className="font-bold">
-              <a className="text-[#06b6d4] underline underline-offset-2" href="https://github.com/Privoce/vocechat-web/issues" target="_blank" rel="noopener noreferrer">vocechat-web/issues</a>
-            </strong>
-          </li>
-        </ul>
       }
     ]
   }
