@@ -23,6 +23,7 @@ const SettingChannelPage = lazy(() => import("./settingChannel"));
 const SettingDMPage = lazy(() => import("./settingDM"));
 const SettingPage = lazy(() => import("./setting"));
 const ResourceManagement = lazy(() => import("./resources"));
+const GPTDemo = lazy(() => import("./gptDemo"));
 const GuestLogin = lazy(() => import("./guest"));
 const ChatPage = lazy(() => import("./chat"));
 const HomePage = lazy(() => import("./home"));
@@ -59,6 +60,7 @@ const PageRoutes = () => {
   return (
     <HashRouter>
       <Routes>
+        <Route path="/gpt" element={<LazyIt><GPTDemo /></LazyIt>} />
         <Route path="/guest_login" element={<LazyIt><GuestLogin /></LazyIt>} />
         <Route path="/cb/:type/:payload" element={<LazyIt><CallbackPage /></LazyIt>} />
         <Route path="/oauth/:token" element={<LazyIt><OAuthPage /></LazyIt>} />

@@ -147,6 +147,14 @@ export const messageApi = createApi({
         }
       }
     }),
+
+    replyWithChatGPT: builder.mutation<{ message: string, prompt: string }, string>({
+      query: (prompt) => ({
+        url: `https://official.voce.chat/chatgpt/complete`,
+        method: "POST",
+        body: { prompt, api_key: "test" }
+      })
+    }),
     replyMessage: builder.mutation<
       number,
       { from_uid: number, reply_mid: number; content: string; type: ContentTypeKey, properties?: {} }
@@ -209,5 +217,6 @@ export const {
   useReplyMessageMutation,
   useLazyDeleteMessageQuery,
   useReadMessageMutation,
-  useCreateArchiveMutation
+  useCreateArchiveMutation,
+  useReplyWithChatGPTMutation
 } = messageApi;
