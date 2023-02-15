@@ -21,9 +21,7 @@
     "license": "License",
     "about": "About",
     "api_doc": "API Document",
-    "version": "Version",
-    "terms": "Terms & Privacy",
-    "feedback": "Feedback"
+    "version": "Version"
   },
   "channel": {
     "leave": "Leave Channel",
