@@ -25,11 +25,11 @@ function UsersPage() {
   if (!users) return null;
 
   return (
-    <div className="flex h-full pt-2 pr-12 pb-2.5">
-      <div className="rounded-l-2xl bg-white dark:bg-[#1F2A37] relative flex flex-col min-w-[268px] shadow-[inset_-1px_0px_0px_rgba(0,_0,_0,_0.1)]">
+    <div className="flex h-full pt-2 md:pr-12 pb-2.5">
+      <div className="rounded-l-2xl bg-white dark:bg-[#1F2A37] relative flex flex-col md:min-w-[268px] shadow-[inset_-1px_0px_0px_rgba(0,_0,_0,_0.1)]">
         <Search input={input} updateInput={updateInput} />
-        <div className="px-2 py-3 overflow-scroll pb-[50px]">
-          <nav className="flex flex-col gap-1">
+        <div className="px-2 py-3 overflow-scroll">
+          <nav className="flex flex-col md:gap-1">
             {users.map(({ uid }) => {
               return (
                 <NavLink key={uid} className={({ isActive }) => `rounded-md hover:bg-gray-500/10 ${isActive ? "bg-gray-500/10" : ""}`} to={`/users/${uid}`}>

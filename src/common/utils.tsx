@@ -10,6 +10,8 @@ import IconImage from "../assets/icons/file.image.svg";
 import { Archive, ArchiveMessage } from "../types/resource";
 import { MessagePayload } from "../app/slices/message";
 
+export const isMobile = () => /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
 export const getLocalAuthData = () => {
   return {
     token: localStorage.getItem(KEY_TOKEN) || "",

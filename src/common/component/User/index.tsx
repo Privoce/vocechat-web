@@ -43,8 +43,8 @@ const User: FC<Props> = ({
   };
   if (!curr) return null;
   const online = curr.online || curr.uid == loginUid;
-  const containerClass = clsx(`relative flex items-center justify-start gap-2 rounded-lg select-none `, interactive && "hover:bg-gray-500/10", compact ? "p-0" : "p-2");
-  const nameClass = clsx(`text-sm text-gray-500 max-w-[190px] truncate font-semibold dark:text-white`);
+  const containerClass = clsx(`relative flex items-center justify-start md:gap-2 rounded-lg select-none `, interactive && "hover:bg-gray-500/10", compact ? "p-0" : "p-2");
+  const nameClass = clsx(`hidden md:block text-sm text-gray-500 max-w-[190px] truncate font-semibold dark:text-white`);
   const statusClass = clsx(`absolute -bottom-0.5 -right-1.5 w-3 h-3 box-content rounded-full border-[2px] border-solid border-white dark:border-gray-300`,
     online ? "bg-[#22c55e]" : "bg-[#a1a1aa]",
     compact && "w-3.5 h-3.5");

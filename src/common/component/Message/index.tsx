@@ -96,7 +96,7 @@ const Message: FC<IProps> = ({
       onContextMenu={readOnly ? undefined : handleContextMenuEvent}
       data-msg-mid={mid}
       ref={inviewRef}
-      className={clsx(`group w-full relative flex items-start gap-4 px-2 py-1 my-2 rounded-lg dark:hover:bg-gray-800 hover:bg-gray-100`,
+      className={clsx(`group w-[85%] md:w-full relative flex items-start gap-2 md:gap-4 px-1 md:px-2 py-1 my-2 rounded-lg dark:hover:bg-gray-800 hover:bg-gray-100`,
         readOnly && "hover:bg-transparent",
         showExpire && "bg-red-200",
         pinInfo && "bg-cyan-50 dark:bg-cyan-800 pt-7"
@@ -111,7 +111,7 @@ const Message: FC<IProps> = ({
         trigger="click"
         content={<Profile uid={fromUid || 0} type="card" cid={context == "user" ? 0 : contextId} />}
       >
-        <div className="cursor-pointer w-10 h-10 flex-shrink-0" data-uid={fromUid} ref={avatarRef}>
+        <div className="cursor-pointer w-10 h-10 shrink-0" data-uid={fromUid} ref={avatarRef}>
           <Avatar className="w-10 h-10 rounded-full object-cover" width={40} height={40} src={currUser?.avatar} name={currUser?.name} />
         </div>
       </Tippy>

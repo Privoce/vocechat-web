@@ -82,9 +82,8 @@ function ResourceManagement({ fileMessages }) {
   }, [view, filter]);
 
   return (
-    <div className="h-screen overflow-y-scroll flex flex-col items-start my-2 mr-6 rounded-2xl bg-white dark:bg-[#384250]">
+    <div className="h-screen md:overflow-y-scroll flex flex-col items-start my-2 mr-6 rounded-2xl bg-white dark:bg-[#384250]">
       <Search value={filter.name} updateSearchValue={handleUpdateSearch} />
-      <div className="divider"></div>
       <div className="flex justify-between w-full px-4 py-5">
         <Filter filter={filter} updateFilter={updateFilter} />
         <View view={view} />

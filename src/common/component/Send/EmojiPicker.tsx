@@ -51,7 +51,7 @@ export default function EmojiPicker({ selectEmoji }: { selectEmoji: (e: string) 
 
   return (
     <Tooltip placement="top" tip="Emojis" disabled={visible}>
-      <div className="relative w-fit flex items-center">
+      <div className="hidden md:flex relative w-fit items-center">
         <div ref={ref} className={clsx(`absolute -top-5 -left-5 -translate-y-full`, visible ? 'block' : 'hidden')}>
           {/* emoji picker */}
         </div>

@@ -1,5 +1,7 @@
 import { useState } from "react";
 import Tippy from "@tippyjs/react";
+import clsx from "clsx";
+import { useTranslation } from "react-i18next";
 import Avatar from "../../../common/component/Avatar";
 import FilterDate, { Dates } from "./Date";
 import FilterFrom from "./From";
@@ -7,11 +9,9 @@ import FilterChannel from "./Channel";
 import FilterType, { FileTypes } from "./Type";
 import ArrowDown from "../../../assets/icons/arrow.down.svg";
 import { useAppSelector } from "../../../app/store";
-import { useTranslation } from "react-i18next";
-import clsx from "clsx";
 
 const getClass = (selected: boolean) => {
-  return clsx(`cursor-pointer flex items-center gap-2 shadow rounded-lg py-2 px-3 text-xs text-gray-900 dark:text-gray-200`, selected ? 'text-white bg-primary-400' : 'border border-solid border-gray-300 dark:border-gray-400 ');
+  return clsx(`cursor-pointer flex items-center gap-1 md:gap-2 shadow rounded-lg p-1 md:py-2 md:px-3 text-xs text-gray-900 dark:text-gray-200`, selected ? 'text-white bg-primary-400' : 'border border-solid border-gray-300 dark:border-gray-400 ');
 };
 export default function Filter({ filter, updateFilter }) {
   const { t } = useTranslation("file");
@@ -22,13 +22,13 @@ export default function Filter({ filter, updateFilter }) {
     type: false
   });
 
-  const toggleFilterVisible = (obj) => {
+  const toggleFilterVisible = (obj: any) => {
     setFiltersVisible((prev) => {
       return { ...prev, ...obj };
     });
   };
 
-  const handleUpdateFilter = (data) => {
+  const handleUpdateFilter = (data: any) => {
     updateFilter(data);
     let _key = Object.keys(data)[0];
     let tmp = {

@@ -14,7 +14,7 @@ const renderContent = (data: MessagePayload) => {
   switch (content_type) {
     case ContentTypes.text:
       res = (
-        <span className="truncate break-words break-all text-gray-800 dark:text-gray-100">
+        <span className="md:truncate md:break-words md:break-all text-gray-800 dark:text-gray-100">
           <LinkifyText text={content} url={false} mentionTextOnly={true} mentionPopOver={false} />
         </span>
       );
@@ -77,7 +77,7 @@ const Reply: FC<ReplyProps> = ({ mid, interactive = true }) => {
     <div
       key={mid}
       data-mid={mid}
-      className={`flex items-start p-2 bg-gray-100 dark:bg-gray-900 rounded-lg gap-2 mb-1 ${interactive ? "cursor-pointer" : "!bg-transparent"}`}
+      className={`flex items-start flex-col md:flex-row p-2 bg-gray-100 dark:bg-gray-900 rounded-lg gap-2 mb-1 ${interactive ? "cursor-pointer" : "!bg-transparent"}`}
       onClick={interactive ? handleClick : undefined}
     >
       <div className="flex items-center gap-1 whitespace-nowrap">

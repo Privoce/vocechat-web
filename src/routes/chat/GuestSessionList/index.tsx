@@ -40,7 +40,7 @@ const SessionList: FC<Props> = () => {
   }, [channelIDs, channelMessage, readChannels, readUsers, loginUid, userMessage]);
 
   return (
-    <ul className="flex flex-col gap-0.5 p-2 overflow-auto h-[calc(100vh_-_56px_-_16px_-_8px)]">
+    <ul className="flex flex-col gap-0.5 p-2 overflow-auto h-[calc(100vh_-_56px_-_38px)]">
       {sessions.map((s) => {
         const { key, id, mid = 0 } = s;
         return <Session key={key} id={id} mid={mid} />;

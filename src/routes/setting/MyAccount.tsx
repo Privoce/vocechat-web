@@ -61,12 +61,12 @@ export default function MyAccount() {
   return (
     <>
       <div className="flex flex-col items-start gap-8">
-        <div className="p-6 flex flex-col items-center w-[512px] bg-gray-100 dark:bg-gray-800 rounded-2xl">
+        <div className="p-6 flex flex-col items-center md:w-[512px] bg-gray-100 dark:bg-gray-800 rounded-2xl">
           <AvatarUploader url={avatar} name={name} uploadImage={uploadAvatar} />
           <div className="mt-2 mb-16 font-bold text-lg text-gray-800 dark:text-white">
             {name} <span className="font-normal text-gray-500">#{uid}</span>
           </div>
-          <div className="w-full flex justify-between mb-6">
+          <div className="w-full flex flex-col items-start md:flex-row justify-between mb-6">
             <div className="flex flex-col text-gray-500 dark:text-gray-50">
               <span className="text-xs uppercase  font-semibold">{t("username")}</span>
               <span className="text-sm ">
@@ -77,7 +77,7 @@ export default function MyAccount() {
               {ct("action.edit")}
             </Button>
           </div>
-          <div className="w-full flex justify-between mb-6">
+          <div className="w-full flex flex-col items-start md:flex-row justify-between mb-6">
             <div className="flex flex-col text-gray-500 dark:text-gray-50">
               <span className="text-xs uppercase  font-semibold">{t("email")}</span>
               <span className="text-sm">{email}</span>
@@ -86,7 +86,7 @@ export default function MyAccount() {
               {ct("action.edit")}
             </Button>
           </div>
-          <div className="w-full flex justify-between mb-6">
+          <div className="w-full flex flex-col items-start md:flex-row justify-between mb-6">
             <div className="flex flex-col text-gray-500 dark:text-gray-50">
               <span className="text-xs uppercase  font-semibold">{t("password")}</span>
               <span className="text-sm">*********</span>

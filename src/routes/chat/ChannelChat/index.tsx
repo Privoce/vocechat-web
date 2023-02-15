@@ -136,7 +136,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
             <div className="flex items-center gap-1">
               <ChannelIcon personal={!is_public} />
               <span className="text-gray-800 dark:text-white">{name}</span>
-              <span className="ml-2 text-gray-500">{description}</span>
+              <span className="ml-2 text-gray-500 hidden md:block">{description}</span>
             </div>
           </header>
         }
@@ -164,7 +164,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
           </div>
         }
       >
-        <article className="py-4.5 px-4 w-full h-full overflow-x-hidden overflow-y-auto" id={`VOCECHAT_FEED_channel_${cid}`}>
+        <article className="py-4.5 px-1 md:px-4 w-full h-full overflow-x-hidden overflow-y-auto" id={`VOCECHAT_FEED_channel_${cid}`}>
           {hasMore ? (
             <LoadMore pullUp={pullUp} pulling={pulling} />
           ) : (

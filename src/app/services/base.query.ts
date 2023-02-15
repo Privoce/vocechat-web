@@ -26,7 +26,8 @@ const whiteList = [
   "getInitialized",
   "createAdmin",
   "getBotRelatedChannels",
-  "sendMessageByBot"
+  "sendMessageByBot",
+  "replyWithChatGPT"
 ];
 
 const baseQuery = fetchBaseQuery({
@@ -41,7 +42,7 @@ const baseQuery = fetchBaseQuery({
 });
 
 let waitingForRenew: null | any = null;
-const baseQueryWithTokenCheck = async (args, api, extraOptions) => {
+const baseQueryWithTokenCheck = async (args: any, api: any, extraOptions: any) => {
   if (waitingForRenew) {
     await waitingForRenew;
   }

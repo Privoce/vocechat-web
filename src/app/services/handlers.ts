@@ -46,6 +46,7 @@ export const onMessageSendStarted = async (
 
   try {
     const { data: server_mid } = await queryFulfilled;
+    // throw new Error();
     // console.log("message server mid", server_mid);
     batch(() => {
       dispatch(removeContextMessage({ id, mid: ts }));

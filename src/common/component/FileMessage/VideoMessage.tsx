@@ -37,17 +37,17 @@ const VideoMessage = ({ url, name, size, download }: Props) => {
     };
     const tipClass = 'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2';
     return (
-        <div className='w-64 h-32 md:w-96 md:h-52 relative rounded-md border border-solid border-gray-300 overflow-hidden group'>
+        <div className='w-60 h-32 md:w-96 md:h-52 relative rounded-md border border-solid border-gray-300 dark:border-gray-700 overflow-hidden group'>
             <div className="absolute top-0 left-0 w-full h-full bg-black/40 z-20 group-hover:hidden"></div>
             <div className="absolute top-0 left-0 w-full flex justify-between z-30 px-3 py-2 overflow-hidden group-hover:bg-black/20">
                 <div className="flex gap-2 ">
-                    <IconVideo className="w-9 h-auto" />
+                    <IconVideo className="hidden md:block w-9 h-auto" />
                     <div className="flex flex-col gap-1 text-sm text-white">
-                        <span title={name} className='font-bold w-[240px] truncate'>{name}</span>
+                        <span title={name} className='font-bold w-56 md:w-[240px] truncate'>{name}</span>
                         <span>{_size}</span>
                     </div>
                 </div>
-                <a href={download} className="mt-2"><IconDownload className="fill-white" /></a>
+                <a href={download} className="hidden md:block mt-2"><IconDownload className="fill-white" /></a>
             </div>
             {!canPlay ?
                 <div className={tipClass}>

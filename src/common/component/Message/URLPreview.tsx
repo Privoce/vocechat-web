@@ -40,7 +40,7 @@ export default function URLPreview({ url = "" }) {
   if (!url || !data || !data.title) return null;
   const { title, description, ogImage } = data;
 
-  const containerClass = `flex items-center border border-solid border-gray-300 box-border rounded-md w-[380px]`;
+  const containerClass = `flex items-center border border-solid border-gray-300 dark:border-gray-600 box-border rounded-md w-[80%] md:w-[380px]`;
   const dotsClass = `truncate`;
   return ogImage ? (
     <a className={`${containerClass} flex-col !items-start p-3`} href={url} target="_blank" rel="noreferrer">
@@ -55,13 +55,13 @@ export default function URLPreview({ url = "" }) {
       className={`${containerClass} gap-2  px-2 py-3`}
       href={url} target="_blank" rel="noreferrer">
       {favicon && (
-        <div className="flex w-12 h-12 rounded">
-          <img onError={handleFavError} className="object-contain" src={favicon} alt="favicon" />
+        <div className="flex rounded">
+          <img onError={handleFavError} className="object-contain w-12 h-12" src={favicon} alt="favicon" />
         </div>
       )}
       <div className="flex flex-col">
-        <h3 className="text-sm text-gray-900">{title}</h3>
-        <p className={`text-xs text-gray-500 w-[288px] ${dotsClass}`}>{description}</p>
+        <h3 className="text-sm text-gray-900 dark:text-gray-100">{title}</h3>
+        <p className={`hidden md:block text-xs text-gray-500 dark:text-gray-400 w-[288px] ${dotsClass}`}>{description}</p>
         <span className={`text-[10px] text-gray-500 w-[288px] ${dotsClass}`}>{url}</span>
       </div>
     </a>
