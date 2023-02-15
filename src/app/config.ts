@@ -8,22 +8,12 @@ const BASE_URL = process.env.REACT_APP_RELEASE
 
 let prices: Price[] = [
   {
-    type: "subscription",
-    price: "",
-    sub_dur: "year",
-    // sub_type: "year", //day month year
-    title: "Pro",
-    limit: 100,
-    pid: "price_1MN8C7GGoUDRyc3jos06bCqM",
-    desc: "{{Pro Desc}}",
+    type: "payment",
+    limit: 999999,
+    pid: "price_1MbF30GGoUDRyc3jwOg30dVQ",
   },
   {
-    type: "payment",
-    price: "",
-    title: "supreme",
-    limit: 99999,
-    pid: "price_1M5VoGGGoUDRyc3j6xhQou6D",
-    desc: "{{supreme desc}}",
+    type: "booking",
   }
 ];
 export const getLicensePriceList = () => {

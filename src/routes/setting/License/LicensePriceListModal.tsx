@@ -80,6 +80,7 @@ const LicensePriceListModal: FC<Props> = ({ closeModal }) => {
     location.href = resp.data.session_url;
   };
   const handlePriceSelect = (price: string) => {
+    console.log(price);
     setSelectPrice(price);
   };
   const handleUpdateHost = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -88,10 +89,15 @@ const LicensePriceListModal: FC<Props> = ({ closeModal }) => {
   const togglePopUpVisible = () => {
     setPopUpVisible(prev => !prev);
   };
+  const handleTalk = () => {
+    window.open("https://calendly.com/hansu", "_blank");
+  };
+  const isBooking = selectPrice.includes("booking");
+
   return (
     <Modal id="modal-modal">
       <StyledModal
-        className="!min-w-[480px]"
+        // className="!min-w-[480px]"
         title={t("license.renew")}
         description={t("license.renew_select")}
         buttons={
@@ -99,14 +105,16 @@ const LicensePriceListModal: FC<Props> = ({ closeModal }) => {
             <Button onClick={closeModal} className="ghost">
               {ct("action.cancel")}
             </Button>
-            <Tippy
+            {isBooking ? <Button onClick={handleTalk}>
+              Booking a meeting!
+            </Button> : <Tippy
               visible={popUpVisible}
               interactive
               placement="top-end"
               offset={[0, -40]}
               trigger="click"
               content={
-                <div className="p-3 rounded-lg border border-solid border-gray-200 flex flex-col items-start gap-3 w-[340px] bg-white shadow shadow-gray-200 drop-shadow-xl">
+                <div className="p-3 rounded-lg border border-solid border-gray-200 dark:border-gray-900 flex flex-col items-start gap-3 w-[380px] bg-white dark:bg-gray-800 shadow shadow-gray-200 dark:shadow-gray-900 drop-shadow-xl">
                   <div className="text-gray-500 text-sm">
                     {t("license.tip_domain")}
                   </div>
@@ -114,27 +122,28 @@ const LicensePriceListModal: FC<Props> = ({ closeModal }) => {
                   <div className="flex justify-between items-center w-full mt-4">
                     <span className="text-xs text-orange-500"> {t("license.tip_port")}</span>
                     <div className="flex gap-3">
-                      <Button className="cancel mini" onClick={togglePopUpVisible}>
+                      <Button className="mini cancel" onClick={togglePopUpVisible}>
                         {ct("action.cancel")}
                       </Button>
                       <Button className="mini" disabled={isLoading || isSuccess} onClick={handleRenew}>
                         {isLoading ? "Initialize Payment Url" : isSuccess ? "Redirecting" : t("license.tip_confirm")}
                       </Button>
-
                     </div>
                   </div>
                 </div>
               }
             >
-              <Button onClick={togglePopUpVisible}>
+              <button onClick={togglePopUpVisible} className="text-sm text-white bg-primary-400 break-keep shadow rounded-lg px-3.5 py-2.5 hover:bg-primary-500 active:bg-primary-500 disabled:bg-gray-300"> {t("license.renew")}</button>
+              {/* <Button >
                 {t("license.renew")}
-              </Button>
-            </Tippy>
+              </Button> */}
+            </Tippy>}
+
           </>
         }
       >
         <StyledRadio
-          options={LicensePriceList.map(({ title, desc, price }) => `${title} [${desc}][${price}]`)}
+          options={LicensePriceList.map(({ title, desc, price }) => `${title} ${desc ? `[${desc}]` : ""}${price ? `[${price}]` : ""}`)}
           values={LicensePriceList.map(({ pid, limit, type = "payment", sub_dur = "month" }) => `${pid}|${limit}|${type}|${sub_dur}`)}
           value={selectPrice}
           onChange={(v) => {
