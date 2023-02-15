@@ -24,10 +24,10 @@ const InactiveScreen: FC<Props> = () => {
     location.reload();
   };
   return (
-    <div className="w-screen h-screen flex-center text-4xl font-bold">
-      <div className="flex flex-col items-center gap-2">
-        <h1 className="text-4xl font-bold">{t("inactive.title")}</h1>
-        <p className="text-gray-400 text-base font-semibold" >{t("inactive.desc")}</p>
+    <div className="w-screen h-screen dark:bg-gray-700 flex-center text-4xl font-bold">
+      <div className="flex flex-col items-center text-center gap-2">
+        <h1 className="text-lg md:text-4xl dark:text-white font-bold">{t("inactive.title")}</h1>
+        <p className="text-gray-400 text-xs md:text-sm font-semibold" >{t("inactive.desc")}</p>
         <Button className="mt-4 uppercase" onClick={handleReload}>{t("action.reload")}</Button>
       </div>
 
