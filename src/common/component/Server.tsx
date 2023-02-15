@@ -22,7 +22,7 @@ export default function Server({ readonly = false }: Props) {
   const { name, description, logo } = server;
   if (readonly)
     return (
-      <div className="relative flex items-center justify-between gap-2 px-4 py-2">
+      <NavLink to={"/"} className="relative flex items-center justify-between gap-2 px-4 py-2">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8">
             <img alt={`${name} logo`} className="w-full h-full object-cover rounded-full" src={logo} />
@@ -34,7 +34,7 @@ export default function Server({ readonly = false }: Props) {
             <span className="text-xs text-gray-500">{userCount} {t("members")}</span>
           </div>
         </div>
-      </div>
+      </NavLink>
     );
 
   return (
