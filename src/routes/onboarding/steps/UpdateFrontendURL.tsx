@@ -35,10 +35,10 @@ const UpdateFrontendURL = ({ refreshInviteLink }: Props) => {
         }
     }, [isSuccess]);
     return (
-        <div className="absolute left-1/2 -translate-x-1/2 bottom-8 border-2 border-solid border-[#67E3F9] bg-[#F5FEFF] rounded-lg px-2 py-3 flex justify-start gap-4">
+        <div className="absolute left-1/2 -translate-x-1/2 bottom-8 border-2 border-solid border-primary-300 bg-primary-25 rounded-lg px-2 py-3 flex justify-start gap-4">
             <InfoIcon />
             <div className="flex flex-col items-start gap-2">
-                <span className="text-sm text-[#0E7090] mb-1">{t("update_domain_tip")}</span>
+                <span className="text-sm text-primary-700 mb-1">{t("update_domain_tip")}</span>
                 <div className="w-[400px] rounded flex gap-2">
                     <StyledInput type={"url"} className="!shadow-none !bg-transparent" placeholder="Frontend URL" value={frontUrl} onChange={handleUpdateUrl} />
                     <StyledButton disabled={!frontUrl || isLoading} onClick={updateFrontUrl} className="small ">

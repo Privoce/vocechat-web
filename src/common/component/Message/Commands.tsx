@@ -105,27 +105,27 @@ const Commands: FC<Props> = ({ context = "user", contextId = 0, mid = 0, toggleE
           trigger="click"
           content={<ReactionPicker mid={mid} hidePicker={hideAll} />}
         >
-          <li className="flex cursor-pointer p-1 hover:bg-[#f3f4f6] dark:hover:bg-gray-800">
+          <li className="flex cursor-pointer p-1 hover:bg-gray-100 dark:hover:bg-gray-800">
             <Tooltip placement="top" tip={t("action.add_reaction")}>
               <img src={reactIcon} className="toggler w-6 h-6" alt="icon emoji" />
             </Tooltip>
           </li>
         </Tippy>
         {canEdit && (
-          <li className="flex cursor-pointer p-1 hover:bg-[#f3f4f6] dark:hover:bg-gray-800" onClick={toggleEditMessage}>
+          <li className="flex cursor-pointer p-1 hover:bg-gray-100 dark:hover:bg-gray-800" onClick={toggleEditMessage}>
             <Tooltip placement="top" tip={t("action.edit")}>
               <img src={editIcon} className="w-6 h-6" alt="icon edit" />
             </Tooltip>
           </li>
         )}
         {canReply && (
-          <li className="flex cursor-pointer p-1 hover:bg-[#f3f4f6] dark:hover:bg-gray-800" onClick={handleReply}>
+          <li className="flex cursor-pointer p-1 hover:bg-gray-100 dark:hover:bg-gray-800" onClick={handleReply}>
             <Tooltip placement="top" tip={t("action.reply")}>
               <img src={replyIcon} className="w-6 h-6" alt="icon reply" />
             </Tooltip>
           </li>
         )}
-        <li className="flex cursor-pointer p-1 hover:bg-[#f3f4f6] dark:hover:bg-gray-800" onClick={handleAddFav}>
+        <li className="flex cursor-pointer p-1 hover:bg-gray-100 dark:hover:bg-gray-800" onClick={handleAddFav}>
           <Tooltip placement="top" tip={t("action.add_to_fav")}>
             <IconBookmark className="fill-[#667085] w-6 h-6" />
           </Tooltip>
@@ -166,7 +166,7 @@ const Commands: FC<Props> = ({ context = "user", contextId = 0, mid = 0, toggleE
             />
           }
         >
-          <li className="flex cursor-pointer p-1 hover:bg-[#f3f4f6] dark:hover:bg-gray-800">
+          <li className="flex cursor-pointer p-1 hover:bg-gray-100 dark:hover:bg-gray-800">
             <Tooltip placement="top" tip={t("more")}>
               <img src={moreIcon} alt="icon more" />
             </Tooltip>

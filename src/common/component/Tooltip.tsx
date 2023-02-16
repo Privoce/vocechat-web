@@ -1,6 +1,7 @@
 import { FC } from "react";
 import Tippy, { TippyProps } from "@tippyjs/react";
 import clsx from "clsx";
+import { isMobile } from "../utils";
 
 
 const Triangle: FC<Pick<TippyProps, "placement">> = ({ placement }) => {
@@ -23,6 +24,7 @@ const Tooltip: FC<Props> = ({ tip = "", placement = "right", delay = null, child
 
   return (
     <Tippy
+      disabled={isMobile()}
       offset={[0, 18]}
       duration={delay ? defaultDuration : 0}
       delay={delay ?? [150, 0]}

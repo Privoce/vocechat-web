@@ -11,6 +11,7 @@ import LoadMore from "../LoadMore";
 import { renderMessageFragment } from "../utils";
 import useMessageFeed from "../../../common/hook/useMessageFeed";
 import { useAppSelector } from "../../../app/store";
+import GoBackNav from "../GoBackNav";
 type Props = {
   uid: number;
   dropFiles?: File[];
@@ -64,7 +65,8 @@ const DMChat: FC<Props> = ({ uid = 0, dropFiles }) => {
         </ul>
       }
       header={
-        <header className="box-border h-14 px-5 flex items-center justify-between shadow-[inset_0_-1px_0_rgb(0_0_0_/_10%)]">
+        <header className="box-border h-14 px-5 flex items-center justify-center md:justify-between shadow-[inset_0_-1px_0_rgb(0_0_0_/_10%)]">
+          <GoBackNav />
           <User interactive={false} uid={currUser.uid} />
         </header>
       }

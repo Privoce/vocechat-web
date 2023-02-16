@@ -118,7 +118,7 @@ function FavsPage() {
     removeFavorite(id);
   };
   return (
-    <div className="h-screen flex bg-white mt-2 mr-6 mb-2.5 overflow-auto dark:bg-[#384250] rounded-2xl">
+    <div className="h-screen flex bg-white mt-2 mr-6 mb-2.5 overflow-auto dark:bg-gray-700 rounded-2xl">
       <div className=" md:min-w-[268px] p-2 shadow-inner-[-1px_0px_0px_rgba(0,_0,_0,_0.1)]">
         <ul className="flex flex-col gap-0.5">
           {Filters.map(({ icon, title, filter: f }) => {

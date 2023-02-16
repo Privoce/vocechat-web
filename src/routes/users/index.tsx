@@ -8,6 +8,7 @@ import Profile from "../../common/component/Profile";
 
 import BlankPlaceholder from "../../common/component/BlankPlaceholder";
 import useFilteredUsers from "../../common/hook/useFilteredUsers";
+import clsx from "clsx";
 
 function UsersPage() {
   const dispatch = useDispatch();
@@ -23,12 +24,14 @@ function UsersPage() {
   }, [pathname]);
 
   if (!users) return null;
-
+  const isUserDetail = !!user_id;
   return (
-    <div className="flex h-full pt-2 md:pr-12 pb-2.5">
-      <div className="rounded-l-2xl bg-white dark:bg-[#1F2A37] relative flex flex-col md:min-w-[268px] shadow-[inset_-1px_0px_0px_rgba(0,_0,_0,_0.1)]">
+    <div className={clsx("flex h-full md:pt-2 md:pb-2.5 md:pr-12")}>
+      <div className={clsx("md:rounded-l-2xl bg-white dark:bg-gray-800 relative flex flex-col w-full md:w-auto md:min-w-[268px] shadow-[inset_-1px_0px_0px_rgba(0,_0,_0,_0.1)]",
+        isUserDetail && "hidden"
+      )}>
         <Search input={input} updateInput={updateInput} />
-        <div className="px-2 py-3 overflow-scroll">
+        <div className="px-2 pt-3 pb-20 md:py-3 overflow-scroll">
           <nav className="flex flex-col md:gap-1">
             {users.map(({ uid }) => {
               return (
@@ -40,8 +43,11 @@ function UsersPage() {
           </nav>
         </div>
       </div>
-      <div className={`rounded-r-2xl bg-white w-full flex justify-center items-start ${!user_id ? "h-full items-center" : ""} dark:bg-[#384250]`}>
-        {user_id ? <Profile uid={+user_id} /> : <BlankPlaceholder type="user" />}
+      <div className={clsx(`md:rounded-r-2xl bg-white w-full flex justify-center items-start dark:bg-gray-700`,
+        !user_id && "h-full items-center",
+        !isUserDetail && "hidden md:flex"
+      )}>
+        {isUserDetail ? <Profile uid={+user_id} /> : <BlankPlaceholder type="user" />}
       </div>
     </div>
   );

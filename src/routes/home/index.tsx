@@ -14,7 +14,7 @@ import UserIcon from "../../assets/icons/user.svg";
 import FavIcon from "../../assets/icons/bookmark.svg";
 import FolderIcon from "../../assets/icons/folder.svg";
 import { useAppSelector } from "../../app/store";
-import { isMobile } from "../../common/utils";
+import MobileNavs from "./MobileNavs";
 
 
 function HomePage() {
@@ -49,14 +49,13 @@ function HomePage() {
   const chatNav = isChatHomePath ? "/chat" : chatPath || "/chat";
   const userNav = userPath || "/users";
   const linkClass = `flex items-center gap-2.5 px-3 py-2 font-semibold text-sm text-gray-600 rounded-lg hover:bg-gray-800/10`;
-  const mobile = isMobile();
   return (
     <>
       <Manifest />
       {!guest && <Notification />}
       <div className={`vocechat-container flex w-screen h-screen bg-[#e5e7eb] dark:bg-[#121926]`}>
         {!guest && (
-          <div className={`h-full flex flex-col items-center relative w-16 bg-[#e5e7eb] dark:bg-[#121926] transition-all`}>
+          <div className={`hidden md:flex h-full flex-col items-center relative w-16 bg-[#e5e7eb] dark:bg-[#121926] transition-all`}>
             {loginUid && <User uid={loginUid} />}
             <nav className="flex flex-col gap-1 px-3 py-6">
               <NavLink
@@ -64,28 +63,28 @@ function HomePage() {
                 to={chatNav}
               >
                 {({ isActive }) => {
-                  return <Tooltip disabled={mobile} tip={t("chat")}>
+                  return <Tooltip tip={t("chat")}>
                     <ChatIcon className={(isActive || isChattingPage) ? "fill-white" : ""} />
                   </Tooltip>;
                 }}
               </NavLink>
               <NavLink className={({ isActive }) => `${linkClass} ${isActive ? 'bg-primary-400 hover:bg-primary-400' : ""}`} to={userNav}>
                 {({ isActive }) => {
-                  return <Tooltip disabled={mobile} tip={t("members")}>
+                  return <Tooltip tip={t("members")}>
                     <UserIcon className={isActive ? "fill-white" : ""} />
                   </Tooltip>;
                 }}
               </NavLink>
               <NavLink className={({ isActive }) => `${linkClass} ${isActive ? 'bg-primary-400 hover:bg-primary-400' : ""}`} to={"/favs"}>
                 {({ isActive }) => {
-                  return <Tooltip disabled={mobile} tip={t("favs")}>
+                  return <Tooltip tip={t("favs")}>
                     <FavIcon className={isActive ? "fill-white" : ""} />
                   </Tooltip>;
                 }}
               </NavLink>
               <NavLink className={({ isActive }) => `${linkClass} ${isActive ? 'bg-primary-400 hover:bg-primary-400' : ""}`} to={"/files"}>
                 {({ isActive }) => {
-                  return <Tooltip disabled={mobile} tip={t("files")}>
+                  return <Tooltip tip={t("files")}>
                     <FolderIcon className={isActive ? "fill-white" : ""} />
                   </Tooltip>;
                 }}
@@ -98,6 +97,7 @@ function HomePage() {
           <Outlet />
         </div>
       </div>
+      {!guest && <MobileNavs />}
     </>
   );
 }

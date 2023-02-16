@@ -23,6 +23,7 @@ import InviteModal from "../../../common/component/InviteModal";
 import LoadMore from "../LoadMore";
 import { useAppSelector } from "../../../app/store";
 import { useTranslation } from "react-i18next";
+import GoBackNav from "../GoBackNav";
 type Props = {
   cid?: number;
   dropFiles?: File[];
@@ -133,6 +134,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
         }
         header={
           <header className="h-14 px-5  flex items-center justify-center md:justify-between shadow-[inset_0_-1px_0_rgb(0_0_0_/_10%)]">
+            <GoBackNav />
             <div className="flex items-center gap-1">
               <ChannelIcon personal={!is_public} />
               <span className="text-gray-800 dark:text-white">{name}</span>

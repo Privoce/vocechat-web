@@ -124,7 +124,7 @@ export default function LoginPage() {
 
 
   return (
-    <div className="flex-center h-screen dark:bg-[#384250]">
+    <div className="flex-center h-screen dark:bg-gray-700">
       <div className="py-8 px-10 shadow-md rounded-xl">
         <div className="flex-center flex-col pb-6">
           <img src={`${BASE_URL}/resource/organization/logo`} alt="logo" className="w-14 h-14 mb-3 md:mb-7 rounded-full" />

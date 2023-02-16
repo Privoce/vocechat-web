@@ -79,11 +79,11 @@ const CreateModal = ({ closeModal }: Props) => {
             >
                 <form ref={formRef} className="w-full flex flex-col gap-2" action="/">
                     <div className="flex flex-col items-start gap-1 w-full">
-                        <label htmlFor={"name"} className="text-sm text-[#6b7280]">Name</label>
+                        <label htmlFor={"name"} className="text-sm text-gray-500">Name</label>
                         <Input name={"name"} required placeholder='Please input bot name'></Input>
                     </div>
                     <div className="flex flex-col items-start gap-1 w-full">
-                        <label htmlFor={"webhook_url"} className="text-sm text-[#6b7280]">Webhook URL (Optional)</label>
+                        <label htmlFor={"webhook_url"} className="text-sm text-gray-500">Webhook URL (Optional)</label>
                         <Input name={"webhook_url"} type="url" placeholder='Please input webhook url'></Input>
                     </div>
                 </form>

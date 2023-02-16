@@ -27,7 +27,7 @@ const StyledSettingContainer: FC<PropsWithChildren<Props>> = ({
   const { pathname } = useLocation();
   return (
     <div className="w-screen h-screen flex">
-      <div className="h-screen min-w-[120px] md:min-w-[212px] overflow-scroll px-4 py-8 bg-[#f5f6f7] dark:bg-[#1F2A37]">
+      <div className="h-screen min-w-[120px] md:min-w-[212px] overflow-scroll px-4 py-8 bg-neutral-100 dark:bg-gray-800">
         <h2 onClick={closeModal} className="flex gap-2 items-center text-sm md:text-base cursor-pointer mb-8 font-bold text-gray-800 dark:text-white">
           <IconBack className="dark:fill-gray-400" /> {title}
         </h2>
@@ -58,7 +58,7 @@ const StyledSettingContainer: FC<PropsWithChildren<Props>> = ({
           </ul>
         ) : null}
       </div>
-      <div className="bg-white w-full max-h-full overflow-auto p-8 dark:bg-[#384250]">
+      <div className="bg-white w-full max-h-full overflow-auto p-8 dark:bg-gray-700">
         {nav && <h4 className="font-bold text-xl text-gray-600 mb-8 dark:text-gray-100">{nav.title}</h4>}
         {children}
       </div>

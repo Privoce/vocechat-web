@@ -2,6 +2,7 @@ import { FC } from "react";
 import { useState, useEffect } from "react";
 import Session from "./Session";
 import { useAppSelector } from "../../../app/store";
+import LoginTip from "../Layout/LoginTip";
 export interface ChatSession {
   key: string;
   id: number;
@@ -40,12 +41,15 @@ const SessionList: FC<Props> = () => {
   }, [channelIDs, channelMessage, readChannels, readUsers, loginUid, userMessage]);
 
   return (
-    <ul className="flex flex-col gap-0.5 p-2 overflow-auto h-[calc(100vh_-_56px_-_38px)]">
-      {sessions.map((s) => {
-        const { key, id, mid = 0 } = s;
-        return <Session key={key} id={id} mid={mid} />;
-      })}
-    </ul>
+    <>
+      <ul className="flex flex-col gap-0.5 p-2 overflow-auto h-[calc(100vh_-_56px_-_38px)]">
+        {sessions.map((s) => {
+          const { key, id, mid = 0 } = s;
+          return <Session key={key} id={id} mid={mid} />;
+        })}
+      </ul>
+      <LoginTip placement="session" />
+    </>
   );
 };
 export default SessionList;

@@ -58,7 +58,7 @@ const WebhookModal = ({ uid, webhook, closeModal }: Props) => {
                 }
             >
                 <form ref={formRef} className="w-full flex flex-col gap-2" action="/">
-                    <label htmlFor={"webhook"} className="text-sm text-[#6b7280]">Webhook URL</label>
+                    <label htmlFor={"webhook"} className="text-sm text-gray-500">Webhook URL</label>
                     <Input name={"webhook"} value={url} onChange={handleUrlChange} type="url"></Input>
                 </form>
             </StyledModal>

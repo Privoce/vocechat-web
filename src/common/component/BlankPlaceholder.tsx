@@ -38,10 +38,10 @@ const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
   const chatHandler = type == "chat" ? toggleChannelModalVisible : toggleUserListVisible;
   return (
     <>
-      <div className="flex flex-col gap-8 -mt-[50px] dark:bg-[#384250]">
+      <div className="flex flex-col gap-8 -mt-[50px] dark:bg-gray-700">
         <div className="flex flex-col gap-2 items-center">
           <h2 className="text-center text-3xl text-[#344054] dark:text-white font-bold">{t("title", { name: server.name })}</h2>
-          <p className="text-sm text-[#98a2b3] max-w-[424px] text-center">
+          <p className="text-sm text-gray-400 max-w-[424px] text-center">
             {t("desc")}
           </p>
         </div>

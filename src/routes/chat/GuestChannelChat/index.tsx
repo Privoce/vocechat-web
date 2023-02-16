@@ -7,6 +7,7 @@ import Layout from "../Layout";
 import { renderMessageFragment } from "../utils";
 import LoadMore from "../LoadMore";
 import { useAppSelector } from "../../../app/store";
+import GoBackNav from "../GoBackNav";
 
 type Props = {
   cid?: number;
@@ -41,6 +42,7 @@ export default function GuestChannelChat({ cid = 0 }: Props) {
         context="channel"
         header={
           <header className="h-14 px-5 flex items-center justify-center md:justify-between shadow-[inset_0_-1px_0_rgb(0_0_0_/_10%)]">
+            <GoBackNav />
             <div className="flex items-center gap-1">
               <ChannelIcon personal={!is_public} />
               <span className="text-gray-800 dark:text-white">{name}</span>
