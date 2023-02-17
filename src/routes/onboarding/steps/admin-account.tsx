@@ -74,7 +74,7 @@ const AdminAccount: FC<Props> = ({ serverName }) => {
   }, [isUpdatedServer]);
 
   return (
-    <div className="h-full flex-center flex-col text-center w-[360px] m-auto">
+    <div className="h-full flex-center flex-col text-center w-[360px] m-auto dark:text-gray-100">
       <span className="text-2xl mb-2 font-bold">{t("admin_title")}</span>
       <span className="text-sm mb-6">{t("admin_desc")}</span>
       <form ref={formRef} action="/" className="flex flex-col gap-2 w-full">

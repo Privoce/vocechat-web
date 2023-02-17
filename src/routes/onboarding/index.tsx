@@ -19,7 +19,7 @@ const Navigator = () => {
   console.log("active step", activeStep);
 
   return (
-    <div className="absolute top-5 w-full flex justify-center gap-2 z-10">
+    <div className="hidden md:flex absolute top-5 w-full justify-center gap-2 z-10">
       {steps.map((stepToRender, indexToRender) => {
         const clickable = canJumpTo.includes(stepToRender.name);
         const itemClass = clsx(`text-sm text-gray-600`, clickable && "cursor-pointer hover:text-gray-500", indexToRender === activeStep && "font-bold text-black", indexToRender >= activeStep && "text-gray-400");
@@ -52,7 +52,7 @@ export default function OnboardingPage() {
       <Helmet>
         <title>{t("onboarding.title")}</title>
       </Helmet>
-      <div className="h-screen overflow-y-auto">
+      <div className="h-screen bg-gray-200 dark:bg-gray-900 overflow-y-auto">
         <Wizard header={<Navigator />}>
           <WelcomePage />
           <ServerName serverName={serverName} setServerName={setServerName} />

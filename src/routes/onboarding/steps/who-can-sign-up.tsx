@@ -41,7 +41,7 @@ export default function SignUpSetting() {
 
 
   return (
-    <div className="h-full flex-center flex-col text-center w-[512px] m-auto">
+    <div className="h-full px-2 flex-center flex-col text-center w-full md:w-[512px] m-auto dark:text-gray-100">
       <span className="font-bold text-2xl mb-2">{t("onboarding.invite_title")}</span>
       <span className="text-sm mb-6">{t("onboarding.invite_desc")}</span>
       {value && <StyledRadio

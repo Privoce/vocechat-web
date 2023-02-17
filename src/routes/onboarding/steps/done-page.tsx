@@ -9,7 +9,7 @@ export default function DonePage({ serverName }: { serverName: string }) {
   const navigate = useNavigate();
 
   return (
-    <div className="h-full flex-center flex-col text-center w-[588px] m-auto">
+    <div className="h-full px-2 flex-center flex-col text-center md:w-[588px] m-auto dark:text-gray-100">
       <span className="text-2xl font-bold mb-2">{t("done_welcome", { serverName })}</span>
       <span className="text-sm mb-12">{t("done_title")}</span>
       <span className="text-xl mb-12">
