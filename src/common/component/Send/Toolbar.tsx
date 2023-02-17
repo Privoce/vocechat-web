@@ -45,8 +45,8 @@ const Toolbar: FC<Props> = ({
 
   const isMarkdown = mode == 'markdown';
   return (
-    <div className={`flex flex-col md:flex-row items-center justify-end gap-2.5`}>
-      <div className="hidden md:flex cursor-pointer gap-3.5">
+    <div className={`hidden md:flex flex-col md:flex-row items-center justify-end gap-2.5`}>
+      <div className="flex cursor-pointer gap-3.5">
         <Tooltip placement="top" tip="Markdown">
           <MarkdownIcon className={isMarkdown ? "fill-[#22ccee]" : "dark:fill-gray-300"} onClick={toggleMode} />
         </Tooltip>

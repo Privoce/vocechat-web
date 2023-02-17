@@ -17,11 +17,14 @@ import {
   MentionCombobox
 } from "@udecode/plate";
 import { createComboboxPlugin } from "@udecode/plate-combobox";
+import { useTranslation } from "react-i18next";
 import { ReactEditor } from "slate-react";
 import useUploadFile from "../../hook/useUploadFile";
 import { CONFIG } from "./config";
 import User from "../User";
 import { useAppSelector } from "../../../app/store";
+import Button from "../styled/Button";
+import { isMobile } from "../../utils";
 export const TEXT_EDITOR_PREFIX = "_text_editor";
 
 let components = createPlateUI({
@@ -46,6 +49,7 @@ const Plugins: FC<Props> = ({
   sendMessages,
   members = []
 }) => {
+  const { t } = useTranslation();
   // const { getMenuProps, getItemProps } = useComboboxControls();
   const [context, to] = id.split("_") as [ctx, number];
   const { addStageFile } = useUploadFile({ context, id: to });
@@ -55,7 +59,7 @@ const Plugins: FC<Props> = ({
   const editableRef = useRef(null);
   const initialProps = {
     ...CONFIG.editableProps,
-    className: "flex flex-col gap-2",
+    className: "flex flex-col md:gap-2",
     placeholder
   };
   const plateEditor = getPlateEditorRef(`${TEXT_EDITOR_PREFIX}_${id}`);
@@ -92,19 +96,23 @@ const Plugins: FC<Props> = ({
       }
       evt.preventDefault();
       // return true;
-      sendMessages(msgs);
-      // 清空
-      Transforms.delete(plateEditor, {
-        at: {
-          anchor: Editor.start(plateEditor, []),
-          focus: Editor.end(plateEditor, [])
-        }
-      });
+      handleSend();
     },
     {
-      target: editableRef
+      when: !isMobile(),
+      target: editableRef,
     }
   );
+  const handleSend = () => {
+    sendMessages(msgs);
+    // 清空
+    Transforms.delete(plateEditor, {
+      at: {
+        anchor: Editor.start(plateEditor, []),
+        focus: Editor.end(plateEditor, [])
+      }
+    });
+  };
   const pluginArr = [
     createParagraphPlugin(),
     createNodeIdPlugin(),
@@ -188,7 +196,7 @@ const Plugins: FC<Props> = ({
 
 
   return (
-    <div className="input w-full max-h-[50vh] overflow-auto text-sm text-gray-600 dark:text-white" ref={editableRef}>
+    <div className="input w-full pr-14 md:pr-0 max-h-[50vh] overflow-auto text-sm text-gray-600 dark:text-white" ref={editableRef}>
       <Plate
         id={`${TEXT_EDITOR_PREFIX}_${id}`}
         onChange={handleChange}
@@ -221,6 +229,7 @@ const Plugins: FC<Props> = ({
           />
         ) : null}
       </Plate>
+      <Button onClick={handleSend} className="mini md:hidden absolute right-1.5 bottom-1.5">{t("action.send")}</Button>
     </div>
   );
 };
