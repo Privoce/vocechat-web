@@ -7,7 +7,7 @@ import Layout from "../Layout";
 import { renderMessageFragment } from "../utils";
 import LoadMore from "../LoadMore";
 import { useAppSelector } from "../../../app/store";
-import GoBackNav from "../GoBackNav";
+import GoBackNav from "../../../common/component/GoBackNav";
 
 type Props = {
   cid?: number;

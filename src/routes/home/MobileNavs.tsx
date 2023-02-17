@@ -5,6 +5,7 @@ import { useAppSelector } from '../../app/store';
 
 import ChatIcon from "../../assets/icons/chat.svg";
 import UserIcon from "../../assets/icons/user.svg";
+import SettingIcon from "../../assets/icons/setting.svg";
 
 // type Props = {}
 
@@ -13,6 +14,7 @@ const MobileNavs = () => {
     const { pathname } = useLocation();
     const isChatHomePath = useMatch(`/chat`);
     const isDMChat = useMatch(`/chat/dm/:user_id`);
+    // const isSettingPage = useMatch(`/setting`);
     const isChannelChat = useMatch(`/chat/channel/:channel_id`);
     const {
         ui: {
@@ -44,8 +46,8 @@ const MobileNavs = () => {
                     {({ isActive }) => {
                         const active = isActive || isChatPage;
                         return <div className='flex flex-col gap-1 items-center'>
-                            <ChatIcon className={!active ? "fill-gray-600" : "fill-gray-400"} />
-                            <span className={clsx('text-xs', !active ? "text-gray-500" : "text-gray-400")}>Chats</span>
+                            <ChatIcon className={!active ? "fill-gray-500" : "fill-primary-500"} />
+                            <span className={clsx('text-xs', !active ? "text-gray-500" : "text-primary-500")}>Chats</span>
                         </div>;
                     }}
                 </NavLink>
@@ -54,8 +56,18 @@ const MobileNavs = () => {
                 <NavLink className={() => `${linkClass}`} to={userNav}>
                     {({ isActive: active }) => {
                         return <div className='flex flex-col gap-1 items-center'>
-                            <UserIcon className={!active ? "fill-gray-600" : "fill-gray-400"} />
-                            <span className={clsx('text-xs', !active ? "text-gray-500" : "text-gray-400")}>Contacts</span>
+                            <UserIcon className={!active ? "fill-gray-500" : "fill-primary-500"} />
+                            <span className={clsx('text-xs', !active ? "text-gray-500" : "text-primary-500")}>Contacts</span>
+                        </div>;
+                    }}
+                </NavLink>
+            </li>
+            <li>
+                <NavLink className={() => `${linkClass}`} to={'/setting'}>
+                    {({ isActive: active }) => {
+                        return <div className='flex flex-col gap-1 items-center'>
+                            <SettingIcon className={clsx("w-6 h-6", !active ? "fill-gray-500" : "fill-primary-500")} />
+                            <span className={clsx('text-xs', !active ? "text-gray-500" : "text-primary-500")}>Settings</span>
                         </div>;
                     }}
                 </NavLink>

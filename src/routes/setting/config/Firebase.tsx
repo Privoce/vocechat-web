@@ -77,7 +77,7 @@ export default function ConfigFirebase() {
     client_email,
   } = values as FirebaseConfig;
   return (
-    <div className="setting-container">
+    <div className="setting-container max-md:w-full max-md:h-auto">
       <StyledRadio
         options={Object.values(Options)}
         values={Object.keys(Options)}

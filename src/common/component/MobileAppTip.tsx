@@ -19,7 +19,7 @@ const Container = (props: ContainerProps) => {
     localStorage.removeItem(KEY_MOBILE_APP_TIP);
     toast.dismiss(id);
   };
-  return <div className="flex items-center gap-2 whitespace-nowrap">
+  return <div className="flex flex-col md:flex-row items-center gap-2 whitespace-nowrap">
     <div>
       <Trans i18nKey={"mobile_app"}>
         <strong className="font-bold" />

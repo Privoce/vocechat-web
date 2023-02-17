@@ -11,7 +11,7 @@ import LoadMore from "../LoadMore";
 import { renderMessageFragment } from "../utils";
 import useMessageFeed from "../../../common/hook/useMessageFeed";
 import { useAppSelector } from "../../../app/store";
-import GoBackNav from "../GoBackNav";
+import GoBackNav from "../../../common/component/GoBackNav";
 type Props = {
   uid: number;
   dropFiles?: File[];

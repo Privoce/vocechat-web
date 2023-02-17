@@ -16,7 +16,7 @@ const Index: FC<Props> = ({ id, handleUpdate }) => {
   }, []);
 
   return (
-    <div className="flex items-center gap-2 whitespace-nowrap">
+    <div className="flex flex-col md:flex-row items-center gap-2 whitespace-nowrap">
       <div>
         <Trans i18nKey={"new_version"}>
           <strong className="font-bold" />

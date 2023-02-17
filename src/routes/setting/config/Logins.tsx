@@ -70,7 +70,7 @@ export default function Logins() {
   const valuesChanged = clientIdChanged || changed || githubChanged;
 
   return (
-    <div className="setting-container">
+    <div className="setting-container max-md:w-full max-md:h-auto">
       <div className="inputs">
         <div className="input">
           <div className="row">

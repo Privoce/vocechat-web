@@ -78,7 +78,7 @@ const InviteByEmail: FC<Props> = ({ cid }) => {
         </div>
       </div>
       <div className="w-44 h-44 my-2">
-        {!generating && <QRCode link={link} />}
+        {!generating && <QRCode size={1200} link={link} />}
       </div>
       <div className="text-xs text-gray-600 dark:text-gray-200">
         {t("invite_link_expire")}

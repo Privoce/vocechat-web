@@ -131,7 +131,7 @@ export default function LoginPage() {
           <h2 className="font-semibold text-2xl text-gray-800 dark:text-white md:mb-2">{t("login.title")}</h2>
           <span className="text-gray-400 dark:text-gray-100">{t("login.desc")}</span>
         </div>
-        <form className="flex flex-col gap-5 w-[320px] md:min-w-[360px] " onSubmit={handleLogin}>
+        <form className="flex flex-col gap-5 w-80 md:min-w-[360px] " onSubmit={handleLogin}>
           <Input
             className="large"
             name="email"

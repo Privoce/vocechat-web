@@ -61,7 +61,7 @@ const ManageMembers: FC<Props> = ({ cid }) => {
         </p>
       </div>
 
-      <ul className="flex flex-col gap-1 w-[512px] mb-44">
+      <ul className="flex flex-col gap-1 w-full md:w-[512px] mb-44">
         {uids.map((uid) => {
           const currUser = users.byId[uid];
           if (!currUser) return null;
@@ -80,7 +80,7 @@ const ManageMembers: FC<Props> = ({ cid }) => {
                   <span className="font-bold text-sm text-gray-600 dark:text-white flex items-center gap-1">
                     {name} {owner && <IconOwner />}
                   </span>
-                  <span className="text-xs text-gray-500 dark:text-slate-50">{email}</span>
+                  <span className="hidden md:block text-xs text-gray-500 dark:text-slate-50">{email}</span>
                 </div>
               </div>
               <div className="flex items-center gap-7">

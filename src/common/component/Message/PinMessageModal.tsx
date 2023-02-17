@@ -34,7 +34,7 @@ const PinMessageModal: FC<Props> = ({ closeModal, mid = 0, gid = 0 }) => {
   return (
     <Modal>
       <StyledModal
-        className="min-w-[406px]"
+        className="min-w-[320px] md:min-w-[406px]"
         buttons={
           <>
             <Button onClick={closeModal} className="cancel">

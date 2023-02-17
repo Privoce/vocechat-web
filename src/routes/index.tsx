@@ -130,8 +130,9 @@ const PageRoutes = () => {
                 </LazyIt>
               }
             />
-            <Route path="channel/:cid" element={<LazyIt><SettingChannelPage /></LazyIt>} />
-            <Route path="dm/:uid" element={<LazyIt><SettingDMPage /></LazyIt>} />
+            <Route path=":nav?" element={<LazyIt><SettingPage /></LazyIt>} />
+            <Route path="channel/:cid/:nav?" element={<LazyIt><SettingChannelPage /></LazyIt>} />
+            <Route path="dm/:uid/:nav?" element={<LazyIt><SettingDMPage /></LazyIt>} />
           </Route>
           <Route
             index

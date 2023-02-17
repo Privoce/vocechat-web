@@ -34,7 +34,7 @@ export default function Widget() {
       <div className="text-gray-500 dark:text-white text-sm mt-5 mb-2">
         {t('config')}:
       </div>
-      <div className="w-[700px] border border-solid border-gray-300 dark:border-gray-400 rounded overflow-hidden">
+      <div className="w-full md:w-[700px] border border-solid border-gray-300 dark:border-gray-400 rounded overflow-auto md:overflow-hidden">
         <table className="min-w-full table-auto">
           <thead className="border-b bg-gray-50 dark:bg-gray-500">
             <tr>

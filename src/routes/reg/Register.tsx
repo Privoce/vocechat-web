@@ -103,12 +103,12 @@ export default function Reg() {
   return (
     <>
       <div className="flex-center flex-col pb-6">
-        <img src={`${BASE_URL}/resource/organization/logo`} alt="logo" className="w-14 h-14 mb-7 rounded-full" />
-        <h2 className="font-semibold text-2xl text-gray-800 dark:text-white mb-2">{t("reg.title")}</h2>
-        <span className="text-gray-400 dark:text-gray-100">{t("reg.desc")}</span>
+        <img src={`${BASE_URL}/resource/organization/logo`} alt="logo" className="w-14 h-14 md:mb-7 rounded-full" />
+        <h2 className="font-semibold text-2xl text-gray-800 dark:text-white md:mb-2">{t("reg.title")}</h2>
+        <span className="hidden md:block text-gray-400 dark:text-gray-100">{t("reg.desc")}</span>
       </div>
 
-      <form className="flex flex-col gap-5 min-w-[360px]" onSubmit={handleReg} autoSave={"false"} autoComplete={"true"}>
+      <form className="flex flex-col gap-5 w-80 md:min-w-[360px]" onSubmit={handleReg} autoSave={"false"} autoComplete={"true"}>
         <Input
           className="large"
           name="email"

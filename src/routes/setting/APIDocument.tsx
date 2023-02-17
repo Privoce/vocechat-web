@@ -35,7 +35,7 @@ const APIDocument = () => {
                             👉 {t("api_doc.step_1")}
                         </h3>
                         {/* <div className="flex flex-col gap-1"> */}
-                        <img className='border border-solid rounded-md border-gray-300 shadow-lg w-[85%]' src="https://s.voce.chat/web_client/assets/img/api.doc.step1.png" alt="step 1" />
+                        <img className='border border-solid rounded-md border-gray-300 shadow-lg md:w-[85%]' src="https://s.voce.chat/web_client/assets/img/api.doc.step1.png" alt="step 1" />
                         {/* </div> */}
                     </div>
                     <div className="flex flex-col gap-2">
@@ -50,13 +50,13 @@ const APIDocument = () => {
                                 <IconCopy onClick={handleCopy} className="absolute right-2 bottom-2 cursor-pointer" />
                             </p>
                         </div>
-                        <img className='border border-solid rounded-md border-gray-300 shadow-lg w-[85%]' src="https://s.voce.chat/web_client/assets/img/api.doc.step2.jpg" alt="step 2" />
+                        <img className='border border-solid rounded-md border-gray-300 shadow-lg md:w-[85%]' src="https://s.voce.chat/web_client/assets/img/api.doc.step2.jpg" alt="step 2" />
                     </div>
                     <div className="flex flex-col gap-2">
                         <h3 className='text-gray-700 dark:text-white text-lg flex items-center gap-2'>
                             👉  {t("api_doc.last")}
                         </h3>
-                        <img className='border border-solid rounded-md border-gray-300 shadow-lg w-[85%]' src="https://s.voce.chat/web_client/assets/img/api.doc.step3.png" alt="step 3" />
+                        <img className='border border-solid rounded-md border-gray-300 shadow-lg md:w-[85%]' src="https://s.voce.chat/web_client/assets/img/api.doc.step3.png" alt="step 3" />
                     </div>
                 </div>
 

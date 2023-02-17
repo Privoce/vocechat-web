@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import StyledSettingContainer from "../../common/component/StyledSettingContainer";
 import useNavs from "./navs";
 import LogoutConfirmModal from "./LogoutConfirmModal";
@@ -12,7 +12,7 @@ export default function Setting() {
   const [searchParams] = useSearchParams();
   const navs = useNavs();
   const flattenNaves = navs.map(({ items }) => items).flat();
-  const navKey = searchParams.get("nav");
+  const { nav: navKey } = useParams();;
   const [logoutConfirm, setLogoutConfirm] = useState(false);
   const navigateTo = useNavigate();
   pageFrom = pageFrom ? pageFrom : searchParams.get("f") || "/";
@@ -25,7 +25,7 @@ export default function Setting() {
     setLogoutConfirm((prev) => !prev);
   };
 
-  const currNav = flattenNaves.find((n) => n.name == navKey) || flattenNaves[0];
+  const currNav = flattenNaves.find((n) => n.name == navKey);
 
   return (
     <>
@@ -36,7 +36,7 @@ export default function Setting() {
         navs={navs}
         dangers={[{ title: t("action.logout"), handler: toggleLogoutConfirm }]}
       >
-        {currNav.component}
+        {navKey ? currNav?.component : null}
       </StyledSettingContainer>
       {logoutConfirm && <LogoutConfirmModal closeModal={toggleLogoutConfirm} />}
     </>

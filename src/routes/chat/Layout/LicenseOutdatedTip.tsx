@@ -8,7 +8,7 @@ const LicenseUpgradeTip = () => {
   const { t } = useTranslation("chat");
   const navigateTo = useNavigate();
   const handleRedirect = () => {
-    navigateTo("/setting?nav=license");
+    navigateTo("/setting/license");
   };
 
   return (

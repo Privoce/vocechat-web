@@ -73,7 +73,7 @@ export default function BotConfig() {
           </h2>
           <p className='text-gray-500 dark:text-gray-400 text-xs'>{t("manage_desc")}</p>
         </div>
-        <div className="w-fit  overflow-hidden">
+        <div className="w-full md:w-fit overflow-auto md:overflow-hidden">
           <table className="min-w-full table-auto">
             <thead className="border-b dark:border-b-gray-500 bg-gray-50 dark:bg-gray-600">
               <tr>

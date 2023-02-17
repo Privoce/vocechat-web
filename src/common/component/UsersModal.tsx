@@ -24,7 +24,7 @@ const UsersModal: FC<Props> = ({ closeModal }) => {
 
   return (
     <Modal>
-      <div className="flex flex-col w-[440px] max-h-[402px] bg-white drop-shadow rounded-lg" ref={wrapperRef}>
+      <div className="flex flex-col w-80 md:w-[440px] max-h-[402px] bg-white drop-shadow rounded-lg" ref={wrapperRef}>
         <div className="shadow-md p-2">
           <input className=" p-2 text-sm" value={input} onChange={handleSearch} placeholder={t("search_user_placeholder")} />
         </div>

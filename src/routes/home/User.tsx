@@ -14,7 +14,7 @@ const User: FC<Props> = ({ uid }) => {
 
   return (
     <div className="px-3 py-2.5 invisible md:visible">
-      <NavLink to={`/setting?nav=my_account&f=${pathname}`}>
+      <NavLink to={`/setting/my_account?f=${pathname}`}>
         <div className="w-8 h-8">
           <Avatar className=" object-cover w-full h-full rounded-full" width={32} height={32} src={user.avatar} name={user.name} />
         </div>

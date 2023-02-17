@@ -132,7 +132,7 @@ const ChannelModal: FC<Props> = ({ personal = false, closeModal }) => {
             )}
           </div>
         )}
-        <div className={clsx(`min-w-[400px] flex flex-col items-center p-8 box-border`, !is_public && "w-[344px] justify-evenly")}>
+        <div className={clsx(`w-80 md:min-w-[400px] flex flex-col items-center p-8 box-border`, !is_public && "w-[344px] justify-evenly")}>
           <h3 className="font-semibold text-xl text-gray-600 mb-4 dark:text-white">{t("create_channel")}</h3>
           <p className="text-gray-400 mb-12 text-sm font-normal">
             {!is_public

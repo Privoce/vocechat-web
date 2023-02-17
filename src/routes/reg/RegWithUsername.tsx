@@ -105,7 +105,7 @@ const RegWithUsername: FC = () => {
           visible to others in spaces you joined.
         </span>
       </div>
-      <form className="flex flex-col gap-5 min-w-[360px]" onSubmit={handleAuth}>
+      <form className="flex flex-col gap-5 w-80 md:min-w-[360px]" onSubmit={handleAuth}>
         <Input
           className="large"
           name="username"

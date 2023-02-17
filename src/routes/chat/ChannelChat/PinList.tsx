@@ -18,7 +18,7 @@ const PinList: FC<Props> = ({ id }: Props) => {
   };
   const noPins = pins.length == 0;
   return (
-    <div className="p-4 drop-shadow-md overflow-y-scroll max-h-[90vh] min-w-[486px] rounded-xl bg-gray-50 dark:bg-gray-800">
+    <div className="p-4 drop-shadow-md overflow-y-scroll min-w-[320px] md:min-w-[486px] md:max-h-[90vh] rounded-xl bg-gray-50 dark:bg-gray-800">
       <h4 className=" text-gray-600 dark:text-gray-400 mb-4 font-semibold">{t("pinned_msg")}({pins.length})</h4>
       {noPins ? (
         <div className="flex flex-col items-center gap-2 w-full p-4">

@@ -23,7 +23,7 @@ import InviteModal from "../../../common/component/InviteModal";
 import LoadMore from "../LoadMore";
 import { useAppSelector } from "../../../app/store";
 import { useTranslation } from "react-i18next";
-import GoBackNav from "../GoBackNav";
+import GoBackNav from "../../../common/component/GoBackNav";
 type Props = {
   cid?: number;
   dropFiles?: File[];
@@ -170,7 +170,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
           {hasMore ? (
             <LoadMore pullUp={pullUp} pulling={pulling} />
           ) : (
-            <div className="pt-14 flex flex-col items-start gap-2">
+            <div className="pt-14 px-1 md:px-0 flex flex-col items-start gap-2">
               <h2 className="font-bold text-4xl dark:text-white">{t("welcome_channel", { name })}</h2>
               <p className="text-gray-600 dark:text-gray-300">{t("welcome_desc", { name })} </p>
               {loginUser?.is_admin && (

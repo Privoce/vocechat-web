@@ -53,7 +53,7 @@ export default function ConfigSMTP() {
   if (!values) return null;
   const { host, port, from, username, password, enabled = false } = values as SMTPConfig;
   return (
-    <div className="setting-container">
+    <div className="setting-container max-md:w-full">
       <div className="inputs">
         <div className="input row">
           <Label className="dark:text-gray-200">{t("enable")}</Label>

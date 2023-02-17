@@ -9,6 +9,7 @@ import Profile from "../../common/component/Profile";
 import BlankPlaceholder from "../../common/component/BlankPlaceholder";
 import useFilteredUsers from "../../common/hook/useFilteredUsers";
 import clsx from "clsx";
+import GoBackNav from "../../common/component/GoBackNav";
 
 function UsersPage() {
   const dispatch = useDispatch();
@@ -48,6 +49,7 @@ function UsersPage() {
         !isUserDetail && "hidden md:flex"
       )}>
         {isUserDetail ? <Profile uid={+user_id} /> : <BlankPlaceholder type="user" />}
+        <GoBackNav />
       </div>
     </div>
   );
