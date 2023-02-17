@@ -235,6 +235,9 @@ html.dark ::-webkit-scrollbar-thumb {
   flex-direction: column;
   align-items: flex-start;
 }
+#MARKDOWN_CONTAINER .toastui-editor-contents iframe {
+  width: 100%;
+}
 [class^="toastui-editor-"] .toastui-editor-md-container {
   border-bottom: none;
 }

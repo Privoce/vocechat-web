@@ -109,7 +109,7 @@ const Layout: FC<Props> = ({
       <article ref={drop} className={`relative w-full rounded-r-2xl`}>
         {header}
         <main className="h-full w-full flex items-start justify-between relative" ref={messagesContainer}>
-          <div className="rounded-br-2xl w-full flex flex-col h-[calc(100vh_-_56px_-_18px)]">
+          <div className="rounded-br-2xl w-full flex flex-col h-[calc(100vh_-_64px)] md:h-[calc(100vh_-_56px_-_18px)]">
             {children}
             <div className={`px-2 py-0 md:p-4  ${selects ? "selecting" : ""}`}>
               {readonly ? (
