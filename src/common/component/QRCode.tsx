@@ -1,5 +1,5 @@
 // import React from 'react';
-import { QRCodeCanvas, QRCodeSVG } from 'qrcode.react';
+import QR from 'qrcode.react';
 import { useAppSelector } from '../../app/store';
 
 type Props = {
@@ -10,8 +10,9 @@ type Props = {
 const QRCode = ({ link, size = 512 }: Props) => {
     const logo = useAppSelector(store => store.server.logo);
     return (
-        <QRCodeSVG value={link}
-
+        <QR
+            renderAs='svg'
+            value={link}
             className="rounded border border-solid border-gray-200 dark:border-gray-500 p-1 !w-full !h-full"
             size={size}
             bgColor={"#fff"}
