@@ -12,18 +12,21 @@ interface Props {
 }
 
 const PinnedMessageView: FC<Props> = ({ data }) => {
-  const { usersData } = useAppSelector((store) => {
-    return { usersData: store.users.byId };
+  const { msgData, usersData } = useAppSelector((store) => {
+    return { msgData: store.message, usersData: store.users.byId };
   });
-  const { created_by = 0 } = data;
-  const normalized = normalizeFileMessage(data as MessagePayload) || {};
-  console.log("nnnn", normalized);
+  console.log("piiii", data);
 
-  const { created_at, content_type, content, properties, thumbnail = "" } = { ...data, ...normalized };
-  const { name, avatar } = usersData[created_by] ?? {};
+  const { mid = 0 } = data;
+  const normalized = normalizeFileMessage(data as MessagePayload) || {};
+
+  const { content_type, content, properties, thumbnail = "" } = { ...data, ...normalized };
+  const uid = msgData[mid]?.from_uid || 0;
+  const created_at = msgData[mid]?.created_at || 0;
+  const { name, avatar } = usersData[uid] ?? {};
   return (
     <div className="w-full relative flex items-start gap-3 p-2 my-2 rounded-lg">
-      <div>
+      <div className="rounded-full overflow-hidden w-10 h-10 shrink-0">
         <Avatar width={40} height={40} src={avatar} name={name} />
       </div>
       <div className="w-full flex flex-col items-start gap-1  text-sm">
@@ -36,7 +39,7 @@ const PinnedMessageView: FC<Props> = ({ data }) => {
             content_type,
             content,
             thumbnail,
-            from_uid: created_by,
+            from_uid: uid,
             properties
           })}
         </div>
