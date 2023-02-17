@@ -1,12 +1,22 @@
 import dayjs from "dayjs";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useGetServerVersionQuery } from "../../app/services/server";
+import Button from "./styled/Button";
+import { unregister } from '../../serviceWorkerRegistration';
 type Props = {};
 const Version: FC<Props> = () => {
+  const [syncing, setSyncing] = useState(false);
   const { t } = useTranslation("setting", { keyPrefix: "version" });
   const { data: serverVersion } = useGetServerVersionQuery();
   const ts = (process.env.REACT_APP_BUILD_TIME ?? 0) as number;
+  const handleSync = () => {
+    setSyncing(true);
+    unregister();
+    setTimeout(() => {
+      location.reload();
+    }, 1500);
+  };
   return (
     <ul className="flex flex-col gap-2 dark:text-white">
       <li>{t("client_version")}: {process.env.VERSION}</li>
@@ -16,6 +26,9 @@ const Version: FC<Props> = () => {
         <strong className="font-bold">
           <a className="text-primary-600 underline underline-offset-2" href="https://github.com/Privoce/vocechat-web/issues" target="_blank" rel="noopener noreferrer">vocechat-web/issues</a>
         </strong>
+      </li>
+      <li>
+        <Button disabled={syncing} onClick={handleSync}>{t("sync")}</Button>
       </li>
     </ul>
   );

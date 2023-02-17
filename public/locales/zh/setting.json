@@ -197,7 +197,8 @@
   "version": {
     "client_version": "客户端版本",
     "server_version": "服务器端版本",
-    "build_time": "构建时间戳"
+    "build_time": "构建时间戳",
+    "sync": "同步到最新版"
   },
   "api_doc": {
     "desc": "我们有详尽的API文档说明，你可以基于该文档，构建自己的客户端聊天工具。",
