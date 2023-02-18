@@ -139,7 +139,7 @@ const Send: FC<IProps> = ({
   const isMarkdownMode = mode == Modes.markdown;
   return (
     <div
-      className={clsx(`send relative bg-gray-200 rounded-lg w-full dark:bg-[#4D5761] ${mode} ${markdownFullscreen ? "fullscreen" : ""} ${replying_mid ? "reply" : ""
+      className={clsx(`send relative bg-gray-200 rounded-lg w-full dark:bg-gray-600 ${mode} ${markdownFullscreen ? "fullscreen" : ""} ${replying_mid ? "reply" : ""
         } ${context}`, isMarkdownMode && markdownFullscreen && '-mt-9')}
     >
       {replying_mid && <Replying context={context} mid={replying_mid} id={id} />}

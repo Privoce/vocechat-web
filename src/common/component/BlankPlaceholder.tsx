@@ -14,9 +14,9 @@ interface Props {
   type?: "chat" | "user";
 }
 const classes = {
-  box: "w-[220px] md:w-[200px] h-[100px] md:h-[200px] cursor-pointer bg-[#f9fafb] dark:bg-gray-800 rounded-3xl flex-center flex-col gap-4",
+  box: "w-[220px] md:w-[200px] h-[100px] md:h-[200px] cursor-pointer bg-white dark:bg-gray-800 rounded-3xl flex-center flex-col gap-4",
   boxIcon: "w-7 h-7 md:w-10 md:h-10",
-  boxTip: "px-5 text-xs md:text-sm text-[#475467] dark:text-gray-100 font-bold text-center"
+  boxTip: "px-5 text-xs md:text-sm text-slate-600 dark:text-gray-100 font-bold text-center"
 };
 const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
   const { t } = useTranslation("welcome");
@@ -40,7 +40,7 @@ const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
     <>
       <div className="flex flex-col gap-8 -mt-[50px] dark:bg-gray-700">
         <div className="flex flex-col gap-2 items-center">
-          <h2 className="text-center text-3xl text-[#344054] dark:text-white font-bold">{t("title", { name: server.name })}</h2>
+          <h2 className="text-center text-3xl text-slate-700 dark:text-white font-bold">{t("title", { name: server.name })}</h2>
           <p className="text-sm text-gray-400 max-w-[424px] text-center">
             {t("desc")}
           </p>

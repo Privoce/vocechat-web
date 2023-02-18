@@ -17,7 +17,7 @@ const Text = ({ content, host, sending }: Props) => {
             {content}
         </div>
         :
-        <div className={clsx("text-md text-white bg-[#1fe1f9] rounded-lg px-3 py-1.5 transition-all break-words", sending ? 'opacity-70' : "")} style={{ maxWidth: 'min(((100vw - 56px) - 20px) - 64px, 360px)', backgroundColor: color, color: fgColor }}>
+        <div className={clsx("text-md text-white bg-primary-400 rounded-lg px-3 py-1.5 transition-all break-words", sending ? 'opacity-70' : "")} style={{ maxWidth: 'min(((100vw - 56px) - 20px) - 64px, 360px)', backgroundColor: color, color: fgColor }}>
             {content}
         </div>
         ;

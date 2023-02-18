@@ -44,7 +44,7 @@ const GoogleLoginInner: FC<Props> = ({ type = "login", loaded, loadError }) => {
   }, [error]);
 
   return (
-    <Button className=" group relative w-full !bg-white dark:!bg-gray-700 !text-gray-600 dark:!text-gray-200 !h-[46px] overflow-hidden border border-solid border-[#d0d5dd]" disabled={!loaded || isLoading}>
+    <Button className=" group relative w-full !bg-white dark:!bg-gray-700 !text-gray-600 dark:!text-gray-200 !h-[46px] overflow-hidden border border-solid border-gray-300" disabled={!loaded || isLoading}>
       <div className="absolute left-0 top-0 w-full flex-center gap-3 z-[998] h-10 bg-inherit">
         <IconGoogle className="w-6 h-6" />
         {loadError

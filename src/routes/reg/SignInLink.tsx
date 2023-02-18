@@ -17,9 +17,9 @@ export default function SignInLink({ token }: { token?: string }) {
   }, [token]);
 
   return (
-    <div className="flex gap-1 mt-7 text-sm text-[#667085] dark:text-gray-100 justify-center">
+    <div className="flex gap-1 mt-7 text-sm text-slate-500 dark:text-gray-100 justify-center">
       <span>{t("reg.have_account")}</span>
-      <a onClick={handleSignIn} className="text-[#22d3ee] cursor-pointer">{t("sign_in")}</a>
+      <a onClick={handleSignIn} className="text-primary-400 cursor-pointer">{t("sign_in")}</a>
     </div>
   );
 }

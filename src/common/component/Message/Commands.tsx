@@ -127,7 +127,7 @@ const Commands: FC<Props> = ({ context = "user", contextId = 0, mid = 0, toggleE
         )}
         <li className="flex cursor-pointer p-1 hover:bg-gray-100 dark:hover:bg-gray-800" onClick={handleAddFav}>
           <Tooltip placement="top" tip={t("action.add_to_fav")}>
-            <IconBookmark className="fill-[#667085] w-6 h-6" />
+            <IconBookmark className="fill-slate-500 w-6 h-6" />
           </Tooltip>
         </li>
         <Tippy

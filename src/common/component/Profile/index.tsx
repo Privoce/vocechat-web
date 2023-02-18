@@ -55,7 +55,7 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
         src={avatar}
         name={name}
       />
-      <h2 className="text-lg select-text font-bold text-[#1c1c1e] dark:text-white">{name}</h2>
+      <h2 className="text-lg select-text font-bold text-gray-900 dark:text-white">{name}</h2>
       <span className="text-sm text-gray-400 dark:text-gray-200 select-text">{email}</span>
       {/* <p className="intro">{introduction}</p> */}
       <ul className={clsx("mt-6 flex flex-col md:flex-row items-center gap-2", isCard && "pb-0.5")}>

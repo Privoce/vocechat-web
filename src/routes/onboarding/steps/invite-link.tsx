@@ -20,7 +20,7 @@ export default function InviteLink() {
       <span className="text-sm text-gray-500 mb-2 font-semibold">{t("last_desc")}</span>
       <div className="w-full md:w-[400px] rounded shadow-md flex border border-solid border-gray-100">
         <StyledInput className="large !border-none !shadow-none" readOnly placeholder="Generating" value={link} />
-        <StyledButton onClick={copyLink} className="ghost small border_less !px-2 hover:!text-[#088ab2]">
+        <StyledButton onClick={copyLink} className="ghost small border_less !px-2 hover:!text-primary-600">
           {linkCopied ? "Copied" : ct("action.copy")}
         </StyledButton>
       </div>

@@ -41,7 +41,7 @@ const StyledSettingContainer: FC<PropsWithChildren<Props>> = ({
               <ul key={title} data-title={title} className="flex flex-col gap-0.5 mb-5 md:mb-9 before:md:pl-3 before:content-[attr(data-title)] before:font-bold before:text-xs before:text-gray-400">
                 {items.map(({ name, title }) => {
                   return (
-                    <li key={name} className={clsx(`md:text-sm font-semibold text-gray-600 whitespace-nowrap dark:text-gray-200  md:rounded hover:bg-[#e7e5e4] dark:hover:bg-slate-500/20`, name == nav?.name && "bg-[#e7e5e4] dark:bg-slate-500/20")}>
+                    <li key={name} className={clsx(`md:text-sm font-semibold text-gray-600 whitespace-nowrap dark:text-gray-200  md:rounded hover:bg-stone-200 dark:hover:bg-slate-500/20`, name == nav?.name && "bg-stone-200 dark:bg-slate-500/20")}>
                       <NavLink to={`${pathPrefix}/${name}`} className="block md:px-3 py-1">{title}</NavLink>
                     </li>
                   );

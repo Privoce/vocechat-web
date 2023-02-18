@@ -18,7 +18,7 @@ const AudioMessage = ({ url, name, size, download }: Props) => {
     };
     const _size = formatBytes(size);
     return (
-        <div className='w-96 flex flex-col gap-2 px-3 py-2 rounded-md border border-solid border-gray-300 overflow-hidden bg-[#f1f3f4]'>
+        <div className='w-96 flex flex-col gap-2 px-3 py-2 rounded-md border border-solid border-gray-300 overflow-hidden bg-stone-100'>
             <div className="flex justify-between z-30 overflow-hidden">
                 <div className="flex gap-2 ">
                     <IconAudio className="w-9 h-auto" />

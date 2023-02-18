@@ -174,8 +174,8 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
               <h2 className="font-bold text-4xl dark:text-white">{t("welcome_channel", { name })}</h2>
               <p className="text-gray-600 dark:text-gray-300">{t("welcome_desc", { name })} </p>
               {loginUser?.is_admin && (
-                <NavLink to={`/setting/channel/${cid}?f=${pathname}`} className="flex items-center gap-1 bg-clip-text text-fill-transparent bg-gradient-to-r from-[#3c8ce7] to-primary-400 ">
-                  <EditIcon className="w-4 h-4 fill-[#3c8ce7]" />
+                <NavLink to={`/setting/channel/${cid}?f=${pathname}`} className="flex items-center gap-1 bg-clip-text text-fill-transparent bg-gradient-to-r from-blue-500 to-primary-400 ">
+                  <EditIcon className="w-4 h-4 fill-blue-500" />
                   {t("edit_channel")}
                 </NavLink>
               )}

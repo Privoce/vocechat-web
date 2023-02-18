@@ -48,7 +48,7 @@ const Toolbar: FC<Props> = ({
     <div className={`hidden md:flex flex-col md:flex-row items-center justify-end gap-2.5`}>
       <div className="flex cursor-pointer gap-3.5">
         <Tooltip placement="top" tip="Markdown">
-          <MarkdownIcon className={isMarkdown ? "fill-[#22ccee]" : "dark:fill-gray-300"} onClick={toggleMode} />
+          <MarkdownIcon className={isMarkdown ? "fill-primary-400" : "dark:fill-gray-300"} onClick={toggleMode} />
         </Tooltip>
         {isMarkdown &&
           (fullscreen ? (
