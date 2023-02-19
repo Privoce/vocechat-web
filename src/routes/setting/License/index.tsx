@@ -10,10 +10,10 @@ import UpdateLicenseModal from "./UpdateLicenseModal";
 
 interface ItemProps extends HTMLAttributes<HTMLSpanElement> { label: string, data?: string | number | string[], foldable?: boolean }
 const Item = ({ label, data, foldable = false, ...rest }: ItemProps) => {
-  const infoClass = clsx("font-bold w-full cursor-pointer", foldable ? "truncate" : "whitespace-pre-wrap break-all");
+  const infoClass = clsx("font-bold w-full cursor-pointer dark:text-green-500", foldable ? "truncate" : "whitespace-pre-wrap break-all");
   if (!data) return null;
   return <div className="whitespace-nowrap  flex flex-col items-start justify-start text-lg">
-    <span className="text-sm text-gray-400 dark:text-white">{label}</span>
+    <span className="text-sm text-green-500">{label}</span>
     {Array.isArray(data) ? <ul className={infoClass}>
       {data.map((d) => {
         return <li key={d}>{d}</li>;
@@ -44,7 +44,7 @@ export default function License() {
   return (
     <>
       <div className="max-w-3xl flex flex-col justify-start items-start gap-4">
-        <div className={clsx('relative w-full p-3 rounded border-solid border flex flex-col gap-4 shadow', reachLimit ? "border-red-600 bg-red-200/50" : "border-green-600 bg-green-200/50")}>
+        <div className={clsx('relative w-full p-3 rounded border-solid border flex flex-col gap-4 shadow', reachLimit ? "border-red-600 bg-red-200/50" : "border-green-600 bg-green-100 dark:bg-green-900")}>
           <Item label={t("license.signed")} data={licenseInfo?.sign ? "Yes" : "Not Yet"} />
           <Item label={t("license.domain")} data={licenseInfo?.domains} />
           <Item label={t("license.user_limit")} data={licenseInfo?.user_limit == 99999 ? "No Limit" : licenseInfo?.user_limit} />

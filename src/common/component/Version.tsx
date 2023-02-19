@@ -15,7 +15,7 @@ const Version: FC<Props> = () => {
     unregister();
     setTimeout(() => {
       location.reload();
-    }, 1500);
+    }, 2000);
   };
   return (
     <ul className="flex flex-col gap-2 dark:text-white">

@@ -65,7 +65,7 @@ const StyledSettingContainer: FC<PropsWithChildren<Props>> = ({
         </div>
         <div className={clsx("relative bg-white w-full max-h-full overflow-auto px-4 md:px-8 py-2 md:py-8 dark:bg-gray-700", !nav ? "hidden md:block" : "!pb-4")}>
           <GoBackNav path={pathPrefix} className="!left-1 top-1.5" />
-          {nav && <h4 className="font-bold text-xl text-gray-600 mb-4 md:mb-8 pl-4 md:pl-0 dark:text-gray-100">{nav.title}</h4>}
+          {nav && <h4 className="font-bold text-xl text-center md:text-left text-gray-600 mb-4 md:mb-8 pl-4 md:pl-0 dark:text-gray-100">{nav.title}</h4>}
           {children}
         </div>
       </div>

@@ -17,7 +17,7 @@ const APIDocument = () => {
             <div className="text-gray-500 dark:text-gray-100">
                 {t("api_doc.desc")}
             </div>
-            <div className='flex flex-col gap-2'>
+            <div className='flex flex-col gap-2 w-full'>
                 <h2 className='text-gray-700 dark:text-white text-xl font-bold'>
                     {t("api_doc.access")}
                 </h2>
@@ -25,11 +25,11 @@ const APIDocument = () => {
                     {APIUrl}
                 </a>
             </div>
-            <div className='flex flex-col gap-2'>
+            <div className='flex flex-col gap-2 w-full'>
                 <h2 className='text-gray-700 dark:text-white text-xl font-bold'>
                     {t("api_doc.use_method")}
                 </h2>
-                <div className=" flex flex-col gap-6">
+                <div className="flex flex-col gap-6">
                     <div className="flex flex-col gap-2">
                         <h3 className='text-gray-700 dark:text-white text-lg'>
                             👉 {t("api_doc.step_1")}
@@ -45,7 +45,7 @@ const APIDocument = () => {
                             </span>
                         </h3>
                         <div className='flex flex-col border border-solid border-green-500 bg-green-100 rounded-md p-2 w-fit break-words text-sm relative'>
-                            <p className="max-w-4xl font-bold">
+                            <p className="break-all md:max-w-4xl font-bold">
                                 {token}
                                 <IconCopy onClick={handleCopy} className="absolute right-2 bottom-2 cursor-pointer" />
                             </p>
