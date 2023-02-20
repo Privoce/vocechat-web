@@ -41,7 +41,7 @@ export default function GuestChannelChat({ cid = 0 }: Props) {
         to={cid}
         context="channel"
         header={
-          <header className="h-14 px-5 flex items-center justify-center md:justify-between shadow-[inset_0_-1px_0_rgb(0_0_0_/_10%)]">
+          <header className="px-5 py-4 flex items-center justify-center md:justify-between shadow-[inset_0_-1px_0_rgb(0_0_0_/_10%)]">
             <GoBackNav />
             <div className="flex items-center gap-1">
               <ChannelIcon personal={!is_public} />
@@ -51,7 +51,7 @@ export default function GuestChannelChat({ cid = 0 }: Props) {
           </header>
         }
       >
-        <article className="py-4.5 px-4 w-full h-full overflow-x-hidden overflow-y-auto" id={`VOCECHAT_FEED_channel_${cid}`}>
+        <>
           {hasMore ? (
             <LoadMore pullUp={pullUp} pulling={pulling} />
           ) : (
@@ -75,7 +75,7 @@ export default function GuestChannelChat({ cid = 0 }: Props) {
               context: "channel"
             });
           })}
-        </article>
+        </>
       </Layout>
     </>
   );
