@@ -39,7 +39,7 @@ const Session: FC<IProps> = ({ id, mid }) => {
 
   return (
     <li className="session">
-      <NavLink className={({ isActive: linkActive }) => clsx(`nav flex gap-2 rounded-lg p-2 w-full hover:bg-gray-500/20`, linkActive && "bg-gray-500/20")} to={`/chat/channel/${id}`}>
+      <NavLink className={({ isActive: linkActive }) => clsx(`nav flex gap-2 rounded-lg p-2 w-full md:hover:bg-gray-500/20`, linkActive && "bg-gray-500/20")} to={`/chat/channel/${id}`}>
         <div className="flex bg-slate-50 rounded-full">
           <Avatar width={40} height={40} className="icon" type="channel" name={name} src={icon} />
         </div>

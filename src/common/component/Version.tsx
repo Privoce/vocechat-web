@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Ring } from "@uiball/loaders";
 import { useGetServerVersionQuery } from "../../app/services/server";
 import Button from "./styled/Button";
 import { unregister } from '../../serviceWorkerRegistration';
@@ -28,7 +29,7 @@ const Version: FC<Props> = () => {
         </strong>
       </li>
       <li>
-        <Button disabled={syncing} onClick={handleSync}>{t("sync")}</Button>
+        <Button disabled={syncing} onClick={handleSync}> {syncing ? <Ring size={18} color="#fff" /> : t("sync")}</Button>
       </li>
     </ul>
   );

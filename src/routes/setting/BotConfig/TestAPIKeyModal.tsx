@@ -62,7 +62,7 @@ const TestAPIKeyModal = ({ closeModal }: Props) => {
             >
                 {key ? (data ? <ul className="divide-y-2">
                     {data.map(({ gid, name, is_public }) => {
-                        return <li key={gid} className={clsx("py-1 px-2 text-gray-500 cursor-pointer hover:bg-slate-50", gid == currCid ? 'bg-slate-100' : "")} onClick={handleSetChannel.bind(null, gid)}>
+                        return <li key={gid} className={clsx("py-1 px-2 text-gray-500 cursor-pointer md:hover:bg-slate-50", gid == currCid ? 'bg-slate-100' : "")} onClick={handleSetChannel.bind(null, gid)}>
                             # {name} {!is_public ? "🔒" : ""}
                         </li>;
                     })}
@@ -73,7 +73,7 @@ const TestAPIKeyModal = ({ closeModal }: Props) => {
                     <Textarea ref={msgInputRef} placeholder='Input Something...' />
                     <ul className='flex gap-1'>
                         {Object.entries(MessageTypes).map(([key, value]) => {
-                            return <li onClick={handleSetMsgType.bind(null, key)} className={clsx("py-1 px-2 text-gray-500 cursor-pointer hover:bg-slate-50", msgType == key ? 'bg-slate-100' : "")} key={key}>{value}</li>;
+                            return <li onClick={handleSetMsgType.bind(null, key)} className={clsx("py-1 px-2 text-gray-500 cursor-pointer md:hover:bg-slate-50", msgType == key ? 'bg-slate-100' : "")} key={key}>{value}</li>;
                         })}
                     </ul>
                     <Button className='mini' onClick={handleSend} >Send</Button>

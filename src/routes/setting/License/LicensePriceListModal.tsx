@@ -133,7 +133,7 @@ const LicensePriceListModal: FC<Props> = ({ closeModal }) => {
                 </div>
               }
             >
-              <button onClick={togglePopUpVisible} className="text-sm text-white bg-primary-400 break-keep shadow rounded-lg px-3.5 py-2.5 hover:bg-primary-500 active:bg-primary-500 disabled:bg-gray-300"> {t("license.renew")}</button>
+              <button onClick={togglePopUpVisible} className="text-sm text-white bg-primary-400 break-keep shadow rounded-lg px-3.5 py-2.5 md:hover:bg-primary-500 active:bg-primary-500 disabled:bg-gray-300"> {t("license.renew")}</button>
               {/* <Button >
                 {t("license.renew")}
               </Button> */}

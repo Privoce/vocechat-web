@@ -22,7 +22,7 @@ const Navigator = () => {
     <div className="hidden md:flex absolute top-5 w-full justify-center gap-2 z-10">
       {steps.map((stepToRender, indexToRender) => {
         const clickable = canJumpTo.includes(stepToRender.name);
-        const itemClass = clsx(`text-sm text-gray-600`, clickable && "cursor-pointer hover:text-gray-500", indexToRender === activeStep && "font-bold text-black", indexToRender >= activeStep && "text-gray-400");
+        const itemClass = clsx(`text-sm text-gray-600`, clickable && "cursor-pointer md:hover:text-gray-500", indexToRender === activeStep && "font-bold text-black", indexToRender >= activeStep && "text-gray-400");
         const nodeCls = `${itemClass}`;
         return (
           <React.Fragment key={indexToRender}>

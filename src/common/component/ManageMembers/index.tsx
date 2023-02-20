@@ -73,7 +73,7 @@ const ManageMembers: FC<Props> = ({ cid }) => {
           const canRemoveFromChannel =
             channel && channel.owner == loginUser?.uid && loginUser?.uid != uid;
           return (
-            <li key={uid} className="w-full flex items-center justify-between px-3 py-2 rounded-md hover:bg-slate-50 dark:hover:bg-gray-800">
+            <li key={uid} className="w-full flex items-center justify-between px-3 py-2 rounded-md md:hover:bg-slate-50 md:dark:hover:bg-gray-800">
               <div className="flex gap-4">
                 <User compact uid={uid} interactive={false} />
                 <div className="flex flex-col">

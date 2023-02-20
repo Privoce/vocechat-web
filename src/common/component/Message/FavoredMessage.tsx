@@ -22,7 +22,7 @@ const FavoredMessage: FC<Props> = ({ id = "" }) => {
           {messages.map((msg, idx) => {
             const { user = {}, download, content, content_type, properties, thumbnail } = msg;
             return (
-              <div className="w-full relative flex items-start gap-3 px-2 py-1 my-2 rounded-lg dark:hover:bg-gray-800" key={idx}>
+              <div className="w-full relative flex items-start gap-3 px-2 py-1 my-2 rounded-lg md:dark:hover:bg-gray-800" key={idx}>
                 {user && (
                   <div className="shrink-0 w-10 h-10 flex">
                     <Avatar width={40} height={40} className="rounded-full object-cover" src={user.avatar} name={user.name} />

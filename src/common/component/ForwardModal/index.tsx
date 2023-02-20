@@ -95,7 +95,7 @@ const ForwardModal: FC<IProps> = ({ mids, closeModal }) => {
                     key={gid}
                     data-type="channel"
                     data-id={gid}
-                    className="cursor-pointer flex items-center px-4 rounded hover:bg-gray-600/10"
+                    className="cursor-pointer flex items-center px-4 rounded md:hover:bg-gray-600/10"
                     onClick={toggleCheck}
                   >
                     <StyledCheckbox readOnly checked={checked} name="cb" id="cb" />
@@ -112,7 +112,7 @@ const ForwardModal: FC<IProps> = ({ mids, closeModal }) => {
                     key={uid}
                     data-id={uid}
                     data-type="user"
-                    className="cursor-pointer flex items-center px-4 rounded hover:bg-gray-600/10"
+                    className="cursor-pointer flex items-center px-4 rounded md:hover:bg-gray-600/10"
                     onClick={toggleCheck}
                   >
                     <StyledCheckbox readOnly checked={checked} name="cb" id="cb" />

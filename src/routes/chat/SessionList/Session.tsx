@@ -109,7 +109,7 @@ const Session: FC<IProps> = ({
       >
         <NavLink
           ref={drop}
-          className={({ isActive: linkActive }) => clsx(`nav flex gap-2 rounded-lg p-2 w-full hover:bg-gray-500/20`, isActive && "shadow-[inset_0_0_0_2px_#52edff]", linkActive && "bg-gray-500/20")}
+          className={({ isActive: linkActive }) => clsx(`nav flex gap-2 rounded-lg p-2 w-full md:hover:bg-gray-500/20`, isActive && "shadow-[inset_0_0_0_2px_#52edff]", linkActive && "bg-gray-500/20")}
           to={type == "user" ? `/chat/dm/${id}` : `/chat/channel/${id}`}
           onContextMenu={handleContextMenuEvent}
         >
@@ -142,7 +142,7 @@ const Session: FC<IProps> = ({
             <div className="flex items-center justify-between">
               <span className={clsx("text-xs text-gray-500 dark:text-gray-400  truncate", unreads > 0 ? `w-36` : ``)}>{renderPreviewMessage(previewMsg)}</span>
               {unreads > 0 && (
-                <strong className={clsx(`text-white h-5 min-w-[20px] bg-primary-400 font-bold text-[10px] rounded-[10px] flex-center`, unreads > 99 && 'w-1.5 h-1.5 p-0 min-w-[unset]', muted && "bg-gray-500")}>
+                <strong className={clsx(`text-white h-5 min-w-[20px] bg-primary-400 font-bold text-[10px] rounded-[10px] flex-center`, unreads > 99 && 'w-1.5 !h-1.5 p-0 min-w-[unset]', muted && "bg-gray-500")}>
                   {unreads > 99 ? null : unreads}
                 </strong>
               )}

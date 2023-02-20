@@ -36,7 +36,7 @@ function UsersPage() {
           <nav className="flex flex-col md:gap-1">
             {users.map(({ uid }) => {
               return (
-                <NavLink key={uid} className={({ isActive }) => `rounded-md hover:bg-gray-500/10 ${isActive ? "bg-gray-500/10" : ""}`} to={`/users/${uid}`}>
+                <NavLink key={uid} className={({ isActive }) => `rounded-md md:hover:bg-gray-500/10 ${isActive ? "bg-gray-500/10" : ""}`} to={`/users/${uid}`}>
                   <User uid={uid} enableContextMenu={true} />
                 </NavLink>
               );

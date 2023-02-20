@@ -65,7 +65,7 @@ const Reaction: FC<Props> = ({ mid, reactions = null, readOnly = false }) => {
         return uids.length > 0 ? (
           <span
             onClick={readOnly ? undefined : handleReact.bind(null, reaction)}
-            className={`cursor-pointer rounded-md relative flex items-center gap-1 p-1 hover:bg-cyan-100 ${reacted ? "shadow-[inset_0_0_0_1px_#06aed4] bg-cyan-200" : ""}`}
+            className={`cursor-pointer rounded-md relative flex items-center gap-1 p-1 md:hover:bg-cyan-100 ${reacted ? "shadow-[inset_0_0_0_1px_#06aed4] bg-cyan-200" : ""}`}
             key={reaction}
           >
             <Tippy
@@ -93,7 +93,7 @@ const Reaction: FC<Props> = ({ mid, reactions = null, readOnly = false }) => {
             trigger="click"
             content={<ReactionPicker mid={mid} hidePicker={hideAll} />}
           >
-            <button className="invisible group-hover:visible w-6 h-6 bg-cyan-100 hover:bg-cyan-200 rounded-md flex-center">
+            <button className="invisible group-hover:visible w-6 h-6 bg-cyan-100 md:hover:bg-cyan-200 rounded-md flex-center">
               <IconAddEmoji className={'w-4 h-4'} />
             </button>
           </Tippy>

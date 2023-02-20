@@ -28,7 +28,7 @@ const ReactionPicker: FC<Props> = ({ mid, hidePicker }) => {
             reactionData[emoji] && reactionData[emoji].findIndex((id) => id == currUid) > -1;
           return (
             <li
-              className={`flex-center cursor-pointer rounded-lg p-4 hover:bg-gray-50 w-4 h-4 ${reacted ? "bg-gray-50" : ""}`}
+              className={`flex-center cursor-pointer rounded-lg p-4 md:hover:bg-gray-50 w-4 h-4 ${reacted ? "bg-gray-50" : ""}`}
               key={emoji}
               onClick={handleReact.bind(null, emoji)}
             >

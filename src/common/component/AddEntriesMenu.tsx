@@ -42,7 +42,7 @@ export default function AddEntriesMenu() {
     setChannelModalVisible(false);
   };
 
-  const itemClass = "rounded flex items-center gap-2 text-sm font-semibold cursor-pointer px-2 py-2.5 hover:bg-gray-800/20 dark:hover:bg-gray-200/20";
+  const itemClass = "rounded flex items-center gap-2 text-sm font-semibold cursor-pointer px-2 py-2.5 md:hover:bg-gray-800/20 md:dark:hover:bg-gray-200/20";
   const iconClass = "w-5 h-5 dark:fill-gray-300";
   return (
     <>

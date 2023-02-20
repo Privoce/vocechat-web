@@ -114,7 +114,7 @@ const ChannelModal: FC<Props> = ({ personal = false, closeModal }) => {
                     <li
                       key={uid}
                       data-uid={uid}
-                      className="cursor-pointer flex items-center px-4 rounded hover:bg-gray-500/10"
+                      className="cursor-pointer flex items-center px-4 rounded md:hover:bg-gray-500/10"
                       onClick={loginUid == uid ? undefined : toggleCheckMember}
                     >
                       <StyledCheckbox

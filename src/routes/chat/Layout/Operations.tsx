@@ -55,17 +55,17 @@ const Operations: FC<Props> = ({ context, id }) => {
   });
   const canDel = canDelete(mids);
 
-  // const 
+  const optClass = `p-2 bg-slate-100 rounded md:hover:bg-slate-300`;
   return (
     <>
       <div className="relative p-4 flex-center gap-8 shadow-md">
-        <button className="p-2 bg-slate-100 rounded hover:bg-slate-300" onClick={toggleForwardModal}>
+        <button className={optClass} onClick={toggleForwardModal}>
           <IconForward />
         </button>
-        <button className="p-2 bg-slate-100 rounded hover:bg-slate-300" onClick={handleFav}>
+        <button className={optClass} onClick={handleFav}>
           <IconBookmark />
         </button>
-        <button className="p-2 bg-slate-100 rounded hover:bg-slate-300" disabled={!canDel} onClick={toggleDeleteModal.bind(null, false)}>
+        <button className={optClass} disabled={!canDel} onClick={toggleDeleteModal.bind(null, false)}>
           <IconDelete />
         </button>
         <IconClose className="cursor-pointer absolute right-5 top-1/2 -translate-y-1/2" onClick={handleClose} />

@@ -5,7 +5,7 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 const Row = ({ paramKey, paramDefault, remarks }: { paramKey: string, paramDefault: string | number, remarks: string }) => {
-  return <tr className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-50 border-b transition duration-300 ease-in-out hover:bg-gray-100">
+  return <tr className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-50 border-b transition duration-300 ease-in-out md:hover:bg-gray-100">
     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
       {paramKey}
     </td>

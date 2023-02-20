@@ -48,7 +48,7 @@ function HomePage() {
   // 有点绕
   const chatNav = isChatHomePath ? "/chat" : chatPath || "/chat";
   const userNav = userPath || "/users";
-  const linkClass = `flex items-center gap-2.5 px-3 py-2 font-semibold text-sm text-gray-600 rounded-lg hover:bg-gray-800/10`;
+  const linkClass = `flex items-center gap-2.5 px-3 py-2 font-semibold text-sm text-gray-600 rounded-lg md:hover:bg-gray-800/10`;
   return (
     <>
       <Manifest />
@@ -59,7 +59,7 @@ function HomePage() {
             {loginUid && <User uid={loginUid} />}
             <nav className="flex flex-col gap-1 px-3 py-6">
               <NavLink
-                className={({ isActive }) => `${linkClass} ${(isActive || isChattingPage) ? "bg-primary-400 hover:bg-primary-400" : ""}`}
+                className={({ isActive }) => `${linkClass} ${(isActive || isChattingPage) ? "bg-primary-400 md:hover:bg-primary-400" : ""}`}
                 to={chatNav}
               >
                 {({ isActive }) => {
@@ -68,21 +68,21 @@ function HomePage() {
                   </Tooltip>;
                 }}
               </NavLink>
-              <NavLink className={({ isActive }) => `${linkClass} ${isActive ? 'bg-primary-400 hover:bg-primary-400' : ""}`} to={userNav}>
+              <NavLink className={({ isActive }) => `${linkClass} ${isActive ? 'bg-primary-400 md:hover:bg-primary-400' : ""}`} to={userNav}>
                 {({ isActive }) => {
                   return <Tooltip tip={t("members")}>
                     <UserIcon className={isActive ? "fill-white" : ""} />
                   </Tooltip>;
                 }}
               </NavLink>
-              <NavLink className={({ isActive }) => `${linkClass} ${isActive ? 'bg-primary-400 hover:bg-primary-400' : ""}`} to={"/favs"}>
+              <NavLink className={({ isActive }) => `${linkClass} ${isActive ? 'bg-primary-400 md:hover:bg-primary-400' : ""}`} to={"/favs"}>
                 {({ isActive }) => {
                   return <Tooltip tip={t("favs")}>
                     <FavIcon className={isActive ? "fill-white" : ""} />
                   </Tooltip>;
                 }}
               </NavLink>
-              <NavLink className={({ isActive }) => `${linkClass} ${isActive ? 'bg-primary-400 hover:bg-primary-400' : ""}`} to={"/files"}>
+              <NavLink className={({ isActive }) => `${linkClass} ${isActive ? 'bg-primary-400 md:hover:bg-primary-400' : ""}`} to={"/files"}>
                 {({ isActive }) => {
                   return <Tooltip tip={t("files")}>
                     <FolderIcon className={isActive ? "fill-white" : ""} />
