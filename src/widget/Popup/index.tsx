@@ -6,6 +6,8 @@ import MessageFeed from './MessageFeed';
 import MessageInput from './MessageInput';
 import { useAppSelector } from '../../app/store';
 import useSSE from '../useSSE';
+import { useWidget } from '../WidgetContext';
+import clsx from 'clsx';
 
 type Props = {
     hostId: number,
@@ -13,6 +15,7 @@ type Props = {
 }
 
 const Index = ({ handleClose, hostId }: Props) => {
+    const { embed } = useWidget();
     // 建立SSE连接
     useSSE();
     const { user: loginUser, token, guest: isGuest } = useAppSelector(store => store.authData);
@@ -20,7 +23,7 @@ const Index = ({ handleClose, hostId }: Props) => {
     // no token or guest login
     const notLogin = !token || isGuest;
     return (
-        <aside className="flex flex-col bg-white w-full h-full rounded-md overflow-hidden">
+        <aside className={clsx("flex flex-col bg-white dark:bg-gray-700 rounded-md overflow-hidden", embed ? "w-full h-full" : `w-full h-full md:max-w-lg md:h-[calc(100vh_-_20px)] m-auto md:my-2 md:shadow-lg rounded-none md:rounded-md`)}>
             <Header handleClose={handleClose} />
             {/* message list */}
             <main id='MESSAGE_LIST_CONTAINER' className="relative flex-1 overflow-y-auto scroll-smooth">

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useGetServerQuery } from "../app/services/server";
-import { ThemeProvider } from "./ThemeContext";
+import { useWidget } from "./WidgetContext";
 import Icon from "./Icon";
 import Popup from "./Popup";
 import useCache from "./useCache";
@@ -9,6 +9,7 @@ type Props = {
 };
 
 function Widget({ hostId }: Props) {
+  const { embed } = useWidget();
   const { rehydrated } = useCache();
   const [visible, setVisible] = useState(!!new URLSearchParams(location.search).get("open"));
   const { isLoading, isError } = useGetServerQuery();
@@ -21,7 +22,8 @@ function Widget({ hostId }: Props) {
     setVisible((prev) => !prev);
   };
   if (isLoading || isError || !rehydrated) return null;
-  return <ThemeProvider> {visible ? <Popup handleClose={toggleVisible} hostId={hostId} /> : <Icon handleClick={toggleVisible} />}</ThemeProvider>;
+  if (!embed) return <Popup handleClose={toggleVisible} hostId={hostId} />;
+  return visible ? <Popup handleClose={toggleVisible} hostId={hostId} /> : <Icon handleClick={toggleVisible} />;
 }
 
 export default Widget;

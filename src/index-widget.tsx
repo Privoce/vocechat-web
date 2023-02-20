@@ -1,16 +1,24 @@
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
-
+import { WidgetProvider } from './widget/WidgetContext';
 import Widget from "./widget/index";
 import './assets/index.css';
 import store from "./app/store";
 import './i18n';
+import { isDarkMode } from "./common/utils";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
-const hostId = new URLSearchParams(location.search).get("host");
-const themeColor = new URLSearchParams(location.search).get("themeColor") || "#1fe1f9";
+const hostId = new URLSearchParams(location.search).get("host") || 1;
+// dark mode
+if (isDarkMode()) {
+  document.documentElement.classList.add('dark');
+} else {
+  document.documentElement.classList.remove('dark');
+}
 root.render(
   hostId ? <Provider store={store}>
-    <Widget hostId={Number(hostId)} themeColor={themeColor} />
+    <WidgetProvider>
+      <Widget hostId={Number(hostId)} />
+    </WidgetProvider>
   </Provider> : null
 );

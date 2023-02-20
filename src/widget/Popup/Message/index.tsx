@@ -34,7 +34,7 @@ const Index = (props: IWidgetMessage) => {
     }
     return <div className={clsx('group flex mb-3', host ? 'relative justify-start items-start' : 'items-center justify-end px-3')}>
         {host ? <><div className="w-9 h-9 absolute top-0 left-3">
-            <img src={logo} alt="avatar" className='rounded-full bg-gray-100 w-9 h-9' />
+            <img src={logo} alt="avatar" className='rounded-full  w-9 h-9' />
         </div>
             <div className="pl-14 flex items-center">
                 {contentContainer}

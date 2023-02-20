@@ -1,6 +1,6 @@
 // import React from 'react';
 import clsx from 'clsx';
-import { useTheme } from '../../ThemeContext';
+import { useWidget } from '../../WidgetContext';
 
 type Props = {
     uid: number,
@@ -10,10 +10,10 @@ type Props = {
 }
 
 const Text = ({ content, host, sending }: Props) => {
-    const { color, fgColor } = useTheme();
+    const { color, fgColor } = useWidget();
 
     return host ?
-        <div className="text-md text-gray-900 bg-gray-100 rounded-lg px-3 py-1.5 break-words" style={{ maxWidth: 'min(((100vw - 56px) - 20px) - 64px, 360px)' }}>
+        <div className="text-md text-gray-900 dark:text-gray-100 bg-gray-100 dark:bg-gray-900 rounded-lg px-3 py-1.5 break-words" style={{ maxWidth: 'min(((100vw - 56px) - 20px) - 64px, 360px)' }}>
             {content}
         </div>
         :
