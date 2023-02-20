@@ -13,12 +13,12 @@ const QRCode = ({ link, size = 512 }: Props) => {
         <QR
             renderAs='svg'
             value={link}
-            className="rounded border border-solid border-gray-200 dark:border-gray-500 p-1 !w-full !h-full"
+            className="rounded border border-solid border-gray-200 dark:border-none !w-full !h-full"
             size={size}
             bgColor={"#fff"}
             fgColor={"#000"}
             level={"L"}
-            includeMargin={false}
+            includeMargin={true}
             imageSettings={{
                 src: logo,
                 x: undefined,
