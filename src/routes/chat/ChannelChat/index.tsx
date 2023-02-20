@@ -112,7 +112,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
               <Tippy
                 placement="left-start"
                 popperOptions={{ strategy: "fixed" }}
-                offset={[0, 162]}
+                offset={[0, 164]}
                 interactive
                 trigger="click"
                 content={<FavList cid={cid} />}
@@ -133,7 +133,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
           </ul>
         }
         header={
-          <header className="h-14 px-5  flex items-center justify-center md:justify-between shadow-[inset_0_-1px_0_rgb(0_0_0_/_10%)]">
+          <header className="px-5 py-4 flex items-center justify-center md:justify-between shadow-[inset_0_-1px_0_rgb(0_0_0_/_10%)]">
             <GoBackNav />
             <div className="flex items-center gap-1">
               <ChannelIcon personal={!is_public} />
@@ -143,7 +143,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
           </header>
         }
         users={
-          <div className={`flex-col gap-1 w-[226px] h-[calc(100vh_-_56px_-_22px)] overflow-y-scroll p-2 shadow-[inset_1px_0px_0px_rgba(0,_0,_0,_0.1)] ${membersVisible ? "flex" : "hidden"}`}>
+          <div className={`h-full flex-col gap-1 w-[226px] overflow-y-scroll p-2 shadow-[inset_1px_0px_0px_rgba(0,_0,_0,_0.1)] ${membersVisible ? "flex" : "hidden"}`}>
             {addVisible && (
               <div className="cursor-pointer flex items-center justify-start gap-1 select-none rounded-lg p-2.5 hover:bg-gray-500/10" onClick={toggleAddVisible}>
                 <IconAdd className="w-6 h-6 dark:fill-slate-300" />
@@ -166,7 +166,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
           </div>
         }
       >
-        <article className="py-4.5 px-1 md:px-4 w-full h-full overflow-x-hidden overflow-y-auto" id={`VOCECHAT_FEED_channel_${cid}`}>
+        <>
           {hasMore ? (
             <LoadMore pullUp={pullUp} pulling={pulling} />
           ) : (
@@ -197,7 +197,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
               context: "channel"
             });
           })}
-        </article>
+        </>
       </Layout>
     </>
   );

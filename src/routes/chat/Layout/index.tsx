@@ -106,31 +106,37 @@ const Layout: FC<Props> = ({
   return (
     <>
       {previewImage && <ImagePreviewModal data={previewImage} closeModal={closePreviewModal} />}
-      <article ref={drop} className={`relative w-full rounded-r-2xl`}>
-        {header}
-        <main className="h-full w-full flex items-start justify-between relative" ref={messagesContainer}>
-          <div className="rounded-br-2xl w-full flex flex-col h-[calc(100vh_-_64px)] md:h-[calc(100vh_-_56px_-_18px)]">
-            {children}
-            <div className={`px-2 py-0 md:p-4  ${selects ? "selecting" : ""}`}>
-              {readonly ? (
-                <LoginTip />
-              ) : reachLimit ? (
-                <LicenseUpgradeTip />
-              ) : (
-                <div className={clsx(`flex justify-center`, selects && "hidden")}>
-                  <Send key={to} id={to} context={context} />
-                </div>
-              )}
-              {selects && <Operations context={context} id={to} />}
+      <section ref={drop} className={`relative h-full w-full rounded-r-2xl flex`}>
+        <main className="flex flex-col flex-1">
+          {header}
+          <div className="w-full h-full flex items-start justify-between relative" ref={messagesContainer}>
+            <div className="rounded-br-2xl flex flex-col absolute bottom-0 w-full h-full">
+              {/* 消息流 */}
+              <article id={`VOCECHAT_FEED_${context}_${to}`} className="w-full h-full px-1 md:px-4 py-4.5 overflow-x-hidden overflow-y-scroll">
+                {children}
+              </article>
+              {/* 发送框 */}
+              <div className={`px-2 py-0 md:p-4  ${selects ? "selecting" : ""}`}>
+                {readonly ? (
+                  <LoginTip />
+                ) : reachLimit ? (
+                  <LicenseUpgradeTip />
+                ) : (
+                  <div className={clsx(`flex justify-center`, selects && "hidden")}>
+                    <Send key={to} id={to} context={context} />
+                  </div>
+                )}
+                {selects && <Operations context={context} id={to} />}
+              </div>
             </div>
           </div>
-          {users && <div className="hidden md:block">{users}</div>}
-          {aside && <div className={clsx("p-3 absolute right-0 -top-14 translate-x-full flex-col hidden md:flex")}>{aside}</div>}
         </main>
+        {aside && <div className={clsx("p-3 absolute right-0 top-0 translate-x-full flex-col hidden md:flex")}>{aside}</div>}
+        {users && <div className="hidden md:block">{users}</div>}
         {!readonly && isActive && (
           <DnDTip context={context} name={name} />
         )}
-      </article>
+      </section>
     </>
   );
 };

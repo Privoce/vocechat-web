@@ -23,8 +23,8 @@ const LoginTip = ({ placement = "chat" }: Props) => {
   };
 
   return (
-    <div className={clsx("flex items-center justify-between bg-slate-200/80 dark:bg-gray-800 rounded-lg w-full p-4 border border-solid border-gray-200 dark:border-gray-500",
-      placement == "session" && "w-[96%] md:hidden fixed bottom-2 left-1/2 -translate-x-1/2"
+    <div className={clsx("flex items-center justify-between bg-slate-200/80 dark:bg-gray-800 rounded-lg p-4 border border-solid border-gray-200 dark:border-gray-500",
+      placement == "session" ? "!w-[96%] md:hidden fixed bottom-2 left-1/2 -translate-x-1/2" : "w-full"
     )}>
       <span className="text-xs md:text-base text-gray-400 dark:text-gray-100">
         <i className="mr-2 text-xs md:text-lg ">👋</i>
