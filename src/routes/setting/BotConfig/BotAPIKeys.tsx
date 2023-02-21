@@ -12,14 +12,6 @@ import clsx from 'clsx';
 type Props = {
     uid: number
 }
-
-// const APIKeyTable = () => {
-
-
-//     return <table>
-
-//     </table>;
-// };
 type DeleteAPIKeyProps = { uid: number, kid: number }
 const tdClass = "p-1 whitespace-nowrap text-xs text-gray-500 dark:text-gray-200 align-middle px-1";
 const BotAPIKeys = ({ uid }: Props) => {

@@ -145,7 +145,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
         users={
           <div className={`h-full flex-col gap-1 w-[226px] overflow-y-scroll p-2 shadow-[inset_1px_0px_0px_rgba(0,_0,_0,_0.1)] ${membersVisible ? "flex" : "hidden"}`}>
             {addVisible && (
-              <div className="cursor-pointer flex items-center justify-start gap-1 select-none rounded-lg p-2.5 hover:bg-gray-500/10" onClick={toggleAddVisible}>
+              <div className="cursor-pointer flex items-center justify-start gap-1 select-none rounded-lg p-2.5 md:hover:bg-gray-500/10" onClick={toggleAddVisible}>
                 <IconAdd className="w-6 h-6 dark:fill-slate-300" />
                 <div className="font-semibold text-sm text-gray-600 dark:text-gray-50">{t("add_channel_members")}</div>
               </div>

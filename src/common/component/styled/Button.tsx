@@ -11,7 +11,7 @@ const StyledButton = ({ children, className = '', ...rest }: Props) => {
   const isMini = className.includes('mini');
   const isFull = className.includes('flex');
   return <button className={clsx(`text-sm text-white bg-primary-400 break-keep shadow rounded-lg px-3.5 py-2.5 md:hover:bg-primary-500 active:bg-primary-500 disabled:bg-gray-300`,
-    isFull && "w-full",
+    isFull && "w-full text-center justify-center",
     isGhost && "!text-gray-600 dark:!text-gray-100  !border !border-solid !border-gray-300 !bg-transparent",
     isCancel && "!bg-transparent !text-black dark:!text-gray-50 !border !border-solid !border-gray-200",
     isSmall && "!py-2",

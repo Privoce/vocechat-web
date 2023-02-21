@@ -17,11 +17,11 @@ const FavList: FC<Props> = ({ cid = null, uid = null }) => {
   const noFavs = favorites.length == 0;
   return (
     <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-xl min-w-[500px] max-h-[500px] overflow-auto drop-shadow-[0px_25px_50px_rgba(31,_41,_55,_0.25)]">
-      <h4 className="font-bold text-base text-gray-600 dark:text-gray-400 mb-4">{t('fav_msg')}({favorites.length})</h4>
+      <h4 className="font-bold text-gray-600 dark:text-gray-400 mb-4">{t('fav_msg')}({favorites.length})</h4>
       {noFavs ? (
         <div className="flex flex-col gap-2 w-full items-center p-4">
           <IconSurprise />
-          <div className="w-60 text-base text-gray-600 dark:text-gray-400 text-center font-bold">{t("fav_empty_tip")}</div>
+          <div className="w-60 text-gray-600 dark:text-gray-400 text-center font-bold">{t("fav_empty_tip")}</div>
         </div>
       ) : (
         <ul className="flex flex-col gap-2">

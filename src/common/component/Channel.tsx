@@ -24,7 +24,7 @@ const Channel: FC<Props> = ({ interactive = true, id, compact = false, avatarSiz
 
   return (
     <div
-      className={clsx(`flex items-center justify-start gap-2 p-2 rounded-lg select-none`, compact && "p-0", interactive && "hover:bg-gray-500/10")}
+      className={clsx(`flex items-center justify-start gap-2 p-2 rounded-lg select-none`, compact && "p-0", interactive && "md:hover:bg-gray-500/10")}
     >
       <div className={`cursor-pointer relative`} style={{ width: `${avatarSize}px`, height: `${avatarSize}px` }}>
         <Avatar

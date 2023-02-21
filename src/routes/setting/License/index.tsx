@@ -59,7 +59,7 @@ export default function License() {
         </div>
         <div className="flex flex-col gap-4 bg-primary-500 text-white rounded drop-shadow-xl p-5">
           <h2 className="text-2xl font-bold">{t("license.tip.title")} 🎁</h2>
-          <p className="text-base flex flex-col">
+          <p className="flex flex-col">
             <span>
               {t("license.tip.user_test")}
             </span>

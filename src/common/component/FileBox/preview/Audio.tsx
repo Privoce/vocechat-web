@@ -16,7 +16,7 @@ const Audio: FC<Props> = ({ url }) => {
   return (
     <div className="flex-center h-full">
       {err ? (
-        <div className="p-[18px] text-base text-gray-500">Unable to play this audio</div>
+        <div className="p-[18px] text-gray-500">Unable to play this audio</div>
       ) : (
         <audio className="w-full" controls src={url} onError={handleError} />
       )}

@@ -44,7 +44,7 @@ export default function URLPreview({ url = "" }) {
   const dotsClass = `truncate`;
   return ogImage ? (
     <a className={`${containerClass} flex-col !items-start p-3`} href={url} target="_blank" rel="noreferrer">
-      <h3 className={`text-base text-primary-500 w-full ${dotsClass}`}>{title}</h3>
+      <h3 className={`text-primary-500 w-full ${dotsClass}`}>{title}</h3>
       <p className={`text-xs text-gray-400 mb-2 w-full ${dotsClass}`}>{description}</p>
       <div className="w-full h-[180px]">
         <img className="w-full h-full object-cover" onError={handleOGImageError} src={ogImage} alt="og image" />
