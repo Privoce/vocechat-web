@@ -35,48 +35,46 @@ export default function GuestChannelChat({ cid = 0 }: Props) {
   const { name, description, is_public } = data;
   const feeds = [...msgIds, ...appends];
   return (
-    <>
-      <Layout
-        readonly
-        to={cid}
-        context="channel"
-        header={
-          <header className="px-5 py-4 flex items-center justify-center md:justify-between shadow-[inset_0_-1px_0_rgb(0_0_0_/_10%)]">
-            <GoBackNav />
-            <div className="flex items-center gap-1">
-              <ChannelIcon personal={!is_public} />
-              <span className="text-gray-800 dark:text-white">{name}</span>
-              <span className="ml-2 text-gray-500 hidden md:block ">{description}</span>
-            </div>
-          </header>
-        }
-      >
-        <>
-          {hasMore ? (
-            <LoadMore pullUp={pullUp} pulling={pulling} />
-          ) : (
-            <div className="pt-14 flex flex-col items-start gap-2">
-              <h2 className="font-bold text-4xl dark:text-white">{t("welcome_channel", { name })}</h2>
-              <p className="text-gray-600 dark:text-gray-300">{t("welcome_desc", { name })} </p>
-            </div>
-          )}
-          {/* <div className="feed"> */}
-          {feeds.map((mid, idx) => {
-            const curr = messageData[mid];
-            if (!curr) return null;
-            const isFirst = idx == 0;
-            const prev = isFirst ? null : messageData[feeds[idx - 1]];
-            return renderMessageFragment({
-              readonly: true,
-              selectMode: false,
-              prev,
-              curr,
-              contextId: cid,
-              context: "channel"
-            });
-          })}
-        </>
-      </Layout>
-    </>
+    <Layout
+      readonly
+      to={cid}
+      context="channel"
+      header={
+        <header className="px-5 py-4 flex items-center justify-center md:justify-between shadow-[inset_0_-1px_0_rgb(0_0_0_/_10%)]">
+          <GoBackNav />
+          <div className="flex items-center gap-1">
+            <ChannelIcon personal={!is_public} />
+            <span className="text-gray-800 dark:text-white">{name}</span>
+            <span className="ml-2 text-gray-500 hidden md:block ">{description}</span>
+          </div>
+        </header>
+      }
+    >
+      <>
+        {hasMore ? (
+          <LoadMore pullUp={pullUp} pulling={pulling} />
+        ) : (
+          <div className="pt-14 flex flex-col items-start gap-2">
+            <h2 className="font-bold text-4xl dark:text-white">{t("welcome_channel", { name })}</h2>
+            <p className="text-gray-600 dark:text-gray-300">{t("welcome_desc", { name })} </p>
+          </div>
+        )}
+        {/* <div className="feed"> */}
+        {feeds.map((mid, idx) => {
+          const curr = messageData[mid];
+          if (!curr) return null;
+          const isFirst = idx == 0;
+          const prev = isFirst ? null : messageData[feeds[idx - 1]];
+          return renderMessageFragment({
+            readonly: true,
+            selectMode: false,
+            prev,
+            curr,
+            contextId: cid,
+            context: "channel"
+          });
+        })}
+      </>
+    </Layout>
   );
 }

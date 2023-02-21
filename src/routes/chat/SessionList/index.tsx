@@ -66,7 +66,7 @@ const SessionList: FC<Props> = ({ tempSession }) => {
   ]);
   return (
     <>
-      <ul className="flex flex-col gap-0.5 p-2 overflow-auto h-[calc(100vh_-_56px_-_16px_-_8px)]">
+      <ul className="flex flex-col gap-0.5 p-2 overflow-auto">
         {sessions.map((s) => {
           const { key, type, id, mid = 0 } = s;
           return (

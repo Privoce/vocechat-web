@@ -2,16 +2,15 @@ import { useState, useRef, useEffect, FC, ReactElement } from "react";
 import { useDrop } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
 import clsx from "clsx";
+
 import ImagePreviewModal from "../../../common/component/ImagePreviewModal";
 import Send from "../../../common/component/Send";
 import Operations from "./Operations";
 import useUploadFile from "../../../common/hook/useUploadFile";
-
 import { useAppSelector } from "../../../app/store";
 import LoginTip from "./LoginTip";
 import useLicense from "../../../common/hook/useLicense";
 import LicenseUpgradeTip from "./LicenseOutdatedTip";
-// import { useTranslation } from "react-i18next";
 import DnDTip from "./DnDTip";
 
 interface Props {

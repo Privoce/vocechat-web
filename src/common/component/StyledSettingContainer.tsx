@@ -32,7 +32,7 @@ const StyledSettingContainer: FC<PropsWithChildren<Props>> = ({
   return (
     <>
       <div className="w-screen h-screen flex">
-        <div className={clsx("h-screen w-full md:max-w-[212px] overflow-scroll px-4 py-8 bg-neutral-100 dark:bg-gray-800", nav && "hidden md:block")}>
+        <div className={clsx("h-full w-full overflow-y-scroll md:max-w-[212px] px-4 py-8 bg-neutral-100 dark:bg-gray-800", nav && "hidden md:block")}>
           <h2 onClick={closeModal} className="hidden md:flex gap-2 items-center text-sm md:text-base cursor-pointer mb-8 font-bold text-gray-800 dark:text-white">
             <IconBack className="dark:fill-gray-400" /> {title}
           </h2>

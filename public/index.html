@@ -127,6 +127,16 @@
       width: 100%;
       height: 100%;
     }
+    /* iOS safari */
+    @supports (-webkit-touch-callout: none) {
+      body {
+        height: -webkit-fill-available;
+      }
+      .h-screen {
+        height: -webkit-fill-available !important ;
+        overflow: auto;
+      }
+    }
     /* iframe 样式覆盖 */
     body.iframe {
       position: fixed;
