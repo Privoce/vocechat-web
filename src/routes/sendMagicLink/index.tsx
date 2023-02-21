@@ -9,6 +9,7 @@ import SentTip from "./SentTip";
 import { useTranslation } from "react-i18next";
 import SocialLoginButtons from "../login/SocialLoginButtons";
 import Divider from "../../common/component/Divider";
+import SignInLink from "../reg/SignInLink";
 
 export default function SendMagicLinkPage() {
   const { t } = useTranslation("auth");
@@ -63,7 +64,7 @@ export default function SendMagicLinkPage() {
     setSent(false);
   };
   return (
-    <div className="flex-center h-screen">
+    <div className="flex-center h-screen dark:bg-gray-700">
       <div className="py-8 px-10 shadow rounded-xl">
         {sent ? (
           <SentTip email={email} reset={handleReset} />
@@ -71,7 +72,7 @@ export default function SendMagicLinkPage() {
           <>
             <div className="flex flex-col items-center">
               <img src={`${BASE_URL}/resource/organization/logo`} alt="logo" className="w-14 h-14 mb-7 rounded-full" />
-              <h2 className="font-semibold text-2xl text-gray-800 mb-2">{t("login.title")}</h2>
+              <h2 className="font-semibold text-2xl text-gray-800 dark:text-gray-200 mb-2">{t("enter")}VoceChat</h2>
               <span className="text-center text-gray-500 mb-6">{t("placeholder_email")}</span>
             </div>
             <form onSubmit={handleLogin} className="flex flex-col gap-5 w-[360px]">
@@ -90,11 +91,12 @@ export default function SendMagicLinkPage() {
                 {isLoading ? "Sending" : t("continue")}
               </Button>
             </form>
-            <Divider content="or" />
+            <Divider content="OR" />
+            <Button onClick={handlePwdPath} className="flex">{t("login.password")}</Button>
             <div className="flex flex-col gap-3 py-3">
               <SocialLoginButtons />
             </div>
-            <Button onClick={handlePwdPath} className="flex">{t("login.password")}</Button>
+            <SignInLink />
           </>
         )}
       </div>

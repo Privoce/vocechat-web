@@ -3,10 +3,9 @@ import Button from "../../common/component/styled/Button";
 
 export default function MagicLinkLogin() {
   const navigate = useNavigate();
-  const handleGoogleLogin = () => {
+  const handleLogin = () => {
     navigate("/send_magic_link");
-    // signIn();
   };
 
-  return <Button className="w-full" onClick={handleGoogleLogin}>Sign in with Magic Link</Button>;
+  return <Button className="w-full" onClick={handleLogin}>Sign in with Magic Link</Button>;
 }

@@ -1,19 +1,13 @@
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
-type Props = {
-  smtp?: boolean
-}
-export default function MagicLinkLogin({ smtp = false }: Props) {
+// type Props = {
+// }
+export default function SignUpLink() {
   const { t } = useTranslation("auth");
   const navigate = useNavigate();
   const handleSignUp = () => {
-    if (smtp) {
-      // 配置了SMTP，走magic link 流程
-      navigate("/send_magic_link");
-    } else {
-      navigate("/register");
-    }
+    navigate("/register");
   };
 
   return (

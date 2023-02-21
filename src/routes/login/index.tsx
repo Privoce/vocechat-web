@@ -19,7 +19,7 @@ import Divider from "../../common/component/Divider";
 export default function LoginPage() {
   const { t } = useTranslation("auth");
   const { t: ct } = useTranslation();
-  const { data: enableSMTP } = useGetSMTPStatusQuery();
+  const { data: enableSMTP, isLoading: loadingSMTPStatus } = useGetSMTPStatusQuery();
   const [login, { isSuccess, isLoading, error }] = useLoginMutation();
   const { clientId } = useGoogleAuthConfig();
   const { data: loginConfig, isSuccess: loginConfigSuccess } = useGetLoginConfigQuery();
@@ -122,7 +122,7 @@ export default function LoginPage() {
   const hasDivider =
     enableMagicLink || googleLogin || enableMetamaskLogin || oidc.length > 0 || enableGithubLogin;
 
-
+  if (loadingSMTPStatus) return "Loading...";
   return (
     <div className="flex-center h-screen dark:bg-gray-700">
       <div className="py-8 px-10 shadow-md rounded-xl">
@@ -163,7 +163,7 @@ export default function LoginPage() {
 
           <SocialLoginButtons />
         </div>
-        {whoCanSignUp === "EveryOne" && <SignUpLink smtp={enableSMTP} />}
+        {whoCanSignUp === "EveryOne" && <SignUpLink />}
       </div>
     </div>
   );

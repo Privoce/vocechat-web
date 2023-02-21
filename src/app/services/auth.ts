@@ -218,6 +218,5 @@ export const {
   useCheckMagicTokenValidMutation,
   useUpdatePasswordMutation,
   useRegisterMutation,
-  useLazyDeleteCurrentAccountQuery,
-  useGuestLoginWithNoEffectQuery
+  useLazyDeleteCurrentAccountQuery
 } = authApi;

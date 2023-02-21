@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { isMobile } from '../../common/utils';
 
 export default function SignInLink({ token }: { token?: string }) {
   const { t } = useTranslation("auth");
@@ -9,10 +10,9 @@ export default function SignInLink({ token }: { token?: string }) {
     navigate("/login");
   };
   useEffect(() => {
-    const isMobile = "ontouchstart" in document.documentElement;
-    // 直接跳转
-    if (isMobile && !!token) {
-      location.href = `https://join.voce.chat/download?link=${encodeURIComponent(`${location.origin}?magic_token=${token}`)}`;
+    // 移动端访问，则跳转
+    if (isMobile() && !!token) {
+      location.href = `https://join.voce.chat/download?link=${encodeURIComponent(`${location.origin}&magic_token=${token}`)}`;
     }
   }, [token]);
 

@@ -1,5 +1,6 @@
 import { useState, useEffect, FC, FormEvent, ChangeEvent } from "react";
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import { setAuthData } from "../../app/slices/auth.data";
@@ -8,10 +9,10 @@ import Button from "../../common/component/styled/Button";
 import { useLoginMutation, useCheckMagicTokenValidMutation } from "../../app/services/auth";
 import ExpiredTip from "./ExpiredTip";
 import { useRegisterMutation } from "../../app/services/auth";
-import { useTranslation } from "react-i18next";
 
 const RegWithUsername: FC = () => {
   const { t: ct } = useTranslation();
+  const { t } = useTranslation("auth");
   const [checkTokenInvalid, { data: isTokenValid, isLoading: checkingToken }] =
     useCheckMagicTokenValidMutation();
   const [
@@ -92,20 +93,19 @@ const RegWithUsername: FC = () => {
   };
 
   if (!token) return <>"No Token"</>;
-  if (checkingToken) return <>"Checking Magic Link..."</>;
+  if (checkingToken) return <div className="dark:text-gray-100">"Checking Magic Link..."</div>;
   if (!isTokenValid) return <ExpiredTip />;
   const isLoading = loginLoading || regLoading;
   const isSuccess = loginSuccess || regSuccess;
   return (
     <>
-      <div className="flex-center flex-col pb-6">
-        <h2 className="font-semibold text-2xl text-gray-800 dark:text-white mb-2">What’s your name</h2>
-        <span className="text-gray-400 dark:text-gray-100">
-          Enter a name or handle so people know how you’d like to be called. Your name will only be
-          visible to others in spaces you joined.
+      <div className="flex-center flex-col pb-6 max-w-md">
+        <h2 className="font-semibold text-2xl text-gray-800 dark:text-gray-100 mb-2">{t("reg.input_name")}</h2>
+        <span className="text-gray-400 text-center dark:text-gray-100">
+          {t("reg.input_name_tip")}
         </span>
       </div>
-      <form className="flex flex-col gap-5 w-80 md:min-w-[360px]" onSubmit={handleAuth}>
+      <form className="flex flex-col m-auto gap-5 w-80 md:min-w-[360px]" onSubmit={handleAuth}>
         <Input
           className="large"
           name="username"
