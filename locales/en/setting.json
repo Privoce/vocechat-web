@@ -166,7 +166,8 @@
     "key": "API Secure Key",
     "update": "Update Secret",
     "update_tip": "Are you sure to update API secret? Previous secret will be invalided",
-    "key_tip": "The security key agreed between the server and the third-party app is used to encrypt the communication data."
+    "key_tip": "The security key agreed between the server and the third-party app is used to encrypt the communication data.",
+    "how_to": "How to use?"
   },
   "login": {
     "password": "Password",
