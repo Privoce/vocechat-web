@@ -1,6 +1,6 @@
 {
   "name": "vocechat-web",
-  "version": "0.3.41",
+  "version": "0.3.42",
   "private": true,
   "homepage": "https://voce.chat",
   "dependencies": {
@@ -8,7 +8,7 @@
     "@metamask/onboarding": "^1.0.1",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
     "@react-oauth/google": "^0.7.1",
-    "@reduxjs/toolkit": "^1.9.2",
+    "@reduxjs/toolkit": "^1.9.3",
     "@svgr/webpack": "^6.5.1",
     "@tippyjs/react": "^4.2.6",
     "@toast-ui/editor": "^3.2.2",
@@ -65,7 +65,7 @@
     "rooks": "^7.4.3",
     "slate": "^0.91.1",
     "slate-history": "^0.86.0",
-    "slate-react": "^0.91.1",
+    "slate-react": "^0.91.2",
     "source-map-loader": "^4.0.1",
     "style-loader": "^3.3.1",
     "styled-components": "^5.3.6",
@@ -115,13 +115,13 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.20.12",
+    "@babel/core": "^7.21.0",
     "@types/emoji-mart": "^3.0.9",
     "@types/masonry-layout": "^4.2.5",
     "@types/react-helmet": "^6.1.6",
     "@types/react-syntax-highlighter": "^15.5.6",
-    "@typescript-eslint/eslint-plugin": "^5.52.0",
-    "@typescript-eslint/parser": "^5.52.0",
+    "@typescript-eslint/eslint-plugin": "^5.53.0",
+    "@typescript-eslint/parser": "^5.53.0",
     "@welldone-software/why-did-you-render": "^7.0.1",
     "autoprefixer": "^10.4.13",
     "babel-loader": "^9.1.2",

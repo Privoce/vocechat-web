@@ -33,8 +33,8 @@ registerRoute(
       return false;
     } // If this is a URL that starts with /_, skip.
     const urlPath = url.pathname;
-    // 忽略swagger文档 与 本地语言文件
-    if (urlPath.startsWith("/api/swagger") || urlPath.startsWith("/locales/")) {
+    // 忽略swagger文档 本地语言文件 挂件地址
+    if (urlPath.startsWith("/api/swagger") || urlPath.startsWith("/locales/") || urlPath.startsWith("/widget")) {
       return false;
     }
     if (urlPath.startsWith("/_")) {
