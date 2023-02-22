@@ -130,7 +130,7 @@ const Layout: FC<Props> = ({
             </div>
           </div>
         </main>
-        {aside && <div className={clsx("p-3 absolute right-0 top-0 translate-x-full flex-col hidden md:flex")}>{aside}</div>}
+        {aside && <div className={clsx("z-50 p-3 absolute right-0 top-0 translate-x-full flex-col hidden md:flex")}>{aside}</div>}
         {users && <div className="hidden md:block">{users}</div>}
         {!readonly && isActive && (
           <DnDTip context={context} name={name} />
