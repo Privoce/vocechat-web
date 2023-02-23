@@ -1,11 +1,6 @@
 import i18n from '../i18n';
 import { Price } from "../types/common";
 
-// const BASE_URL = `http://localhost:3333/api`;
-const BASE_URL = process.env.REACT_APP_RELEASE
-  ? `${location.origin}/api`
-  : `https://dev.voce.chat/api`;
-
 let prices: Price[] = [
   {
     type: "payment",
@@ -16,6 +11,12 @@ let prices: Price[] = [
     type: "booking",
   }
 ];
+
+// export const BASE_ORIGIN = `http://localhost:3333`;
+export const BASE_ORIGIN = process.env.REACT_APP_RELEASE
+  ? `${location.origin}`
+  : `https://dev.voce.chat`;
+const BASE_URL = `${BASE_ORIGIN}/api`;
 export const getLicensePriceList = () => {
   const ps = prices.map((p, idx) => {
     switch (idx) {
