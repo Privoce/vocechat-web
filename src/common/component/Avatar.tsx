@@ -1,4 +1,4 @@
-import { FC, ImgHTMLAttributes, useEffect, useState } from "react";
+import { FC, ImgHTMLAttributes, useState } from "react";
 import { getInitials } from "../utils";
 
 interface Props extends ImgHTMLAttributes<HTMLImageElement> {
@@ -29,17 +29,12 @@ const Avatar: FC<Props> = ({
   height,
   ...rest
 }) => {
-  const [avatarSrc, setAvatarSrc] = useState("");
-  useEffect(() => {
-    if (src) {
-      setAvatarSrc(src);
-    }
-  }, [src]);
+  const [error, setError] = useState(false);
   const handleError = () => {
-    setAvatarSrc("");
+    setError(true);
   };
-  if (avatarSrc) {
-    return <img width={width} height={height} src={avatarSrc} onError={handleError} {...rest} />;
+  if (!error && src) {
+    return <img width={width} height={height} src={src} onError={handleError} {...rest} />;
   }
   return (
     <div
