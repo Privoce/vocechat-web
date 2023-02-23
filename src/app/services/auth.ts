@@ -10,6 +10,7 @@ import {
   RenewTokenDTO,
   RenewTokenResponse
 } from "../../types/auth";
+import { UserRegDTO, UserRegResponse } from "../../types/user";
 
 const getDeviceId = () => {
   let d = localStorage.getItem(KEY_DEVICE_ID);
@@ -73,7 +74,7 @@ export const authApi = createApi({
         }
       }
     }),
-    register: builder.mutation<any, any>({
+    register: builder.mutation<UserRegResponse, UserRegDTO>({
       query: (data) => ({
         url: `user/register`,
         method: "POST",
