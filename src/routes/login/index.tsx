@@ -122,7 +122,7 @@ export default function LoginPage() {
   const hasDivider =
     enableMagicLink || googleLogin || enableMetamaskLogin || oidc.length > 0 || enableGithubLogin;
 
-  if (loadingSMTPStatus) return "Loading...";
+  if (loadingSMTPStatus) return null;
   return (
     <div className="flex-center h-screen dark:bg-gray-700">
       <div className="py-8 px-10 shadow-md rounded-xl">

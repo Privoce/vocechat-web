@@ -85,7 +85,7 @@ export default function BotConfig() {
             <tbody>
               {bots.map(bot => {
                 const { uid, name, avatar } = bot;
-                return <tr key={uid} className="bg-white dark:bg-gray-800 border-b dark:border-b-gray-500 transition duration-300 ease-in-out md:hover:bg-gray-100">
+                return <tr key={uid} className="bg-white dark:bg-gray-800 border-b dark:border-b-gray-500 transition duration-300 ease-in-out md:hover:bg-gray-100 dark:md:hover:bg-transparent">
                   <td className="px-4 py-2">
                     <AvatarUploader uid={uid} url={avatar} uploadImage={updateAvatar} name={name} size={56} />
                   </td>

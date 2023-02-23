@@ -80,13 +80,13 @@ const FileBox: FC<Props> = ({
 }) => {
   const fromUser = useAppSelector((store) => store.users.byId[from_uid]);
   const icon = getFileIcon(file_type, name, "icon w-9 h-12");
-  if (!content || !fromUser || !name) return null;
+  if (!content || !name) return null;
   const previewContent = renderPreview({ file_type, content, name });
   const withPreview = preview && previewContent;
 
   return (
     <div
-      className={clsx(`h-[66px] rounded-md border border-solid border-gray-300 dark:border-gray-500 bg-gray-100 dark:bg-gray-900`, flex ? "w-full" : "w-72 md:w-[370px]", withPreview && "relative overflow-hidden h-[281px]", file_type.startsWith("audio") && "h-[125px]")}
+      className={clsx(`rounded-md border border-solid border-gray-300 dark:border-gray-500 bg-gray-100 dark:bg-gray-900`, flex ? "w-full" : "w-72 md:w-[370px]", withPreview ? "relative overflow-hidden h-[281px]" : "h-[66px] ", file_type.startsWith("audio") && "h-[125px]")}
     >
       <div className="w-full p-2 flex items-center justify-between gap-2">
         {icon}
@@ -96,7 +96,7 @@ const FileBox: FC<Props> = ({
             <span className="size">{formatBytes(size)}</span>
             <span className="hidden md:block time">{fromNowTime(created_at)}</span>
             <span>
-              by <strong className="font-bold">{fromUser.name}</strong>
+              by <strong className="font-bold">{fromUser?.name || "Deleted User"}</strong>
             </span>
           </em>
         </div>

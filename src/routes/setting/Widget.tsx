@@ -29,7 +29,7 @@ export default function Widget() {
         {t('code')}:
       </label>
       <SyntaxHighlighter id="code" language="html" style={vscDarkPlus} className="rounded">
-        {`<!-- ${t('code_comment')} -->\n<script \n  data-host-id="1" \n  data-theme-color="#1fe1f9" \n  data-close-width="48" \n  data-close-height="48" \n  data-open-width="380" \n  data-open-height="680" \n  src="${location.origin}/widget.js" \n  async \n/>`}
+        {`<!-- ${t('code_comment')} -->\n<script \n  data-host-id="1" \n  data-theme-color="#1fe1f9" \n  data-close-width="48" \n  data-close-height="48" \n  data-open-width="380" \n  data-open-height="680" \n  src="${location.origin}/widget.js" \n  async \n></script>`}
       </SyntaxHighlighter>
       <div className="text-gray-500 dark:text-white text-sm mt-5 mb-2">
         {t('config')}:
@@ -55,7 +55,7 @@ export default function Widget() {
             }, {
               paramKey: "close-width",
               paramDefault: `48(px)`,
-              remarks: t("param_open_width")
+              remarks: t("param_close_width")
             }, {
               paramKey: "close-height",
               paramDefault: `48(px)`,

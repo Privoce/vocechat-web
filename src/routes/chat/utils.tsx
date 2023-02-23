@@ -96,7 +96,7 @@ const MessageWrapper = ({ selectMode = false, context, id, mid, children, ...res
     dispatch(updateSelectMessages({ context, id, operation, data: mid }));
   };
   return (
-    <div className={`flex items-start gap-2 relative w-full ${selectMode ? "hover:bg-slate-100" : ""}`} {...rest}>
+    <div className={`flex items-start gap-2 relative w-full ${selectMode ? "hover:bg-slate-100 dark:hover:bg-slate-900" : ""}`} {...rest}>
       {selectMode && <Checkbox className="!mt-4 !ml-2" checked={selected} />}
       {children}
       {selectMode && (

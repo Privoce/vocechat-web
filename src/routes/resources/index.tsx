@@ -38,11 +38,12 @@ let msnry: Masonry | null;
 function ResourceManagement({ fileMessages }) {
   const listContainerRef = useRef<HTMLDivElement>();
   const [filter, setFilter] = useState({});
-  const { message, view, channelMessage } = useAppSelector((store) => {
+  const { message, view, channelMessage, userData } = useAppSelector((store) => {
     return {
       message: store.message,
       channelMessage: store.channelMessage,
-      view: store.ui.fileListView
+      view: store.ui.fileListView,
+      userData: store.users.byId
     };
   });
 
@@ -96,6 +97,8 @@ function ResourceManagement({ fileMessages }) {
           const data = message[id];
           if (!data) return null;
           const isSelected = checkFilter(data, filter, channelMessage);
+          // 过滤掉不存在的用户
+          // const fromUser = userData[data.from_uid];
           if (!isSelected) return null;
           const { mid, content, created_at, from_uid, properties } = data;
           const { name, content_type, size } = properties ?? {};
