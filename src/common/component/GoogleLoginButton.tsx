@@ -44,8 +44,8 @@ const GoogleLoginInner: FC<Props> = ({ type = "login", loaded, loadError }) => {
   }, [error]);
 
   return (
-    <Button className=" group relative w-full !bg-white dark:!bg-gray-700 !text-gray-600 dark:!text-gray-200 !h-[46px] overflow-hidden border border-solid border-gray-300" disabled={!loaded || isLoading}>
-      <div className="absolute left-0 top-0 w-full flex-center gap-3 z-[998] h-10 bg-inherit">
+    <Button className=" group relative w-full !bg-white dark:!bg-gray-700 !text-gray-600 dark:!text-gray-200 overflow-hidden border border-solid border-gray-300 dark:border-gray-500" disabled={!loaded || isLoading}>
+      <div className="absolute left-0 top-0 w-full h-full flex-center gap-3 z-[998] bg-inherit">
         <IconGoogle className="w-6 h-6" />
         {loadError
           ? "Script Load Error!"
@@ -53,7 +53,7 @@ const GoogleLoginInner: FC<Props> = ({ type = "login", loaded, loadError }) => {
             ? `${type === "login" ? t("login.google") : t("reg.google")}`
             : `Initializing`}
       </div>
-      <div className="absolute left-0 top-0 w-full group-hover:opacity-0 group-hover:z-[999]">
+      <div className="absolute left-0 top-0 w-full h-full group-hover:opacity-0 group-hover:z-[999]">
         <GoogleLogin
           width="360px"
           onSuccess={(res) => {
