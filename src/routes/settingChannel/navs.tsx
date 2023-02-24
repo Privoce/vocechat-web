@@ -7,6 +7,7 @@ import ManageMembers from "../../common/component/ManageMembers";
 export interface NavItem {
   name: string;
   title: string;
+  link?: string;
   component: ReactNode;
 }
 

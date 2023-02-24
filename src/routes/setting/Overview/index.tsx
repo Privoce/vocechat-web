@@ -29,7 +29,7 @@ export default function Overview() {
   const isAdmin = loginUser?.is_admin;
 
   return (
-    <div className="relative w-[512px] h-full flex flex-col gap-6">
+    <div className="relative w-full md:w-[512px] h-full flex flex-col gap-6">
       <Server />
       {isAdmin && (
         <>
