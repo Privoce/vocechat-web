@@ -105,10 +105,10 @@ export const channelApi = createApi({
       transformResponse: (link: string) => {
         // 确保http开头
         const _link = link.startsWith("http") ? link : `http://${link}`;
-        return _link;
+        // return _link;
         // 替换掉域名
-        // const invite = new URL(_link);
-        // return `${location.origin}${invite.pathname}${invite.search}${invite.hash}`;
+        const invite = new URL(_link);
+        return `${location.origin}${invite.pathname}${invite.search}${invite.hash}`;
       }
     }),
     removeChannel: builder.query<void, number>({
