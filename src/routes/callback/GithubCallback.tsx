@@ -4,12 +4,14 @@ import { useLoginMutation } from "../../app/services/auth";
 import toast from "react-hot-toast";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useTranslation } from 'react-i18next';
+import StyledButton from '../../common/component/styled/Button';
 
 export type GithubLoginSource = "widget" | "webapp"
 type Props = {
     code: string, from?: GithubLoginSource
 }
 const GithubCallback: FC<Props> = ({ code, from = "webapp" }) => {
+    const { t } = useTranslation("auth");
     const { t: ct } = useTranslation();
     //拿本地存的magic token
     const magic_token = localStorage.getItem(KEY_LOCAL_MAGIC_TOKEN);
@@ -38,6 +40,7 @@ const GithubCallback: FC<Props> = ({ code, from = "webapp" }) => {
     }, [isSuccess, from]);
     useEffect(() => {
         if (error) {
+            console.log(error);
             // todo: why?
             switch ((error as FetchBaseQueryError).status) {
                 case 410:
@@ -49,13 +52,16 @@ const GithubCallback: FC<Props> = ({ code, from = "webapp" }) => {
                     toast.error("Something Error");
                     break;
             }
-            return;
         }
     }, [error]);
-    if (error) return <span>Something Error</span>;
+    const handleClose = () => {
+        window.close();
+    };
+    if (error) return <span className='text-red-500 text-lg'>Something Error</span>;
     return <section className='flex-center flex-col gap-3'>
-        {isSuccess && from == 'widget' && <h1>Please close this window and return widget window</h1>}
-        <span className='text-3xl text-green-600 font-bold'>{isLoading ? "GitHub Logging in..." : "GitHub Login Success!"}</span>
+        <StyledButton onClick={handleClose}>{ct("action.close")}</StyledButton>
+        {isSuccess && from == 'widget' && <h1>{t("github_cb_tip")}</h1>}
+        <span className='text-3xl text-green-600 font-bold'>{isLoading ? t("github_logging_in") : t("github_login_success")}</span>
     </section>;
 };
 
