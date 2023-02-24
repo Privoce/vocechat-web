@@ -25,7 +25,7 @@ const Index = ({ needLogin = false }: Props) => {
           </div>
         </div>
       </div>
-      {needLogin && <div className="pl-14 animate-[fadeInUp_.5s_ease-in-out_both]">
+      {needLogin && <div className="pl-14 pr-5 animate-[fadeInUp_.5s_ease-in-out_both]">
         <Login />
       </div>}
     </>

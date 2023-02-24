@@ -58,7 +58,7 @@ const Login = () => {
     } = loginConfig;
     const googleLogin = enableGoogleLogin && clientId;
     return (
-        <div className="w-72 flex flex-col gap-2 mt-4 animate-[fadeInUp_.5s_.8s_ease-in-out_both]">
+        <div className="w-full max-w-[288px] flex flex-col gap-2 mt-4 animate-[fadeInUp_.5s_.8s_ease-in-out_both]">
             <div className="bg-white dark:bg-gray-700 border dark:border-gray-500 rounded-lg">
                 <form className="px-4 py-3 flex flex-col gap-2" onSubmit={handleSubmit}>
                     <Input required placeholder="Name" name='username' />

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useGetServerQuery } from "../app/services/server";
 import { useWidget } from "./WidgetContext";
 import Icon from "./Icon";
@@ -21,6 +21,14 @@ function Widget({ hostId }: Props) {
     }
     setVisible((prev) => !prev);
   };
+  useEffect(() => {
+    if (!visible) {
+      document.documentElement.classList.add("close");
+    } else {
+      document.documentElement.classList.remove("close");
+    }
+  }, [visible]);
+
   if (isLoading || isError || !rehydrated) return null;
   if (!embed) return <Popup handleClose={toggleVisible} hostId={hostId} />;
   return visible ? <Popup handleClose={toggleVisible} hostId={hostId} /> : <Icon handleClick={toggleVisible} />;
