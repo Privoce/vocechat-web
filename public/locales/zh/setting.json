@@ -20,7 +20,8 @@
     "license": "证书",
     "about": "关于",
     "api_doc": "API 文档",
-    "version": "版本信息"
+    "version": "版本信息",
+    "feedback": "反馈"
   },
   "channel": {
     "leave": "离开",
