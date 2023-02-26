@@ -13,7 +13,7 @@ export default function WelcomePage() {
       <span className="text-sm mb-6">
         {t("welcome_desc")}
       </span>
-      <StyledButton className="!w-32 flex flex-col gap-2 items-center py-3 text-sm" onClick={nextStep}>
+      <StyledButton className="!w-32 h-auto flex flex-col gap-2 items-center py-3 text-sm" onClick={nextStep}>
         <img src={PlayIcon} alt="play icon" />
         <span>{t("start")}</span>
       </StyledButton>
