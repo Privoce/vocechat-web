@@ -2218,10 +2218,10 @@
   resolved "https://mirrors.cloud.tencent.com/npm/@react-hook%2fmerged-ref/-/merged-ref-1.3.2.tgz#919b387a5f79ed67f2578f2015ab7b7d337787d2"
   integrity sha512-cQ9Y8m4zlrw/qotReo33E+3Sy9FVqMZb5JwUlb3wj3IJJ1cNJtxcgfWF6rS2NZQrfBJ2nAnckUdPJjMyIJTNZg==
 
-"@react-oauth/google@^0.7.1":
-  version "0.7.1"
-  resolved "https://mirrors.cloud.tencent.com/npm/@react-oauth%2fgoogle/-/google-0.7.1.tgz#3a68444468a9196882b724295b8d2ab62a42596d"
-  integrity sha512-FIMKcXGAbgUinUSM7VpH9VbA6tZNcXEYgi0jmlHIT1FDs4aON80jZsPUX98/TqKznWZHY4l2J9CTL62bskr7Fg==
+"@react-oauth/google@^0.8.0":
+  version "0.8.0"
+  resolved "https://mirrors.cloud.tencent.com/npm/@react-oauth/google/-/google-0.8.0.tgz#e95c9e2ef28f0da6d5de223e48c391a12eb4f821"
+  integrity sha512-xmIhYvvaBSblOzo3Fqv762lqub92SOFR8eRR7QpPyFPZEXZcOymaMuEkRSUKUrbu+9wfB8qtOaGMRJzrN7U2PA==
 
 "@reduxjs/toolkit@^1.9.3":
   version "1.9.3"
@@ -2807,10 +2807,10 @@
   resolved "https://mirrors.cloud.tencent.com/npm/@types%2fnode/-/node-18.13.0.tgz#0400d1e6ce87e9d3032c19eb6c58205b0d3f7850"
   integrity sha512-gC3TazRzGoOnoKAhUx+Q0t8S9Tzs74z7m0ipwGpSqQrleP14hKxP4/JUeEQcD3W1/aIpnWl8pHowI7WokuZpXg==
 
-"@types/node@^18.14.0":
-  version "18.14.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/@types%2fnode/-/node-18.14.0.tgz#94c47b9217bbac49d4a67a967fdcdeed89ebb7d0"
-  integrity sha512-5EWrvLmglK+imbCJY0+INViFWUHg1AHel1sq4ZVSfdcNqGy9Edv3UB9IIzzg+xPaUcAgZYcfVs2fBcwDeZzU0A==
+"@types/node@^18.14.1":
+  version "18.14.1"
+  resolved "https://mirrors.cloud.tencent.com/npm/@types/node/-/node-18.14.1.tgz#90dad8476f1e42797c49d6f8b69aaf9f876fc69f"
+  integrity sha512-QH+37Qds3E0eDlReeboBxfHbX9omAcBCXEzswCu6jySP642jiM3cYSIkU/REqwhCUqXdonHFuBfJDiAJxMNhaQ==
 
 "@types/parse-json@^4.0.0":
   version "4.0.0"
@@ -10123,10 +10123,10 @@ react-hotkeys-hook@^3.4.6:
   dependencies:
     hotkeys-js "3.9.4"
 
-react-i18next@^12.1.5:
-  version "12.1.5"
-  resolved "https://mirrors.cloud.tencent.com/npm/react-i18next/-/react-i18next-12.1.5.tgz#b65f5733dd2f96188a9359c009b7dbe27443f009"
-  integrity sha512-7PQAv6DA0TcStG96fle+8RfTwxVbHVlZZJPoEszwUNvDuWpGldJmNWa3ZPesEsZQZGF6GkzwvEh6p57qpFD2gQ==
+react-i18next@^12.2.0:
+  version "12.2.0"
+  resolved "https://mirrors.cloud.tencent.com/npm/react-i18next/-/react-i18next-12.2.0.tgz#010e3f6070b8d700442947233352ebe4b252d7a1"
+  integrity sha512-5XeVgSygaGfyFmDd2WcXvINRw2WEC1XviW1LXY/xLOEMzsCFRwKqfnHN+hUjla8ZipbVJR27GCMSuTr0BhBBBQ==
   dependencies:
     "@babel/runtime" "^7.20.6"
     html-parse-stringify "^3.0.1"
@@ -10919,10 +10919,10 @@ slate-history@^0.86.0:
   dependencies:
     is-plain-object "^5.0.0"
 
-slate-react@^0.91.2:
-  version "0.91.2"
-  resolved "https://mirrors.cloud.tencent.com/npm/slate-react/-/slate-react-0.91.2.tgz#7bec89b497b939a9d17292d6183f88a7ca3916ea"
-  integrity sha512-D+rm72Q2b81aqlw/+2Kcu8p3fmsKF2v8i134bu1oGfJWy6XTSTVyEXSca0+V5CHdxWgOMu02iXNjnVI2qmIsYw==
+slate-react@^0.91.5:
+  version "0.91.5"
+  resolved "https://mirrors.cloud.tencent.com/npm/slate-react/-/slate-react-0.91.5.tgz#0632ab708a0e88e7a3140c663d0a96662b5c3145"
+  integrity sha512-QHaslGr8sj4YNaWHCHKuBN89OfPPBpkyL7oPbahwwtxt1eWaxRDYQN1HnLot+ofYTL5GUWrRNsaG5TunS3tbxQ==
   dependencies:
     "@juggle/resize-observer" "^3.4.0"
     "@types/is-hotkey" "^0.1.1"
@@ -10934,10 +10934,10 @@ slate-react@^0.91.2:
     scroll-into-view-if-needed "^2.2.20"
     tiny-invariant "1.0.6"
 
-slate@^0.91.1:
-  version "0.91.1"
-  resolved "https://mirrors.cloud.tencent.com/npm/slate/-/slate-0.91.1.tgz#1891e03dc7e3f585a23fb20149e2c7a4614b0ddc"
-  integrity sha512-t8R6y2CjVD/NNo3h6fyM9tOH2mwJVETzSq7cNBfhAHwTRsKQ0fF0nxErxwWURiRFr1ZMOCk7rJXfgLxI95ZNFA==
+slate@^0.91.4:
+  version "0.91.4"
+  resolved "https://mirrors.cloud.tencent.com/npm/slate/-/slate-0.91.4.tgz#759764d63c8a8a7aff29a29e598e593ed80277f9"
+  integrity sha512-aUJ3rpjrdi5SbJ5G1Qjr3arytfRkEStTmHjBfWq2A2Q8MybacIzkScSvGJjQkdTk3djCK9C9SEOt39sSeZFwTw==
   dependencies:
     immer "^9.0.6"
     is-plain-object "^5.0.0"

@@ -142,7 +142,7 @@ const ChannelModal: FC<Props> = ({ personal = false, closeModal }) => {
           <div className="w-full flex flex-col justify-start gap-2 mb-2 md:mb-8">
             <span className="text-gray-400 text-sm font-normal">{t("channel_name")}</span>
             <div className="relative">
-              <input className="text-gray-600 rounded p-2 pl-9 border border-solid border-gray-300 w-full bg-transparent" onChange={handleNameInput} value={name} placeholder="new channel" />
+              <input className="text-gray-600 dark:text-gray-300 rounded p-2 pl-9 border border-solid border-gray-300 w-full bg-transparent" onChange={handleNameInput} value={name} placeholder="new channel" />
               <ChannelIcon personal={!is_public} className="absolute left-2 top-1/2 -translate-y-1/2" />
             </div>
           </div>

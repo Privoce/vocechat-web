@@ -38,7 +38,7 @@ const Send: FC<IProps> = ({
   const [markdownEditor, setMarkdownEditor] = useState(null);
   const [markdownFullscreen, setMarkdownFullscreen] = useState(false);
   const dispatch = useAppDispatch();
-  const addLocalFileMesage = useAddLocalFileMessage({ context, to: id });
+  const addLocalFileMessage = useAddLocalFileMessage({ context, to: id });
   // 谁发的
   const {
     from_uid,
@@ -111,7 +111,7 @@ const Send: FC<IProps> = ({
           from_uid,
           sending: true
         };
-        addLocalFileMesage(tmpMsg);
+        addLocalFileMessage(tmpMsg);
       });
       resetStageFiles();
     }

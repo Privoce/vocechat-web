@@ -57,6 +57,7 @@ const Login = () => {
         google: enableGoogleLogin,
     } = loginConfig;
     const googleLogin = enableGoogleLogin && clientId;
+    const hasSocialLogins = enableGithubLogin || googleLogin;
     return (
         <div className="w-full max-w-[288px] flex flex-col gap-2 mt-4 animate-[fadeInUp_.5s_.8s_ease-in-out_both]">
             <div className="bg-white dark:bg-gray-700 border dark:border-gray-500 rounded-lg">
@@ -64,7 +65,7 @@ const Login = () => {
                     <Input required placeholder="Name" name='username' />
                     <Input required placeholder="Email" type="email" name='email' />
                     <StyledButton disabled={isLoading} type="submit" className={clsx("small", `bg-[${color}] text-[${fgColor}]`)}>Start Chat</StyledButton>
-                    <Divider content='OR' />
+                    {hasSocialLogins && <Divider content='OR' />}
                     {googleLogin && <GoogleLoginButton clientId={clientId} />}
                     {enableGithubLogin && <GithubLoginButton client_id={githubAuthConfig?.client_id} source="widget" />}
                 </form>
