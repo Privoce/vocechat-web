@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, Suspense, useEffect, useState } from "react";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import toast from "react-hot-toast";
 import { KEY_LOCAL_MAGIC_TOKEN } from "../../app/config";
@@ -39,7 +39,6 @@ const GoogleLoginInner: FC<Props> = ({ type = "login", loaded, loadError }) => {
           toast.error("Something Error");
           break;
       }
-      return;
     }
   }, [error]);
 
@@ -74,17 +73,19 @@ const GoogleLoginButton: FC<Props> = ({ type = "login", clientId }) => {
   const [hasError, setHasError] = useState(false);
   if (!clientId) return null;
   return (
-    <GoogleOAuthProvider
-      onScriptLoadError={() => {
-        setHasError(true);
-      }}
-      onScriptLoadSuccess={() => {
-        setScriptLoaded(true);
-      }}
-      clientId={clientId}
-    >
-      <GoogleLoginInner type={type} loaded={scriptLoaded} loadError={hasError} />
-    </GoogleOAuthProvider>
+    <Suspense fallback={<span>loading...</span>}>
+      <GoogleOAuthProvider
+        onScriptLoadError={() => {
+          setHasError(true);
+        }}
+        onScriptLoadSuccess={() => {
+          setScriptLoaded(true);
+        }}
+        clientId={clientId}
+      >
+        <GoogleLoginInner type={type} loaded={scriptLoaded} loadError={hasError} />
+      </GoogleOAuthProvider>
+    </Suspense>
   );
 };
 

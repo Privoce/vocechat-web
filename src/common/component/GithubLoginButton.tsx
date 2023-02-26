@@ -18,9 +18,15 @@ const GithubLoginButton: FC<Props> = ({ type = "login", source = "webapp", clien
       if (key == 'widget' && !!newValue) {
         console.log("github logged in");
         localStorage.removeItem("widget");
-        const parentWindow = window.parent;
-        if (parentWindow) {
-          parentWindow.postMessage("RELOAD_WITH_OPEN", '*');
+        if (window.location !== window.parent.location) {
+          // in iframe
+          const parentWindow = window.parent;
+          if (parentWindow) {
+            parentWindow.postMessage("RELOAD_WITH_OPEN", '*');
+          }
+        } else {
+          // 刷新页面
+          location.reload();
         }
       }
     };
