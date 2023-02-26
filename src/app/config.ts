@@ -12,10 +12,11 @@ let prices: Price[] = [
   }
 ];
 
-// export const BASE_ORIGIN = `http://localhost:3333`;
+const local_dev = `https://dev.voce.chat`;
+// const local_dev = `http://localhost:3333`;
 export const BASE_ORIGIN = process.env.REACT_APP_RELEASE
   ? `${location.origin}`
-  : `https://dev.voce.chat`;
+  : local_dev;
 const BASE_URL = `${BASE_ORIGIN}/api`;
 export const getLicensePriceList = () => {
   const ps = prices.map((p, idx) => {
