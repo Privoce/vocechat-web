@@ -24,6 +24,7 @@
   "enable_smtp": "Enable SMTP First",
   "send_invite_link": "Or Send invite link to your friends",
   "share_invite_link": "Share this link to invite people to this server.",
+  "invite_link_faq": "Incorrect Invite Link?",
   "invite_link_expire": "Invite link expires in 48 hours",
   "generate_new_link": "Generate New Link",
 
