@@ -54,7 +54,7 @@ const FileMessage: FC<Props> = ({
     from: from_uid,
     to
   });
-  const { stopUploading, data, uploadFile, progress, isSuccess: uploadSuccess } = useUploadFile();
+  const { stopUploading, data, uploadFile, progress, isSuccess: uploadSuccess, isError } = useUploadFile();
   const fromUser = useAppSelector((store) => store.users.byId[from_uid]);
   const { size = 0, name, content_type } = properties ?? {};
   useEffect(() => {
@@ -89,6 +89,18 @@ const FileMessage: FC<Props> = ({
       handleUpSend({ url: content, name, type: content_type });
     }
   }, [content, name, content_type]);
+  const handleCancel = () => {
+    stopUploading();
+    URL.revokeObjectURL(content);
+    removeLocalMessage(properties.local_id);
+  };
+  useEffect(() => {
+    if (isError) {
+      // 撤回消息
+      handleCancel();
+    }
+  }, [isError]);
+
   useEffect(() => {
     const props = properties ?? {};
     const propsV2 = imageSize ? { ...props, ...imageSize } : props;
@@ -110,11 +122,7 @@ const FileMessage: FC<Props> = ({
       URL.revokeObjectURL(content);
     }
   }, [sendMessageSuccess, content]);
-  const handleCancel = () => {
-    stopUploading();
-    URL.revokeObjectURL(content);
-    removeLocalMessage(properties.local_id);
-  };
+
   if (!properties) return null;
   const icon = getFileIcon(content_type, name, "w-9 h-auto");
 

@@ -24,7 +24,7 @@ const useUploadFile = (props?: IProps) => {
   const canceledRef = useRef(false);
   const sliceUploadedCountRef = useRef(0);
   const totalSliceCountRef = useRef(1);
-  const [prepareUploadFile, { isLoading: isPreparing }] = usePrepareUploadFileMutation();
+  const [prepareUploadFile, { isLoading: isPreparing, isError: prepareFileError }] = usePrepareUploadFileMutation();
   const [uploadFileFn, { isLoading: isUploading, isError: uploadFileError }] =
     useUploadFileMutation();
 
@@ -41,6 +41,8 @@ const useUploadFile = (props?: IProps) => {
 
   const uploadFile = async (file?: File) => {
     if (!file) return;
+    console.log("up file", file);
+
     setData(null);
     const {
       name = `-${+new Date()}.${file.type.split("/")[1]}`,
@@ -95,7 +97,7 @@ const useUploadFile = (props?: IProps) => {
         }
       }
     }
-    // setUploadingFile(false);
+    // 出错 则返回
     if (!uploadResult || "error" in uploadResult) {
       return;
     }
@@ -157,7 +159,7 @@ const useUploadFile = (props?: IProps) => {
       2
     ),
     uploadFile,
-    isError: uploadFileError,
+    isError: uploadFileError || prepareFileError,
     isSuccess: !!data,
     stageFiles,
     addStageFile,
