@@ -34,10 +34,13 @@ const SessionList: FC<Props> = ({ tempSession }) => {
   useEffect(() => {
     const cSessions = channelIDs.map((id) => {
       const mids = channelMessage[id];
+      // console.log("midssss", mids);
+
       if (!mids || mids.length == 0) {
         return { key: `channel_${id}`, unreads: 0, id, type: "channel" };
       }
-      const mid = [...mids].sort().pop();
+      // 先转换成数字，再排序
+      const mid = [...mids].map(mid => +mid).sort().pop();
       return { key: `channel_${id}`, id, mid, type: "channel" };
     });
     const uSessions = DMs.map((id) => {
@@ -45,7 +48,8 @@ const SessionList: FC<Props> = ({ tempSession }) => {
       if (!mids || mids.length == 0) {
         return { key: `user_${id}`, unreads: 0, id, type: "user" };
       }
-      const mid = [...mids].sort().pop();
+      // 先转换成数字，再排序
+      const mid = [...mids].map(mid => +mid).sort().pop();
       return { key: `user_${id}`, type: "user", id, mid };
     });
     const tmps = [...(cSessions as ChatSession[]), ...(uSessions as ChatSession[])].sort((a, b) => {
