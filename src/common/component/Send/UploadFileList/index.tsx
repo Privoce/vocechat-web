@@ -53,7 +53,7 @@ export default function UploadFileList({
         />
       )}
 
-      <ul className="w-full overflow-auto flex justify-start p-4 pt-6 bg-gray-200 dark:bg-gray-800 rounded-t-lg">
+      <ul className="w-full overflow-auto flex gap-2 justify-start p-4 pt-6 bg-gray-200 dark:bg-gray-800 rounded-t-lg">
         {stageFiles.map(({ name, url, size, type }, idx: number) => {
           return (
             <li className="group relative flex flex-col bg-gray-100 dark:bg-gray-700 rounded p-2" key={url}>

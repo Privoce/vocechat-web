@@ -34,8 +34,6 @@ const useUploadFile = (props?: IProps) => {
     formData.append("file_id", file_id);
     formData.append("chunk_data", chunk);
     formData.append("chunk_is_last", `${is_last}`);
-    // old code
-    // formData.append("chunk_is_last", is_last);
     return uploadFileFn(formData);
   };
 

@@ -235,9 +235,6 @@ html.dark ::-webkit-scrollbar-thumb {
   padding-right: 0;
   padding-left: 8px;
 }
-/* [class^="toastui-editor-"] .toastui-editor-md-container .toastui-editor-md-splitter {
-  background-color: #d0d5dd;
-} */
 [class^="toastui-editor-"] .toastui-editor-md-container .ProseMirror {
   height: 100%;
 }
@@ -287,4 +284,13 @@ html.dark ::-webkit-scrollbar-thumb {
 }
 .toastui-editor-dark .toastui-editor-md-container {
   background-color: #4e5762 !important;
+}
+html.dark .slate-mention {
+  background: #333;
+}
+html.dark .slate-Combobox {
+  background: #333 !important;
+}
+html.dark .slate-Combobox li:hover {
+  background: #333 !important;
 }
