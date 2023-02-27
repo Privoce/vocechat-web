@@ -24,6 +24,7 @@
   "enable_smtp": "首先开启SMTP",
   "send_invite_link": "或者，向朋友发送邀请链接",
   "share_invite_link": "分享此链接，邀请朋友加入",
+  "invite_link_faq": "链接异常？",
 
   "invite_link_expire": "邀请链接有效期：48小时",
   "generate_new_link": "生成新邀请链接",
