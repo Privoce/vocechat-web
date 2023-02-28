@@ -10,19 +10,17 @@ import { useAppSelector } from "../../../app/store";
 
 interface Params {
   mid: number;
-  context: string;
+  context: "user" | "channel";
   contextId: number;
 }
 
 export default function useMessageOperation({ mid, context, contextId }: Params) {
   const { copy } = useCopy();
-  const { content_type, properties, currUid, from_uid, content } = useAppSelector((store) => {
+  const { loginUser, message, channel } = useAppSelector((store) => {
     return {
-      content: store.message[mid]?.content,
-      from_uid: store.message[mid]?.from_uid,
-      content_type: store.message[mid]?.content_type,
-      properties: store.message[mid]?.properties,
-      currUid: store.authData.user?.uid
+      channel: context == "channel" ? store.channels.byId[contextId] : undefined,
+      message: store.message[mid],
+      loginUser: store.authData.user
     };
   });
   const { canPin, pins, unpinMessage, isUnpinSuccess } = usePinMessage(
@@ -32,7 +30,7 @@ export default function useMessageOperation({ mid, context, contextId }: Params)
   const [pinModalVisible, setPinModalVisible] = useState(false);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [forwardModalVisible, setForwardModalVisible] = useState(false);
-
+  const { content_type, properties, from_uid, content } = message ?? {};
   const toggleForwardModal = () => {
     // hideAll();
     setForwardModalVisible((prev) => !prev);
@@ -74,8 +72,8 @@ export default function useMessageOperation({ mid, context, contextId }: Params)
     !!properties?.content_type &&
     properties?.content_type.startsWith("image");
   const enableEdit =
-    currUid == from_uid && [ContentTypes.text, ContentTypes.markdown].includes(content_type);
-  const canDelete = currUid == from_uid;
+    loginUser?.uid == from_uid && [ContentTypes.text, ContentTypes.markdown].includes(content_type);
+  const canDelete = loginUser?.uid == from_uid || loginUser?.is_admin || (channel && channel.owner == loginUser?.uid);
   const canCopy = [ContentTypes.text, ContentTypes.markdown].includes(content_type) || isImage;
   return {
     copyContent: isImage ? copyContent.bind(null, true) : copyContent.bind(null, false),
