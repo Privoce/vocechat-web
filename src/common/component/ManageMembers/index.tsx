@@ -84,44 +84,45 @@ const ManageMembers: FC<Props> = ({ cid }) => {
                 </div>
               </div>
               <div className="flex items-center gap-7">
-                <span className="text-xs text-right text-gray-500 dark:text-slate-100 flex items-center gap-1">
-                  {is_admin ? t("admin") : t("user")}
-                  {switchRoleVisible && (
-                    <Tippy
-                      interactive
-                      placement="bottom-end"
-                      trigger="click"
-                      content={
-                        <ul className="context-menu">
-                          <li
-                            className="item sb"
-                            onClick={handleToggleRole.bind(null, {
-                              ignore: is_admin,
-                              uid,
-                              isAdmin: true
-                            })}
-                          >
-                            {t("admin")}
-                            {is_admin && <IconCheck className="icon" />}
-                          </li>
-                          <li
-                            className="item sb"
-                            onClick={handleToggleRole.bind(null, {
-                              ignore: !is_admin,
-                              uid,
-                              isAdmin: false
-                            })}
-                          >
-                            {t("user")}
-                            {!is_admin && <IconCheck className="icon" />}
-                          </li>
-                        </ul>
-                      }
-                    >
-                      <IconArrowDown className="cursor-pointer dark:fill-slate-50" />
-                    </Tippy>
-                  )}
-                </span>
+                {switchRoleVisible ? <Tippy
+                  interactive
+                  placement="bottom-end"
+                  trigger="click"
+                  content={
+                    <ul className="context-menu">
+                      <li
+                        className="item sb"
+                        onClick={handleToggleRole.bind(null, {
+                          ignore: is_admin,
+                          uid,
+                          isAdmin: true
+                        })}
+                      >
+                        {t("admin")}
+                        {is_admin && <IconCheck className="icon" />}
+                      </li>
+                      <li
+                        className="item sb"
+                        onClick={handleToggleRole.bind(null, {
+                          ignore: !is_admin,
+                          uid,
+                          isAdmin: false
+                        })}
+                      >
+                        {t("user")}
+                        {!is_admin && <IconCheck className="icon" />}
+                      </li>
+                    </ul>
+                  }
+                >
+                  <span className="text-xs text-right text-gray-500 dark:text-slate-100 flex items-center gap-1 cursor-pointer">
+                    {is_admin ? t("admin") : t("user")}
+                    <IconArrowDown className="dark:fill-slate-50" />
+                  </span>
+                </Tippy> :
+                  <span className="text-xs text-right text-gray-500 dark:text-slate-100 flex items-center gap-1">
+                    {is_admin ? t("admin") : t("user")}</span>}
+
                 {dotsVisible && (
                   <Tippy
                     interactive

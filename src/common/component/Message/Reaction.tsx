@@ -76,7 +76,7 @@ const Reaction: FC<Props> = ({ mid, reactions = null, readOnly = false }) => {
               placement="top"
               content={<ReactionDetails uids={uids} emoji={reaction as keyof Emojis} index={idx} />}
             >
-              <i className="emoji">
+              <i className="emoji w-4 h-4">
                 <ReactionItem native={reaction as keyof Emojis} />
               </i>
             </Tippy>
