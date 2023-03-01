@@ -113,7 +113,7 @@ const Session: FC<IProps> = ({
           to={type == "user" ? `/chat/dm/${id}` : `/chat/channel/${id}`}
           onContextMenu={handleContextMenuEvent}
         >
-          <div className="flex bg-slate-50 rounded-full">
+          <div className="flex shrink-0 w-10 h-10 bg-slate-50 rounded-full overflow-hidden">
             {type == "user" ? (
               <User avatarSize={40} compact interactive={false} uid={id} />
             ) : (
