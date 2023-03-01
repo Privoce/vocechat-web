@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, FC, ReactElement } from "react";
 import { useDrop } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
 import clsx from "clsx";
+import { toast } from "react-hot-toast";
 
 import ImagePreviewModal from "../../../common/component/ImagePreviewModal";
 import Send from "../../../common/component/Send";
@@ -12,6 +13,7 @@ import LoginTip from "./LoginTip";
 import useLicense from "../../../common/hook/useLicense";
 import LicenseUpgradeTip from "./LicenseOutdatedTip";
 import DnDTip from "./DnDTip";
+import IconWarning from '../../../assets/icons/warning.svg';
 
 interface Props {
   readonly?: boolean;
@@ -39,8 +41,9 @@ const Layout: FC<Props> = ({
   const { addStageFile } = useUploadFile({ context, id: to });
   const messagesContainer = useRef<HTMLDivElement>(null);
   const [previewImage, setPreviewImage] = useState(null);
-  const { selects, channelsData, usersData } = useAppSelector((store) => {
+  const { selects, channelsData, usersData, inputMode } = useAppSelector((store) => {
     return {
+      inputMode: store.ui.inputMode,
       selects: store.ui.selectMessages[`${context}_${to}`],
       channelsData: store.channels.byId,
       usersData: store.users.byId
@@ -50,6 +53,13 @@ const Layout: FC<Props> = ({
     () => ({
       accept: [NativeTypes.FILE],
       drop({ files }) {
+        // console.log("iii", inputMode);
+        if (inputMode !== "text") {
+          toast("DnD not allowed in this input mode", {
+            icon: <IconWarning className="w-5 h-5" />,
+          });
+          return;
+        };
         if (files.length) {
           const filesData = files.map((file) => {
             const { size, type, name } = file;
@@ -63,7 +73,7 @@ const Layout: FC<Props> = ({
         isActive: monitor.canDrop() && monitor.isOver()
       })
     }),
-    [context, to]
+    [context, to, inputMode]
   );
 
   useEffect(() => {
@@ -132,7 +142,7 @@ const Layout: FC<Props> = ({
         </main>
         {aside && <div className={clsx("z-50 p-3 absolute right-0 top-0 translate-x-full flex-col hidden md:flex")}>{aside}</div>}
         {users && <div className="hidden md:block">{users}</div>}
-        {!readonly && isActive && (
+        {!readonly && inputMode == "text" && isActive && (
           <DnDTip context={context} name={name} />
         )}
       </section>
