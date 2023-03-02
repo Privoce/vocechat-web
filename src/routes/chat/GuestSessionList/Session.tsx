@@ -40,8 +40,8 @@ const Session: FC<IProps> = ({ id, mid }) => {
   return (
     <li className="session">
       <NavLink className={({ isActive: linkActive }) => clsx(`nav flex gap-2 rounded-lg p-2 w-full md:hover:bg-gray-500/20`, linkActive && "bg-gray-500/20")} to={`/chat/channel/${id}`}>
-        <div className="flex shrink-0 w-10 h-10 bg-slate-50 rounded-full overflow-hidden">
-          <Avatar width={40} height={40} className="icon" type="channel" name={name} src={icon} />
+        <div className="flex shrink-0">
+          <Avatar width={40} height={40} className="icon rounded-full" type="channel" name={name} src={icon} />
         </div>
         <div className="w-full flex flex-col justify-between">
           <div className="flex items-center justify-between">

@@ -113,14 +113,14 @@ const Session: FC<IProps> = ({
           to={type == "user" ? `/chat/dm/${id}` : `/chat/channel/${id}`}
           onContextMenu={handleContextMenuEvent}
         >
-          <div className="flex shrink-0 w-10 h-10 bg-slate-50 rounded-full overflow-hidden">
+          <div className="flex shrink-0">
             {type == "user" ? (
               <User avatarSize={40} compact interactive={false} uid={id} />
             ) : (
               <Avatar
                 width={40}
                 height={40}
-                className="icon"
+                className="icon rounded-full"
                 type="channel"
                 name={name}
                 src={icon}
