@@ -49,7 +49,7 @@ const handler = (data: ChatEvent, dispatch: AppDispatch, currState: CurrentState
       dispatch(updateAfterMid(mid));
       break;
   }
-  const { ready, loginUid, readUsers = {}, readChannels = {} } = currState;
+  const { loginUid, readUsers = {}, readChannels = {} } = currState;
   const to = "gid" in target ? "channel" : "user";
   const appendMessage = to == "user" ? addUserMsg : addChannelMsg;
   const self = from_uid == loginUid;

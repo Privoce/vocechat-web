@@ -54,6 +54,7 @@
   "tip": {
     "update": "Update Successfully!",
     "delete": "Delete Successfully!",
+    "reg": "Register Successfully!",
     "login": "Login Successfully!",
     "logout": "Logout Successfully!",
     "pin": "Pin Message Successfully!",
