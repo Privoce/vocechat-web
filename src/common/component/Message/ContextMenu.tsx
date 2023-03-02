@@ -95,7 +95,7 @@ const MessageContextMenu: FC<Props> = ({
       icon: <IconDelete className="icon" />,
       handler: toggleDeleteModal
     }
-  ].filter((v) => typeof v !== "boolean" && "title" in v) as Item[];
+  ].filter((v) => typeof v !== "boolean" && "title" in (v ?? {})) as Item[];
   return (
     <>
       {ForwardModal}
