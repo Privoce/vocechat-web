@@ -39,8 +39,6 @@ const Login = () => {
             name: `${name}-[${from}]`,
             email,
             password: email,
-            gender: 0,
-            device: "unknown"
         });
         // const content = new FormData(form).get("prompt") as string;
     };

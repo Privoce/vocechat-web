@@ -18,7 +18,7 @@ const InvitePage: FC = () => {
   const { token: loginToken } = useAppSelector((store) => store.authData);
   const [secondPwd, setSecondPwd] = useState("");
   const [samePwd, setSamePwd] = useState(true);
-  const [token, setToken] = useState<string | null>("");
+  const [token, setToken] = useState<string | undefined>();
   const [valid, setValid] = useState(false);
   const [register, { data, isLoading, isSuccess, isError, error }] = useRegisterMutation();
   const [checkToken, { data: isValid, isLoading: checkLoading, isSuccess: checkSuccess }] =
@@ -26,7 +26,7 @@ const InvitePage: FC = () => {
 
   useEffect(() => {
     const query = new URLSearchParams(location.search);
-    setToken(query.get("token"));
+    setToken(query.get("token") ?? undefined);
   }, []);
 
   useEffect(() => {
@@ -54,7 +54,6 @@ const InvitePage: FC = () => {
     register({
       ...input,
       magic_token: token,
-      gender: 1
     });
   };
 

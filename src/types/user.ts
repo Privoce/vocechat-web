@@ -48,8 +48,8 @@ export interface UserDTO extends Partial<Pick<User, "name" | "gender" | "languag
 export interface UserCreateDTO extends Pick<User, "name" | "gender" | "language" | "email" | "webhook_url" | "is_bot" | "is_admin"> {
   password: string;
 }
-export interface UserRegDTO extends Pick<User, "name" | "gender" | "language" | "email">, Pick<UserDevice, "device" | "device_token"> {
-  password: string;
+export interface UserRegDTO extends Partial<Pick<User, "name" | "gender" | "language" | "email">>, Partial<Pick<UserDevice, "device" | "device_token">> {
+  password?: string;
   magic_token?: string
 }
 export interface UserRegResponse extends AuthToken {

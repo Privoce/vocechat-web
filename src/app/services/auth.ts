@@ -78,7 +78,11 @@ export const authApi = createApi({
       query: (data) => ({
         url: `user/register`,
         method: "POST",
-        body: data
+        body: {
+          ...data,
+          gender: 0,
+          device: "browser"
+        }
       })
     }),
     // 更新token

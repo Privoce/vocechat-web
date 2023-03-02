@@ -1,48 +1,49 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 import BASE_URL, { KEY_LOCAL_MAGIC_TOKEN } from "../../app/config";
 import Input from "../../common/component/styled/Input";
 import Button from "../../common/component/styled/Button";
-import { useLazyCheckEmailQuery, useSendRegMagicLinkMutation } from "../../app/services/auth";
+import { useLazyCheckEmailQuery, useRegisterMutation, useSendRegMagicLinkMutation } from "../../app/services/auth";
 import EmailNextTip from "./EmailNextStepTip";
 import SignInLink from "./SignInLink";
 import Divider from "../../common/component/Divider";
 
-import { useTranslation } from "react-i18next";
 import { useGetLoginConfigQuery } from "../../app/services/server";
 import SocialLoginButtons from "../login/SocialLoginButtons";
+import { setAuthData } from "../../app/slices/auth.data";
+import { useDispatch } from "react-redux";
 
 interface AuthForm {
+  name?: string,
   email: string;
   password: string;
   confirmPassword: string;
 }
 
-export default function Reg() {
+export default function Register() {
   const { t } = useTranslation("auth");
+  const { t: ct } = useTranslation();
   const [sendRegMagicLink, { isLoading: signingUp, data, isSuccess }] =
     useSendRegMagicLinkMutation();
+  const dispatch = useDispatch();
+  const [register, { isLoading: registering, data: regData, isSuccess: regSuccess }] = useRegisterMutation();
   const [checkEmail, { isLoading: checkingEmail }] = useLazyCheckEmailQuery();
   const { data: loginConfig, isSuccess: loginConfigSuccess } = useGetLoginConfigQuery();
 
   // const navigateTo = useNavigate();
-  const [magicToken, setMagicToken] = useState("");
   const [input, setInput] = useState<AuthForm>({
     email: "",
     password: "",
     confirmPassword: ""
   });
-
-  useEffect(() => {
-    const query = new URLSearchParams(location.search);
-    const token = query.get("magic_token");
-    if (token) {
-      //本地存一下 magic token 后续oauth流程用到
-      localStorage.setItem(KEY_LOCAL_MAGIC_TOKEN, token);
-      setMagicToken(token);
-    }
-  }, []);
-
+  const query = new URLSearchParams(location.search);
+  const magic_token = query.get("magic_token") ?? undefined;
+  if (magic_token) {
+    //本地存一下 magic token 后续oauth流程用到
+    localStorage.setItem(KEY_LOCAL_MAGIC_TOKEN, magic_token);
+  }
+  // send reg link
   useEffect(() => {
     if (isSuccess && data) {
       const { new_magic_token, mail_is_sent } = data;
@@ -52,21 +53,40 @@ export default function Reg() {
       }
     }
   }, [isSuccess, data]);
+  // register
+  useEffect(() => {
+    if (regSuccess && regData) {
+      // 更新本地认证信息
+      toast.success(ct("tip.reg"));
+      dispatch(setAuthData(regData));
+      // tricky
+      location.href = `/#/`;
+    }
+  }, [regSuccess, regData]);
 
   const handleReg = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    const { email, password, confirmPassword } = input;
+    const { name, email, password, confirmPassword } = input;
     if (password !== confirmPassword) {
       toast.error("Not Same Password!");
       return;
     }
     const { data: canReg } = await checkEmail(email);
     if (canReg) {
-      sendRegMagicLink({
-        magic_token: magicToken,
-        email,
-        password
-      });
+      if (magic_token) {
+        sendRegMagicLink({
+          magic_token,
+          email,
+          password
+        });
+      } else {
+        // 带用户名的注册
+        register({
+          name,
+          email,
+          password
+        });
+      }
     } else {
       toast.error("Email already registered!");
     }
@@ -93,12 +113,12 @@ export default function Reg() {
     who_can_sign_up: whoCanSignUp
   } = loginConfig;
   // magic token 没有并且没有开放注册
-  if (whoCanSignUp !== "EveryOne" && !magicToken)
+  if (whoCanSignUp !== "EveryOne" && !magic_token)
     // todo: i18n
     return <>Sign up method is updated to Invitation Link Only</>;
-  const { email, password, confirmPassword } = input;
+  const { name, email, password, confirmPassword } = input;
   if (data?.mail_is_sent) return <EmailNextTip />;
-  const isLoading = signingUp || checkingEmail;
+  const isLoading = registering || signingUp || checkingEmail;
 
   return (
     <>
@@ -109,6 +129,17 @@ export default function Reg() {
       </div>
 
       <form className="flex flex-col gap-5 w-80 md:min-w-[360px]" onSubmit={handleReg} autoSave={"false"} autoComplete={"true"}>
+        {/* 不存在 magic token */}
+        {!magic_token && <Input
+          className="large"
+          name="name"
+          value={name}
+          required
+          type="name"
+          placeholder={t("placeholder_name")}
+          data-type="name"
+          onChange={handleInput}
+        />}
         <Input
           className="large"
           name="email"
@@ -150,7 +181,7 @@ export default function Reg() {
       <div className="flex flex-col gap-3 py-3">
         <SocialLoginButtons type="register" />
       </div>
-      <SignInLink token={magicToken} />
+      <SignInLink token={magic_token} />
     </>
   );
 }
