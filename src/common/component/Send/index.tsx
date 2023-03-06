@@ -17,6 +17,7 @@ import MixedInput, { useMixedEditor } from "../MixedInput";
 import useDraft from "../../hook/useDraft";
 import useUploadFile from "../../hook/useUploadFile";
 import { useAppDispatch, useAppSelector } from "../../../app/store";
+import TextInput from "../TextInput";
 
 const Modes = {
   text: "text",
@@ -138,45 +139,50 @@ const Send: FC<IProps> = ({
     context == "channel" ? (channelsData[id]?.is_public ? uids : channelsData[id]?.members) : [];
   const isMarkdownMode = mode == Modes.markdown;
   return (
-    <div
-      className={clsx(`send relative bg-gray-200 rounded-lg w-full dark:bg-gray-600 ${mode} ${markdownFullscreen ? "fullscreen" : ""} ${replying_mid ? "reply" : ""
-        } ${context}`, isMarkdownMode && markdownFullscreen && '-mt-9')}
-    >
-      {replying_mid && <Replying context={context} mid={replying_mid} id={id} />}
-      {mode == Modes.text && <UploadFileList context={context} id={id} />}
+    <>
+      {/* mobile input */}
+      <TextInput sendMessage={handleSendMessage} placeholder={placeholder} />
+      {/* PC input */}
+      <div
+        className={clsx(`send hidden md:block relative bg-gray-200 rounded-lg w-full dark:bg-gray-600 ${mode} ${markdownFullscreen ? "fullscreen" : ""} ${replying_mid ? "reply" : ""
+          } ${context}`, isMarkdownMode && markdownFullscreen && '-mt-9')}
+      >
+        {replying_mid && <Replying context={context} mid={replying_mid} id={id} />}
+        {mode == Modes.text && <UploadFileList context={context} id={id} />}
 
-      <div className={clsx(`flex justify-between items-center gap-4 px-2 md:px-4 py-1 md:py-3.5`, isMarkdownMode && `grid grid-cols-[1fr_1fr] grid-rows-[auto_auto] gap-0`)}>
-        <EmojiPicker selectEmoji={insertEmoji} />
-        {mode == Modes.text && (
-          <MixedInput
-            updateDraft={getUpdateDraft()}
-            initialValue={getDraft()}
-            members={members}
-            id={`${context}_${id}`}
-            placeholder={placeholder}
-            sendMessages={handleSendMessage}
+        <div className={clsx(`flex justify-between items-center gap-4 px-4 py-3.5`, isMarkdownMode && `grid grid-cols-[1fr_1fr] grid-rows-[auto_auto] gap-0`)}>
+          <EmojiPicker selectEmoji={insertEmoji} />
+          {mode == Modes.text && (
+            <MixedInput
+              updateDraft={getUpdateDraft()}
+              initialValue={getDraft()}
+              members={members}
+              id={`${context}_${id}`}
+              placeholder={placeholder}
+              sendMessages={handleSendMessage}
+            />
+          )}
+          <Toolbar
+            context={context}
+            to={id}
+            mode={mode}
+            toggleMode={toggleMode}
+            fullscreen={markdownFullscreen}
+            toggleMarkdownFullscreen={toggleMarkdownFullscreen}
           />
-        )}
-        <Toolbar
-          context={context}
-          to={id}
-          mode={mode}
-          toggleMode={toggleMode}
-          fullscreen={markdownFullscreen}
-          toggleMarkdownFullscreen={toggleMarkdownFullscreen}
-        />
-        {mode == Modes.markdown && (
-          <MarkdownEditor
-            updateDraft={getUpdateDraft("markdown")}
-            initialValue={getDraft("markdown")}
-            height={markdownFullscreen ? `calc(100vh - 168px)` : `30vh`}
-            placeholder={placeholder}
-            setEditorInstance={setMarkdownEditor}
-            sendMarkdown={sendMarkdown}
-          />
-        )}
+          {mode == Modes.markdown && (
+            <MarkdownEditor
+              updateDraft={getUpdateDraft("markdown")}
+              initialValue={getDraft("markdown")}
+              height={markdownFullscreen ? `calc(100vh - 168px)` : `30vh`}
+              placeholder={placeholder}
+              setEditorInstance={setMarkdownEditor}
+              sendMarkdown={sendMarkdown}
+            />
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

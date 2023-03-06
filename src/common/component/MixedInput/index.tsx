@@ -17,13 +17,11 @@ import {
   MentionCombobox
 } from "@udecode/plate";
 import { createComboboxPlugin } from "@udecode/plate-combobox";
-import { useTranslation } from "react-i18next";
 import { ReactEditor } from "slate-react";
 import useUploadFile from "../../hook/useUploadFile";
 import { CONFIG } from "./config";
 import User from "../User";
 import { useAppSelector } from "../../../app/store";
-import Button from "../styled/Button";
 import { isMobile } from "../../utils";
 export const TEXT_EDITOR_PREFIX = "_text_editor";
 
@@ -49,7 +47,7 @@ const Plugins: FC<Props> = ({
   sendMessages,
   members = []
 }) => {
-  const { t } = useTranslation();
+
   // const { getMenuProps, getItemProps } = useComboboxControls();
   const [context, to] = id.split("_") as [ctx, number];
   const { addStageFile } = useUploadFile({ context, id: to });
@@ -229,7 +227,6 @@ const Plugins: FC<Props> = ({
           />
         ) : null}
       </Plate>
-      <Button onClick={handleSend} className="mini md:hidden absolute right-1.5 bottom-1.5">{t("action.send")}</Button>
     </div>
   );
 };
