@@ -206,7 +206,7 @@
     "client_version": "Client Version",
     "server_version": "Server Version",
     "build_time": "Build Timestamp",
-    "sync": "Sync to the latest version"
+    "sync": "Sync to the latest version of web client"
   },
   "api_doc": {
     "desc": "We have detailed API documentation that you can build your own chat tool based on.",
