@@ -1,6 +1,6 @@
 {
   "name": "vocechat-web",
-  "version": "0.3.45",
+  "version": "0.3.47",
   "private": true,
   "homepage": "https://voce.chat",
   "dependencies": {
@@ -61,6 +61,7 @@
     "react-syntax-highlighter": "^15.5.0",
     "react-textarea-autosize": "^8.4.0",
     "react-use-wizard": "^2.2.1",
+    "react-viewport-list": "^7.0.0-beta.4",
     "resolve": "^1.22.1",
     "rooks": "^7.4.3",
     "slate": "^0.91.4",

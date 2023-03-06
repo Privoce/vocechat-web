@@ -1,6 +1,8 @@
-import { memo, useEffect } from "react";
+import { memo, useEffect, useRef } from "react";
 import { NavLink, useParams, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { ViewportList } from 'react-viewport-list';
+
 import { updateRememberedNavs } from "../../app/slices/ui";
 import Search from "./Search";
 import User from "../../common/component/User";
@@ -12,6 +14,9 @@ import clsx from "clsx";
 import GoBackNav from "../../common/component/GoBackNav";
 
 function UsersPage() {
+  const ref = useRef<HTMLDivElement | null>(
+    null,
+  );
   const dispatch = useDispatch();
   const { pathname } = useLocation();
   const { input, updateInput, users } = useFilteredUsers();
@@ -32,16 +37,19 @@ function UsersPage() {
         isUserDetail && "hidden md:flex"
       )}>
         <Search input={input} updateInput={updateInput} />
-        <div className="px-2 pt-3 pb-20 md:py-3 overflow-scroll">
-          <nav className="flex flex-col md:gap-1">
-            {users.map(({ uid }) => {
+        <div className="flex flex-col md:gap-1 px-2 pt-3 pb-20 md:py-3 overflow-scroll" ref={ref}>
+          <ViewportList
+            viewportRef={ref}
+            items={users.map(({ uid }) => uid)}
+          >
+            {(uid) => {
               return (
                 <NavLink key={uid} className={({ isActive }) => `rounded-md md:hover:bg-gray-500/10 ${isActive ? "bg-gray-500/10" : ""}`} to={`/users/${uid}`}>
                   <User uid={uid} enableContextMenu={true} />
                 </NavLink>
               );
-            })}
-          </nav>
+            }}
+          </ViewportList>
         </div>
       </div>
       <div className={clsx(`md:rounded-r-2xl bg-white w-full flex justify-center items-start dark:bg-gray-700`,

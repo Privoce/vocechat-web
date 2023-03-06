@@ -10301,6 +10301,11 @@ react-use@^17.3.2:
     ts-easing "^0.2.0"
     tslib "^2.1.0"
 
+react-viewport-list@^7.0.0-beta.4:
+  version "7.0.0-beta.4"
+  resolved "https://mirrors.cloud.tencent.com/npm/react-viewport-list/-/react-viewport-list-7.0.0-beta.4.tgz#bb1a5ebb6485fc11df1b50af9c9b8a7cf3552501"
+  integrity sha512-6Jv5+CYNl/0X3BQITxSwgfuqK53R2SXENlGjnLkNqrkGDs7RC9ehJRBrJwPRvvRSPLWi1J2AatrndiOxcesdVQ==
+
 react@^18.2.0:
   version "18.2.0"
   resolved "https://mirrors.cloud.tencent.com/npm/react/-/react-18.2.0.tgz#555bd98592883255fa00de14f1151a917b5d77d5"

@@ -10,7 +10,6 @@ import { updateRememberedNavs } from "../../../app/slices/ui";
 import useMessageFeed from "../../../common/hook/useMessageFeed";
 import ChannelIcon from "../../../common/component/ChannelIcon";
 import Tooltip from "../../../common/component/Tooltip";
-import User from "../../../common/component/User";
 import Layout from "../Layout";
 import { renderMessageFragment } from "../utils";
 import EditIcon from "../../../assets/icons/edit.svg";
@@ -18,12 +17,12 @@ import IconFav from "../../../assets/icons/bookmark.svg";
 import IconPeople from "../../../assets/icons/people.svg";
 import IconPin from "../../../assets/icons/pin.svg";
 
-import IconAdd from "../../../assets/icons/add.svg";
-import InviteModal from "../../../common/component/InviteModal";
+
 import LoadMore from "../LoadMore";
 import { useAppSelector } from "../../../app/store";
 import { useTranslation } from "react-i18next";
 import GoBackNav from "../../../common/component/GoBackNav";
+import Members from "./Members";
 type Props = {
   cid?: number;
   dropFiles?: File[];
@@ -45,7 +44,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
   const [updateReadIndex] = useReadMessageMutation();
   const updateReadDebounced = useDebounce(updateReadIndex, 300);
   const [membersVisible, setMembersVisible] = useState(true);
-  const [addMemberModalVisible, setAddMemberModalVisible] = useState(false);
+
   const {
     selects,
     userIds,
@@ -73,9 +72,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
   const toggleMembersVisible = () => {
     setMembersVisible((prev) => !prev);
   };
-  const toggleAddVisible = () => {
-    setAddMemberModalVisible((prev) => !prev);
-  };
+
   if (!data) return null;
   const { name, description, is_public, members = [], owner } = data;
   const memberIds = is_public ? userIds : members.slice(0).sort((n) => (n == owner ? -1 : 0));
@@ -86,7 +83,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
   const toolClass = `relative cursor-pointer`;
   return (
     <>
-      {addMemberModalVisible && <InviteModal cid={cid} closeModal={toggleAddVisible} />}
+
       <Layout
         to={cid}
         context="channel"
@@ -143,27 +140,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
           </header>
         }
         users={
-          <div className={`h-full flex-col gap-1 w-[226px] overflow-y-scroll p-2 shadow-[inset_1px_0px_0px_rgba(0,_0,_0,_0.1)] ${membersVisible ? "flex" : "hidden"}`}>
-            {addVisible && (
-              <div className="cursor-pointer flex items-center justify-start gap-1 select-none rounded-lg p-2.5 md:hover:bg-gray-500/10" onClick={toggleAddVisible}>
-                <IconAdd className="w-6 h-6 dark:fill-slate-300" />
-                <div className="font-semibold text-sm text-gray-600 dark:text-gray-50">{t("add_channel_members")}</div>
-              </div>
-            )}
-            {memberIds.map((uid: number) => {
-              return (
-                <User
-                  enableContextMenu={true}
-                  cid={cid}
-                  owner={owner == uid}
-                  key={uid}
-                  uid={uid}
-                  dm
-                  popover
-                />
-              );
-            })}
-          </div>
+          <Members uids={memberIds} addVisible={addVisible} cid={cid} ownerId={owner} membersVisible={membersVisible} />
         }
       >
         <>
