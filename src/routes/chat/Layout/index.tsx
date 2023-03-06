@@ -1,10 +1,10 @@
-import { useState, useRef, useEffect, FC, ReactElement } from "react";
+import { useRef, useEffect, FC, ReactElement } from "react";
 import { useDrop } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
 import clsx from "clsx";
 import { toast } from "react-hot-toast";
 
-import ImagePreviewModal from "../../../common/component/ImagePreviewModal";
+
 import Send from "../../../common/component/Send";
 import Operations from "./Operations";
 import useUploadFile from "../../../common/hook/useUploadFile";
@@ -14,6 +14,7 @@ import useLicense from "../../../common/hook/useLicense";
 import LicenseUpgradeTip from "./LicenseOutdatedTip";
 import DnDTip from "./DnDTip";
 import IconWarning from '../../../assets/icons/warning.svg';
+import ImagePreview from "../../../common/component/ImagePreview";
 
 interface Props {
   readonly?: boolean;
@@ -40,7 +41,7 @@ const Layout: FC<Props> = ({
   const { reachLimit } = useLicense();
   const { addStageFile } = useUploadFile({ context, id: to });
   const messagesContainer = useRef<HTMLDivElement>(null);
-  const [previewImage, setPreviewImage] = useState(null);
+
   const { selects, channelsData, usersData, inputMode } = useAppSelector((store) => {
     return {
       inputMode: store.ui.inputMode,
@@ -86,46 +87,21 @@ const Layout: FC<Props> = ({
       addStageFile(filesData);
     }
   }, [dropFiles]);
-
-  const closePreviewModal = () => {
-    setPreviewImage(null);
-  };
-
-  useEffect(() => {
-    const container = messagesContainer?.current;
-    if (!container) return;
-    // 点击查看大图
-    container.addEventListener(
-      "click",
-      (evt) => {
-        const target = evt.target as HTMLImageElement;
-        if (!target) return;
-        if (target.nodeName == "IMG" && target.classList.contains("preview")) {
-          const thumbnail = target.src;
-          const originUrl = target.dataset.origin || target.src;
-          const downloadLink = target.dataset.download || target.src;
-          const meta = JSON.parse(target.dataset.meta || "{}");
-          setPreviewImage({ thumbnail, originUrl, downloadLink, ...meta });
-        }
-      },
-      true
-    );
-  }, []);
   const name = context == "channel" ? channelsData[to]?.name : usersData[to]?.name;
   return (
     <>
-      {previewImage && <ImagePreviewModal data={previewImage} closeModal={closePreviewModal} />}
+      <ImagePreview container={messagesContainer.current} />
       <section ref={drop} className={`relative h-full w-full rounded-r-2xl flex`}>
         <main className="flex flex-col flex-1">
           {header}
-          <div className="w-full h-full flex items-start justify-between relative" ref={messagesContainer}>
-            <div className="rounded-br-2xl flex flex-col absolute bottom-0 w-full h-full">
+          <div className="w-full h-full flex items-start justify-between relative" >
+            <div className="rounded-br-2xl flex flex-col absolute bottom-0 w-full h-full" ref={messagesContainer}>
               {/* 消息流 */}
               <article id={`VOCECHAT_FEED_${context}_${to}`} className="w-full h-full px-1 md:px-4 py-4.5 overflow-x-hidden overflow-y-scroll">
                 {children}
               </article>
               {/* 发送框 */}
-              <div className={`px-2 py-0 md:p-4  ${selects ? "selecting" : ""}`}>
+              <div className={`px-2 py-0 md:p-4 ${selects ? "selecting" : ""}`}>
                 {readonly ? (
                   <LoginTip />
                 ) : reachLimit ? (
