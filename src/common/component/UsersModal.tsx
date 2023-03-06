@@ -24,9 +24,9 @@ const UsersModal: FC<Props> = ({ closeModal }) => {
 
   return (
     <Modal>
-      <div className="flex flex-col w-80 md:w-[440px] max-h-[402px] bg-white drop-shadow rounded-lg" ref={wrapperRef}>
+      <div className="flex flex-col w-80 md:w-[440px] max-h-[402px] bg-white dark:bg-gray-900 drop-shadow rounded-lg" ref={wrapperRef}>
         <div className="shadow-md p-2">
-          <input className=" p-2 text-sm" value={input} onChange={handleSearch} placeholder={t("search_user_placeholder")} />
+          <input className="p-2 text-sm bg-transparent dark:text-white" value={input} onChange={handleSearch} placeholder={t("search_user_placeholder")} />
         </div>
         {users && (
           <ul className="flex flex-col overflow-y-scroll h-[260px] py-4">

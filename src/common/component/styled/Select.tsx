@@ -59,7 +59,7 @@ const Select: FC<Props> = ({ options = [], updateSelect = null, current = null }
       }
     >
       <div className="select-none border border-solid border-slate-200 p-2 flex items-center gap-2" onClick={toggleVisible}>
-        <span className="text-sm text-gray-500 min-w-[76px]">{(current !== null ? current : curr)?.title || t("action.select")}</span>
+        <span className="text-sm text-gray-500 dark:text-gray-200 min-w-[76px]">{(current !== null ? current : curr)?.title || t("action.select")}</span>
         <IconArrow className="!w-5 !h-5" />
       </div>
     </Tippy>

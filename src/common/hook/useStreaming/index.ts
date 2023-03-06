@@ -37,7 +37,6 @@ const getQueryString = (params: { [key: string]: string }) => {
 };
 
 let SSE: EventSource | undefined;
-// let connectionIsOpen = false;
 // let opened = false; //标识SSE打开过
 let aliveInter: number | ReturnType<typeof setTimeout> = 0;
 export default function useStreaming() {
@@ -59,7 +58,7 @@ export default function useStreaming() {
     console.info("debug SSE: clear prev timeout", aliveInter);
     aliveInter = setTimeout(() => {
       console.info("debug SSE: start reconnect");
-      // 有网的情况再试
+      // 判断有网再试
       if (navigator.onLine) {
         console.info("debug SSE: start reconnect onLine");
         // 重启连接
@@ -71,10 +70,6 @@ export default function useStreaming() {
     console.info("debug SSE: start new timeout", aliveInter);
   };
   const startStreaming = useCallback(async () => {
-    // if (connectionIsOpen) {
-    //   console.log("connection is open, return");
-    //   return;
-    // };
     console.info("debug SSE: clear timeout at startStreaming", aliveInter);
     clearTimeout(aliveInter);
     if (SSE && (SSE.readyState === EventSource.OPEN || SSE.readyState === EventSource.CONNECTING)) {

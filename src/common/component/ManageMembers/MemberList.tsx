@@ -96,7 +96,7 @@ const MemberList: FC<Props> = ({ cid }) => {
                                             })}
                                         >
                                             {t("admin")}
-                                            {is_admin && <IconCheck className="icon" />}
+                                            {is_admin && <IconCheck className="icon dark:fill-white" />}
                                         </li>
                                         <li
                                             className="item sb"
@@ -107,7 +107,7 @@ const MemberList: FC<Props> = ({ cid }) => {
                                             })}
                                         >
                                             {t("user")}
-                                            {!is_admin && <IconCheck className="icon" />}
+                                            {!is_admin && <IconCheck className="icon dark:fill-white" />}
                                         </li>
                                     </ul>
                                 }

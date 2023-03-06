@@ -33,6 +33,7 @@ export default function Register() {
 
   // const navigateTo = useNavigate();
   const [input, setInput] = useState<AuthForm>({
+    name: "",
     email: "",
     password: "",
     confirmPassword: ""
