@@ -30,5 +30,10 @@
 
   "send_to": "Send To",
   "edited": "edited",
-  "license_tip": "Your license has reached the limit, upgrade the License or contact the Admin!"
+  "license_tip": "Your license has reached the limit, upgrade the License or contact the Admin!",
+
+  "delete_msg_title": "Delete Message",
+  "delete_msg_desc": "Are you sure want to delete {{msg}}?",
+  "delete_msg_this": "this message",
+  "delete_msg_these": "these messages"
 }
