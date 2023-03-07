@@ -36,15 +36,15 @@ function ChatPage() {
   const toggleSessionList = () => {
     setSessionListVisible(prev => !prev);
   };
-  const tmpSession =
-    sessionUids.findIndex((i) => i == user_id) > -1
-      ? undefined
-      : {
-        key: `user_${user_id}`,
-        unreads: 0,
+  const tmpSession = user_id == 0 ? undefined :
+    sessionUids.findIndex((i) => i == +user_id) == -1
+      ? {
+        mid: 0,
+        unread: 0,
         id: +user_id,
-        type: "user" as "user" | "channel"
-      };
+        type: "user" as const
+      }
+      : undefined;
   // console.log("temp uid", tmpUid);
   const placeholderVisible = channel_id == 0 && user_id == 0;
   const isMainPath = isHomePath || isChatHomePath;

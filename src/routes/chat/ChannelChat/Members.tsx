@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react';
 import { ViewportList } from 'react-viewport-list';
+import { useTranslation } from 'react-i18next';
 import User from "../../../common/component/User";
 import IconAdd from "../../../assets/icons/add.svg";
-import { useTranslation } from 'react-i18next';
 import InviteModal from "../../../common/component/InviteModal";
 
 
@@ -16,9 +16,7 @@ type Props = {
 
 const Members = ({ uids, addVisible, ownerId, cid, membersVisible }: Props) => {
     const { t } = useTranslation("chat");
-    const ref = useRef<HTMLDivElement | null>(
-        null,
-    );
+    const ref = useRef<HTMLDivElement | null>(null);
     const [addMemberModalVisible, setAddMemberModalVisible] = useState(false);
     const toggleAddVisible = () => {
         setAddMemberModalVisible((prev) => !prev);
@@ -34,6 +32,7 @@ const Members = ({ uids, addVisible, ownerId, cid, membersVisible }: Props) => {
                     </div>
                 )}
                 <ViewportList
+                    initialPrerender={15}
                     viewportRef={ref}
                     items={uids}
                 >

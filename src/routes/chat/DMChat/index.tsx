@@ -1,15 +1,10 @@
 import { FC } from "react";
-import { useDebounce } from "rooks";
 import Tippy from "@tippyjs/react";
 import FavList from "../FavList";
 import Tooltip from "../../../common/component/Tooltip";
 import FavIcon from "../../../assets/icons/bookmark.svg";
-import { useReadMessageMutation } from "../../../app/services/message";
 import User from "../../../common/component/User";
 import Layout from "../Layout";
-import LoadMore from "../LoadMore";
-import { renderMessageFragment } from "../utils";
-import useMessageFeed from "../../../common/hook/useMessageFeed";
 import { useAppSelector } from "../../../app/store";
 import GoBackNav from "../../../common/component/GoBackNav";
 type Props = {
@@ -17,30 +12,12 @@ type Props = {
   dropFiles?: File[];
 };
 const DMChat: FC<Props> = ({ uid = 0, dropFiles }) => {
-  const {
-    pulling,
-    list: msgIds,
-    appends,
-    hasMore,
-    pullUp
-  } = useMessageFeed({
-    context: "user",
-    id: uid
-  });
-  const [updateReadIndex] = useReadMessageMutation();
-  const updateReadDebounced = useDebounce(updateReadIndex, 300);
-  const { currUser, messageData, footprint, loginUid, selects } = useAppSelector((store) => {
+  const { currUser } = useAppSelector((store) => {
     return {
-      selects: store.ui.selectMessages[`user_${uid}`],
-      loginUid: store.authData.user?.uid,
-      footprint: store.footprint,
       currUser: store.users.byId[uid],
-      messageData: store.message
     };
   });
   if (!currUser) return null;
-  const readIndex = footprint.readUsers[uid];
-  const feeds = [...msgIds, ...appends];
   return (
     <Layout
       to={uid}
@@ -70,25 +47,7 @@ const DMChat: FC<Props> = ({ uid = 0, dropFiles }) => {
           <User interactive={false} uid={currUser.uid} />
         </header>
       }
-    >
-      <>
-        {hasMore ? <LoadMore pullUp={pullUp} pulling={pulling} /> : null}
-        {[...feeds].map((mid, idx) => {
-          const curr = messageData[mid];
-          const prev = idx == 0 ? null : messageData[feeds[idx - 1]];
-          const read = curr?.from_uid == loginUid || mid <= readIndex;
-          return renderMessageFragment({
-            selectMode: !!selects,
-            updateReadIndex: updateReadDebounced,
-            read,
-            prev,
-            curr,
-            contextId: uid,
-            context: "user"
-          });
-        })}
-      </>
-    </Layout>
+    />
   );
 };
 export default DMChat;
