@@ -13,6 +13,7 @@ import { useGetLoginConfigQuery } from "../../app/services/server";
 import SocialLoginButtons from "../login/SocialLoginButtons";
 import { setAuthData } from "../../app/slices/auth.data";
 import { useDispatch } from "react-redux";
+import { useAppSelector } from "../../app/store";
 
 interface AuthForm {
   name?: string,
@@ -22,6 +23,7 @@ interface AuthForm {
 }
 
 export default function Register() {
+  const serverName = useAppSelector(store => store.server.name);
   const { t } = useTranslation("auth");
   const { t: ct } = useTranslation();
   const [sendRegMagicLink, { isLoading: signingUp, data, isSuccess }] =
@@ -125,7 +127,7 @@ export default function Register() {
     <>
       <div className="flex-center flex-col pb-6">
         <img src={`${BASE_URL}/resource/organization/logo`} alt="logo" className="w-14 h-14 md:mb-7 rounded-full" />
-        <h2 className="font-semibold text-2xl text-gray-800 dark:text-white md:mb-2">{t("reg.title")}</h2>
+        <h2 className="font-semibold text-2xl text-gray-800 dark:text-white md:mb-2">{t("reg.title", { name: serverName })}</h2>
         <span className="hidden md:block text-gray-400 dark:text-gray-100">{t("reg.desc")}</span>
       </div>
 

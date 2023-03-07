@@ -15,8 +15,10 @@ import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useTranslation } from "react-i18next";
 import SocialLoginButtons from "./SocialLoginButtons";
 import Divider from "../../common/component/Divider";
+import { useAppSelector } from "../../app/store";
 
 export default function LoginPage() {
+  const serverName = useAppSelector(store => store.server.name);
   const { t } = useTranslation("auth");
   const { t: ct } = useTranslation();
   const { data: enableSMTP, isLoading: loadingSMTPStatus } = useGetSMTPStatusQuery();
@@ -128,7 +130,7 @@ export default function LoginPage() {
       <div className="py-8 px-10 shadow-md rounded-xl">
         <div className="flex-center flex-col pb-6">
           <img src={`${BASE_URL}/resource/organization/logo`} alt="logo" className="w-14 h-14 mb-3 md:mb-7 rounded-full" />
-          <h2 className="font-semibold text-2xl text-gray-800 dark:text-white md:mb-2">{t("login.title")}</h2>
+          <h2 className="font-semibold text-2xl text-gray-800 dark:text-white md:mb-2">{t("login.title", { name: serverName })}</h2>
           <span className="text-gray-400 dark:text-gray-100">{t("login.desc")}</span>
         </div>
         <form className="flex flex-col gap-5 w-80 md:min-w-[360px] " onSubmit={handleLogin}>
