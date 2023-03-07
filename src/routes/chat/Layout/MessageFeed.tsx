@@ -42,7 +42,7 @@ const MessageFeed = ({ context, id }: Props) => {
         };
     });
     useEffect(() => {
-        // 上下文有变动，则滚动到底部
+        // context changed, scroll to bottom
         console.log("listRef", listRef);
         if (listRef && listRef.current) {
             const list = listRef.current;
@@ -58,7 +58,7 @@ const MessageFeed = ({ context, id }: Props) => {
 
     }, [context, id]);
     useEffect(() => {
-        //  需要检测滚动位置，如果距离底部超过阈值，则不滚到底部
+        //  check current scroll position first, scroll to bottom only when under the trigger number
         if (ref && ref.current) {
             const container = ref.current;
             const { scrollHeight, scrollTop, offsetHeight } = container;
@@ -94,7 +94,7 @@ const MessageFeed = ({ context, id }: Props) => {
                 onViewportIndexesChange={handleMessageListChange}
                 overscan={10}
                 // itemSize={100}
-                initialPrerender={30}
+                initialPrerender={40}
                 scrollThreshold={2000}
                 ref={listRef}
                 viewportRef={ref}
