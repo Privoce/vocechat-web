@@ -1,6 +1,6 @@
 import { useState, useEffect, FC } from "react";
 import { Ping } from '@uiball/loaders';
-// import { getDefaultSize } from "../../utils";
+import { getDefaultSize, isMobile } from "../../utils";
 
 type Props = {
   uploading: boolean;
@@ -20,7 +20,7 @@ const ImageMessage: FC<Props> = ({
   properties
 }) => {
   const [url, setUrl] = useState(thumbnail);
-  // const { width = 0, height = 0 } = getDefaultSize(properties);
+  const { width = 0, height = 0 } = getDefaultSize(properties, { min: 200, max: isMobile() ? 300 : 480 });
   useEffect(() => {
     const newUrl = thumbnail;
     const img = new Image();
@@ -34,7 +34,11 @@ const ImageMessage: FC<Props> = ({
   }, [thumbnail]);
 
   return (
-    <div className="relative w-fit h-fit">
+    <div className={`relative`} style={{
+      width: width ? `${width}px` : "",
+      height: height ? `${height}px` : ""
+    }}
+    >
       {uploading && (
         <div className="absolute left-0 top-0 w-full h-full bg-white/50 flex flex-col justify-center items-center gap-1">
           <Ping
@@ -46,7 +50,7 @@ const ImageMessage: FC<Props> = ({
         </div>
       )}
       <img
-        className="w-full h-auto max-w-[480px] cursor-zoom-in object-cover preview"
+        className="h-auto w-full cursor-zoom-in object-cover preview"
         // style={{
         //   width: width ? `${width}px` : "",
         //   height: height ? `${height}px` : ""

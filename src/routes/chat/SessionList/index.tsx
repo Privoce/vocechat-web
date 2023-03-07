@@ -1,4 +1,4 @@
-import { FC, useRef } from "react";
+import { FC, memo, useRef } from "react";
 import { useState, useEffect } from "react";
 import { ViewportList } from "react-viewport-list";
 import Session from "./Session";
@@ -81,7 +81,6 @@ const SessionList: FC<Props> = ({ tempSession }) => {
           items={sessions}
         >
           {(s) => {
-            console.log("ssss", sessions);
             const { type, id, mid = 0 } = s;
             const key = `${type}_${id}`;
             return (
@@ -117,4 +116,4 @@ const SessionList: FC<Props> = ({ tempSession }) => {
     </>
   );
 };
-export default SessionList;
+export default memo(SessionList);

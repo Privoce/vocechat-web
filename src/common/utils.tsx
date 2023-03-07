@@ -50,21 +50,22 @@ export const isElementVisible = (el: Element | null) => {
     || el.contains(efp(rect.left, rect.bottom))
   );
 };
-export function getDefaultSize(size?: { width: number; height: number }, min = 480) {
+export function getDefaultSize(size?: { width: number; height: number }, limit?: { min: number; max: number }) {
   if (!size) return { width: 0, height: 0 };
+  const { min, max } = limit ?? { min: 200, max: 320 };
   const { width: oWidth, height: oHeight } = size;
   if (oWidth == oHeight) {
-    const tmp = min > oWidth ? oWidth : min;
+    const tmp = min > oWidth ? min : (oWidth < max ? oWidth : max);
     return { width: tmp, height: tmp };
   }
   const isVertical = oWidth <= oHeight;
   let dWidth = 0;
   let dHeight = 0;
   if (isVertical) {
-    dHeight = oHeight >= min ? min : oHeight;
+    dHeight = oHeight < min ? min : (oHeight < max ? oHeight : max);
     dWidth = (oWidth / oHeight) * dHeight;
   } else {
-    dWidth = oWidth >= min ? min : oWidth;
+    dWidth = oWidth < min ? min : (oWidth < max ? oWidth : max);
     dHeight = (oHeight / oWidth) * dWidth;
   }
   return { width: dWidth, height: dHeight };
