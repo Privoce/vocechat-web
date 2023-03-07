@@ -81,7 +81,7 @@ const Reaction: FC<Props> = ({ mid, reactions = null, readOnly = false }) => {
               </i>
             </Tippy>
 
-            {uids.length > 1 ? <em className="text-primary-600 text-xs">{`${uids.length}`} </em> : null}
+            {uids.length > 1 ? <i className="text-primary-600 text-xs not-italic">{`${uids.length}`} </i> : null}
           </span>
         ) : null;
       })}

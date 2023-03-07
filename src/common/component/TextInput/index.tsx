@@ -24,7 +24,7 @@ const TextInput = ({ sendMessage, placeholder }: Props) => {
   return (
     <div className='md:hidden relative mb-1 p-1 flex items-center w-full text-gray-600 dark:text-white bg-gray-200 dark:bg-gray-600 rounded-lg'>
       <TextareaAutoSize
-        autoFocus
+        // autoFocus
         onFocus={(e) =>
           e.currentTarget.setSelectionRange(
             e.currentTarget.value.length,

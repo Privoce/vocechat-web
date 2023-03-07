@@ -177,7 +177,7 @@
     box-sizing: border-box;
     width: calc(88%);
     height: 1px;
-    background-color: #f2f4f7;
+    background-color: #aaa;
   }
   .context-menu .item.danger {
     color: #a11043;
@@ -226,7 +226,7 @@ html.dark ::-webkit-scrollbar-thumb {
   align-items: flex-start;
 }
 #MARKDOWN_CONTAINER .toastui-editor-contents iframe {
-  width: 100%;
+  width: 640px;
 }
 [class^="toastui-editor-"] .toastui-editor-md-container {
   border-bottom: none;

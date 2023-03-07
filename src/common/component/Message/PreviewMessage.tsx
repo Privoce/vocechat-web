@@ -19,7 +19,9 @@ const PreviewMessage: FC<Props> = ({ mid = 0, context }) => {
   const pinMsg = context == "pin";
   return (
     <div className={clsx(`w-full relative flex items-start gap-3 p-2 my-2 rounded-lg`, pinMsg && "max-h-64 overflow-auto overflow-x-hidden border border-solid border-gray-200 dark:border-gray-400")}>
-      <Avatar width={40} height={40} className="rounded-full object-cover" src={avatar} name={name} />
+      <div className="w-10 h-10 flex shrink-0">
+        <Avatar width={40} height={40} className="rounded-full object-cover" src={avatar} name={name} />
+      </div>
       <div className="w-full flex flex-col items-start">
         <div className="flex items-center gap-2 font-semibold">
           <span className="text-gray-500 text-sm">{name}</span>
