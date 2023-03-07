@@ -101,7 +101,8 @@ const baseQueryWithTokenCheck = async (args: any, api: any, extraOptions: any) =
         break;
       case 404:
         {
-          if (api.endpoint !== "login") {
+          const whiteList404 = ["login", "getArchiveMessage"];
+          if (!whiteList404.includes(api.endpoint)) {
             toast.error("Request Not Found");
           }
         }
