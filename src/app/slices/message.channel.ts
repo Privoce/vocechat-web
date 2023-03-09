@@ -22,7 +22,9 @@ const channelMsgSlice = createSlice({
         const midExisted = state[id]!.findIndex((id) => id == mid) > -1;
         const localMsgExisted = state[id]!.findIndex((id) => id == local_id) > -1;
         if (midExisted || localMsgExisted) return;
-        state[id]!.push(+mid);
+        // 每次入库，都排序
+        const newArr = [...state[id], +mid].sort((a, b) => a - b);
+        state[id] = newArr;
       } else {
         state[id] = [+mid];
       }
