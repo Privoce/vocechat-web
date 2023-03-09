@@ -1,4 +1,5 @@
 import React, { MouseEvent, FC } from "react";
+import clsx from "clsx";
 import MarkdownRender from "../MarkdownRender";
 import { ContentTypes } from "../../../app/config";
 import { getFileIcon, isImage } from "../../utils";
@@ -62,10 +63,14 @@ const Reply: FC<ReplyProps> = ({ mid, interactive = true }) => {
     const { mid } = evt.currentTarget.dataset;
     const msgEle = document.querySelector<HTMLDivElement>(`[data-msg-mid='${mid}']`);
     if (msgEle) {
-      msgEle.dataset.highlight = "true";
+      const _class1 = `md:dark:bg-gray-800`;
+      const _class2 = `md:bg-gray-100`;
+      msgEle.classList.add(_class1);
+      msgEle.classList.add(_class2);
       msgEle.scrollIntoView({ behavior: "smooth", block: "center" });
       setTimeout(() => {
-        msgEle.dataset.highlight = "false";
+        msgEle.classList.remove(_class1);
+        msgEle.classList.remove(_class2);
       }, 3000);
     }
   };
@@ -77,7 +82,9 @@ const Reply: FC<ReplyProps> = ({ mid, interactive = true }) => {
     <div
       key={mid}
       data-mid={mid}
-      className={`flex items-start flex-col md:flex-row p-2 bg-gray-100 dark:bg-gray-900 rounded-lg gap-2 mb-1 ${interactive ? "cursor-pointer" : "!bg-transparent"}`}
+      className={clsx(`flex items-start flex-col md:flex-row p-2 bg-gray-100 dark:bg-gray-900 rounded-lg gap-2 mb-1`,
+        interactive ? "cursor-pointer" : "!bg-transparent"
+      )}
       onClick={interactive ? handleClick : undefined}
     >
       <div className="flex items-center gap-1 whitespace-nowrap">
@@ -90,7 +97,10 @@ const Reply: FC<ReplyProps> = ({ mid, interactive = true }) => {
         />
         <span className="text-sm text-primary-500">{currUser.name}</span>
       </div>
-      <div className="text-sm flex items-center overflow-hidden">{renderContent(data)}</div>
+      <div className={clsx("text-sm flex items-center overflow-hidden", interactive && "relative")}>
+        {renderContent(data)}
+        {interactive && <div className="absolute top-0 left-0 w-full h-full"></div>}
+      </div>
     </div>
   );
 };
