@@ -70,7 +70,7 @@ const SessionContextMenu: FC<Props> = ({
     muteChannel(data);
   };
   const handleDMSetting = () => {
-    navigateTo(`/setting/dm/${id}?f=${pathname}`);
+    navigateTo(`/setting/dm/${id}/overview?f=${pathname}`);
   };
 
   const items =
