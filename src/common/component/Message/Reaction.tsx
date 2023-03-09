@@ -59,7 +59,7 @@ const Reaction: FC<Props> = ({ mid, reactions = null, readOnly = false }) => {
   if (!reactions || Object.entries(reactions).length == 0) return null;
 
   return (
-    <span className="group relative mt-2 mb-1 flex items-center gap-1 w-fit">
+    <span className="group relative my-1 flex items-center gap-1 w-fit">
       {Object.entries(reactions).map(([reaction, uids], idx) => {
         const reacted = uids.findIndex((id: number) => id == currUid) > -1;
         return uids.length > 0 ? (

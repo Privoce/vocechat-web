@@ -35,7 +35,7 @@ const Message: FC<IProps> = ({
   read = true
 }) => {
   const { visible: contextMenuVisible, handleContextMenuEvent, hideContextMenu } = useContextMenu();
-  const inviewRef = useInView();
+  const inViewRef = useInView<HTMLDivElement>();
   const [edit, setEdit] = useState(false);
   const avatarRef = useRef(null);
   const { getPinInfo } = usePinMessage(context == "channel" ? contextId : 0);
@@ -95,7 +95,7 @@ const Message: FC<IProps> = ({
       key={_key}
       onContextMenu={readOnly ? undefined : handleContextMenuEvent}
       data-msg-mid={mid}
-      ref={inviewRef}
+      ref={inViewRef}
       className={clsx(`group w-full relative flex items-start gap-2 md:gap-4 px-1 md:px-2 py-1 my-2 rounded-lg md:dark:hover:bg-gray-800 md:hover:bg-gray-100`,
         readOnly && "hover:bg-transparent",
         showExpire && "bg-red-200 dark:bg-red-200/40",
@@ -146,7 +146,11 @@ const Message: FC<IProps> = ({
               </time>
             </Tooltip>
           </div>
-          <div className={`select-text text-gray-800 text-sm break-all whitespace-pre-wrap dark:!text-white ${sending ? "opacity-90" : ""}`}>
+          {/* 文本类的消息限高 */}
+          <div className={clsx(`select-text text-gray-800 text-sm break-all whitespace-pre-wrap dark:!text-white`,
+            sending && "opacity-90",
+            content_type.startsWith("text") && "max-h-96 overflow-y-scroll ",
+          )}>
             {reply_mid && <Reply key={reply_mid} mid={reply_mid} />}
             {edit ? (
               <EditMessage mid={mid} cancelEdit={toggleEditMessage} />
@@ -164,8 +168,8 @@ const Message: FC<IProps> = ({
                 edited
               })
             )}
-            {reactions && <Reaction mid={mid} reactions={reactions} readOnly={readOnly} />}
           </div>
+          {reactions && <Reaction mid={mid} reactions={reactions} readOnly={readOnly} />}
         </div>
       </ContextMenu>
 
