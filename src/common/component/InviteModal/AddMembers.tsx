@@ -97,7 +97,7 @@ const AddMembers: FC<Props> = ({ cid = 0, closeModal }) => {
           );
         })}
       </ul>
-      <Button disabled={selects.length == 0 || isAdding} className="flex mt-4 justify-center" onClick={handleAddMembers}>
+      <Button disabled={selects.length == 0 || isAdding} className="flex mt-4 justify-center items-center" onClick={handleAddMembers}>
         {isAdding ? `Adding` : "Add"} to #{channel.name}
       </Button>
     </div>

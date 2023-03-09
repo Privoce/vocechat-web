@@ -37,7 +37,7 @@ const ForwardedMessage: FC<Props> = ({ context, to, from_uid, id }) => {
               return (
                 <div className="w-full relative flex items-start gap-4 px-2 py-1 my-2 rounded-lg" key={idx}>
                   {user && (
-                    <div >
+                    <div className="w-6 h-6 rounded-full flex shrink-0 overflow-hidden">
                       <Avatar width={24} height={24} src={user.avatar} name={user.name} />
                     </div>
                   )}

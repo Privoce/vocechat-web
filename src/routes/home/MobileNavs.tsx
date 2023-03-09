@@ -31,7 +31,7 @@ const MobileNavs = () => {
     const linkClass = `flex`;
     const isChatPage = isHomePath || pathname.startsWith("/chat");
     const isChattingPage = !!isDMChat || !!isChannelChat;
-    console.log("rrr", isDMChat, isChannelChat);
+    // console.log("rrr", isDMChat, isChannelChat);
 
     // 有点绕
     const chatNav = isChatHomePath ? "/chat" : chatPath || "/chat";

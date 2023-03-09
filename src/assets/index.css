@@ -216,7 +216,7 @@
   height: 5px;
 }
 html.dark ::-webkit-scrollbar-thumb {
-  background: #1c1c1e;
+  background: rgb(17 24 39);
 }
 /* markdown overrides */
 

@@ -38,7 +38,7 @@ const WebhookEdit = ({ uid }: Props) => {
             // 保存编辑
             const webhook_url = new FormData(form).get("webhook") as string;
             const resp = await updateUser({ id: uid, webhook_url });
-            console.log("ressssss", resp);
+            // console.log("ressssss", resp);
             if ("error" in resp) {
                 switch (resp.error.status) {
                     case 406:

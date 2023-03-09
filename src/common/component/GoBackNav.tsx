@@ -11,7 +11,7 @@ const GoBackNav = ({ path, className = "" }: Props) => {
     const isChannelChatPage = useMatch("/chat/channel/:channel_id");
     const isDMChatPage = useMatch("/chat/dm/:user_id");
     const isProfilePage = useMatch("/users/:user_id");
-    console.log("routt", isChannelChatPage, isDMChatPage);
+    // console.log("routt", isChannelChatPage, isDMChatPage);
     const isChatPage = !!isChannelChatPage || !!isDMChatPage;
     const handleBack = () => {
         if (path) {
