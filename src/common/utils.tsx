@@ -209,6 +209,8 @@ export const normalizeFileMessage = (data: MessagePayload) => {
   const { properties, content, sending = false, content_type } = data;
   const isFile = content_type == ContentTypes.file;
   const isPic = isImage(properties?.content_type, properties?.size);
+  // gif暂不支持缩略图
+  const isGif = isPic && properties?.content_type == "image/gif";
   let res: null | { file_path?: string, content?: string, download?: string, thumbnail: string } = null;
   if (isFile) {
     if (!sending) {
@@ -220,14 +222,14 @@ export const normalizeFileMessage = (data: MessagePayload) => {
         download: `${BASE_URL}/resource/file?file_path=${encodeURIComponent(
           content
         )}&download=true`,
-        thumbnail: isPic
+        thumbnail: (isPic && !isGif)
           ? `${BASE_URL}/resource/file?file_path=${encodeURIComponent(
             content
           )}&thumbnail=true`
           : ""
       };
     } else if (isPic) {
-      res = { thumbnail: content };
+      res = { thumbnail: isGif ? "" : content };
     }
   }
   return res;
