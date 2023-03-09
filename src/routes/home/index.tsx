@@ -1,6 +1,7 @@
-import { memo } from "react";
+import { memo, useEffect } from "react";
 import { Outlet, NavLink, useLocation, useMatch } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
 
 import User from "./User";
 import Loading from "../../common/component/Loading";
@@ -15,10 +16,12 @@ import FavIcon from "../../assets/icons/bookmark.svg";
 import FolderIcon from "../../assets/icons/folder.svg";
 import { useAppSelector } from "../../app/store";
 import MobileNavs from "./MobileNavs";
+import { updateRememberedNavs } from "../../app/slices/ui";
 
 
 function HomePage() {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const isHomePath = useMatch(`/`);
   const isChatHomePath = useMatch(`/chat`);
   const { pathname } = useLocation();
@@ -37,6 +40,12 @@ function HomePage() {
     };
   });
   const { success } = usePreload();
+  useEffect(() => {
+    if (isChatHomePath) {
+      dispatch(updateRememberedNavs({ key: "chat", path: "/chat" }));
+    }
+  }, [isChatHomePath]);
+
   if (!success || !ready) {
     return <Loading reload={true} fullscreen={true} />;
   }
@@ -47,6 +56,7 @@ function HomePage() {
   }
   // 有点绕
   const chatNav = isChatHomePath ? "/chat" : chatPath || "/chat";
+  console.log("navvvv", isChatHomePath, chatPath);
   const userNav = userPath || "/users";
   const linkClass = `flex items-center gap-2.5 px-3 py-2 font-semibold text-sm text-gray-600 rounded-lg md:hover:bg-gray-800/10`;
   return (
