@@ -6,7 +6,8 @@ import { onMessageSendStarted } from "./handlers";
 import { normalizeArchiveData } from "../../common/utils";
 import baseQuery from "./base.query";
 import { Archive, FavoriteArchive, OG } from "../../types/resource";
-import { ContentTypeKey, UploadFileResponse } from "../../types/message";
+import { ChatMessage, ContentTypeKey, UploadFileResponse } from "../../types/message";
+import handleChatMessage from "../../common/hook/useStreaming/chat.handler";
 import { RootState } from "../store";
 
 export const messageApi = createApi({
@@ -147,7 +148,25 @@ export const messageApi = createApi({
         }
       }
     }),
-
+    loadMoreMessages: builder.query<ChatMessage[], { context?: "channel" | "user", id: number; mid?: number; limit?: number }>({
+      query: ({ context = "channel", id, mid = "", limit = 100 }) => {
+        const url = context == "channel" ?
+          `/group/${id}/history?limit=${limit}${mid ? `&before=${mid}` : ""}`
+          :
+          `/user/${id}/history?limit=${limit}${mid ? `&before=${mid}` : ""}`;
+        return {
+          url
+        };
+      },
+      async onQueryStarted(params, { dispatch, getState, queryFulfilled }) {
+        const { data: messages } = await queryFulfilled;
+        if (messages?.length) {
+          messages.forEach((msg) => {
+            handleChatMessage(msg, dispatch, getState() as RootState);
+          });
+        }
+      }
+    }),
     replyWithChatGPT: builder.mutation<{ message: string, prompt: string }, string>({
       query: (prompt) => ({
         url: `https://official.voce.chat/chatgpt/complete`,
@@ -218,5 +237,6 @@ export const {
   useLazyDeleteMessageQuery,
   useReadMessageMutation,
   useCreateArchiveMutation,
-  useReplyWithChatGPTMutation
+  useReplyWithChatGPTMutation,
+  useLazyLoadMoreMessagesQuery
 } = messageApi;

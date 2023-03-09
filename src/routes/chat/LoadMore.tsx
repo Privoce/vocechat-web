@@ -1,20 +1,11 @@
-import { useEffect, FC } from "react";
+import { FC } from "react";
 import { Waveform } from "@uiball/loaders";
-import { useInViewRef } from "rooks";
 
 type Props = {
-  pulling?: boolean;
-  pullUp: () => Promise<void> | null;
 };
-const LoadMore: FC<Props> = ({ pullUp = null, pulling }) => {
-  const [myRef, inView] = useInViewRef();
-  useEffect(() => {
-    if (inView && pullUp && !pulling) {
-      pullUp();
-    }
-  }, [inView, pullUp, pulling]);
+const LoadMore: FC<Props> = () => {
   return (
-    <div data-load-more className="mt-2 flex-center w-full py-2" ref={myRef}>
+    <div data-load-more className="mt-2 flex-center w-full py-2" >
       <Waveform size={18} lineWeight={4} speed={1} color="#ccc" />
     </div>
   );

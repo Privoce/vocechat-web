@@ -8,10 +8,9 @@ import { removeMessage } from "../slices/message";
 import { removeChannelSession } from "../slices/message.channel";
 import { removeReactionMessage } from "../slices/message.reaction";
 import { onMessageSendStarted } from "./handlers";
-import handleChatMessage from "../../common/hook/useStreaming/chat.handler";
 import { Channel, ChannelDTO, CreateChannelDTO } from "../../types/channel";
 import { RootState } from "../store";
-import { ContentTypeKey, ChatMessage } from "../../types/message";
+import { ContentTypeKey } from "../../types/message";
 
 export const channelApi = createApi({
   reducerPath: "channelApi",
@@ -73,21 +72,6 @@ export const channelApi = createApi({
           await queryFulfilled;
         } catch {
           console.error("channel update failed");
-        }
-      }
-    }),
-    getHistoryMessages: builder.query<ChatMessage[], { id: number; mid?: number; limit?: number }>({
-      query: ({ id, mid = null, limit = 100 }) => ({
-        url: mid
-          ? `/group/${id}/history?before=${mid}&limit=${limit}`
-          : `/group/${id}/history?limit=${limit}`
-      }),
-      async onQueryStarted(params, { dispatch, getState, queryFulfilled }) {
-        const { data: messages } = await queryFulfilled;
-        if (messages?.length) {
-          messages.forEach((msg) => {
-            handleChatMessage(msg, dispatch, getState() as RootState);
-          });
         }
       }
     }),
@@ -211,7 +195,6 @@ export const {
   useLazyLeaveChannelQuery,
   useLazyCreateInviteLinkQuery,
   useCreateInviteLinkQuery,
-  useLazyGetHistoryMessagesQuery,
   useGetChannelQuery,
   useUpdateChannelMutation,
   useLazyRemoveChannelQuery,

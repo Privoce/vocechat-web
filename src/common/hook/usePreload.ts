@@ -6,13 +6,13 @@ import { useLazyGetUsersQuery } from "../../app/services/user";
 import { useLazyGetServerQuery } from "../../app/services/server";
 import useStreaming from "./useStreaming";
 import { useAppSelector } from "../../app/store";
-import { useLazyGetHistoryMessagesQuery } from "../../app/services/channel";
+import { useLazyLoadMoreMessagesQuery } from "../../app/services/message";
 // type Props={
 //   guest?:boolean
 // }
 let preloadChannelMsgs = false;
 export default function usePreload() {
-  const [preloadChannelMessages] = useLazyGetHistoryMessagesQuery();
+  const [preloadChannelMessages] = useLazyLoadMoreMessagesQuery();
   const { rehydrate, rehydrated } = useRehydrate();
   const {
     loginUid,
