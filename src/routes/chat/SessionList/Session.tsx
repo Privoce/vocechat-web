@@ -3,7 +3,7 @@ import { useState, useEffect, FC } from "react";
 import clsx from "clsx";
 import { useDrop } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
-import { useNavigate, NavLink } from "react-router-dom";
+import { useNavigate, NavLink, useMatch } from "react-router-dom";
 import ContextMenu from "./ContextMenu";
 import getUnreadCount, { renderPreviewMessage } from "../utils";
 import User from "../../../common/component/User";
@@ -28,6 +28,9 @@ const Session: FC<IProps> = ({
   setDeleteChannelId,
   setInviteChannelId
 }) => {
+  const navPath = type == "user" ? `/chat/dm/${id}` : `/chat/channel/${id}`;
+  // const { pathname } = useLocation();
+  const isCurrentPath = useMatch(navPath);
   const navigate = useNavigate();
   const { addStageFile } = useUploadFile({ context: type, id });
 
@@ -51,7 +54,6 @@ const Session: FC<IProps> = ({
     }),
     [type, id]
   );
-
   const { visible: contextMenuVisible, handleContextMenuEvent, hideContextMenu } = useContextMenu();
   const [data, setData] = useState<{
     name: string;
@@ -110,7 +112,7 @@ const Session: FC<IProps> = ({
         <NavLink
           ref={drop}
           className={({ isActive: linkActive }) => clsx(`nav flex gap-2 rounded-lg p-2 w-full md:hover:bg-gray-500/20`, isActive && "shadow-[inset_0_0_0_2px_#52edff]", linkActive && "bg-gray-500/20")}
-          to={type == "user" ? `/chat/dm/${id}` : `/chat/channel/${id}`}
+          to={navPath}
           onContextMenu={handleContextMenuEvent}
         >
           <div className="flex shrink-0">
@@ -141,7 +143,7 @@ const Session: FC<IProps> = ({
             </div>
             <div className="flex items-center justify-between">
               <span className={clsx("text-xs text-gray-500 dark:text-gray-400  truncate", unreads > 0 ? `w-36` : ``)}>{renderPreviewMessage(previewMsg)}</span>
-              {unreads > 0 && (
+              {unreads > 0 && !isCurrentPath && (
                 <strong className={clsx(`text-white h-5 min-w-[20px] bg-primary-400 font-bold text-[10px] rounded-[10px] flex-center`, unreads > 99 && 'w-1.5 !h-1.5 p-0 min-w-[unset]', muted && "bg-gray-500")}>
                   {unreads > 99 ? null : unreads}
                 </strong>
