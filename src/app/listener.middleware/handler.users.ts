@@ -1,7 +1,9 @@
+import localforage from "localforage";
+import { User } from "../../types/user";
 import clearTable from "./clear.handler";
 
 export default async function handler({ operation, data, payload }) {
-  const table = window.CACHE["users"];
+  const table = window.CACHE["users"] as typeof localforage;
   if (operation.startsWith("reset")) {
     clearTable("users");
     return;
@@ -9,12 +11,11 @@ export default async function handler({ operation, data, payload }) {
   switch (operation) {
     case "fillUsers":
       {
-        const users = payload;
-        await Promise.all(
-          users.map(({ uid, ...rest }) => {
-            return table?.setItem(uid + "", { uid, ...rest });
-          })
-        );
+        const users = payload as User[];
+        const arr = users.map(({ uid, ...rest }) => {
+          return { key: uid + "", value: rest };
+        });
+        await table.setItems(arr);
       }
       break;
     case "updateUsersByLogs":

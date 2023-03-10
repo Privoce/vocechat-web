@@ -1,3 +1,5 @@
+import localforage from "localforage";
+import { Channel } from "../../types/channel";
 import clearTable from "./clear.handler";
 interface Params {
   data: any;
@@ -5,7 +7,7 @@ interface Params {
   operation: string;
 }
 export default async function handler({ operation, data, payload }: Params) {
-  const table = window.CACHE["channels"];
+  const table = window.CACHE["channels"] as typeof localforage;
   if (operation.startsWith("reset")) {
     clearTable("channels");
     return;
@@ -13,12 +15,11 @@ export default async function handler({ operation, data, payload }: Params) {
   switch (operation) {
     case "fillChannels":
       {
-        const chs = payload;
-        await Promise.all(
-          chs.map(({ gid, ...rest }) => {
-            return table?.setItem(gid + "", { gid, ...rest });
-          })
-        );
+        const chs = payload as Channel[];
+        const arr = chs.map(({ gid, ...rest }) => {
+          return { key: gid + "", value: rest };
+        });
+        await table.setItems(arr);
       }
       break;
     case "addChannel":
@@ -39,7 +40,6 @@ export default async function handler({ operation, data, payload }: Params) {
         await table?.setItem(id + "", data.byId[id]);
       }
       break;
-
     default:
       break;
   }
