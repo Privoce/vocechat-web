@@ -35,5 +35,8 @@
   "delete_msg_title": "Delete Message",
   "delete_msg_desc": "Are you sure want to delete {{msg}}?",
   "delete_msg_this": "this message",
-  "delete_msg_these": "these messages"
+  "delete_msg_these": "these messages",
+
+  "new_msg": "{{num}} new messages",
+  "mark_read": "Mark As Read"
 }

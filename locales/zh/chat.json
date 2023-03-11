@@ -36,5 +36,8 @@
   "delete_msg_title": "删除消息",
   "delete_msg_desc": "确定删除{{msg}}？",
   "delete_msg_this": "此消息",
-  "delete_msg_these": "这些消息"
+  "delete_msg_these": "这些消息",
+
+  "new_msg": "{{num}} 条新消息",
+  "mark_read": "设为已读"
 }
