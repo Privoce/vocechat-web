@@ -86,7 +86,7 @@ export const renderPreviewMessage = (message = null) => {
   return res;
 };
 
-const MessageWrapper = ({ selectMode = false, context, id, mid, children, ...rest }) => {
+const MessageWrapper = ({ selectMode = false, context, id, mid, divider, children, ...rest }) => {
   const dispatch = useDispatch();
 
   const selects = useAppSelector((store) => store.ui.selectMessages[`${context}_${id}`]);
@@ -96,9 +96,13 @@ const MessageWrapper = ({ selectMode = false, context, id, mid, children, ...res
     dispatch(updateSelectMessages({ context, id, operation, data: mid }));
   };
   return (
-    <div className={`flex items-start gap-2 relative w-full ${selectMode ? "hover:bg-slate-100 dark:hover:bg-slate-900" : ""}`} {...rest}>
-      {selectMode && <Checkbox className="!mt-4 !ml-2" checked={selected} />}
-      {children}
+    <div className={`group flex flex-col items-start gap-2 relative w-full `} {...rest}>
+      {divider}
+      <div className={`w-full flex items-center ${selectMode ? "group-hover:bg-slate-100 dark:group-hover:bg-slate-900" : ""}`}>
+
+        {selectMode && <Checkbox className="!ml-2" checked={selected} />}
+        {children}
+      </div>
       {selectMode && (
         <div className="absolute left-0 top-0 w-full h-full cursor-pointer" onClick={selectMode ? toggleSelect : undefined}></div>
       )}
@@ -141,27 +145,25 @@ export const renderMessageFragment = ({
   }
   const _key = local_id || mid;
   return (
-    <React.Fragment key={_key}>
-      {divider && <Divider content={divider}></Divider>}
-      <MessageWrapper
-        key={_key}
-        data-key={_key}
+    <MessageWrapper
+      key={_key}
+      data-key={_key}
+      context={context}
+      id={contextId}
+      mid={mid}
+      selectMode={selectMode}
+      divider={divider ? <Divider className="w-full" content={divider}></Divider> : null}
+    >
+      <Message
+        readOnly={selectMode || readonly}
+        updateReadIndex={updateReadIndex}
+        read={read}
         context={context}
-        id={contextId}
         mid={mid}
-        selectMode={selectMode}
-      >
-        <Message
-          readOnly={selectMode || readonly}
-          updateReadIndex={updateReadIndex}
-          read={read}
-          context={context}
-          mid={mid}
-          key={_key}
-          contextId={contextId}
-        />
-      </MessageWrapper>
-    </React.Fragment>
+        key={_key}
+        contextId={contextId}
+      />
+    </MessageWrapper>
   );
 };
 
