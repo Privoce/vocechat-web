@@ -54,7 +54,7 @@ const MemberList: FC<Props> = ({ cid }) => {
 
     const channel = cid ? channels.byId[cid] : null;
     const uids = channel ? (channel.is_public ? users.ids : channel.members) : users.ids;
-    return <ul className="flex flex-col gap-1 w-full md:w-[512px] mb-44" ref={ref}>
+    return <ul className="flex flex-col gap-1 w-full md:w-[512px] mb-44 max-h-[800px] overflow-y-scroll" ref={ref}>
         <ViewportList
             initialPrerender={15}
             viewportRef={ref}
