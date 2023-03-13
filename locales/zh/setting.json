@@ -195,7 +195,8 @@
     "param_close_height": "挂件关闭态的高度",
     "param_open_width": "挂件打开态的宽度",
     "param_open_height": "挂件打开态的高度",
-    "share_link": "分享此链接，别人可以通过该地址直接与你对话"
+    "share_link": "分享此链接，别人可以通过该地址直接与你对话",
+    "widget_faq": "允许公开注册"
   },
   "version": {
     "client_version": "客户端版本",

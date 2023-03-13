@@ -201,7 +201,8 @@
     "param_close_height": "The height while widget closed",
     "param_open_width": "The width while widget opened",
     "param_open_height": "The height while widget opened",
-    "share_link": "Share the widget link so that people can chat with you directly"
+    "share_link": "Share the widget link so that people can chat with you directly",
+    "widget_faq": "Enable Let Everyone Join First"
   },
   "version": {
     "client_version": "Client Version",
