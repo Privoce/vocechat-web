@@ -63,7 +63,7 @@ const Message: FC<IProps> = ({
       }
     }
   }, [mid, read]);
-
+  if (!message) return null;
   const {
     reply_mid,
     from_uid: fromUid,
@@ -91,6 +91,7 @@ const Message: FC<IProps> = ({
   const _key = properties?.local_id || mid;
   const showExpire = (expires_in ?? 0) > 0;
   return (
+
     <div
       key={_key}
       onContextMenu={readOnly ? undefined : handleContextMenuEvent}

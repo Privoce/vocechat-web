@@ -56,7 +56,7 @@ function HomePage() {
   }
   // 有点绕
   const chatNav = isChatHomePath ? "/chat" : chatPath || "/chat";
-  console.log("navvvv", isChatHomePath, chatPath);
+  // console.log("navvvv", isChatHomePath, chatPath);
   const userNav = userPath || "/users";
   const linkClass = `flex items-center gap-2.5 px-3 py-2 font-semibold text-sm text-gray-600 rounded-lg md:hover:bg-gray-800/10`;
   return (

@@ -85,7 +85,7 @@ export default function Overview({ id = 0 }) {
     }
   }, [changeTypeSuccess]);
 
-  if (!values || !id) return null;
+  if (!values || !id || !channel) return null;
   const { name, description } = values;
   const readOnly = !loginUser?.is_admin && channel?.owner != loginUser?.uid;
   const inputClass = `w-full flex flex-col items-start gap-2 relative`;

@@ -47,7 +47,7 @@ const SessionContextMenu: FC<Props> = ({
   });
 
   const handleChannelSetting = () => {
-    navigateTo(`/setting/channel/${id}?f=${pathname}`);
+    navigateTo(`/setting/channel/${id}/overview?f=${pathname}`);
   };
 
   const handleReadAll = () => {

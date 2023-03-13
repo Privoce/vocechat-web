@@ -43,7 +43,7 @@ const SessionList: FC<Props> = ({ tempSession }) => {
       return { id, mid, type: "channel" };
     });
     const uSessions = DMs.map((id) => {
-      console.log("adddd", id);
+      // console.log("adddd", id);
       const mids = userMessage[id];
       if (!mids || mids.length == 0) {
         return { unreads: 0, id, type: "user" };
@@ -57,9 +57,9 @@ const SessionList: FC<Props> = ({ tempSession }) => {
       const { mid: bMid = 0 } = b;
       return bMid - aMid;
     });
-    console.log("before qqqq", temps);
+    // console.log("before qqqq", temps);
     const newSessions = tempSession ? [tempSession, ...temps] : temps;
-    console.log("qqqq", newSessions);
+    // console.log("qqqq", newSessions);
     setSessions(newSessions);
   }, [
     channelIDs,

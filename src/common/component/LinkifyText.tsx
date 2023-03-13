@@ -30,7 +30,7 @@ const LinkifyText = ({ url = true, mention = true, mentionTextOnly = false, ment
                         </a>;
                     },
                     url: ({ content, attributes: { href: link } }) => {
-                        console.log("attr", link);
+                        // console.log("attr", link);
                         if (!url) return <>{content}</>;
                         return <>
                             <a className="link" target="_blank" href={link} rel="noreferrer">
