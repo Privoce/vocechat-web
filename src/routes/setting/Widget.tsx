@@ -3,6 +3,12 @@
 import { useTranslation } from 'react-i18next';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { useAppSelector } from '../../app/store';
+import Button from '../../common/component/styled/Button';
+import Input from '../../common/component/styled/Input';
+import useCopy from '../../common/hook/useCopy';
+import IconQuestion from '../../assets/icons/question.svg';
+
 
 const Row = ({ paramKey, paramDefault, remarks }: { paramKey: string, paramDefault: string | number, remarks: string }) => {
   return <tr className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-50 border-b transition duration-300 ease-in-out md:hover:bg-gray-100 dark:md:hover:bg-gray-900">
@@ -18,7 +24,14 @@ const Row = ({ paramKey, paramDefault, remarks }: { paramKey: string, paramDefau
   </tr>;
 };
 export default function Widget() {
+  const loginUid = useAppSelector(store => store.authData.user?.uid);
+  const widgetLink = `${location.origin}/widget.html?hostId=${loginUid}`;
   const { t } = useTranslation("setting", { keyPrefix: "widget" });
+  const { t: ct } = useTranslation();
+  const { copied, copy } = useCopy({ enableToast: false });
+  const copyLink = () => {
+    copy(widgetLink);
+  };
   // const disableBtn = !reachLimit;
   return (
     <div className="flex flex-col justify-start items-start">
@@ -29,7 +42,7 @@ export default function Widget() {
         {t('code')}:
       </label>
       <SyntaxHighlighter id="code" language="html" style={vscDarkPlus} className="rounded">
-        {`<!-- ${t('code_comment')} -->\n<script \n  data-host-id="1" \n  data-theme-color="#1fe1f9" \n  data-close-width="48" \n  data-close-height="48" \n  data-open-width="380" \n  data-open-height="680" \n  src="${location.origin}/widget.js" \n  async \n></script>`}
+        {`<!-- ${t('code_comment')} -->\n<script \n  data-host-id="${loginUid}" \n  data-theme-color="#1fe1f9" \n  data-close-width="48" \n  data-close-height="48" \n  data-open-width="380" \n  data-open-height="680" \n  src="${location.origin}/widget.js" \n  async \n></script>`}
       </SyntaxHighlighter>
       <div className="text-gray-500 dark:text-white text-sm mt-5 mb-2">
         {t('config')}:
@@ -80,7 +93,19 @@ export default function Widget() {
           </tfoot>
         </table>
       </div>
-
+      <div className="mt-8">
+        <p className="text-sm mb-2 text-gray-500 dark:text-gray-50 flex flex-col md:flex-row gap-4">
+          {t("share_link")}  <a className="text-primary-500 flex gap-1 items-center" href="https://doc.voce.chat/widget" target="_blank" rel="noopener noreferrer">
+            <IconQuestion /> {t("widget_faq")}
+          </a>
+        </p>
+        <div className="w-full md:w-96 mb-3 relative">
+          <Input readOnly className={"large !pr-16"} value={widgetLink} />
+          <Button onClick={copyLink} className="ghost small border_less absolute right-1 top-1/2 -translate-y-1/2 dark:!text-primary-400">
+            {copied ? "Copied" : ct("action.copy")}
+          </Button>
+        </div>
+      </div>
     </div>
   );
 }

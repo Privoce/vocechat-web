@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import { useWidget } from '../WidgetContext';
-import { useAppSelector } from '../../app/store';
 import IconClose from './close.svg';
 
 type Props = {
@@ -8,8 +7,7 @@ type Props = {
 };
 
 const Index: FC<Props> = ({ handleClose }) => {
-  const { color, fgColor, embed } = useWidget();
-  const { name, logo } = useAppSelector(store => store.server);
+  const { color, fgColor, embed, name, logo } = useWidget();
   return (
     <header className="relative flex justify-between items-center h-14 px-4 py-2" style={{ backgroundColor: color }}>
       <div className="relative w-8 h-8">
