@@ -36,10 +36,15 @@ const Avatar: FC<Props> = ({
   if (!error && src) {
     return <img width={width} height={height} src={src} onError={handleError} {...rest} />;
   }
+  // 长度限制在六个字符
+  let initials = getInitials(name).substring(0, 6);
+  const len = initials.length;
+  const scaleVal = len > 2 ? (11 - len) / 10 : 1;
   return (
     <div
       className={`rounded-full flex-center ${rest.className || ""}`}
       style={{
+
         width,
         height,
         fontSize: getFontSize(width),
@@ -49,7 +54,7 @@ const Avatar: FC<Props> = ({
         color: type === "channel" ? "#475467" : "#FFFFFF"
       }}
     >
-      {getInitials(name)}
+      <span className="whitespace-nowrap" style={{ transform: `scale(${scaleVal})` }}>{initials}</span>
     </div>
   );
 };
