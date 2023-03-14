@@ -55,7 +55,7 @@ export default function Overview() {
             <StyledRadio
               options={[t("overview.guest_mode.enable"), t("overview.guest_mode.disable")]}
               values={["true", "false"]}
-              value={String(guest)}
+              value={`${guest}`}
               onChange={(v) => {
                 handleGuestToggle(v);
               }}

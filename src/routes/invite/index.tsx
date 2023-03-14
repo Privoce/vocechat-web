@@ -15,7 +15,9 @@ interface AuthForm {
 }
 
 const InvitePage: FC = () => {
-  const { token: loginToken } = useAppSelector((store) => store.authData);
+  const { token: loginToken, serverName } = useAppSelector((store) => {
+    return { token: store.authData.token, serverName: store.server.name };
+  });
   const [secondPwd, setSecondPwd] = useState("");
   const [samePwd, setSamePwd] = useState(true);
   const [token, setToken] = useState<string | undefined>();
@@ -121,7 +123,7 @@ const InvitePage: FC = () => {
       <div className="py-8 px-10 shadow-md rounded-xl">
         <div className="flex-center flex-col pb-6">
           <img src={`${BASE_URL}/resource/organization/logo`} alt="logo" className="w-14 h-14 mb-7 rounded-full" />
-          <h2 className="font-semibold text-2xl text-gray-800 dark:text-white mb-2">Sign Up to VoceChat</h2>
+          <h2 className="font-semibold text-2xl text-gray-800 dark:text-white mb-2">Sign Up to {serverName}</h2>
           <span className="text-gray-400 dark:text-gray-100">Please enter your details.</span>
         </div>
         <form className="flex flex-col gap-5 min-w-[360px]" onSubmit={handleReg}>

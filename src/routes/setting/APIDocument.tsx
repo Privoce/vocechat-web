@@ -39,7 +39,7 @@ const APIDocument = () => {
                         {/* </div> */}
                     </div>
                     <div className="flex flex-col gap-2">
-                        <h3 className='text-gray-700 dark:text-white text-lg flex items-center gap-2'>
+                        <h3 className='text-gray-700 dark:text-white text-lg flex flex-col items-start gap-2'>
                             👉 {t("api_doc.step_2")} <span className='text-gray-500 dark:text-white text-sm'>
                                 ({t("api_doc.step_2_desc")})
                             </span>
