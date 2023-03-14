@@ -1,6 +1,7 @@
 // import React from 'react'
 import clsx from 'clsx';
 import { FormEvent, useEffect } from 'react';
+import { toast } from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { useRegisterMutation } from '../../../app/services/auth';
 import { useGetLoginConfigQuery } from '../../../app/services/server';
@@ -21,7 +22,7 @@ const Login = () => {
     const { color, fgColor, from } = useWidget();
     const { clientId } = useGoogleAuthConfig();
     const { config: githubAuthConfig } = useGithubAuthConfig();
-    const [register, { isLoading, isSuccess, data }] = useRegisterMutation();
+    const [register, { isLoading, isSuccess, data, error }] = useRegisterMutation();
     const { data: loginConfig, isSuccess: loginConfigSuccess } = useGetLoginConfigQuery();
     const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
@@ -47,6 +48,20 @@ const Login = () => {
             dispatch(setAuthData(data));
         }
     }, [isSuccess, data]);
+    // 报错处理
+    useEffect(() => {
+        if (error) {
+            switch (error.status) {
+                case 409:
+                    toast.error("Email existed already!");
+                    break;
+                default:
+                    toast.error("Something error!");
+                    break;
+            }
+        }
+    }, [error]);
+
 
     if (!loginConfigSuccess) return null;
 
