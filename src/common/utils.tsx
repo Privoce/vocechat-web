@@ -36,12 +36,10 @@ export const isElementVisible = (el: Element | null) => {
     vWidth = window.innerWidth || document.documentElement.clientWidth,
     vHeight = window.innerHeight || document.documentElement.clientHeight,
     efp = function (x: number, y: number) { return document.elementFromPoint(x, y); };
-
   // Return false if it's not in the viewport
   if (rect.right < 0 || rect.bottom < 0
     || rect.left > vWidth || rect.top > vHeight)
     return false;
-
   // Return true if any of its four corners are visible
   return (
     el.contains(efp(rect.left, rect.top))
@@ -73,13 +71,10 @@ export function getDefaultSize(size?: { width: number; height: number }, limit?:
 
 export function formatBytes(bytes: number, decimals = 2) {
   if (bytes === 0) return "0 Bytes";
-
   const k = 1000;
   const dm = decimals < 0 ? 0 : decimals;
   const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
-
   const i = Math.floor(Math.log(bytes) / Math.log(k));
-
   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
 }
 export const getImageSize = (url: string) => {
@@ -128,7 +123,6 @@ export const getInitialsAvatar = ({
   canvas.style.height = `${height}px`;
 
   const context = canvas.getContext("2d") as CanvasRenderingContext2D;
-
   context.scale(devicePixelRatio, devicePixelRatio);
   context.rect(0, 0, canvas.width, canvas.height);
   context.fillStyle = background;
@@ -155,18 +149,15 @@ export function sliceFile(file: File | null, chunksAmount: number) {
   if (!file) return null;
   let byteIndex = 0;
   let chunks = [];
-
   for (let i = 0; i < chunksAmount; i += 1) {
     let byteEnd = Math.ceil((file.size / chunksAmount) * (i + 1));
     chunks.push(file.slice(byteIndex, byteEnd));
     byteIndex += byteEnd - byteIndex;
   }
-
   return chunks;
 }
 export const getFileIcon = (type: string, name = "", className = "icon") => {
   let icon = null;
-
   const checks = {
     image: /^image/gi,
     audio: /^audio/gi,
@@ -198,7 +189,6 @@ export const getFileIcon = (type: string, name = "", className = "icon") => {
     case checks.video.test(_type):
       icon = <IconVideo className={className} />;
       break;
-
     default:
       icon = <IconUnknown className={className} />;
       break;
@@ -312,26 +302,21 @@ export const compareVersion = (v1: string, v2: string, options?: { lexicographic
   function isValidPart(x) {
     return (lexicographical ? /^\d+[A-Za-z]*$/ : /^\d+$/).test(x);
   }
-
   if (!v1parts.every(isValidPart) || !v2parts.every(isValidPart)) {
     return NaN;
   }
-
   if (zeroExtend) {
     while (v1parts.length < v2parts.length) v1parts.push("0");
     while (v2parts.length < v1parts.length) v2parts.push("0");
   }
-
   if (!lexicographical) {
     v1parts = v1parts.map(Number);
     v2parts = v2parts.map(Number);
   }
-
   for (var i = 0; i < v1parts.length; ++i) {
     if (v2parts.length == i) {
       return 1;
     }
-
     if (v1parts[i] == v2parts[i]) {
       continue;
     }
@@ -342,11 +327,9 @@ export const compareVersion = (v1: string, v2: string, options?: { lexicographic
       return -1;
     }
   }
-
   if (v1parts.length != v2parts.length) {
     return -1;
   }
-
   return 0;
 };
 
@@ -358,37 +341,29 @@ export const compareVersion = (v1: string, v2: string, options?: { lexicographic
  * @return {String} The contrasting color (black or white)
  */
 export const getContrastColor = (hexcolor: string) => {
-
   // If a leading # is provided, remove it
   if (hexcolor.slice(0, 1) === '#') {
     hexcolor = hexcolor.slice(1);
   }
-
   // If a three-character hexcode, make six-character
   if (hexcolor.length === 3) {
     hexcolor = hexcolor.split('').map(function (hex) {
       return hex + hex;
     }).join('');
   }
-
   // Convert to RGB value
   let r = parseInt(hexcolor.substr(0, 2), 16);
   let g = parseInt(hexcolor.substr(2, 2), 16);
   let b = parseInt(hexcolor.substr(4, 2), 16);
-
   // Get YIQ ratio
   let yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
-
   // Check contrast
   return (yiq >= 128) ? 'black' : 'white';
-
 };
 export const isDarkMode = () => {
   const isDarkMode = localStorage.theme === 'dark';
   const isLightMode = localStorage.theme === 'light';
-
   return isDarkMode || (!isLightMode && window.matchMedia('(prefers-color-scheme: dark)').matches);
-
 };
 
 export const fromNowTime = (ts?: number) => {

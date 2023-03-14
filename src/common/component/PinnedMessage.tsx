@@ -15,7 +15,7 @@ const PinnedMessageView: FC<Props> = ({ data }) => {
   const { msgData, usersData } = useAppSelector((store) => {
     return { msgData: store.message, usersData: store.users.byId };
   });
-  console.log("piiii", data);
+  // console.log("piiii", data);
 
   const { mid = 0 } = data;
   const normalized = normalizeFileMessage(data as MessagePayload) || {};

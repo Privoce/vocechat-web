@@ -128,6 +128,7 @@ export default function useStreaming() {
       keepAlive(2000);
     };
     SSE.onmessage = (evt) => {
+      // console.log("sse msg");
       const data: ServerEvent = JSON.parse(evt.data);
       const { type } = data;
       switch (type) {

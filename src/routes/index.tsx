@@ -204,16 +204,10 @@ const PageRoutes = () => {
 
 export default function ReduxRoutes() {
   const { tabActive } = useTabBroadcast();
-  if (!tabActive) return (
-    <Provider store={store}>
-      <Meta />
-      <InactiveScreen />
-    </Provider>
-  );
   return (
     <Provider store={store}>
       <Meta />
-      <PageRoutes />
+      {tabActive ? <PageRoutes /> : <InactiveScreen />}
     </Provider>
   );
 }
