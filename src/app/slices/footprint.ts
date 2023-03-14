@@ -1,21 +1,28 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { MuteDTO } from "../../types/message";
+import { OG } from "../../types/resource";
 import { AutoDeleteMessageSettingDTO, AutoDeleteMsgForGroup, AutoDeleteMsgForUser, AutoDeleteSettingForChannels, AutoDeleteSettingForUsers } from "../../types/sse";
 
 export interface State {
+  og: { [url: string]: OG }
   usersVersion: number;
   afterMid: number;
+  historyUsers: { [uid: number]: string | "reached" };
+  historyChannels: { [cid: number]: string | "reached" };
   readUsers: { [uid: number]: number };
-  readChannels: { [gid: number]: number };
+  readChannels: { [cid: number]: number };
   muteUsers: { [uid: number]: { expired_in?: number } | undefined };
-  muteChannels: { [gid: number]: { expired_in?: number } | undefined };
+  muteChannels: { [cid: number]: { expired_in?: number } | undefined };
   autoDeleteMsgUsers: AutoDeleteMsgForUser[];
   autoDeleteMsgChannels: AutoDeleteMsgForGroup[];
 }
 
 const initialState: State = {
+  og: {},
   usersVersion: 0,
   afterMid: 0,
+  historyUsers: {},
+  historyChannels: {},
   readUsers: {},
   readChannels: {},
   muteUsers: {},
@@ -33,8 +40,11 @@ const footprintSlice = createSlice({
     },
     fillFootprint(state, action) {
       const {
+        og = {},
         usersVersion = 0,
         afterMid = 0,
+        historyUsers = {},
+        historyChannels = {},
         readUsers = {},
         readChannels = {},
         muteUsers = {},
@@ -43,8 +53,11 @@ const footprintSlice = createSlice({
         autoDeleteMsgChannels = []
       } = action.payload;
       return {
+        og,
         usersVersion,
         afterMid,
+        historyUsers,
+        historyChannels,
         readUsers,
         readChannels,
         muteUsers,
@@ -139,6 +152,18 @@ const footprintSlice = createSlice({
         }
       });
     },
+    upsertOG(state, action: PayloadAction<{ key: string, value: OG }>) {
+      const { key, value } = action.payload;
+      state.og[key] = value;
+    },
+    updateHistoryMark(state, action: PayloadAction<{ type: "channel" | "user", id: number, mid: string, }>) {
+      const { type, id, mid } = action.payload;
+      if (type == "channel") {
+        state.historyChannels[id] = mid;
+      } else {
+        state.historyUsers[id] = mid;
+      }
+    },
     updateReadUsers(state, action: PayloadAction<{ uid: number; mid: number }[] | undefined>) {
       const reads = action.payload || [];
       if (reads.length == 0) return;
@@ -164,7 +189,9 @@ export const {
   updateReadChannels,
   updateReadUsers,
   updateMute,
-  updateAutoDeleteSetting
+  updateAutoDeleteSetting,
+  updateHistoryMark,
+  upsertOG
 } = footprintSlice.actions;
 
 export default footprintSlice.reducer;

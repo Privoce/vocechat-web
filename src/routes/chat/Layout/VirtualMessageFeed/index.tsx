@@ -1,7 +1,7 @@
-import { useEffect, useRef, useCallback, useState, useMemo } from 'react';
+import { useEffect, useRef, useCallback, useState } from 'react';
 // import clsx from 'clsx';
 // import { useTranslation } from 'react-i18next';
-import { useDebounce, useLocalstorageState } from 'rooks';
+import { useDebounce } from 'rooks';
 import { Virtuoso, VirtuosoHandle } from 'react-virtuoso';
 
 import { useLazyLoadMoreMessagesQuery, useReadMessageMutation } from '../../../../app/services/message';
@@ -10,6 +10,8 @@ import { renderMessageFragment } from '../../utils';
 import NewMessageBottomTip from "../NewMessageBottomTip";
 import CustomList from './CustomList';
 import CustomHeader from './CustomHeader';
+import { useDispatch } from 'react-redux';
+import { updateHistoryMark } from '../../../../app/slices/footprint';
 type Props = {
     context: "user" | "channel",
     id: number
@@ -17,15 +19,16 @@ type Props = {
 // const firstMsgIndex = 10000;
 // let prevMids: number[] = [];
 const VirtualMessageFeed = ({ context, id }: Props) => {
+    const dispatch = useDispatch();
     // const { t } = useTranslation("chat");
     // const [firstItemIndex, setFirstItemIndex] = useState(firstMsgIndex);
     const [atBottom, setAtBottom] = useState(false);
     const [loadMoreMessage, { isLoading: loadingMore, isSuccess, data: historyData }] = useLazyLoadMoreMessagesQuery();
-    const [historyMid, setHistoryMid] = useLocalstorageState<'reached' | string>(`history_mid_${context}_${id}`, "");
     const vList = useRef<VirtuosoHandle | null>(null);
     const [updateReadIndex] = useReadMessageMutation();
     const updateReadDebounced = useDebounce(updateReadIndex, 300);
     const {
+        historyMid = "",
         mids = [],
         selects,
         messageData,
@@ -33,6 +36,7 @@ const VirtualMessageFeed = ({ context, id }: Props) => {
         footprint
     } = useAppSelector((store) => {
         return {
+            historyMid: context == "user" ? store.footprint.historyUsers[id] : store.footprint.historyChannels[id],
             mids: context == "user" ? store.userMessage.byId[id] : store.channelMessage[id],
             selects: store.ui.selectMessages[`${context}_${id}`],
             footprint: store.footprint,
@@ -45,14 +49,14 @@ const VirtualMessageFeed = ({ context, id }: Props) => {
         if (isSuccess && historyData) {
             if (historyData.length == 0) {
                 // 到顶了
-                setHistoryMid(`reached`);
+                dispatch(updateHistoryMark({ type: context, id, mid: "reached" }));
             } else {
                 // 记录最新的mid
                 const [{ mid }] = historyData;
-                setHistoryMid(`${mid}`);
+                dispatch(updateHistoryMark({ type: context, id, mid: `${mid}` }));
             }
         }
-    }, [isSuccess, historyData, mids]);
+    }, [isSuccess, historyData, mids, context, id]);
     // useEffect(() => {
     //     console.log("diff mids", prevMids, mids);
     //     const newCount = mids.length - prevMids.length;

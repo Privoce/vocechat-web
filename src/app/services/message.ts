@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { ContentTypes } from "../config";
-import { updateReadChannels, updateReadUsers } from "../slices/footprint";
+import { updateReadChannels, updateReadUsers, upsertOG } from "../slices/footprint";
 import { fillFavorites, populateFavorite, addFavorite, deleteFavorite } from "../slices/favorites";
 import { onMessageSendStarted } from "./handlers";
 import { normalizeArchiveData } from "../../common/utils";
@@ -64,8 +64,26 @@ export const messageApi = createApi({
     getOGInfo: builder.query<OG, string>({
       query: (url) => ({
         url: `/resource/open_graphic_parse?url=${encodeURIComponent(url)}`
-      })
+      }),
+      async onQueryStarted(url, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(upsertOG({ key: url, value: data }));
+        } catch (err) {
+          console.log("get og error", err);
+          dispatch(upsertOG({
+            key: url, value: {
+              images: [],
+              audios: [],
+              videos: [],
+              title: "",
+              url,
+            }
+          }));
+        }
+      }
     }),
+
     getArchiveMessage: builder.query<Archive, string>({
       query: (file_path) => ({
         url: `/resource/archive?file_path=${encodeURIComponent(file_path)}`

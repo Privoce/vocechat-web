@@ -34,34 +34,32 @@ export interface UploadResponse {
 }
 // Open Graph
 export interface OG {
-  type: string;
+  type?: string;
   title: string;
   url: string;
-  images: [
-    {
-      type?: string;
-      url: string;
-      secure_url?: string;
-      width?: number;
-      height?: number;
-      alt?: string;
-    }
+  images: {
+    type?: string;
+    url: string;
+    secure_url?: string;
+    width?: number;
+    height?: number;
+    alt?: string;
+  }[
+
   ];
-  audios: [
-    {
-      type?: string;
-      url: string;
-      secure_url?: string;
-    }
-  ];
-  videos: [
-    {
-      type?: string;
-      url: string;
-      secure_url?: string;
-      width: number;
-      height: number;
-    }
+  audios: {
+    type?: string;
+    url: string;
+    secure_url?: string;
+  }[];
+  videos: {
+    type?: string;
+    url: string;
+    secure_url?: string;
+    width: number;
+    height: number;
+  }[
+
   ];
   favicon_url?: string;
   description?: string;

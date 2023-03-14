@@ -37,6 +37,17 @@ export default async function handler({ operation, data = {}, payload }: Params)
         await table?.setItem("muteChannels", data.muteChannels || {});
       }
       break;
+    case "updateHistoryMark":
+      {
+        const { type } = payload;
+        if (type == "channel") {
+          await table?.setItem("historyChannels", data.historyChannels);
+
+        } else {
+          await table?.setItem("historyUsers", data.historyUsers);
+        }
+      }
+      break;
     case "updateReadChannels":
       {
         await table?.setItem("readChannels", data.readChannels);
