@@ -13,6 +13,7 @@ import { useAppSelector } from "../../app/store";
 import GuestBlankPlaceholder from "./GuestBlankPlaceholder";
 import GuestChannelChat from "./GuestChannelChat";
 import GuestSessionList from "./GuestSessionList";
+import ErrorCatcher from "../../common/component/ErrorCatcher";
 
 function ChatPage() {
   const isHomePath = useMatch(`/`);
@@ -49,7 +50,7 @@ function ChatPage() {
   const placeholderVisible = channel_id == 0 && user_id == 0;
   const isMainPath = isHomePath || isChatHomePath;
   return (
-    <>
+    <ErrorCatcher>
       {channelModalVisible && (
         <ChannelModal closeModal={toggleChannelModalVisible} personal={true} />
       )}
@@ -76,7 +77,7 @@ function ChatPage() {
           {user_id !== 0 && <DMChat uid={+user_id} />}
         </div>
       </div>
-    </>
+    </ErrorCatcher>
   );
 }
 export default memo(ChatPage);
