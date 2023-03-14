@@ -18,7 +18,7 @@ type CurrentState = {
     [key: number]: number;
   };
 };
-const handler = (data: ChatEvent, dispatch: AppDispatch, currState: CurrentState) => {
+const handler = (data: ChatEvent, dispatch: AppDispatch, currState: CurrentState, fromHistory = false) => {
   const {
     mid,
     from_uid,
@@ -42,12 +42,15 @@ const handler = (data: ChatEvent, dispatch: AppDispatch, currState: CurrentState
     properties,
     expires_in
   };
-  switch (type) {
-    case "normal":
-    case "reply":
-      // 更新after_mid
-      dispatch(updateAfterMid(mid));
-      break;
+  if (!fromHistory) {
+    // 如果来自历史消息的拉取，则忽略更新after mid
+    switch (type) {
+      case "normal":
+      case "reply":
+        // 更新after_mid
+        dispatch(updateAfterMid(mid));
+        break;
+    }
   }
   const { loginUid, readUsers = {}, readChannels = {} } = currState;
   const to = "gid" in target ? "channel" : "user";

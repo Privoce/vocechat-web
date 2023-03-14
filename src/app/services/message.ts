@@ -160,9 +160,10 @@ export const messageApi = createApi({
       },
       async onQueryStarted(params, { dispatch, getState, queryFulfilled }) {
         const { data: messages } = await queryFulfilled;
+        const fromHistory = true;
         if (messages?.length) {
           messages.forEach((msg) => {
-            handleChatMessage(msg, dispatch, getState() as RootState);
+            handleChatMessage(msg, dispatch, getState() as RootState, fromHistory);
           });
         }
       }

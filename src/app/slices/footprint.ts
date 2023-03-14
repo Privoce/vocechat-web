@@ -57,7 +57,11 @@ const footprintSlice = createSlice({
       state.usersVersion = action.payload;
     },
     updateAfterMid(state, action: PayloadAction<number>) {
-      state.afterMid = action.payload;
+      const newMid = action.payload;
+      // 如果新mid小于已有的afterMid,则不必更新
+      if (state.afterMid < newMid) {
+        state.afterMid = action.payload;
+      }
     },
     updateAutoDeleteSetting(state, action: PayloadAction<AutoDeleteMessageSettingDTO>) {
       const payload = action.payload;

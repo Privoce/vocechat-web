@@ -15,7 +15,8 @@ import LicenseUpgradeTip from "./LicenseOutdatedTip";
 import DnDTip from "./DnDTip";
 import IconWarning from '../../../assets/icons/warning.svg';
 import ImagePreview from "../../../common/component/ImagePreview";
-import MessageFeed from "./MessageFeed";
+
+import VirtualMessageFeed from "./VirtualMessageFeed";
 
 interface Props {
   readonly?: boolean;
@@ -96,7 +97,7 @@ const Layout: FC<Props> = ({
           <div className="w-full h-full flex items-start justify-between relative" >
             <div className="rounded-br-2xl flex flex-col absolute bottom-0 w-full h-full" ref={messagesContainer}>
               {/* 消息流 */}
-              <MessageFeed context={context} id={to} />
+              <VirtualMessageFeed key={`${context}_${to}`} context={context} id={to} />
               {/* 发送框 */}
               <div className={`px-2 py-0 md:p-4 ${selects ? "selecting" : ""}`}>
                 {readonly ? (
