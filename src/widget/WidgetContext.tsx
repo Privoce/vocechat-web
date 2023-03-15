@@ -4,7 +4,7 @@ import { useAppSelector } from '../app/store';
 import { getContrastColor } from '../common/utils';
 
 const color = decodeURIComponent(new URLSearchParams(location.search).get("themeColor") || "#1fe1f9");
-const from = decodeURIComponent(new URLSearchParams(location.search).get("from") || "widget");
+const from = decodeURIComponent(new URLSearchParams(location.search).get("from") || "widget.link");
 const fgColor = getContrastColor(color);
 // 判断是否是iframe上下文
 const embed = window.location !== window.parent.location;
@@ -12,7 +12,7 @@ const WidgetContext = createContext({ color, fgColor, embed, from, loading: true
 
 
 function WidgetProvider({ children }: { children: ReactNode }) {
-    const { isLoading: loadingServerData, isError } = useGetServerQuery();
+    const { isLoading: loadingServerData } = useGetServerQuery();
     const { isLoading: loadingConfig, data: loginConfig } = useGetLoginConfigQuery();
     const serverData = useAppSelector(store => store.server);
 

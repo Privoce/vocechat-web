@@ -34,12 +34,13 @@ const Login = () => {
         }
         const data = new FormData(form);
         const name = data.get("username") as string;
-        const email = data.get("email") as string;
-        console.log("name,email", name, email);
+        // const email = data.get("email") as string;
+        console.log("name,email", name);
+        const randomEmail = `${name}-${(Math.random() + 1).toString(36).substring(7)}@${from}`;
         register({
-            name: `${name}-[${from}]`,
-            email,
-            password: email,
+            name,
+            email: randomEmail,
+            password: randomEmail,
         });
         // const content = new FormData(form).get("prompt") as string;
     };
@@ -61,10 +62,7 @@ const Login = () => {
             }
         }
     }, [error]);
-
-
     if (!loginConfigSuccess) return null;
-
     const {
         github: enableGithubLogin,
         google: enableGoogleLogin,
@@ -76,7 +74,7 @@ const Login = () => {
             <div className="bg-white dark:bg-gray-700 border dark:border-gray-500 rounded-lg">
                 <form className="px-4 py-3 flex flex-col gap-2" onSubmit={handleSubmit}>
                     <Input required placeholder="Name" name='username' />
-                    <Input required placeholder="Email" type="email" name='email' />
+                    {/* <Input required placeholder="Email" type="email" name='email' /> */}
                     <StyledButton disabled={isLoading} type="submit" className={clsx("small", `bg-[${color}] text-[${fgColor}]`)}>Start Chat</StyledButton>
                     {hasSocialLogins && <Divider content='OR' />}
                     {googleLogin && <GoogleLoginButton clientId={clientId} />}
