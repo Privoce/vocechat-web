@@ -39,5 +39,9 @@
   "delete_msg_these": "这些消息",
 
   "new_msg": "{{num}} 条新消息",
-  "mark_read": "设为已读"
+  "mark_read": "设为已读",
+
+  "file": "文件",
+  "image": "图片",
+  "forward": "转发"
 }
