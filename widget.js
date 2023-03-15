@@ -20,7 +20,7 @@ const styles = {
 Object.assign(wrapper.style, styles);
 wrapper.src = `${new URL(_src).origin}/widget.html?host=${hostId}&themeColor=${encodeURIComponent(
   themeColor
-)}&from=${encodeURIComponent(location.host)}`;
+)}&from=${encodeURIComponent(location.hostname)}`;
 wrapper.width = closeWidth;
 wrapper.height = closeHeight;
 wrapper.frameborder = 0;
