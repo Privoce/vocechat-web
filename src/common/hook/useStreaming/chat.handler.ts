@@ -9,6 +9,7 @@ import { ContentTypes } from "../../../app/config";
 import { ChatEvent } from "../../../types/sse";
 import { AppDispatch } from "../../../app/store";
 type CurrentState = {
+  afterMid: number,
   ready: boolean;
   loginUid: number;
   readUsers: {
@@ -47,8 +48,12 @@ const handler = (data: ChatEvent, dispatch: AppDispatch, currState: CurrentState
     switch (type) {
       case "normal":
       case "reply":
-        // 更新after_mid
-        dispatch(updateAfterMid(mid));
+        {
+          if (currState.afterMid < mid) {
+            // 更新after_mid
+            dispatch(updateAfterMid(mid));
+          }
+        }
         break;
     }
   }

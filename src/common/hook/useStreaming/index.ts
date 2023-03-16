@@ -1,5 +1,8 @@
 import { useEffect, useState, useCallback } from "react";
 import toast from "react-hot-toast";
+import dayjs from "dayjs";
+import { isNull, omitBy } from "lodash";
+
 import BASE_URL from "../../../app/config";
 import { setReady } from "../../../app/slices/ui";
 import {
@@ -21,9 +24,7 @@ import { resetAuthData, updateLoginUser } from "../../../app/slices/auth.data";
 import chatMessageHandler from "./chat.handler";
 import { useAppDispatch, useAppSelector } from "../../../app/store";
 import { ServerEvent, UsersStateEvent } from "../../../types/sse";
-import { isNull, omitBy } from "lodash";
 import { useRenewMutation } from "../../../app/services/auth";
-import dayjs from "dayjs";
 import { getLocalAuthData } from "../../utils";
 
 const getQueryString = (params: { [key: string]: string }) => {
@@ -272,6 +273,7 @@ export default function useStreaming() {
           break;
         case "chat": {
           chatMessageHandler(data, dispatch, {
+            afterMid,
             ready,
             loginUid,
             readUsers,
