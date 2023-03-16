@@ -147,10 +147,8 @@ const Message: FC<IProps> = ({
               </time>
             </Tooltip>
           </div>
-          {/* 文本类的消息限高 */}
           <div className={clsx(`select-text text-gray-800 text-sm break-all whitespace-pre-wrap dark:!text-white`,
             sending && "opacity-90",
-            content_type.startsWith("text") && "max-h-96 overflow-y-scroll ",
           )}>
             {reply_mid && <Reply key={reply_mid} mid={reply_mid} />}
             {edit ? (
