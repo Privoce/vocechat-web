@@ -3,8 +3,9 @@ import { useGetLoginConfigQuery, useGetServerQuery } from '../app/services/serve
 import { useAppSelector } from '../app/store';
 import { getContrastColor } from '../common/utils';
 
-const color = decodeURIComponent(new URLSearchParams(location.search).get("themeColor") || "#1fe1f9");
-const from = decodeURIComponent(new URLSearchParams(location.search).get("from") || "widget.link");
+const query = new URLSearchParams(location.search);
+const color = decodeURIComponent(query.get("themeColor") || "#1fe1f9");
+const from = decodeURIComponent(query.get("from") || "widget.link");
 const fgColor = getContrastColor(color);
 // 判断是否是iframe上下文
 const embed = window.location !== window.parent.location;

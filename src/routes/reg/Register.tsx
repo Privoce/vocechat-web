@@ -1,6 +1,7 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
+import { useSearchParams } from "react-router-dom";
 import BASE_URL, { KEY_LOCAL_MAGIC_TOKEN } from "../../app/config";
 import Input from "../../common/component/styled/Input";
 import Button from "../../common/component/styled/Button";
@@ -26,6 +27,7 @@ export default function Register() {
   const serverName = useAppSelector(store => store.server.name);
   const { t } = useTranslation("auth");
   const { t: ct } = useTranslation();
+  let [searchParams] = useSearchParams();
   const [sendRegMagicLink, { isLoading: signingUp, data, isSuccess }] =
     useSendRegMagicLinkMutation();
   const dispatch = useDispatch();
@@ -40,8 +42,7 @@ export default function Register() {
     password: "",
     confirmPassword: ""
   });
-  const query = new URLSearchParams(location.search);
-  const magic_token = query.get("magic_token") ?? undefined;
+  const magic_token = searchParams.get("magic_token") ?? undefined;
   if (magic_token) {
     //本地存一下 magic token 后续oauth流程用到
     localStorage.setItem(KEY_LOCAL_MAGIC_TOKEN, magic_token);
@@ -118,7 +119,7 @@ export default function Register() {
   // magic token 没有并且没有开放注册
   if (whoCanSignUp !== "EveryOne" && !magic_token)
     // todo: i18n
-    return <>Sign up method is updated to Invitation Link Only</>;
+    return <span className="dark:text-white">Sign up method is updated to Invitation Link Only</span>;
   const { name, email, password, confirmPassword } = input;
   if (data?.mail_is_sent) return <EmailNextTip />;
   const isLoading = registering || signingUp || checkingEmail;

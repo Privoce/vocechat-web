@@ -2,7 +2,6 @@
 import { useState, useEffect, FormEvent, ChangeEvent } from "react";
 import toast from "react-hot-toast";
 import BASE_URL from "../../app/config";
-// import web3 from "web3";
 
 import Input from "../../common/component/styled/Input";
 import Button from "../../common/component/styled/Button";
@@ -56,7 +55,8 @@ export default function LoginPage() {
         });
       } else {
         // reg with magic link and set name only
-        location.href = `?magic_token=${magic_token}#/register/set_name/login`;
+        // navigate(`/register/set_name/login?magic_token=${magic_token}`);
+        location.href = `/#/register/set_name/login?magic_token=${magic_token}`;
       }
     }
   }, []);

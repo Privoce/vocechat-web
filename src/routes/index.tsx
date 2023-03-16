@@ -18,7 +18,6 @@ const UsersPage = lazy(() => import("./users"));
 const CallbackPage = lazy(() => import("./callback"));
 const FavoritesPage = lazy(() => import("./favs"));
 const OnboardingPage = lazy(() => import("./onboarding"));
-const InvitePage = lazy(() => import("./invite"));
 const SettingChannelPage = lazy(() => import("./settingChannel"));
 const SettingDMPage = lazy(() => import("./settingDM"));
 const SettingPage = lazy(() => import("./setting"));
@@ -107,7 +106,6 @@ const PageRoutes = () => {
             </LazyIt>
           }
         />
-        <Route path="/invite" element={<LazyIt><InvitePage /></LazyIt>} />
         <Route path="/onboarding" element={<LazyIt><OnboardingPage /></LazyIt>} />
 
         <Route

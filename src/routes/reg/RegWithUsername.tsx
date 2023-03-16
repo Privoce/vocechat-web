@@ -1,7 +1,7 @@
 import { useState, useEffect, FC, FormEvent, ChangeEvent } from "react";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import { setAuthData } from "../../app/slices/auth.data";
 import Input from "../../common/component/styled/Input";
@@ -13,6 +13,7 @@ import { useRegisterMutation } from "../../app/services/auth";
 const RegWithUsername: FC = () => {
   const { t: ct } = useTranslation();
   const { t } = useTranslation("auth");
+  const [searchParams] = useSearchParams();
   const [checkTokenInvalid, { data: isTokenValid, isLoading: checkingToken }] =
     useCheckMagicTokenValidMutation();
   const [
@@ -27,9 +28,8 @@ const RegWithUsername: FC = () => {
   const { from = "reg" } = useParams();
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
-  const query = new URLSearchParams(location.search);
   // todo: check if query param exists
-  const token = query.get("magic_token") as string;
+  const token = searchParams.get("magic_token") as string;
   useEffect(() => {
     if (token) {
       checkTokenInvalid(token);
@@ -92,8 +92,8 @@ const RegWithUsername: FC = () => {
     setUsername(evt.target.value);
   };
 
-  if (!token) return <>"No Token"</>;
-  if (checkingToken) return <div className="dark:text-gray-100">"Checking Magic Link..."</div>;
+  if (!token) return <span className="dark:text-white">No Token</span>;
+  if (checkingToken) return <div className="dark:text-gray-100">Checking Magic Link...</div>;
   if (!isTokenValid) return <ExpiredTip />;
   const isLoading = loginLoading || regLoading;
   const isSuccess = loginSuccess || regSuccess;

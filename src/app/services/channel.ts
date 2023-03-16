@@ -92,7 +92,7 @@ export const channelApi = createApi({
         // return _link;
         // 替换掉域名
         const invite = new URL(_link);
-        return `${location.origin}${invite.pathname}${invite.search}${invite.hash}`;
+        return `${location.origin}${invite.pathname}${invite.hash}${invite.search}`;
       }
     }),
     removeChannel: builder.query<void, number>({
