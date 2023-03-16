@@ -38,5 +38,9 @@
   "delete_msg_these": "these messages",
 
   "new_msg": "{{num}} new messages",
-  "mark_read": "Mark As Read"
+  "mark_read": "Mark As Read",
+
+  "file": "file",
+  "image": "image",
+  "forward": "forward"
 }

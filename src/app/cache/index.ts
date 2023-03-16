@@ -28,7 +28,11 @@ const tables = [
   },
   {
     storeName: "messageFile",
-    description: "store file message list refs"
+    description: "store file message list"
+  },
+  {
+    storeName: "messageArchive",
+    description: "store archive message"
   },
   {
     storeName: "messageReaction",

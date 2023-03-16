@@ -1,5 +1,4 @@
 import { useEffect, useState, FC, ReactElement } from "react";
-import StyledMsg from "./styled";
 import renderContent from "./renderContent";
 import Avatar from "../Avatar";
 import IconForward from "../../../assets/icons/forward.svg";
@@ -14,13 +13,9 @@ type Props = {
 };
 const ForwardedMessage: FC<Props> = ({ context, to, from_uid, id }) => {
   const { t } = useTranslation();
-  const { normalizeMessage, messages } = useNormalizeMessage();
+  const { messages, isLoading } = useNormalizeMessage(id);
   const [forwards, setForwards] = useState<ReactElement | null>(null);
-  useEffect(() => {
-    if (id) {
-      normalizeMessage(id);
-    }
-  }, [id]);
+
   useEffect(() => {
     if (messages) {
       const forward_mids = messages.map(({ from_mid }) => from_mid) || [];
@@ -67,6 +62,7 @@ const ForwardedMessage: FC<Props> = ({ context, to, from_uid, id }) => {
     }
   }, [messages, context, to, from_uid]);
   if (!id) return null;
+  if (isLoading) return <span className="text-sm dark:text-white">Loading</span>;
 
   return forwards;
 };

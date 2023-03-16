@@ -7,6 +7,7 @@ import dmMsgHandler from "./handler.dm.msg";
 import serverHandler from "./handler.server";
 import messageHandler from "./handler.message";
 import fileMessageHandler from "./handler.file.msg";
+import archiveMessageHandler from "./handler.archive.msg";
 import reactionHandler from "./handler.reaction";
 import UIHandler from "./handler.ui";
 import footprintHandler from "./handler.footprint";
@@ -20,6 +21,7 @@ const operations = [
   "userMessage",
   "reactionMessage",
   "fileMessage",
+  "archiveMessage",
   "message",
   "ui",
   "footprint",
@@ -35,7 +37,7 @@ listenerMiddleware.startListening({
   predicate: (action) => {
     const { type = "" } = action;
     const [prefix] = type.split("/");
-    // console.log("operation", type, operations.includes(prefix));
+    // console.log("operation", type);
     return operations.includes(prefix);
     // console.log("listener predicate", action, currentState, previousState);
     // return true;
@@ -99,6 +101,14 @@ listenerMiddleware.startListening({
             operation,
             // payload,
             data: state
+          });
+        }
+        break;
+      case "archiveMessage":
+        {
+          await archiveMessageHandler({
+            operation,
+            payload
           });
         }
         break;

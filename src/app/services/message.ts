@@ -9,6 +9,7 @@ import { Archive, FavoriteArchive, OG } from "../../types/resource";
 import { ChatMessage, ContentTypeKey, UploadFileResponse } from "../../types/message";
 import handleChatMessage from "../../common/hook/useStreaming/chat.handler";
 import { RootState } from "../store";
+import { upsertArchiveMessage } from "../slices/message.archive";
 
 export const messageApi = createApi({
   reducerPath: "messageApi",
@@ -85,9 +86,17 @@ export const messageApi = createApi({
     }),
 
     getArchiveMessage: builder.query<Archive, string>({
-      query: (file_path) => ({
-        url: `/resource/archive?file_path=${encodeURIComponent(file_path)}`
-      })
+      query: (filePath) => ({
+        url: `/resource/archive?file_path=${encodeURIComponent(filePath)}`
+      }),
+      async onQueryStarted(filePath, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(upsertArchiveMessage({ filePath, data }));
+        } catch (err) {
+          console.log("get archive error", err);
+        }
+      }
     }),
     pinMessage: builder.mutation<void, { gid: number; mid: number }>({
       query: ({ gid, mid }) => ({

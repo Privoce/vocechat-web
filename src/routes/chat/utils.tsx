@@ -9,6 +9,7 @@ import Message from "../../common/component/Message";
 import { updateSelectMessages } from "../../app/slices/ui";
 import { useAppSelector } from "../../app/store";
 import LinkifyText from "../../common/component/LinkifyText";
+import i18n from "../../i18n";
 
 export function getUnreadCount({
   mids = [],
@@ -63,18 +64,18 @@ export const renderPreviewMessage = (message = null) => {
         res = `[markdown]`;
       }
       break;
-    // case ContentTypes.archive:
-    //   {
-    //     res = `[forward]`;
-    //   }
-    //   break;
+    case ContentTypes.archive:
+      {
+        res = `[${i18n.t("forward", { ns: "chat" })}]`;
+      }
+      break;
     case ContentTypes.file:
       {
         const props = properties ?? {};
         if (isImage(props.content_type, props.size)) {
-          res = `[image]`;
+          res = `[${i18n.t("image", { ns: "chat" })}]`;
         } else {
-          res = `[file]`;
+          res = `[${i18n.t("file", { ns: "chat" })}]`;
         }
       }
 
