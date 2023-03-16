@@ -64,17 +64,18 @@ const VirtualMessageFeed = ({ context, id }: Props) => {
     // }, [mids]);
 
     // 加载更多
-    const handleLoadMore = useCallback(() => {
-        console.log("reach start ");
-        if (historyMid === "reached") return;
-        let lastMid = mids.slice(0, 1)[0];
-        if (historyMid) {
-            lastMid = +historyMid;
+    const handleTopStateChange = (isTop: boolean) => {
+        console.log("reach top ", isTop);
+        if (isTop) {
+            if (historyMid === "reached") return;
+            let lastMid = mids.slice(0, 1)[0];
+            if (historyMid) {
+                lastMid = +historyMid;
+            }
+            // prevMids = mids;
+            loadMoreMessage({ context, id, mid: lastMid });
         }
-        // prevMids = mids;
-        loadMoreMessage({ context, id, mid: lastMid });
-        // return false;
-    }, [mids, context, id]);
+    };
     // 自动跟随
     const handleFollowOutput = (isAtBottom: boolean) => {
         const [lastMid] = mids ? mids.slice(-1) : [0];
@@ -112,9 +113,10 @@ const VirtualMessageFeed = ({ context, id }: Props) => {
             }}
             // firstItemIndex={firstItemIndex}
             initialTopMostItemIndex={mids.length - 1}
-            startReached={handleLoadMore}
+            // startReached={handleLoadMore}
             data={mids}
             atTopThreshold={context == "channel" ? 160 : 0}
+            atTopStateChange={handleTopStateChange}
             atBottomStateChange={handleBottomStateChange}
             atBottomThreshold={400}
             followOutput={handleFollowOutput}
