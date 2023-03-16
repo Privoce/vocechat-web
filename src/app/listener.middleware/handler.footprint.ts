@@ -12,6 +12,11 @@ export default async function handler({ operation, data = {}, payload }: Params)
     return;
   }
   switch (operation) {
+    case "upsertOG":
+      {
+        await table?.setItem("og", data.og);
+      }
+      break;
     case "updateUsersVersion":
       {
         const usersVersion = payload;
