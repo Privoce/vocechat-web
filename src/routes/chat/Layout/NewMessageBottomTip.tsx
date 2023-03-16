@@ -43,7 +43,6 @@ const NewMessageBottomTip = ({ context, id, scrollToBottom }: Props) => {
                                 bg-gradient-to-tl from-[#3C8CE7] to-[#00EAFF]`,
             unreads > 0 ? "flex" : "hidden")}>
             <button onClick={scrollToBottom}>{t("new_msg", { num: unreads })}</button>
-            <span className='absolute -left-1 -translate-x-full'>👇</span>
         </aside>
     );
 };

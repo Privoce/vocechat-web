@@ -47,7 +47,7 @@ export default function License() {
         <div className={clsx('relative w-full p-3 rounded border-solid border flex flex-col gap-4 shadow', reachLimit ? "border-red-600 bg-red-200/50" : "border-green-600 bg-green-100 dark:bg-green-900")}>
           <Item label={t("license.signed")} data={licenseInfo?.sign ? "Yes" : "Not Yet"} />
           <Item label={t("license.domain")} data={licenseInfo?.domains} />
-          <Item label={t("license.user_limit")} data={licenseInfo?.user_limit == 99999 ? "No Limit" : licenseInfo?.user_limit} />
+          <Item label={t("license.user_limit")} data={(licenseInfo?.user_limit ?? 0) >= 999999 ? "No Limit" : licenseInfo?.user_limit} />
           <Item label={t("license.expire")} data={dayjs(licenseInfo?.expired_at).format("YYYY-MM-DD h:mm:ss A")} />
           <Item label={t("license.create")} data={dayjs(licenseInfo?.created_at).format("YYYY-MM-DD h:mm:ss A")} />
           <Item label={t("license.value")} data={licenseInfo?.base58} foldable={base58Fold} title={base58Fold ? "Click to see full text" : "Click to fold text"}

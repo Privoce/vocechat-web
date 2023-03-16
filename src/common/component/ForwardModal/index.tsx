@@ -75,11 +75,11 @@ const ForwardModal: FC<IProps> = ({ mids, closeModal }) => {
     (selectedChannels.length == 0 && selectedMembers.length == 0) || forwarding;
   return (
     <Modal>
-      <div className="flex max-h-[514px] min-h-[400px] bg-white drop-shadow rounded-lg overflow-hidden">
+      <div className="flex max-h-[514px] min-h-[400px] bg-white dark:bg-slate-900 drop-shadow rounded-lg overflow-hidden">
         <div className="w-[271px] shadow-[inset_-1px_0px_0px_rgba(0,_0,_0,_0.1)] overflow-y-scroll bg-inherit">
           <div className="sticky top-0 bg-inherit z-[90] p-4 w-[calc(100%_-_1px)]">
             <input
-              className="px-2 py-2.5 text-sm bg-black/10 rounded-lg w-full"
+              className="px-2 py-2.5 text-sm dark:text-white bg-black/10 rounded-lg w-full"
               value={input}
               onChange={handleSearchChange}
               placeholder="Search user or channel"
@@ -138,14 +138,14 @@ const ForwardModal: FC<IProps> = ({ mids, closeModal }) => {
             })}
             {selectedMembers.map((uid) => {
               return (
-                <li key={uid} className="item">
+                <li key={uid} className="relative">
                   <User key={uid} uid={uid} interactive={false} />
-                  <CloseIcon className="remove" onClick={removeSelected.bind(null, uid, "user")} />
+                  <CloseIcon className="cursor-pointer absolute right-1 top-1/2 -translate-y-1/2" onClick={removeSelected.bind(null, uid, "user")} />
                 </li>
               );
             })}
           </ul>
-          <div className="rounded-lg p-2 max-h-[200px] overflow-auto bg-slate-100 w-[280px] mb-1">
+          <div className="rounded-lg p-2 max-h-[200px] overflow-auto bg-slate-100 dark:bg-slate-800 w-[280px] mb-1">
             {mids.map((mid) => (
               <Reply key={mid} mid={mid} interactive={false} />
             ))}
