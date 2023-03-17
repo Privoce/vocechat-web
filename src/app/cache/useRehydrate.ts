@@ -27,6 +27,10 @@ const useRehydrate = () => {
       ui: {},
       server: {}
     };
+    if (!window.CACHE) {
+      setIterated(true);
+      return;
+    }
     const tables = Object.keys(window.CACHE);
     await Promise.all(
       tables.map((_key) => {
