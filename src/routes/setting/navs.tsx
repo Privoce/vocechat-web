@@ -14,10 +14,11 @@ import Version from "../../common/component/Version";
 import { useAppSelector } from "../../app/store";
 import { useTranslation } from "react-i18next";
 import ServerVersionChecker from "../../common/component/ServerVersionChecker";
+import useLicense from "../../common/hook/useLicense";
 
 const navs = [
   {
-    title: "general",
+    name: "general",
     items: [
       {
         name: "overview",
@@ -35,7 +36,7 @@ const navs = [
     ]
   },
   {
-    title: "config",
+    name: "config",
     items: [
       {
         name: "bot",
@@ -74,7 +75,7 @@ const navs = [
     admin: true
   },
   {
-    title: "about",
+    name: "about",
     items: [
       {
         name: "api_doc",
@@ -97,14 +98,16 @@ const navs = [
 ];
 
 const useNavs = () => {
+  const { license: licenseInfo } = useLicense();
   const { t } = useTranslation("setting");
   const loginUser = useAppSelector((store) => {
     return store.authData.user;
   });
   const transformedNavs = navs.map(n => {
-    const { title, items, ...rest } = n;
+    const { name, items, ...rest } = n;
     return {
-      title: t(`nav.${title}`),
+      name,
+      title: t(`nav.${name}`),
       items: items.map(item => {
         const { name, ...rest } = item;
         return {
@@ -120,7 +123,13 @@ const useNavs = () => {
     if (loginUser?.is_admin) {
       return true;
     } else {
-      return !nav.admin;
+      // about 特殊处理下
+      if (nav.name == "about") {
+        // 有付费，但是普通用户，则不显示about
+        return licenseInfo?.user_limit === 20;
+      } else {
+        return !nav.admin;
+      }
     }
   });
 };
