@@ -25,7 +25,7 @@ const Row = ({ paramKey, paramDefault, remarks }: { paramKey: string, paramDefau
 };
 export default function Widget() {
   const loginUid = useAppSelector(store => store.authData.user?.uid);
-  const widgetLink = `${location.origin}/widget.html?hostId=${loginUid}`;
+  const widgetLink = `${location.origin}/widget.html?host=${loginUid}`;
   const { t } = useTranslation("setting", { keyPrefix: "widget" });
   const { t: ct } = useTranslation();
   const { copied, copy } = useCopy({ enableToast: false });
