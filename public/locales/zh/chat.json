@@ -18,6 +18,7 @@
   "create_channel_desc": "这是一个公开频道，所有人都能看到",
   "create_private_channel_desc": "这是一个私密频道，只有被选择的人才能看到",
   "search_user_placeholder": "请输入用户名",
+  "welcome_msg": "欢迎来到 {{name}} 频道",
 
   "invite_title": "邀请朋友加入{{name}}",
   "invite_by_email": "邮件邀请",

@@ -1,6 +1,9 @@
 import { useState, useEffect, FC, MouseEvent, ChangeEvent } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import clsx from "clsx";
+
 import Modal from "../Modal";
 import Button from "../styled/Button";
 import ChannelIcon from "../ChannelIcon";
@@ -8,11 +11,10 @@ import User from "../User";
 import StyledCheckbox from "../styled/Checkbox";
 import StyledToggle from "../../component/styled/Toggle";
 import useFilteredUsers from "../../hook/useFilteredUsers";
-import { useCreateChannelMutation } from "../../../app/services/channel";
+import { useCreateChannelMutation, useSendChannelMsgMutation } from "../../../app/services/channel";
 import { useAppSelector } from "../../../app/store";
 import { CreateChannelDTO } from "../../../types/channel";
-import { useTranslation } from "react-i18next";
-import clsx from "clsx";
+import i18n from "../../../i18n";
 
 interface Props {
   personal?: boolean;
@@ -21,14 +23,15 @@ interface Props {
 
 const ChannelModal: FC<Props> = ({ personal = false, closeModal }) => {
   const { t } = useTranslation("chat");
-  const { usersData, loginUid } = useAppSelector((store) => {
-    return { usersData: store.users.byId, loginUid: store.authData.user?.uid };
-  });
   const navigateTo = useNavigate();
+  const [sendMessage] = useSendChannelMsgMutation();
+  const { loginUser, channelData } = useAppSelector((store) => {
+    return { loginUser: store.authData.user, channelData: store.channels.byId };
+  });
   const [data, setData] = useState<CreateChannelDTO>({
     name: "",
     description: "",
-    members: loginUid ? [Number(loginUid)] : [],
+    members: loginUser?.uid ? [loginUser.uid] : [],
     is_public: !personal
   });
 
@@ -63,13 +66,18 @@ const ChannelModal: FC<Props> = ({ personal = false, closeModal }) => {
   }, [isError]);
 
   useEffect(() => {
-    if (isSuccess && newChannel) {
-      toast.success("create new channel success");
+    const id = typeof newChannel == 'object' ? newChannel.gid : newChannel;
+    if (isSuccess && id && channelData[id]) {
+      const name = channelData[id].name;
+      // 发个欢迎消息
+      const welcome = i18n.t("welcome_msg", { ns: "chat", name }) ?? "";
+      sendMessage({ id, content: welcome, from_uid: loginUser?.uid, type: "text" });
       closeModal();
-      const id = typeof newChannel == 'object' ? newChannel.gid : newChannel;
+      toast.success("create new channel success");
       navigateTo(`/chat/channel/${id}`);
     }
-  }, [isSuccess, newChannel]);
+  }, [isSuccess, newChannel, channelData]);
+
 
   const handleNameInput = (evt: ChangeEvent<HTMLInputElement>) => {
     setData((prev) => ({ ...prev, name: evt.target.value }));
@@ -87,11 +95,9 @@ const ChannelModal: FC<Props> = ({ personal = false, closeModal }) => {
     setData((prev) => ({ ...prev, members: tmp }));
   };
 
-  if (!loginUid) return null;
-  const loginUser = usersData[Number(loginUid)];
   if (!loginUser) return null;
   const { name, members, is_public } = data;
-
+  const loginUid = loginUser.uid;
   return (
     <Modal>
       <div className="flex flex-col md:flex-row max-h-screen md:max-h-[402px] bg-white dark:bg-gray-800 drop-shadow rounded-lg">
