@@ -1,7 +1,9 @@
 import { useState, useEffect, memo } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Tippy from "@tippyjs/react";
+import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
+
 import PinList from "./PinList";
 import FavList from "../FavList";
 import { updateRememberedNavs } from "../../../app/slices/ui";
@@ -11,9 +13,7 @@ import Layout from "../Layout";
 import IconFav from "../../../assets/icons/bookmark.svg";
 import IconPeople from "../../../assets/icons/people.svg";
 import IconPin from "../../../assets/icons/pin.svg";
-
 import { useAppSelector } from "../../../app/store";
-import { useTranslation } from "react-i18next";
 import GoBackNav from "../../../common/component/GoBackNav";
 import Members from "./Members";
 type Props = {
@@ -23,6 +23,7 @@ type Props = {
 function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
   const { t } = useTranslation("chat");
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [membersVisible, setMembersVisible] = useState(true);
 
@@ -38,6 +39,12 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
     };
   });
   useEffect(() => {
+    if (!data) {
+      // channel不存在了 回首页
+      navigate("/chat");
+    }
+  }, [data]);
+  useEffect(() => {
     dispatch(updateRememberedNavs());
     return () => {
       dispatch(updateRememberedNavs({ path: pathname }));
@@ -47,6 +54,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
   const toggleMembersVisible = () => {
     setMembersVisible((prev) => !prev);
   };
+
 
   if (!data) return null;
   const { name, description, is_public, members = [], owner } = data;

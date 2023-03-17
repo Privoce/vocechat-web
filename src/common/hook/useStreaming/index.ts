@@ -26,6 +26,8 @@ import { useAppDispatch, useAppSelector } from "../../../app/store";
 import { ServerEvent, UsersStateEvent } from "../../../types/sse";
 import { useRenewMutation } from "../../../app/services/auth";
 import { getLocalAuthData } from "../../utils";
+import { removeUserSession } from "../../../app/slices/message.user";
+import { removeChannelSession } from "../../../app/slices/message.channel";
 
 const getQueryString = (params: { [key: string]: string }) => {
   const sp = new URLSearchParams();
@@ -155,6 +157,10 @@ export default function useStreaming() {
             if (uid === loginUid && action === "update") {
               dispatch(updateLoginUser(omitBy(rest, isNull)));
             }
+            if (action === "delete") {
+              // 同时删掉对应的聊天记录
+              dispatch(removeUserSession(uid));
+            }
           });
           break;
         }
@@ -265,8 +271,11 @@ export default function useStreaming() {
           }
           break;
         }
-        case "kick_from_group":
+        case "kick_from_group": {
           dispatch(removeChannel(data.gid));
+          // 同时清掉channel聊天记录
+          dispatch(removeChannelSession(data.gid));
+        }
           break;
         case "pinned_message_updated":
           dispatch(updatePinMessage(data));

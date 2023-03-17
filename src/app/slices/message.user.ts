@@ -60,7 +60,7 @@ const userMsgSlice = createSlice({
         }
       }
     },
-    removeUserSession(state, action) {
+    removeUserSession(state, action: PayloadAction<number | number[]>) {
       const ids = Array.isArray(action.payload) ? action.payload : [action.payload];
       state.ids = state.ids.filter((id) => ids.findIndex((i) => i == id) == -1);
     }

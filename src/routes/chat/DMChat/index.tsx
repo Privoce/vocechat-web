@@ -1,4 +1,5 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Tippy from "@tippyjs/react";
 import FavList from "../FavList";
 import Tooltip from "../../../common/component/Tooltip";
@@ -12,11 +13,18 @@ type Props = {
   dropFiles?: File[];
 };
 const DMChat: FC<Props> = ({ uid = 0, dropFiles }) => {
+  const navigate = useNavigate();
   const { currUser } = useAppSelector((store) => {
     return {
       currUser: store.users.byId[uid],
     };
   });
+  useEffect(() => {
+    if (!currUser) {
+      // user不存在了 回首页
+      navigate("/chat");
+    }
+  }, [currUser]);
   if (!currUser) return null;
   return (
     <Layout
