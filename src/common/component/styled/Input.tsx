@@ -37,7 +37,12 @@ const Input: FC<Props> = ({ type = "text", prefix = "", className = "", ...rest 
   const isNone = className.includes("none");
   // const noInner=!className.includes("inner");
   const isPwd = type == "password";
-  const inputClass = clsx(`w-full bg-white dark:bg-gray-800 text-sm text-gray-800 dark:text-gray-200 p-2 outline-none disabled:text-gray-500 disabled:bg-gray-100 dark:disabled:text-gray-500 dark:disabled:bg-gray-800/50 placeholder:text-gray-400`,
+  const inputClass = clsx(`w-full bg-white dark:bg-gray-800 text-sm text-gray-800 dark:text-gray-200 p-2 outline-none 
+  disabled:text-gray-500 disabled:bg-gray-100 
+  dark:disabled:text-gray-500 
+  dark:disabled:bg-gray-800/50
+  dark:disabled:border-gray-600 
+  placeholder:text-gray-400`,
     // noInner && 'rounded border border-solid border-gray-200 shadow',
     isLarge && 'py-3',
     isNone && "border-none bg-transparent shadow-none",
