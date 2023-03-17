@@ -18,6 +18,7 @@
   "create_channel_desc": "This is a public channel, everyone in this team can see it.",
   "create_private_channel_desc": "This is a private channel, only select members will be able to join.",
   "search_user_placeholder": "Type Username to search",
+  "welcome_msg": "Welcome to channel {{name}}",
 
   "invite_title": "Add friends to {{name}}",
   "invite_by_email": "Invite by Email",
