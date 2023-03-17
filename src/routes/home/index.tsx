@@ -17,6 +17,7 @@ import FolderIcon from "../../assets/icons/folder.svg";
 import { useAppSelector } from "../../app/store";
 import MobileNavs from "./MobileNavs";
 import { updateRememberedNavs } from "../../app/slices/ui";
+import UnreadTabTip from "../../common/component/UnreadTabTip";
 
 
 function HomePage() {
@@ -61,6 +62,7 @@ function HomePage() {
   const linkClass = `flex items-center gap-2.5 px-3 py-2 font-semibold text-sm text-gray-600 rounded-lg md:hover:bg-gray-800/10`;
   return (
     <>
+      <UnreadTabTip />
       <Manifest />
       {!guest && <Notification />}
       <div className={`vocechat-container flex w-screen h-screen bg-gray-200 dark:bg-gray-900`}>
