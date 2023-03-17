@@ -185,7 +185,7 @@
     "oidc": "OIDC",
     "oidc_desc": "Allows members login with OIDC.",
     "oidc_custom": "Custom",
-    "more_details": "Need more detail? See our <link>doc</link>."
+    "more_details": "Need more detail? See our <0>doc</0>."
   },
   "widget": {
     "tip": "Extending VoceChat by embedding the vocechat widget SDK!",
