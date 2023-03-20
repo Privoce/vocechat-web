@@ -1,13 +1,17 @@
 import { FC, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { NavLink } from "react-router-dom";
+import Linkify from "linkify-react";
+
 import ChannelModal from "./ChannelModal";
 import InviteModal from "./InviteModal";
+import IconEdit from "../../assets/icons/edit.svg";
 import IconChat from "../../assets/icons/placeholder.chat.svg";
 import IconAsk from "../../assets/icons/placeholder.question.svg";
 import IconInvite from "../../assets/icons/placeholder.invite.svg";
 import IconDownload from "../../assets/icons/placeholder.download.svg";
 import UsersModal from "./UsersModal";
 import { useAppSelector } from "../../app/store";
-import { useTranslation } from "react-i18next";
 
 
 interface Props {
@@ -20,7 +24,7 @@ const classes = {
 };
 const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
   const { t } = useTranslation("welcome");
-  const server = useAppSelector((store) => store.server);
+  const { server, isAdmin } = useAppSelector((store) => { return { server: store.server, isAdmin: store.authData.user?.is_admin }; });
   const [inviteModalVisible, setInviteModalVisible] = useState(false);
   const [createChannelVisible, setCreateChannelVisible] = useState(false);
   const [userListVisible, setUserListVisible] = useState(false);
@@ -39,10 +43,29 @@ const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
   return (
     <>
       <div className="flex flex-col gap-8 -mt-[50px] dark:bg-gray-700">
-        <div className="flex flex-col gap-2 items-center">
+        <div className="flex flex-col gap-2 items-center group">
           <h2 className="text-center text-3xl text-slate-700 dark:text-white font-bold">{t("title", { name: server.name })}</h2>
-          <p className="text-sm text-gray-400 max-w-[424px] text-center">
-            {t("desc")}
+          <p className="text-sm text-gray-400 max-w-md text-center relative break-all">
+            <Linkify options={
+              {
+                render: {
+                  url: ({ content, attributes: { href: link } }) => {
+                    // console.log("attr", link);
+                    // if (!url) return <>{content}</>;
+                    return <>
+                      <a className="text-primary-400" target="_blank" href={link} rel="noreferrer">
+                        {content}
+                      </a>
+                    </>;
+                  },
+                }
+              }
+            }>
+              {server.description ?? t("desc")}
+            </Linkify>
+            {isAdmin && <NavLink to={"/setting/overview"} className="absolute -top-6 -right-6 invisible group-hover:visible">
+              <IconEdit />
+            </NavLink>}
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 grid-rows-2 gap-2 md:gap-6 m-auto">

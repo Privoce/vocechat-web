@@ -4,7 +4,7 @@ import StyledRadio from "../../../common/component/styled/Radio";
 import { useAppSelector } from "../../../app/store";
 import { LoginConfig, WhoCanSignUp } from "../../../types/server";
 import useConfig from "../../../common/hook/useConfig";
-import Server from './server';
+import Server from './Server';
 import Language from './Language';
 import FrontendURL from "./FrontendURL";
 import DarkMode from "./DarkMode";
