@@ -7,6 +7,7 @@
   "more": "More",
   "action": {
     "login": "Sign In",
+    "re_login": "Logout",
     "logout": "Log Out",
     "change_avatar": "Change Avatar",
     "cancel": "Cancel",

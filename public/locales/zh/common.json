@@ -7,7 +7,7 @@
   "more": "更多",
   "action": {
     "login": "登录",
-
+    "re_login": "重新登录",
     "logout": "退出登录",
     "change_avatar": "修改头像",
     "cancel": "取消",

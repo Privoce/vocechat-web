@@ -153,7 +153,7 @@ export default function useStreaming() {
           dispatch(updateUsersByLogs(logs));
           // 特殊处理当前登录用户的更新
           logs.forEach((log) => {
-            const { uid, action, log_id, ...rest } = log;
+            const { uid, action, ...rest } = log;
             if (uid === loginUid && action === "update") {
               dispatch(updateLoginUser(omitBy(rest, isNull)));
             }

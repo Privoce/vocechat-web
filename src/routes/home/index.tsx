@@ -18,6 +18,7 @@ import { useAppSelector } from "../../app/store";
 import MobileNavs from "./MobileNavs";
 import { updateRememberedNavs } from "../../app/slices/ui";
 import UnreadTabTip from "../../common/component/UnreadTabTip";
+import ReLoginModal from "../../common/component/ReLoginModal";
 
 
 function HomePage() {
@@ -27,6 +28,7 @@ function HomePage() {
   const isChatHomePath = useMatch(`/chat`);
   const { pathname } = useLocation();
   const {
+    roleChanged,
     loginUid,
     guest,
     ui: {
@@ -37,7 +39,8 @@ function HomePage() {
     return {
       ui: store.ui,
       loginUid: store.authData.user?.uid,
-      guest: store.authData.guest
+      guest: store.authData.guest,
+      roleChanged: store.authData.roleChanged
     };
   });
   const { success } = usePreload();
@@ -62,6 +65,7 @@ function HomePage() {
   const linkClass = `flex items-center gap-2.5 px-3 py-2 font-semibold text-sm text-gray-600 rounded-lg md:hover:bg-gray-800/10`;
   return (
     <>
+      {roleChanged && <ReLoginModal />}
       <UnreadTabTip />
       <Manifest />
       {!guest && <Notification />}

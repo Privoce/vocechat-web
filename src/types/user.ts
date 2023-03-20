@@ -17,6 +17,7 @@ export interface User {
   create_by: string;
   webhook_url?: string;
   is_bot?: boolean;
+  log_id?: number;
 }
 export type UserStatus = "normal" | "frozen";
 export type UserDevice = {
