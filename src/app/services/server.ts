@@ -1,5 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import BASE_URL, { ContentTypes, PAYMENT_URL_PREFIX } from "../config";
+import BASE_URL, { ContentTypes, IS_OFFICIAL_DEMO, PAYMENT_URL_PREFIX } from "../config";
 import { updateInfo } from "../slices/server";
 import baseQuery from "./base.query";
 import { RootState } from "../store";
@@ -214,7 +214,24 @@ export const serverApi = createApi({
     getLicense: builder.query<LicenseResponse, void>({
       query: () => ({
         url: `/license`
-      })
+      }),
+      async onQueryStarted(data, { dispatch, queryFulfilled, getState }) {
+        // vocechat官方demo 则忽略
+        if (IS_OFFICIAL_DEMO) return;
+        const rootStore = getState() as RootState;
+        const { upgraded: prevValue } = rootStore.server;
+        try {
+          const { data: { user_limit } } = await queryFulfilled;
+          const currValue = user_limit > 20;
+          if (prevValue !== currValue) {
+            dispatch(updateInfo({ upgraded: currValue }));
+          }
+        } catch {
+          console.error("update license upgraded status failed ");
+
+        }
+
+      }
     }),
 
     getLicensePaymentUrl: builder.mutation<RenewLicenseResponse, RenewLicense>({

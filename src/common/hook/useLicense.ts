@@ -7,8 +7,8 @@ import {
 import { useAppSelector } from "../../app/store";
 
 const useLicense = () => {
-  const { userCount, isGuest } = useAppSelector((store) => {
-    return { userCount: store.users.ids.length, isGuest: store.authData.guest };
+  const { userCount, isGuest, upgraded } = useAppSelector((store) => {
+    return { userCount: store.users.ids.length, isGuest: store.authData.guest, upgraded: store.server.upgraded };
   });
   const { data: license, refetch: refetchLicense } = useGetLicenseQuery(undefined, {
     refetchOnMountOrArgChange: true,
@@ -36,6 +36,7 @@ const useLicense = () => {
   }, [upserted]);
   const lUserLimit = license?.user_limit ?? Number.MAX_SAFE_INTEGER;
   return {
+    upgraded,
     reachLimit: userCount >= lUserLimit,
     license,
     checked,

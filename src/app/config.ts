@@ -11,12 +11,15 @@ let prices: Price[] = [
     type: "booking",
   }
 ];
-
-const local_dev = `https://dev.voce.chat`;
+const official_dev = `https://dev.voce.chat`;
+// const local_dev = `http://07333.qicp.vip:3030`;
+const local_dev = official_dev;
 // const local_dev = `http://localhost:3333`;
 export const BASE_ORIGIN = process.env.REACT_APP_RELEASE
   ? `${location.origin}`
   : local_dev;
+export const IS_OFFICIAL_DEMO = BASE_ORIGIN === official_dev;
+
 const BASE_URL = `${BASE_ORIGIN}/api`;
 export const getLicensePriceList = () => {
   const ps = prices.map((p, idx) => {
@@ -69,7 +72,7 @@ export const PAYMENT_URL_PREFIX =
   process.env.NODE_ENV === "production"
     ? `https://vera.nicegoodthings.com`
     : `http://localhost:4000`;
-export const CACHE_VERSION = `0.3.33`;
+export const CACHE_VERSION = `0.3.36`;
 export const GuestRoutes = ["/", "/chat", "/chat/channel/:channel_id"];
 export const ContentTypes = {
   text: "text/plain",

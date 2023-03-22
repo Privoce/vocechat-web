@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import MyAccount from "./MyAccount";
 import Overview from "./Overview";
 import Logins from "./config/Logins";
@@ -12,7 +13,6 @@ import ManageMembers from "../../common/component/ManageMembers";
 import Version from "../../common/component/Version";
 // import ConfigAgora from "./config/Agora";
 import { useAppSelector } from "../../app/store";
-import { useTranslation } from "react-i18next";
 import ServerVersionChecker from "../../common/component/ServerVersionChecker";
 import useLicense from "../../common/hook/useLicense";
 
@@ -98,7 +98,7 @@ const navs = [
 ];
 
 const useNavs = () => {
-  const { license: licenseInfo } = useLicense();
+  const { upgraded } = useLicense();
   const { t } = useTranslation("setting");
   const loginUser = useAppSelector((store) => {
     return store.authData.user;
@@ -107,11 +107,13 @@ const useNavs = () => {
     const { name, items, ...rest } = n;
     return {
       name,
+      // @ts-ignore
       title: t(`nav.${name}`),
       items: items.map(item => {
         const { name, ...rest } = item;
         return {
           name,
+          // @ts-ignore
           title: t(`nav.${name}`),
           ...rest
         };
@@ -126,7 +128,7 @@ const useNavs = () => {
       // about 特殊处理下
       if (nav.name == "about") {
         // 有付费，但是普通用户，则不显示about
-        return licenseInfo?.user_limit === 20;
+        return !upgraded;
       } else {
         return !nav.admin;
       }

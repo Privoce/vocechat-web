@@ -12,6 +12,7 @@ import IconInvite from "../../assets/icons/placeholder.invite.svg";
 import IconDownload from "../../assets/icons/placeholder.download.svg";
 import UsersModal from "./UsersModal";
 import { useAppSelector } from "../../app/store";
+import useLicense from "../hook/useLicense";
 
 
 interface Props {
@@ -28,6 +29,7 @@ const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
   const [inviteModalVisible, setInviteModalVisible] = useState(false);
   const [createChannelVisible, setCreateChannelVisible] = useState(false);
   const [userListVisible, setUserListVisible] = useState(false);
+  const { upgraded } = useLicense();
   const toggleChannelModalVisible = () => {
     setCreateChannelVisible((prev) => !prev);
   };
@@ -45,13 +47,11 @@ const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
       <div className="flex flex-col gap-8 -mt-[50px] dark:bg-gray-700">
         <div className="flex flex-col gap-2 items-center group">
           <h2 className="text-center text-3xl text-slate-700 dark:text-white font-bold">{t("title", { name: server.name })}</h2>
-          <p className="text-sm text-gray-400 max-w-md text-center relative break-all">
+          <p className="text-sm text-gray-400 max-w-md text-center relative break-all whitespace-pre">
             <Linkify options={
               {
                 render: {
                   url: ({ content, attributes: { href: link } }) => {
-                    // console.log("attr", link);
-                    // if (!url) return <>{content}</>;
                     return <>
                       <a className="text-primary-400" target="_blank" href={link} rel="noreferrer">
                         {content}
@@ -77,14 +77,17 @@ const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
             <IconChat className={classes.boxIcon} />
             <div className={classes.boxTip}>{chatTip}</div>
           </button>
-          <a href={"https://voce.chat#download"} target={"_blank"} rel="noreferrer" className={classes.box} >
-            <IconDownload className={classes.boxIcon} />
-            <div className={classes.boxTip}>{t("download")}</div>
-          </a>
-          <a href={"https://doc.voce.chat"} target={"_blank"} rel="noreferrer" className={classes.box} >
-            <IconAsk className={classes.boxIcon} />
-            <div className={classes.boxTip}>{t("help")}</div>
-          </a>
+          {!upgraded && <>
+            <a href={"https://voce.chat#download"} target={"_blank"} rel="noreferrer" className={classes.box} >
+              <IconDownload className={classes.boxIcon} />
+              <div className={classes.boxTip}>{t("download")}</div>
+            </a>
+            <a href={"https://doc.voce.chat"} target={"_blank"} rel="noreferrer" className={classes.box} >
+              <IconAsk className={classes.boxIcon} />
+              <div className={classes.boxTip}>{t("help")}</div>
+            </a>
+          </>
+          }
         </div>
       </div>
       {createChannelVisible && (
