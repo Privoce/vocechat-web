@@ -1,7 +1,7 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import BASE_URL, { KEY_LOCAL_MAGIC_TOKEN } from "../../app/config";
 import Input from "../../common/component/styled/Input";
 import Button from "../../common/component/styled/Button";
@@ -15,6 +15,7 @@ import SocialLoginButtons from "../login/SocialLoginButtons";
 import { setAuthData } from "../../app/slices/auth.data";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../app/store";
+import { useMagicToken } from "./index";
 
 interface AuthForm {
   name?: string,
@@ -27,22 +28,21 @@ export default function Register() {
   const serverName = useAppSelector(store => store.server.name);
   const { t } = useTranslation("auth");
   const { t: ct } = useTranslation();
-  let [searchParams] = useSearchParams();
   const [sendRegMagicLink, { isLoading: signingUp, data, isSuccess }] =
     useSendRegMagicLinkMutation();
   const dispatch = useDispatch();
+  const { token: magic_token } = useMagicToken();
   const [register, { isLoading: registering, data: regData, isSuccess: regSuccess }] = useRegisterMutation();
   const [checkEmail, { isLoading: checkingEmail }] = useLazyCheckEmailQuery();
   const { data: loginConfig, isSuccess: loginConfigSuccess } = useGetLoginConfigQuery();
 
-  // const navigateTo = useNavigate();
+  const navigateTo = useNavigate();
   const [input, setInput] = useState<AuthForm>({
     name: "",
     email: "",
     password: "",
     confirmPassword: ""
   });
-  const magic_token = searchParams.get("magic_token") ?? undefined;
   if (magic_token) {
     //本地存一下 magic token 后续oauth流程用到
     localStorage.setItem(KEY_LOCAL_MAGIC_TOKEN, magic_token);
@@ -53,7 +53,7 @@ export default function Register() {
       const { new_magic_token, mail_is_sent } = data;
       if (!mail_is_sent && new_magic_token) {
         // 直接进入set_name流程
-        location.href = `?magic_token=${new_magic_token}#/register/set_name`;
+        navigateTo(`/register/set_name?magic_token=${new_magic_token}`);
       }
     }
   }, [isSuccess, data]);

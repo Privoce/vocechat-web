@@ -1,7 +1,7 @@
 import { useState, useEffect, FC, FormEvent, ChangeEvent } from "react";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import { setAuthData } from "../../app/slices/auth.data";
 import Input from "../../common/component/styled/Input";
@@ -9,11 +9,12 @@ import Button from "../../common/component/styled/Button";
 import { useLoginMutation, useCheckMagicTokenValidMutation } from "../../app/services/auth";
 import ExpiredTip from "./ExpiredTip";
 import { useRegisterMutation } from "../../app/services/auth";
+import { useMagicToken } from "./index";
 
 const RegWithUsername: FC = () => {
   const { t: ct } = useTranslation();
   const { t } = useTranslation("auth");
-  const [searchParams] = useSearchParams();
+  const { token } = useMagicToken();
   const [checkTokenInvalid, { data: isTokenValid, isLoading: checkingToken }] =
     useCheckMagicTokenValidMutation();
   const [
@@ -29,7 +30,6 @@ const RegWithUsername: FC = () => {
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   // todo: check if query param exists
-  const token = searchParams.get("magic_token") as string;
   useEffect(() => {
     if (token) {
       checkTokenInvalid(token);
