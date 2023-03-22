@@ -66,7 +66,7 @@ function HomePage() {
   return (
     <>
       {roleChanged && <ReLoginModal />}
-      <UnreadTabTip />
+      {!guest && <UnreadTabTip />}
       <Manifest />
       {!guest && <Notification />}
       <div className={`vocechat-container flex w-screen h-screen bg-gray-200 dark:bg-gray-900`}>
