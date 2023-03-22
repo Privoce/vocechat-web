@@ -47,13 +47,13 @@ const useUploadFile = (props?: IProps) => {
       type: file_type,
       size: file_size
     } = file;
-    // 拿file id
+    // 生成 file id
     const resp = await prepareUploadFile({
       content_type: file_type,
       filename: name
     });
     if ("error" in resp) {
-      toast.error("Prepare Upload File Error");
+      // toast.error("Prepare Upload File Error");
       return;
     }
     const file_id = resp.data;

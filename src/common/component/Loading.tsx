@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from "react";
+import { FC, useState, useEffect, memo } from "react";
 import clsx from "clsx";
 import { Ring } from "@uiball/loaders";
 import Button from "./styled/Button";
@@ -39,4 +39,4 @@ const Loading: FC<Props> = ({ reload = false, fullscreen = false }) => {
   );
 };
 
-export default Loading;
+export default memo(Loading);
