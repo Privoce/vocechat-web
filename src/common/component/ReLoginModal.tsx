@@ -6,7 +6,7 @@ import Button from "../../common/component/styled/Button";
 import useLogout from "../../common/hook/useLogout";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
-import { resetRoleChanged } from "../../app/slices/auth.data";
+import { updateRoleChanged } from "../../app/slices/auth.data";
 
 interface Props {
     reasonType?: "role_changed",
@@ -21,7 +21,7 @@ const ReLoginModal: FC<Props> = ({ reasonType = "role_changed" }) => {
         logout();
     };
     const handleReset = () => {
-        dispatch(resetRoleChanged());
+        dispatch(updateRoleChanged(false));
     };
     useEffect(() => {
         if (exited) {

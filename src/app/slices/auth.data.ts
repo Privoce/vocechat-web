@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { isNull, omitBy } from "lodash";
+// import { isNull, omitBy } from "lodash";
 import {
   KEY_EXPIRE,
   KEY_PWA_INSTALLED,
@@ -10,7 +10,7 @@ import {
 } from "../config";
 import { AuthData, RenewTokenResponse } from "../../types/auth";
 import { User } from "../../types/user";
-import { updateUsersByLogs } from './users';
+// import { updateUsersByLogs } from './users';
 
 interface State {
   initialized: boolean;
@@ -50,7 +50,7 @@ const authDataSlice = createSlice({
       const { initialized = true, user, token, refresh_token, expired_in = 0 } = payload;
       const { uid, create_by } = user;
       state.initialized = initialized;
-      state.user = user;
+      state.user = { ...state.user, ...user };
       state.guest = create_by == "guest";
       state.token = token;
       state.refreshToken = refresh_token;
@@ -79,8 +79,8 @@ const authDataSlice = createSlice({
       state.user = obj;
       localStorage.setItem(KEY_LOGIN_USER, JSON.stringify(obj));
     },
-    resetRoleChanged(state) {
-      state.roleChanged = false;
+    updateRoleChanged(state, action: PayloadAction<boolean>) {
+      state.roleChanged = action.payload;
     },
     resetAuthData() {
       // remove local data
@@ -106,27 +106,27 @@ const authDataSlice = createSlice({
       localStorage.setItem(KEY_REFRESH_TOKEN, refresh_token);
     }
   },
-  extraReducers: (builder) => {
-    builder.addCase(updateUsersByLogs, (state, action) => {
-      const changeLogs = action.payload;
-      const currUid = Number(localStorage.getItem(KEY_UID) ?? 0);
-      changeLogs.forEach(({ action, uid, ...rest }) => {
-        if (uid == currUid && action == "update") {
-          const vals = omitBy(rest, isNull);
-          const logId = state.user?.log_id ?? 0;
-          Object.keys(vals).forEach((k) => {
-            if (k == "is_admin" && vals.log_id > logId && vals.is_admin !== state.user?.is_admin) {
-              console.log("upppp 2 ", vals, state.user?.is_bot, state.user?.log_id);
-              // 用户角色有变化
-              state.roleChanged = true;
-            }
-          });
-        }
-      });
+  // extraReducers: (builder) => {
+  //   builder.addCase(updateUsersByLogs, (state, action) => {
+  //     const changeLogs = action.payload;
+  //     const currUid = Number(localStorage.getItem(KEY_UID) ?? 0);
+  //     changeLogs.forEach(({ action, uid, ...rest }) => {
+  //       if (uid == currUid && action == "update") {
+  //         const vals = omitBy(rest, isNull);
+  //         // const logId = state.user?.log_id ?? Number.MAX_SAFE_INTEGER;
+  //         Object.keys(vals).forEach((k) => {
+  //           console.log("upppp 2 ", vals.is_admin, state.user?.is_admin);
+  //           if (k == "is_admin" && vals.is_admin !== state.user?.is_admin) {
+  //             // 用户角色有变化
+  //             state.roleChanged = true;
+  //           }
+  //         });
+  //       }
+  //     });
 
-    });
-  }
+  //   });
+  // }
 });
 
-export const { updateInitialized, updateLoginUser, setAuthData, resetAuthData, updateToken, resetRoleChanged } = authDataSlice.actions;
+export const { updateInitialized, updateLoginUser, setAuthData, resetAuthData, updateToken, updateRoleChanged } = authDataSlice.actions;
 export default authDataSlice.reducer;

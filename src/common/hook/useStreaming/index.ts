@@ -20,7 +20,7 @@ import {
   updateAutoDeleteSetting
 } from "../../../app/slices/footprint";
 import { updateUsersByLogs, updateUsersStatus } from "../../../app/slices/users";
-import { resetAuthData, updateLoginUser } from "../../../app/slices/auth.data";
+import { resetAuthData, updateLoginUser, updateRoleChanged } from "../../../app/slices/auth.data";
 import chatMessageHandler from "./chat.handler";
 import { useAppDispatch, useAppSelector } from "../../../app/store";
 import { ServerEvent, UsersStateEvent } from "../../../types/sse";
@@ -40,14 +40,13 @@ const getQueryString = (params: { [key: string]: string }) => {
 };
 
 let SSE: EventSource | undefined;
-// let opened = false; //标识SSE打开过
+let ready = false; //是否已完成初始推送
 let aliveInter: number | ReturnType<typeof setTimeout> = 0;
 export default function useStreaming() {
   const [renewToken] = useRenewMutation();
   const [streamingReady, setStreamingReady] = useState(false);
   const {
-    authData: { user },
-    ui: { ready },
+    authData: { user, guest },
     footprint: { afterMid, usersVersion, readUsers, readChannels }
   } = useAppSelector((store) => store);
   const dispatch = useAppDispatch();
@@ -116,6 +115,7 @@ export default function useStreaming() {
     SSE = new EventSource(`${BASE_URL}/user/events?${getQueryString(params)}`);
 
     SSE.onopen = () => {
+      ready = false;
       //todo
       // opened = true;
       // connectionIsOpen = true;
@@ -139,6 +139,7 @@ export default function useStreaming() {
           keepAlive();
           break;
         case "ready":
+          ready = true;
           // 有时候，heartbeat不会发？
           keepAlive();
           dispatch(setReady());
@@ -155,7 +156,14 @@ export default function useStreaming() {
           logs.forEach((log) => {
             const { uid, action, ...rest } = log;
             if (uid === loginUid && action === "update") {
-              dispatch(updateLoginUser(omitBy(rest, isNull)));
+              const purified = omitBy(rest, isNull);
+              dispatch(updateLoginUser(purified));
+              console.log("upppp 3", purified, ready, user?.is_admin);
+
+              if (!guest && typeof purified.is_admin !== "undefined" && ready && user?.is_admin !== purified.is_admin) {
+                // ready 之后，登录用户有角色变动
+                dispatch(updateRoleChanged(true));
+              }
             }
             if (action === "delete") {
               // 同时删掉对应的聊天记录
@@ -294,7 +302,7 @@ export default function useStreaming() {
           break;
       }
     };
-  }, [afterMid, usersVersion]);
+  }, [afterMid, usersVersion, user, guest]);
 
   const stopStreaming = () => {
     // 先清掉定时器
