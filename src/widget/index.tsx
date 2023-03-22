@@ -21,12 +21,14 @@ function Widget({ hostId }: Props) {
     setVisible((prev) => !prev);
   };
   useEffect(() => {
-    if (!visible) {
-      document.documentElement.classList.add("close");
-    } else {
-      document.documentElement.classList.remove("close");
+    if (embed) {
+      if (!visible) {
+        document.documentElement.classList.add("close");
+      } else {
+        document.documentElement.classList.remove("close");
+      }
     }
-  }, [visible]);
+  }, [visible, embed]);
 
   if (!rehydrated) return null;
   if (!embed) return <Popup handleClose={toggleVisible} hostId={hostId} />;
