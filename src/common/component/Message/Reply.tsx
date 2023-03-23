@@ -77,12 +77,11 @@ const Reply: FC<ReplyProps> = ({ mid, interactive = true }) => {
       }, 3000);
     }
   };
+  const defaultClass = `flex items-start flex-col md:flex-row p-2 bg-gray-100 dark:bg-gray-900 rounded-lg gap-2 mb-1`;
   if (!data) return <div
     key={mid}
     data-mid={mid}
-    className={clsx(`flex items-start flex-col md:flex-row p-2 bg-gray-100 italic dark:bg-gray-900 rounded-lg gap-2 mb-1`,
-      interactive ? "cursor-pointer" : "!bg-transparent"
-    )}
+    className={clsx(defaultClass, 'italic')}
   >{t("reply_msg_del")}</div>;
   const currUser = users[data.from_uid || 0];
   if (!currUser) return null;
@@ -91,7 +90,7 @@ const Reply: FC<ReplyProps> = ({ mid, interactive = true }) => {
     <div
       key={mid}
       data-mid={mid}
-      className={clsx(`flex items-start flex-col md:flex-row p-2 bg-gray-100 dark:bg-gray-900 rounded-lg gap-2 mb-1`,
+      className={clsx(defaultClass,
         interactive ? "cursor-pointer" : "!bg-transparent"
       )}
       onClick={interactive ? handleClick : undefined}
