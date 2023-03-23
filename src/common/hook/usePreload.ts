@@ -7,11 +7,13 @@ import { useLazyGetServerQuery } from "../../app/services/server";
 import useStreaming from "./useStreaming";
 import { useAppSelector } from "../../app/store";
 import { useLazyLoadMoreMessagesQuery } from "../../app/services/message";
+import useLicense from "./useLicense";
 // type Props={
 //   guest?:boolean
 // }
 let preloadChannelMsgs = false;
 export default function usePreload() {
+  const { isLoading: loadingLicense } = useLicense(false);
   const [preloadChannelMessages] = useLazyLoadMoreMessagesQuery();
   const { rehydrate, rehydrated } = useRehydrate();
   const {
@@ -85,7 +87,7 @@ export default function usePreload() {
   }, [canStreaming]);
 
   return {
-    loading: usersLoading || serverLoading || favoritesLoading || !rehydrated,
+    loading: usersLoading || serverLoading || favoritesLoading || !rehydrated || loadingLicense,
     error: usersError && serverError && favoritesError,
     success: usersSuccess && serverSuccess && favoritesSuccess,
     data: {

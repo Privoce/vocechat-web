@@ -27,7 +27,7 @@ const Item = ({ label, data, foldable = false, ...rest }: ItemProps) => {
 export default function License() {
   const { t, i18n } = useTranslation("setting");
   // const { t: ct } = useTranslation();
-  const { license: licenseInfo, reachLimit, upsertLicense, upserting, upserted } = useLicense();
+  const { license: licenseInfo, reachLimit, upsertLicense, upserting, upserted } = useLicense(true);
   const [modalVisible, setModalVisible] = useState(false);
   const [updateVisible, setUpdateVisible] = useState(false);
   const [base58Fold, setBase58Fold] = useState(true);

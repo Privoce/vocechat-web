@@ -14,7 +14,6 @@ import Version from "../../common/component/Version";
 // import ConfigAgora from "./config/Agora";
 import { useAppSelector } from "../../app/store";
 import ServerVersionChecker from "../../common/component/ServerVersionChecker";
-import useLicense from "../../common/hook/useLicense";
 
 const navs = [
   {
@@ -98,10 +97,9 @@ const navs = [
 ];
 
 const useNavs = () => {
-  const { upgraded } = useLicense();
   const { t } = useTranslation("setting");
-  const loginUser = useAppSelector((store) => {
-    return store.authData.user;
+  const { loginUser, upgraded } = useAppSelector((store) => {
+    return { loginUser: store.authData.user, upgraded: store.server.upgraded };
   });
   const transformedNavs = navs.map(n => {
     const { name, items, ...rest } = n;

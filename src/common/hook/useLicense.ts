@@ -5,13 +5,15 @@ import {
   useUpsertLicenseMutation
 } from "../../app/services/server";
 import { useAppSelector } from "../../app/store";
-
-const useLicense = () => {
+// type Props = {
+//   refetchOnMountOrArgChange?: boolean
+// } | undefined
+const useLicense = (refetchOnMountOrArgChange = false) => {
   const { userCount, isGuest, upgraded } = useAppSelector((store) => {
     return { userCount: store.users.ids.length, isGuest: store.authData.guest, upgraded: store.server.upgraded };
   });
-  const { data: license, refetch: refetchLicense } = useGetLicenseQuery(undefined, {
-    refetchOnMountOrArgChange: true,
+  const { data: license, refetch: refetchLicense, isLoading } = useGetLicenseQuery(undefined, {
+    refetchOnMountOrArgChange,
     skip: isGuest
   });
   const [check, { isLoading: isChecking, isSuccess: checked }] = useCheckLicenseMutation();
@@ -40,6 +42,7 @@ const useLicense = () => {
     reachLimit: userCount >= lUserLimit,
     license,
     checked,
+    isLoading,
     checking: isChecking,
     upserting,
     upserted,
