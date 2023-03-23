@@ -3879,6 +3879,18 @@ aggregate-error@^3.0.0:
     clean-stack "^2.0.0"
     indent-string "^4.0.0"
 
+agora-rtc-sdk-ng@^4.17.0:
+  version "4.17.0"
+  resolved "https://mirrors.cloud.tencent.com/npm/agora-rtc-sdk-ng/-/agora-rtc-sdk-ng-4.17.0.tgz#5824fcd2613a82ab9e946d451007d0f35b0b91a2"
+  integrity sha512-TmqnvWr7J9cVm62KzE3jhBjVcQpcvxj0GoSMHUylce5GWZrN6rkDLgcPNvhNmPPK5Slqwsx/d70FrWM7T3ngQw==
+  dependencies:
+    agora-rte-extension "^1.2.3"
+
+agora-rte-extension@^1.2.3:
+  version "1.2.3"
+  resolved "https://mirrors.cloud.tencent.com/npm/agora-rte-extension/-/agora-rte-extension-1.2.3.tgz#979b96df0146300296f9f37212ffa67656c698ef"
+  integrity sha512-k3yNrYVyzJRoQJjaJUktKUI1XRtf8J1XsW8OzYKFqGlS8WQRMsES1+Phj2rfuEriiLObfuyuCimG6KHQCt5tiw==
+
 ajv-formats@^2.1.1:
   version "2.1.1"
   resolved "https://mirrors.cloud.tencent.com/npm/ajv-formats/-/ajv-formats-2.1.1.tgz#6e669400659eb74973bbf2e33327180a0996b520"

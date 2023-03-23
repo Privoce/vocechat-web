@@ -11,7 +11,7 @@ import BotConfig from "./BotConfig";
 import APIDocument from "./APIDocument";
 import ManageMembers from "../../common/component/ManageMembers";
 import Version from "../../common/component/Version";
-// import ConfigAgora from "./config/Agora";
+import ConfigAgora from "./config/Agora";
 import { useAppSelector } from "../../app/store";
 import ServerVersionChecker from "../../common/component/ServerVersionChecker";
 import useLicense from "../../common/hook/useLicense";
@@ -47,10 +47,10 @@ const navs = [
         name: "firebase",
         component: <ConfigFirebase />
       },
-      // {
-      //   name: "agora",
-      //   component: <ConfigAgora />
-      // },
+      {
+        name: "agora",
+        component: <ConfigAgora />
+      },
       {
         name: "smtp",
         component: <ConfigSMTP />

@@ -9,17 +9,18 @@ import {
   KEY_UID
 } from "../config";
 import { AuthData, RenewTokenResponse } from "../../types/auth";
-import { User } from "../../types/user";
+import { StoredUser } from "./users";
 // import { updateUsersByLogs } from './users';
 
 interface State {
   initialized: boolean;
   guest: boolean;
-  user: User | undefined;
+  user: StoredUser | undefined;
   token: string;
   expireTime: number;
   refreshToken: string;
   roleChanged: boolean;
+  voice: boolean;
 }
 const loginUser = localStorage.getItem(KEY_LOGIN_USER) || "";
 const initialState: State = {
@@ -29,7 +30,8 @@ const initialState: State = {
   token: localStorage.getItem(KEY_TOKEN) || "",
   expireTime: Number(localStorage.getItem(KEY_EXPIRE) || +new Date()),
   refreshToken: localStorage.getItem(KEY_REFRESH_TOKEN) || "",
-  roleChanged: false
+  roleChanged: false,
+  voice: false
 };
 
 const emptyState: State = {
@@ -39,7 +41,8 @@ const emptyState: State = {
   token: "",
   expireTime: +new Date(),
   refreshToken: "",
-  roleChanged: false
+  roleChanged: false,
+  voice: false
 };
 
 const authDataSlice = createSlice({
@@ -64,7 +67,7 @@ const authDataSlice = createSlice({
       localStorage.setItem(KEY_REFRESH_TOKEN, refresh_token);
       localStorage.setItem(KEY_UID, `${uid}`);
     },
-    updateLoginUser(state, { payload }: PayloadAction<Partial<User>>) {
+    updateLoginUser(state, { payload }: PayloadAction<Partial<StoredUser>>) {
       if (!state.user) return;
 
       const obj = { ...state.user, ...payload };
@@ -81,6 +84,9 @@ const authDataSlice = createSlice({
     },
     updateRoleChanged(state, action: PayloadAction<boolean>) {
       state.roleChanged = action.payload;
+    },
+    updateVoiceStatus(state, action: PayloadAction<boolean>) {
+      state.voice = action.payload;
     },
     resetAuthData() {
       // remove local data
@@ -128,5 +134,5 @@ const authDataSlice = createSlice({
   // }
 });
 
-export const { updateInitialized, updateLoginUser, setAuthData, resetAuthData, updateToken, updateRoleChanged } = authDataSlice.actions;
+export const { updateInitialized, updateLoginUser, setAuthData, resetAuthData, updateToken, updateRoleChanged, updateVoiceStatus } = authDataSlice.actions;
 export default authDataSlice.reducer;

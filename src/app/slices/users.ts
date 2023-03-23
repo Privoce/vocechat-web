@@ -6,6 +6,7 @@ import { UserLog, UserState } from "../../types/sse";
 
 export interface StoredUser extends User {
   online?: boolean;
+  voice?: boolean;
   avatar?: string;
 }
 

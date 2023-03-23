@@ -16,6 +16,7 @@ import IconPin from "../../../assets/icons/pin.svg";
 import { useAppSelector } from "../../../app/store";
 import GoBackNav from "../../../common/component/GoBackNav";
 import Members from "./Members";
+import VoiceChat from "../VoiceChat";
 type Props = {
   cid?: number;
   dropFiles?: File[];
@@ -83,6 +84,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
             </li>
           </Tippy>
         </Tooltip>
+        <VoiceChat channel={`channel_${cid}`} />
         <Tooltip tip={t("fav")} placement="left">
           <Tippy
             placement="left-start"

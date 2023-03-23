@@ -74,7 +74,7 @@ const SessionList: FC<Props> = ({ tempSession }) => {
 
   return (
     <>
-      <ul ref={ref} className="flex flex-col gap-0.5 p-2 overflow-auto">
+      <ul ref={ref} className="flex flex-1 flex-col gap-0.5 p-2 overflow-auto">
         <ViewportList
           initialPrerender={10}
           viewportRef={ref}
