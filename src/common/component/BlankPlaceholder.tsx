@@ -12,7 +12,6 @@ import IconInvite from "../../assets/icons/placeholder.invite.svg";
 import IconDownload from "../../assets/icons/placeholder.download.svg";
 import UsersModal from "./UsersModal";
 import { useAppSelector } from "../../app/store";
-import useLicense from "../hook/useLicense";
 
 
 interface Props {
@@ -25,11 +24,10 @@ const classes = {
 };
 const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
   const { t } = useTranslation("welcome");
-  const { server, isAdmin } = useAppSelector((store) => { return { server: store.server, isAdmin: store.authData.user?.is_admin }; });
+  const { server, isAdmin, upgraded } = useAppSelector((store) => { return { server: store.server, isAdmin: store.authData.user?.is_admin, upgraded: store.server.upgraded }; });
   const [inviteModalVisible, setInviteModalVisible] = useState(false);
   const [createChannelVisible, setCreateChannelVisible] = useState(false);
   const [userListVisible, setUserListVisible] = useState(false);
-  const { upgraded } = useLicense();
   const toggleChannelModalVisible = () => {
     setCreateChannelVisible((prev) => !prev);
   };

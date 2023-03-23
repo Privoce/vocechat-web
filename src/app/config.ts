@@ -12,8 +12,10 @@ let prices: Price[] = [
   }
 ];
 const official_dev = `https://dev.voce.chat`;
-// const local_dev = `http://07333.qicp.vip:3030`;
 const local_dev = official_dev;
+
+// const local_dev = `http://07333.qicp.vip:3030`;
+// const local_dev = `https://im.ttt.td`;
 // const local_dev = `http://localhost:3333`;
 export const BASE_ORIGIN = process.env.REACT_APP_RELEASE
   ? `${location.origin}`
