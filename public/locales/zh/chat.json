@@ -42,6 +42,8 @@
   "new_msg": "{{num}} 条新消息",
   "mark_read": "设为已读",
 
+  "reply_msg_del": "被回复的消息已删除！",
+
   "file": "文件",
   "image": "图片",
   "forward": "转发"

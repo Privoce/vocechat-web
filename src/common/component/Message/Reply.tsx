@@ -8,8 +8,10 @@ import LinkifyText from '../LinkifyText';
 import Avatar from "../Avatar";
 import { useAppSelector } from "../../../app/store";
 import { MessagePayload } from "../../../app/slices/message";
+import { useTranslation } from "react-i18next";
 
 const renderContent = (data: MessagePayload) => {
+
   const { content_type, content, thumbnail, properties } = data;
   let res = null;
   switch (content_type) {
@@ -56,6 +58,7 @@ interface ReplyProps {
 }
 
 const Reply: FC<ReplyProps> = ({ mid, interactive = true }) => {
+  const { t } = useTranslation("chat");
   const { data, users } = useAppSelector((store) => {
     return { data: store.message[mid], users: store.users.byId };
   });
@@ -74,7 +77,13 @@ const Reply: FC<ReplyProps> = ({ mid, interactive = true }) => {
       }, 3000);
     }
   };
-  if (!data) return null;
+  if (!data) return <div
+    key={mid}
+    data-mid={mid}
+    className={clsx(`flex items-start flex-col md:flex-row p-2 bg-gray-100 italic dark:bg-gray-900 rounded-lg gap-2 mb-1`,
+      interactive ? "cursor-pointer" : "!bg-transparent"
+    )}
+  >{t("reply_msg_del")}</div>;
   const currUser = users[data.from_uid || 0];
   if (!currUser) return null;
 
