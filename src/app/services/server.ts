@@ -16,7 +16,8 @@ import {
   GithubAuthConfig,
   LicenseResponse,
   RenewLicense,
-  RenewLicenseResponse
+  RenewLicenseResponse,
+  AgoraTokenResponse
 } from "../../types/server";
 import { Channel } from "../../types/channel";
 import { ContentTypeKey } from "../../types/message";
@@ -107,6 +108,11 @@ export const serverApi = createApi({
         url: `admin/agora/config`,
         method: "POST",
         body: data
+      })
+    }),
+    getAgoraToken: builder.query<AgoraTokenResponse, number>({
+      query: (id) => ({
+        url: `group/${id}/agora_token`,
       })
     }),
     getSMTPConfig: builder.query<SMTPConfig, void>({
@@ -320,5 +326,6 @@ export const {
   useLazyGetBotRelatedChannelsQuery,
   useSendMessageByBotMutation,
   useUpdateFrontendUrlMutation,
-  useGetFrontendUrlQuery
+  useGetFrontendUrlQuery,
+  useLazyGetAgoraTokenQuery
 } = serverApi;

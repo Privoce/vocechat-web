@@ -84,7 +84,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
             </li>
           </Tippy>
         </Tooltip>
-        <VoiceChat channel={`channel_${cid}`} />
+        <VoiceChat channel={`channel_${cid}`} id={cid} />
         <Tooltip tip={t("fav")} placement="left">
           <Tippy
             placement="left-start"

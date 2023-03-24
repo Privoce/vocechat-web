@@ -7,23 +7,24 @@ import Tooltip from '../../../common/component/Tooltip';
 import Dashboard from './Dashboard';
 
 type Props = {
+    id: number,
     channel: string
 }
 
-const VoiceChat = ({ channel }: Props) => {
+const VoiceChat = ({ channel, id }: Props) => {
     const { loginUser, voice } = useAppSelector(store => { return { loginUser: store.authData.user, voice: store.authData.voice }; });
     const { t } = useTranslation("chat");
     const toolClass = `relative cursor-pointer`;
     if (!loginUser) return null;
     return (
-        <Tooltip tip={t("fav")} placement="left">
+        <Tooltip tip={t("voice")} placement="left">
             <Tippy
                 placement="left-start"
                 popperOptions={{ strategy: "fixed" }}
                 offset={[0, 164]}
                 interactive
                 trigger="click"
-                content={<Dashboard uid={loginUser.uid} channel={channel} voicing={voice} />}
+                content={<Dashboard id={id} uid={loginUser.uid} channel={channel} voicing={voice} />}
             >
                 <li className={`${toolClass}`}>
                     <IconHeadphone className="fill-gray-500" />

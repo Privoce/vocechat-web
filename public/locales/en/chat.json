@@ -45,5 +45,6 @@
 
   "file": "file",
   "image": "image",
-  "forward": "forward"
+  "forward": "forward",
+  "voice": "Voice"
 }
