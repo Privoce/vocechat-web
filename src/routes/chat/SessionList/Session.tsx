@@ -9,6 +9,7 @@ import getUnreadCount, { renderPreviewMessage } from "../utils";
 import User from "../../../common/component/User";
 import Avatar from "../../../common/component/Avatar";
 import IconLock from "../../../assets/icons/lock.svg";
+import IconVoicing from "../../../assets/icons/voicing.svg";
 import useContextMenu from "../../../common/hook/useContextMenu";
 import useUploadFile from "../../../common/hook/useUploadFile";
 import { useAppSelector } from "../../../app/store";
@@ -61,9 +62,10 @@ const Session: FC<IProps> = ({
     mid: number;
     is_public: boolean;
   }>();
-  const { messageData, userData, channelData, readIndex, loginUid, mids, muted } = useAppSelector(
+  const { messageData, userData, channelData, readIndex, loginUid, mids, muted, voiceInfo } = useAppSelector(
     (store) => {
       return {
+        voiceInfo: store.voice.voicing,
         mids: type == "user" ? store.userMessage.byId[id] : store.channelMessage[id],
         loginUid: store.authData.user?.uid || 0,
         readIndex:
@@ -115,7 +117,7 @@ const Session: FC<IProps> = ({
           to={navPath}
           onContextMenu={handleContextMenuEvent}
         >
-          <div className="flex shrink-0">
+          <div className="flex shrink-0 relative">
             {type == "user" ? (
               <User avatarSize={40} compact interactive={false} uid={id} />
             ) : (
@@ -128,6 +130,7 @@ const Session: FC<IProps> = ({
                 src={icon}
               />
             )}
+            {type == "channel" && voiceInfo.id == id && <IconVoicing className="-top-0.5 -right-0.5 absolute w-[18px] h-[18px]" />}
           </div>
           <div className="w-full flex flex-col justify-between overflow-hidden">
             <div className="flex items-center justify-between ">

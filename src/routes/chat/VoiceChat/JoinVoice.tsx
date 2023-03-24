@@ -1,10 +1,19 @@
 import React from 'react';
+import StyledButton from '../../../common/component/styled/Button';
 
-type Props = {}
+type Props = {
+    join: () => void,
+    joining: boolean
+}
 
-const JoinVoice = (props: Props) => {
+const JoinVoice = ({ joining, join }: Props) => {
+    if (joining) return <div>
+        Joining
+    </div>;
     return (
-        <div>JoinVoice</div>
+        <div>
+            <StyledButton className='mini' onClick={join}>Join</StyledButton>
+        </div>
     );
 };
 

@@ -19,6 +19,7 @@ import MobileNavs from "./MobileNavs";
 import { updateRememberedNavs } from "../../app/slices/ui";
 import UnreadTabTip from "../../common/component/UnreadTabTip";
 import ReLoginModal from "../../common/component/ReLoginModal";
+import Voice from "../../common/component/Voice";
 
 
 function HomePage() {
@@ -67,6 +68,7 @@ function HomePage() {
     <>
       {roleChanged && <ReLoginModal />}
       {!guest && <UnreadTabTip />}
+      {!guest && <Voice />}
       <Manifest />
       {!guest && <Notification />}
       <div className={`vocechat-container flex w-screen h-screen bg-gray-200 dark:bg-gray-900`}>

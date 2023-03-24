@@ -1,5 +1,6 @@
 // import React from 'react';
-import Tippy from '@tippyjs/react';
+// import Tippy from '@tippyjs/react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../app/store';
 import IconHeadphone from '../../../assets/icons/headphone.svg';
@@ -7,29 +8,24 @@ import Tooltip from '../../../common/component/Tooltip';
 import Dashboard from './Dashboard';
 
 type Props = {
+    context?: "channel" | "dm"
     id: number,
-    channel: string
 }
 
-const VoiceChat = ({ channel, id }: Props) => {
-    const { loginUser, voice } = useAppSelector(store => { return { loginUser: store.authData.user, voice: store.authData.voice }; });
+const VoiceChat = ({ id, context = "channel" }: Props) => {
+    const [dashboardVisible, setDashboardVisible] = useState(false);
+    const { loginUser } = useAppSelector(store => { return { loginUser: store.authData.user }; });
     const { t } = useTranslation("chat");
-    const toolClass = `relative cursor-pointer`;
+    const toggleDashboard = () => {
+        setDashboardVisible(prev => !prev);
+    };
     if (!loginUser) return null;
     return (
-        <Tooltip tip={t("voice")} placement="left">
-            <Tippy
-                placement="left-start"
-                popperOptions={{ strategy: "fixed" }}
-                offset={[0, 164]}
-                interactive
-                trigger="click"
-                content={<Dashboard id={id} uid={loginUser.uid} channel={channel} voicing={voice} />}
-            >
-                <li className={`${toolClass}`}>
-                    <IconHeadphone className="fill-gray-500" />
-                </li>
-            </Tippy>
+        <Tooltip disabled={dashboardVisible} tip={t("voice")} placement="left">
+            <li className={`relative`} >
+                <IconHeadphone className="fill-gray-500" role="button" onClick={toggleDashboard} />
+                {dashboardVisible && <Dashboard id={id} context={context} />}
+            </li>
         </Tooltip>
     );
 };

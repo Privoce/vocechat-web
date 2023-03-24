@@ -27,7 +27,8 @@ const whiteList = [
   "createAdmin",
   "getBotRelatedChannels",
   "sendMessageByBot",
-  "replyWithChatGPT"
+  "replyWithChatGPT",
+  "getAgoraVoicingList"
 ];
 
 const baseQuery = fetchBaseQuery({

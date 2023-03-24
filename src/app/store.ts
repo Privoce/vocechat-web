@@ -3,6 +3,7 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import listenerMiddleware from "./listener.middleware";
 import authDataReducer from "./slices/auth.data";
+import voiceReducer from "./slices/voice";
 import footprintReducer from "./slices/footprint";
 import serverReducer from "./slices/server";
 import uiReducer from "./slices/ui";
@@ -23,6 +24,7 @@ import { serverApi } from "./services/server";
 
 const reducer = combineReducers({
   authData: authDataReducer,
+  voice: voiceReducer,
   ui: uiReducer,
   footprint: footprintReducer,
   server: serverReducer,

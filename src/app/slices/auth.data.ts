@@ -85,9 +85,6 @@ const authDataSlice = createSlice({
     updateRoleChanged(state, action: PayloadAction<boolean>) {
       state.roleChanged = action.payload;
     },
-    updateVoiceStatus(state, action: PayloadAction<boolean>) {
-      state.voice = action.payload;
-    },
     resetAuthData() {
       // remove local data
       localStorage.removeItem(KEY_EXPIRE);
@@ -134,5 +131,5 @@ const authDataSlice = createSlice({
   // }
 });
 
-export const { updateInitialized, updateLoginUser, setAuthData, resetAuthData, updateToken, updateRoleChanged, updateVoiceStatus } = authDataSlice.actions;
+export const { updateInitialized, updateLoginUser, setAuthData, resetAuthData, updateToken, updateRoleChanged } = authDataSlice.actions;
 export default authDataSlice.reducer;

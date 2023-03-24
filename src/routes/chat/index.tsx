@@ -50,6 +50,8 @@ function ChatPage() {
   // console.log("temp uid", tmpUid);
   const placeholderVisible = channel_id == 0 && user_id == 0;
   const isMainPath = isHomePath || isChatHomePath;
+  const context = channel_id !== 0 ? "channel" : "dm";
+  const contextId = (channel_id || user_id) ?? 0;
   return (
     <ErrorCatcher>
       {channelModalVisible && (
@@ -66,7 +68,7 @@ function ChatPage() {
 
           {isGuest ? <footer className="hidden md:block py-1 text-xs text-gray-300 dark:text-gray-700 text-center">
             Host your own <a href="https://voce.chat" target="_blank" rel="noopener noreferrer" className="text-gray-400  dark:text-gray-600">voce.chat</a>
-          </footer> : <RTCWidget />}
+          </footer> : <RTCWidget id={+contextId} context={context} />}
         </div>
         <div className={clsx(`right-container md:rounded-r-2xl w-full bg-white dark:!bg-gray-700`, placeholderVisible && "h-full flex-center", isMainPath && "hidden md:flex")}>
           {placeholderVisible && (isGuest ? <GuestBlankPlaceholder /> : <BlankPlaceholder />)}

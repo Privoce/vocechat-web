@@ -17,10 +17,12 @@ import {
   LicenseResponse,
   RenewLicense,
   RenewLicenseResponse,
-  AgoraTokenResponse
+  AgoraTokenResponse,
+  AgoraVoicingListResponse
 } from "../../types/server";
 import { Channel } from "../../types/channel";
 import { ContentTypeKey } from "../../types/message";
+import { updateVoiceInfo } from "../slices/voice";
 
 const defaultExpireDuration = 2 * 24 * 60 * 60;
 
@@ -114,6 +116,31 @@ export const serverApi = createApi({
       query: (id) => ({
         url: `group/${id}/agora_token`,
       })
+    }),
+    getAgoraVoicingList: builder.query<AgoraVoicingListResponse, { appid: string, key: string, secret: string }>({
+      query: ({ appid, key, secret }) => ({
+        headers: {
+          Authorization: `Basic ${btoa(`${key}:${secret}`)}`
+        },
+        url: `https://api.agora.io/dev/v1/channel/${appid}`,
+      }),
+      async onQueryStarted(data, { dispatch, queryFulfilled }) {
+        try {
+          const { data: resp } = await queryFulfilled;
+          const { success } = resp;
+          if (success && resp.data.channels.length > 0) {
+            const [channel] = resp.data.channels;
+            const [id] = channel.channel_name.split(":").slice(-1);
+            // todo
+            dispatch(updateVoiceInfo({
+              id: +id,
+              context: "channel"
+            }));
+          }
+        } catch {
+          console.error("get voice list error");
+        }
+      }
     }),
     getSMTPConfig: builder.query<SMTPConfig, void>({
       query: () => ({ url: `admin/smtp/config` })
@@ -327,5 +354,7 @@ export const {
   useSendMessageByBotMutation,
   useUpdateFrontendUrlMutation,
   useGetFrontendUrlQuery,
-  useLazyGetAgoraTokenQuery
+  useLazyGetAgoraTokenQuery,
+  useGetAgoraConfigQuery,
+  useGetAgoraVoicingListQuery
 } = serverApi;
