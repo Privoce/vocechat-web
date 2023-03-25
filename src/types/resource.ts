@@ -44,9 +44,7 @@ export interface OG {
     width?: number;
     height?: number;
     alt?: string;
-  }[
-
-  ];
+  }[];
   audios: {
     type?: string;
     url: string;

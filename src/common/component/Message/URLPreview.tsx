@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useLazyGetOGInfoQuery } from "../../../app/services/message";
+import { upsertOG } from "../../../app/slices/footprint";
 import { useAppSelector } from "../../../app/store";
 
 
 export default function URLPreview({ url = "" }) {
+  const dispatch = useDispatch();
   const [favicon, setFavicon] = useState("");
   const [getInfo, { isLoading }] = useLazyGetOGInfoQuery();
   const ogData = useAppSelector(store => store.footprint.og[url]);
@@ -32,12 +35,9 @@ export default function URLPreview({ url = "" }) {
   // const handleFavError = () => {
   //   setFavicon("");
   // };
-  // const handleOGImageError = () => {
-  //   setData(prev => {
-  //     if (!prev) return prev;
-  //     return { ...prev, ogImage: "" };
-  //   });
-  // };
+  const handleOGImageError = () => {
+    dispatch(upsertOG({ key: url, value: { ...ogData, images: [] } }));
+  };
   if (isLoading) return <div className="h-28"></div>;
   if (!url || !data || !data.title) return null;
   const { title, description, ogImage } = data;
@@ -50,7 +50,7 @@ export default function URLPreview({ url = "" }) {
       <h3 className={`text-primary-500 w-full truncate`}>{title}</h3>
       <p className={`text-xs text-gray-400 mb-2 w-full truncate`}>{description}</p>
       <div className="w-full h-[180px]">
-        <img className="w-full h-full object-cover" src={ogImage} alt="og image" />
+        <img className="w-full h-full object-cover" onError={handleOGImageError} src={ogImage} alt="og image" />
       </div>
     </a>
   ) : (
