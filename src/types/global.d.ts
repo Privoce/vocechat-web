@@ -1,4 +1,4 @@
-import { IAgoraRTCClient, IRemoteAudioTrack } from "agora-rtc-sdk-ng";
+import { IAgoraRTCClient, IMicrophoneAudioTrack, IRemoteAudioTrack } from "agora-rtc-sdk-ng";
 
 interface BeforeInstallPromptEvent extends Event {
   /**
@@ -33,7 +33,7 @@ export declare global {
     CACHE: { [key: string]: typeof localforage | undefined };
     VOICE_CLIENT?: IAgoraRTCClient;
     VOICE_TRACK_MAP: {
-      [key: number]: IRemoteAudioTrack | undefined
+      [key: number]: IRemoteAudioTrack | IMicrophoneAudioTrack | undefined | null
     }
   }
   interface WindowEventMap {

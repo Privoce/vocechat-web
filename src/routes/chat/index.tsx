@@ -44,7 +44,7 @@ function ChatPage() {
         mid: 0,
         unread: 0,
         id: +user_id,
-        type: "user" as const
+        type: "dm" as const
       }
       : undefined;
   // console.log("temp uid", tmpUid);

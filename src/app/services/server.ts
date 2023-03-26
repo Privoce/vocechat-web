@@ -22,7 +22,7 @@ import {
 } from "../../types/server";
 import { Channel } from "../../types/channel";
 import { ContentTypeKey } from "../../types/message";
-import { updateVoiceInfo } from "../slices/voice";
+import { updateVoiceList } from "../slices/voice";
 
 const defaultExpireDuration = 2 * 24 * 60 * 60;
 
@@ -128,14 +128,17 @@ export const serverApi = createApi({
         try {
           const { data: resp } = await queryFulfilled;
           const { success } = resp;
-          if (success && resp.data.channels.length > 0) {
-            const [channel] = resp.data.channels;
-            const [id] = channel.channel_name.split(":").slice(-1);
-            // todo
-            dispatch(updateVoiceInfo({
-              id: +id,
-              context: "channel"
-            }));
+          if (success) {
+            const arr = resp.data.channels.map(data => {
+              const [id] = data.channel_name.split(":").slice(-1);
+              const count = data.user_count;
+              return {
+                id: +id,
+                context: "channel" as const,
+                memberCount: count
+              };
+            });
+            dispatch(updateVoiceList(arr));
           }
         } catch {
           console.error("get voice list error");

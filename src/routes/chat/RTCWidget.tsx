@@ -14,17 +14,24 @@ type Props = {
 
 const RTCWidget = ({ id, context = "channel" }: Props) => {
     const { leave } = useVoice({ context, id });
-    const { loginUser, joined } = useAppSelector(store => { return { loginUser: store.authData.user, joined: store.voice.joined }; });
+    const { loginUser, voicingInfo, channelData, userData } = useAppSelector(store => {
+        return {
+            userData: store.users.byId,
+            channelData: store.channels.byId,
+            loginUser: store.authData.user,
+            voicingInfo: store.voice.voicing
+        };
+    });
     if (!loginUser) return null;
     return (
         <div className='bg-gray-100 dark:bg-gray-900 flex flex-col p-2 rounded-3xl m-3 text-sm'>
-            {joined &&
+            {voicingInfo &&
                 <div className="flex justify-between items-center border-b border-solid border-gray-100 dark:border-gray-800 pb-3 mb-2">
                     <div className="flex items-center gap-1">
                         <IconSignal />
                         <div className="flex flex-col">
                             <span className='text-green-800'>Voice Connected</span>
-                            <span className='text-gray-600 dark:text-gray-400 text-xs'>Channel / name</span>
+                            <span className='text-gray-600 dark:text-gray-400 text-xs'>{voicingInfo.context == "channel" ? "Channel" : "DM"} / {voicingInfo.context == "channel" ? channelData[voicingInfo.id].name : userData[voicingInfo.id].name}</span>
                         </div>
                     </div>
                     <IconHeadphone onClick={leave} role="button" className="fill-red-600" />

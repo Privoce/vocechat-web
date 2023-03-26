@@ -1,8 +1,8 @@
-import AgoraRTC from 'agora-rtc-sdk-ng';
+import AgoraRTC, { IMicrophoneAudioTrack } from 'agora-rtc-sdk-ng';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useGetAgoraConfigQuery, useGetAgoraVoicingListQuery, useLazyGetAgoraTokenQuery } from '../../app/services/server';
-import { addVoiceMember, removeVoiceMember, updateJoinStatus, updateVoiceInfo } from '../../app/slices/voice';
+import { addVoiceMember, removeVoiceMember, updateVoicingInfo } from '../../app/slices/voice';
 import { useAppSelector } from '../../app/store';
 
 // type Props = {}
@@ -34,6 +34,7 @@ const Voice = () => {
                 dispatch(addVoiceMember(+user.uid));
                 // console.log("subscribe success");
                 // Subscribe and play the remote audio track.
+                console.log(user.uid + "has joined the channel");
                 if (mediaType == "audio") {
                     // Play the remote audio track. 
                     user.audioTrack?.play();
@@ -71,10 +72,11 @@ type VoiceProps = {
 }
 const useVoice = ({ id, context = "channel" }: VoiceProps) => {
     const dispatch = useDispatch();
-    const { voiceInfo, joined } = useAppSelector(store => {
+    const { voiceInfo, joined, loginUid = 0 } = useAppSelector(store => {
         return {
+            loginUid: store.authData.user?.uid,
             voiceInfo: store.voice.voicing,
-            joined: store.voice.joined
+            joined: !!store.voice.voicing
         };
     });
     const [generateToken] = useLazyGetAgoraTokenQuery();
@@ -88,25 +90,27 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
                 await window.VOICE_CLIENT.join(app_id, channel_name, agora_token, uid);
                 console.table(data);
                 // Create a local audio track from the microphone audio.
-                const localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+
+                window.VOICE_TRACK_MAP[loginUid] = await AgoraRTC.createMicrophoneAudioTrack();
                 // Publish the local audio track in the channel.
-                await window.VOICE_CLIENT.publish(localAudioTrack);
+                await window.VOICE_CLIENT.publish(window.VOICE_TRACK_MAP[loginUid]);
                 console.log("Publish success!");
-                dispatch(updateVoiceInfo({
+                dispatch(updateVoicingInfo({
                     id,
                     context,
                     members: [uid]
                 }));
-                dispatch(updateJoinStatus(true));
             }
         }
         setJoining(false);
     };
     const leave = async () => {
         if (window.VOICE_CLIENT) {
+            (window.VOICE_TRACK_MAP[loginUid] as IMicrophoneAudioTrack).close();
             await window.VOICE_CLIENT.leave();
-            dispatch(updateJoinStatus(false));
-            // window.VOICE_TRACK_MAP
+            dispatch(updateVoicingInfo(null));
+            // window.VOICE_TRACK_MAP[loginUid]?.stop();
+            // window.VOICE_TRACK_MAP[loginUid] = null;
         }
     };
     return {

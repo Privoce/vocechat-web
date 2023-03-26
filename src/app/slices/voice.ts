@@ -1,22 +1,27 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export type VoiceInfo = {
+export type VoiceBasicInfo = {
   context: "channel" | "dm"
-  id: number | null,
+  id: number,
+}
+export type VoicingInfo = {
   members: number[]
-}
+} & VoiceBasicInfo
+export type VoiceInfo = {
+  memberCount: number
+} & VoiceBasicInfo
 interface State {
-  joined: boolean,
-  voicing: VoiceInfo
+  voicing: VoicingInfo | null,
+  list: VoiceInfo[]
 }
-const initialInfo = {
-  context: "channel" as const,
-  id: null,
-  members: []
-};
+// const initialInfo = {
+//   context: "channel" as const,
+//   id: 0,
+//   members: []
+// };
 const initialState: State = {
-  joined: false,
-  voicing: initialInfo
+  voicing: null,
+  list: []
 };
 
 
@@ -25,21 +30,11 @@ const voiceSlice = createSlice({
   name: "voice",
   initialState,
   reducers: {
-    updateJoinStatus(state, { payload }: PayloadAction<boolean>) {
-      state.joined = payload;
+    updateVoicingInfo(state, { payload }: PayloadAction<VoicingInfo | null>) {
+      state.voicing = payload;
     },
-    updateVoiceInfo(state, { payload }: PayloadAction<VoiceInfo | null>) {
-      if (!payload) {
-        // reset
-        state.voicing = initialInfo;
-      } else {
-        if (state.voicing) {
-          state.voicing = { ...state.voicing, ...payload };
-        } else {
-          state.voicing = payload;
-        }
-
-      }
+    updateVoiceList(state, { payload }: PayloadAction<VoiceInfo[]>) {
+      state.list = payload;
     },
     addVoiceMember(state, { payload }: PayloadAction<number>) {
       if (state.voicing) {
@@ -59,5 +54,5 @@ const voiceSlice = createSlice({
   },
 });
 
-export const { updateJoinStatus, updateVoiceInfo, addVoiceMember, removeVoiceMember } = voiceSlice.actions;
+export const { addVoiceMember, removeVoiceMember, updateVoiceList, updateVoicingInfo } = voiceSlice.actions;
 export default voiceSlice.reducer;
