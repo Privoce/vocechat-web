@@ -17,7 +17,7 @@ const renderContent = (data: MessagePayload) => {
   switch (content_type) {
     case ContentTypes.text:
       res = (
-        <span className="md:truncate md:break-words md:break-all text-gray-800 dark:text-gray-100">
+        <span className="max-w-lg md:truncate md:break-words md:break-all text-gray-800 dark:text-gray-100">
           <LinkifyText text={content} url={false} mentionTextOnly={true} mentionPopOver={false} />
         </span>
       );
@@ -77,7 +77,7 @@ const Reply: FC<ReplyProps> = ({ mid, interactive = true }) => {
       }, 3000);
     }
   };
-  const defaultClass = `flex items-start flex-col md:flex-row p-2 bg-gray-100 dark:bg-gray-900 rounded-lg gap-2 mb-1`;
+  const defaultClass = `w-fit flex items-start flex-col md:flex-row p-2 bg-gray-100 dark:bg-gray-900 rounded-lg gap-2 mb-1`;
   if (!data) return <div
     key={mid}
     data-mid={mid}
@@ -95,17 +95,17 @@ const Reply: FC<ReplyProps> = ({ mid, interactive = true }) => {
       )}
       onClick={interactive ? handleClick : undefined}
     >
-      <div className="flex items-center gap-1 whitespace-nowrap">
+      <div className="flex shrink-0">
         <Avatar
-          width={16}
-          height={16}
-          className="w-4 h-4 rounded-full"
+          width={24}
+          height={24}
+          className="rounded-full"
           src={currUser.avatar}
           name={currUser.name}
         />
-        <span className="text-sm text-primary-500">{currUser.name}</span>
       </div>
-      <div className={clsx("text-sm flex items-center overflow-hidden", interactive && "relative")}>
+      <div className={clsx("text-sm flex flex-col", interactive && "relative")}>
+        <span className="text-sm text-primary-500">{currUser.name}</span>
         {renderContent(data)}
         {interactive && <div className="absolute top-0 left-0 w-full h-full"></div>}
       </div>
