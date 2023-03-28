@@ -119,7 +119,7 @@ export default function Overview({ id = 0 }) {
             id="name"
             placeholder={t("topic_placeholder")} />
         </div>
-        {!readOnly && <div className={inputClass}>
+        {!readOnly && loginUser.is_admin && <div className={inputClass}>
           <Label htmlFor="desc">{t("visibility")}</Label>
           <Radio
             options={[t("public"), t("private")]}
