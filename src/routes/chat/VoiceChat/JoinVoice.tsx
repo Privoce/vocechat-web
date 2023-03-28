@@ -11,7 +11,7 @@ const JoinVoice = ({ joining, join }: Props) => {
         Joining
     </div>;
     return (
-        <div>
+        <div className='w-full h-full flex-center p-4'>
             <StyledButton className='mini' onClick={join}>Join</StyledButton>
         </div>
     );

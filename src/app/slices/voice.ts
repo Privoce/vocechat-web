@@ -5,6 +5,8 @@ export type VoiceBasicInfo = {
   id: number,
 }
 export type VoicingInfo = {
+  downlinkNetworkQuality?: number,
+  muted: boolean,
   members: number[]
 } & VoiceBasicInfo
 export type VoiceInfo = {
@@ -31,7 +33,24 @@ const voiceSlice = createSlice({
   initialState,
   reducers: {
     updateVoicingInfo(state, { payload }: PayloadAction<VoicingInfo | null>) {
+      if (payload && state.voicing) {
+        const { members, ...rest } = payload;
+        const tmpArr = [...state.voicing.members, ...members];
+        console.log("tmmp arr", tmpArr);
+
+        state.voicing = { ...rest, members: Array.from(new Set(tmpArr)) };
+      }
       state.voicing = payload;
+    },
+    updateMuteStatus(state, { payload }: PayloadAction<boolean>) {
+      if (state.voicing) {
+        state.voicing.muted = payload;
+      }
+    },
+    updateVoicingNetworkQuality(state, { payload }: PayloadAction<number>) {
+      if (state.voicing) {
+        state.voicing.downlinkNetworkQuality = payload;
+      }
     },
     updateVoiceList(state, { payload }: PayloadAction<VoiceInfo[]>) {
       state.list = payload;
@@ -41,6 +60,14 @@ const voiceSlice = createSlice({
         if (!state.voicing.members.includes(payload)) {
           state.voicing.members.push(payload);
         }
+      } else {
+        // tricky?
+        state.voicing = {
+          id: 0,
+          context: "channel",
+          muted: false,
+          members: [payload]
+        };
       }
     },
     removeVoiceMember(state, { payload }: PayloadAction<number>) {
@@ -54,5 +81,5 @@ const voiceSlice = createSlice({
   },
 });
 
-export const { addVoiceMember, removeVoiceMember, updateVoiceList, updateVoicingInfo } = voiceSlice.actions;
+export const { addVoiceMember, removeVoiceMember, updateVoiceList, updateVoicingInfo, updateVoicingNetworkQuality, updateMuteStatus } = voiceSlice.actions;
 export default voiceSlice.reducer;

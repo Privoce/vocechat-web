@@ -3,9 +3,11 @@ import { useAppSelector } from '../../app/store';
 import User from '../../common/component/User';
 import IconHeadphone from '../../assets/icons/headphone.svg';
 import IconMic from '../../assets/icons/mic.on.svg';
-import IconSoundOn from '../../assets/icons/sound.on.svg';
-import IconSignal from '../../assets/icons/signal.svg';
+import IconMicOff from '../../assets/icons/mic.off.svg';
+// import IconSoundOn from '../../assets/icons/sound.on.svg';
+// import IconSignal from '../../assets/icons/signal.svg';
 import { useVoice } from '../../common/component/Voice';
+import Signal from '../../common/component/Signal';
 
 type Props = {
     id: number,
@@ -13,30 +15,31 @@ type Props = {
 }
 
 const RTCWidget = ({ id, context = "channel" }: Props) => {
-    const { leave } = useVoice({ context, id });
-    const { loginUser, voicingInfo, channelData, userData } = useAppSelector(store => {
+    const { leave, voicingInfo, setMute } = useVoice({ context, id });
+    const { loginUser, channelData, userData } = useAppSelector(store => {
         return {
             userData: store.users.byId,
             channelData: store.channels.byId,
             loginUser: store.authData.user,
-            voicingInfo: store.voice.voicing
         };
     });
-    if (!loginUser) return null;
+    if (!loginUser || !voicingInfo) return null;
+    const name = voicingInfo.context == "channel" ? channelData[voicingInfo.id]?.name : userData[voicingInfo.id]?.name;
+    if (!name) return null;
     return (
         <div className='bg-gray-100 dark:bg-gray-900 flex flex-col p-2 rounded-3xl m-3 text-sm'>
-            {voicingInfo &&
-                <div className="flex justify-between items-center border-b border-gray-100 dark:border-gray-800 pb-3 mb-2">
-                    <div className="flex items-center gap-1">
-                        <IconSignal />
-                        <div className="flex flex-col">
-                            <span className='text-green-800'>Voice Connected</span>
-                            <span className='text-gray-600 dark:text-gray-400 text-xs'>{voicingInfo.context == "channel" ? "Channel" : "DM"} / {voicingInfo.context == "channel" ? channelData[voicingInfo.id].name : userData[voicingInfo.id].name}</span>
-                        </div>
+            {/* {voicingInfo && */}
+            <div className="flex justify-between items-center border-b border-gray-100 dark:border-gray-800 pb-3 mb-2">
+                <div className="flex flex-1 items-center gap-1">
+                    <Signal strength={voicingInfo.downlinkNetworkQuality} />
+                    <div className="flex flex-col">
+                        <span className='text-green-800'>Voice Connected</span>
+                        <span className='text-gray-600 dark:text-gray-400 text-xs truncate max-w-[170px]' >{voicingInfo.context == "channel" ? "Channel" : "DM"} / {voicingInfo.context == "channel" ? channelData[voicingInfo.id].name : userData[voicingInfo.id].name}</span>
                     </div>
-                    <IconHeadphone onClick={leave} role="button" className="fill-red-600" />
                 </div>
-            }
+                <IconHeadphone onClick={leave} role="button" className="fill-red-600" />
+            </div>
+            {/* } */}
             <div className="flex justify-between items-center">
                 <div className="flex items-center gap-3">
                     <User uid={loginUser.uid} compact />
@@ -45,10 +48,15 @@ const RTCWidget = ({ id, context = "channel" }: Props) => {
                         <span className='text-gray-400 text-xs'>#{loginUser.uid}</span>
                     </div>
                 </div>
-                <div className="flex gap-2">
-                    <IconSoundOn role="button" />
-                    <IconMic role="button" />
+                {/* {voicingInfo && */}
+                <div className="flex gap-2 px-1">
+                    {/* <IconSoundOn role="button" /> */}
+                    {voicingInfo.muted ?
+                        <IconMicOff className="w-5" onClick={setMute.bind(null, false)} role="button" />
+                        :
+                        <IconMic className="w-5" onClick={setMute.bind(null, true)} role="button" />}
                 </div>
+                {/*  } */}
             </div>
         </div>
     );

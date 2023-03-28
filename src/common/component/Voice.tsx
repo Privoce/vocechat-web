@@ -2,7 +2,7 @@ import AgoraRTC, { IMicrophoneAudioTrack } from 'agora-rtc-sdk-ng';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useGetAgoraConfigQuery, useGetAgoraVoicingListQuery, useLazyGetAgoraTokenQuery } from '../../app/services/server';
-import { addVoiceMember, removeVoiceMember, updateVoicingInfo } from '../../app/slices/voice';
+import { addVoiceMember, removeVoiceMember, updateMuteStatus, updateVoicingInfo, updateVoicingNetworkQuality } from '../../app/slices/voice';
 import { useAppSelector } from '../../app/store';
 
 // type Props = {}
@@ -31,22 +31,45 @@ const Voice = () => {
             agoraEngine.on("user-published", async (user, mediaType) => {
                 // Subscribe to the remote user when the SDK triggers the "user-published" event.
                 await agoraEngine.subscribe(user, mediaType);
-                dispatch(addVoiceMember(+user.uid));
-                // console.log("subscribe success");
                 // Subscribe and play the remote audio track.
-                console.log(user.uid + "has joined the channel");
+                console.log(user, " has published at the channel");
                 if (mediaType == "audio") {
                     // Play the remote audio track. 
                     user.audioTrack?.play();
                     window.VOICE_TRACK_MAP[+user.uid] = user.audioTrack;
-                    // console.log("Remote user connected: " + user.uid);
                 }
                 // Listen for the "user-unpublished" event.
                 agoraEngine.on("user-unpublished", user => {
                     dispatch(removeVoiceMember(+user.uid as number));
                     console.log(user.uid + "has left the channel");
-                    // console.log("Remote user has left the channel");
                 });
+                // 信号强度
+                agoraEngine.on("network-quality", (qlt) => {
+                    const { downlinkNetworkQuality } = qlt;
+                    dispatch(updateVoicingNetworkQuality(downlinkNetworkQuality));
+                });
+                // 用户状态变化
+                agoraEngine.on("user-info-updated", (uid, msg) => {
+                    console.log("user-info-updated", uid, msg);
+                    switch (msg) {
+                        case "mute-audio":
+                            // todo
+                            break;
+                        case "unmute-audio":
+                            // todo
+                            break;
+
+                        default:
+                            break;
+                    }
+                    // const { downlinkNetworkQuality } = qlt;
+                    // dispatch(updateVoicingNetworkQuality(downlinkNetworkQuality));
+                });
+            });
+            // 有新用户加入
+            agoraEngine.on("user-joined", async (user) => {
+                console.log(user, " has joined the channel");
+                dispatch(addVoiceMember(+user.uid));
             });
             window.VOICE_CLIENT = agoraEngine;
         };
@@ -56,7 +79,8 @@ const Voice = () => {
         }
 
         return () => {
-            if (window.VOICE_CLIENT) {
+            if (window.VOICE_CLIENT && localTrack) {
+                localTrack.close();
                 window.VOICE_CLIENT.leave();
             }
             // window.VOICE_CLIENT=null
@@ -66,17 +90,17 @@ const Voice = () => {
 
     return null;
 };
+let localTrack: IMicrophoneAudioTrack | null = null;
 type VoiceProps = {
     id: number,
     context?: "channel" | "dm"
 }
 const useVoice = ({ id, context = "channel" }: VoiceProps) => {
     const dispatch = useDispatch();
-    const { voiceInfo, joined, loginUid = 0 } = useAppSelector(store => {
+    const { voicingInfo } = useAppSelector(store => {
         return {
-            loginUid: store.authData.user?.uid,
-            voiceInfo: store.voice.voicing,
-            joined: !!store.voice.voicing
+            // loginUid: store.authData.user?.uid,
+            voicingInfo: store.voice.voicing
         };
     });
     const [generateToken] = useLazyGetAgoraTokenQuery();
@@ -90,12 +114,13 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
                 await window.VOICE_CLIENT.join(app_id, channel_name, agora_token, uid);
                 console.table(data);
                 // Create a local audio track from the microphone audio.
-
-                window.VOICE_TRACK_MAP[loginUid] = await AgoraRTC.createMicrophoneAudioTrack();
+                localTrack = await AgoraRTC.createMicrophoneAudioTrack();
                 // Publish the local audio track in the channel.
-                await window.VOICE_CLIENT.publish(window.VOICE_TRACK_MAP[loginUid]);
-                console.log("Publish success!");
+                await window.VOICE_CLIENT.publish(localTrack);
+                console.log("Publish success!,joined the channel");
+
                 dispatch(updateVoicingInfo({
+                    muted: false,
                     id,
                     context,
                     members: [uid]
@@ -105,20 +130,25 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
         setJoining(false);
     };
     const leave = async () => {
-        if (window.VOICE_CLIENT) {
-            (window.VOICE_TRACK_MAP[loginUid] as IMicrophoneAudioTrack).close();
+        if (window.VOICE_CLIENT && localTrack) {
+            localTrack.close();
             await window.VOICE_CLIENT.leave();
             dispatch(updateVoicingInfo(null));
-            // window.VOICE_TRACK_MAP[loginUid]?.stop();
-            // window.VOICE_TRACK_MAP[loginUid] = null;
+        }
+    };
+    const setMute = (mute: boolean) => {
+        if (localTrack) {
+            localTrack.setMuted(mute);
+            dispatch(updateMuteStatus(mute));
         }
     };
     return {
+        setMute,
         leave,
         // canVoice,
-        voiceInfo,
+        voicingInfo,
         joining,
-        joined,
+        joined: !!voicingInfo,
         joinVoice
     };
 };

@@ -23,7 +23,7 @@ const VoiceChat = ({ id, context = "channel" }: Props) => {
     return (
         <Tooltip disabled={dashboardVisible} tip={t("voice")} placement="left">
             <li className={`relative`} >
-                <IconHeadphone className="fill-gray-500" role="button" onClick={toggleDashboard} />
+                <IconHeadphone className={dashboardVisible ? "fill-gray-600" : "fill-gray-500"} role="button" onClick={toggleDashboard} />
                 {dashboardVisible && <Dashboard id={id} context={context} />}
             </li>
         </Tooltip>
