@@ -26,7 +26,7 @@ const RTCWidget = ({ id, context = "channel" }: Props) => {
     return (
         <div className='bg-gray-100 dark:bg-gray-900 flex flex-col p-2 rounded-3xl m-3 text-sm'>
             {voicingInfo &&
-                <div className="flex justify-between items-center border-b border-solid border-gray-100 dark:border-gray-800 pb-3 mb-2">
+                <div className="flex justify-between items-center border-b border-gray-100 dark:border-gray-800 pb-3 mb-2">
                     <div className="flex items-center gap-1">
                         <IconSignal />
                         <div className="flex flex-col">
