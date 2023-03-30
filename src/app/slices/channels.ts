@@ -3,8 +3,10 @@ import { isNull, omitBy } from "lodash";
 import BASE_URL from "../config";
 import { Channel, UpdateChannelDTO, UpdatePinnedMessageDTO } from "../../types/channel";
 
+type ChannelAside = "members" | "voice" | null;
 interface StoredChannel extends Channel {
   icon?: string;
+  visibleAside: ChannelAside
 }
 
 interface State {
@@ -33,7 +35,8 @@ const channelsSlice = createSlice({
           icon:
             c.avatar_updated_at == 0
               ? ""
-              : `${BASE_URL}/resource/group_avatar?gid=${c.gid}&t=${c.avatar_updated_at}`
+              : `${BASE_URL}/resource/group_avatar?gid=${c.gid}&t=${c.avatar_updated_at}`,
+          visibleAside: "members"
         };
       });
     },
@@ -48,7 +51,8 @@ const channelsSlice = createSlice({
         icon:
           avatar_updated_at == 0
             ? ""
-            : `${BASE_URL}/resource/group_avatar?gid=${gid}&t=${avatar_updated_at}`
+            : `${BASE_URL}/resource/group_avatar?gid=${gid}&t=${avatar_updated_at}`,
+        visibleAside: "members"
       };
     },
     updateChannel(state, action: PayloadAction<UpdateChannelDTO>) {
@@ -99,6 +103,12 @@ const channelsSlice = createSlice({
         }
       }
     },
+    updateChannelVisibleAside(state, action: PayloadAction<{ id: number, aside: ChannelAside }>) {
+      const { id, aside } = action.payload;
+      if (state.byId[id]) {
+        state.byId[id].visibleAside = aside;
+      }
+    },
     removeChannel(state, action: PayloadAction<number>) {
       const gid = action.payload;
       const idx = state.ids.findIndex((i) => i == gid);
@@ -116,7 +126,8 @@ export const {
   fillChannels,
   addChannel,
   updateChannel,
-  removeChannel
+  removeChannel,
+  updateChannelVisibleAside
 } = channelsSlice.actions;
 
 export default channelsSlice.reducer;

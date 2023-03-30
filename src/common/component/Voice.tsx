@@ -2,7 +2,7 @@ import AgoraRTC, { IMicrophoneAudioTrack } from 'agora-rtc-sdk-ng';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useGetAgoraConfigQuery, useGetAgoraVoicingListQuery, useLazyGetAgoraTokenQuery } from '../../app/services/server';
-import { addVoiceMember, removeVoiceMember, updateMuteStatus, updateVoicingInfo, updateVoicingMember, updateVoicingNetworkQuality } from '../../app/slices/voice';
+import { addVoiceMember, removeVoiceMember, updateDeafenStatus, updateMuteStatus, updateVoicingInfo, updateVoicingMember, updateVoicingNetworkQuality } from '../../app/slices/voice';
 import { useAppSelector } from '../../app/store';
 
 // type Props = {}
@@ -150,6 +150,7 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
                 await window.VOICE_CLIENT.publish(localTrack);
                 console.log("Publish success!,joined the channel");
                 dispatch(updateVoicingInfo({
+                    deafen: false,
                     muted: false,
                     id,
                     context,
@@ -174,8 +175,27 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
             dispatch(updateMuteStatus(mute));
         }
     };
+    const setDeafen = (deafen: boolean) => {
+        if (localTrack) {
+            if (deafen) {
+                localTrack.setMuted(true);
+                // 远端音频，全部静音
+                Object.entries(window.VOICE_TRACK_MAP).forEach(([, audioTrack]) => {
+                    audioTrack?.setVolume(0);
+                });
+            } else {
+                localTrack.setMuted(false);
+                // 远端音频，恢复原音
+                Object.entries(window.VOICE_TRACK_MAP).forEach(([, audioTrack]) => {
+                    audioTrack?.setVolume(100);
+                });
+            }
+            dispatch(updateDeafenStatus(deafen));
+        }
+    };
     return {
         setMute,
+        setDeafen,
         leave,
         // canVoice,
         voicingInfo,

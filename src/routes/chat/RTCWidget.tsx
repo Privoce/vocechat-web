@@ -16,7 +16,7 @@ type Props = {
 }
 
 const RTCWidget = ({ id, context = "channel" }: Props) => {
-    const { leave, voicingInfo, setMute } = useVoice({ context, id });
+    const { leave, voicingInfo, setMute, setDeafen } = useVoice({ context, id });
     const { loginUser, channelData, userData } = useAppSelector(store => {
         return {
             userData: store.users.byId,
@@ -51,7 +51,7 @@ const RTCWidget = ({ id, context = "channel" }: Props) => {
                 </div>
                 {/* {voicingInfo && */}
                 <div className="flex gap-2 px-1">
-                    <IconHeadphone role="button" />
+                    {voicingInfo.deafen ? <IconHeadphoneOff role="button" onClick={setDeafen.bind(null, false)} /> : <IconHeadphone role="button" onClick={setDeafen.bind(null, true)} />}
                     {voicingInfo.muted ?
                         <IconMicOff onClick={setMute.bind(null, false)} role="button" />
                         :

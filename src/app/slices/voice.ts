@@ -9,11 +9,13 @@ export type VoiceBasicInfo = {
 export type VoicingInfo = {
   downlinkNetworkQuality?: number,
   muted: boolean,
+  deafen: boolean
 } & VoiceBasicInfo
 
 export type VoicingMemberInfo = {
   speakingVolume?: number,
-  muted?: boolean
+  muted?: boolean,
+  deafen?: boolean
 }
 
 export type VoicingMembers = {
@@ -73,6 +75,18 @@ const voiceSlice = createSlice({
         }
       }
     },
+    updateDeafenStatus(state, { payload }: PayloadAction<boolean>) {
+      if (state.voicing) {
+        state.voicing.deafen = payload;
+        state.voicing.muted = payload;
+        // 更新登录用户在member list的状态
+        const loginUid = localStorage.getItem(KEY_UID) ?? 0;
+        const idx = state.voicingMembers.ids.findIndex((uid) => uid == loginUid);
+        if (idx > -1) {
+          state.voicingMembers.byId[+loginUid].muted = payload;
+        }
+      }
+    },
     updateVoicingNetworkQuality(state, { payload }: PayloadAction<number>) {
       if (state.voicing) {
         state.voicing.downlinkNetworkQuality = payload;
@@ -109,5 +123,5 @@ const voiceSlice = createSlice({
   },
 });
 
-export const { addVoiceMember, removeVoiceMember, updateVoiceList, updateVoicingInfo, updateVoicingNetworkQuality, updateMuteStatus, updateVoicingMember } = voiceSlice.actions;
+export const { addVoiceMember, removeVoiceMember, updateVoiceList, updateVoicingInfo, updateVoicingNetworkQuality, updateMuteStatus, updateVoicingMember, updateDeafenStatus } = voiceSlice.actions;
 export default voiceSlice.reducer;

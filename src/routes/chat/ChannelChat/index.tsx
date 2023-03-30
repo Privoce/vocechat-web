@@ -1,4 +1,4 @@
-import { useState, useEffect, memo } from "react";
+import { useEffect, memo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Tippy from "@tippyjs/react";
 import { useTranslation } from "react-i18next";
@@ -17,6 +17,8 @@ import { useAppSelector } from "../../../app/store";
 import GoBackNav from "../../../common/component/GoBackNav";
 import Members from "./Members";
 import VoiceChat from "../VoiceChat";
+import { updateChannelVisibleAside } from "../../../app/slices/channels";
+import Dashboard from "../VoiceChat/Dashboard";
 type Props = {
   cid?: number;
   dropFiles?: File[];
@@ -26,7 +28,6 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [membersVisible, setMembersVisible] = useState(true);
 
   const {
     userIds,
@@ -53,7 +54,10 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
   }, [pathname]);
 
   const toggleMembersVisible = () => {
-    setMembersVisible((prev) => !prev);
+    dispatch(updateChannelVisibleAside({
+      id: cid,
+      aside: data.visibleAside !== "members" ? "members" : null
+    }));
   };
 
 
@@ -84,7 +88,8 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
             </li>
           </Tippy>
         </Tooltip>
-        <VoiceChat channel={`channel_${cid}`} id={cid} />
+        {/* 音频 */}
+        <VoiceChat context={`channel`} id={cid} />
         <Tooltip tip={t("fav")} placement="left">
           <Tippy
             placement="left-start"
@@ -104,7 +109,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
           onClick={toggleMembersVisible}
         >
           <Tooltip tip={t("channel_members")} placement="left">
-            <IconPeople className={membersVisible ? "fill-gray-600" : ""} />
+            <IconPeople className={data.visibleAside == "members" ? "fill-gray-600" : ""} />
           </Tooltip>
         </li>
       </ul>
@@ -120,7 +125,10 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
       </header>
     }
     users={
-      <Members uids={memberIds} addVisible={addVisible} cid={cid} ownerId={owner} membersVisible={membersVisible} />
+      <Members uids={memberIds} addVisible={addVisible} cid={cid} ownerId={owner} membersVisible={data.visibleAside == "members"} />
+    }
+    voice={
+      <Dashboard visible={data.visibleAside == "voice"} id={cid} context="channel" />
     }
   />;
 }
