@@ -28,9 +28,9 @@ const RTCWidget = ({ id, context = "channel" }: Props) => {
     const name = voicingInfo.context == "channel" ? channelData[voicingInfo.id]?.name : userData[voicingInfo.id]?.name;
     if (!name) return null;
     return (
-        <div className='bg-gray-100 dark:bg-gray-900 flex flex-col p-2 rounded-3xl m-3 text-sm divide-y divide-gray-200 dark:divide-gray-800'>
+        <div className='bg-gray-100 dark:bg-gray-900 flex flex-col p-2 rounded-3xl m-3 text-sm'>
             {/* {voicingInfo && */}
-            <div className="flex justify-between items-center pb-3">
+            <div className="flex justify-between items-center  border-solid border-b border-b-gray-200 dark:border-b-gray-800 pb-2">
                 <div className="flex flex-1 items-center gap-1">
                     <Signal strength={voicingInfo.downlinkNetworkQuality} />
                     <div className="flex flex-col">
