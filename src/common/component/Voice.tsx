@@ -2,13 +2,19 @@ import AgoraRTC, { IMicrophoneAudioTrack } from 'agora-rtc-sdk-ng';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useGetAgoraConfigQuery, useGetAgoraVoicingListQuery, useLazyGetAgoraTokenQuery } from '../../app/services/server';
-import { addVoiceMember, removeVoiceMember, updateMuteStatus, updateVoicingInfo, updateVoicingNetworkQuality } from '../../app/slices/voice';
+import { addVoiceMember, removeVoiceMember, updateMuteStatus, updateVoicingInfo, updateVoicingMember, updateVoicingNetworkQuality } from '../../app/slices/voice';
 import { useAppSelector } from '../../app/store';
 
 // type Props = {}
 window.VOICE_TRACK_MAP = window.VOICE_TRACK_MAP ?? {};
+// let tmpUids: number[] = [];
 const Voice = () => {
-    const isAdmin = useAppSelector(store => store.authData.user?.is_admin);
+    const { isAdmin } = useAppSelector(store => {
+        return {
+            isAdmin: !!store.authData.user?.is_admin,
+            // joined: !!store.voice.voicing
+        };
+    });
     const { data: agoraConfig } = useGetAgoraConfigQuery(undefined, {
         skip: !isAdmin
     });
@@ -22,26 +28,48 @@ const Voice = () => {
         pollingInterval: 5000
     });
     const dispatch = useDispatch();
-
     useEffect(() => {
         const initializeAgoraClient = async () => {
-            // Create an instance of the Agora Engine
+            // 创建agora客户端实例
             const agoraEngine = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
+            // 无论频道内是否有人说话，都会每两秒返回提示音量
+            agoraEngine.enableAudioVolumeIndicator();
             // Listen for the "user-published" event to retrieve an AgoraRTCRemoteUser object.
             agoraEngine.on("user-published", async (user, mediaType) => {
                 // Subscribe to the remote user when the SDK triggers the "user-published" event.
                 await agoraEngine.subscribe(user, mediaType);
-                // Subscribe and play the remote audio track.
                 console.log(user, " has published at the channel");
                 if (mediaType == "audio") {
-                    // Play the remote audio track. 
+                    // 播放远端音频
                     user.audioTrack?.play();
                     window.VOICE_TRACK_MAP[+user.uid] = user.audioTrack;
                 }
-                // Listen for the "user-unpublished" event.
-                agoraEngine.on("user-unpublished", user => {
-                    dispatch(removeVoiceMember(+user.uid as number));
-                    console.log(user.uid + "has left the channel");
+                agoraEngine.on("user-unpublished", (user) => {
+                    //   远端用户取消了音频（muted）
+                    dispatch(updateVoicingMember({ uid: +user.uid, info: { muted: true } }));
+                });
+                //remote user leave
+                agoraEngine.on("user-left", (user, reason) => {
+                    switch (reason) {
+                        case "Quit":
+                        case "ServerTimeOut": {
+                            dispatch(removeVoiceMember(+user.uid as number));
+
+                            console.log(user + "has left the channel");
+                        }
+                            break;
+
+                        default:
+                            break;
+                    }
+                });
+                // 报告频道内正在说话的远端用户及其音量的回调。
+                agoraEngine.on("volume-indicator", (vols) => {
+                    vols.forEach((vol, index) => {
+                        console.log(`${index} UID ${vol.uid} Level ${vol.level}`);
+                        const { uid, level } = vol;
+                        dispatch(updateVoicingMember({ uid: +uid, info: { speakingVolume: level } }));
+                    });
                 });
                 // 信号强度
                 agoraEngine.on("network-quality", (qlt) => {
@@ -54,9 +82,11 @@ const Voice = () => {
                     switch (msg) {
                         case "mute-audio":
                             // todo
+                            dispatch(updateVoicingMember({ uid: +uid, info: { muted: true } }));
                             break;
                         case "unmute-audio":
                             // todo
+                            dispatch(updateVoicingMember({ uid: +uid, info: { muted: false } }));
                             break;
 
                         default:
@@ -68,20 +98,26 @@ const Voice = () => {
             });
             // 有新用户加入
             agoraEngine.on("user-joined", async (user) => {
-                console.log(user, " has joined the channel");
+                // console.log(user.uid, !!localTrack, agoraEngine.channelName, " has joined the channel");
+                // if (localTrack) {
+                // joined
                 dispatch(addVoiceMember(+user.uid));
+                // } else {
+                //     tmpUids.push(+user.uid);
+                // }
             });
             window.VOICE_CLIENT = agoraEngine;
         };
         if (!window.VOICE_CLIENT) {
             initializeAgoraClient();
-
         }
 
         return () => {
             if (window.VOICE_CLIENT && localTrack) {
                 localTrack.close();
+                localTrack = null;
                 window.VOICE_CLIENT.leave();
+
             }
             // window.VOICE_CLIENT=null
         };
@@ -118,13 +154,13 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
                 // Publish the local audio track in the channel.
                 await window.VOICE_CLIENT.publish(localTrack);
                 console.log("Publish success!,joined the channel");
-
                 dispatch(updateVoicingInfo({
                     muted: false,
                     id,
                     context,
-                    members: [uid]
                 }));
+                // 把自己加进去
+                dispatch(addVoiceMember(uid));
             }
         }
         setJoining(false);
@@ -132,6 +168,7 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
     const leave = async () => {
         if (window.VOICE_CLIENT && localTrack) {
             localTrack.close();
+            localTrack = null;
             await window.VOICE_CLIENT.leave();
             dispatch(updateVoicingInfo(null));
         }

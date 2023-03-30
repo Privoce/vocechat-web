@@ -117,6 +117,7 @@ export const serverApi = createApi({
         url: `group/${id}/agora_token`,
       })
     }),
+    // tmp API
     getAgoraVoicingList: builder.query<AgoraVoicingListResponse, { appid: string, key: string, secret: string }>({
       query: ({ appid, key, secret }) => ({
         headers: {

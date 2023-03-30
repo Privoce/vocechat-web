@@ -2,10 +2,11 @@ import React from 'react';
 import { useAppSelector } from '../../app/store';
 import User from '../../common/component/User';
 import IconHeadphone from '../../assets/icons/headphone.svg';
+import IconHeadphoneOff from '../../assets/icons/headphone.off.svg';
 import IconMic from '../../assets/icons/mic.on.svg';
 import IconMicOff from '../../assets/icons/mic.off.svg';
+import IconCallOff from '../../assets/icons/call.off.svg';
 // import IconSoundOn from '../../assets/icons/sound.on.svg';
-// import IconSignal from '../../assets/icons/signal.svg';
 import { useVoice } from '../../common/component/Voice';
 import Signal from '../../common/component/Signal';
 
@@ -37,7 +38,7 @@ const RTCWidget = ({ id, context = "channel" }: Props) => {
                         <span className='text-gray-600 dark:text-gray-400 text-xs truncate max-w-[170px]' >{voicingInfo.context == "channel" ? "Channel" : "DM"} / {voicingInfo.context == "channel" ? channelData[voicingInfo.id].name : userData[voicingInfo.id].name}</span>
                     </div>
                 </div>
-                <IconHeadphone onClick={leave} role="button" className="fill-red-600" />
+                <IconCallOff onClick={leave} role="button" className="fill-red-600" />
             </div>
             {/* } */}
             <div className="flex justify-between items-center">
@@ -50,11 +51,11 @@ const RTCWidget = ({ id, context = "channel" }: Props) => {
                 </div>
                 {/* {voicingInfo && */}
                 <div className="flex gap-2 px-1">
-                    {/* <IconSoundOn role="button" /> */}
+                    <IconHeadphone role="button" />
                     {voicingInfo.muted ?
-                        <IconMicOff className="w-5" onClick={setMute.bind(null, false)} role="button" />
+                        <IconMicOff onClick={setMute.bind(null, false)} role="button" />
                         :
-                        <IconMic className="w-5" onClick={setMute.bind(null, true)} role="button" />}
+                        <IconMic onClick={setMute.bind(null, true)} role="button" />}
                 </div>
                 {/*  } */}
             </div>
