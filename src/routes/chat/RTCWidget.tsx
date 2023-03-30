@@ -28,9 +28,9 @@ const RTCWidget = ({ id, context = "channel" }: Props) => {
     const name = voicingInfo.context == "channel" ? channelData[voicingInfo.id]?.name : userData[voicingInfo.id]?.name;
     if (!name) return null;
     return (
-        <div className='bg-gray-100 dark:bg-gray-900 flex flex-col p-2 rounded-3xl m-3 text-sm'>
+        <div className='bg-gray-100 dark:bg-gray-900 flex flex-col p-2 rounded-3xl m-3 text-sm divide-y divide-gray-200 dark:divide-gray-800'>
             {/* {voicingInfo && */}
-            <div className="flex justify-between items-center border-b border-gray-100 dark:border-gray-800 pb-3 mb-2">
+            <div className="flex justify-between items-center pb-3">
                 <div className="flex flex-1 items-center gap-1">
                     <Signal strength={voicingInfo.downlinkNetworkQuality} />
                     <div className="flex flex-col">
@@ -41,7 +41,7 @@ const RTCWidget = ({ id, context = "channel" }: Props) => {
                 <IconCallOff onClick={leave} role="button" className="fill-red-600" />
             </div>
             {/* } */}
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center pt-2">
                 <div className="flex items-center gap-3">
                     <User uid={loginUser.uid} compact />
                     <div className="flex flex-col">

@@ -53,7 +53,12 @@ const voiceSlice = createSlice({
       if (payload && state.voicing) {
         state.voicing = { ...state.voicing, ...payload };
       } else {
+        // reset
         state.voicing = payload;
+        state.voicingMembers = {
+          ids: [],
+          byId: {}
+        };
       }
     },
     updateMuteStatus(state, { payload }: PayloadAction<boolean>) {
