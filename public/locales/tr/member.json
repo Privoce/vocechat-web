@@ -1,0 +1,26 @@
+{
+  "username": "Kullanıcı Adı",
+  "email": "E-Posta",
+  "password": "Parola",
+  "delete_account": "Hesabı Sil",
+  "change_name": "Kullanıcı Adını değiştir",
+  "change_name_desc": "Yeni Kullanıcı Adı giriniz",
+  "change_email": "E-Posta değiştir",
+  "change_email_desc": "Yeni E-posta giriniz.",
+  "change_pwd": "Parola değiştir",
+  "change_pwd_desc": "Mevcut parolanız ve yeni parola giriniz.",
+  "current_pwd": "Mevcut Parola",
+  "new_pwd": "Yeni Parola",
+  "confirm_new_pwd": "Yeni Parola Onayı",
+
+  "manage_members": "Üyeleri Yönet",
+  "manage_tip": "Hesabınızı etkisizleştirmeniz durumunda istediğiniz zaman kaldığınız yerden devam edebilirsiniz.",
+  "admin": "Sistem Yöneticisi",
+  "user": "Kullanıcı",
+  "copy_email": "E-Posta Kopyala",
+  "send_msg": "İleti Gönder",
+  "remove": "Sil",
+  "remove_account": "Hesabı Sil",
+  "remove_account_desc": "Bu hesabı silmek istediğinize emin misiniz?",
+  "remove_from_channel": "Kanaldan Sil"
+}

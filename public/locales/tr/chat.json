@@ -1,0 +1,49 @@
+{
+  "pin": "Sabitle",
+  "pin_desc": "Bu iletiyi sabitlemek istiyor musunuz",
+  "pinned_msg": "Sabitlenmiş İleti",
+  "pin_empty_tip": "Bu kanal'da henüz hiç sabitlenmiş ileti yok.",
+  "fav": "Favori",
+  "fav_msg": "Kaydedilmiş İletiler",
+  "fav_empty_tip": "Bu kanal'da henüz hiç kaydedilmiş ileti yok.",
+  "channel_members": "Kanal üyeleri",
+  "add_channel_members": "Üye ekle",
+  "welcome_channel": "{{name}} kanalına hoşgeldiniz!",
+  "welcome_desc": "Burası #{{name}} kanal'ının başlangıcıdır.",
+  "edit_channel": "Kanal'ı düzenle",
+
+  "channel_name": "Kanal Adı",
+  "private_channel": "Özel Kanal",
+  "create_channel": "Yeni Kanal Yarat",
+  "create_channel_desc": "Bu umumi bir kanaldır, bu ekipteki herkes tarafından görülebilir.",
+  "create_private_channel_desc": "Bu özel bir kanaldır, sadece seçilen üyeler görebilir.",
+  "search_user_placeholder": "Kullanıcı araması için birşeyler yazın",
+  "welcome_msg": "{{name}} kanalına hoşgeldiniz",
+
+  "invite_title": "{{name}} kullanıcısını arkadaş olarak ekle",
+  "invite_by_email": "E-posta ile davet et",
+  "enable_smtp": "Öncelikle SMTP'ye izin verin ",
+  "send_invite_link": "Veya arkadaşlarınıza davet bağlantısı gönderin",
+  "share_invite_link": "Diğerlerini bu bağlantıyı paylaşarak bu sunucuya davet edebilirsiniz.",
+  "invite_link_faq": "Hatalı davet bağlantısı mı?",
+  "invite_link_expire": "Davet bağlantısı 48 saat geçerli olacaktır.",
+  "generate_new_link": "Yeni bağlantı yarat",
+
+  "send_to": "Şuna gönder",
+  "edited": "düzenlenmiş",
+  "license_tip": "Lisansınız sınırına ulaşmıştır,  Lisansınızı yükseltin veya sistem yöneticinize başvurun!",
+
+  "delete_msg_title": "İletiyi Sil",
+  "delete_msg_desc": "{{msg}} iletisini silmek istediğinize emin misiniz?",
+  "delete_msg_this": "bu ileti",
+  "delete_msg_these": "bu iletiler",
+
+  "new_msg": "{{num}} yeni ileti",
+  "mark_read": "Okundu olarak işaretle",
+
+  "reply_msg_del": "Bu ileti silinmiş.",
+
+  "file": "dosya",
+  "image": "resim",
+  "forward": "ilet"
+}

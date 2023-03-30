@@ -1,0 +1,223 @@
+{
+  "title": "Ayarlar",
+  "save_change": "Değişiklikleri Kaydet",
+  "reset": "Sıfırla",
+  "save_tip": "Kaydedilmemiş değişiklikler var!",
+  "nav": {
+    "general": "Genel",
+    "overview": "Genel Bakış",
+    "members": "Üyeler",
+    "auto_delete_msg": "Mesajları Otomatik Sil",
+    "user": "Kullanıcı",
+    "my_account": "Hesabım",
+    "config": "Yapılandırma",
+    "bot": "Bot & Webhook",
+    "firebase": "Firebase",
+    "agora": "Agora",
+    "smtp": "SMTP",
+    "login_method": "Giriş Yöntemleri",
+    "third_app": "Third-party Girişler",
+    "widget": "Araçlar",
+    "license": "Lisans",
+    "about": "Hakkında",
+    "api_doc": "API Document",
+    "version": "Sürüm",
+    "faq": "SSS",
+    "feedback": "Geri Bildirim"
+  },
+  "channel": {
+    "leave": "Kanalı Terket",
+    "leave_desc": "Bu kanalı terketmek istediğinize emin misiniz?",
+    "transfer_desc": "Ayrılmadan önce kanal sahipliğini başkasına devretmek ister misiniz?",
+    "delete": "Kanal'ı Sil",
+    "delete_desc": "Bu Kanal'ı silmek istediğinize emin misiniz?",
+    "name": "Kanal Adı",
+    "topic": "Kanal Konusu",
+    "topic_placeholder": "Herkese bu kanalı nasıl kullanacağını göster!",
+    "visibility": "Kanal Görünürlüğü",
+    "public": "Umumi",
+    "private": "Özel"
+  },
+  "dm": {
+    "delete": "Kullanıcı Sil",
+    "delete_desc": "Bu kullanıcı'yı silmek istediğinize emin misiniz?"
+  },
+  "overview": {
+    "name": "Sunucu Adı",
+    "desc": "Sunucu Açıklaması",
+    "upload_desc": "Asgari ölçü 128x128'dir, ancak sunucu için asgari 512x512 öneririz. Azami boyut 5M ile sınırlıdır.",
+    "sign_up": {
+      "title": "Varsayılan Kaydolma",
+      "desc": "Bu sunucuya kimler kaydolabilir?",
+      "everyone": "Herkes",
+      "invite": "Sadece davet bağlantısı olanlar"
+    },
+    "guest_mode": {
+      "title": "Misafir Kipi",
+      "desc": "Eğer etkinleştirilirse, ziyaretçiler bu sunucudaki umumi kanalları görüntüleyebilir.",
+      "enable": "Etkin",
+      "disable": "Devre dışı"
+    },
+    "url": {
+      "title": "Önyüz URL Güncelle",
+      "desc": "Önyüz bağlantısını günceller"
+    },
+    "lang": {
+      "title": "Dil",
+      "desc": "Dil Ayarları",
+      "en": "English",
+      "tr": "Türkçe",
+      "zh": "中文",
+      "jp": "日本語"
+    },
+    "theme": {
+      "title": "Tema",
+      "desc": "Tema Ayarları",
+      "auto": "Otomatik",
+      "dark": "Karanlık",
+      "light": "Aydınlık"
+    }
+  },
+  "license": {
+    "signed": "İmzalanmış",
+    "domain": "Etki Alanları",
+    "user_limit": "Kullanıcı Limiti",
+    "expire": "Süre Dolum Tarihi",
+    "create": "Yaratılma Tarihi",
+    "value": "Lisans değeri",
+    "renew": "Lisansı Yenile",
+    "update": "El ile Yenile",
+    "update_placeholder": "Lütfen yeni lisans değerini girin",
+    "renew_select": "Lütfen ücret seçin",
+    "tip": {
+      "title": "Ücretsiz Lisans yükseltme Fırsatı!",
+      "user_test": "25 Dakika Kullanıcı Testi ile ücretsiz lisans yükseltin.",
+      "contact": "Şuradan bir zaman ayarlayın: "
+    },
+    "payment_success": "Ödeme Başarılı!",
+    "back_home": "Ana Sayfaya Dön",
+    "tip_renewing": "Lisans yenileniyor lütfen bu sayfayı kapatmayın!",
+    "tip_renewed": "Lisans başarı ile yenilendi!",
+    "tip_renew_error": "Invalided Stripe Session ID",
+    "tip_domain": "Lisansınız Alan adı ve Porta bağlıdır, lütfen onaylayın veya ayarlarınız güncelleyin:",
+    "tip_port": "80 veya 443 portu görmezden gelinir",
+    "tip_confirm": "Ödemeye başlayın"
+  },
+  "bot": {
+    "add_api_key": "API Anahtarı Ekleyin",
+    "no_api_key": "Henüz API Anahtarı yok",
+    "bot_tip_title": "Botlar kanalarra ileti yazabilir.",
+    "bot_tip_desc": "Oluşturulduktan sonra bir Bot'un API anahtarını tekrar göstermediğimizi lütfen unutmayın. 'API Anahtarı Ekle'yi tıklayarak her zaman bir Bot için yeni bir API anahtarı oluşturabilirsiniz ve bu, önceki API anahtarlarını geçersiz kılmayacaktır.",
+    "webhook_tip_title": "Webhook'lar bir kanaldaki iletileri alabilir ve URL'nin sizin tarafınızdan sağlanması gerekir.",
+    "webhook_tip_desc": "Lütfen 200 döndürecek bir webhook URL'si sağlayın.",
+    "manage": "Yönet",
+    "how_to_use": "Nasıl Kullanılır",
+    "manage_desc": "Bir botu istediğiniz zaman silebilirsiniz, bot kullanıcısı hemen kaldırılır ve tüm API'ler geçersiz kılınır.",
+    "create_title": "Bot Yarat",
+    "create_desc": "Botunuza bir isim verin. Veri almak için bir uç nokta webhook URL'si de ekleyebilirsiniz.",
+    "create_key_title": "Bot API anahtarı yaratın",
+    "create_key_desc": "İletişiminizin kimliğini doğrulamak için API Anahtarı oluşturun",
+    "create_key_warning": "API Anahtarını şimdi kopyaladığınızdan emin olun. Bir daha göremeyeceksiniz!",
+    "key_copy_and_close": "Kopyala ve Kapat",
+    "delete_title": "Bot'u Sil",
+    "delete_desc": "Bu Bot'u silmek istediğinize emin misiniz?",
+    "delete_key_title": "Bot API Anahtarını Sil",
+    "delete_key_desc": "Bu Bot API Anahtarını silmek istediğinizden emin misiniz?",
+    "webhook_title": "Webhook URL'sini Güncelle",
+    "webhook_desc": "Lütfen geçerli bir URL girin",
+    "col_avatar": "Avatar",
+    "col_name": "Bot Adı",
+    "col_api_key": "API Anahtarı (Gelen İletiler)",
+    "col_webhook": "Uç Nokta Webhook URL (Giden)",
+    "col_opt": "İşlemler",
+    "col_key_name": "Adı",
+    "col_key_value": "Anahtar",
+    "col_key_create_time": "Yaratılma Tarihi",
+    "col_key_last_used": "Son Kullanım Tarihi"
+  },
+  "auto_delete_msg": {
+    "title": "Belirli bir süre sonra tarafımdan gönderilen iletileri silin. ",
+    "desc": "Bu, hem sunucu hem de istemci tarafında depolanan ileti verilerini kaldıracaktır.",
+    "off": "Kapalı",
+    "5_min": "5 Dakika",
+    "10_min": "10 Dakika",
+    "1_hour": "1 Saat",
+    "1_day": "1 Gün",
+    "1_week": "1 Hafta"
+  },
+  "firebase": {
+    "disable": "Devre dışı",
+    "use_official": "Resmi Yapılandırmayı Kullanın",
+    "custom": "Özel",
+    "enable": "Etkin",
+    "token_url": "Jeton Url",
+    "project_id": "Tasarı Kimliği",
+    "private_key": "Gizli Anahtar",
+    "client_email": "İstemci E-Posta'sı"
+  },
+  "smtp": {
+    "enable": "Etkin",
+    "host": "Konuk",
+    "port": "Port",
+    "from": "Gönderen",
+    "username": "Kullanıcı Adı",
+    "password": "Parola",
+    "how_to": "SMTP Nasıl Kurulur?",
+    "send_test_email": "Deneme E-Postası gönderin"
+  },
+  "third_app": {
+    "key": "API Güvenlik Anahtarı",
+    "update": "Güvenlik Anahtarını Güncelle",
+    "update_tip": "API Güvenlik Anahtarı'nı güncellemek istediğinizden emin misiniz? Önceki Güvenlik Anahtarı geçersiz olacak",
+    "key_tip": "Sunucu ile üçüncü taraf uygulama arasında kararlaştırılan güvenlik anahtarı, iletişim verilerini şifrelemek için kullanılır.",
+    "how_to": "Nasıl Kullanılır?"
+  },
+  "login": {
+    "password": "Parola",
+    "password_desc": "Üyelerin parola ile giriş yapmasına izin verir.",
+    "magic_link": "Sihirli Bağlantı",
+    "magic_link_desc": "Üyelerin Sihirli Bağlantı ile giriş yapmasına izin verir.",
+    "google": "Google",
+    "google_desc": "Üyelerin Google ile giriş yapmasına izin verir.",
+    "github": "GitHub",
+    "github_desc": "Üyelerin GitHub ile giriş yapmasına izin verir.",
+    "metamask": "Metamask",
+    "metamask_desc": "Üyelerin Metamask ile giriş yapmasına izin verir.",
+    "oidc": "OIDC",
+    "oidc_desc": "Üyelerin OIDC ile giriş yapmasına izin verir.",
+    "oidc_custom": "Özel",
+    "more_details": "Daha fazla detay için lütfen <0>dökümantasyon'a</0> bakın."
+  },
+  "widget": {
+    "tip": "Vocechat Widget SDK'sını yerleştirerek VoceChat'i genişletin!",
+    "code": "Kod örneği",
+    "code_comment": "bu kod parçacığını html dosyanıza koyun",
+    "config": "Yapılandırma Açıklaması",
+    "param_key": "Parametre Anahtarı",
+    "default_value": "Varsayılan Değer",
+    "remark": "Notlar",
+    "param_host": "Ziyaretçiyle sohbet eden kullanıcıyı atayın (Kullanıcı Kimliği)",
+    "param_theme_color": "Widget'ın tema rengi",
+    "param_close_width": "Widget kapalıyken genişlik",
+    "param_close_height": "Widget kapalıyken yükseklik",
+    "param_open_width": "Widget açıkken genişlik",
+    "param_open_height": "Widget açıkken yükseklik",
+    "share_link": "İnsanların sizinle doğrudan sohbet edebilmesi için widget bağlantısını paylaşın",
+    "widget_faq": "Önce 'Herkesin Katılmasına İzin Ver' seçeneğini etkinleştirin"
+  },
+  "version": {
+    "client_version": "İstemci Sürümü",
+    "server_version": "Sunucu Sürümü",
+    "build_time": "Derleme Zaman Damgası",
+    "sync": "Web istemcisinin en son sürümüne senkronize edin"
+  },
+  "api_doc": {
+    "desc": "Kendi sohbet aracınızı temel alarak oluşturabileceğiniz ayrıntılı API dökümantasyonumuz var.",
+    "access": "Erişim Bağlantı Adresi:",
+    "use_method": "Kullanıcı Yöntemi:",
+    "step_1": "Birinci Adım: Kendi Sunucunuza geçin",
+    "step_2": "İkinci Adım: Oturum açma jetonunu girin",
+    "step_2_desc": "Jetonu 'X-API-Key' http header'e erişerek alabilir veya aşağıdaki metni kopyalayabilirsiniz:",
+    "last": "Her API'de bir 'Deneyin' düğmesi vardır ve bununla API'de hata ayıklayabilirsiniz"
+  }
+}
