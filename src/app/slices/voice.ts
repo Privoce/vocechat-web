@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { KEY_UID } from "../config";
 
 export type VoiceBasicInfo = {
   context: "channel" | "dm"
@@ -50,8 +51,8 @@ const voiceSlice = createSlice({
   initialState,
   reducers: {
     updateVoicingInfo(state, { payload }: PayloadAction<VoicingInfo | null>) {
-      if (payload && state.voicing) {
-        state.voicing = { ...state.voicing, ...payload };
+      if (payload) {
+        state.voicing = { ...(state.voicing ?? {}), ...payload };
       } else {
         // reset
         state.voicing = payload;
@@ -64,6 +65,12 @@ const voiceSlice = createSlice({
     updateMuteStatus(state, { payload }: PayloadAction<boolean>) {
       if (state.voicing) {
         state.voicing.muted = payload;
+        // 更新登录用户在member list的状态
+        const loginUid = localStorage.getItem(KEY_UID) ?? 0;
+        const idx = state.voicingMembers.ids.findIndex((uid) => uid == loginUid);
+        if (idx > -1) {
+          state.voicingMembers.byId[+loginUid].muted = payload;
+        }
       }
     },
     updateVoicingNetworkQuality(state, { payload }: PayloadAction<number>) {
@@ -75,8 +82,10 @@ const voiceSlice = createSlice({
       state.list = payload;
     },
     addVoiceMember(state, { payload }: PayloadAction<number>) {
-      if (!state.voicingMembers.ids.includes(payload)) {
-        state.voicingMembers.ids.push(payload);
+      const notExisted = !state.voicingMembers.ids.includes(payload);
+      console.log("add voice member", payload, notExisted, state.voicingMembers.ids);
+      if (notExisted) {
+        state.voicingMembers.ids = [...state.voicingMembers.ids, payload];
         state.voicingMembers.byId[payload] = {
           speakingVolume: 0,
           muted: false

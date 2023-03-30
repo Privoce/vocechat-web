@@ -55,7 +55,7 @@ const Voice = () => {
                         case "ServerTimeOut": {
                             dispatch(removeVoiceMember(+user.uid as number));
 
-                            console.log(user + "has left the channel");
+                            console.log(user, "has left the channel");
                         }
                             break;
 
@@ -98,13 +98,8 @@ const Voice = () => {
             });
             // 有新用户加入
             agoraEngine.on("user-joined", async (user) => {
-                // console.log(user.uid, !!localTrack, agoraEngine.channelName, " has joined the channel");
-                // if (localTrack) {
-                // joined
+                console.log(user.uid, !!localTrack, agoraEngine.channelName, " has joined the channel");
                 dispatch(addVoiceMember(+user.uid));
-                // } else {
-                //     tmpUids.push(+user.uid);
-                // }
             });
             window.VOICE_CLIENT = agoraEngine;
         };
