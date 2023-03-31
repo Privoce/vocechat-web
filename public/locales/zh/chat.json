@@ -46,5 +46,11 @@
 
   "file": "文件",
   "image": "图片",
-  "forward": "转发"
+  "forward": "转发",
+  "voice": "音频通话",
+  "deafen": "静默",
+  "undeafen": "取消静默",
+  "mute": "静音",
+  "unmute": "取消静音",
+  "leave_voice": "离开"
 }

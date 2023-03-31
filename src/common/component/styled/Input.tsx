@@ -20,6 +20,7 @@ interface Props
       | "pattern"
       | "disabled"
       | "minLength"
+      | "spellCheck"
     >,
     HTMLInputElement
   > {

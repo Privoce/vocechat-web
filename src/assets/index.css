@@ -294,3 +294,9 @@ html.dark .slate-Combobox {
 html.dark .slate-Combobox li:hover {
   background: #333 !important;
 }
+
+/* remove focus border */
+svg:focus {
+  border: none;
+  outline: none;
+}

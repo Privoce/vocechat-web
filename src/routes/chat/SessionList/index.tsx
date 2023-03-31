@@ -6,7 +6,7 @@ import DeleteChannelConfirmModal from "../../settingChannel/DeleteConfirmModal";
 import InviteModal from "../../../common/component/InviteModal";
 import { useAppSelector } from "../../../app/store";
 export interface ChatSession {
-  type: "user" | "channel";
+  type: "dm" | "channel";
   id: number;
   mid: number;
   unread: number;
@@ -46,11 +46,11 @@ const SessionList: FC<Props> = ({ tempSession }) => {
       // console.log("adddd", id);
       const mids = userMessage[id];
       if (!mids || mids.length == 0) {
-        return { unreads: 0, id, type: "user" };
+        return { unreads: 0, id, type: "dm" };
       }
       // 先转换成数字，再排序
       const mid = [...mids].sort((a, b) => +a - +b).pop();
-      return { type: "user", id, mid };
+      return { type: "dm", id, mid };
     });
     const temps = [...(cSessions as ChatSession[]), ...(uSessions as ChatSession[])].sort((a, b) => {
       const { mid: aMid = 0 } = a;
@@ -74,7 +74,7 @@ const SessionList: FC<Props> = ({ tempSession }) => {
 
   return (
     <>
-      <ul ref={ref} className="flex flex-col gap-0.5 p-2 overflow-auto">
+      <ul ref={ref} className="flex flex-1 flex-col gap-0.5 p-2 overflow-auto">
         <ViewportList
           initialPrerender={10}
           viewportRef={ref}

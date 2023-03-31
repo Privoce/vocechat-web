@@ -19,6 +19,7 @@ import MobileNavs from "./MobileNavs";
 import { updateRememberedNavs } from "../../app/slices/ui";
 import UnreadTabTip from "../../common/component/UnreadTabTip";
 import ReLoginModal from "../../common/component/ReLoginModal";
+import Voice from "../../common/component/Voice";
 
 
 function HomePage() {
@@ -29,7 +30,7 @@ function HomePage() {
   const { pathname } = useLocation();
   const {
     roleChanged,
-    loginUid,
+    loginUser: { uid: loginUid, is_admin: isAdmin },
     guest,
     ui: {
       ready,
@@ -38,7 +39,7 @@ function HomePage() {
   } = useAppSelector((store) => {
     return {
       ui: store.ui,
-      loginUid: store.authData.user?.uid,
+      loginUser: store.authData.user ?? { uid: 0, is_admin: false },
       guest: store.authData.guest,
       roleChanged: store.authData.roleChanged
     };
@@ -67,6 +68,7 @@ function HomePage() {
     <>
       {roleChanged && <ReLoginModal />}
       {!guest && <UnreadTabTip />}
+      {!guest && isAdmin && <Voice />}
       <Manifest />
       {!guest && <Notification />}
       <div className={`vocechat-container flex w-screen h-screen bg-gray-200 dark:bg-gray-900`}>

@@ -27,6 +27,20 @@ export interface AgoraConfig {
   rtm_key: string;
   rtm_secret: string;
 }
+export interface AgoraVoicingListResponse {
+  success: boolean,
+  data: {
+    channels: { channel_name: string, user_count: number }[],
+    total_size: number
+  }
+}
+export interface AgoraTokenResponse {
+  agora_token: string,
+  uid: number,
+  channel_name: string,
+  expired_in: number,
+  app_id: string;
+}
 export interface SMTPConfig {
   enabled: boolean;
   host: string;

@@ -54,8 +54,8 @@ export default function ConfigAgora() {
         <div className="input">
           <Label htmlFor="project_id">Project ID</Label>
           <Input
+            spellCheck={false}
             disabled={!enabled}
-            // type={"number"}
             data-type="project_id"
             onChange={handleChange}
             value={project_id}
@@ -66,6 +66,7 @@ export default function ConfigAgora() {
         <div className="input">
           <Label htmlFor="app_id">App ID</Label>
           <Input
+            spellCheck={false}
             disabled={!enabled}
             data-type="app_id"
             onChange={handleChange}
@@ -77,6 +78,7 @@ export default function ConfigAgora() {
         <div className="input">
           <Label htmlFor="app_certificate">APP Certificate</Label>
           <Input
+            spellCheck={false}
             disabled={!enabled}
             data-type="app_certificate"
             onChange={handleChange}
@@ -88,6 +90,7 @@ export default function ConfigAgora() {
         <div className="input">
           <Label htmlFor="rtm_key">RTM Key</Label>
           <Textarea
+            spellCheck={false}
             disabled={!enabled}
             data-type="rtm_key"
             onChange={handleChange}
@@ -99,6 +102,7 @@ export default function ConfigAgora() {
         <div className="input">
           <Label htmlFor="rtm_secret">RTM Secret</Label>
           <Textarea
+            spellCheck={false}
             disabled={!enabled}
             data-type="rtm_secret"
             onChange={handleChange}

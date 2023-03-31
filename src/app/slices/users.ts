@@ -4,9 +4,12 @@ import BASE_URL from "../config";
 import { User } from "../../types/user";
 import { UserLog, UserState } from "../../types/sse";
 
+type DMAside = "voice" | null;
 export interface StoredUser extends User {
   online?: boolean;
+  voice?: boolean;
   avatar?: string;
+  visibleAside?: DMAside
 }
 
 export interface State {

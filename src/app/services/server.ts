@@ -16,10 +16,13 @@ import {
   GithubAuthConfig,
   LicenseResponse,
   RenewLicense,
-  RenewLicenseResponse
+  RenewLicenseResponse,
+  AgoraTokenResponse,
+  AgoraVoicingListResponse
 } from "../../types/server";
 import { Channel } from "../../types/channel";
 import { ContentTypeKey } from "../../types/message";
+import { upsertVoiceList } from "../slices/voice";
 
 const defaultExpireDuration = 2 * 24 * 60 * 60;
 
@@ -108,6 +111,40 @@ export const serverApi = createApi({
         method: "POST",
         body: data
       })
+    }),
+    getAgoraToken: builder.query<AgoraTokenResponse, number>({
+      query: (id) => ({
+        url: `group/${id}/agora_token`,
+      })
+    }),
+    // tmp API
+    getAgoraVoicingList: builder.query<AgoraVoicingListResponse, { appid: string, key: string, secret: string }>({
+      query: ({ appid, key, secret }) => ({
+        headers: {
+          Authorization: `Basic ${btoa(`${key}:${secret}`)}`
+        },
+        url: `https://api.agora.io/dev/v1/channel/${appid}`,
+      }),
+      async onQueryStarted(data, { dispatch, queryFulfilled }) {
+        try {
+          const { data: resp } = await queryFulfilled;
+          const { success } = resp;
+          if (success) {
+            const arr = resp.data.channels.map(data => {
+              const [id] = data.channel_name.split(":").slice(-1);
+              const count = data.user_count;
+              return {
+                id: +id,
+                context: "channel" as const,
+                memberCount: count
+              };
+            });
+            dispatch(upsertVoiceList(arr));
+          }
+        } catch {
+          console.error("get voice list error");
+        }
+      }
     }),
     getSMTPConfig: builder.query<SMTPConfig, void>({
       query: () => ({ url: `admin/smtp/config` })
@@ -320,5 +357,8 @@ export const {
   useLazyGetBotRelatedChannelsQuery,
   useSendMessageByBotMutation,
   useUpdateFrontendUrlMutation,
-  useGetFrontendUrlQuery
+  useGetFrontendUrlQuery,
+  useLazyGetAgoraTokenQuery,
+  useGetAgoraConfigQuery,
+  useGetAgoraVoicingListQuery
 } = serverApi;

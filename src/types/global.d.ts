@@ -1,3 +1,5 @@
+import { IAgoraRTCClient, IMicrophoneAudioTrack, IRemoteAudioTrack } from "agora-rtc-sdk-ng";
+
 interface BeforeInstallPromptEvent extends Event {
   /**
    * Returns an array of DOMString items containing the platforms on which the event was dispatched.
@@ -29,6 +31,10 @@ export declare global {
     __WB_MANIFEST: Array<PrecacheEntry | string>;
     skipWaiting: () => void;
     CACHE: { [key: string]: typeof localforage | undefined };
+    VOICE_CLIENT?: IAgoraRTCClient;
+    VOICE_TRACK_MAP: {
+      [key: number]: IRemoteAudioTrack | IMicrophoneAudioTrack | undefined | null
+    }
   }
   interface WindowEventMap {
     beforeinstallprompt: BeforeInstallPromptEvent;

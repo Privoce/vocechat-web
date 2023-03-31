@@ -9,26 +9,27 @@ import getUnreadCount, { renderPreviewMessage } from "../utils";
 import User from "../../../common/component/User";
 import Avatar from "../../../common/component/Avatar";
 import IconLock from "../../../assets/icons/lock.svg";
+import IconVoicing from "../../../assets/icons/voicing.svg";
 import useContextMenu from "../../../common/hook/useContextMenu";
 import useUploadFile from "../../../common/hook/useUploadFile";
 import { useAppSelector } from "../../../app/store";
 import { fromNowTime } from "../../../common/utils";
 
 interface IProps {
-  type?: "user" | "channel";
+  type?: "dm" | "channel";
   id: number;
   mid: number;
   setDeleteChannelId: (param: number) => void;
   setInviteChannelId: (param: number) => void;
 }
 const Session: FC<IProps> = ({
-  type = "user",
+  type = "dm",
   id,
   mid,
   setDeleteChannelId,
   setInviteChannelId
 }) => {
-  const navPath = type == "user" ? `/chat/dm/${id}` : `/chat/channel/${id}`;
+  const navPath = type == "dm" ? `/chat/dm/${id}` : `/chat/channel/${id}`;
   // const { pathname } = useLocation();
   const isCurrentPath = useMatch(navPath);
   const navigate = useNavigate();
@@ -45,7 +46,7 @@ const Session: FC<IProps> = ({
             return { size, type, name, url };
           });
           addStageFile(filesData);
-          navigate(type == "user" ? `/chat/dm/${id}` : `/chat/channel/${id}`);
+          navigate(type == "dm" ? `/chat/dm/${id}` : `/chat/channel/${id}`);
         }
       },
       collect: (monitor) => ({
@@ -61,23 +62,24 @@ const Session: FC<IProps> = ({
     mid: number;
     is_public: boolean;
   }>();
-  const { messageData, userData, channelData, readIndex, loginUid, mids, muted } = useAppSelector(
+  const { messageData, userData, channelData, readIndex, loginUid, mids, muted, voiceList } = useAppSelector(
     (store) => {
       return {
-        mids: type == "user" ? store.userMessage.byId[id] : store.channelMessage[id],
+        voiceList: store.voice.list,
+        mids: type == "dm" ? store.userMessage.byId[id] : store.channelMessage[id],
         loginUid: store.authData.user?.uid || 0,
         readIndex:
-          type == "user" ? store.footprint.readUsers[id] : store.footprint.readChannels[id],
+          type == "dm" ? store.footprint.readUsers[id] : store.footprint.readChannels[id],
         messageData: store.message,
         userData: store.users.byId,
         channelData: store.channels.byId,
-        muted: type == "user" ? store.footprint.muteUsers[id] : store.footprint.muteChannels[id]
+        muted: type == "dm" ? store.footprint.muteUsers[id] : store.footprint.muteChannels[id]
       };
     }
   );
 
   useEffect(() => {
-    const tmp = type == "user" ? userData[id] : channelData[id];
+    const tmp = type == "dm" ? userData[id] : channelData[id];
     if (!tmp) return;
     if ("avatar" in tmp) {
       // user
@@ -98,6 +100,7 @@ const Session: FC<IProps> = ({
     messageData,
     loginUid
   });
+  const isVoicing = type == "channel" && voiceList.findIndex(item => item.id == id) > -1;
   return (
     <li className="session">
       <ContextMenu
@@ -115,8 +118,8 @@ const Session: FC<IProps> = ({
           to={navPath}
           onContextMenu={handleContextMenuEvent}
         >
-          <div className="flex shrink-0">
-            {type == "user" ? (
+          <div className="flex shrink-0 relative">
+            {type == "dm" ? (
               <User avatarSize={40} compact interactive={false} uid={id} />
             ) : (
               <Avatar
@@ -128,6 +131,7 @@ const Session: FC<IProps> = ({
                 src={icon}
               />
             )}
+            {isVoicing && <IconVoicing className="-top-0.5 -right-0.5 absolute w-[18px] h-[18px]" />}
           </div>
           <div className="w-full flex flex-col justify-between overflow-hidden">
             <div className="flex items-center justify-between ">

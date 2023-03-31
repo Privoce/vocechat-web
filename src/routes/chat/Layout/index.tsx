@@ -23,6 +23,7 @@ interface Props {
   header: ReactElement;
   aside?: ReactElement | null;
   users?: ReactElement | null;
+  voice?: ReactElement | null;
   dropFiles?: File[];
   context: "channel" | "user";
   to: number;
@@ -33,6 +34,7 @@ const Layout: FC<Props> = ({
   header,
   aside = null,
   users = null,
+  voice = null,
   dropFiles = [],
   context = "channel",
   to
@@ -116,6 +118,7 @@ const Layout: FC<Props> = ({
         </main>
         {aside && <div className={clsx("z-50 p-3 absolute right-0 top-0 translate-x-full flex-col hidden md:flex")}>{aside}</div>}
         {users && <div className="hidden md:block">{users}</div>}
+        {voice && <div className="hidden md:block">{voice}</div>}
         {!readonly && inputMode == "text" && isActive && (
           <DnDTip context={context} name={name} />
         )}
