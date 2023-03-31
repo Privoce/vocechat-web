@@ -42,6 +42,11 @@ const Voice = () => {
                 if (mediaType == "audio") {
                     // 播放远端音频
                     user.audioTrack?.play();
+                    const level = user.audioTrack?.getVolumeLevel();
+                    if (level === 0) {
+                        // 远端静音
+                        dispatch(updateVoicingMember({ uid: +user.uid, info: { muted: true } }));
+                    }
                     window.VOICE_TRACK_MAP[+user.uid] = user.audioTrack;
                 }
                 agoraEngine.on("user-unpublished", (user) => {
@@ -54,11 +59,9 @@ const Voice = () => {
                         case "Quit":
                         case "ServerTimeOut": {
                             dispatch(removeVoiceMember(+user.uid as number));
-
                             console.log(user, "has left the channel");
                         }
                             break;
-
                         default:
                             break;
                     }
@@ -88,7 +91,6 @@ const Voice = () => {
                             // todo
                             dispatch(updateVoicingMember({ uid: +uid, info: { muted: false } }));
                             break;
-
                         default:
                             break;
                     }
@@ -112,7 +114,6 @@ const Voice = () => {
                 localTrack.close();
                 localTrack = null;
                 window.VOICE_CLIENT.leave();
-
             }
             // window.VOICE_CLIENT=null
         };

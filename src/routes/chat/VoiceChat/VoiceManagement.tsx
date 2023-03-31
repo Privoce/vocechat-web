@@ -27,7 +27,7 @@ const VoiceManagement = ({ info, setMute, setDeafen, leave }: Props) => {
     });
     if (!info) return null;
     const { deafen, muted } = info;
-    const nameClass = clsx(`text-sm text-gray-500 max-w-[190px] truncate font-semibold dark:text-white`);
+    const nameClass = clsx(`text-sm text-gray-500 max-w-[120px] truncate font-semibold dark:text-white`);
     const members = voicingMembers.ids;
     const membersData = voicingMembers.byId;
     return (
