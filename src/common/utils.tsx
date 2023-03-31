@@ -204,17 +204,18 @@ export const normalizeFileMessage = (data: MessagePayload) => {
   let res: null | { file_path?: string, content?: string, download?: string, thumbnail: string } = null;
   if (isFile) {
     if (!sending) {
+      const file_path = typeof content == "string" ? content : content.path;
       res = {
-        file_path: content,
+        file_path,
         content: `${BASE_URL}/resource/file?file_path=${encodeURIComponent(
-          content
+          file_path
         )}`,
         download: `${BASE_URL}/resource/file?file_path=${encodeURIComponent(
-          content
+          file_path
         )}&download=true`,
         thumbnail: (isPic && !isGif)
           ? `${BASE_URL}/resource/file?file_path=${encodeURIComponent(
-            content
+            file_path
           )}&thumbnail=true`
           : ""
       };
