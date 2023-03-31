@@ -46,5 +46,10 @@
   "file": "file",
   "image": "image",
   "forward": "forward",
-  "voice": "Voice Chat"
+  "voice": "Voice Chat",
+  "deafen": "Deafen",
+  "undeafen": "Undeafen",
+  "mute": "Mute",
+  "unmute": "Unmute",
+  "leave_voice": "Leave Voice Chat"
 }
