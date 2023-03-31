@@ -30,15 +30,20 @@ const VoiceManagement = ({ info, setMute, setDeafen, leave }: Props) => {
     const nameClass = clsx(`text-sm text-gray-500 max-w-[120px] truncate font-semibold dark:text-white`);
     const members = voicingMembers.ids;
     const membersData = voicingMembers.byId;
+    if (info.joining) {
+        return <div className='w-full h-full flex-center p-1 text-sm text-gray-600 dark:text-gray-400'>
+            Connecting to voice channel...
+        </div>;
+    }
     return (
         <div className='w-full h-full py-2 flex flex-col'>
-            <ul className='flex grow flex-col gap-2'>
+            <ul className='flex grow flex-col'>
                 {members.map((uid) => {
                     const curr = userData[uid];
                     if (!curr) return null;
-                    const { muted, deafen, speakingVolume = 0 } = membersData[uid];
+                    const { muted, speakingVolume = 0 } = membersData[uid];
                     const speaking = speakingVolume > 50;
-                    return <li key={uid} className="flex items-center justify-between gap-6 ">
+                    return <li key={uid} className="flex items-center justify-between gap-6 pb-4 ">
                         <div className="flex items-center gap-2 transition-opacity" style={{ opacity: `${speaking ? 0.4 : 1}` }}>
                             <div className="w-8 h-8 flex shrink-0">
                                 <Avatar
@@ -55,7 +60,7 @@ const VoiceManagement = ({ info, setMute, setDeafen, leave }: Props) => {
                             </span>
                         </div>
                         <div className="flex items-center gap-2">
-                            {deafen ? <IconHeadphoneOff className="w-4" /> : <IconHeadphone className="w-4" />}
+                            {/* {deafen ? <IconHeadphoneOff className="w-4" /> : <IconHeadphone className="w-4" />} */}
                             {muted ? <IconMicOff className="w-4 fill-gray-500" /> : <IconMic className="w-4 fill-gray-500" />}
                         </div>
                         {/* <User uid={uid} interactive={false} /> */}

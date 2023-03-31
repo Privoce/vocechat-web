@@ -8,8 +8,9 @@ export type VoiceBasicInfo = {
 
 export type VoicingInfo = {
   downlinkNetworkQuality?: number,
-  muted: boolean,
-  deafen: boolean
+  muted?: boolean,
+  deafen?: boolean,
+  joining?: boolean
 } & VoiceBasicInfo
 
 export type VoicingMemberInfo = {

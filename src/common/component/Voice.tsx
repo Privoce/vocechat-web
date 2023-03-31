@@ -1,7 +1,8 @@
 import AgoraRTC, { IMicrophoneAudioTrack } from 'agora-rtc-sdk-ng';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useGetAgoraConfigQuery, useGetAgoraVoicingListQuery, useLazyGetAgoraTokenQuery } from '../../app/services/server';
+import { updateChannelVisibleAside } from '../../app/slices/channels';
 import { addVoiceMember, removeVoiceMember, updateDeafenStatus, updateMuteStatus, updateVoicingInfo, updateVoicingMember, updateVoicingNetworkQuality } from '../../app/slices/voice';
 import { useAppSelector } from '../../app/store';
 
@@ -136,9 +137,14 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
         };
     });
     const [generateToken] = useLazyGetAgoraTokenQuery();
-    const [joining, setJoining] = useState(false);
+    // const [joining, setJoining] = useState(false);
     const joinVoice = async () => {
-        setJoining(true);
+        // setJoining(true);
+        dispatch(updateVoicingInfo({
+            id,
+            context,
+            joining: true
+        }));
         const { isError, data } = await generateToken(id);
         if (!isError && data) {
             const { channel_name, app_id, agora_token, uid } = data;
@@ -153,14 +159,23 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
                 dispatch(updateVoicingInfo({
                     deafen: false,
                     muted: false,
+                    joining: false,
                     id,
                     context,
                 }));
                 // 把自己加进去
                 dispatch(addVoiceMember(uid));
             }
+        } else {
+            console.error("generate agora token error");
+            dispatch(updateVoicingInfo({
+                joining: false,
+                id,
+                context,
+            }));
+
         }
-        setJoining(false);
+        // setJoining(false);
     };
     const leave = async () => {
         if (window.VOICE_CLIENT && localTrack) {
@@ -168,6 +183,11 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
             localTrack = null;
             await window.VOICE_CLIENT.leave();
             dispatch(updateVoicingInfo(null));
+            if (context == "channel") {
+                dispatch(updateChannelVisibleAside({
+                    id, aside: null
+                }));
+            }
         }
     };
     const setMute = (mute: boolean) => {
@@ -194,13 +214,15 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
             dispatch(updateDeafenStatus(deafen));
         }
     };
+    const joinedAtThisContext = voicingInfo ? (voicingInfo.id == id && voicingInfo.context == context) : false;
     return {
         setMute,
         setDeafen,
         leave,
         // canVoice,
         voicingInfo,
-        joining,
+        joining: voicingInfo ? voicingInfo.joining : undefined,
+        joinedAtThisContext,
         joined: !!voicingInfo,
         joinVoice
     };
