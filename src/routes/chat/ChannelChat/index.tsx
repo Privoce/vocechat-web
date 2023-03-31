@@ -88,8 +88,8 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
             </li>
           </Tippy>
         </Tooltip>
-        {/* 音频 */}
-        <VoiceChat context={`channel`} id={cid} />
+        {/* 音频 暂时只有admin有入口 */}
+        {loginUser?.is_admin && <VoiceChat context={`channel`} id={cid} />}
         <Tooltip tip={t("fav")} placement="left">
           <Tippy
             placement="left-start"

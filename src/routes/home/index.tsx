@@ -30,7 +30,7 @@ function HomePage() {
   const { pathname } = useLocation();
   const {
     roleChanged,
-    loginUid,
+    loginUser: { uid: loginUid, is_admin: isAdmin },
     guest,
     ui: {
       ready,
@@ -39,7 +39,7 @@ function HomePage() {
   } = useAppSelector((store) => {
     return {
       ui: store.ui,
-      loginUid: store.authData.user?.uid,
+      loginUser: store.authData.user ?? { uid: 0, is_admin: false },
       guest: store.authData.guest,
       roleChanged: store.authData.roleChanged
     };
@@ -68,7 +68,7 @@ function HomePage() {
     <>
       {roleChanged && <ReLoginModal />}
       {!guest && <UnreadTabTip />}
-      {!guest && <Voice />}
+      {!guest && isAdmin && <Voice />}
       <Manifest />
       {!guest && <Notification />}
       <div className={`vocechat-container flex w-screen h-screen bg-gray-200 dark:bg-gray-900`}>
