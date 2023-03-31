@@ -1,12 +1,11 @@
 import React from 'react';
 import { useAppSelector } from '../../app/store';
 import User from '../../common/component/User';
-import IconHeadphone from '../../assets/icons/headphone.svg';
-import IconHeadphoneOff from '../../assets/icons/headphone.off.svg';
 import IconMic from '../../assets/icons/mic.on.svg';
 import IconMicOff from '../../assets/icons/mic.off.svg';
 import IconCallOff from '../../assets/icons/call.off.svg';
-// import IconSoundOn from '../../assets/icons/sound.on.svg';
+import IconSoundOn from '../../assets/icons/sound.on.svg';
+import IconSoundOff from '../../assets/icons/sound.off.svg';
 import { useVoice } from '../../common/component/Voice';
 import Signal from '../../common/component/Signal';
 
@@ -51,7 +50,7 @@ const RTCWidget = ({ id, context = "channel" }: Props) => {
                 </div>
                 {/* {voicingInfo && */}
                 <div className="flex gap-2 px-1">
-                    {voicingInfo.deafen ? <IconHeadphoneOff role="button" onClick={setDeafen.bind(null, false)} /> : <IconHeadphone role="button" onClick={setDeafen.bind(null, true)} />}
+                    {voicingInfo.deafen ? <IconSoundOff role="button" onClick={setDeafen.bind(null, false)} /> : <IconSoundOn role="button" onClick={setDeafen.bind(null, true)} />}
                     {voicingInfo.muted ?
                         <IconMicOff onClick={setMute.bind(null, false)} role="button" />
                         :

@@ -43,11 +43,11 @@ const Voice = () => {
                 if (mediaType == "audio") {
                     // 播放远端音频
                     user.audioTrack?.play();
-                    const level = user.audioTrack?.getVolumeLevel();
-                    if (level === 0) {
-                        // 远端静音
-                        dispatch(updateVoicingMember({ uid: +user.uid, info: { muted: true } }));
-                    }
+                    // const level = user.audioTrack?.getVolumeLevel();
+                    // if (level === 0) {
+                    //     // 远端静音
+                    //     dispatch(updateVoicingMember({ uid: +user.uid, info: { muted: true } }));
+                    // }
                     window.VOICE_TRACK_MAP[+user.uid] = user.audioTrack;
                 }
                 agoraEngine.on("user-unpublished", (user) => {

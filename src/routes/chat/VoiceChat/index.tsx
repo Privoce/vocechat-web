@@ -50,7 +50,7 @@ const VoiceChat = ({ id, context = "channel" }: Props) => {
     if (!loginUser) return null;
     const visible = contextData.visibleAside == "voice";
     const memberCount = voiceList.find((v) => v.context == context && v.id == id)?.memberCount ?? 0;
-    const badgeClass = `absolute -top-1 -right-1 w-4 h-4 rounded-full bg-primary-400 text-white `;
+    const badgeClass = `absolute -top-2 -right-2 w-4 h-4 rounded-full bg-primary-400 text-white `;
     return (
         <Tooltip disabled={visible} tip={t("voice")} placement="left">
             <li className={`relative group`} >
