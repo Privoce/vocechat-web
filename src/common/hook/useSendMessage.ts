@@ -14,7 +14,7 @@ interface Props {
 
 interface SendMessagesDTO {
   type: "text";
-  content: string;
+  content: string | { path: string };
   users: number[];
   channels: number[];
 }

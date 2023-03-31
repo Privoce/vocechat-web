@@ -9,7 +9,7 @@ export interface MessagePayload {
   created_at?: number;
   sending?: boolean;
   content_type: ContentType;
-  content: string;
+  content: string | { path: string };
   expires_in?: number | null;
   properties?: {
     name?: string;
