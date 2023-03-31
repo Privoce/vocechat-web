@@ -56,7 +56,7 @@ const VoiceChat = ({ id, context = "channel" }: Props) => {
             <li className={`relative group`} >
                 <IconHeadphone className={visible ? "fill-gray-600" : "fill-gray-500"} role="button" onClick={joinedAtThisContext ? toggleDashboard : handleJoin} />
                 {visible ? null : memberCount > 0 ? <span className={`${badgeClass} flex-center font-bold text-[10px]`}>{memberCount}</span> : <span className={`${badgeClass} hidden text-xs group-hover:flex-center`}>
-                    <em className='font-normal'>+</em>
+                    <em className='not-italic'>+</em>
                 </span>}
             </li>
         </Tooltip>

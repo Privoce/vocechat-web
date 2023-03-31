@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useGetAgoraConfigQuery, useGetAgoraVoicingListQuery, useLazyGetAgoraTokenQuery } from '../../app/services/server';
 import { updateChannelVisibleAside } from '../../app/slices/channels';
-import { addVoiceMember, removeVoiceMember, updateDeafenStatus, updateMuteStatus, updateVoicingInfo, updateVoicingMember, updateVoicingNetworkQuality } from '../../app/slices/voice';
+import { addVoiceMember, removeVoiceMember, updateDeafenStatus, updateMuteStatus, updateVoicingInfo, updateVoicingMember, updateVoicingNetworkQuality, upsertVoiceList } from '../../app/slices/voice';
 import { useAppSelector } from '../../app/store';
 
 // type Props = {}
@@ -186,6 +186,11 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
             if (context == "channel") {
                 dispatch(updateChannelVisibleAside({
                     id, aside: null
+                }));
+                dispatch(upsertVoiceList({
+                    id,
+                    context,
+                    memberCount: 0
                 }));
             }
         }

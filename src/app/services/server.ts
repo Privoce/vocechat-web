@@ -22,7 +22,7 @@ import {
 } from "../../types/server";
 import { Channel } from "../../types/channel";
 import { ContentTypeKey } from "../../types/message";
-import { updateVoiceList } from "../slices/voice";
+import { upsertVoiceList } from "../slices/voice";
 
 const defaultExpireDuration = 2 * 24 * 60 * 60;
 
@@ -139,7 +139,7 @@ export const serverApi = createApi({
                 memberCount: count
               };
             });
-            dispatch(updateVoiceList(arr));
+            dispatch(upsertVoiceList(arr));
           }
         } catch {
           console.error("get voice list error");

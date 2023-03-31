@@ -93,8 +93,18 @@ const voiceSlice = createSlice({
         state.voicing.downlinkNetworkQuality = payload;
       }
     },
-    updateVoiceList(state, { payload }: PayloadAction<VoiceInfo[]>) {
-      state.list = payload;
+    upsertVoiceList(state, { payload }: PayloadAction<VoiceInfo[] | VoiceInfo>) {
+      if (Array.isArray(payload)) {
+        state.list = payload;
+      } else {
+        const { id, context } = payload;
+        const idx = state.list.findIndex(v => v.id == id && v.context == context);
+        if (idx > -1) {
+          state.list.splice(idx, 1, payload);
+        } else {
+          state.list.push(payload);
+        }
+      }
     },
     addVoiceMember(state, { payload }: PayloadAction<number>) {
       const notExisted = !state.voicingMembers.ids.includes(payload);
@@ -124,5 +134,5 @@ const voiceSlice = createSlice({
   },
 });
 
-export const { addVoiceMember, removeVoiceMember, updateVoiceList, updateVoicingInfo, updateVoicingNetworkQuality, updateMuteStatus, updateVoicingMember, updateDeafenStatus } = voiceSlice.actions;
+export const { addVoiceMember, removeVoiceMember, upsertVoiceList, updateVoicingInfo, updateVoicingNetworkQuality, updateMuteStatus, updateVoicingMember, updateDeafenStatus } = voiceSlice.actions;
 export default voiceSlice.reducer;
