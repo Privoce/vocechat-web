@@ -18,7 +18,7 @@ type Props = {
 
 const RTCWidget = ({ id, context = "channel" }: Props) => {
     const { t } = useTranslation("chat");
-    const { leave, voicingInfo, setMute, setDeafen } = useVoice({ context, id });
+    const { leave, voicingInfo, setMute, setDeafen, joining = true } = useVoice({ context, id });
     const { loginUser, channelData, userData } = useAppSelector(store => {
         return {
             userData: store.users.byId,
@@ -26,7 +26,7 @@ const RTCWidget = ({ id, context = "channel" }: Props) => {
             loginUser: store.authData.user,
         };
     });
-    if (!loginUser || !voicingInfo) return null;
+    if (!loginUser || !voicingInfo || joining) return null;
     const name = voicingInfo.context == "channel" ? channelData[voicingInfo.id]?.name : userData[voicingInfo.id]?.name;
     if (!name) return null;
     return (

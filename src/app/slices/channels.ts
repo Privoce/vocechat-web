@@ -36,7 +36,7 @@ const channelsSlice = createSlice({
             c.avatar_updated_at == 0
               ? ""
               : `${BASE_URL}/resource/group_avatar?gid=${c.gid}&t=${c.avatar_updated_at}`,
-          visibleAside: "members"
+          visibleAside: state.byId[c.gid]?.visibleAside ?? null
         };
       });
     },
