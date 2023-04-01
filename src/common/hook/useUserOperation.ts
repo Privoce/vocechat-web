@@ -81,8 +81,9 @@ const useUserOperation = ({ uid, cid }: IProps) => {
     (isAdmin || channel?.owner == loginUid) &&
     uid != channel?.owner;
   const canRemove: boolean = isAdmin && loginUid != uid && !cid && uid !== 1;
-
+  const canInviteChannel = !!cid && (loginUser?.is_admin || channel?.owner == loginUser?.uid);
   return {
+    canInviteChannel,
     canDeleteChannel,
     canRemove,
     removeUser: handleRemove,

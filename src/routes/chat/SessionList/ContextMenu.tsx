@@ -10,7 +10,7 @@ import useUserOperation from "../../../common/hook/useUserOperation";
 import { useAppSelector } from "../../../app/store";
 import { useTranslation } from "react-i18next";
 type Props = {
-  context: "user" | "channel";
+  context: "dm" | "channel";
   id: number;
   visible: boolean;
   mid: number;
@@ -20,7 +20,7 @@ type Props = {
   children: ReactElement;
 };
 const SessionContextMenu: FC<Props> = ({
-  context = "user",
+  context = "dm",
   id,
   visible,
   mid,
@@ -30,8 +30,8 @@ const SessionContextMenu: FC<Props> = ({
   children
 }) => {
   const { t } = useTranslation();
-  const { canCopyEmail, copyEmail, canDeleteChannel } = useUserOperation({
-    uid: context == "user" ? id : undefined,
+  const { canCopyEmail, copyEmail, canDeleteChannel, canInviteChannel } = useUserOperation({
+    uid: context == "dm" ? id : undefined,
     cid: context == "channel" ? id : undefined
   });
   const [muteChannel] = useUpdateMuteSettingMutation();
@@ -53,7 +53,7 @@ const SessionContextMenu: FC<Props> = ({
   const handleReadAll = () => {
     if (mid) {
       const param =
-        context == "user" ? { users: [{ uid: +id, mid }] } : { groups: [{ gid: +id, mid }] };
+        context == "dm" ? { users: [{ uid: +id, mid }] } : { groups: [{ gid: +id, mid }] };
       updateReadIndex(param);
     }
   };
@@ -74,7 +74,7 @@ const SessionContextMenu: FC<Props> = ({
   };
 
   const items =
-    context == "user"
+    context == "dm"
       ? [
         {
           title: t("action.mark_read"),
@@ -109,7 +109,7 @@ const SessionContextMenu: FC<Props> = ({
           title: channelMuted ? t("action.unmute") : t("action.mute"),
           handler: handleChannelMute
         },
-        {
+        canInviteChannel && {
           title: t("action.invite_people"),
           handler: setInviteChannelId.bind(null, id)
         },
