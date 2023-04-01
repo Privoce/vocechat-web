@@ -6,7 +6,7 @@ import { ViewportList } from 'react-viewport-list';
 import { useTranslation } from "react-i18next";
 import { useUpdateUserMutation } from "../../../app/services/user";
 import User from "../User";
-import moreIcon from "../../../assets/icons/more.svg?url";
+import IconMore from "../../../assets/icons/more.svg";
 import IconOwner from "../../../assets/icons/owner.svg";
 import IconArrowDown from "../../../assets/icons/arrow.down.mini.svg";
 import IconCheck from "../../../assets/icons/check.sign.svg";
@@ -147,7 +147,7 @@ const MemberList: FC<Props> = ({ cid }) => {
                                     }
                                 >
                                     <div className="relative w-6 h-6">
-                                        <img className="cursor-pointer" src={moreIcon} alt="dots icon" />
+                                        <IconMore role="button" className="dark:fill-gray-400" />
                                     </div>
                                 </Tippy>
                             )}

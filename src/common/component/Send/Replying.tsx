@@ -1,6 +1,6 @@
 import { ContentTypes } from "../../../app/config";
 import MarkdownRender from "../MarkdownRender";
-import closeIcon from "../../../assets/icons/close.circle.svg?url";
+import IconClose from "../../../assets/icons/close.circle.svg";
 import pictureIcon from "../../../assets/icons/picture.svg?url";
 import { getFileIcon, isImage } from "../../utils";
 import useSendMessage from "../../hook/useSendMessage";
@@ -78,7 +78,7 @@ export default function Replying({
       </div>
       <div className="text-gray-500 overflow-hidden pr-7 ">{renderContent(msg)}</div>
       <button className="absolute top-4 right-4 cursor-pointer" onClick={removeReply}>
-        <img src={closeIcon} alt="close icon" />
+        <IconClose className="dark:fill-gray-400" />
       </button>
     </div>
   );

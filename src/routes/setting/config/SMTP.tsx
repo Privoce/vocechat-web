@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 
 import { useSendTestEmailMutation } from "../../../app/services/server";
-import iconQuestion from "../../../assets/icons/question.svg?url";
+import IconQuestion from "../../../assets/icons/question.svg";
 import useConfig from "../../../common/hook/useConfig";
 import Input from "../../../common/component/styled/Input";
 import Button from "../../../common/component/styled/Button";
@@ -118,7 +118,7 @@ export default function ConfigSMTP() {
         </div>
       </div>
       <div className="tip">
-        <img src={iconQuestion} alt="question icon" />
+        <IconQuestion className="dark:fill-gray-300" />
         <a
           href="https://doc.voce.chat/setting/smtp/smtp-gmail"
           target="_blank"

@@ -1,6 +1,6 @@
 import { NavLink, useLocation } from "react-router-dom";
 import Tippy from "@tippyjs/react";
-import addIcon from "../../assets/icons/add.svg?url";
+import IconAdd from "../../assets/icons/add.svg";
 import Tooltip from "./Tooltip";
 import AddEntriesMenu from "./AddEntriesMenu";
 import { useAppSelector } from "../../app/store";
@@ -55,7 +55,7 @@ export default function Server({ readonly = false }: Props) {
 
       <Tooltip tip={t("more")} placement="bottom">
         <Tippy interactive placement="bottom-end" trigger="click" content={<AddEntriesMenu />}>
-          <img src={addIcon} alt="add icon" className="cursor-pointer" />
+          <IconAdd className="dark:fill-gray-400" role="button" />
         </Tippy>
       </Tooltip>
     </div>
