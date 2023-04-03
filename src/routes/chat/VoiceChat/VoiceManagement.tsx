@@ -12,6 +12,7 @@ import IconMicOff from '../../../assets/icons/mic.off.svg';
 import StyledButton from '../../../common/component/styled/Button';
 import IconCallOff from '../../../assets/icons/call.off.svg';
 import Tooltip from '../../../common/component/Tooltip';
+import SpeakingAnimate from './SpeakingAnimate';
 // import User from '../../../common/component/User';
 
 type Props = {
@@ -48,12 +49,13 @@ const VoiceManagement = ({ info, setMute, setDeafen, leave }: Props) => {
                     const { muted, speakingVolume = 0 } = membersData[uid];
                     const speaking = speakingVolume > 50;
                     return <li key={uid} className="flex items-center justify-between gap-6 pb-4 ">
-                        <div className="flex items-center gap-2 transition-opacity" style={{ opacity: `${speaking ? 0.4 : 1}` }}>
-                            <div className="w-8 h-8 flex shrink-0">
+                        <div className="flex items-center gap-2 transition-opacity">
+                            <div className={clsx("w-8 h-8 flex shrink-0 relative")}>
+                                {speaking && <div className="z-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 rounded-full bg-green-700 animate-speaking w-10 h-10"></div>}
                                 <Avatar
                                     width={32}
                                     height={32}
-                                    className="w-full h-full rounded-full object-cover"
+                                    className="w-full h-full rounded-full object-cover z-20"
                                     src={curr.avatar}
                                     name={curr.name}
                                     alt="avatar"
@@ -65,7 +67,7 @@ const VoiceManagement = ({ info, setMute, setDeafen, leave }: Props) => {
                         </div>
                         <div className="flex items-center gap-2">
                             {/* {deafen ? <IconHeadphoneOff className="w-4" /> : <IconHeadphone className="w-4" />} */}
-                            {muted ? <IconMicOff className="w-4 fill-gray-500" /> : <IconMic className="w-4 fill-gray-500" />}
+                            {muted ? <IconMicOff className="w-4 fill-gray-500 dark:fill-gray-400" /> : <IconMic className="w-4 fill-gray-500  dark:fill-gray-400" />}
                         </div>
                         {/* <User uid={uid} interactive={false} /> */}
                         {/* {userData[uid]?.name} */}

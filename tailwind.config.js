@@ -22,6 +22,9 @@ module.exports = {
           900: "#164C63"
         }
       },
+      animation: {
+        speaking: "speaking 0.5s infinite cubic-bezier(.36, .11, .89, .32) alternate"
+      },
       keyframes: {
         fadeInUp: {
           from: {
@@ -32,6 +35,14 @@ module.exports = {
           to: {
             opacity: 1,
             transform: `translate3d(0, 0, 0)`
+          }
+        },
+        speaking: {
+          from: {
+            opacity: 0.8
+          },
+          to: {
+            opacity: 0
           }
         }
       }
