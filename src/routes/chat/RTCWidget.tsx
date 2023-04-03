@@ -55,7 +55,7 @@ const RTCWidget = ({ id, context = "channel" }: Props) => {
                 </div>
                 {/* {voicingInfo && */}
                 <div className="flex gap-2 px-1">
-                    <Tooltip tip={voicingInfo.muted ? t("undeafen") : t("deafen")} placement="top">
+                    <Tooltip tip={voicingInfo.deafen ? t("undeafen") : t("deafen")} placement="top">
                         {voicingInfo.deafen ? <IconSoundOff role="button" onClick={setDeafen.bind(null, false)} /> : <IconSoundOn role="button" onClick={setDeafen.bind(null, true)} />}
                     </Tooltip>
                     <Tooltip tip={voicingInfo.muted ? t("unmute") : t("mute")} placement="top">

@@ -1,5 +1,7 @@
 import clsx from 'clsx';
-import React from 'react';
+// import React from 'react';
+import { useTranslation } from 'react-i18next';
+
 import { VoicingInfo } from '../../../app/slices/voice';
 import { useAppSelector } from '../../../app/store';
 import Avatar from '../../../common/component/Avatar';
@@ -9,6 +11,7 @@ import IconMic from '../../../assets/icons/mic.on.svg';
 import IconMicOff from '../../../assets/icons/mic.off.svg';
 import StyledButton from '../../../common/component/styled/Button';
 import IconCallOff from '../../../assets/icons/call.off.svg';
+import Tooltip from '../../../common/component/Tooltip';
 // import User from '../../../common/component/User';
 
 type Props = {
@@ -19,6 +22,7 @@ type Props = {
 }
 
 const VoiceManagement = ({ info, setMute, setDeafen, leave }: Props) => {
+    const { t } = useTranslation("chat");
     const { userData, voicingMembers } = useAppSelector(store => {
         return {
             userData: store.users.byId,
@@ -71,16 +75,22 @@ const VoiceManagement = ({ info, setMute, setDeafen, leave }: Props) => {
             </ul>
             <div className="flex flex-col gap-2">
                 <ul className='flex justify-between'>
-                    <li role={"button"} onClick={setDeafen.bind(null, !deafen)} className="py-2 px-3 rounded bg-gray-100 dark:bg-gray-900">
-                        {deafen ? <IconHeadphoneOff className="fill-gray-700 dark:fill-gray-300" /> : <IconHeadphone className="fill-gray-700 dark:fill-gray-300" />}
-                    </li>
-                    <li role={"button"} onClick={setMute.bind(null, !muted)} className="py-2 px-3 rounded bg-gray-100 dark:bg-gray-900">
-                        {muted ? <IconMicOff className="fill-gray-700 dark:fill-gray-300" /> : <IconMic className="fill-gray-700 dark:fill-gray-300" />}
+                    <Tooltip tip={deafen ? t("undeafen") : t("deafen")} placement="top">
+                        <li role={"button"} onClick={setDeafen.bind(null, !deafen)} className="py-2 px-3 rounded bg-gray-100 dark:bg-gray-900">
+                            {deafen ? <IconHeadphoneOff className="fill-gray-700 dark:fill-gray-300" /> : <IconHeadphone className="fill-gray-700 dark:fill-gray-300" />}
+                        </li>
+                    </Tooltip>
+                    <Tooltip tip={muted ? t("unmute") : t("mute")} placement="top">
+                        <li role={"button"} onClick={setMute.bind(null, !muted)} className="py-2 px-3 rounded bg-gray-100 dark:bg-gray-900">
+                            {muted ? <IconMicOff className="fill-gray-700 dark:fill-gray-300" /> : <IconMic className="fill-gray-700 dark:fill-gray-300" />}
 
-                    </li>
+                        </li>
+                    </Tooltip>
                 </ul>
                 <StyledButton onClick={leave} className='bg-red-600 hover:!bg-red-700 text-center'>
-                    <IconCallOff className="m-auto" />
+                    <Tooltip tip={t("leave_voice")} placement="top" offset={[0, 24]} >
+                        <IconCallOff className="m-auto" />
+                    </Tooltip>
                 </StyledButton>
             </div>
         </div>
