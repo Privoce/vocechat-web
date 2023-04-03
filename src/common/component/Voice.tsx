@@ -5,7 +5,7 @@ import { useGetAgoraConfigQuery, useGetAgoraVoicingListQuery, useLazyGetAgoraTok
 import { updateChannelVisibleAside } from '../../app/slices/channels';
 import { addVoiceMember, removeVoiceMember, updateDeafenStatus, updateMuteStatus, updateVoicingInfo, updateVoicingMember, updateVoicingNetworkQuality, upsertVoiceList } from '../../app/slices/voice';
 import { useAppSelector } from '../../app/store';
-
+import AudioJoin from '../../assets/join.wav';
 // type Props = {}
 window.VOICE_TRACK_MAP = window.VOICE_TRACK_MAP ?? {};
 // let tmpUids: number[] = [];
@@ -129,6 +129,7 @@ type VoiceProps = {
     id: number,
     context?: "channel" | "dm"
 }
+const audioJoin = new Audio(AudioJoin);
 const useVoice = ({ id, context = "channel" }: VoiceProps) => {
     const dispatch = useDispatch();
     const { voicingInfo } = useAppSelector(store => {
@@ -156,6 +157,8 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
                 localTrack = await AgoraRTC.createMicrophoneAudioTrack();
                 // Publish the local audio track in the channel.
                 await window.VOICE_CLIENT.publish(localTrack);
+                // play the join audio
+                audioJoin.play();
                 console.log("Publish success!,joined the channel");
                 dispatch(updateVoicingInfo({
                     deafen: false,
