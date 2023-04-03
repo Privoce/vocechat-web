@@ -1,0 +1,89 @@
+{
+  "chat": "Sohbet",
+  "members": "Üeyler",
+  "favs": "Kaydedilmiş Öğeler",
+  "files": "Dosyalar",
+  "setting": "Ayarlar",
+  "more": "Daha Fazla",
+  "action": {
+    "login": "Giriş",
+    "re_login": "Çıkış",
+    "logout": "Çıkış",
+    "change_avatar": "Avatar değiştir",
+    "cancel": "İptal",
+    "dismiss": "Yok say",
+    "search": "Arama",
+    "new_channel": "Yeni kanal",
+    "new_private_channel": "Yeni Özel Kanal",
+    "new_msg": "Yeni İleti",
+    "invite_people": "Davet et",
+    "create": "Yarat",
+    "open": "Aç",
+    "update": "Güncelle",
+    "upload": "Yükle",
+    "done": "Bitti",
+    "add": "Ekle",
+    "yes": "Evet",
+    "delete_channel": "Kanal'ı Sil",
+    "remove": "Sil",
+    "remove_user": "Kullanıcı'yı Sil",
+    "edit": "Düzenle",
+    "edit_msg": "İleti'yi Düzenle",
+    "add_reaction": "Tepkilere Ekle",
+    "add_to_fav": "Favorilere Ekle",
+    "select": "Seç",
+    "forward": "İlet",
+    "reply": "Cevap Ver",
+    "pin": "Sabitle",
+    "unpin": "Sabitleme",
+    "send": "Gönder",
+    "send_msg": "İlet",
+    "copy": "Kopyala",
+    "copy_email": "E-posta Kopyala",
+    "mute": "Sessize Al",
+    "unmute": "Sessizden Çıkar",
+    "mark_read": "Okundu olarak işaretle",
+    "hide_session": "Oturumu gizle",
+    "reload": "Yeniden Yükle",
+    "install": "Kur",
+    "download_origin": "Aslını İndir",
+    "close": "Kapat"
+  },
+  "status": {
+    "uploading": "Yükleniyor"
+  },
+  "tip": {
+    "update": "Yükleme Başarılı!",
+    "delete": "Silme Başarılı!",
+    "reg": "Kayıt Başarılı!",
+    "login": "Giriş Başarılı!",
+    "logout": "Çıkış Başarılı!",
+    "pin": "İleti Başarı ile Sabitlendi!",
+    "pwa_install_title": "Uygulama masaüstü'ne yüklensin mi?",
+    "pwa_install_desc": "Bu uygulamaya hızlı erişim için masaüstüne yükleyin."
+  },
+  "new_version": "<0>Yeni Sürüm</0> Mevcut",
+  "mobile_app": "Yeni <0>Mobil Uygulama</0>'yı deneyin",
+  "price": {
+    "pro": {
+      "title": "VoceChat Pro",
+      "desc": "",
+      "price": "$49"
+    },
+    "supreme": {
+      "title": "VoceChat SDK Customization and Integration",
+      "desc": "",
+      "price": ""
+    }
+  },
+  "server_update": {
+    "version_needed": "Bu yöntem için sunucu sürümü en az <0>{{version}}</0> olmalı 🚨",
+    "current_version": "Sizin mevcut sürümünüz:<0>{{version}}</0>",
+    "update_tip": "Lütfen sunucuyu yükseltin!",
+    "howto": "VocaChat Sunucu nasıl yükseltilir"
+  },
+  "inactive": {
+    "title": "VocaChat ile sadece 1 aktif sekmeye izin verilir.",
+    "desc": "Lütfen bu sayfa ile devam etmek için tekrar yükleyin veya kapatın."
+  }
+}
