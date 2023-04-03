@@ -1,5 +1,5 @@
 import AgoraRTC, { IMicrophoneAudioTrack } from 'agora-rtc-sdk-ng';
-import { useEffect } from 'react';
+import { memo, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useGetAgoraConfigQuery, useGetAgoraVoicingListQuery, useLazyGetAgoraTokenQuery } from '../../app/services/server';
 import { updateChannelVisibleAside } from '../../app/slices/channels';
@@ -111,11 +111,12 @@ const Voice = () => {
         }
 
         return () => {
-            if (window.VOICE_CLIENT && localTrack) {
-                localTrack.close();
-                localTrack = null;
-                window.VOICE_CLIENT.leave();
-            }
+            // if (window.VOICE_CLIENT && localTrack) {
+            //     localTrack.close();
+            //     localTrack = null;
+            //     window.VOICE_CLIENT.leave();
+            //     dispatch(updateVoicingInfo(null));
+            // }
             // window.VOICE_CLIENT=null
         };
     }, []);
@@ -233,4 +234,4 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
     };
 };
 export { useVoice };
-export default Voice;
+export default memo(Voice);

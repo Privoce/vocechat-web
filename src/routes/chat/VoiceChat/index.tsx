@@ -55,9 +55,14 @@ const VoiceChat = ({ id, context = "channel" }: Props) => {
         <Tooltip disabled={visible} tip={t("voice")} placement="left">
             <li className={`relative group`} >
                 <IconHeadphone className={visible ? "fill-gray-600" : "fill-gray-500"} role="button" onClick={joinedAtThisContext ? toggleDashboard : handleJoin} />
-                {visible ? null : memberCount > 0 ? <span className={`${badgeClass} flex-center font-bold text-[10px]`}>{memberCount}</span> : <span className={`${badgeClass} hidden text-xs group-hover:flex-center`}>
-                    <em className='not-italic'>+</em>
-                </span>}
+                {visible ?
+                    null
+                    : <>
+                        {memberCount > 0 && <span className={`${badgeClass} flex-center font-bold text-[10px] group-hover:invisible`}>{memberCount}</span>}
+                        <span className={`${badgeClass} text-xs flex-center invisible group-hover:visible`}>
+                            <em className='not-italic'>+</em>
+                        </span>
+                    </>}
             </li>
         </Tooltip>
     );
