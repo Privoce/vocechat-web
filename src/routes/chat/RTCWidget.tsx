@@ -1,4 +1,6 @@
 // import React from 'react';
+import { useTranslation } from 'react-i18next';
+import clsx from 'clsx';
 import { useAppSelector } from '../../app/store';
 import User from '../../common/component/User';
 import IconMic from '../../assets/icons/mic.on.svg';
@@ -9,7 +11,6 @@ import IconSoundOff from '../../assets/icons/sound.off.svg';
 import { useVoice } from '../../common/component/Voice';
 import Signal from '../../common/component/Signal';
 import Tooltip from '../../common/component/Tooltip';
-import { useTranslation } from 'react-i18next';
 
 type Props = {
     id: number,
@@ -29,6 +30,7 @@ const RTCWidget = ({ id, context = "channel" }: Props) => {
     if (!loginUser || !voicingInfo || joining) return null;
     const name = voicingInfo.context == "channel" ? channelData[voicingInfo.id]?.name : userData[voicingInfo.id]?.name;
     if (!name) return null;
+    const isReConnecting = voicingInfo.connectionState == "RECONNECTING";
     return (
         <div className='bg-gray-100 dark:bg-gray-900 flex flex-col p-2 rounded-3xl m-3 text-sm'>
             {/* {voicingInfo && */}
@@ -36,7 +38,7 @@ const RTCWidget = ({ id, context = "channel" }: Props) => {
                 <div className="flex flex-1 items-center gap-1">
                     <Signal strength={voicingInfo.downlinkNetworkQuality} />
                     <div className="flex flex-col">
-                        <span className='text-green-800 font-bold'>Voice Connected</span>
+                        <span className={clsx('text-green-800 font-bold', isReConnecting && `text-red-500`)}>{isReConnecting ? `Voice Reconnecting...` : `Voice Connected`}</span>
                         <span className='text-gray-600 dark:text-gray-400 text-xs truncate max-w-[170px]' >{voicingInfo.context == "channel" ? "Channel" : "DM"} / {voicingInfo.context == "channel" ? channelData[voicingInfo.id].name : userData[voicingInfo.id].name}</span>
                     </div>
                 </div>

@@ -12,7 +12,6 @@ import IconMicOff from '../../../assets/icons/mic.off.svg';
 import StyledButton from '../../../common/component/styled/Button';
 import IconCallOff from '../../../assets/icons/call.off.svg';
 import Tooltip from '../../../common/component/Tooltip';
-import SpeakingAnimate from './SpeakingAnimate';
 // import User from '../../../common/component/User';
 
 type Props = {
@@ -38,6 +37,14 @@ const VoiceManagement = ({ info, setMute, setDeafen, leave }: Props) => {
     if (info.joining) {
         return <div className='w-full h-full flex-center p-1 text-sm text-gray-600 dark:text-gray-400'>
             Connecting to voice channel...
+        </div>;
+    }
+    if (info.connectionState == "RECONNECTING") {
+        return <div className='w-full h-full flex-center flex-col gap-1 p-1 '>
+            <span className='text-red-300'>
+                Reconnecting...
+            </span>
+            <span className='text-xs text-red-500'>Please check network connection!</span>
         </div>;
     }
     return (
@@ -95,6 +102,7 @@ const VoiceManagement = ({ info, setMute, setDeafen, leave }: Props) => {
                     </Tooltip>
                 </StyledButton>
             </div>
+
         </div>
     );
 };

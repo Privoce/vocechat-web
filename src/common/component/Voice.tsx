@@ -3,7 +3,7 @@ import { memo, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useGetAgoraConfigQuery, useGetAgoraVoicingListQuery, useLazyGetAgoraTokenQuery } from '../../app/services/server';
 import { updateChannelVisibleAside } from '../../app/slices/channels';
-import { addVoiceMember, removeVoiceMember, updateDeafenStatus, updateMuteStatus, updateVoicingInfo, updateVoicingMember, updateVoicingNetworkQuality, upsertVoiceList } from '../../app/slices/voice';
+import { addVoiceMember, removeVoiceMember, updateConnectionState, updateDeafenStatus, updateMuteStatus, updateVoicingInfo, updateVoicingMember, updateVoicingNetworkQuality, upsertVoiceList } from '../../app/slices/voice';
 import { useAppSelector } from '../../app/store';
 import AudioJoin from '../../assets/join.wav';
 // type Props = {}
@@ -25,7 +25,7 @@ const Voice = () => {
         secret: agoraConfig?.rtm_secret ?? "",
 
     }, {
-        skip: !isAdmin || !agoraConfig,
+        skip: !isAdmin || !agoraConfig || !navigator.onLine,
         pollingInterval: 5000
     });
     const dispatch = useDispatch();
@@ -43,6 +43,7 @@ const Voice = () => {
                 if (mediaType == "audio") {
                     // 播放远端音频
                     user.audioTrack?.play();
+                    //    const playing= user.audioTrack?.isPlaying;
                     // const level = user.audioTrack?.getVolumeLevel();
                     // if (level === 0) {
                     //     // 远端静音
@@ -79,6 +80,11 @@ const Voice = () => {
                 agoraEngine.on("network-quality", (qlt) => {
                     const { downlinkNetworkQuality } = qlt;
                     dispatch(updateVoicingNetworkQuality(downlinkNetworkQuality));
+                });
+                // 连接状态有变化
+                agoraEngine.on("connection-state-change", (state, prevState, reason) => {
+                    console.log("connection-state-change", state, prevState, reason);
+                    dispatch(updateConnectionState(state));
                 });
                 // 用户状态变化
                 agoraEngine.on("user-info-updated", (uid, msg) => {
