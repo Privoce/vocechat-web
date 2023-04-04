@@ -112,11 +112,20 @@ const Voice = () => {
             });
             window.VOICE_CLIENT = agoraEngine;
         };
+        const handlePageUnload = (evt: BeforeUnloadEvent) => {
+            console.log("unload");
+            if (localTrack) {
+                evt.preventDefault();
+                return (evt.returnValue = "");
+            }
+        };
+        window.addEventListener("beforeunload", handlePageUnload, { capture: true });
         if (!window.VOICE_CLIENT) {
             initializeAgoraClient();
         }
 
         return () => {
+            window.removeEventListener("beforeunload", handlePageUnload, { capture: true });
             // if (window.VOICE_CLIENT && localTrack) {
             //     localTrack.close();
             //     localTrack = null;
