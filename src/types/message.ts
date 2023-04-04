@@ -1,7 +1,7 @@
 import { ChatEvent } from "./sse";
 
-export type ContentType = "text/plain" | "text/markdown" | "vocechat/file" | "vocechat/archive";
-export type ContentTypeKey = "text" | "markdown" | "file" | "archive";
+export type ContentType = "text/plain" | "text/markdown" | "vocechat/file" | "vocechat/audio" | "vocechat/archive";
+export type ContentTypeKey = "text" | "markdown" | "file" | "audio" | "archive";
 
 export interface MuteDTO {
   add_users?: {
@@ -24,4 +24,4 @@ export interface UploadFileResponse {
     height: number;
   };
 }
-export interface ChatMessage extends Omit<ChatEvent, "type"> {}
+export interface ChatMessage extends Omit<ChatEvent, "type"> { }

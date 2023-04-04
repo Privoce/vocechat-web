@@ -80,6 +80,7 @@ export const ContentTypes = {
   text: "text/plain",
   markdown: "text/markdown",
   file: "vocechat/file",
+  audio: "vocechat/audio",
   archive: "vocechat/archive",
   formData: "multipart/form-data",
   json: "application/json"
@@ -87,6 +88,7 @@ export const ContentTypes = {
 export const MessageTypes = {
   text: "text/plain",
   markdown: "text/markdown",
+  audio: "vocechat/audio",
   file: "vocechat/file",
   archive: "vocechat/archive",
 };

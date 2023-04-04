@@ -7,6 +7,7 @@ import MarkdownRender from "../MarkdownRender";
 import FileMessage from "../FileMessage";
 import { ContentType } from "../../../types/message";
 import LinkifyText from '../LinkifyText';
+import VoiceMessage, { VoiceMessageProps } from "../VoiceMessage";
 
 type Props = {
   context: "user" | "channel";
@@ -49,6 +50,12 @@ const renderContent = ({
     case ContentTypes.markdown:
       {
         ctn = <MarkdownRender content={content} />;
+      }
+      break;
+    case ContentTypes.audio:
+      {
+        // const { url, secure_url } = properties; todo
+        ctn = <VoiceMessage data={content as VoiceMessageProps} />;
       }
       break;
     case ContentTypes.file:
