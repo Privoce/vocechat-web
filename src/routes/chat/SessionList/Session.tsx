@@ -131,7 +131,7 @@ const Session: FC<IProps> = ({
                 src={icon}
               />
             )}
-            {isVoicing && <IconVoicing className="-top-0.5 -right-0.5 absolute w-[18px] h-[18px]" />}
+            {isVoicing && <IconVoicing className="top-0 -right-[7px] absolute w-6 h-6" />}
           </div>
           <div className="w-full flex flex-col justify-between overflow-hidden">
             <div className="flex items-center justify-between ">
