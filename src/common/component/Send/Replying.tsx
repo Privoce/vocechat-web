@@ -13,7 +13,7 @@ const renderContent = (data: MessagePayload) => {
   let res = null;
   switch (content_type) {
     case ContentTypes.text:
-      res = <LinkifyText text={content} url={false} mentionTextOnly={true} />;
+      res = <LinkifyText text={content as string} url={false} mentionTextOnly={true} />;
       // res = reactStringReplace(content, /(\s{1}@[0-9]+\s{1})/g, (match, idx) => {
       //   const uid = match.trim().slice(1);
       //   return <Mention popover={false} key={idx} uid={+uid} />;
@@ -23,7 +23,7 @@ const renderContent = (data: MessagePayload) => {
     case ContentTypes.markdown:
       res = (
         <div className="max-h-[100px] overflow-auto">
-          <MarkdownRender content={content} />
+          <MarkdownRender content={content as string} />
         </div>
       );
       break;

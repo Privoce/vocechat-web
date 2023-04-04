@@ -26,10 +26,22 @@
   dependencies:
     "@babel/highlight" "^7.18.6"
 
+"@babel/code-frame@^7.21.4":
+  version "7.21.4"
+  resolved "https://mirrors.cloud.tencent.com/npm/@babel/code-frame/-/code-frame-7.21.4.tgz#d0fa9e4413aca81f2b23b9442797bda1826edb39"
+  integrity sha512-LYvhNKfwWSPpocw8GI7gpK2nq3HSDuEPC/uSYaALSJu9xjsalaaYFOq0Pwt5KmVqwEbZlDu81aLXwBOmD/Fv9g==
+  dependencies:
+    "@babel/highlight" "^7.18.6"
+
 "@babel/compat-data@^7.17.7", "@babel/compat-data@^7.20.1", "@babel/compat-data@^7.20.5":
   version "7.21.0"
   resolved "https://mirrors.cloud.tencent.com/npm/@babel/compat-data/-/compat-data-7.21.0.tgz#c241dc454e5b5917e40d37e525e2f4530c399298"
   integrity sha512-gMuZsmsgxk/ENC3O/fRw5QY8A9/uxQbbCEypnLIiYYc/qVJtEV7ouxC3EllIIwNzMqAQee5tanFabWsUOutS7g==
+
+"@babel/compat-data@^7.21.4":
+  version "7.21.4"
+  resolved "https://mirrors.cloud.tencent.com/npm/@babel/compat-data/-/compat-data-7.21.4.tgz#457ffe647c480dff59c2be092fc3acf71195c87f"
+  integrity sha512-/DYyDpeCfaVinT40FPGdkkb+lYSKvsVuMjDAG7jPOWWiM1ibOaB9CXJAlc4d1QpP/U2q2P9jbrSlClKSErd55g==
 
 "@babel/core@^7.1.0", "@babel/core@^7.11.1", "@babel/core@^7.12.3", "@babel/core@^7.16.0", "@babel/core@^7.21.3", "@babel/core@^7.7.2", "@babel/core@^7.8.0":
   version "7.21.3"
@@ -52,6 +64,27 @@
     json5 "^2.2.2"
     semver "^6.3.0"
 
+"@babel/core@^7.21.4":
+  version "7.21.4"
+  resolved "https://mirrors.cloud.tencent.com/npm/@babel/core/-/core-7.21.4.tgz#c6dc73242507b8e2a27fd13a9c1814f9fa34a659"
+  integrity sha512-qt/YV149Jman/6AfmlxJ04LMIu8bMoyl3RB91yTFrxQmgbrSvQMy7cI8Q62FHx1t8wJ8B5fu0UDoLwHAhUo1QA==
+  dependencies:
+    "@ampproject/remapping" "^2.2.0"
+    "@babel/code-frame" "^7.21.4"
+    "@babel/generator" "^7.21.4"
+    "@babel/helper-compilation-targets" "^7.21.4"
+    "@babel/helper-module-transforms" "^7.21.2"
+    "@babel/helpers" "^7.21.0"
+    "@babel/parser" "^7.21.4"
+    "@babel/template" "^7.20.7"
+    "@babel/traverse" "^7.21.4"
+    "@babel/types" "^7.21.4"
+    convert-source-map "^1.7.0"
+    debug "^4.1.0"
+    gensync "^1.0.0-beta.2"
+    json5 "^2.2.2"
+    semver "^6.3.0"
+
 "@babel/eslint-parser@^7.16.3":
   version "7.21.3"
   resolved "https://mirrors.cloud.tencent.com/npm/@babel/eslint-parser/-/eslint-parser-7.21.3.tgz#d79e822050f2de65d7f368a076846e7184234af7"
@@ -67,6 +100,16 @@
   integrity sha512-QS3iR1GYC/YGUnW7IdggFeN5c1poPUurnGttOV/bZgPGV+izC/D8HnD6DLwod0fsatNyVn1G3EVWMYIF0nHbeA==
   dependencies:
     "@babel/types" "^7.21.3"
+    "@jridgewell/gen-mapping" "^0.3.2"
+    "@jridgewell/trace-mapping" "^0.3.17"
+    jsesc "^2.5.1"
+
+"@babel/generator@^7.21.4":
+  version "7.21.4"
+  resolved "https://mirrors.cloud.tencent.com/npm/@babel/generator/-/generator-7.21.4.tgz#64a94b7448989f421f919d5239ef553b37bb26bc"
+  integrity sha512-NieM3pVIYW2SwGzKoqfPrQsf4xGs9M9AIG3ThppsSRmO+m7eQhmI6amajKMUeIO37wFfsvnvcxQFx6x6iqxDnA==
+  dependencies:
+    "@babel/types" "^7.21.4"
     "@jridgewell/gen-mapping" "^0.3.2"
     "@jridgewell/trace-mapping" "^0.3.17"
     jsesc "^2.5.1"
@@ -93,6 +136,17 @@
   dependencies:
     "@babel/compat-data" "^7.20.5"
     "@babel/helper-validator-option" "^7.18.6"
+    browserslist "^4.21.3"
+    lru-cache "^5.1.1"
+    semver "^6.3.0"
+
+"@babel/helper-compilation-targets@^7.21.4":
+  version "7.21.4"
+  resolved "https://mirrors.cloud.tencent.com/npm/@babel/helper-compilation-targets/-/helper-compilation-targets-7.21.4.tgz#770cd1ce0889097ceacb99418ee6934ef0572656"
+  integrity sha512-Fa0tTuOXZ1iL8IeDFUWCzjZcn+sJGd9RZdH9esYVjEejGmzf+FFYQpMi/kZUk2kPy/q1H3/GPw7np8qar/stfg==
+  dependencies:
+    "@babel/compat-data" "^7.21.4"
+    "@babel/helper-validator-option" "^7.21.0"
     browserslist "^4.21.3"
     lru-cache "^5.1.1"
     semver "^6.3.0"
@@ -288,6 +342,11 @@
   version "7.21.3"
   resolved "https://mirrors.cloud.tencent.com/npm/@babel/parser/-/parser-7.21.3.tgz#1d285d67a19162ff9daa358d4cb41d50c06220b3"
   integrity sha512-lobG0d7aOfQRXh8AyklEAgZGvA4FShxo6xQbUrrT/cNBPUdIDojlokwJsQyCC/eKia7ifqM0yP+2DRZ4WKw2RQ==
+
+"@babel/parser@^7.21.4":
+  version "7.21.4"
+  resolved "https://mirrors.cloud.tencent.com/npm/@babel/parser/-/parser-7.21.4.tgz#94003fdfc520bbe2875d4ae557b43ddb6d880f17"
+  integrity sha512-alVJj7k7zIxqBZ7BTRhz0IqJFxW1VJbm6N8JbcYhQ186df9ZBPbZBmWSqAMXwHGsCJdYks7z/voa3ibiS5bCIw==
 
 "@babel/plugin-bugfix-safari-id-destructuring-collision-in-function-expression@^7.18.6":
   version "7.18.6"
@@ -1063,10 +1122,35 @@
     debug "^4.1.0"
     globals "^11.1.0"
 
+"@babel/traverse@^7.21.4":
+  version "7.21.4"
+  resolved "https://mirrors.cloud.tencent.com/npm/@babel/traverse/-/traverse-7.21.4.tgz#a836aca7b116634e97a6ed99976236b3282c9d36"
+  integrity sha512-eyKrRHKdyZxqDm+fV1iqL9UAHMoIg0nDaGqfIOd8rKH17m5snv7Gn4qgjBoFfLz9APvjFU/ICT00NVCv1Epp8Q==
+  dependencies:
+    "@babel/code-frame" "^7.21.4"
+    "@babel/generator" "^7.21.4"
+    "@babel/helper-environment-visitor" "^7.18.9"
+    "@babel/helper-function-name" "^7.21.0"
+    "@babel/helper-hoist-variables" "^7.18.6"
+    "@babel/helper-split-export-declaration" "^7.18.6"
+    "@babel/parser" "^7.21.4"
+    "@babel/types" "^7.21.4"
+    debug "^4.1.0"
+    globals "^11.1.0"
+
 "@babel/types@^7.0.0", "@babel/types@^7.12.6", "@babel/types@^7.18.6", "@babel/types@^7.18.9", "@babel/types@^7.20.0", "@babel/types@^7.20.2", "@babel/types@^7.20.5", "@babel/types@^7.20.7", "@babel/types@^7.21.0", "@babel/types@^7.21.2", "@babel/types@^7.21.3", "@babel/types@^7.3.0", "@babel/types@^7.3.3", "@babel/types@^7.4.4":
   version "7.21.3"
   resolved "https://mirrors.cloud.tencent.com/npm/@babel/types/-/types-7.21.3.tgz#4865a5357ce40f64e3400b0f3b737dc6d4f64d05"
   integrity sha512-sBGdETxC+/M4o/zKC0sl6sjWv62WFR/uzxrJ6uYyMLZOUlPnwzw0tKgVHOXxaAd5l2g8pEDM5RZ495GPQI77kg==
+  dependencies:
+    "@babel/helper-string-parser" "^7.19.4"
+    "@babel/helper-validator-identifier" "^7.19.1"
+    to-fast-properties "^2.0.0"
+
+"@babel/types@^7.21.4":
+  version "7.21.4"
+  resolved "https://mirrors.cloud.tencent.com/npm/@babel/types/-/types-7.21.4.tgz#2d5d6bb7908699b3b416409ffd3b5daa25b030d4"
+  integrity sha512-rU2oY501qDxE8Pyo7i/Orqma4ziCOrby0/9mvbDUGEfvZjb279Nk9k19e2fiCxHbRRpY2ZyrgW1eq22mvmOIzA==
   dependencies:
     "@babel/helper-string-parser" "^7.19.4"
     "@babel/helper-validator-identifier" "^7.19.1"
@@ -1267,12 +1351,12 @@
   resolved "https://mirrors.cloud.tencent.com/npm/@eslint/js/-/js-8.37.0.tgz#cf1b5fa24217fe007f6487a26d765274925efa7d"
   integrity sha512-x5vzdtOOGgFVDCUs81QRB2+liax8rFg3+7hqM+QhBG0/G3F1ZsoYl97UrqgHgQ9KKT7G6c4V+aTUCgu/n22v1A==
 
-"@firebase/analytics-compat@0.2.4":
-  version "0.2.4"
-  resolved "https://mirrors.cloud.tencent.com/npm/@firebase/analytics-compat/-/analytics-compat-0.2.4.tgz#3887676286ead7b30f9880581e0144f43bc71f16"
-  integrity sha512-ZN4K49QwOR8EWIUTV03VBdcVkz8sVsfJmve4g2+FEIj0kyTK0MdoVTWNOwWj9TVi2p/7FvKRKkpWxkydmi9x7g==
+"@firebase/analytics-compat@0.2.5":
+  version "0.2.5"
+  resolved "https://mirrors.cloud.tencent.com/npm/@firebase/analytics-compat/-/analytics-compat-0.2.5.tgz#6b6801df07219d4a0aff7f5b95b5b020af067b47"
+  integrity sha512-ohKUrwSoXvyUJdSLuDr82mOqrzgWKyHMUt9/TfYKkyDXnFjNlBcFBpkpl/UHMAOJe0M60YYXiVCZoGQYldCslA==
   dependencies:
-    "@firebase/analytics" "0.9.4"
+    "@firebase/analytics" "0.9.5"
     "@firebase/analytics-types" "0.8.0"
     "@firebase/component" "0.6.4"
     "@firebase/util" "1.9.3"
@@ -1283,10 +1367,10 @@
   resolved "https://mirrors.cloud.tencent.com/npm/@firebase/analytics-types/-/analytics-types-0.8.0.tgz#551e744a29adbc07f557306530a2ec86add6d410"
   integrity sha512-iRP+QKI2+oz3UAh4nPEq14CsEjrjD6a5+fuypjScisAh9kXKFvdJOZJDwk7kikLvWVLGEs9+kIUS4LPQV7VZVw==
 
-"@firebase/analytics@0.9.4":
-  version "0.9.4"
-  resolved "https://mirrors.cloud.tencent.com/npm/@firebase/analytics/-/analytics-0.9.4.tgz#1b863bd795c3dbe3d278467e8c9dd0e6c54f37a3"
-  integrity sha512-Mb2UaD0cyJ9DrTk4Okz8wqpjZuVRVXHZOjhbQcmGb8VtibXY1+jm/k3eJ21r7NqUKnjWejYM2EX+hI9+dtXGkQ==
+"@firebase/analytics@0.9.5":
+  version "0.9.5"
+  resolved "https://mirrors.cloud.tencent.com/npm/@firebase/analytics/-/analytics-0.9.5.tgz#fbd8f4c57136ad2f12450ed0b86b537f5f33f669"
+  integrity sha512-hJTVs2jLxPXE7hs7D/jaEsgGivrm7tSEl65kb5NkDBWV7QQBUnRfVML/xra9nTFLLJhAdbExZPHg6HfIuMSYEQ==
   dependencies:
     "@firebase/component" "0.6.4"
     "@firebase/installations" "0.6.4"
@@ -1326,12 +1410,12 @@
     "@firebase/util" "1.9.3"
     tslib "^2.1.0"
 
-"@firebase/app-compat@0.2.5":
-  version "0.2.5"
-  resolved "https://mirrors.cloud.tencent.com/npm/@firebase/app-compat/-/app-compat-0.2.5.tgz#7253fe6b17a3128b465c96c1f374594ce91c7dcd"
-  integrity sha512-PSEax7UAc1Qxcksq5GHKb8M9rCsXTJWxWUf6pqhGTWO9UbJnI1tv00ogoCicEHgkXBTkOWMLxCs3318HaGZh4g==
+"@firebase/app-compat@0.2.7":
+  version "0.2.7"
+  resolved "https://mirrors.cloud.tencent.com/npm/@firebase/app-compat/-/app-compat-0.2.7.tgz#094195f5db5bdc28f7ad9ee383631bcd14a4c092"
+  integrity sha512-KYBUKoRrvSGW8jqKgARRsma0lJie9M0zyWhPF3PNjqc9pYsw7SZXp5s5SzsheeCXzIDFydP5uEA4f1Z87D7CxQ==
   dependencies:
-    "@firebase/app" "0.9.5"
+    "@firebase/app" "0.9.7"
     "@firebase/component" "0.6.4"
     "@firebase/logger" "0.4.0"
     "@firebase/util" "1.9.3"
@@ -1342,10 +1426,10 @@
   resolved "https://mirrors.cloud.tencent.com/npm/@firebase/app-types/-/app-types-0.9.0.tgz#35b5c568341e9e263b29b3d2ba0e9cfc9ec7f01e"
   integrity sha512-AeweANOIo0Mb8GiYm3xhTEBVCmPwTYAu9Hcd2qSkLuga/6+j9b1Jskl5bpiSQWy9eJ/j5pavxj6eYogmnuzm+Q==
 
-"@firebase/app@0.9.5":
-  version "0.9.5"
-  resolved "https://mirrors.cloud.tencent.com/npm/@firebase/app/-/app-0.9.5.tgz#dabf46a6b0384b805b65c787b440a895dac2b4c4"
-  integrity sha512-mXO9hrygxCohD8Qy0z8p9ZtuQirmjkjSTuQghH05/kLG1UJqP0TQZBlhP5qwzMTKuu2YpIn3kX2PZoSWti8LDA==
+"@firebase/app@0.9.7":
+  version "0.9.7"
+  resolved "https://mirrors.cloud.tencent.com/npm/@firebase/app/-/app-0.9.7.tgz#9dd51d10c6f68a5f4a539e72cd143caa6dabecaa"
+  integrity sha512-ADnRXaW4XQF11QYYhZQEJEtOGnmLkGl2FCixCxPighLrmJmGwCZrzSFtwITd8w/EU3dRYaU5Og37VfnY+gKxGw==
   dependencies:
     "@firebase/component" "0.6.4"
     "@firebase/logger" "0.4.0"
@@ -1353,12 +1437,12 @@
     idb "7.0.1"
     tslib "^2.1.0"
 
-"@firebase/auth-compat@0.3.5":
-  version "0.3.5"
-  resolved "https://mirrors.cloud.tencent.com/npm/@firebase/auth-compat/-/auth-compat-0.3.5.tgz#db4c41646b949ad18b4824beefd02338c3a865d6"
-  integrity sha512-xEkR4Buuw8NfyJhMVC3HMvyaODfstpMuo55tK03APoP+X9fnZpQE+ASdacq60qBBvpKF78d+gmAhmh0ISTXZ0w==
+"@firebase/auth-compat@0.3.7":
+  version "0.3.7"
+  resolved "https://mirrors.cloud.tencent.com/npm/@firebase/auth-compat/-/auth-compat-0.3.7.tgz#e2bc288df780a04e5f89437c95e41156abd26d01"
+  integrity sha512-+r8/++hYZLA/to6Iq8A70LTUsZvhkdT2R4mB4oJGxryJ7vNjpuP5m5hfAd42h/VvX8eT1OXJCENCfEZoDyhksA==
   dependencies:
-    "@firebase/auth" "0.21.5"
+    "@firebase/auth" "0.22.0"
     "@firebase/auth-types" "0.12.0"
     "@firebase/component" "0.6.4"
     "@firebase/util" "1.9.3"
@@ -1375,10 +1459,10 @@
   resolved "https://mirrors.cloud.tencent.com/npm/@firebase/auth-types/-/auth-types-0.12.0.tgz#f28e1b68ac3b208ad02a15854c585be6da3e8e79"
   integrity sha512-pPwaZt+SPOshK8xNoiQlK5XIrS97kFYc3Rc7xmy373QsOJ9MmqXxLaYssP5Kcds4wd2qK//amx/c+A8O2fVeZA==
 
-"@firebase/auth@0.21.5":
-  version "0.21.5"
-  resolved "https://mirrors.cloud.tencent.com/npm/@firebase/auth/-/auth-0.21.5.tgz#02ca0b73ae0ee69a0bab0b19da6c92a722b56a6c"
-  integrity sha512-Pt/S24qbtJeFPxYxcQHDNgYAuEa9oyCK1XJBQ9Kc3FT1rDMb1OaK6wfnDDrCChQfENdHZVI1pGw4QG6/tO3NWw==
+"@firebase/auth@0.22.0":
+  version "0.22.0"
+  resolved "https://mirrors.cloud.tencent.com/npm/@firebase/auth/-/auth-0.22.0.tgz#0fb9028ede99f477ef04b30b32ee40f82df4da84"
+  integrity sha512-4PiaDJEhJ7FNo48WG0TAlqHiCuRBXxUow2q+0emh+PhmM0cLT1UdqK1EuWWGc5CY+ztNQZUh+Yzeh+nv9tZL0w==
   dependencies:
     "@firebase/component" "0.6.4"
     "@firebase/logger" "0.4.0"
@@ -1426,13 +1510,13 @@
     faye-websocket "0.11.4"
     tslib "^2.1.0"
 
-"@firebase/firestore-compat@0.3.5":
-  version "0.3.5"
-  resolved "https://mirrors.cloud.tencent.com/npm/@firebase/firestore-compat/-/firestore-compat-0.3.5.tgz#df159e66ea96096cd2c4b4ce8d72ff9685464444"
-  integrity sha512-gwBFGOqNIgF2TOJ2mKIS1lTQy6I9DytWsmIfvXGV76is53MaZUZXyUZd7oIC8h2Otq6gP3xtvPRQJTMcnQrbFg==
+"@firebase/firestore-compat@0.3.6":
+  version "0.3.6"
+  resolved "https://mirrors.cloud.tencent.com/npm/@firebase/firestore-compat/-/firestore-compat-0.3.6.tgz#e64338621f7e05614382201691ecc85a9fbb98a5"
+  integrity sha512-svS8oV0nwTyoHW5mslFV0gRb3FLpRQGjz2F7nc5imnPUTjSJmAfXECtgs5HG5MSJM/laSimfAeGuQVh5FM1AEw==
   dependencies:
     "@firebase/component" "0.6.4"
-    "@firebase/firestore" "3.9.0"
+    "@firebase/firestore" "3.10.0"
     "@firebase/firestore-types" "2.5.1"
     "@firebase/util" "1.9.3"
     tslib "^2.1.0"
@@ -1442,10 +1526,10 @@
   resolved "https://mirrors.cloud.tencent.com/npm/@firebase/firestore-types/-/firestore-types-2.5.1.tgz#464b2ee057956599ca34de50eae957c30fdbabb7"
   integrity sha512-xG0CA6EMfYo8YeUxC8FeDzf6W3FX1cLlcAGBYV6Cku12sZRI81oWcu61RSKM66K6kUENP+78Qm8mvroBcm1whw==
 
-"@firebase/firestore@3.9.0":
-  version "3.9.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/@firebase/firestore/-/firestore-3.9.0.tgz#de31229a8b7fdf8da44c267234ea5796d3a0d045"
-  integrity sha512-At8HeTec3y7EfGjtYqvzON/8896igJgE34zjEndYxKPUKyhQ6xtcM+zhfa8C+lUW6W8qQB6lNzTNNXmF4NxdpQ==
+"@firebase/firestore@3.10.0":
+  version "3.10.0"
+  resolved "https://mirrors.cloud.tencent.com/npm/@firebase/firestore/-/firestore-3.10.0.tgz#bea8c24d5b0ba5000eef5621076c58f6c30cc373"
+  integrity sha512-St6yy2r7zYxJiAEiI19aQJqxVV8LDvlmeK52R9KMn2nZsgdDVOurch1cH7bBl0OxEgfiVxBmAQJLYvZc+qwAgw==
   dependencies:
     "@firebase/component" "0.6.4"
     "@firebase/logger" "0.4.0"
@@ -2816,10 +2900,10 @@
     "@types/scheduler" "*"
     csstype "^3.0.2"
 
-"@types/react@^18.0.31":
-  version "18.0.31"
-  resolved "https://mirrors.cloud.tencent.com/npm/@types/react/-/react-18.0.31.tgz#a69ef8dd7bfa849734d258c793a8fe343a338205"
-  integrity sha512-EEG67of7DsvRDU6BLLI0p+k1GojDLz9+lZsnCpCRTa/lOokvyPBvp8S5x+A24hME3yyQuIipcP70KJ6H7Qupww==
+"@types/react@^18.0.33":
+  version "18.0.33"
+  resolved "https://mirrors.cloud.tencent.com/npm/@types/react/-/react-18.0.33.tgz#a1575160cb4376787c2f5fe0312302f824baa61e"
+  integrity sha512-sHxzVxeanvQyQ1lr8NSHaj0kDzcNiGpILEVt69g9S31/7PfMvNCKLKcsHw4lYKjs3cGNJjXSP4mYzX43QlnjNA==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -2936,15 +3020,15 @@
     semver "^7.3.7"
     tsutils "^3.21.0"
 
-"@typescript-eslint/eslint-plugin@^5.57.0":
-  version "5.57.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/@typescript-eslint/eslint-plugin/-/eslint-plugin-5.57.0.tgz#52c8a7a4512f10e7249ca1e2e61f81c62c34365c"
-  integrity sha512-itag0qpN6q2UMM6Xgk6xoHa0D0/P+M17THnr4SVgqn9Rgam5k/He33MA7/D7QoJcdMxHFyX7U9imaBonAX/6qA==
+"@typescript-eslint/eslint-plugin@^5.57.1":
+  version "5.57.1"
+  resolved "https://mirrors.cloud.tencent.com/npm/@typescript-eslint/eslint-plugin/-/eslint-plugin-5.57.1.tgz#d1ab162a3cd2671b8a1c9ddf6e2db73b14439735"
+  integrity sha512-1MeobQkQ9tztuleT3v72XmY0XuKXVXusAhryoLuU5YZ+mXoYKZP9SQ7Flulh1NX4DTjpGTc2b/eMu4u7M7dhnQ==
   dependencies:
     "@eslint-community/regexpp" "^4.4.0"
-    "@typescript-eslint/scope-manager" "5.57.0"
-    "@typescript-eslint/type-utils" "5.57.0"
-    "@typescript-eslint/utils" "5.57.0"
+    "@typescript-eslint/scope-manager" "5.57.1"
+    "@typescript-eslint/type-utils" "5.57.1"
+    "@typescript-eslint/utils" "5.57.1"
     debug "^4.3.4"
     grapheme-splitter "^1.0.4"
     ignore "^5.2.0"
@@ -2969,14 +3053,14 @@
     "@typescript-eslint/typescript-estree" "5.56.0"
     debug "^4.3.4"
 
-"@typescript-eslint/parser@^5.57.0":
-  version "5.57.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/@typescript-eslint/parser/-/parser-5.57.0.tgz#f675bf2cd1a838949fd0de5683834417b757e4fa"
-  integrity sha512-orrduvpWYkgLCyAdNtR1QIWovcNZlEm6yL8nwH/eTxWLd8gsP+25pdLHYzL2QdkqrieaDwLpytHqycncv0woUQ==
+"@typescript-eslint/parser@^5.57.1":
+  version "5.57.1"
+  resolved "https://mirrors.cloud.tencent.com/npm/@typescript-eslint/parser/-/parser-5.57.1.tgz#af911234bd4401d09668c5faf708a0570a17a748"
+  integrity sha512-hlA0BLeVSA/wBPKdPGxoVr9Pp6GutGoY380FEhbVi0Ph4WNe8kLvqIRx76RSQt1lynZKfrXKs0/XeEk4zZycuA==
   dependencies:
-    "@typescript-eslint/scope-manager" "5.57.0"
-    "@typescript-eslint/types" "5.57.0"
-    "@typescript-eslint/typescript-estree" "5.57.0"
+    "@typescript-eslint/scope-manager" "5.57.1"
+    "@typescript-eslint/types" "5.57.1"
+    "@typescript-eslint/typescript-estree" "5.57.1"
     debug "^4.3.4"
 
 "@typescript-eslint/scope-manager@5.56.0":
@@ -2987,13 +3071,13 @@
     "@typescript-eslint/types" "5.56.0"
     "@typescript-eslint/visitor-keys" "5.56.0"
 
-"@typescript-eslint/scope-manager@5.57.0":
-  version "5.57.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/@typescript-eslint/scope-manager/-/scope-manager-5.57.0.tgz#79ccd3fa7bde0758059172d44239e871e087ea36"
-  integrity sha512-NANBNOQvllPlizl9LatX8+MHi7bx7WGIWYjPHDmQe5Si/0YEYfxSljJpoTyTWFTgRy3X8gLYSE4xQ2U+aCozSw==
+"@typescript-eslint/scope-manager@5.57.1":
+  version "5.57.1"
+  resolved "https://mirrors.cloud.tencent.com/npm/@typescript-eslint/scope-manager/-/scope-manager-5.57.1.tgz#5d28799c0fc8b501a29ba1749d827800ef22d710"
+  integrity sha512-N/RrBwEUKMIYxSKl0oDK5sFVHd6VI7p9K5MyUlVYAY6dyNb/wHUqndkTd3XhpGlXgnQsBkRZuu4f9kAHghvgPw==
   dependencies:
-    "@typescript-eslint/types" "5.57.0"
-    "@typescript-eslint/visitor-keys" "5.57.0"
+    "@typescript-eslint/types" "5.57.1"
+    "@typescript-eslint/visitor-keys" "5.57.1"
 
 "@typescript-eslint/type-utils@5.56.0":
   version "5.56.0"
@@ -3005,13 +3089,13 @@
     debug "^4.3.4"
     tsutils "^3.21.0"
 
-"@typescript-eslint/type-utils@5.57.0":
-  version "5.57.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/@typescript-eslint/type-utils/-/type-utils-5.57.0.tgz#98e7531c4e927855d45bd362de922a619b4319f2"
-  integrity sha512-kxXoq9zOTbvqzLbdNKy1yFrxLC6GDJFE2Yuo3KqSwTmDOFjUGeWSakgoXT864WcK5/NAJkkONCiKb1ddsqhLXQ==
+"@typescript-eslint/type-utils@5.57.1":
+  version "5.57.1"
+  resolved "https://mirrors.cloud.tencent.com/npm/@typescript-eslint/type-utils/-/type-utils-5.57.1.tgz#235daba621d3f882b8488040597b33777c74bbe9"
+  integrity sha512-/RIPQyx60Pt6ga86hKXesXkJ2WOS4UemFrmmq/7eOyiYjYv/MUSHPlkhU6k9T9W1ytnTJueqASW+wOmW4KrViw==
   dependencies:
-    "@typescript-eslint/typescript-estree" "5.57.0"
-    "@typescript-eslint/utils" "5.57.0"
+    "@typescript-eslint/typescript-estree" "5.57.1"
+    "@typescript-eslint/utils" "5.57.1"
     debug "^4.3.4"
     tsutils "^3.21.0"
 
@@ -3020,10 +3104,10 @@
   resolved "https://mirrors.cloud.tencent.com/npm/@typescript-eslint/types/-/types-5.56.0.tgz#b03f0bfd6fa2afff4e67c5795930aff398cbd834"
   integrity sha512-JyAzbTJcIyhuUhogmiu+t79AkdnqgPUEsxMTMc/dCZczGMJQh1MK2wgrju++yMN6AWroVAy2jxyPcPr3SWCq5w==
 
-"@typescript-eslint/types@5.57.0":
-  version "5.57.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/@typescript-eslint/types/-/types-5.57.0.tgz#727bfa2b64c73a4376264379cf1f447998eaa132"
-  integrity sha512-mxsod+aZRSyLT+jiqHw1KK6xrANm19/+VFALVFP5qa/aiJnlP38qpyaTd0fEKhWvQk6YeNZ5LGwI1pDpBRBhtQ==
+"@typescript-eslint/types@5.57.1":
+  version "5.57.1"
+  resolved "https://mirrors.cloud.tencent.com/npm/@typescript-eslint/types/-/types-5.57.1.tgz#d9989c7a9025897ea6f0550b7036027f69e8a603"
+  integrity sha512-bSs4LOgyV3bJ08F5RDqO2KXqg3WAdwHCu06zOqcQ6vqbTJizyBhuh1o1ImC69X4bV2g1OJxbH71PJqiO7Y1RuA==
 
 "@typescript-eslint/typescript-estree@5.56.0":
   version "5.56.0"
@@ -3038,13 +3122,13 @@
     semver "^7.3.7"
     tsutils "^3.21.0"
 
-"@typescript-eslint/typescript-estree@5.57.0":
-  version "5.57.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/@typescript-eslint/typescript-estree/-/typescript-estree-5.57.0.tgz#ebcd0ee3e1d6230e888d88cddf654252d41e2e40"
-  integrity sha512-LTzQ23TV82KpO8HPnWuxM2V7ieXW8O142I7hQTxWIHDcCEIjtkat6H96PFkYBQqGFLW/G/eVVOB9Z8rcvdY/Vw==
+"@typescript-eslint/typescript-estree@5.57.1":
+  version "5.57.1"
+  resolved "https://mirrors.cloud.tencent.com/npm/@typescript-eslint/typescript-estree/-/typescript-estree-5.57.1.tgz#10d9643e503afc1ca4f5553d9bbe672ea4050b71"
+  integrity sha512-A2MZqD8gNT0qHKbk2wRspg7cHbCDCk2tcqt6ScCFLr5Ru8cn+TCfM786DjPhqwseiS+PrYwcXht5ztpEQ6TFTw==
   dependencies:
-    "@typescript-eslint/types" "5.57.0"
-    "@typescript-eslint/visitor-keys" "5.57.0"
+    "@typescript-eslint/types" "5.57.1"
+    "@typescript-eslint/visitor-keys" "5.57.1"
     debug "^4.3.4"
     globby "^11.1.0"
     is-glob "^4.0.3"
@@ -3065,17 +3149,17 @@
     eslint-scope "^5.1.1"
     semver "^7.3.7"
 
-"@typescript-eslint/utils@5.57.0":
-  version "5.57.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/@typescript-eslint/utils/-/utils-5.57.0.tgz#eab8f6563a2ac31f60f3e7024b91bf75f43ecef6"
-  integrity sha512-ps/4WohXV7C+LTSgAL5CApxvxbMkl9B9AUZRtnEFonpIxZDIT7wC1xfvuJONMidrkB9scs4zhtRyIwHh4+18kw==
+"@typescript-eslint/utils@5.57.1":
+  version "5.57.1"
+  resolved "https://mirrors.cloud.tencent.com/npm/@typescript-eslint/utils/-/utils-5.57.1.tgz#0f97b0bbd88c2d5e2036869f26466be5f4c69475"
+  integrity sha512-kN6vzzf9NkEtawECqze6v99LtmDiUJCVpvieTFA1uL7/jDghiJGubGZ5csicYHU1Xoqb3oH/R5cN5df6W41Nfg==
   dependencies:
     "@eslint-community/eslint-utils" "^4.2.0"
     "@types/json-schema" "^7.0.9"
     "@types/semver" "^7.3.12"
-    "@typescript-eslint/scope-manager" "5.57.0"
-    "@typescript-eslint/types" "5.57.0"
-    "@typescript-eslint/typescript-estree" "5.57.0"
+    "@typescript-eslint/scope-manager" "5.57.1"
+    "@typescript-eslint/types" "5.57.1"
+    "@typescript-eslint/typescript-estree" "5.57.1"
     eslint-scope "^5.1.1"
     semver "^7.3.7"
 
@@ -3087,12 +3171,12 @@
     "@typescript-eslint/types" "5.56.0"
     eslint-visitor-keys "^3.3.0"
 
-"@typescript-eslint/visitor-keys@5.57.0":
-  version "5.57.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/@typescript-eslint/visitor-keys/-/visitor-keys-5.57.0.tgz#e2b2f4174aff1d15eef887ce3d019ecc2d7a8ac1"
-  integrity sha512-ery2g3k0hv5BLiKpPuwYt9KBkAp2ugT6VvyShXdLOkax895EC55sP0Tx5L0fZaQueiK3fBLvHVvEl3jFS5ia+g==
+"@typescript-eslint/visitor-keys@5.57.1":
+  version "5.57.1"
+  resolved "https://mirrors.cloud.tencent.com/npm/@typescript-eslint/visitor-keys/-/visitor-keys-5.57.1.tgz#585e5fa42a9bbcd9065f334fd7c8a4ddfa7d905e"
+  integrity sha512-RjQrAniDU0CEk5r7iphkm731zKlFiUjvcBS2yHAg8WWqFMCaCrD0rKEVOMUyMMcbGPZ0bPp56srkGWrgfZqLRA==
   dependencies:
-    "@typescript-eslint/types" "5.57.0"
+    "@typescript-eslint/types" "5.57.1"
     eslint-visitor-keys "^3.3.0"
 
 "@udecode/plate-alignment@16.8.0":
@@ -4904,6 +4988,11 @@ core-util-is@~1.0.0:
   resolved "https://mirrors.cloud.tencent.com/npm/core-util-is/-/core-util-is-1.0.3.tgz#a6042d3634c2b27e9328f837b965fac83808db85"
   integrity sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==
 
+cosmiconfig-typescript-loader@^4.3.0:
+  version "4.3.0"
+  resolved "https://mirrors.cloud.tencent.com/npm/cosmiconfig-typescript-loader/-/cosmiconfig-typescript-loader-4.3.0.tgz#c4259ce474c9df0f32274ed162c0447c951ef073"
+  integrity sha512-NTxV1MFfZDLPiBMjxbHRwSh5LaLcPMwNdCutmnHJCKoVnlvldPWlllonKwrsRJ5pYZBIBGRWWU2tfvzxgeSW5Q==
+
 cosmiconfig@^6.0.0:
   version "6.0.0"
   resolved "https://mirrors.cloud.tencent.com/npm/cosmiconfig/-/cosmiconfig-6.0.0.tgz#da4fee853c52f6b1e6935f41c1a2fc50bd4a9982"
@@ -4926,7 +5015,7 @@ cosmiconfig@^7.0.0:
     path-type "^4.0.0"
     yaml "^1.10.0"
 
-cosmiconfig@^8.0.0, cosmiconfig@^8.1.3:
+cosmiconfig@^8.1.3:
   version "8.1.3"
   resolved "https://mirrors.cloud.tencent.com/npm/cosmiconfig/-/cosmiconfig-8.1.3.tgz#0e614a118fcc2d9e5afc2f87d53cd09931015689"
   integrity sha512-/UkO2JKI18b5jVMJUp0lvKFMpa/Gye+ZgZjKD+DGEN9y7NRcf/nK1A0sp67ONmKtnDCNMS44E6jrk0Yc3bDuUw==
@@ -6471,24 +6560,24 @@ find-yarn-workspace-root@^2.0.0:
   dependencies:
     micromatch "^4.0.2"
 
-firebase@^9.18.0:
-  version "9.18.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/firebase/-/firebase-9.18.0.tgz#c617c8194baa7683b6da24d05e613eadc6ab7e32"
-  integrity sha512-CTV5S3mTtn9zodeWkdeTqiQFyS7t+iskA50V9hVKPCQ4TPw4tnoyNgtNzWUmemFnYadzzsTnAaxsR7UaBJgiqw==
+firebase@^9.19.1:
+  version "9.19.1"
+  resolved "https://mirrors.cloud.tencent.com/npm/firebase/-/firebase-9.19.1.tgz#c33331017156f8ca9c4570c05af1f549528f568c"
+  integrity sha512-MeukV4NIk6usV1ZbnoA36gumK62JzxOZmF6OZyqkFwJ7edpAEyYNZXvExQlFsvnx2ery0UwNIvu4pKIZS3HiEQ==
   dependencies:
-    "@firebase/analytics" "0.9.4"
-    "@firebase/analytics-compat" "0.2.4"
-    "@firebase/app" "0.9.5"
+    "@firebase/analytics" "0.9.5"
+    "@firebase/analytics-compat" "0.2.5"
+    "@firebase/app" "0.9.7"
     "@firebase/app-check" "0.6.4"
     "@firebase/app-check-compat" "0.3.4"
-    "@firebase/app-compat" "0.2.5"
+    "@firebase/app-compat" "0.2.7"
     "@firebase/app-types" "0.9.0"
-    "@firebase/auth" "0.21.5"
-    "@firebase/auth-compat" "0.3.5"
+    "@firebase/auth" "0.22.0"
+    "@firebase/auth-compat" "0.3.7"
     "@firebase/database" "0.14.4"
     "@firebase/database-compat" "0.3.4"
-    "@firebase/firestore" "3.9.0"
-    "@firebase/firestore-compat" "0.3.5"
+    "@firebase/firestore" "3.10.0"
+    "@firebase/firestore-compat" "0.3.6"
     "@firebase/functions" "0.9.4"
     "@firebase/functions-compat" "0.3.4"
     "@firebase/installations" "0.6.4"
@@ -7114,10 +7203,10 @@ i18next-http-backend@^2.2.0:
   dependencies:
     cross-fetch "3.1.5"
 
-i18next@^22.4.13:
-  version "22.4.13"
-  resolved "https://mirrors.cloud.tencent.com/npm/i18next/-/i18next-22.4.13.tgz#02e291ab0056eab13b7d356fb454ff991923eaa0"
-  integrity sha512-GX7flMHRRqQA0I1yGLmaZ4Hwt1JfLqagk8QPDPZsqekbKtXsuIngSVWM/s3SLgNkrEXjA+0sMGNuOEkkmyqmWg==
+i18next@^22.4.14:
+  version "22.4.14"
+  resolved "https://mirrors.cloud.tencent.com/npm/i18next/-/i18next-22.4.14.tgz#18dd94e9adc2618497c7de101a206e1ca3a18727"
+  integrity sha512-VtLPtbdwGn0+DAeE00YkiKKXadkwg+rBUV+0v8v0ikEjwdiJ0gmYChVE4GIa9HXymY6wKapkL93vGT7xpq6aTw==
   dependencies:
     "@babel/runtime" "^7.20.6"
 
@@ -9569,12 +9658,13 @@ postcss-loader@^6.2.1:
     klona "^2.0.5"
     semver "^7.3.5"
 
-postcss-loader@^7.1.0:
-  version "7.1.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/postcss-loader/-/postcss-loader-7.1.0.tgz#3ba0dfddff06043f3eac7690a1d8b432264bb866"
-  integrity sha512-vTD2DJ8vJD0Vr1WzMQkRZWRjcynGh3t7NeoLg+Sb1TeuK7etiZfL/ZwHbaVa3M+Qni7Lj/29voV9IggnIUjlIw==
+postcss-loader@^7.2.3:
+  version "7.2.3"
+  resolved "https://mirrors.cloud.tencent.com/npm/postcss-loader/-/postcss-loader-7.2.3.tgz#c2d491a769102e0aac228d53fb1ad376cc158bb2"
+  integrity sha512-H/PIjgbn2q7zFnmUMPvEupIFnOAg+fYWC/4F6DugK8uPITVYyEflnSjLFV0u20B3Qi88PzPiAlzn8hBSu3f8oA==
   dependencies:
-    cosmiconfig "^8.0.0"
+    cosmiconfig "^8.1.3"
+    cosmiconfig-typescript-loader "^4.3.0"
     klona "^2.0.6"
     semver "^7.3.8"
 
@@ -11266,17 +11356,17 @@ slash@^4.0.0:
   resolved "https://mirrors.cloud.tencent.com/npm/slash/-/slash-4.0.0.tgz#2422372176c4c6c5addb5e2ada885af984b396a7"
   integrity sha512-3dOsAHXXUkQTpOYcoAxLIorMTp4gIQr5IW3iVb7A7lFIp0VHhnynm9izx6TssdrIcVIESAlVjtnO2K8bg+Coew==
 
-slate-history@^0.86.0:
-  version "0.86.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/slate-history/-/slate-history-0.86.0.tgz#5554612271d2fc1018a7918be3961bb66e620c58"
-  integrity sha512-OxObL9tbhgwvSlnKSCpGIh7wnuaqvOj5jRExGjEyCU2Ke8ctf22HjT+jw7GEi9ttLzNTUmTEU3YIzqKGeqN+og==
+slate-history@^0.93.0:
+  version "0.93.0"
+  resolved "https://mirrors.cloud.tencent.com/npm/slate-history/-/slate-history-0.93.0.tgz#d2fad47e4e8b262ab7c86b653f5dd6d9b6d85277"
+  integrity sha512-Gr1GMGPipRuxIz41jD2/rbvzPj8eyar56TVMyJBvBeIpQSSjNISssvGNDYfJlSWM8eaRqf6DAcxMKzsLCYeX6g==
   dependencies:
     is-plain-object "^5.0.0"
 
-slate-react@^0.92.0:
-  version "0.92.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/slate-react/-/slate-react-0.92.0.tgz#eb158ac2a33d962f48c466c4c8cc7bc14c1c6633"
-  integrity sha512-xEDKu5RKw5f0N95l1UeNQnrB0Pxh4JPjpIZR/BVsMo0ININnLAknR99gLo46bl/Ffql4mr7LeaxQRoXxbFtJOQ==
+slate-react@^0.93.0:
+  version "0.93.0"
+  resolved "https://mirrors.cloud.tencent.com/npm/slate-react/-/slate-react-0.93.0.tgz#62988e0dc278b907e479c77fcca8b71f68ae64dc"
+  integrity sha512-yzQYA91N7ELA8295TsY/Nig2sOq7mhi4HuvqX/Ay1jjs+Pnp8+BTYpIzmi9ruvnwovdwtDm+pdNO8LzPeJaKcQ==
   dependencies:
     "@juggle/resize-observer" "^3.4.0"
     "@types/is-hotkey" "^0.1.1"
@@ -11288,10 +11378,10 @@ slate-react@^0.92.0:
     scroll-into-view-if-needed "^2.2.20"
     tiny-invariant "1.0.6"
 
-slate@^0.91.4:
-  version "0.91.4"
-  resolved "https://mirrors.cloud.tencent.com/npm/slate/-/slate-0.91.4.tgz#759764d63c8a8a7aff29a29e598e593ed80277f9"
-  integrity sha512-aUJ3rpjrdi5SbJ5G1Qjr3arytfRkEStTmHjBfWq2A2Q8MybacIzkScSvGJjQkdTk3djCK9C9SEOt39sSeZFwTw==
+slate@^0.93.0:
+  version "0.93.0"
+  resolved "https://mirrors.cloud.tencent.com/npm/slate/-/slate-0.93.0.tgz#12956a4c164a00c6839998f0803e52b9c31c771e"
+  integrity sha512-80IktTrGJU9/MzOp8T4fgXfMMedeG1qx0Y/EiABd68Qm9iFgJ9khnAt8clDfYyFDTs7erXJpjbQoZnV0XKuqfA==
   dependencies:
     immer "^9.0.6"
     is-plain-object "^5.0.0"
@@ -11816,10 +11906,10 @@ tailwindcss@^3.0.2:
     quick-lru "^5.1.1"
     resolve "^1.22.1"
 
-tailwindcss@^3.3.0:
-  version "3.3.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/tailwindcss/-/tailwindcss-3.3.0.tgz#8cab40e5a10a10648118c0859ba8bfbc744a761e"
-  integrity sha512-hOXlFx+YcklJ8kXiCAfk/FMyr4Pm9ck477G0m/us2344Vuj355IpoEDB5UmGAsSpTBmr+4ZhjzW04JuFXkb/fw==
+tailwindcss@^3.3.1:
+  version "3.3.1"
+  resolved "https://mirrors.cloud.tencent.com/npm/tailwindcss/-/tailwindcss-3.3.1.tgz#b6662fab6a9b704779e48d083a9fef5a81d2b81e"
+  integrity sha512-Vkiouc41d4CEq0ujXl6oiGFQ7bA3WEhUZdTgXAhtKxSy49OmKs8rEfQmupsfF0IGW8fv2iQkp1EVUuapCFrZ9g==
   dependencies:
     arg "^5.0.2"
     chokidar "^3.5.3"
@@ -12140,10 +12230,10 @@ typedarray-to-buffer@^3.1.5:
   dependencies:
     is-typedarray "^1.0.0"
 
-typescript@^5.0.2:
-  version "5.0.2"
-  resolved "https://mirrors.cloud.tencent.com/npm/typescript/-/typescript-5.0.2.tgz#891e1a90c5189d8506af64b9ef929fca99ba1ee5"
-  integrity sha512-wVORMBGO/FAs/++blGNeAVdbNKtIh1rbBL2EyQ1+J9lClJ93KiiKe8PmFIVdXhHcyv44SL9oglmfeSsndo0jRw==
+typescript@^5.0.3:
+  version "5.0.3"
+  resolved "https://mirrors.cloud.tencent.com/npm/typescript/-/typescript-5.0.3.tgz#fe976f0c826a88d0a382007681cbb2da44afdedf"
+  integrity sha512-xv8mOEDnigb/tN9PSMTwSEqAnUvkoXMQlicOb0IUVDBSQCgBSaAAROUZYy2IcUy5qU6XajK5jjjO7TMWqBTKZA==
 
 unbox-primitive@^1.0.2:
   version "1.0.2"
@@ -12440,7 +12530,43 @@ webpack-dev-middleware@^5.3.1:
     range-parser "^1.2.1"
     schema-utils "^4.0.0"
 
-webpack-dev-server@^4.13.1, webpack-dev-server@^4.6.0:
+webpack-dev-server@^4.13.2:
+  version "4.13.2"
+  resolved "https://mirrors.cloud.tencent.com/npm/webpack-dev-server/-/webpack-dev-server-4.13.2.tgz#d97445481d78691efe6d9a3b230833d802fc31f9"
+  integrity sha512-5i6TrGBRxG4vnfDpB6qSQGfnB6skGBXNL5/542w2uRGLimX6qeE5BQMLrzIC3JYV/xlGOv+s+hTleI9AZKUQNw==
+  dependencies:
+    "@types/bonjour" "^3.5.9"
+    "@types/connect-history-api-fallback" "^1.3.5"
+    "@types/express" "^4.17.13"
+    "@types/serve-index" "^1.9.1"
+    "@types/serve-static" "^1.13.10"
+    "@types/sockjs" "^0.3.33"
+    "@types/ws" "^8.5.1"
+    ansi-html-community "^0.0.8"
+    bonjour-service "^1.0.11"
+    chokidar "^3.5.3"
+    colorette "^2.0.10"
+    compression "^1.7.4"
+    connect-history-api-fallback "^2.0.0"
+    default-gateway "^6.0.3"
+    express "^4.17.3"
+    graceful-fs "^4.2.6"
+    html-entities "^2.3.2"
+    http-proxy-middleware "^2.0.3"
+    ipaddr.js "^2.0.1"
+    launch-editor "^2.6.0"
+    open "^8.0.9"
+    p-retry "^4.5.0"
+    rimraf "^3.0.2"
+    schema-utils "^4.0.0"
+    selfsigned "^2.1.1"
+    serve-index "^1.9.1"
+    sockjs "^0.3.24"
+    spdy "^4.0.2"
+    webpack-dev-middleware "^5.3.1"
+    ws "^8.13.0"
+
+webpack-dev-server@^4.6.0:
   version "4.13.1"
   resolved "https://mirrors.cloud.tencent.com/npm/webpack-dev-server/-/webpack-dev-server-4.13.1.tgz#6417a9b5d2f528e7644b68d6ed335e392dccffe8"
   integrity sha512-5tWg00bnWbYgkN+pd5yISQKDejRBYGEw15RaEEslH+zdbNDxxaZvEAO2WulaSaFKb5n3YG8JXsGaDsut1D0xdA==
