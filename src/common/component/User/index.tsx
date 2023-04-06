@@ -45,7 +45,7 @@ const User: FC<Props> = ({
   const online = curr.online || curr.uid == loginUid;
   const containerClass = clsx(`relative flex items-center justify-start gap-2 rounded-lg select-none`, interactive && "md:hover:bg-gray-500/10", compact ? "p-0" : "p-2");
   const nameClass = clsx(`text-sm text-gray-500 max-w-[190px] truncate font-semibold dark:text-white`);
-  const statusClass = clsx(`absolute -bottom-[2.5px] -right-[2.5px] border-content rounded-full border-[1px] border-solid border-white dark:border-gray-300`,
+  const statusClass = clsx(`absolute -bottom-[2.5px] -right-[2.5px] border-content rounded-full border-[1px] border-white dark:border-gray-300`,
     online ? "bg-green-500" : "bg-zinc-400",
     compact ? "w-[15px] h-[15px]" : "w-3 h-3");
   if (!popover)
@@ -71,7 +71,7 @@ const User: FC<Props> = ({
               name={curr.name}
               alt="avatar"
             />
-            <div className={statusClass}></div>
+            {curr.is_bot ? <IconBot className={clsx(compact && "absolute -bottom-[2.5px] -right-[2.5px]", "!w-[15px] !h-[15px]")} /> : <div className={statusClass}></div>}
           </div>
           {!compact && (
             <span className={nameClass} title={curr?.name}>
@@ -79,7 +79,6 @@ const User: FC<Props> = ({
             </span>
           )}
           {owner && <IconOwner />}
-          {curr.is_bot && <IconBot className={clsx(compact && "absolute -top-[2.5px] -right-[2.5px]", "!w-[15px] !h-[15px]")} />}
         </div>
       </ContextMenu>
     );

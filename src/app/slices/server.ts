@@ -42,10 +42,9 @@ const serverSlice = createSlice({
         name = "",
         description = "",
         show_user_online_status = false,
-        language = "en",
         webclient_auto_update = true
       } = action.payload || {};
-      return { upgraded, name, logo, description, inviteLink, show_user_online_status, language, webclient_auto_update };
+      return { upgraded, name, logo, description, inviteLink, show_user_online_status, webclient_auto_update };
     },
     updateInfo(state, action: PayloadAction<Partial<StoredServer>>) {
       const values = action.payload || {};
