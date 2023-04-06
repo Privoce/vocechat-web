@@ -22,6 +22,11 @@ const renderContent = (data: MessagePayload) => {
         </span>
       );
       break;
+    case ContentTypes.audio:
+      res = (
+        <span className="text-gray-400 italic">[Voice Message]</span>
+      );
+      break;
     case ContentTypes.markdown:
       res = (
         <div className="max-h-[152px] overflow-hidden dark:text-gray-100">

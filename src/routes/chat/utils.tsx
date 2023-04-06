@@ -59,6 +59,11 @@ export const renderPreviewMessage = (message = null) => {
         res = <LinkifyText text={content} url={false} mentionTextOnly={true} />;
       }
       break;
+    case ContentTypes.audio:
+      {
+        res = `[${i18n.t("voice_message", { ns: "chat" })}]`;
+      }
+      break;
     case ContentTypes.markdown:
       {
         res = `[markdown]`;

@@ -20,6 +20,13 @@ const renderContent = (data: MessagePayload) => {
       // });
       break;
 
+    case ContentTypes.audio:
+      res = (
+        <div className="text-sm">
+          <span className="text-gray-400 italic">[Voice Message]</span>
+        </div>
+      );
+      break;
     case ContentTypes.markdown:
       res = (
         <div className="max-h-[100px] overflow-auto">
