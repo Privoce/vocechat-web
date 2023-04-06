@@ -18,7 +18,8 @@ import {
   RenewLicense,
   RenewLicenseResponse,
   AgoraTokenResponse,
-  AgoraVoicingListResponse
+  AgoraVoicingListResponse,
+  SystemCommon
 } from "../../types/server";
 import { Channel } from "../../types/channel";
 import { ContentTypeKey } from "../../types/message";
@@ -143,6 +144,26 @@ export const serverApi = createApi({
           }
         } catch {
           console.error("get voice list error");
+        }
+      }
+    }),
+    getSystemCommon: builder.query<SystemCommon, void>({
+      query: () => ({ url: `admin/system/common` })
+    }),
+    updateSystemCommon: builder.mutation<void, Partial<SystemCommon>>({
+      query: (data) => ({
+        url: `admin/system/common`,
+        method: "PUT",
+        body: data
+      }),
+      async onQueryStarted(data, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          dispatch(
+            updateInfo(data)
+          );
+        } catch {
+          console.error("update server common error");
         }
       }
     }),
@@ -360,5 +381,7 @@ export const {
   useGetFrontendUrlQuery,
   useLazyGetAgoraTokenQuery,
   useGetAgoraConfigQuery,
-  useGetAgoraVoicingListQuery
+  useGetAgoraVoicingListQuery,
+  useUpdateSystemCommonMutation,
+  useGetSystemCommonQuery
 } = serverApi;
