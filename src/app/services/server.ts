@@ -196,7 +196,7 @@ export const serverApi = createApi({
           "content-type": "image/png"
         },
         url: `admin/system/organization/logo`,
-        method: "PUT",
+        method: "POST",
         body: data
       }),
       async onQueryStarted(data, { dispatch, queryFulfilled }) {
@@ -229,10 +229,10 @@ export const serverApi = createApi({
         return `${location.origin}${invite.pathname}${invite.search}${invite.hash}`;
       }
     }),
-    updateServer: builder.mutation<void, Partial<Server>>({
+    updateServer: builder.mutation<void, Server>({
       query: (data) => ({
         url: "admin/system/organization",
-        method: "PUT",
+        method: "POST",
         body: data
       }),
       async onQueryStarted(data, { dispatch, queryFulfilled, getState }) {
