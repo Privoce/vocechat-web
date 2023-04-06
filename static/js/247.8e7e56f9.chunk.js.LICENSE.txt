@@ -1,0 +1,207 @@
+/*!
+ * @toast-ui/editor
+ * @version 3.2.2 | Fri Feb 17 2023
+ * @author NHN Cloud FE Development Lab <dl_javascript@nhn.com>
+ * @license MIT
+ */
+
+/*!
+ * TOAST UI Editor : Code Syntax Highlight Plugin
+ * @version 3.1.0 | Fri Aug 05 2022
+ * @author NHN Cloud FE Development Lab <dl_javascript@nhn.com>
+ * @license MIT
+ */
+
+/*!
+ * wavesurfer.js 6.6.3 (2023-04-04)
+ * https://wavesurfer-js.org
+ * @license BSD-3-Clause
+ */
+
+/*! *****************************************************************************
+        Copyright (c) Microsoft Corporation.
+        
+        Permission to use, copy, modify, and/or distribute this software for any
+        purpose with or without fee is hereby granted.
+        
+        THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+        REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+        AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+        INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+        LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+        OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+        PERFORMANCE OF THIS SOFTWARE.
+        ***************************************************************************** */
+
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+
+/*! ./absMax */
+
+/*! ./clamp */
+
+/*! ./drawer */
+
+/*! ./drawer.canvasentry */
+
+/*! ./drawer.multicanvas */
+
+/*! ./fetch */
+
+/*! ./frame */
+
+/*! ./get-id */
+
+/*! ./max */
+
+/*! ./mediaelement */
+
+/*! ./mediaelement-webaudio */
+
+/*! ./min */
+
+/*! ./observer */
+
+/*! ./orientation */
+
+/*! ./peakcache */
+
+/*! ./prevent-click */
+
+/*! ./request-animation-frame */
+
+/*! ./silence-mode */
+
+/*! ./style */
+
+/*! ./util */
+
+/*! ./util/get-id */
+
+/*! ./util/style */
+
+/*! ./webaudio */
+
+/*! @license DOMPurify 2.3.3 | (c) Cure53 and other contributors | Released under the Apache license 2.0 and Mozilla Public License 2.0 | github.com/cure53/DOMPurify/blob/2.3.3/LICENSE */
+
+/*! debounce */
+
+/*!***********************!*\
+          !*** ./src/drawer.js ***!
+          \***********************/
+
+/*!*************************!*\
+          !*** ./src/util/max.js ***!
+          \*************************/
+
+/*!*************************!*\
+          !*** ./src/util/min.js ***!
+          \*************************/
+
+/*!*************************!*\
+          !*** ./src/webaudio.js ***!
+          \*************************/
+
+/*!**************************!*\
+          !*** ./src/peakcache.js ***!
+          \**************************/
+
+/*!***************************!*\
+          !*** ./src/util/clamp.js ***!
+          \***************************/
+
+/*!***************************!*\
+          !*** ./src/util/fetch.js ***!
+          \***************************/
+
+/*!***************************!*\
+          !*** ./src/util/frame.js ***!
+          \***************************/
+
+/*!***************************!*\
+          !*** ./src/util/index.js ***!
+          \***************************/
+
+/*!***************************!*\
+          !*** ./src/util/style.js ***!
+          \***************************/
+
+/*!***************************!*\
+          !*** ./src/wavesurfer.js ***!
+          \***************************/
+
+/*!****************************!*\
+          !*** ./src/util/absMax.js ***!
+          \****************************/
+
+/*!****************************!*\
+          !*** ./src/util/get-id.js ***!
+          \****************************/
+
+/*!*****************************!*\
+          !*** ./src/mediaelement.js ***!
+          \*****************************/
+
+/*!******************************!*\
+          !*** ./src/util/observer.js ***!
+          \******************************/
+
+/*!*********************************!*\
+          !*** ./src/util/orientation.js ***!
+          \*********************************/
+
+/*!**********************************!*\
+          !*** ./src/util/silence-mode.js ***!
+          \**********************************/
+
+/*!***********************************!*\
+          !*** ./src/drawer.canvasentry.js ***!
+          \***********************************/
+
+/*!***********************************!*\
+          !*** ./src/drawer.multicanvas.js ***!
+          \***********************************/
+
+/*!***********************************!*\
+          !*** ./src/util/prevent-click.js ***!
+          \***********************************/
+
+/*!**************************************!*\
+          !*** ./src/mediaelement-webaudio.js ***!
+          \**************************************/
+
+/*!****************************************!*\
+          !*** ./node_modules/debounce/index.js ***!
+          \****************************************/
+
+/*!*********************************************!*\
+          !*** ./src/util/request-animation-frame.js ***!
+          \*********************************************/
+
+/**
+       * Prism: Lightweight, robust, elegant syntax highlighting
+       *
+       * @license MIT <https://opensource.org/licenses/MIT>
+       * @author Lea Verou <https://lea.verou.me>
+       * @namespace
+       * @public
+       */
+
+/**
+ * @toast-ui/editor
+ * @version 3.2.2 | Fri Feb 17 2023
+ * @author NHN Cloud FE Development Lab <dl_javascript@nhn.com>
+ * @license MIT
+ */
