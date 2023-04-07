@@ -32,7 +32,7 @@ const RTCWidget = ({ id, context = "channel" }: Props) => {
     if (!name) return null;
     const isReConnecting = voicingInfo.connectionState == "RECONNECTING";
     return (
-        <div className='bg-gray-100 dark:bg-gray-900 flex flex-col p-2 rounded-3xl m-3 text-sm'>
+        <div className='bg-gray-100 dark:bg-gray-900 flex flex-col p-2 rounded-3xl m-3 mb-4 text-sm'>
             {/* {voicingInfo && */}
             <div className="flex justify-between items-center border-b border-b-gray-200 dark:border-b-gray-800 pb-2">
                 <div className="flex flex-1 items-center gap-1">

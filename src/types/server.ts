@@ -6,6 +6,10 @@ export interface Server {
   name: string;
   description: string;
 }
+export interface SystemCommon {
+  show_user_online_status: boolean,
+  webclient_auto_update: boolean,
+}
 export interface GithubAuthConfig {
   client_id?: string;
   client_secret?: string;

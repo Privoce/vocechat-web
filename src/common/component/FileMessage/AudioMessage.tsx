@@ -29,7 +29,7 @@ const AudioMessage = ({ url, name, size, download }: Props) => {
                 </div>
                 <a href={download} className="mt-2"><IconDownload className="fill-gray-500 dark:fill-gray-400" /></a>
             </div>
-            <audio src={url} onCanPlay={handleCanPlay} controls className={clsx("w-full object-cover z-10", canPlay ? "" : "hidden")} />
+            <audio src={url} onCanPlay={handleCanPlay} controls className={clsx("w-full object-cover z-10", canPlay ? "visible" : "invisible")} />
         </div>
     );
 };

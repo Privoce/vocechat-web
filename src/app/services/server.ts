@@ -18,7 +18,8 @@ import {
   RenewLicense,
   RenewLicenseResponse,
   AgoraTokenResponse,
-  AgoraVoicingListResponse
+  AgoraVoicingListResponse,
+  SystemCommon
 } from "../../types/server";
 import { Channel } from "../../types/channel";
 import { ContentTypeKey } from "../../types/message";
@@ -146,6 +147,26 @@ export const serverApi = createApi({
         }
       }
     }),
+    getSystemCommon: builder.query<SystemCommon, void>({
+      query: () => ({ url: `admin/system/common` })
+    }),
+    updateSystemCommon: builder.mutation<void, Partial<SystemCommon>>({
+      query: (data) => ({
+        url: `admin/system/common`,
+        method: "PUT",
+        body: data
+      }),
+      async onQueryStarted(data, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          dispatch(
+            updateInfo(data)
+          );
+        } catch {
+          console.error("update server common error");
+        }
+      }
+    }),
     getSMTPConfig: builder.query<SMTPConfig, void>({
       query: () => ({ url: `admin/smtp/config` })
     }),
@@ -175,7 +196,7 @@ export const serverApi = createApi({
           "content-type": "image/png"
         },
         url: `admin/system/organization/logo`,
-        method: "PUT",
+        method: "POST",
         body: data
       }),
       async onQueryStarted(data, { dispatch, queryFulfilled }) {
@@ -208,10 +229,10 @@ export const serverApi = createApi({
         return `${location.origin}${invite.pathname}${invite.search}${invite.hash}`;
       }
     }),
-    updateServer: builder.mutation<void, Partial<Server>>({
+    updateServer: builder.mutation<void, Server>({
       query: (data) => ({
         url: "admin/system/organization",
-        method: "PUT",
+        method: "POST",
         body: data
       }),
       async onQueryStarted(data, { dispatch, queryFulfilled, getState }) {
@@ -360,5 +381,7 @@ export const {
   useGetFrontendUrlQuery,
   useLazyGetAgoraTokenQuery,
   useGetAgoraConfigQuery,
-  useGetAgoraVoicingListQuery
+  useGetAgoraVoicingListQuery,
+  useUpdateSystemCommonMutation,
+  useGetSystemCommonQuery
 } = serverApi;

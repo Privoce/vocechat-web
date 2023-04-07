@@ -58,7 +58,7 @@ const VoiceManagement = ({ info, setMute, setDeafen, leave }: Props) => {
                     return <li key={uid} className="flex items-center justify-between gap-6 pb-4 ">
                         <div className="flex items-center gap-2 transition-opacity">
                             <div className={clsx("w-8 h-8 flex shrink-0 relative")}>
-                                {speaking && <div className="z-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 rounded-full bg-green-500 animate-speaking w-10 h-10"></div>}
+                                {speaking && <div className="z-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 rounded-full bg-green-500 animate-speaking w-[36px] h-[36px]"></div>}
                                 <Avatar
                                     width={32}
                                     height={32}

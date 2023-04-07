@@ -60,7 +60,7 @@ const ProfileBasicEditModal: FC<Props> = ({ closeModal }) => {
     newPassword !== confirmPassword ||
     isLoading;
 
-  const inputClass = `my-4 w-full flex flex-col gap-2`;
+  const inputClass = `my-4 w-full flex flex-col items-start gap-2`;
   const labelClass = `text-gray-400 font-semibold`;
   return (
     <Modal id="modal-modal">

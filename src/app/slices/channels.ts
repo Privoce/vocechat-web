@@ -2,6 +2,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { isNull, omitBy } from "lodash";
 import BASE_URL from "../config";
 import { Channel, UpdateChannelDTO, UpdatePinnedMessageDTO } from "../../types/channel";
+import { resetAuthData } from "./auth.data";
+// import { updateVoicingInfo } from "./voice";
 
 type ChannelAside = "members" | "voice" | null;
 interface StoredChannel extends Channel {
@@ -117,6 +119,16 @@ const channelsSlice = createSlice({
         delete state.byId[gid];
       }
     }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(resetAuthData, (state) => {
+      // 如果有aside是voice的，就把它关掉
+      Object.values(state.byId).forEach((ch) => {
+        if (ch.visibleAside === "voice") {
+          ch.visibleAside = null;
+        }
+      });
+    });
   }
 });
 

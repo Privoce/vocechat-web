@@ -7,6 +7,7 @@ import { addVoiceMember, removeVoiceMember, updateConnectionState, updateDeafenS
 import { useAppSelector } from '../../app/store';
 import AudioJoin from '../../assets/join.wav';
 // type Props = {}
+AgoraRTC.setLogLevel(process.env.NODE_ENV === 'development' ? 0 : 4);
 window.VOICE_TRACK_MAP = window.VOICE_TRACK_MAP ?? {};
 // let tmpUids: number[] = [];
 const Voice = () => {
@@ -57,11 +58,11 @@ const Voice = () => {
                 });
                 //remote user leave
                 agoraEngine.on("user-left", (user, reason) => {
+                    console.log(user, "has left the channel");
                     switch (reason) {
                         case "Quit":
                         case "ServerTimeOut": {
                             dispatch(removeVoiceMember(+user.uid as number));
-                            console.log(user, "has left the channel");
                         }
                             break;
                         default:
@@ -206,6 +207,7 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
                 dispatch(updateChannelVisibleAside({
                     id, aside: null
                 }));
+                // 即时更新对应的活跃列表信息
                 dispatch(upsertVoiceList({
                     id,
                     context,

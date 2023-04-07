@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { KEY_UID } from "../config";
 import { ConnectionState } from "agora-rtc-sdk-ng";
+import { resetAuthData } from "./auth.data";
 
 export type VoiceBasicInfo = {
   context: "channel" | "dm"
@@ -139,6 +140,19 @@ const voiceSlice = createSlice({
       }
     }
   },
+  extraReducers: (builder) => {
+    builder.addCase(resetAuthData, (state) => {
+      //  reset voicing info
+      if (window.VOICE_CLIENT) {
+        window.VOICE_CLIENT.leave();
+      }
+      state.voicing = null;
+      state.voicingMembers = {
+        ids: [],
+        byId: {}
+      };
+    });
+  }
 });
 
 export const { updateConnectionState, addVoiceMember, removeVoiceMember, upsertVoiceList, updateVoicingInfo, updateVoicingNetworkQuality, updateMuteStatus, updateVoicingMember, updateDeafenStatus } = voiceSlice.actions;
