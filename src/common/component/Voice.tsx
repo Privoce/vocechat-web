@@ -7,6 +7,7 @@ import { addVoiceMember, removeVoiceMember, updateConnectionState, updateDeafenS
 import { useAppSelector } from '../../app/store';
 import AudioJoin from '../../assets/join.wav';
 // type Props = {}
+AgoraRTC.setLogLevel(process.env.NODE_ENV === 'development' ? 0 : 4);
 window.VOICE_TRACK_MAP = window.VOICE_TRACK_MAP ?? {};
 // let tmpUids: number[] = [];
 const Voice = () => {
