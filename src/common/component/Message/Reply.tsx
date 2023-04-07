@@ -18,19 +18,19 @@ const renderContent = (data: MessagePayload) => {
     case ContentTypes.text:
       res = (
         <span className="max-w-lg md:truncate md:break-words md:break-all text-gray-800 dark:text-gray-100">
-          <LinkifyText text={content} url={false} mentionTextOnly={true} mentionPopOver={false} />
+          <LinkifyText text={content as string} url={false} mentionTextOnly={true} mentionPopOver={false} />
         </span>
       );
       break;
     case ContentTypes.audio:
       res = (
-        <span className="text-gray-400 italic">[Voice Message]</span>
+        <span className=" text-primary-400 text-sm">[Voice Message]</span>
       );
       break;
     case ContentTypes.markdown:
       res = (
         <div className="max-h-[152px] overflow-hidden dark:text-gray-100">
-          <MarkdownRender content={content} />
+          <MarkdownRender content={content as string} />
         </div>
       );
       break;
@@ -42,10 +42,10 @@ const renderContent = (data: MessagePayload) => {
           res = <img className="w-10 h-10 object-cover" src={thumbnail} />;
         } else {
           res = (
-            <>
+            <div className="flex gap-1">
               {icon}
-              <span className="ml-1 text-[10px] text-gray-500 dark:text-gray-100">{name}</span>
-            </>
+              <span className="text-[10px] text-gray-500 dark:text-gray-100">{name}</span>
+            </div>
           );
         }
       }
