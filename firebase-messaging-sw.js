@@ -27,7 +27,8 @@ self.addEventListener("notificationclick", function (event) {
         return;
       }
       if (allClients.length == 0) {
-        chatClient = await clients.openWindow(redirectPath);
+        // hash路由
+        chatClient = await clients.openWindow(`/#${redirectPath}`);
       } else {
         firstClient.postMessage({ newPath: redirectPath });
         firstClient.focus();
