@@ -63,7 +63,7 @@ const Message: FC<IProps> = ({
       }
     }
   }, [mid, read]);
-  if (!message) return null;
+  if (!message) return <div className="w-full h-[1px] invisible"></div>;
   const {
     reply_mid,
     from_uid: fromUid,
