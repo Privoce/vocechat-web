@@ -20,7 +20,7 @@ const ReactionDetails = ({
 }) => {
   const usersData = useAppSelector((store) => store.users.byId);
   const names = uids.map((id) => {
-    return usersData[id]?.name;
+    return usersData[id]?.name ?? "Deleted User";
   });
   // const emojiData = getEmojiDataFromNative(emoji || "", "apple", AppleEmojiData);
   const prefixDesc =
