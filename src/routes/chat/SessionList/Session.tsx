@@ -148,8 +148,8 @@ const Session: FC<IProps> = ({
             <div className="flex items-center justify-between">
               <span className={clsx("text-xs text-gray-500 dark:text-gray-400  truncate", unreads > 0 ? `w-36` : ``)}>{renderPreviewMessage(previewMsg)}</span>
               {unreads > 0 && !isCurrentPath && (
-                <strong className={clsx(`text-white px-1.5 py-[3px] bg-primary-400 font-bold text-[10px] leading-[10px] rounded-[10px]`, unreads > 99 && 'w-1.5 !h-1.5 p-0 min-w-[unset]', muted && "bg-gray-500")}>
-                  {unreads > 99 ? null : unreads}
+                <strong className={clsx(`text-white px-1.5 py-[3px] bg-primary-400 font-bold text-[10px] leading-[10px] rounded-[10px]`, muted && "bg-gray-500")}>
+                  {unreads > 99 ? "99+" : unreads}
                 </strong>
               )}
             </div>
