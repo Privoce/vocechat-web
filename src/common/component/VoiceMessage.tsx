@@ -95,11 +95,11 @@ const VoiceMessage = ({ file_path }: { file_path: string }) => {
             <button className='disabled:opacity-60' onClick={handleClick} disabled={notReady}>
                 {playing ? <IconPause className="stroke-primary-500" /> : <IconPlay className="stroke-primary-500" />}
             </button>
-            <div ref={containerRef} className={clsx('flex-1 h-8', notReady && "flex-center")} >
+            <div ref={containerRef} className={clsx('flex-1 h-8', notReady && "flex-center flex-1 whitespace-nowrap")} >
                 {status == "loading" && <span className='text-xs'>Loading voice message...</span>}
                 {status == "error" && <span className='text-xs text-red-800'>Load voice message error</span>}
             </div>
-            {status !== "error" && <time className='text-primary-500 text-xs whitespace-nowrap text-left'>{duration}'</time>}
+            {status !== "error" && <time className='text-primary-500 text-xs whitespace-nowrap text-left'>{duration}</time>}
             {status === "error" && <IconRefresh role="button" className="absolute -right-6 top-1/2 -translate-y-1/2 w-4 h-4 stroke-primary-600" onClick={handleReload} />}
         </div>
     );
