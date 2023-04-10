@@ -68,6 +68,10 @@
       "auto": "自动",
       "dark": "黑夜模式",
       "light": "白天模式"
+    },
+    "online_status": {
+      "title": "在线状态",
+      "desc": "开启或关闭用户在线状态"
     }
   },
   "license": {
