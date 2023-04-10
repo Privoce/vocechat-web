@@ -3,11 +3,12 @@ import dayjs from "dayjs";
 import initCache, { useRehydrate } from "../../app/cache";
 import { useLazyGetFavoritesQuery } from "../../app/services/message";
 import { useLazyGetUsersQuery } from "../../app/services/user";
-import { useLazyGetServerQuery } from "../../app/services/server";
+import { useGetServerVersionQuery, useGetSystemCommonQuery, useLazyGetServerQuery } from "../../app/services/server";
 import useStreaming from "./useStreaming";
 import { useAppSelector } from "../../app/store";
 import { useLazyLoadMoreMessagesQuery } from "../../app/services/message";
 import useLicense from "./useLicense";
+import { compareVersion } from "../utils";
 // type Props={
 //   guest?:boolean
 // }
@@ -51,6 +52,10 @@ export default function usePreload() {
     getServer,
     { isLoading: serverLoading, isSuccess: serverSuccess, isError: serverError, data: server }
   ] = useLazyGetServerQuery();
+  const { data: currServerVersion, isSuccess: serverVersionSuccess, isLoading: loadingServerVersion } = useGetServerVersionQuery();
+  // 根据版本号判断是否需要调用system common api
+  const skipSystemCommonApi = !(serverVersionSuccess && compareVersion(currServerVersion, '0.3.4') >= 0);
+  useGetSystemCommonQuery(undefined, { skip: skipSystemCommonApi });
   useEffect(() => {
     initCache();
     rehydrate();
@@ -87,9 +92,9 @@ export default function usePreload() {
   }, [canStreaming]);
 
   return {
-    loading: usersLoading || serverLoading || favoritesLoading || !rehydrated || loadingLicense,
+    loading: usersLoading || serverLoading || favoritesLoading || !rehydrated || loadingLicense || loadingServerVersion,
     error: usersError && serverError && favoritesError,
-    success: usersSuccess && serverSuccess && favoritesSuccess,
+    success: usersSuccess && serverSuccess && favoritesSuccess && serverVersionSuccess,
     data: {
       users,
       server,

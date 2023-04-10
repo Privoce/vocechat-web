@@ -64,7 +64,17 @@ export const serverApi = createApi({
         },
         url: `/admin/system/version`,
         responseHandler: "text"
-      })
+      }),
+      async onQueryStarted(data, { dispatch, queryFulfilled }) {
+        try {
+          const resp = await queryFulfilled;
+          dispatch(
+            updateInfo({ version: resp.data })
+          );
+        } catch {
+          console.error("get server version error");
+        }
+      }
     }),
     getFirebaseConfig: builder.query<FirebaseConfig, void>({
       query: () => ({ url: `admin/fcm/config` })
@@ -148,7 +158,17 @@ export const serverApi = createApi({
       }
     }),
     getSystemCommon: builder.query<SystemCommon, void>({
-      query: () => ({ url: `admin/system/common` })
+      query: () => ({ url: `admin/system/common` }),
+      async onQueryStarted(data, { dispatch, queryFulfilled }) {
+        try {
+          const resp = await queryFulfilled;
+          dispatch(
+            updateInfo(resp.data)
+          );
+        } catch {
+          console.error("get server common error");
+        }
+      }
     }),
     updateSystemCommon: builder.mutation<void, Partial<SystemCommon>>({
       query: (data) => ({
@@ -383,5 +403,6 @@ export const {
   useGetAgoraConfigQuery,
   useGetAgoraVoicingListQuery,
   useUpdateSystemCommonMutation,
+  useLazyGetSystemCommonQuery,
   useGetSystemCommonQuery
 } = serverApi;
