@@ -46,7 +46,7 @@ export const userApi = createApi({
     }),
     searchUser: builder.mutation<User, string>({
       query: (input) => ({
-        url: `/user/contacts/search`,
+        url: `/user/search`,
         body: {
           keyword: input
         },
