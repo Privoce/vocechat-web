@@ -12,6 +12,7 @@ import BlankPlaceholder from "../../common/component/BlankPlaceholder";
 import useFilteredUsers from "../../common/hook/useFilteredUsers";
 import clsx from "clsx";
 import GoBackNav from "../../common/component/GoBackNav";
+import SearchUser from "./SearchUser";
 
 function UsersPage() {
   const ref = useRef<HTMLDivElement | null>(
@@ -37,6 +38,7 @@ function UsersPage() {
         isUserDetail && "hidden md:flex"
       )}>
         <Search input={input} updateInput={updateInput} />
+        <SearchUser />
         <div className="flex flex-col md:gap-1 px-2 pt-3 pb-20 md:py-3 overflow-scroll" ref={ref}>
           <ViewportList
             viewportRef={ref}

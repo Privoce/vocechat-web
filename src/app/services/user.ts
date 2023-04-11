@@ -44,6 +44,15 @@ export const userApi = createApi({
         method: "POST"
       })
     }),
+    searchUser: builder.mutation<User, string>({
+      query: (input) => ({
+        url: `/user/contacts/search`,
+        body: {
+          keyword: input
+        },
+        method: "POST"
+      })
+    }),
     updateUser: builder.mutation<UserForAdmin, UserForAdminDTO>({
       query: ({ id, ...rest }) => ({
         url: `/admin/user/${id}`,
@@ -174,5 +183,6 @@ export const {
   useSendMsgMutation,
   useCreateBotAPIKeyMutation,
   useLazyDeleteBotAPIKeyQuery,
-  useGetBotAPIKeysQuery
+  useGetBotAPIKeysQuery,
+  useSearchUserMutation
 } = userApi;
