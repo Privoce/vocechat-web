@@ -122,7 +122,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.21.4",
-    "@tauri-apps/cli": "^1.2.3",
     "@types/emoji-mart": "^3.0.9",
     "@types/masonry-layout": "^4.2.5",
     "@types/react-helmet": "^6.1.6",
