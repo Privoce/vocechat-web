@@ -2,14 +2,14 @@ import dayjs from "dayjs";
 import { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Ring } from "@uiball/loaders";
-import { useGetServerVersionQuery } from "../../app/services/server";
 import Button from "./styled/Button";
 import { unregister } from '../../serviceWorkerRegistration';
+import { useAppSelector } from "../../app/store";
 type Props = {};
 const Version: FC<Props> = () => {
+  const serverVersion = useAppSelector(store => store.server.version);
   const [syncing, setSyncing] = useState(false);
   const { t } = useTranslation("setting", { keyPrefix: "version" });
-  const { data: serverVersion } = useGetServerVersionQuery();
   const ts = (process.env.REACT_APP_BUILD_TIME ?? 0) as number;
   const handleSync = () => {
     setSyncing(true);

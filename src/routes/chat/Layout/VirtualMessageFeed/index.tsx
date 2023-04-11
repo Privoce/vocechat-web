@@ -124,7 +124,7 @@ const VirtualMessageFeed = ({ context, id }: Props) => {
                 // 计算出真正的index
                 // const idx = index - firstItemIndex;
                 const curr = messageData[mid];
-                if (!curr) return null;
+                if (!curr) return <div className='w-full h-[1px] invisible'></div>;
                 const isFirst = idx == 0;
                 const prev = isFirst ? null : messageData[mids[idx - 1]];
                 const read = curr?.from_uid == loginUser?.uid || mid <= readIndex;

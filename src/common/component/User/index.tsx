@@ -35,8 +35,8 @@ const User: FC<Props> = ({
 }) => {
   const navigate = useNavigate();
   const { visible: contextMenuVisible, handleContextMenuEvent, hideContextMenu } = useContextMenu();
-  const { curr, loginUid } = useAppSelector((store) => {
-    return { curr: store.users.byId[uid], loginUid: store.authData.user?.uid };
+  const { curr, loginUid, showStatus } = useAppSelector((store) => {
+    return { curr: store.users.byId[uid], loginUid: store.authData.user?.uid, showStatus: store.server.show_user_online_status };
   });
   const handleDoubleClick = () => {
     navigate(`/chat/dm/${uid}`);
@@ -48,6 +48,7 @@ const User: FC<Props> = ({
   const statusClass = clsx(`absolute -bottom-[2.5px] -right-[2.5px] border-content rounded-full border-[1px] border-white dark:border-gray-300`,
     online ? "bg-green-500" : "bg-zinc-400",
     compact ? "w-[15px] h-[15px]" : "w-3 h-3");
+  const statusElement = showStatus ? <div className={statusClass}></div> : null;
   if (!popover)
     return (
       <ContextMenu
@@ -71,7 +72,7 @@ const User: FC<Props> = ({
               name={curr.name}
               alt="avatar"
             />
-            {curr.is_bot ? <IconBot className={clsx(compact && "absolute -bottom-[2.5px] -right-[2.5px]", "!w-[15px] !h-[15px]")} /> : <div className={statusClass}></div>}
+            {curr.is_bot ? <IconBot className={clsx(compact && "absolute -bottom-[2.5px] -right-[2.5px]", "!w-[15px] !h-[15px]")} /> : statusElement}
           </div>
           {!compact && (
             <span className={nameClass} title={curr?.name}>
@@ -111,7 +112,7 @@ const User: FC<Props> = ({
               name={curr.name}
               alt="avatar"
             />
-            <div className={statusClass}></div>
+            {statusElement}
           </div>
           {!compact && (
             <span className={nameClass} title={curr?.name}>

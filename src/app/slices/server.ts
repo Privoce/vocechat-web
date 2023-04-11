@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Server } from "../../types/server";
 
 export interface StoredServer extends Server {
+  version: string,
   upgraded: boolean,
   logo: string;
   inviteLink?: {
@@ -12,6 +13,7 @@ export interface StoredServer extends Server {
   webclient_auto_update: boolean
 }
 const initialState: StoredServer = {
+  version: "",
   upgraded: false,
   name: "",
   description: "",
@@ -33,6 +35,7 @@ const serverSlice = createSlice({
     },
     fillServer(state, action: PayloadAction<StoredServer>) {
       const {
+        version = "",
         upgraded = false,
         inviteLink = {
           link: "",
@@ -41,10 +44,10 @@ const serverSlice = createSlice({
         logo = "", // todo: check missed logo property
         name = "",
         description = "",
-        show_user_online_status = false,
+        show_user_online_status = true,
         webclient_auto_update = true
       } = action.payload || {};
-      return { upgraded, name, logo, description, inviteLink, show_user_online_status, webclient_auto_update };
+      return { version, upgraded, name, logo, description, inviteLink, show_user_online_status, webclient_auto_update };
     },
     updateInfo(state, action: PayloadAction<Partial<StoredServer>>) {
       const values = action.payload || {};

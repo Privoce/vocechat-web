@@ -76,6 +76,10 @@
       "auto": "Auto",
       "dark": "Dark",
       "light": "Light"
+    },
+    "online_status": {
+      "title": "Online Status",
+      "desc": "Toggle users' online status visible"
     }
   },
   "license": {

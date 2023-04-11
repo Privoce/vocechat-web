@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import clsx from 'clsx';
 import WaveSurfer from 'wavesurfer.js';
 import IconPause from '../../assets/icons/pause.svg';
+import IconRefresh from '../../assets/icons/refresh.svg';
 import IconPlay from '../../assets/icons/play.circle.svg';
 import BASE_URL from '../../app/config';
 
@@ -21,47 +22,54 @@ const VoiceMessage = ({ file_path }: { file_path: string }) => {
     // const [audio, setAudio] = useState<HTMLAudioElement>(new Audio(`${BASE_URL}/resource/file?file_path=${encodeURIComponent(
     //     file_path
     // )}`));
-    useEffect(() => {
+    const initWave = (file_path: string) => {
         let wave: WaveSurfer | null = null;
+        const audioSrc = `${BASE_URL}/resource/file?file_path=${encodeURIComponent(
+            file_path
+        )}`;
+        wave = WaveSurfer.create({
+            container: containerRef.current ?? "",
+            // maxCanvasWidth: 200,
+            height: 32,
+            waveColor: '#0BA5EC',
+            cursorColor: '#0BA5AA',
+            progressColor: "#0BA5AA",
+            hideScrollbar: true,
+            // mediaControls: true,
+            normalize: true,
+        });
+        wave.load(audioSrc);
+
+        wave.on('error', function (err) {
+            console.log("voice message error", err);
+            setStatus("error");
+            if (waveRef.current) {
+                waveRef.current.destroy();
+            }
+        });
+        wave.on('play', function () {
+            setPlaying(true);
+        });
+        wave.on('pause', function () {
+            setPlaying(false);
+        });
+        wave.on('ready', function () {
+            setStatus("ready");
+            console.log("readd");
+
+            if (waveRef.current) {
+                const dur = waveRef.current.getDuration();
+                const num = Math.ceil(dur);
+                const durDisplay = dayjs.duration(num, 'seconds').format('mm:ss');
+                setDuration(durDisplay);
+            }
+        });
+        waveRef.current = wave;
+    };
+    useEffect(() => {
+
         if (containerRef.current && file_path) {
-            const audioSrc = `${BASE_URL}/resource/file?file_path=${encodeURIComponent(
-                file_path
-            )}`;
-            wave = WaveSurfer.create({
-                container: containerRef.current,
-                // maxCanvasWidth: 200,
-                height: 32,
-                waveColor: '#0BA5EC',
-                cursorColor: '#0BA5AA',
-                progressColor: "#0BA5AA",
-                hideScrollbar: true,
-                // mediaControls: true,
-                normalize: true,
-            });
-            wave.load(audioSrc);
-
-            wave.on('error', function (err) {
-                console.log("voice message error", err);
-                setStatus("error");
-            });
-            wave.on('play', function () {
-                setPlaying(true);
-            });
-            wave.on('pause', function () {
-                setPlaying(false);
-            });
-            wave.on('ready', function () {
-                setStatus("ready");
-                console.log("readd");
-
-                if (waveRef.current) {
-                    const dur = waveRef.current.getDuration();
-                    const num = Math.ceil(dur);
-                    const durDisplay = dayjs.duration(num, 'seconds').format('mm:ss');
-                    setDuration(durDisplay);
-                }
-            });
-            waveRef.current = wave;
+            initWave(file_path);
         }
         return () => {
             if (waveRef.current) {
@@ -78,16 +86,21 @@ const VoiceMessage = ({ file_path }: { file_path: string }) => {
             }
         }
     };
+    const handleReload = () => {
+        initWave(file_path);
+    };
+    const notReady = status !== "ready";
     return (
-        <div className={clsx("select-none flex items-center gap-2 p-2 rounded-lg max-w-sm", status === "error" ? "bg-red-200" : "bg-primary-100 dark:bg-primary-900")}>
-            <button className='disabled:opacity-60' onClick={handleClick} disabled={status !== "ready"}>
+        <div className={clsx("relative select-none flex items-center gap-2 p-2 rounded-lg max-w-sm", status === "error" ? "bg-red-200" : "bg-primary-100 dark:bg-primary-900")}>
+            <button className='disabled:opacity-60' onClick={handleClick} disabled={notReady}>
                 {playing ? <IconPause className="stroke-primary-500" /> : <IconPlay className="stroke-primary-500" />}
             </button>
-            <div ref={containerRef} className='flex-1 h-8' >
+            <div ref={containerRef} className={clsx('flex-1 h-8', notReady && "flex-center flex-1 whitespace-nowrap")} >
                 {status == "loading" && <span className='text-xs'>Loading voice message...</span>}
                 {status == "error" && <span className='text-xs text-red-800'>Load voice message error</span>}
             </div>
-            <time className='text-primary-500 text-xs whitespace-nowrap text-left'>{duration}'</time>
+            {status !== "error" && <time className='text-primary-500 text-xs whitespace-nowrap text-left'>{duration}</time>}
+            {status === "error" && <IconRefresh role="button" className="absolute -right-6 top-1/2 -translate-y-1/2 w-4 h-4 stroke-primary-600" onClick={handleReload} />}
         </div>
     );
 };

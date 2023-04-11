@@ -105,7 +105,6 @@ const MessageWrapper = ({ selectMode = false, context, id, mid, divider, childre
     <div className={`group flex flex-col items-start gap-2 relative w-full `} {...rest}>
       {divider}
       <div className={`w-full flex items-center ${selectMode ? "group-hover:bg-slate-100 dark:group-hover:bg-slate-900" : ""}`}>
-
         {selectMode && <Checkbox className="!ml-2" checked={selected} />}
         {children}
       </div>
@@ -135,7 +134,7 @@ export const renderMessageFragment = ({
   contextId = 0,
   context = "user"
 }: Params) => {
-  if (!curr) return null;
+  if (!curr) return <div className="w-full h-[1px] invisible"></div>;
   let { created_at, mid } = curr;
   const local_id = curr.properties?.local_id;
   let divider = null;
