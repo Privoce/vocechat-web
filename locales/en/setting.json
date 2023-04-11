@@ -79,7 +79,9 @@
     },
     "online_status": {
       "title": "Online Status",
-      "desc": "Toggle users' online status visible"
+      "desc": "Toggle users' online status visible",
+      "enable": "Enable",
+      "disable": "Disable"
     }
   },
   "license": {
