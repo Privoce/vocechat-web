@@ -11,7 +11,7 @@ let prices: Price[] = [
     type: "booking",
   }
 ];
-const official_dev = `https://dev.voce.chat`;
+const official_dev = `https://pulsechat.voce.chat`;
 const local_dev = official_dev;
 
 // const local_dev = `http://07333.qicp.vip:3030`;
