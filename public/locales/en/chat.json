@@ -52,5 +52,8 @@
   "undeafen": "Undeafen",
   "mute": "Mute",
   "unmute": "Unmute",
-  "leave_voice": "Leave Voice Chat"
+  "leave_voice": "Leave Voice Chat",
+  "add_contact": "Add as contact",
+  "block": "Block",
+  "contact_tip": "This user is not in your contact"
 }

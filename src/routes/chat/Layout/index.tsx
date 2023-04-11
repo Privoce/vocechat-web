@@ -17,6 +17,7 @@ import IconWarning from '../../../assets/icons/warning.svg';
 import ImagePreview from "../../../common/component/ImagePreview";
 
 import VirtualMessageFeed from "./VirtualMessageFeed";
+import AddContactTip from "./AddContactTip";
 
 interface Props {
   readonly?: boolean;
@@ -98,6 +99,7 @@ const Layout: FC<Props> = ({
           {header}
           <div className="w-full h-full flex items-start justify-between relative" >
             <div className="rounded-br-2xl flex flex-col absolute bottom-0 w-full h-full" ref={messagesContainer}>
+              <AddContactTip />
               {/* 消息流 */}
               <VirtualMessageFeed key={`${context}_${to}`} context={context} id={to} />
               {/* 发送框 */}

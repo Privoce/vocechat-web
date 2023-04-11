@@ -53,5 +53,8 @@
   "undeafen": "取消静默",
   "mute": "静音",
   "unmute": "取消静音",
-  "leave_voice": "离开"
+  "leave_voice": "离开",
+  "add_contact": "加为联系人",
+  "block": "屏蔽",
+  "contact_tip": "该用户不您的联系人列表中"
 }
