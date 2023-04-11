@@ -26,7 +26,7 @@ const Voice = () => {
         secret: agoraConfig?.rtm_secret ?? "",
 
     }, {
-        skip: !isAdmin || !agoraConfig || !navigator.onLine,
+        skip: !isAdmin || !agoraConfig?.enabled || !navigator.onLine,
         pollingInterval: 5000
     });
     const dispatch = useDispatch();
