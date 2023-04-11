@@ -27,7 +27,6 @@ const whiteList = [
   "createAdmin",
   "getBotRelatedChannels",
   "sendMessageByBot",
-  "replyWithChatGPT",
   "getAgoraVoicingList"
 ];
 
