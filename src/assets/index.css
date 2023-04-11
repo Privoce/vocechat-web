@@ -282,8 +282,17 @@ html.dark ::-webkit-scrollbar-thumb {
   font-size: 14px;
   line-height: 20px;
 }
+.toastui-editor-md-preview {
+  overflow-x: hidden;
+}
 .toastui-editor-dark .toastui-editor-md-container {
-  background-color: #4e5762 !important;
+  background-color: transparent !important;
+}
+.toastui-editor-md-container.toastui-editor-md-vertical-style {
+  align-items: flex-start;
+}
+html.dark .send.markdown {
+  background-color: #222 !important;
 }
 html.dark .slate-mention {
   background: #333;
