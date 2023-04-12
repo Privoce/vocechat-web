@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { useState, FC, DetailedHTMLProps, InputHTMLAttributes } from "react";
+import { useState, FC, DetailedHTMLProps, InputHTMLAttributes, ReactElement } from "react";
 import IconEyeOpen from "../../../assets/icons/eye.open.svg";
 import IconEyeClose from "../../../assets/icons/eye.close.svg";
 interface Props
@@ -24,7 +24,7 @@ interface Props
     >,
     HTMLInputElement
   > {
-  prefix?: string;
+  prefix?: string | ReactElement;
   ref?: any;
 }
 
@@ -46,7 +46,7 @@ const Input: FC<Props> = ({ type = "text", prefix = "", className = "", ...rest 
   placeholder:text-gray-400`,
     // noInner && 'rounded border border-solid border-gray-200 shadow',
     isLarge && 'py-3',
-    isNone && "border-none bg-transparent shadow-none",
+    isNone && "!border-none bg-transparent shadow-none",
     isPwd && "pr-[30px]"
   );
   return type == "password" ? (
