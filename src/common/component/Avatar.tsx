@@ -44,7 +44,6 @@ const Avatar: FC<Props> = ({
     <div
       className={`rounded-full flex-center ${rest.className || ""}`}
       style={{
-
         width,
         height,
         fontSize: getFontSize(width),
