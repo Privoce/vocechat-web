@@ -12,12 +12,16 @@ import Input from "../../common/component/styled/Input";
 import { useKey } from "rooks";
 import Avatar from "../../common/component/Avatar";
 import BASE_URL from "../../app/config";
+import { useAppSelector } from "../../app/store";
+import { useNavigate } from "react-router-dom";
 type Props = {
   closeModal: () => void;
 };
 type Keyword = "id" | "email";
 const SearchUser: FC<Props> = ({ closeModal }) => {
+  const usersData = useAppSelector(store => store.users.byId);
   const { t } = useTranslation();
+  const navigateTo = useNavigate();
   const inputRef = useRef(null);
   const [keyword, setKeyword] = useState<Keyword>("id");
   const [input, setInput] = useState({
@@ -39,10 +43,10 @@ const SearchUser: FC<Props> = ({ closeModal }) => {
     "Enter",
     (evt) => {
       evt.preventDefault();
+      const currInput = input[keyword];
+      if (!currInput) return;
       // return true;
-      console.log("enter");
-
-      searchUser(input[keyword]);
+      searchUser(currInput);
     },
     {
       target: inputRef,
@@ -50,6 +54,12 @@ const SearchUser: FC<Props> = ({ closeModal }) => {
   );
   const handleChangeKeyword = (kw: Keyword) => {
     setKeyword(kw);
+  };
+  const handleChat = (directChat: boolean) => {
+    if (!directChat) {
+      // todo 先加到联系人列表
+    }
+    navigateTo(`/chat/dm/${data?.uid}`);
   };
   useEffect(() => {
     if (isSuccess && data) {
@@ -60,7 +70,7 @@ const SearchUser: FC<Props> = ({ closeModal }) => {
   // const showResult = isSuccess && data;
   return (
     <Modal>
-      <div className=" relative flex flex-col gap-2 w-96 px-4 py-8 rounded-lg bg-gray-100 dark:bg-gray-900 text-slate-900 dark:text-slate-100">
+      <div className=" relative flex flex-col gap-2 w-96 px-4 py-3 rounded-lg bg-gray-100 dark:bg-gray-900 text-slate-900 dark:text-slate-100">
         <div className="flex items-center gap-2 py-2">
           <StyledButton className={clsx("mini", keyword == "email" && "ghost !border-none !shadow-none")} onClick={handleChangeKeyword.bind(null, "id")}>Search by ID</StyledButton>
           <StyledButton className={clsx("mini", keyword == "id" && "ghost !border-none !shadow-none")} onClick={handleChangeKeyword.bind(null, "email")}>Search by Email</StyledButton>
@@ -68,13 +78,13 @@ const SearchUser: FC<Props> = ({ closeModal }) => {
         <div className="w-full" ref={inputRef}>
           <Input className="none" disabled={isLoading} prefix={<IconSearch className="dark:fill-gray-400 w-6 h-6 shrink-0" />} value={input[keyword]} placeholder={`${t("action.search")}...`} onChange={handleInput} />
         </div>
-        <div className="min-h-[200px] flex-center">
+        <div className="min-h-[280px] flex-center pb-10">
           {isSuccess ? (data ? <div className="flex flex-col items-center pt-10">
             <Avatar className="rounded-full" src={data.avatar_updated_at === 0 ? "" : `${BASE_URL}/resource/avatar?uid=${data.uid}&t=${data.avatar_updated_at}`} name={data.name} width={120} height={120} />
             <span className="my-2 dark:text-gray-100 text-gray-950">{data.name}</span>
             <div className="flex gap-2 my-2">
               <StyledButton className="mini ghost" onClick={resetInput}>Cancel</StyledButton>
-              <StyledButton className="mini">Add to contact</StyledButton>
+              <StyledButton onClick={handleChat.bind(null, !!usersData[data.uid])} className="mini">{usersData[data.uid] ? `Chat` : `Add to contact`}</StyledButton>
             </div>
           </div> : <div className="w-full h-full text-center flex flex-col gap-3 items-center">
             <span className="text-sm text-gray-800 dark:text-gray-200">
