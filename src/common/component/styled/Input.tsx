@@ -58,7 +58,7 @@ const Input: FC<Props> = ({ type = "text", prefix = "", className = "", ...rest 
     </div>
   ) : prefix ? (
     <div className={`w-full relative flex overflow-hidden rounded border border-solid border-gray-300 dark:border-gray-400 shadow-sm ${className}`}>
-      <span className="px-4 py-2 text-sm text-gray-500 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 shadow-[rgb(0_0_0_/_10%)_-1px_0px_0px_inset]">{prefix}</span>
+      {typeof prefix === "string" ? <span className="px-4 py-2 text-sm text-gray-500 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 shadow-[rgb(0_0_0_/_10%)_-1px_0px_0px_inset]">{prefix}</span> : <span className="flex-center p-2 bg-gray-100 dark:bg-gray-800 ">{prefix}</span>}
       <input className={`${inputClass} ${className}`} type={inputType} {...rest} />
     </div>
   ) : (

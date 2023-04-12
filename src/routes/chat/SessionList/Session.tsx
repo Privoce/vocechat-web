@@ -118,14 +118,14 @@ const Session: FC<IProps> = ({
           to={navPath}
           onContextMenu={handleContextMenuEvent}
         >
-          <div className="flex shrink-0 relative">
+          <div className="flex shrink-0 relative w-10 h-10">
             {type == "dm" ? (
               <User avatarSize={40} compact interactive={false} uid={id} />
             ) : (
               <Avatar
                 width={40}
                 height={40}
-                className="icon rounded-full"
+                className="icon rounded-full object-cover"
                 type="channel"
                 name={name}
                 src={icon}
