@@ -4,14 +4,17 @@ const {
   closeHeight = 48,
   openWidth = 380,
   openHeight = 680,
-  themeColor = "#1fe1f9"
+  themeColor = "#1fe1f9",
+  position = "right"
 } = document.currentScript.dataset;
 const _src = document.currentScript.src;
 const wrapper = document.createElement("iframe");
+wrapper.id = "VOCECHAT_WIDGET";
 const styles = {
   position: "fixed",
   borderRadius: "8px",
   right: "16px",
+  [position]: "16px", // [position] = [right] or [left]
   bottom: "16px",
   border: "none",
   zIndex: 9999,
