@@ -53,7 +53,7 @@ const authDataSlice = createSlice({
       const { initialized = true, user, token, refresh_token, expired_in = 0 } = payload;
       const { uid, create_by } = user;
       state.initialized = initialized;
-      state.user = { ...state.user, ...user };
+      state.user = { ...state.user, ...user, status: "added" };
       state.guest = create_by == "guest";
       state.token = token;
       state.refreshToken = refresh_token;

@@ -81,7 +81,7 @@ const Session: FC<IProps> = ({
   useEffect(() => {
     const tmp = type == "dm" ? userData[id] : channelData[id];
     if (!tmp) return;
-    if ("avatar" in tmp) {
+    if (type == "dm") {
       // user
       const { name, avatar } = tmp;
       setData({ name, icon: avatar, mid, is_public: true });

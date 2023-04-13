@@ -2,11 +2,12 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 // import toast from "react-hot-toast";
 import baseQuery from "./base.query";
 import { updateAutoDeleteSetting, updateMute } from "../slices/footprint";
-import { fillUsers, updateContactStatus as updateStatus } from "../slices/users";
+import { StoredUser, fillUsers, updateContactStatus as updateStatus } from "../slices/users";
 import BASE_URL, { ContentTypes } from "../config";
 import { onMessageSendStarted } from "./handlers";
 import { AutoDeleteMsgDTO, BotAPIKey, Contact, ContactAction, ContactResponse, ContactStatus, User, UserCreateDTO, UserDTO, UserForAdmin, UserForAdminDTO } from "../../types/user";
 import { ContentTypeKey, MuteDTO } from "../../types/message";
+import { RootState } from "../store";
 
 export const userApi = createApi({
   reducerPath: "userApi",
@@ -28,10 +29,11 @@ export const userApi = createApi({
           };
         });
       },
-      async onQueryStarted(data, { dispatch, queryFulfilled }) {
+      async onQueryStarted(data, { dispatch, queryFulfilled, getState }) {
         try {
           const { data: users } = await queryFulfilled;
-          dispatch(fillUsers(users));
+          const { authData: { user } } = getState() as RootState;
+          dispatch(fillUsers([user as StoredUser, ...users]));
         } catch {
           console.log("get contact list error");
         }
