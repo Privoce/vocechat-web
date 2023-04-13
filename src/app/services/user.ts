@@ -44,12 +44,10 @@ export const userApi = createApi({
         method: "POST"
       })
     }),
-    searchUser: builder.mutation<User, string>({
+    searchUser: builder.mutation<User, { ty: "id" | "email", keyword: string }>({
       query: (input) => ({
         url: `/user/search`,
-        body: {
-          keyword: input
-        },
+        body: input,
         method: "POST"
       })
     }),
