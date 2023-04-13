@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { isNull, omitBy } from "lodash";
 import BASE_URL from "../config";
-import { User } from "../../types/user";
+import { Contact, ContactStatus } from "../../types/user";
 import { UserLog, UserState } from "../../types/sse";
 
 type DMAside = "voice" | null;
-export interface StoredUser extends User {
+export interface StoredUser extends Contact {
   online?: boolean;
   voice?: boolean;
   avatar?: string;
@@ -39,6 +39,12 @@ const usersSlice = createSlice({
         })
       );
     },
+    addContact(state, action: PayloadAction<Contact>) {
+      if (!state.ids.includes(action.payload.uid)) {
+        state.ids.push(action.payload.uid);
+      }
+      state.byId[action.payload.uid] = action.payload;
+    },
     removeUser(state, action: PayloadAction<number>) {
       const uid = action.payload;
       state.ids = state.ids.filter((i) => i != uid);
@@ -69,6 +75,7 @@ const usersSlice = createSlice({
                   ? ""
                   : `${BASE_URL}/resource/avatar?uid=${uid}&t=${rest.avatar_updated_at}`,
               create_by: "", // todo: missing properties create_by
+              status: "added",//默认是联系人
               ...rest
             };
             const idx = state.ids.findIndex((i) => i == uid);
@@ -98,9 +105,14 @@ const usersSlice = createSlice({
           state.byId[uid]!.online = online;
         }
       });
+    },
+    updateContactStatus(state, action: PayloadAction<{ uid: number, status: ContactStatus }>) {
+      if (state.byId[action.payload.uid]) {
+        state.byId[action.payload.uid]!.status = action.payload.status;
+      }
     }
   }
 });
 
-export const { resetUsers, fillUsers, updateUsersByLogs, updateUsersStatus } = usersSlice.actions;
+export const { addContact, updateContactStatus, resetUsers, fillUsers, updateUsersByLogs, updateUsersStatus } = usersSlice.actions;
 export default usersSlice.reducer;

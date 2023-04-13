@@ -55,5 +55,7 @@
   "leave_voice": "Leave Voice Chat",
   "add_contact": "Add to contacts",
   "block": "Block",
-  "contact_tip": "This user is not in your contact"
+  "unblock": "Unblock",
+  "contact_tip": "This user is not in your contact",
+  "contact_block_tip": "This user has been blocked by you"
 }

@@ -1,5 +1,5 @@
 import IconSearch from "../../assets/icons/search.svg";
-import IconAdd from "../../assets/icons/add.person.svg";
+import IconAdd from "../../assets/icons/add.svg";
 import { FC, ChangeEvent } from "react";
 import { useTranslation } from "react-i18next";
 type Props = {

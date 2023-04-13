@@ -19,6 +19,20 @@ export interface User {
   is_bot?: boolean;
   log_id?: number;
 }
+export type ContactAction = "add" | "remove" | "block" | "unblock";
+export type ContactStatus = "added" | "blocked" | "";
+export interface ContactResponse {
+  target_uid: number;
+  target_info: User;
+  contact_info: {
+    status: ContactStatus;
+    created_at: number;
+    updated_at: number;
+  }
+}
+export interface Contact extends User {
+  status: ContactStatus
+}
 export type UserStatus = "normal" | "frozen";
 export type UserDevice = {
   device: string;

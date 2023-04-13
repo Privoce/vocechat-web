@@ -99,7 +99,7 @@ const Layout: FC<Props> = ({
           {header}
           <div className="w-full h-full flex items-start justify-between relative" >
             <div className="rounded-br-2xl flex flex-col absolute bottom-0 w-full h-full" ref={messagesContainer}>
-              <AddContactTip />
+              {context == "user" && <AddContactTip uid={to} />}
               {/* 消息流 */}
               <VirtualMessageFeed key={`${context}_${to}`} context={context} id={to} />
               {/* 发送框 */}

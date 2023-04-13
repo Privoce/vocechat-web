@@ -2,22 +2,25 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 // import toast from "react-hot-toast";
 import baseQuery from "./base.query";
 import { updateAutoDeleteSetting, updateMute } from "../slices/footprint";
-import { fillUsers } from "../slices/users";
+import { fillUsers, updateContactStatus as updateStatus } from "../slices/users";
 import BASE_URL, { ContentTypes } from "../config";
 import { onMessageSendStarted } from "./handlers";
-import { AutoDeleteMsgDTO, BotAPIKey, User, UserCreateDTO, UserDTO, UserForAdmin, UserForAdminDTO } from "../../types/user";
+import { AutoDeleteMsgDTO, BotAPIKey, Contact, ContactAction, ContactResponse, ContactStatus, User, UserCreateDTO, UserDTO, UserForAdmin, UserForAdminDTO } from "../../types/user";
 import { ContentTypeKey, MuteDTO } from "../../types/message";
 
 export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery,
   endpoints: (builder) => ({
-    getUsers: builder.query<User[], void>({
-      query: () => ({ url: `user` }),
-      transformResponse: (data: User[]) => {
-        return data.map((user) => {
+    getContacts: builder.query<Contact[], void>({
+      query: () => ({ url: `/user/contacts` }),
+      transformResponse: (data: ContactResponse[]) => {
+        return data.map((c) => {
+          const status = c.contact_info.status;
+          const user = c.target_info;
           return {
             ...user,
+            status,
             avatar:
               user.avatar_updated_at == 0
                 ? ""
@@ -30,7 +33,7 @@ export const userApi = createApi({
           const { data: users } = await queryFulfilled;
           dispatch(fillUsers(users));
         } catch {
-          console.log("get user list error");
+          console.log("get contact list error");
         }
       }
     }),
@@ -44,7 +47,7 @@ export const userApi = createApi({
         method: "POST"
       })
     }),
-    searchUser: builder.mutation<User, { ty: "id" | "email", keyword: string }>({
+    searchUser: builder.mutation<User, { search_type: "id" | "email", keyword: string }>({
       query: (input) => ({
         url: `/user/search`,
         body: input,
@@ -82,6 +85,28 @@ export const userApi = createApi({
       }
     }),
 
+    updateContactStatus: builder.mutation<void, { action: ContactAction, target_uid: number }>({
+      query: (payload) => ({
+        url: `/user/update_contact_status`,
+        method: "POST",
+        body: payload
+      }),
+      async onQueryStarted(data, { dispatch, queryFulfilled }) {
+        const map = {
+          "add": "added",
+          "block": "blocked",
+          "remove": "",
+          "unblock": "",
+        };
+        try {
+          await queryFulfilled;
+          const status = map[data.action] as ContactStatus;
+          dispatch(updateStatus({ uid: data.target_uid, status }));
+        } catch (error) {
+          console.log("update mute failed", error);
+        }
+      }
+    }),
     updateMuteSetting: builder.mutation<void, MuteDTO>({
       query: (data) => ({
         url: `/user/mute`,
@@ -159,6 +184,7 @@ export const userApi = createApi({
         body: type == "file" ? JSON.stringify(content) : content
       }),
       async onQueryStarted(param1, param2) {
+        // @ts-ignore
         await onMessageSendStarted.call(this, param1, param2, "user");
       }
     }),
@@ -176,11 +202,11 @@ export const {
   useLazyDeleteUserQuery,
   useUpdateInfoMutation,
   useUpdateAvatarMutation,
-  useGetUsersQuery,
-  useLazyGetUsersQuery,
+  useLazyGetContactsQuery,
   useSendMsgMutation,
   useCreateBotAPIKeyMutation,
   useLazyDeleteBotAPIKeyQuery,
   useGetBotAPIKeysQuery,
-  useSearchUserMutation
+  useSearchUserMutation,
+  useUpdateContactStatusMutation
 } = userApi;

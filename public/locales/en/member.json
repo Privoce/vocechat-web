@@ -20,6 +20,7 @@
   "copy_email": "Copy Email",
   "send_msg": "Send Message",
   "remove": "Remove",
+  "remove_from_contact": "Remove From Contact",
   "remove_account": "Remove Account",
   "remove_account_desc": "Are you sure remove this account?",
   "remove_from_channel": "Remove From Channel"

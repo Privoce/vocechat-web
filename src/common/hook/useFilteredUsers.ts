@@ -4,7 +4,7 @@ import { useAppSelector } from "../../app/store";
 
 export default function useFilteredUsers() {
   const [input, setInput] = useState("");
-  const users = useAppSelector((store) => Object.values(store.users.byId));
+  const users = useAppSelector((store) => Object.values(store.users.byId).filter(u => u.status == 'added'));
   const [filteredUsers, setFilteredUsers] = useState<StoredUser[]>([]);
   useEffect(() => {
     if (!input) {
@@ -19,7 +19,7 @@ export default function useFilteredUsers() {
         })
       );
     }
-  }, [input]);
+  }, [input, users.length]);
 
   const updateInput = (val: string) => {
     setInput(val);

@@ -15,11 +15,16 @@ interface Props {
 
 const UserContextMenu: FC<Props> = ({ enable = false, uid, cid, visible, hide, children }) => {
   const { t } = useTranslation("member");
+  const { t: chatTran } = useTranslation("chat");
   const {
+    blockThisContact,
+    removeFromContact,
     copyEmail,
     canCopyEmail,
     startChat,
     canRemove,
+    canRemoveFromContact,
+    canBlock,
     canRemoveFromChannel,
     removeFromChannel,
     removeUser
@@ -55,11 +60,22 @@ const UserContextMenu: FC<Props> = ({ enable = false, uid, cid, visible, hide, c
                 title: t("remove_from_channel"),
                 handler: removeFromChannel
               },
+              canRemoveFromContact && {
+                danger: true,
+                title: t("remove_from_contact"),
+                handler: removeFromContact
+              },
+              canBlock && {
+                danger: true,
+                title: chatTran("block"),
+                handler: blockThisContact
+              },
               canRemove && {
                 danger: true,
                 title: t("remove"),
                 handler: removeUser
               }
+
             ].filter(Boolean) as Item[]
           }
         />

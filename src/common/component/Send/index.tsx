@@ -18,6 +18,8 @@ import useDraft from "../../hook/useDraft";
 import useUploadFile from "../../hook/useUploadFile";
 import { useAppDispatch, useAppSelector } from "../../../app/store";
 import TextInput from "../TextInput";
+import useUserOperation from "../../hook/useUserOperation";
+import StyledButton from "../styled/Button";
 
 const Modes = {
   text: "text",
@@ -33,6 +35,7 @@ const Send: FC<IProps> = ({
   id
 }) => {
   const { t } = useTranslation("chat");
+  const { unblockThisContact, blocked } = useUserOperation({ uid: context == "user" ? id : undefined, cid: context == "channel" ? id : undefined });
   const { resetStageFiles } = useUploadFile({ context, id });
   const { getDraft, getUpdateDraft } = useDraft({ context, id });
   const editor = useMixedEditor(`${context}_${id}`);
@@ -138,6 +141,12 @@ const Send: FC<IProps> = ({
   const members =
     context == "channel" ? (channelsData[id]?.is_public ? uids : channelsData[id]?.members) : [];
   const isMarkdownMode = mode == Modes.markdown;
+  if (context == "user" && blocked) {
+    return <div className="p-5 bg-gray-200 rounded-lg w-full dark:bg-gray-600 text-red-300">
+      {t("contact_block_tip")}
+      <StyledButton className="mini ml-4" onClick={unblockThisContact}>Unblock</StyledButton>
+    </div>;
+  }
   return (
     <>
       {/* mobile input */}
