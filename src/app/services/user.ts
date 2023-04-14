@@ -2,10 +2,10 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 // import toast from "react-hot-toast";
 import baseQuery from "./base.query";
 import { updateAutoDeleteSetting, updateMute } from "../slices/footprint";
-import { StoredUser, fillUsers, updateContactStatus as updateStatus } from "../slices/users";
+import { fillUsers, updateContactStatus as updateStatus } from "../slices/users";
 import BASE_URL, { ContentTypes } from "../config";
 import { onMessageSendStarted } from "./handlers";
-import { AutoDeleteMsgDTO, BotAPIKey, Contact, ContactAction, ContactResponse, ContactStatus, User, UserCreateDTO, UserDTO, UserForAdmin, UserForAdminDTO } from "../../types/user";
+import { AutoDeleteMsgDTO, BotAPIKey, Contact, ContactAction, ContactStatus, User, UserCreateDTO, UserDTO, UserForAdmin, UserForAdminDTO } from "../../types/user";
 import { ContentTypeKey, MuteDTO } from "../../types/message";
 import { RootState } from "../store";
 
@@ -13,15 +13,12 @@ export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery,
   endpoints: (builder) => ({
-    getContacts: builder.query<Contact[], void>({
-      query: () => ({ url: `/user/contacts` }),
-      transformResponse: (data: ContactResponse[]) => {
-        return data.map((c) => {
-          const status = c.contact_info.status;
-          const user = c.target_info;
+    getUsers: builder.query<User[], void>({
+      query: () => ({ url: `/user` }),
+      transformResponse: (data: User[]) => {
+        return data.map((user) => {
           return {
             ...user,
-            status,
             avatar:
               user.avatar_updated_at == 0
                 ? ""
@@ -32,8 +29,32 @@ export const userApi = createApi({
       async onQueryStarted(data, { dispatch, queryFulfilled, getState }) {
         try {
           const { data: users } = await queryFulfilled;
-          const { authData: { user } } = getState() as RootState;
-          dispatch(fillUsers([user as StoredUser, ...users]));
+          const { authData: { user: loginUser } } = getState() as RootState;
+          dispatch(fillUsers(users.map((u) => {
+            const status = loginUser?.uid == u.uid ? "added" : "";
+            return {
+              ...u,
+              status
+            };
+          })));
+        } catch {
+          console.log("get user list error");
+        }
+      }
+    }),
+    getContacts: builder.query<Contact[], void>({
+      query: () => ({ url: `/user/contacts` }),
+      async onQueryStarted(data, { dispatch, queryFulfilled }) {
+        try {
+          const { data: users } = await queryFulfilled;
+          const payloads = users.map((u) => {
+            const { uid, status } = u;
+            return {
+              uid,
+              status
+            };
+          });
+          dispatch(updateStatus(payloads));
         } catch {
           console.log("get contact list error");
         }
@@ -195,6 +216,7 @@ export const userApi = createApi({
 });
 
 export const {
+  useLazyGetUsersQuery,
   useGetUserByAdminQuery,
   useUpdateAvatarByAdminMutation,
   useUpdateAutoDeleteMsgMutation,

@@ -23,5 +23,9 @@
   "remove_from_contact": "Remove From Contact",
   "remove_account": "Remove Account",
   "remove_account_desc": "Are you sure remove this account?",
-  "remove_from_channel": "Remove From Channel"
+  "remove_from_channel": "Remove From Channel",
+
+  "search_not_found": "Not found, or this user is not allowed to be searched.",
+  "search_by_id": "Search by ID",
+  "search_by_email": "Search by Email"
 }

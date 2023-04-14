@@ -1,7 +1,6 @@
 // import Tippy from "@tippyjs/react";
 import clsx from "clsx";
 import { FC, ChangeEvent, useState, useRef, FormEvent } from "react";
-import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import Modal from "../../common/component/Modal";
 import IconClose from "../../assets/icons/close.svg";
@@ -14,19 +13,17 @@ import Avatar from "../../common/component/Avatar";
 import BASE_URL from "../../app/config";
 import { useAppSelector } from "../../app/store";
 import { useNavigate } from "react-router-dom";
-import { addContact } from "../../app/slices/users";
 type Props = {
   closeModal: () => void;
 };
 type Type = "id" | "email";
 const SearchUser: FC<Props> = ({ closeModal }) => {
   const [updateContactStatus, { isLoading: adding }] = useUpdateContactStatusMutation();
-  const dispatch = useDispatch();
   const usersData = useAppSelector(store => store.users.byId);
   const { t } = useTranslation();
   const navigateTo = useNavigate();
   const inputRef = useRef(null);
-  const [type, setType] = useState<Type>("email");
+  const [type, setType] = useState<Type>("id");
   const [input, setInput] = useState({
     id: "",
     email: ""
@@ -64,11 +61,7 @@ const SearchUser: FC<Props> = ({ closeModal }) => {
   };
   const handleChat = async (directChat: boolean) => {
     if (!data) return;
-
-
     if (!directChat) {
-      // todo 先加到联系人列表
-      dispatch(addContact({ ...data, status: "" }));
       await updateContactStatus({ target_uid: data.uid, action: "add" });
     }
     navigateTo(`/chat/dm/${data.uid}`);
@@ -81,8 +74,12 @@ const SearchUser: FC<Props> = ({ closeModal }) => {
     <Modal>
       <div className=" relative flex flex-col gap-2 w-96 px-4 py-3 rounded-lg bg-gray-100 dark:bg-gray-900 text-slate-900 dark:text-slate-100">
         <div className="flex items-center gap-2 py-2">
-          <StyledButton className={clsx("mini", type == "id" && "ghost !border-none !shadow-none")} onClick={handleChangeKeyword.bind(null, "email")}>Search by Email</StyledButton>
-          <StyledButton className={clsx("mini", type == "email" && "ghost !border-none !shadow-none")} onClick={handleChangeKeyword.bind(null, "id")}>Search by ID</StyledButton>
+          <StyledButton className={clsx("mini", type == "email" && "ghost !border-none !shadow-none")} onClick={handleChangeKeyword.bind(null, "id")}>
+            {t("search_by_id", { ns: "member" })}
+          </StyledButton>
+          <StyledButton className={clsx("mini", type == "id" && "ghost !border-none !shadow-none")} onClick={handleChangeKeyword.bind(null, "email")}>
+            {t("search_by_email", { ns: "member" })}
+          </StyledButton>
         </div>
         <form className="w-full" ref={inputRef} action="/" onSubmit={handleSubmit}>
           <Input required type={inputType} className="none" disabled={isLoading} prefix={<IconSearch className="dark:fill-gray-400 w-6 h-6 shrink-0" />} value={input[type]} placeholder={`${t("action.search")}...`} onChange={handleInput} />
@@ -92,12 +89,12 @@ const SearchUser: FC<Props> = ({ closeModal }) => {
             <Avatar className="rounded-full" src={data.avatar_updated_at === 0 ? "" : `${BASE_URL}/resource/avatar?uid=${data.uid}&t=${data.avatar_updated_at}`} name={data.name} width={120} height={120} />
             <span className="my-2 dark:text-gray-100 text-gray-950">{data.name}</span>
             <div className="flex gap-2 my-2">
-              <StyledButton className="mini ghost" onClick={resetInput}>Cancel</StyledButton>
-              <StyledButton disabled={adding} onClick={handleChat.bind(null, inContact)} className="mini">{inContact ? `Chat` : `Add to contact`}</StyledButton>
+              <StyledButton className="mini ghost" onClick={resetInput}>{t("action.cancel")}</StyledButton>
+              <StyledButton disabled={adding} onClick={handleChat.bind(null, inContact)} className="mini">{inContact ? t(`chat`) : `Add to Contact`}</StyledButton>
             </div>
           </div> : <div className="w-full h-full text-center flex flex-col gap-3 items-center">
             <span className="text-sm text-gray-800 dark:text-gray-200">
-              未找到用户，或该用户不允许被搜索
+              {t("search_not_found", { ns: "member" })}
             </span>
             <StyledButton className="mini" onClick={resetInput}>Ok</StyledButton>
           </div>) : null}

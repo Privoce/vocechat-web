@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import dayjs from "dayjs";
 import initCache, { useRehydrate } from "../../app/cache";
 import { useLazyGetFavoritesQuery } from "../../app/services/message";
-import { useLazyGetContactsQuery } from "../../app/services/user";
+import { useLazyGetContactsQuery, useLazyGetUsersQuery } from "../../app/services/user";
 import { useGetServerVersionQuery, useGetSystemCommonQuery, useLazyGetServerQuery } from "../../app/services/server";
 import useStreaming from "./useStreaming";
 import { useAppSelector } from "../../app/store";
@@ -44,6 +44,7 @@ export default function usePreload() {
       data: favorites
     }
   ] = useLazyGetFavoritesQuery();
+  const [getUsers] = useLazyGetUsersQuery();
   const [
     getContacts,
     { isLoading: usersLoading, isSuccess: usersSuccess, isError: usersError, data: users }
@@ -78,7 +79,9 @@ export default function usePreload() {
   }, [channelIds, channelMessageData, isGuest]);
   useEffect(() => {
     if (rehydrated) {
-      getContacts();
+      getUsers().then(() => {
+        getContacts();
+      });
       getServer();
       getFavorites();
     }

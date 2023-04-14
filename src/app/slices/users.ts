@@ -16,7 +16,6 @@ export interface State {
   ids: number[];
   byId: { [id: number]: StoredUser };
 }
-
 const initialState: State = {
   ids: [],
   byId: {}
@@ -106,10 +105,13 @@ const usersSlice = createSlice({
         }
       });
     },
-    updateContactStatus(state, action: PayloadAction<{ uid: number, status: ContactStatus }>) {
-      if (state.byId[action.payload.uid]) {
-        state.byId[action.payload.uid]!.status = action.payload.status;
-      }
+    updateContactStatus(state, action: PayloadAction<{ uid: number, status: ContactStatus } | { uid: number, status: ContactStatus }[]>) {
+      const arr = Array.isArray(action.payload) ? action.payload : [action.payload];
+      arr.forEach((data) => {
+        if (state.byId[data.uid]) {
+          state.byId[data.uid]!.status = data.status;
+        }
+      });
     }
   }
 });
