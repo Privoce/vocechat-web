@@ -144,7 +144,7 @@ const Send: FC<IProps> = ({
   if (context == "user" && blocked) {
     return <div className="p-5 bg-gray-200 rounded-lg w-full dark:bg-gray-600 text-red-300">
       {t("contact_block_tip")}
-      <StyledButton className="mini ml-4" onClick={unblockThisContact}>Unblock</StyledButton>
+      <StyledButton className="mini ml-4" onClick={unblockThisContact}>{t("unblock")}</StyledButton>
     </div>;
   }
   return (
