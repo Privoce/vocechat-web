@@ -5,7 +5,7 @@ import { updateAutoDeleteSetting, updateMute } from "../slices/footprint";
 import { fillUsers, updateContactStatus as updateStatus } from "../slices/users";
 import BASE_URL, { ContentTypes } from "../config";
 import { onMessageSendStarted } from "./handlers";
-import { AutoDeleteMsgDTO, BotAPIKey, Contact, ContactAction, ContactStatus, User, UserCreateDTO, UserDTO, UserForAdmin, UserForAdminDTO } from "../../types/user";
+import { AutoDeleteMsgDTO, BotAPIKey, ContactAction, ContactResponse, ContactStatus, User, UserCreateDTO, UserDTO, UserForAdmin, UserForAdminDTO } from "../../types/user";
 import { ContentTypeKey, MuteDTO } from "../../types/message";
 import { RootState } from "../store";
 
@@ -42,13 +42,14 @@ export const userApi = createApi({
         }
       }
     }),
-    getContacts: builder.query<Contact[], void>({
+    getContacts: builder.query<ContactResponse[], void>({
       query: () => ({ url: `/user/contacts` }),
       async onQueryStarted(data, { dispatch, queryFulfilled }) {
         try {
           const { data: users } = await queryFulfilled;
-          const payloads = users.map((u) => {
-            const { uid, status } = u;
+          const payloads = users.map((c) => {
+            const uid = c.target_uid;
+            const status = c.contact_info.status;
             return {
               uid,
               status

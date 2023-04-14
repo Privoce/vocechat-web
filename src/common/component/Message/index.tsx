@@ -17,6 +17,7 @@ import useContextMenu from "../../hook/useContextMenu";
 import usePinMessage from "../../hook/usePinMessage";
 import { useAppSelector } from "../../../app/store";
 import ExpireTimer from "./ExpireTimer";
+import IconInfo from '../../../assets/icons/info.svg';
 
 interface IProps {
   readOnly?: boolean;
@@ -75,7 +76,9 @@ const Message: FC<IProps> = ({
     content_type = "text/plain",
     edited,
     properties,
-    expires_in = 0
+    expires_in = 0,
+    failed = false
+
   } = message;
 
 
@@ -100,7 +103,7 @@ const Message: FC<IProps> = ({
       className={clsx(`group w-full relative flex items-start gap-2 md:gap-4 px-1 md:px-2 py-1 my-2 rounded-lg md:dark:hover:bg-gray-800 md:hover:bg-gray-100`,
         readOnly && "hover:bg-transparent",
         showExpire && "bg-red-200 dark:bg-red-200/40",
-        pinInfo && "bg-cyan-50 dark:bg-cyan-800 pt-7"
+        pinInfo && "bg-cyan-50 dark:bg-cyan-800 pt-7",
       )}
     >
       <Tippy
@@ -121,7 +124,7 @@ const Message: FC<IProps> = ({
         context={context}
         contextId={contextId}
         mid={mid}
-        visible={contextMenuVisible}
+        visible={contextMenuVisible && !failed}
         hide={hideContextMenu}
       >
         <div
@@ -146,6 +149,9 @@ const Message: FC<IProps> = ({
                   : dayjsTime.format("YYYY-MM-DD h:mm:ss A")}
               </time>
             </Tooltip>
+            {failed && <span className="text-red-500 text-xs flex items-center gap-1">
+              <IconInfo className="stroke-red-600 w-4 h-4" /> Send Failed
+            </span>}
           </div>
           <div className={clsx(`select-text text-gray-800 text-sm break-all whitespace-pre-wrap dark:!text-white`,
             sending && "opacity-90",
@@ -181,7 +187,7 @@ const Message: FC<IProps> = ({
           createAt={time ?? 0}
         />
       )}
-      {!edit && !readOnly && (
+      {!edit && !failed && !readOnly && (
         <Commands
           context={context}
           contextId={contextId}

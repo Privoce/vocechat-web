@@ -22,6 +22,7 @@ export interface MessagePayload {
   thumbnail?: string;
   edited?: boolean | number;
   reply_mid?: number;
+  failed?: boolean;
 }
 export interface State {
   [key: number]: MessagePayload;

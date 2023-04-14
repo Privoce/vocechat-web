@@ -3,7 +3,7 @@ import { batch } from "react-redux";
 import { ContentTypes } from "../config";
 import { addChannelMsg, removeChannelMsg } from "../slices/message.channel";
 import { addUserMsg, removeUserMsg } from "../slices/message.user";
-import { addMessage, removeMessage } from "../slices/message";
+import { addMessage, removeMessage, updateMessage } from "../slices/message";
 // import { ContentType } from "../../types/message";
 
 export const onMessageSendStarted = async (
@@ -57,10 +57,16 @@ export const onMessageSendStarted = async (
       dispatch(removeMessage(ts));
     }, 300);
     // dispatch(removePendingMessage({ id, mid:ts, type: from }));
-  } catch {
-    toast.error("Send Message Failed");
-    dispatch(removeContextMessage({ id, mid: ts }));
-    dispatch(removeMessage(ts));
+  } catch (error) {
+    if (error?.error?.status == 403) {
+      // 403 means blocked
+      // toast.error(`Failed to send, blocked maybe.`,);
+      dispatch(updateMessage({ mid: ts, failed: true }));
+    } else {
+      toast.error(`Send Message Failed ${JSON.stringify(error)}`,);
+      dispatch(removeContextMessage({ id, mid: ts }));
+      dispatch(removeMessage(ts));
+    }
     // patchResult.undo();
   }
 };
