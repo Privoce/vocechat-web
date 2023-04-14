@@ -43,9 +43,9 @@ const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
   return (
     <>
       <div className="flex flex-col gap-8 -mt-[50px] dark:bg-gray-700">
-        <div className="flex flex-col gap-2 items-center group">
+        <div className="flex flex-col gap-2 items-center group px-4">
           <h2 className="text-center text-3xl text-slate-700 dark:text-white font-bold">{t("title", { name: server.name })}</h2>
-          <p className="text-sm text-gray-400 max-w-md text-center relative break-all whitespace-pre">
+          <p className="text-sm text-gray-400 max-w-md text-center relative whitespace-normal">
             <Linkify options={
               {
                 render: {
@@ -59,9 +59,9 @@ const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
                 }
               }
             }>
-              {server.description ?? t("desc")}
+              {server.description ? server.description : t("desc")}
             </Linkify>
-            {isAdmin && <NavLink to={"/setting/overview"} className="absolute -top-6 -right-6 invisible group-hover:visible">
+            {isAdmin && <NavLink to={"/setting/overview"} className="absolute top-0 -right-7 invisible group-hover:visible">
               <IconEdit />
             </NavLink>}
           </p>
