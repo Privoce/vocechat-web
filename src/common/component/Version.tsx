@@ -23,11 +23,6 @@ const Version: FC<Props> = () => {
       <li>{t("client_version")}: {process.env.VERSION}</li>
       <li>{t("server_version")}: {serverVersion}</li>
       <li>{t("build_time")}: {ts}  <span className="text-gray-700 dark:text-gray-300">({dayjs(ts * 1000).fromNow()})</span></li>
-      <li>GitHub:&nbsp;
-        <strong className="font-bold">
-          <a className="text-primary-600 underline underline-offset-2" href="https://github.com/Privoce/vocechat-web/issues" target="_blank" rel="noopener noreferrer">vocechat-web/issues</a>
-        </strong>
-      </li>
       <li>
         <Button disabled={syncing} onClick={handleSync}> {syncing ? <Ring size={18} color="#fff" /> : t("sync")}</Button>
       </li>

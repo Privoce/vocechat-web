@@ -84,14 +84,6 @@ const navs = [
         name: "version",
         component: <Version />
       },
-      {
-        name: "faq",
-        link: "https://doc.voce.chat/faq",
-      },
-      {
-        name: "feedback",
-        link: `https://privoce.voce.chat/widget?from=${encodeURIComponent(location.host)}`,
-      },
     ]
   }
 ];

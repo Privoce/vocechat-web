@@ -7,9 +7,7 @@ import ChannelModal from "./ChannelModal";
 import InviteModal from "./InviteModal";
 import IconEdit from "../../assets/icons/edit.svg";
 import IconChat from "../../assets/icons/placeholder.chat.svg";
-import IconAsk from "../../assets/icons/placeholder.question.svg";
 import IconInvite from "../../assets/icons/placeholder.invite.svg";
-import IconDownload from "../../assets/icons/placeholder.download.svg";
 import UsersModal from "./UsersModal";
 import { useAppSelector } from "../../app/store";
 
@@ -24,7 +22,7 @@ const classes = {
 };
 const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
   const { t } = useTranslation("welcome");
-  const { server, isAdmin, upgraded } = useAppSelector((store) => { return { server: store.server, isAdmin: store.authData.user?.is_admin, upgraded: store.server.upgraded }; });
+  const { server, isAdmin } = useAppSelector((store) => { return { server: store.server, isAdmin: store.authData.user?.is_admin, upgraded: store.server.upgraded }; });
   const [inviteModalVisible, setInviteModalVisible] = useState(false);
   const [createChannelVisible, setCreateChannelVisible] = useState(false);
   const [userListVisible, setUserListVisible] = useState(false);
@@ -43,9 +41,9 @@ const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
   return (
     <>
       <div className="flex flex-col gap-8 -mt-[50px] dark:bg-gray-700">
-        <div className="flex flex-col gap-2 items-center group">
+        <div className="flex flex-col gap-2 items-center group px-4">
           <h2 className="text-center text-3xl text-slate-700 dark:text-white font-bold">{t("title", { name: server.name })}</h2>
-          <p className="text-sm text-gray-400 max-w-md text-center relative break-all whitespace-pre">
+          <p className="text-sm text-gray-400 max-w-md text-center relative whitespace-normal">
             <Linkify options={
               {
                 render: {
@@ -59,9 +57,9 @@ const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
                 }
               }
             }>
-              {server.description ?? t("desc")}
+              {server.description ? server.description : t("desc")}
             </Linkify>
-            {isAdmin && <NavLink to={"/setting/overview"} className="absolute -top-6 -right-6 invisible group-hover:visible">
+            {isAdmin && <NavLink to={"/setting/overview"} className="absolute top-0 -right-7 invisible group-hover:visible">
               <IconEdit />
             </NavLink>}
           </p>
@@ -75,17 +73,6 @@ const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
             <IconChat className={classes.boxIcon} />
             <div className={classes.boxTip}>{chatTip}</div>
           </button>
-          {!upgraded && <>
-            <a href={"https://voce.chat#download"} target={"_blank"} rel="noreferrer" className={classes.box} >
-              <IconDownload className={classes.boxIcon} />
-              <div className={classes.boxTip}>{t("download")}</div>
-            </a>
-            <a href={"https://doc.voce.chat"} target={"_blank"} rel="noreferrer" className={classes.box} >
-              <IconAsk className={classes.boxIcon} />
-              <div className={classes.boxTip}>{t("help")}</div>
-            </a>
-          </>
-          }
         </div>
       </div>
       {createChannelVisible && (
