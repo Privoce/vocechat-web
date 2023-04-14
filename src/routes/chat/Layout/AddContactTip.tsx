@@ -13,7 +13,7 @@ type Props = {
 
 const AddContactTip = (props: Props) => {
     const { t } = useTranslation("chat");
-    const [updateContactStatus, { isSuccess }] = useUpdateContactStatusMutation();
+    const [updateContactStatus] = useUpdateContactStatusMutation();
     const targetUser = useAppSelector(store => store.users.byId[props.uid]);
     const handleContactStatus = (action: ContactAction) => {
         updateContactStatus({ target_uid: props.uid, action });

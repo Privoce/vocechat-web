@@ -38,12 +38,6 @@ const usersSlice = createSlice({
         })
       );
     },
-    addContact(state, action: PayloadAction<Contact>) {
-      if (!state.ids.includes(action.payload.uid)) {
-        state.ids.push(action.payload.uid);
-      }
-      state.byId[action.payload.uid] = action.payload;
-    },
     removeUser(state, action: PayloadAction<number>) {
       const uid = action.payload;
       state.ids = state.ids.filter((i) => i != uid);
@@ -74,7 +68,7 @@ const usersSlice = createSlice({
                   ? ""
                   : `${BASE_URL}/resource/avatar?uid=${uid}&t=${rest.avatar_updated_at}`,
               create_by: "", // todo: missing properties create_by
-              status: "added",//默认是联系人
+              status: state.byId[uid]?.status ?? "",
               ...rest
             };
             const idx = state.ids.findIndex((i) => i == uid);
@@ -116,5 +110,5 @@ const usersSlice = createSlice({
   }
 });
 
-export const { addContact, updateContactStatus, resetUsers, fillUsers, updateUsersByLogs, updateUsersStatus } = usersSlice.actions;
+export const { updateContactStatus, resetUsers, fillUsers, updateUsersByLogs, updateUsersStatus } = usersSlice.actions;
 export default usersSlice.reducer;
