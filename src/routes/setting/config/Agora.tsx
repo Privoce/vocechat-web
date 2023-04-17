@@ -88,7 +88,7 @@ export default function ConfigAgora() {
           />
         </div>
         <div className="input">
-          <Label htmlFor="rtm_key">RTM Key</Label>
+          <Label htmlFor="rtm_key">Customer ID</Label>
           <Textarea
             spellCheck={false}
             disabled={!enabled}
@@ -96,11 +96,11 @@ export default function ConfigAgora() {
             onChange={handleChange}
             value={rtm_key}
             name="rtm_key"
-            placeholder="RTM Key"
+            placeholder="Customer ID for RESTful API"
           />
         </div>
         <div className="input">
-          <Label htmlFor="rtm_secret">RTM Secret</Label>
+          <Label htmlFor="rtm_secret">Customer Secret</Label>
           <Textarea
             spellCheck={false}
             disabled={!enabled}
@@ -108,7 +108,7 @@ export default function ConfigAgora() {
             onChange={handleChange}
             value={rtm_secret}
             name="rtm_secret"
-            placeholder="RTM Secret"
+            placeholder="Customer Secret for RESTful API"
           />
         </div>
       </div>
