@@ -2,14 +2,14 @@
 import clsx from "clsx";
 import { FC, ChangeEvent, useState, useRef, FormEvent } from "react";
 import { useTranslation } from "react-i18next";
-import Modal from "../../common/component/Modal";
+import Modal from "./Modal";
 import IconClose from "../../assets/icons/close.svg";
 import IconSearch from "../../assets/icons/search.svg";
 
 import { useSearchUserMutation, useUpdateContactStatusMutation } from "../../app/services/user";
-import StyledButton from "../../common/component/styled/Button";
-import Input from "../../common/component/styled/Input";
-import Avatar from "../../common/component/Avatar";
+import StyledButton from "./styled/Button";
+import Input from "./styled/Input";
+import Avatar from "./Avatar";
 import BASE_URL from "../../app/config";
 import { useAppSelector } from "../../app/store";
 import { useNavigate } from "react-router-dom";
@@ -64,6 +64,7 @@ const SearchUser: FC<Props> = ({ closeModal }) => {
     if (!directChat) {
       await updateContactStatus({ target_uid: data.uid, action: "add" });
     }
+    closeModal();
     navigateTo(`/chat/dm/${data.uid}`);
   };
   // const tmpData = { "avatar_updated_at": 0, "birthday": 0, "create_by": "password", "email": "tristan@alex.com", "gender": 0, "is_admin": true, "is_bot": false, "language": "en-US", "name": "Admin", "uid": 1 };

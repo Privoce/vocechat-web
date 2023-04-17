@@ -12,7 +12,7 @@ import BlankPlaceholder from "../../common/component/BlankPlaceholder";
 import useFilteredUsers from "../../common/hook/useFilteredUsers";
 import clsx from "clsx";
 import GoBackNav from "../../common/component/GoBackNav";
-import SearchUser from "./SearchUser";
+import SearchUser from "../../common/component/SearchUser";
 
 function UsersPage() {
   const ref = useRef<HTMLDivElement | null>(
