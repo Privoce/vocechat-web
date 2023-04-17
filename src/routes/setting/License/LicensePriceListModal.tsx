@@ -26,7 +26,7 @@ const getExpireDay = (sub_dur: PriceSubscriptionDuration) => {
   let res = currDate;
   switch (sub_dur) {
     case "year":
-      res = currDate.add(1, "year");
+      res = currDate.add(100, "year");
       break;
     case "month":
       res = currDate.add(1, "month");
