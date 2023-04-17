@@ -12,9 +12,10 @@ export type VoiceMessageProps = {
     url: string,
     secure_url: string,
 }
-
+// 全局存储Voice信息
+const VoiceMap: { [key: string]: WaveSurfer | null } = {};
 const VoiceMessage = ({ file_path }: { file_path: string }) => {
-    const waveRef = useRef<WaveSurfer | null>(null);
+    // const waveRef = useRef<WaveSurfer | null>(null);
     const containerRef = useRef(null);
     const [status, setStatus] = useState<"loading" | "error" | "ready">("loading");
     const [playing, setPlaying] = useState(false);
@@ -43,8 +44,9 @@ const VoiceMessage = ({ file_path }: { file_path: string }) => {
         wave.on('error', function (err) {
             console.log("voice message error", err);
             setStatus("error");
-            if (waveRef.current) {
-                waveRef.current.destroy();
+            const current = VoiceMap[file_path];
+            if (current) {
+                current.destroy();
             }
         });
         wave.on('play', function () {
@@ -55,35 +57,41 @@ const VoiceMessage = ({ file_path }: { file_path: string }) => {
         });
         wave.on('ready', function () {
             setStatus("ready");
-            console.log("readd");
-
-            if (waveRef.current) {
-                const dur = waveRef.current.getDuration();
+            const current = VoiceMap[file_path];
+            if (current) {
+                const dur = current.getDuration();
                 const num = Math.ceil(dur);
                 const durDisplay = dayjs.duration(num, 'seconds').format('mm:ss');
                 setDuration(durDisplay);
             }
         });
-        waveRef.current = wave;
+        VoiceMap[file_path] = wave;
     };
     useEffect(() => {
-
         if (containerRef.current && file_path) {
             initWave(file_path);
         }
         return () => {
-            if (waveRef.current) {
-                waveRef.current.destroy();
+            const current = VoiceMap[file_path];
+            if (current) {
+                current.destroy();
             }
         };
     }, [file_path]);
     const handleClick = () => {
-        if (waveRef.current) {
-            if (waveRef.current.isPlaying()) {
-                waveRef.current.pause();
-            } else {
-                waveRef.current.play();
+        const current = VoiceMap[file_path];
+        if (current) {
+            if (!current.isPlaying()) {
+                // 先停掉其他的
+                Object.keys(VoiceMap).forEach((key) => {
+                    const item = VoiceMap[key];
+                    if (item && item.isPlaying()) {
+                        item.stop();
+                    }
+                }
+                );
             }
+            current.playPause();
         }
     };
     const handleReload = () => {
