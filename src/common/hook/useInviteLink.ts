@@ -1,35 +1,42 @@
 import { useState, useEffect } from "react";
 import useCopy from "./useCopy";
 import { useGetSMTPStatusQuery } from "../../app/services/server";
-import { useLazyCreateInviteLinkQuery as useCreateChannelInviteLinkQuery } from "../../app/services/channel";
+import { useLazyCreateInviteLinkQuery as useCreateChannelInviteLinkQuery, useLazyCreatePrivateInviteLinkQuery } from "../../app/services/channel";
+import { useAppSelector } from "../../app/store";
 
 export default function useInviteLink(cid?: number) {
   const [finalLink, setFinalLink] = useState("");
+  const channel = useAppSelector(store => store.channels.byId[cid ?? 0]);
   const { data: SMTPEnabled, isSuccess: smtpStatusFetchSuccess } = useGetSMTPStatusQuery();
   const [generateChannelInviteLink, { data: channelInviteLink, isLoading: generatingChannelLink }] =
     useCreateChannelInviteLinkQuery();
+  const [generatePrivateInviteLink, { data: privateInviteLink, isLoading: generatingPrivateLink }] = useLazyCreatePrivateInviteLinkQuery();
 
   const { copied, copy } = useCopy({ enableToast: false });
   const copyLink = () => {
     copy(finalLink);
   };
   useEffect(() => {
-    generateChannelInviteLink(cid);
-  }, [cid]);
+    if (!cid || channel?.is_public) {
+      generateChannelInviteLink(cid);
+    } else {
+      generatePrivateInviteLink(cid);
+    }
+  }, [cid, channel]);
 
   useEffect(() => {
-    const _link = channelInviteLink;
+    const _link = channelInviteLink || privateInviteLink;
     if (_link && smtpStatusFetchSuccess) {
       setFinalLink(_link);
     }
-  }, [channelInviteLink, smtpStatusFetchSuccess]);
+  }, [channelInviteLink, privateInviteLink, smtpStatusFetchSuccess]);
   const genServerLink = () => {
     generateChannelInviteLink();
   };
-
+  const generating = generatingPrivateLink || generatingChannelLink;
   return {
     enableSMTP: SMTPEnabled,
-    generating: generatingChannelLink,
+    generating,
     generateNewLink: cid ? generateChannelInviteLink.bind(null, cid) : genServerLink,
     link: finalLink,
     linkCopied: copied,

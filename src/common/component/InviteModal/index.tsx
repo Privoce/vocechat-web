@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 
 interface Props {
   type?: "server" | "channel";
-  cid?: number;
+  cid: number;
   title?: string;
   closeModal: () => void;
 }
@@ -22,6 +22,7 @@ const InviteModal: FC<Props> = ({ type = "server", cid, title = "", closeModal }
       server: store.server
     };
   });
+  if (!channel) return null;
   const finalTitle = type == "server" ? server.name : `#${title || channel?.name}`;
   return (
     <Modal>
@@ -31,7 +32,7 @@ const InviteModal: FC<Props> = ({ type = "server", cid, title = "", closeModal }
           <CloseIcon className="cursor-pointer dark:fill-white" onClick={closeModal} />
         </h2>
         {!channel?.is_public && <AddMembers cid={cid} closeModal={closeModal} />}
-        <InviteByEmail cid={channel?.is_public ? undefined : cid} />
+        <InviteByEmail cid={cid} />
       </div>
     </Modal>
   );

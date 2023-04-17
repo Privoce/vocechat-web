@@ -8,7 +8,7 @@ import Button from "../styled/Button";
 import Input from "../styled/Input";
 
 interface Props {
-  cid?: number;
+  cid: number;
 }
 
 const InviteByEmail: FC<Props> = ({ cid }) => {

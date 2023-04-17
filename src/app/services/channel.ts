@@ -95,6 +95,25 @@ export const channelApi = createApi({
         return `${location.origin}${invite.pathname}${invite.hash}${invite.search}`;
       }
     }),
+    createPrivateInviteLink: builder.query<string, number | void>({
+      query: (gid) => ({
+        headers: {
+          "content-type": "text/plain",
+          accept: "text/plain"
+        },
+        // 七天过期
+        url: `/group/create_invite_private_magic_link?expired_in=604800&max_times=1&gid=${gid}`,
+        responseHandler: "text"
+      }),
+      transformResponse: (link: string) => {
+        // 确保http开头
+        const _link = link.startsWith("http") ? link : `http://${link}`;
+        // return _link;
+        // 替换掉域名
+        const invite = new URL(_link);
+        return `${location.origin}${invite.pathname}${invite.hash}${invite.search}`;
+      }
+    }),
     removeChannel: builder.query<void, number>({
       query: (id) => ({
         url: `group/${id}`,
@@ -164,6 +183,13 @@ export const channelApi = createApi({
         body: members
       })
     }),
+    joinPrivateChannel: builder.mutation<Channel, { magic_token: string }>({
+      query: (body) => ({
+        url: `user/join_private`,
+        method: "POST",
+        body
+      })
+    }),
     updateIcon: builder.mutation<void, { gid: number; image: File }>({
       query: ({ gid, image }) => ({
         headers: {
@@ -194,6 +220,8 @@ export const {
   useChangeChannelTypeMutation,
   useLazyLeaveChannelQuery,
   useLazyCreateInviteLinkQuery,
+  useJoinPrivateChannelMutation,
+  useLazyCreatePrivateInviteLinkQuery,
   useCreateInviteLinkQuery,
   useGetChannelQuery,
   useUpdateChannelMutation,
