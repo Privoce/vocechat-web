@@ -85,7 +85,7 @@ const VoiceMessage = ({ file_path }: { file_path: string }) => {
                 // 先停掉其他的
                 Object.keys(VoiceMap).forEach((key) => {
                     const item = VoiceMap[key];
-                    if (item && item.isPlaying()) {
+                    if (item && item.backend && item.isPlaying()) {
                         item.stop();
                     }
                 }
