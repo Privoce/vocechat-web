@@ -76,7 +76,7 @@ export const authApi = createApi({
     }),
     register: builder.mutation<UserRegResponse, UserRegDTO>({
       query: (data) => ({
-        url: `user/register`,
+        url: `/user/register`,
         method: "POST",
         body: {
           ...data,
@@ -140,7 +140,7 @@ export const authApi = createApi({
         headers: {
           accept: "text/plain"
         },
-        url: `user/send_login_magic_link?email=${encodeURIComponent(email)}`,
+        url: `/user/send_login_magic_link?email=${encodeURIComponent(email)}`,
         method: "POST",
         responseHandler: "text"
       })
@@ -157,7 +157,7 @@ export const authApi = createApi({
       }
     >({
       query: (data) => ({
-        url: `user/send_reg_magic_link`,
+        url: `/user/send_reg_magic_link`,
         method: "POST",
         body: data
       })

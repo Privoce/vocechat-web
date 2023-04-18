@@ -151,7 +151,7 @@ export const userApi = createApi({
         headers: {
           "content-type": "image/png"
         },
-        url: `user/avatar`,
+        url: `/user/avatar`,
         method: "POST",
         body: data
       })
@@ -161,7 +161,7 @@ export const userApi = createApi({
         headers: {
           "content-type": "image/png"
         },
-        url: `admin/user/${uid}/avatar`,
+        url: `/admin/user/${uid}/avatar`,
         method: "POST",
         body: file
       })
@@ -172,7 +172,7 @@ export const userApi = createApi({
     // bot operations
     createBotAPIKey: builder.mutation<void, { uid: number, name: string }>({
       query: ({ uid, name }) => ({
-        url: `admin/user/bot-api-key/${uid}`,
+        url: `/admin/user/bot-api-key/${uid}`,
         method: "POST",
         body: { name },
       }),
@@ -187,7 +187,7 @@ export const userApi = createApi({
     // bot operations end
     updateInfo: builder.mutation<User, UserDTO>({
       query: (data) => ({
-        url: `user`,
+        url: `/user`,
         method: "PUT",
         body: data
       })
@@ -203,7 +203,7 @@ export const userApi = createApi({
             ? btoa(unescape(encodeURIComponent(JSON.stringify(properties))))
             : ""
         },
-        url: `user/${id}/send`,
+        url: `/user/${id}/send`,
         method: "POST",
         body: type == "file" ? JSON.stringify(content) : content
       }),
