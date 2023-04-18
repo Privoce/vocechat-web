@@ -1,6 +1,6 @@
 import { FC, ReactElement } from "react";
 import { Navigate, useLocation, matchRoutes } from "react-router-dom";
-import { GuestRoutes } from "../../app/config";
+import { GuestRoutes, KEY_LOCAL_TRY_PATH } from "../../app/config";
 import { useGetInitializedQuery } from "../../app/services/auth";
 import { useGetLoginConfigQuery } from "../../app/services/server";
 import { useAppSelector } from "../../app/store";
@@ -31,7 +31,18 @@ const RequireAuth: FC<Props> = ({ children, redirectTo = "/login" }) => {
   // 登陆者是guest，并且不允许访问
   if (token && guest && !allowGuest) return <Navigate to={"/"} replace />;
   // console.log("authhhhh", allowGuest, token, guest);
-  return token ? children : <Navigate to={redirectTo} replace />;
+  if (!token) {
+    // 记录下当前的路径，登录后跳转回来
+    const ignorePath = `/setting/my_account`;
+    localStorage.setItem(KEY_LOCAL_TRY_PATH, ignorePath == location.pathname ? "/" : `${location.pathname}${location.search}`);
+    return <Navigate to={redirectTo} replace />;
+  }
+  const tryPath = localStorage.getItem(KEY_LOCAL_TRY_PATH);
+  if (tryPath) {
+    localStorage.removeItem(KEY_LOCAL_TRY_PATH);
+    return <Navigate to={tryPath} replace />;
+  }
+  return children;
 };
 
 export default RequireAuth;
