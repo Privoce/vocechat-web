@@ -2,13 +2,10 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { isNull, omitBy } from "lodash";
 import BASE_URL from "../config";
 import { Channel, UpdateChannelDTO, UpdatePinnedMessageDTO } from "../../types/channel";
-import { resetAuthData } from "./auth.data";
 // import { updateVoicingInfo } from "./voice";
 
-type ChannelAside = "members" | "voice" | null;
 interface StoredChannel extends Channel {
   icon?: string;
-  visibleAside: ChannelAside
 }
 
 interface State {
@@ -28,9 +25,10 @@ const channelsSlice = createSlice({
     resetChannels() {
       return initialState;
     },
-    fillChannels(state, action: PayloadAction<Channel[]>) {
+    fillChannels(state, action: PayloadAction<StoredChannel[]>) {
       const channels = action.payload || [];
       state.ids = channels.map(({ gid }) => gid);
+
       channels.forEach((c) => {
         state.byId[c.gid] = {
           ...c,
@@ -38,7 +36,6 @@ const channelsSlice = createSlice({
             c.avatar_updated_at == 0
               ? ""
               : `${BASE_URL}/resource/group_avatar?gid=${c.gid}&t=${c.avatar_updated_at}`,
-          visibleAside: state.byId[c.gid]?.visibleAside ?? null
         };
       });
     },
@@ -54,7 +51,6 @@ const channelsSlice = createSlice({
           avatar_updated_at == 0
             ? ""
             : `${BASE_URL}/resource/group_avatar?gid=${gid}&t=${avatar_updated_at}`,
-        visibleAside: "members"
       };
     },
     updateChannel(state, action: PayloadAction<UpdateChannelDTO>) {
@@ -105,12 +101,6 @@ const channelsSlice = createSlice({
         }
       }
     },
-    updateChannelVisibleAside(state, action: PayloadAction<{ id: number, aside: ChannelAside }>) {
-      const { id, aside } = action.payload;
-      if (state.byId[id]) {
-        state.byId[id].visibleAside = aside;
-      }
-    },
     removeChannel(state, action: PayloadAction<number>) {
       const gid = action.payload;
       const idx = state.ids.findIndex((i) => i == gid);
@@ -120,16 +110,7 @@ const channelsSlice = createSlice({
       }
     }
   },
-  extraReducers: (builder) => {
-    builder.addCase(resetAuthData, (state) => {
-      // 如果有aside是voice的，就把它关掉
-      Object.values(state.byId).forEach((ch) => {
-        if (ch.visibleAside === "voice") {
-          ch.visibleAside = null;
-        }
-      });
-    });
-  }
+
 });
 
 export const {
@@ -139,7 +120,6 @@ export const {
   addChannel,
   updateChannel,
   removeChannel,
-  updateChannelVisibleAside
 } = channelsSlice.actions;
 
 export default channelsSlice.reducer;

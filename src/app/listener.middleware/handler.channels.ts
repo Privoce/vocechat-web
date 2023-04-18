@@ -17,7 +17,7 @@ export default async function handler({ operation, data, payload }: Params) {
       {
         const chs = payload as Channel[];
         const arr = chs.map(({ gid, ...rest }) => {
-          return { key: gid + "", value: rest };
+          return { key: gid + "", value: { gid, ...rest } };
         });
         await table.setItems(arr);
       }
@@ -40,6 +40,7 @@ export default async function handler({ operation, data, payload }: Params) {
         await table?.setItem(id + "", data.byId[id]);
       }
       break;
+
     default:
       break;
   }

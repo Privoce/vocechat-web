@@ -3,7 +3,7 @@
 // import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { updateChannelVisibleAside } from '../../../app/slices/channels';
+import { updateChannelVisibleAside } from '../../../app/slices/footprint';
 import { useAppSelector } from '../../../app/store';
 import IconHeadphone from '../../../assets/icons/headphone.svg';
 import Tooltip from '../../../common/component/Tooltip';
@@ -18,11 +18,12 @@ type Props = {
 const VoiceChat = ({ id, context = "channel" }: Props) => {
     const { joinVoice, joined, joining = false, joinedAtThisContext } = useVoice({ id, context });
     const dispatch = useDispatch();
-    const { loginUser, contextData, voiceList } = useAppSelector(store => {
+    const { loginUser, voiceList, visibleAside } = useAppSelector(store => {
         return {
             loginUser: store.authData.user,
             contextData: context == "channel" ? store.channels.byId[id] : store.users.byId[id],
-            voiceList: store.voice.list
+            voiceList: store.voice.list,
+            visibleAside: context == "channel" ? store.footprint.channelAsides[id] : null,
         };
     });
     const { data: agoraConfig } = useGetAgoraConfigQuery(undefined, { skip: !loginUser?.is_admin });
@@ -31,7 +32,7 @@ const VoiceChat = ({ id, context = "channel" }: Props) => {
         if (context == "channel") {
             dispatch(updateChannelVisibleAside({
                 id,
-                aside: contextData.visibleAside == "voice" ? null : "voice"
+                aside: visibleAside == "voice" ? null : "voice"
             }));
         }
         // todo DM
@@ -51,7 +52,7 @@ const VoiceChat = ({ id, context = "channel" }: Props) => {
     };
     // 只有admin才能看到入口，后续会改
     if (!loginUser || !loginUser.is_admin || !agoraConfig?.enabled) return null;
-    const visible = contextData.visibleAside == "voice";
+    const visible = visibleAside == "voice";
     const memberCount = voiceList.find((v) => v.context == context && v.id == id)?.memberCount ?? 0;
     const badgeClass = `absolute -top-2 -right-2 w-4 h-4 rounded-full bg-primary-400 text-white `;
     return (
