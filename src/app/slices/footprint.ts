@@ -2,7 +2,9 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { MuteDTO } from "../../types/message";
 import { OG } from "../../types/resource";
 import { AutoDeleteMessageSettingDTO, AutoDeleteMsgForGroup, AutoDeleteMsgForUser, AutoDeleteSettingForChannels, AutoDeleteSettingForUsers } from "../../types/sse";
+import { resetAuthData } from "./auth.data";
 
+type ChannelAside = "members" | "voice" | null;
 export interface State {
   og: { [url: string]: OG }
   usersVersion: number;
@@ -15,7 +17,9 @@ export interface State {
   muteChannels: { [cid: number]: { expired_in?: number } | undefined };
   autoDeleteMsgUsers: AutoDeleteMsgForUser[];
   autoDeleteMsgChannels: AutoDeleteMsgForGroup[];
+  channelAsides: { [cid: number]: ChannelAside };
 }
+
 
 const initialState: State = {
   og: {},
@@ -29,6 +33,7 @@ const initialState: State = {
   muteChannels: {},
   autoDeleteMsgUsers: [],
   autoDeleteMsgChannels: [],
+  channelAsides: {}
 };
 
 const footprintSlice = createSlice({
@@ -50,7 +55,8 @@ const footprintSlice = createSlice({
         muteUsers = {},
         muteChannels = {},
         autoDeleteMsgUsers = [],
-        autoDeleteMsgChannels = []
+        autoDeleteMsgChannels = [],
+        channelAsides = {}
       } = action.payload;
       return {
         og,
@@ -63,7 +69,8 @@ const footprintSlice = createSlice({
         muteUsers,
         muteChannels,
         autoDeleteMsgUsers,
-        autoDeleteMsgChannels
+        autoDeleteMsgChannels,
+        channelAsides
       };
     },
     updateUsersVersion(state, action: PayloadAction<number>) {
@@ -177,7 +184,21 @@ const footprintSlice = createSlice({
       reads.forEach(({ gid, mid }) => {
         state.readChannels[gid] = mid;
       });
-    }
+    },
+    updateChannelVisibleAside(state, action: PayloadAction<{ id: number, aside: ChannelAside }>) {
+      const { id, aside } = action.payload;
+      state.channelAsides[id] = aside;
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(resetAuthData, (state) => {
+      // 如果有aside是voice的，就把它关掉
+      Object.keys(state.channelAsides).forEach((channel_id: string) => {
+        if (state.channelAsides[+channel_id] === "voice") {
+          state.channelAsides[+channel_id] = null;
+        }
+      });
+    });
   }
 });
 
@@ -191,7 +212,8 @@ export const {
   updateMute,
   updateAutoDeleteSetting,
   updateHistoryMark,
-  upsertOG
+  upsertOG,
+  updateChannelVisibleAside
 } = footprintSlice.actions;
 
 export default footprintSlice.reducer;

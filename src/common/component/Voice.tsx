@@ -2,7 +2,7 @@ import AgoraRTC, { IMicrophoneAudioTrack } from 'agora-rtc-sdk-ng';
 import { memo, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useGetAgoraConfigQuery, useGetAgoraVoicingListQuery, useLazyGetAgoraTokenQuery } from '../../app/services/server';
-import { updateChannelVisibleAside } from '../../app/slices/channels';
+import { updateChannelVisibleAside } from '../../app/slices/footprint';
 import { addVoiceMember, removeVoiceMember, updateConnectionState, updateDeafenStatus, updateMuteStatus, updateVoicingInfo, updateVoicingMember, updateVoicingNetworkQuality, upsertVoiceList } from '../../app/slices/voice';
 import { useAppSelector } from '../../app/store';
 import AudioJoin from '../../assets/join.wav';

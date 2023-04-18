@@ -17,7 +17,7 @@ import { useAppSelector } from "../../../app/store";
 import GoBackNav from "../../../common/component/GoBackNav";
 import Members from "./Members";
 import VoiceChat from "../VoiceChat";
-import { updateChannelVisibleAside } from "../../../app/slices/channels";
+import { updateChannelVisibleAside } from "../../../app/slices/footprint";
 import Dashboard from "../VoiceChat/Dashboard";
 type Props = {
   cid?: number;
@@ -33,11 +33,13 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
     userIds,
     data,
     loginUser,
+    visibleAside
   } = useAppSelector((store) => {
     return {
       loginUser: store.authData.user,
       userIds: store.users.ids,
       data: store.channels.byId[cid],
+      visibleAside: store.footprint.channelAsides[cid]
     };
   });
   useEffect(() => {
@@ -56,7 +58,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
   const toggleMembersVisible = () => {
     dispatch(updateChannelVisibleAside({
       id: cid,
-      aside: data.visibleAside !== "members" ? "members" : null
+      aside: visibleAside !== "members" ? "members" : null
     }));
   };
 
@@ -109,7 +111,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
           onClick={toggleMembersVisible}
         >
           <Tooltip tip={t("channel_members")} placement="left">
-            <IconPeople className={data.visibleAside == "members" ? "fill-gray-600" : ""} />
+            <IconPeople className={visibleAside == "members" ? "fill-gray-600" : ""} />
           </Tooltip>
         </li>
       </ul>
@@ -125,10 +127,10 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
       </header>
     }
     users={
-      <Members uids={memberIds} addVisible={addVisible} cid={cid} ownerId={owner} membersVisible={data.visibleAside == "members"} />
+      <Members uids={memberIds} addVisible={addVisible} cid={cid} ownerId={owner} membersVisible={visibleAside == "members"} />
     }
     voice={
-      <Dashboard visible={data.visibleAside == "voice"} id={cid} context="channel" />
+      <Dashboard visible={visibleAside == "voice"} id={cid} context="channel" />
     }
   />;
 }
