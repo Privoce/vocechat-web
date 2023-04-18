@@ -32,7 +32,7 @@ export const serverApi = createApi({
   baseQuery,
   endpoints: (builder) => ({
     getServer: builder.query<Server, void>({
-      query: () => ({ url: `admin/system/organization` }),
+      query: () => ({ url: `/admin/system/organization` }),
       async onQueryStarted(data, { dispatch, queryFulfilled }) {
         try {
           const { data: server } = await queryFulfilled;
@@ -77,24 +77,24 @@ export const serverApi = createApi({
       }
     }),
     getFirebaseConfig: builder.query<FirebaseConfig, void>({
-      query: () => ({ url: `admin/fcm/config` })
+      query: () => ({ url: `/admin/fcm/config` })
     }),
     getGoogleAuthConfig: builder.query<GoogleAuthConfig, void>({
-      query: () => ({ url: `admin/google_auth/config` })
+      query: () => ({ url: `/admin/google_auth/config` })
     }),
     updateGoogleAuthConfig: builder.mutation<void, GoogleAuthConfig>({
       query: (data) => ({
-        url: `admin/google_auth/config`,
+        url: `/admin/google_auth/config`,
         method: "POST",
         body: data
       })
     }),
     getGithubAuthConfig: builder.query<GithubAuthConfig, void>({
-      query: () => ({ url: `admin/github_auth/config` })
+      query: () => ({ url: `/admin/github_auth/config` })
     }),
     updateGithubAuthConfig: builder.mutation<void, GithubAuthConfig>({
       query: (data) => ({
-        url: `admin/github_auth/config`,
+        url: `/admin/github_auth/config`,
         method: "POST",
         body: data
       })
@@ -108,17 +108,17 @@ export const serverApi = createApi({
     }),
     updateFirebaseConfig: builder.mutation<void, FirebaseConfig>({
       query: (data) => ({
-        url: `admin/fcm/config`,
+        url: `/admin/fcm/config`,
         method: "POST",
         body: data
       })
     }),
     getAgoraConfig: builder.query<AgoraConfig, void>({
-      query: () => ({ url: `admin/agora/config` })
+      query: () => ({ url: `/admin/agora/config` })
     }),
     updateAgoraConfig: builder.mutation<void, AgoraConfig>({
       query: (data) => ({
-        url: `admin/agora/config`,
+        url: `/admin/agora/config`,
         method: "POST",
         body: data
       })
@@ -158,7 +158,7 @@ export const serverApi = createApi({
       }
     }),
     getSystemCommon: builder.query<SystemCommon, void>({
-      query: () => ({ url: `admin/system/common` }),
+      query: () => ({ url: `/admin/system/common` }),
       async onQueryStarted(data, { dispatch, queryFulfilled }) {
         try {
           const resp = await queryFulfilled;
@@ -172,7 +172,7 @@ export const serverApi = createApi({
     }),
     updateSystemCommon: builder.mutation<void, Partial<SystemCommon>>({
       query: (data) => ({
-        url: `admin/system/common`,
+        url: `/admin/system/common`,
         method: "PUT",
         body: data
       }),
@@ -188,24 +188,24 @@ export const serverApi = createApi({
       }
     }),
     getSMTPConfig: builder.query<SMTPConfig, void>({
-      query: () => ({ url: `admin/smtp/config` })
+      query: () => ({ url: `/admin/smtp/config` })
     }),
     getSMTPStatus: builder.query<boolean, void>({
       query: () => ({ url: `/admin/smtp/enabled` })
     }),
     updateSMTPConfig: builder.mutation<void, SMTPConfig>({
       query: (data) => ({
-        url: `admin/smtp/config`,
+        url: `/admin/smtp/config`,
         method: "POST",
         body: data
       })
     }),
     getLoginConfig: builder.query<LoginConfig, void>({
-      query: () => ({ url: `admin/login/config` })
+      query: () => ({ url: `/admin/login/config` })
     }),
     updateLoginConfig: builder.mutation<void, Partial<LoginConfig>>({
       query: (data) => ({
-        url: `admin/login/config`,
+        url: `/admin/login/config`,
         method: "POST",
         body: data
       })
@@ -215,7 +215,7 @@ export const serverApi = createApi({
         headers: {
           "content-type": "image/png"
         },
-        url: `admin/system/organization/logo`,
+        url: `/admin/system/organization/logo`,
         method: "POST",
         body: data
       }),

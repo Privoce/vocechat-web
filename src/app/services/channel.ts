@@ -18,13 +18,13 @@ export const channelApi = createApi({
   refetchOnFocus: true,
   endpoints: (builder) => ({
     getChannels: builder.query<Channel[], void>({
-      query: () => ({ url: `group` })
+      query: () => ({ url: `/group` })
     }),
     getChannel: builder.query<Channel, number>({
-      query: (id) => ({ url: `group/${id}` })
+      query: (id) => ({ url: `/group/${id}` })
     }),
     leaveChannel: builder.query<void, number>({
-      query: (id) => ({ url: `group/${id}/leave` }),
+      query: (id) => ({ url: `/group/${id}/leave` }),
       async onQueryStarted(gid, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
@@ -43,7 +43,7 @@ export const channelApi = createApi({
     }),
     changeChannelType: builder.mutation<number, { is_public: boolean, id: number, members?: number[] }>({
       query: ({ id, is_public, members }) => ({
-        url: `group/${id}/change_type`,
+        url: `/group/${id}/change_type`,
         method: "POST",
         body: members ? { is_public, members } : { is_public }
       }),
@@ -61,7 +61,7 @@ export const channelApi = createApi({
     }),
     updateChannel: builder.mutation<void, ChannelDTO>({
       query: ({ id, ...data }) => ({
-        url: `group/${id}`,
+        url: `/group/${id}`,
         method: "PUT",
         body: data
       }),
@@ -97,7 +97,7 @@ export const channelApi = createApi({
     }),
     removeChannel: builder.query<void, number>({
       query: (id) => ({
-        url: `group/${id}`,
+        url: `/group/${id}`,
         method: "DELETE"
       }),
       async onQueryStarted(id, { dispatch, getState, queryFulfilled }) {
@@ -142,7 +142,7 @@ export const channelApi = createApi({
             ? btoa(unescape(encodeURIComponent(JSON.stringify(properties))))
             : ""
         },
-        url: `group/${id}/send`,
+        url: `/group/${id}/send`,
         method: "POST",
         body: type == "file" ? JSON.stringify(content) : content
       }),
@@ -152,14 +152,14 @@ export const channelApi = createApi({
     }),
     addMembers: builder.mutation<void, { id: number; members: number[] }>({
       query: ({ id, members }) => ({
-        url: `group/${id}/members/add`,
+        url: `/group/${id}/members/add`,
         method: "POST",
         body: members
       })
     }),
     removeMembers: builder.mutation<void, { id: number; members: number[] }>({
       query: ({ id, members }) => ({
-        url: `group/${id}/members/remove`,
+        url: `/group/${id}/members/remove`,
         method: "POST",
         body: members
       })
@@ -196,6 +196,7 @@ export const {
   useLazyCreateInviteLinkQuery,
   useCreateInviteLinkQuery,
   useGetChannelQuery,
+  useLazyGetChannelQuery,
   useUpdateChannelMutation,
   useLazyRemoveChannelQuery,
   useGetChannelsQuery,
