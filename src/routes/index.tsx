@@ -58,7 +58,7 @@ const PageRoutes = () => {
     <HashRouter>
       <Routes>
         <Route path="/guest_login" element={<LazyIt><GuestLogin /></LazyIt>} />
-        <Route path="/invite_private" element={<LazyIt><RequireAuth><InvitePrivate /></RequireAuth></LazyIt>} />
+        <Route path="/invite_private/:channel_id" element={<LazyIt><RequireAuth><InvitePrivate /></RequireAuth></LazyIt>} />
         <Route path="/cb/:type/:payload" element={<LazyIt><CallbackPage /></LazyIt>} />
         <Route path="/oauth/:token" element={<LazyIt><OAuthPage /></LazyIt>} />
         <Route
