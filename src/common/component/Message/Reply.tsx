@@ -100,11 +100,11 @@ const Reply: FC<ReplyProps> = ({ mid, interactive = true }) => {
       )}
       onClick={interactive ? handleClick : undefined}
     >
-      <div className="flex shrink-0">
+      <div className="flex shrink-0 w-6 h-6">
         <Avatar
           width={24}
           height={24}
-          className="rounded-full"
+          className="rounded-full object-cover"
           src={currUser.avatar}
           name={currUser.name}
         />
