@@ -28,8 +28,8 @@ export interface AgoraConfig {
   project_id: string;
   app_id: string;
   app_certificate: string;
-  rtm_key: string;
-  rtm_secret: string;
+  customer_id: string;
+  customer_secret: string;
 }
 export interface AgoraVoicingListResponse {
   success: boolean,

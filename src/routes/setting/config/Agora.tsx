@@ -28,8 +28,8 @@ export default function ConfigAgora() {
     project_id,
     app_id,
     app_certificate,
-    rtm_key,
-    rtm_secret,
+    customer_id,
+    customer_secret,
     enabled = false
   } = values as AgoraConfig;
 
@@ -88,26 +88,26 @@ export default function ConfigAgora() {
           />
         </div>
         <div className="input">
-          <Label htmlFor="rtm_key">Customer ID</Label>
+          <Label htmlFor="customer_id">Customer ID</Label>
           <Textarea
             spellCheck={false}
             disabled={!enabled}
-            data-type="rtm_key"
+            data-type="customer_id"
             onChange={handleChange}
-            value={rtm_key}
-            name="rtm_key"
+            value={customer_id}
+            name="customer_id"
             placeholder="Customer ID for RESTful API"
           />
         </div>
         <div className="input">
-          <Label htmlFor="rtm_secret">Customer Secret</Label>
+          <Label htmlFor="customer_secret">Customer Secret</Label>
           <Textarea
             spellCheck={false}
             disabled={!enabled}
-            data-type="rtm_secret"
+            data-type="customer_secret"
             onChange={handleChange}
-            value={rtm_secret}
-            name="rtm_secret"
+            value={customer_secret}
+            name="customer_secret"
             placeholder="Customer Secret for RESTful API"
           />
         </div>

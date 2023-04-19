@@ -22,8 +22,8 @@ const Voice = () => {
     });
     useGetAgoraVoicingListQuery({
         appid: agoraConfig?.app_id ?? "",
-        key: agoraConfig?.rtm_key ?? "",
-        secret: agoraConfig?.rtm_secret ?? "",
+        key: agoraConfig?.customer_id ?? "",
+        secret: agoraConfig?.customer_secret ?? "",
 
     }, {
         skip: !isAdmin || !agoraConfig?.enabled || !navigator.onLine,
