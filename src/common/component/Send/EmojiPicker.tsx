@@ -52,7 +52,7 @@ export default function EmojiPicker({ selectEmoji }: { selectEmoji: (e: string) 
   return (
     <Tooltip placement="top" tip="Emojis" disabled={visible}>
       <div className="hidden md:flex relative w-fit items-center">
-        <div ref={ref} className={clsx(`absolute -top-5 -left-5 -translate-y-full`, visible ? 'block' : 'hidden')}>
+        <div ref={ref} className={clsx(`z-50 absolute -top-5 -left-5 -translate-y-full`, visible ? 'block' : 'hidden')}>
           {/* emoji picker */}
         </div>
         <SmileIcon data-emoji="toggler" className="cursor-pointer select-none !w-[22px] !h-[22px]" onClick={togglePickerVisible} />
