@@ -22,12 +22,13 @@ import useMessageOperation from "./useMessageOperation";
 import { useTranslation } from "react-i18next";
 import clsx from "clsx";
 type Props = {
+  isSelf: boolean;
   context: "user" | "channel";
   contextId: number;
   mid: number;
   toggleEditMessage: () => void;
 };
-const Commands: FC<Props> = ({ context = "user", contextId = 0, mid = 0, toggleEditMessage }) => {
+const Commands: FC<Props> = ({ isSelf, context = "user", contextId = 0, mid = 0, toggleEditMessage }) => {
   const { t } = useTranslation();
   const {
     canDelete,
@@ -87,7 +88,10 @@ const Commands: FC<Props> = ({ context = "user", contextId = 0, mid = 0, toggleE
     <>
       <ul
         ref={cmdsRef}
-        className={clsx(`bg-white dark:bg-gray-900 rounded-md z-[999] absolute right-2.5 top-0 -translate-y-1/2 flex items-center border border-solid border-black/10 invisible group-hover:visible`, tippyVisible && '!visible')}>
+        className={clsx(`bg-white dark:bg-gray-900 rounded-md z-[999] absolute top-0 -translate-y-1/2 flex items-center border border-solid border-black/10 invisible group-hover:visible`,
+          tippyVisible && '!visible',
+          isSelf ? "left-2.5" : "right-2.5"
+        )}>
         <Tippy
           onShow={handleTippyVisible.bind(null, true)}
           onHide={handleTippyVisible.bind(null, false)}
