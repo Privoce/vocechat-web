@@ -29,7 +29,7 @@ const whiteList = [
   "sendMessageByBot",
   "getAgoraVoicingList"
 ];
-
+const whiteList401 = ["getAgoraVoicingList"];
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
   prepareHeaders: (headers, { getState, endpoint }) => {
@@ -89,6 +89,9 @@ const baseQueryWithTokenCheck = async (args: any, api: any, extraOptions: any) =
         break;
       case 401:
         {
+          if (whiteList401.includes(api.endpoint)) {
+            return;
+          }
           if (api.endpoint !== "login") {
             api.dispatch(resetAuthData());
             location.href = "/#/login";
