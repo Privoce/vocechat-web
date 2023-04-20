@@ -84,12 +84,12 @@ const SessionContextMenu: FC<Props> = ({
   const handleDMSetting = () => {
     navigateTo(`/setting/dm/${id}/overview?f=${pathname}`);
   };
-
+  const pinTxt = t(pinned ? "unpin_chat" : "pin_chat", { ns: "chat" });
   const items =
     context == "dm"
       ? [
         {
-          title: t(pinned ? "unpin_chat" : "pin_chat", { ns: "chat" }),
+          title: pinTxt,
           handler: handlePinChat
         },
         {
@@ -112,13 +112,13 @@ const SessionContextMenu: FC<Props> = ({
       ]
       : [
         {
+          title: pinTxt,
+          handler: handlePinChat
+        },
+        {
           title: t("setting"),
           underline: true,
           handler: handleChannelSetting
-        },
-        {
-          title: t("pin", { ns: "chat" }),
-          handler: handlePinChat
         },
         {
           title: t("action.mark_read"),
