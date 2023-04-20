@@ -19,11 +19,11 @@ import {
   updateMute,
   updateAutoDeleteSetting
 } from "../../../app/slices/footprint";
-import { updateUsersByLogs, updateUsersStatus } from "../../../app/slices/users";
+import { updateContactStatus, updateUsersByLogs, updateUsersStatus } from "../../../app/slices/users";
 import { resetAuthData, updateLoginUser, updateRoleChanged } from "../../../app/slices/auth.data";
 import chatMessageHandler from "./chat.handler";
 import { useAppDispatch, useAppSelector } from "../../../app/store";
-import { ServerEvent, UsersStateEvent } from "../../../types/sse";
+import { ServerEvent, UserSettingsChangedEvent, UsersStateEvent } from "../../../types/sse";
 import { useRenewMutation } from "../../../app/services/auth";
 import { getLocalAuthData } from "../../utils";
 import { removeUserSession } from "../../../app/slices/message.user";
@@ -193,6 +193,28 @@ export default function useStreaming() {
                     dispatch(updateMute({ [_key]: arr }));
                   }
                 }
+                break;
+              case "remove_contacts": {
+                const arr = (data as UserSettingsChangedEvent).remove_contacts ?? [];
+                updateContactStatus(
+                  arr.map(
+                    (uid: number) => {
+                      return { uid, status: "" };
+                    }
+                  )
+                );
+              }
+                break;
+              case "add_contacts": {
+                const arr = (data as UserSettingsChangedEvent).add_contacts ?? [];
+                updateContactStatus(
+                  arr.map(
+                    ({ target_uid, contact_info: { status } }) => {
+                      return { uid: target_uid, status };
+                    }
+                  )
+                );
+              }
                 break;
               case "remove_mute_users":
               case "remove_mute_groups":

@@ -1,4 +1,4 @@
-import { User } from "./user";
+import { ContactResponse, User } from "./user";
 import { Channel } from "./channel";
 import { ContentType } from "./message";
 
@@ -52,7 +52,7 @@ export type AutoDeleteMsgForUser = {
 export type AutoDeleteMsgForGroup = {
   gid: number; expires_in: number | null
 }
-export interface UserSettingsEvent {
+export type UserSettingsEvent = {
   type: "user_settings";
   mute_users?: MuteUser[];
   mute_groups?: MuteChannel[];
@@ -68,12 +68,14 @@ export type AutoDeleteSettingForChannels = {
   burn_after_reading_groups: AutoDeleteMsgForGroup[]
 }
 export type AutoDeleteMessageSettingDTO = AutoDeleteSettingForUsers | AutoDeleteSettingForChannels
-export interface UserSettingsChangedEvent {
+export type UserSettingsChangedEvent = {
   type: "user_settings_changed";
   from_device?: string;
   add_mute_users?: MuteUser[];
   remove_mute_users?: number[];
   add_mute_groups?: MuteChannel[];
+  add_contacts?: Pick<ContactResponse, "target_uid" | "contact_info">[];
+  remove_contacts?: number[];
   remove_mute_groups?: number[];
   read_index_users?: { uid: number; mid: number }[];
   read_index_groups?: { gid: number; mid: number }[];
