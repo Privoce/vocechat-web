@@ -19,11 +19,13 @@ interface IProps {
   type?: "dm" | "channel";
   id: number;
   mid: number;
+  pinned?: boolean;
   setDeleteChannelId: (param: number) => void;
   setInviteChannelId: (param: number) => void;
 }
 const Session: FC<IProps> = ({
   type = "dm",
+  pinned = false,
   id,
   mid,
   setDeleteChannelId,
@@ -102,13 +104,14 @@ const Session: FC<IProps> = ({
   });
   const isVoicing = type == "channel" && voiceList.findIndex(item => item.id == id) > -1;
   return (
-    <li className="session">
+    <li className={clsx("session")}>
       <ContextMenu
         visible={contextMenuVisible}
         hide={hideContextMenu}
         context={type}
         id={id}
         mid={mid}
+        pinned={pinned}
         setInviteChannelId={setInviteChannelId}
         deleteChannel={setDeleteChannelId}
       >

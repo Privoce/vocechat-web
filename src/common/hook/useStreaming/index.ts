@@ -17,7 +17,9 @@ import {
   updateReadChannels,
   updateReadUsers,
   updateMute,
-  updateAutoDeleteSetting
+  updateAutoDeleteSetting,
+  upsertPinChats,
+  removePinChats
 } from "../../../app/slices/footprint";
 import { updateContactStatus, updateUsersByLogs, updateUsersStatus } from "../../../app/slices/users";
 import { resetAuthData, updateLoginUser, updateRoleChanged } from "../../../app/slices/auth.data";
@@ -144,6 +146,11 @@ export default function useStreaming() {
           keepAlive();
           dispatch(setReady());
           break;
+        case "pinned_chats": {
+          const { chats } = data;
+          dispatch(upsertPinChats({ pins: chats, override: true }));
+          break;
+        }
         case "users_snapshot": {
           const { version } = data;
           dispatch(updateUsersVersion(version));
@@ -181,6 +188,20 @@ export default function useStreaming() {
                 break;
               case "read_index_users":
                 dispatch(updateReadUsers(data[key]));
+                break;
+              case "add_pin_chats": {
+                const pins = (data as UserSettingsChangedEvent).add_pin_chats ?? [];
+                if (pins.length) {
+                  dispatch(upsertPinChats({ pins }));
+                }
+              }
+                break;
+              case "remove_pin_chats": {
+                const pins = (data as UserSettingsChangedEvent).remove_pin_chats ?? [];
+                if (pins.length) {
+                  dispatch(removePinChats(pins));
+                }
+              }
                 break;
               case "add_mute_users":
               case "mute_users":

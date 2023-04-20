@@ -5,6 +5,7 @@ import Session from "./Session";
 import DeleteChannelConfirmModal from "../../settingChannel/DeleteConfirmModal";
 import InviteModal from "../../../common/component/InviteModal";
 import { useAppSelector } from "../../../app/store";
+import { PinChatTargetChannel, PinChatTargetUser } from "../../../types/sse";
 export interface ChatSession {
   type: "dm" | "channel";
   id: number;
@@ -19,9 +20,11 @@ const SessionList: FC<Props> = ({ tempSession }) => {
   const [deleteId, setDeleteId] = useState<number>();
   const [inviteChannelId, setInviteChannelId] = useState<number>();
   const [sessions, setSessions] = useState<ChatSession[]>([]);
-  const { channelIDs, DMs, readChannels, readUsers, channelMessage, userMessage, loginUid } =
+  const [pinSessions, setPinSessions] = useState<ChatSession[]>([]);
+  const { pins, channelIDs, DMs, readChannels, readUsers, channelMessage, userMessage, loginUid } =
     useAppSelector((store) => {
       return {
+        pins: store.footprint.pinChats,
         loginUid: store.authData.user?.uid,
         channelIDs: store.channels.ids,
         DMs: store.userMessage.ids,
@@ -33,24 +36,49 @@ const SessionList: FC<Props> = ({ tempSession }) => {
     });
 
   useEffect(() => {
-    const cSessions = channelIDs.map((id) => {
-      const mids = channelMessage[id];
+    // const pinDMs= 
+    const getSessionObj = (id: number, type: "dm" | "channel") => {
+      const mids = type == "dm" ? userMessage[id] : channelMessage[id];
       if (!mids || mids.length == 0) {
-        return { unreads: 0, id, type: "channel" };
+        return { unread: 0, id, type } as ChatSession;
       }
       // 先转换成数字，再排序
       const mid = [...mids].sort((a, b) => +a - +b).pop();
-      return { id, mid, type: "channel" };
+      return { id, mid, type } as ChatSession;
+    };
+    const pinTmps = pins.map((p) => {
+      const { target } = p;
+      if ("uid" in target) {
+        return getSessionObj((target as PinChatTargetUser).uid, "dm");
+      }
+      if ("gid" in target) {
+        return getSessionObj((target as PinChatTargetChannel).gid, "channel");
+      }
+      return null;
+    }).filter((p) => !!p);
+    const channelPinIds = pins.map(p => {
+      if (p.target.gid) {
+        return p.target.gid;
+      }
+      return null;
+
+    }).filter(id => !!id);
+    const dmPinIds = pins.map(p => {
+      if (p.target.uid) {
+        return p.target.uid;
+      }
+      return null;
+
+    }).filter(id => !!id);
+    const cSessions = channelIDs.filter(id => {
+      return !channelPinIds.includes(id);
+    }).map((id) => {
+      return getSessionObj(id, "channel");
     });
-    const uSessions = DMs.map((id) => {
-      // console.log("adddd", id);
-      const mids = userMessage[id];
-      if (!mids || mids.length == 0) {
-        return { unreads: 0, id, type: "dm" };
-      }
-      // 先转换成数字，再排序
-      const mid = [...mids].sort((a, b) => +a - +b).pop();
-      return { type: "dm", id, mid };
+    const uSessions = DMs.filter(id => {
+      return !dmPinIds.includes(id);
+    }).map((id) => {
+      return getSessionObj(id, "dm");
     });
     const temps = [...(cSessions as ChatSession[]), ...(uSessions as ChatSession[])].sort((a, b) => {
       const { mid: aMid = 0 } = a;
@@ -61,6 +89,7 @@ const SessionList: FC<Props> = ({ tempSession }) => {
     const newSessions = tempSession ? [tempSession, ...temps] : temps;
     // console.log("qqqq", newSessions);
     setSessions(newSessions);
+    setPinSessions(pinTmps);
   }, [
     channelIDs,
     DMs,
@@ -69,11 +98,29 @@ const SessionList: FC<Props> = ({ tempSession }) => {
     readUsers,
     loginUid,
     userMessage,
-    tempSession
+    tempSession,
+    pins
   ]);
 
   return (
     <>
+      {pinSessions.length && <ul className="flex flex-col gap-0.5 p-2 bg-primary-500/10">
+        {pinSessions.map((p) => {
+          const { type, id, mid = 0 } = p;
+          const key = `${type}_${id}`;
+          return (
+            <Session
+              key={key}
+              type={type}
+              pinned={true}
+              id={id}
+              mid={mid}
+              setInviteChannelId={setInviteChannelId}
+              setDeleteChannelId={setDeleteId}
+            />
+          );
+        })}
+      </ul>}
       <ul ref={ref} className="flex flex-1 flex-col gap-0.5 p-2 overflow-auto">
         <ViewportList
           initialPrerender={10}

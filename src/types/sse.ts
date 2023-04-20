@@ -77,6 +77,8 @@ export type UserSettingsChangedEvent = {
   add_contacts?: Pick<ContactResponse, "target_uid" | "contact_info">[];
   remove_contacts?: number[];
   remove_mute_groups?: number[];
+  add_pin_chats?: PinChat[];
+  remove_pin_chats?: PinChatTarget[];
   read_index_users?: { uid: number; mid: number }[];
   read_index_groups?: { gid: number; mid: number }[];
   burn_after_reading_users?: AutoDeleteMsgForUser[];
@@ -86,6 +88,18 @@ export type UserSettingsChangedEvent = {
 export interface RelatedGroupsEvent {
   type: "related_groups";
   groups: Channel[];
+}
+export type PinChatTargetUser = {
+  uid: number;
+};
+export type PinChatTargetChannel = {
+  gid: number;
+};
+export type PinChatTarget = PinChatTargetUser | PinChatTargetChannel;
+export type PinChat = { target: PinChatTarget[], updated_at: number }
+export interface PinnedChatsEvent {
+  type: "pinned_chats";
+  chats: PinChat[];
 }
 
 export interface NormalMessage {
@@ -211,4 +225,5 @@ export type ServerEvent =
   | KickFromGroupEvent
   | GroupChangedEvent
   | PinnedMessageUpdatedEvent
-  | HeartbeatEvent;
+  | HeartbeatEvent
+  | PinnedChatsEvent;

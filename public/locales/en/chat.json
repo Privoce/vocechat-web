@@ -40,6 +40,8 @@
 
   "new_msg": "{{num}} new messages",
   "mark_read": "Mark As Read",
+  "pin_chat": "Sticky on top",
+  "unpin_chat": "Unsticky",
 
   "reply_msg_del": "This message has been deleted.",
 

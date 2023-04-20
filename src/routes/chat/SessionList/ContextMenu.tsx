@@ -2,7 +2,7 @@ import { FC, ReactElement } from "react";
 import Tippy from "@tippyjs/react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useLocation, useMatch } from "react-router-dom";
-import { useUpdateMuteSettingMutation } from "../../../app/services/user";
+import { usePinChatMutation, useUnpinChatMutation, useUpdateMuteSettingMutation } from "../../../app/services/user";
 import { useReadMessageMutation } from "../../../app/services/message";
 import { removeUserSession } from "../../../app/slices/message.user";
 import ContextMenu, { Item } from "../../../common/component/ContextMenu";
@@ -10,6 +10,7 @@ import useUserOperation from "../../../common/hook/useUserOperation";
 import { useAppSelector } from "../../../app/store";
 import { useTranslation } from "react-i18next";
 type Props = {
+  pinned: boolean;
   context: "dm" | "channel";
   id: number;
   visible: boolean;
@@ -20,6 +21,7 @@ type Props = {
   children: ReactElement;
 };
 const SessionContextMenu: FC<Props> = ({
+  pinned,
   context = "dm",
   id,
   visible,
@@ -35,6 +37,8 @@ const SessionContextMenu: FC<Props> = ({
     cid: context == "channel" ? id : undefined
   });
   const [muteChannel] = useUpdateMuteSettingMutation();
+  const [pinChat] = usePinChatMutation();
+  const [unpinChat] = useUnpinChatMutation();
   const [updateReadIndex] = useReadMessageMutation();
   const pathMatched = useMatch(`/chat/dm/${id}`);
   const dispatch = useDispatch();
@@ -69,6 +73,14 @@ const SessionContextMenu: FC<Props> = ({
     const data = channelMuted ? { remove_groups: [id] } : { add_groups: [{ gid: id }] };
     muteChannel(data);
   };
+  const handlePinChat = () => {
+    const data = context == "dm" ? { uid: id } : { gid: id };
+    if (pinned) {
+      unpinChat(data);
+    } else {
+      pinChat(data);
+    }
+  };
   const handleDMSetting = () => {
     navigateTo(`/setting/dm/${id}/overview?f=${pathname}`);
   };
@@ -76,6 +88,10 @@ const SessionContextMenu: FC<Props> = ({
   const items =
     context == "dm"
       ? [
+        {
+          title: t(pinned ? "unpin_chat" : "pin_chat", { ns: "chat" }),
+          handler: handlePinChat
+        },
         {
           title: t("action.mark_read"),
           handler: handleReadAll
@@ -99,6 +115,10 @@ const SessionContextMenu: FC<Props> = ({
           title: t("setting"),
           underline: true,
           handler: handleChannelSetting
+        },
+        {
+          title: t("pin", { ns: "chat" }),
+          handler: handlePinChat
         },
         {
           title: t("action.mark_read"),

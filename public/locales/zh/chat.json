@@ -41,7 +41,8 @@
 
   "new_msg": "{{num}} 条新消息",
   "mark_read": "设为已读",
-
+  "pin_chat": "置顶",
+  "unpin_chat": "取消置顶",
   "reply_msg_del": "被回复的消息已删除！",
 
   "file": "文件",

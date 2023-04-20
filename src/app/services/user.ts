@@ -78,6 +78,20 @@ export const userApi = createApi({
         method: "POST"
       })
     }),
+    pinChat: builder.mutation<void, { uid: number } | { gid: number }>({
+      query: (data) => ({
+        url: `/user/pin_chat`,
+        method: "POST",
+        body: { target: data }
+      })
+    }),
+    unpinChat: builder.mutation<void, { uid: number } | { gid: number }>({
+      query: (data) => ({
+        url: `/user/unpin_chat`,
+        method: "POST",
+        body: { target: data }
+      })
+    }),
     updateUser: builder.mutation<UserForAdmin, UserForAdminDTO>({
       query: ({ id, ...rest }) => ({
         url: `/admin/user/${id}`,
@@ -233,5 +247,7 @@ export const {
   useLazyDeleteBotAPIKeyQuery,
   useGetBotAPIKeysQuery,
   useSearchUserMutation,
-  useUpdateContactStatusMutation
+  useUpdateContactStatusMutation,
+  usePinChatMutation,
+  useUnpinChatMutation
 } = userApi;

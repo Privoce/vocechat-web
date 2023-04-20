@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { MuteDTO } from "../../types/message";
 import { OG } from "../../types/resource";
-import { AutoDeleteMessageSettingDTO, AutoDeleteMsgForGroup, AutoDeleteMsgForUser, AutoDeleteSettingForChannels, AutoDeleteSettingForUsers } from "../../types/sse";
+import { AutoDeleteMessageSettingDTO, AutoDeleteMsgForGroup, AutoDeleteMsgForUser, AutoDeleteSettingForChannels, AutoDeleteSettingForUsers, PinChat, PinChatTarget } from "../../types/sse";
 import { resetAuthData } from "./auth.data";
 
 type ChannelAside = "members" | "voice" | null;
@@ -18,6 +18,7 @@ export interface State {
   autoDeleteMsgUsers: AutoDeleteMsgForUser[];
   autoDeleteMsgChannels: AutoDeleteMsgForGroup[];
   channelAsides: { [cid: number]: ChannelAside };
+  pinChats: PinChat[];
 }
 
 
@@ -33,7 +34,8 @@ const initialState: State = {
   muteChannels: {},
   autoDeleteMsgUsers: [],
   autoDeleteMsgChannels: [],
-  channelAsides: {}
+  channelAsides: {},
+  pinChats: []
 };
 
 const footprintSlice = createSlice({
@@ -56,7 +58,8 @@ const footprintSlice = createSlice({
         muteChannels = {},
         autoDeleteMsgUsers = [],
         autoDeleteMsgChannels = [],
-        channelAsides = {}
+        channelAsides = {},
+        pinChats = []
       } = action.payload;
       return {
         og,
@@ -70,7 +73,8 @@ const footprintSlice = createSlice({
         muteChannels,
         autoDeleteMsgUsers,
         autoDeleteMsgChannels,
-        channelAsides
+        channelAsides,
+        pinChats
       };
     },
     updateUsersVersion(state, action: PayloadAction<number>) {
@@ -159,6 +163,22 @@ const footprintSlice = createSlice({
         }
       });
     },
+    upsertPinChats(state, action: PayloadAction<{ pins: PinChat[], override?: boolean }>) {
+      const { pins, override = false } = action.payload;
+      if (override) {
+        state.pinChats = pins;
+      } else {
+        state.pinChats = [...state.pinChats, ...pins];
+      }
+    },
+    removePinChats(state, action: PayloadAction<PinChatTarget[]>) {
+      const pins = action.payload;
+      state.pinChats = state.pinChats.filter(pin => {
+        const key = "uid" in pin.target ? "uid" : "gid";
+        // @ts-ignore
+        return !pins.some(p => p[key] == pin.target[key]);
+      });
+    },
     upsertOG(state, action: PayloadAction<{ key: string, value: OG }>) {
       const { key, value } = action.payload;
       state.og[key] = value;
@@ -213,7 +233,9 @@ export const {
   updateAutoDeleteSetting,
   updateHistoryMark,
   upsertOG,
-  updateChannelVisibleAside
+  updateChannelVisibleAside,
+  upsertPinChats,
+  removePinChats
 } = footprintSlice.actions;
 
 export default footprintSlice.reducer;
