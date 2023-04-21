@@ -39,6 +39,7 @@ const Send: FC<IProps> = ({
   const { resetStageFiles } = useUploadFile({ context, id });
   const { getDraft, getUpdateDraft } = useDraft({ context, id });
   const editor = useMixedEditor(`${context}_${id}`);
+  const [msgs, setMsgs] = useState([]);
   const [markdownEditor, setMarkdownEditor] = useState(null);
   const [markdownFullscreen, setMarkdownFullscreen] = useState(false);
   const dispatch = useAppDispatch();
@@ -79,12 +80,14 @@ const Send: FC<IProps> = ({
       editor.insertText(emoji);
     }
   };
-  const handleSendMessage = async (msgs = []) => {
+  const handleSendMessage = async () => {
     if (!id) return;
+    editor.resetInput();
     if (msgs && msgs.length) {
       // send text msgs
       for await (const msg of msgs) {
         const { type: content_type, content, properties = {} } = msg;
+        if ((content as string).trim() === '') continue; // 空消息不发送
         properties.local_id = properties.local_id ?? +new Date();
         await sendMessage({
           id,
@@ -163,6 +166,7 @@ const Send: FC<IProps> = ({
           <EmojiPicker selectEmoji={insertEmoji} />
           {mode == Modes.text && (
             <MixedInput
+              updateMessages={setMsgs}
               updateDraft={getUpdateDraft()}
               initialValue={getDraft()}
               members={members}
@@ -172,6 +176,8 @@ const Send: FC<IProps> = ({
             />
           )}
           <Toolbar
+            sendMessages={handleSendMessage}
+            sendVisible={msgs.length > 0}
             context={context}
             to={id}
             mode={mode}

@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState, useCallback, ClipboardEvent, FC } from "react";
+import { useRef, useEffect, ClipboardEvent, FC } from "react";
 import { useKey } from "rooks";
 import { Editor, Transforms } from "slate";
 import {
@@ -37,6 +37,7 @@ type Props = {
   id: `${ctx}_${number}`;
   placeholder: string;
   sendMessages: any;
+  updateMessages: any;
   members: number[];
 };
 const Plugins: FC<Props> = ({
@@ -45,6 +46,7 @@ const Plugins: FC<Props> = ({
   id,
   placeholder = "Write some markdown...",
   sendMessages,
+  updateMessages,
   members = []
 }) => {
 
@@ -53,7 +55,6 @@ const Plugins: FC<Props> = ({
   const { addStageFile } = useUploadFile({ context, id: to });
   const enableMentions = members.length > 0;
   const userData = useAppSelector((store) => store.users.byId);
-  const [msgs, setMsgs] = useState([]);
   const editableRef = useRef(null);
   const initialProps = {
     ...CONFIG.editableProps,
@@ -94,23 +95,13 @@ const Plugins: FC<Props> = ({
       }
       evt.preventDefault();
       // return true;
-      handleSend();
+      sendMessages();
     },
     {
       when: !isMobile(),
       target: editableRef,
     }
   );
-  const handleSend = () => {
-    sendMessages(msgs);
-    // 清空
-    Transforms.delete(plateEditor, {
-      at: {
-        anchor: Editor.start(plateEditor, []),
-        focus: Editor.end(plateEditor, [])
-      }
-    });
-  };
   const pluginArr = [
     createParagraphPlugin(),
     createNodeIdPlugin(),
@@ -142,55 +133,52 @@ const Plugins: FC<Props> = ({
     }
   );
 
-  const handleChange = useCallback(
-    async (val: any) => {
-      // console.log("tmps changed", val);
-      const tmps = [];
-      const getMixedText = (children: any) => {
-        const mentions: any = [];
-        const arr = children.map(({ type, text, uid }: any) => {
-          if (type == "mention") {
-            mentions.push(uid);
-            return ` @${uid} `;
-          }
-          return text;
-        });
-        return { value: arr.join(""), mentions };
-      };
-      for (const v of val) {
-        // p
-        const { value, mentions } = getMixedText(v.children);
-        const prev = tmps[tmps.length - 1];
-        if (!prev) {
-          tmps.push([{ type: "text", content: value, properties: { mentions } }]);
+  const handleChange = (val: any) => {
+    // console.log("tmps changed", val);
+    const tmps = [];
+    const getMixedText = (children: any) => {
+      const mentions: any = [];
+      const arr = children.map(({ type, text, uid }: any) => {
+        if (type == "mention") {
+          mentions.push(uid);
+          return ` @${uid} `;
+        }
+        return text;
+      });
+      return { value: arr.join(""), mentions };
+    };
+    for (const v of val) {
+      // p
+      const { value, mentions } = getMixedText(v.children);
+      const prev = tmps[tmps.length - 1];
+      if (!prev) {
+        tmps.push([{ type: "text", content: value, properties: { mentions } }]);
+      } else {
+        if (Array.isArray(prev)) {
+          tmps[tmps.length - 1].push({
+            type: "text",
+            content: value,
+            properties: { mentions }
+          });
         } else {
-          if (Array.isArray(prev)) {
-            tmps[tmps.length - 1].push({
-              type: "text",
-              content: value,
-              properties: { mentions }
-            });
-          } else {
-            tmps.push([{ type: "text", content: value, properties: { mentions } }]);
-          }
+          tmps.push([{ type: "text", content: value, properties: { mentions } }]);
         }
       }
-      const arr = tmps.map((tmp) => {
-        return Array.isArray(tmp)
-          ? {
-            type: "text",
-            content: tmp.map((t) => t.content).join("\n"),
-            properties: {
-              mentions: tmp.map((t) => t.properties?.mentions || []).flat()
-            }
+    }
+    const arr = tmps.map((tmp) => {
+      return Array.isArray(tmp)
+        ? {
+          type: "text",
+          content: tmp.map((t) => t.content).join("\n"),
+          properties: {
+            mentions: tmp.map((t) => t.properties?.mentions || []).flat()
           }
-          : tmp;
-      });
-      const msgs = arr.filter(({ content }) => !!content);
-      setMsgs(msgs);
-    },
-    [msgs]
-  );
+        }
+        : tmp;
+    });
+    const msgs = arr.filter(({ content }) => !!content.trim());
+    updateMessages(msgs);
+  };
 
 
   return (
@@ -245,7 +233,18 @@ export const useMixedEditor = (key: string) => {
       editorRef.insertText(txt);
     }
   };
+  const resetInput = () => {
+    if (!editorRef) return;
+    // 清空
+    Transforms.delete(editorRef, {
+      at: {
+        anchor: Editor.start(editorRef, []),
+        focus: Editor.end(editorRef, [])
+      }
+    });
+  };
   return {
+    resetInput,
     focus,
     insertText
   };

@@ -2,20 +2,25 @@ import { ChangeEvent, useRef, FC } from "react";
 import Tooltip from "../Tooltip";
 import AddIcon from "../../../assets/icons/add.solid.svg";
 import MarkdownIcon from "../../../assets/icons/markdown.svg";
+import SendIcon from "../../../assets/icons/send.svg";
 import FullscreenIcon from "../../../assets/icons/fullscreen.svg";
 import ExitFullscreenIcon from "../../../assets/icons/fullscreen.exit.svg";
 import useUploadFile from "../../hook/useUploadFile";
 import { useTranslation } from "react-i18next";
 
 type Props = {
+  sendMessages: () => void;
   toggleMarkdownFullscreen: () => void;
   fullscreen: boolean;
   toggleMode: () => void;
   mode: "markdown" | "text";
   to: number;
   context: "user" | "channel";
+  sendVisible: boolean
 };
 const Toolbar: FC<Props> = ({
+  sendMessages,
+  sendVisible,
   toggleMarkdownFullscreen,
   fullscreen,
   toggleMode,
@@ -61,7 +66,7 @@ const Toolbar: FC<Props> = ({
             </Tooltip>
           ))}
       </div>
-      {!isMarkdown && <Tooltip placement="top" tip={t("action.upload")}>
+      {!isMarkdown && <><Tooltip placement="top" tip={t("action.upload")}>
         <div className="cursor-pointer relative w-6 h-6">
           <AddIcon className="dark:fill-gray-300" />
           <label htmlFor="file" className=" cursor-pointer absolute left-0 top-0 w-full h-full opacity-0">
@@ -77,7 +82,11 @@ const Toolbar: FC<Props> = ({
             />
           </label>
         </div>
-      </Tooltip>}
+      </Tooltip>
+        {sendVisible && <Tooltip placement="top" tip="Send">
+          <SendIcon className={"w-6 h-6 cursor-pointer animate-zoomIn"} onClick={sendMessages} />
+        </Tooltip>}
+      </>}
     </div>
   );
 };
