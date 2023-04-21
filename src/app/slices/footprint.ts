@@ -168,7 +168,7 @@ const footprintSlice = createSlice({
       if (override) {
         state.pinChats = pins;
       } else {
-        state.pinChats = [...state.pinChats, ...pins];
+        state.pinChats = [...pins, ...state.pinChats];
       }
     },
     removePinChats(state, action: PayloadAction<PinChatTarget[]>) {
