@@ -1,4 +1,4 @@
-import { ContactResponse, User } from "./user";
+import { ContactInfo, User } from "./user";
 import { Channel } from "./channel";
 import { ContentType } from "./message";
 
@@ -74,7 +74,7 @@ export type UserSettingsChangedEvent = {
   add_mute_users?: MuteUser[];
   remove_mute_users?: number[];
   add_mute_groups?: MuteChannel[];
-  add_contacts?: Pick<ContactResponse, "target_uid" | "contact_info">[];
+  add_contacts?: { target_uid: number, info: ContactInfo }[];
   remove_contacts?: number[];
   remove_mute_groups?: number[];
   add_pin_chats?: PinChat[];

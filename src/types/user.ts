@@ -21,14 +21,15 @@ export interface User {
 }
 export type ContactAction = "add" | "remove" | "block" | "unblock";
 export type ContactStatus = "added" | "blocked" | "";
+export type ContactInfo = {
+  status: ContactStatus;
+  created_at: number;
+  updated_at: number;
+}
 export interface ContactResponse {
   target_uid: number;
   target_info: User;
-  contact_info: {
-    status: ContactStatus;
-    created_at: number;
-    updated_at: number;
-  }
+  contact_info: ContactInfo
 }
 export interface Contact extends User {
   status: ContactStatus

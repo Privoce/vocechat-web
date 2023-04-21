@@ -217,24 +217,27 @@ export default function useStreaming() {
                 break;
               case "remove_contacts": {
                 const arr = (data as UserSettingsChangedEvent).remove_contacts ?? [];
-                updateContactStatus(
-                  arr.map(
-                    (uid: number) => {
-                      return { uid, status: "" };
-                    }
-                  )
-                );
+                if (arr.length) {
+                  dispatch(updateContactStatus(
+                    arr.map(
+                      (uid: number) => {
+                        return { uid, status: "" };
+                      }
+                    )
+                  ));
+                }
               }
                 break;
               case "add_contacts": {
                 const arr = (data as UserSettingsChangedEvent).add_contacts ?? [];
-                updateContactStatus(
-                  arr.map(
-                    ({ target_uid, contact_info: { status } }) => {
+                if (arr.length) {
+                  const transformed = arr.map(
+                    ({ target_uid, info: { status } }) => {
                       return { uid: target_uid, status };
                     }
-                  )
-                );
+                  );
+                  dispatch(updateContactStatus(transformed));
+                }
               }
                 break;
               case "remove_mute_users":
