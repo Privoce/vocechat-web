@@ -1,4 +1,4 @@
-import AgoraRTC, { IMicrophoneAudioTrack } from 'agora-rtc-sdk-ng';
+import AgoraRTC, { ICameraVideoTrack, IMicrophoneAudioTrack } from 'agora-rtc-sdk-ng';
 import { memo, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useGetAgoraChannelsQuery, useGetAgoraStatusQuery, useLazyGetAgoraTokenQuery } from '../../app/services/server';
@@ -10,16 +10,14 @@ import AudioJoin from '../../assets/join.wav';
 // type Props = {}
 AgoraRTC.setLogLevel(process.env.NODE_ENV === 'development' ? 0 : 4);
 window.VOICE_TRACK_MAP = window.VOICE_TRACK_MAP ?? {};
+window.VIDEO_TRACK_MAP = window.VIDEO_TRACK_MAP ?? {};
 // let tmpUids: number[] = [];
 const Voice = () => {
-    const { serverVersion } = useAppSelector(store => {
-        return {
-            serverVersion: store.server.version ?? 0,
-            // joined: !!store.voice.voicing
-        };
-    });
-    console.log("serverVersion", serverVersion);
-
+    // const { serverVersion } = useAppSelector(store => {
+    //     return {
+    //         serverVersion: store.server.version ?? 0,
+    //     };
+    // });
     // const skipAgoraStatusCheck = compareVersion(serverVersion, '0.3.5') >= 0;
     const { data: enabled } = useGetAgoraStatusQuery();
     useGetAgoraChannelsQuery({ page_no: 0, page_size: 100 }, {
@@ -44,16 +42,25 @@ const Voice = () => {
                     window.VOICE_TRACK_MAP[+user.uid] = user.audioTrack;
                 }
                 if (mediaType == "video") {
-                    const id = `CAMERA_${user.uid}`;
-                    console.log("video container id", id);
-
-                    // 播放远端视频
-                    user.videoTrack?.play(id);
-                    window.VOICE_TRACK_MAP[+user.uid] = user.videoTrack;
+                    const playerEle = document.querySelector(`#CAMERA_${user.uid}`) as HTMLElement;
+                    if (playerEle) {
+                        playerEle.classList.add("h-[120px]");
+                        user.videoTrack?.play(playerEle);
+                    }
+                    window.VIDEO_TRACK_MAP[+user.uid] = user.videoTrack;
                 }
                 agoraEngine.on("user-unpublished", (user) => {
-                    //   远端用户取消了音频（muted）
-                    dispatch(updateVoicingMember({ uid: +user.uid, info: { muted: true } }));
+                    if (!user.hasAudio) {
+                        //   远端用户取消了音频（muted）
+                        dispatch(updateVoicingMember({ uid: +user.uid, info: { muted: true } }));
+                    }
+                    if (!user.hasVideo) {
+                        //   远端用户取消了视频
+                        dispatch(updateVoicingMember({ uid: +user.uid, info: { video: false } }));
+                        // 关闭视频后，需要把视频的高度设置回去
+                        const playerEle = document.querySelector(`#CAMERA_${user.uid}`) as HTMLElement;
+                        playerEle.classList.remove("h-[120px]");
+                    }
                 });
                 //remote user leave
                 agoraEngine.on("user-left", (user, reason) => {
@@ -105,14 +112,14 @@ const Voice = () => {
             });
             // 有新用户加入
             agoraEngine.on("user-joined", async (user) => {
-                console.log(user.uid, !!localTrack, agoraEngine.channelName, " has joined the channel");
+                console.log(user.uid, !!localAudioTrack, agoraEngine.channelName, " has joined the channel");
                 dispatch(addVoiceMember(+user.uid));
             });
             window.VOICE_CLIENT = agoraEngine;
         };
         const handlePageUnload = (evt: BeforeUnloadEvent) => {
             console.log("unload");
-            if (localTrack) {
+            if (localAudioTrack) {
                 evt.preventDefault();
                 return (evt.returnValue = "");
             }
@@ -130,7 +137,8 @@ const Voice = () => {
 
     return null;
 };
-let localTrack: IMicrophoneAudioTrack | null = null;
+let localAudioTrack: IMicrophoneAudioTrack | null = null;
+let localVideoTrack: ICameraVideoTrack | null = null;
 type VoiceProps = {
     id: number,
     context?: "channel" | "dm"
@@ -160,9 +168,9 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
                 await window.VOICE_CLIENT.join(app_id, channel_name, agora_token, uid);
                 console.table(data);
                 // Create a local audio track from the microphone audio.
-                localTrack = await AgoraRTC.createMicrophoneAudioTrack();
+                localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
                 // Publish the local audio track in the channel.
-                await window.VOICE_CLIENT.publish(localTrack);
+                await window.VOICE_CLIENT.publish(localAudioTrack);
                 // play the join audio
                 audioJoin.play();
                 console.log("Publish success!,joined the channel");
@@ -188,28 +196,43 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
         // setJoining(false);
     };
     const openCamera = async () => {
-        if (localTrack) {
-            localTrack.close();
-            localTrack = null;
+        localVideoTrack = await AgoraRTC.createCameraVideoTrack();
+        await window.VOICE_CLIENT?.publish(localVideoTrack);
+        const playerEle = document.querySelector(`#CAMERA_${loginUid}`) as HTMLElement;
+        if (playerEle) {
+            playerEle.classList.add("h-[120px]");
+            localVideoTrack?.play(playerEle);
         }
-        localTrack = await AgoraRTC.createCameraVideoTrack();
-        await window.VOICE_CLIENT?.publish(localTrack);
-        const id = `CAMERA_${loginUid}`;
-        localTrack?.play(id);
+        dispatch(updateVoicingInfo({
+            video: true,
+            id,
+            context,
+        }));
     };
     const closeCamera = async () => {
-        if (localTrack) {
-            localTrack.close();
-            localTrack = null;
+        if (localVideoTrack) {
+            await window.VOICE_CLIENT?.unpublish(localVideoTrack);
+            localVideoTrack.close();
+            localVideoTrack = null;
+            // 关闭视频后，需要把视频的高度设置回去
+            const playerEle = document.querySelector(`#CAMERA_${loginUid}`) as HTMLElement;
+            playerEle.classList.remove("h-[120px]");
+            dispatch(updateVoicingInfo({
+                video: false,
+                id,
+                context,
+            }));
         }
-        localTrack = await AgoraRTC.createMicrophoneAudioTrack();
-        await window.VOICE_CLIENT?.publish(localTrack);
     };
 
     const leave = async () => {
-        if (window.VOICE_CLIENT && localTrack) {
-            localTrack.close();
-            localTrack = null;
+        if (window.VOICE_CLIENT && localAudioTrack) {
+            localAudioTrack.close();
+            localAudioTrack = null;
+            if (localVideoTrack) {
+                localVideoTrack.close();
+                localVideoTrack = null;
+            }
             await window.VOICE_CLIENT.leave();
             dispatch(updateVoicingInfo(null));
             if (context == "channel") {
@@ -226,21 +249,21 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
         }
     };
     const setMute = (mute: boolean) => {
-        if (localTrack) {
-            localTrack.setMuted(mute);
+        if (localAudioTrack) {
+            localAudioTrack.setMuted(mute);
             dispatch(updateMuteStatus(mute));
         }
     };
     const setDeafen = (deafen: boolean) => {
-        if (localTrack) {
+        if (localAudioTrack) {
             if (deafen) {
-                localTrack.setMuted(true);
+                localAudioTrack.setMuted(true);
                 // 远端音频，全部静音
                 Object.entries(window.VOICE_TRACK_MAP).forEach(([, audioTrack]) => {
                     audioTrack?.setVolume(0);
                 });
             } else {
-                localTrack.setMuted(false);
+                localAudioTrack.setMuted(false);
                 // 远端音频，恢复原音
                 Object.entries(window.VOICE_TRACK_MAP).forEach(([, audioTrack]) => {
                     audioTrack?.setVolume(100);

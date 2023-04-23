@@ -21,10 +21,12 @@ type Props = {
     info: VoicingInfo | null,
     setMute: (param: boolean) => void,
     setDeafen: (param: boolean) => void,
-    leave: () => void
+    leave: () => void,
+    closeCamera: () => void,
+    openCamera: () => void
 }
 
-const VoiceManagement = ({ info, setMute, setDeafen, leave }: Props) => {
+const VoiceManagement = ({ info, setMute, setDeafen, leave, closeCamera, openCamera }: Props) => {
     const { t } = useTranslation("chat");
     const { userData, voicingMembers } = useAppSelector(store => {
         return {
@@ -33,7 +35,7 @@ const VoiceManagement = ({ info, setMute, setDeafen, leave }: Props) => {
         };
     });
     if (!info) return null;
-    const { deafen, muted } = info;
+    const { deafen, muted, video } = info;
     const nameClass = clsx(`text-sm text-gray-500 max-w-[120px] truncate font-semibold dark:text-white`);
     const members = voicingMembers.ids;
     const membersData = voicingMembers.byId;
@@ -81,7 +83,7 @@ const VoiceManagement = ({ info, setMute, setDeafen, leave }: Props) => {
                                 {muted ? <IconMicOff className="w-4 fill-gray-500 dark:fill-gray-400" /> : <IconMic className="w-4 fill-gray-500  dark:fill-gray-400" />}
                             </div>
                         </div>
-                        <div id={`CAMERA_${uid}`} className="w-[98%] h-[120px] rounded overflow-hidden m-auto">
+                        <div id={`CAMERA_${uid}`} className="w-[98%] rounded overflow-hidden m-auto">
                             {/* camera placeholder */}
                         </div>
                     </li>;
@@ -98,13 +100,11 @@ const VoiceManagement = ({ info, setMute, setDeafen, leave }: Props) => {
                     <Tooltip tip={muted ? t("unmute") : t("mute")} placement="top">
                         <li role={"button"} onClick={setMute.bind(null, !muted)} className="py-2 px-3 rounded bg-gray-100 dark:bg-gray-900">
                             {muted ? <IconMicOff className="fill-gray-700 dark:fill-gray-300" /> : <IconMic className="fill-gray-700 dark:fill-gray-300" />}
-
                         </li>
                     </Tooltip>
-                    <Tooltip tip={"Camera"} placement="top">
-                        <li role={"button"} className="py-2 px-3 rounded bg-gray-100 dark:bg-gray-900">
-                            {muted ? <IconCameraOff className="fill-gray-700 dark:fill-gray-300" /> : <IconCamera className="fill-gray-700 dark:fill-gray-300" />}
-
+                    <Tooltip tip={video ? t("camera_off") : t("camera_on")} placement="top">
+                        <li role={"button"} onClick={video ? closeCamera : openCamera} className="py-2 px-3 rounded bg-gray-100 dark:bg-gray-900">
+                            {video ? <IconCamera className="fill-gray-700 dark:fill-gray-300" /> : <IconCameraOff className="fill-gray-700 dark:fill-gray-300" />}
                         </li>
                     </Tooltip>
                     <Tooltip tip={"Share Screen"} placement="top">

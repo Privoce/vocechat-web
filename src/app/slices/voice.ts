@@ -12,6 +12,7 @@ export type VoicingInfo = {
   downlinkNetworkQuality?: number,
   muted?: boolean,
   deafen?: boolean,
+  video?: boolean,
   joining?: boolean,
   connectionState?: ConnectionState
 } & VoiceBasicInfo
@@ -19,7 +20,8 @@ export type VoicingInfo = {
 export type VoicingMemberInfo = {
   speakingVolume?: number,
   muted?: boolean,
-  deafen?: boolean
+  deafen?: boolean,
+  video?: boolean
 }
 
 export type VoicingMembers = {
