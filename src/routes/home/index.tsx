@@ -20,6 +20,7 @@ import { updateRememberedNavs } from "../../app/slices/ui";
 import UnreadTabTip from "../../common/component/UnreadTabTip";
 import ReLoginModal from "../../common/component/ReLoginModal";
 import Voice from "../../common/component/Voice";
+import ServerVersionChecker from "../../common/component/ServerVersionChecker";
 
 
 function HomePage() {
@@ -30,7 +31,7 @@ function HomePage() {
   const { pathname } = useLocation();
   const {
     roleChanged,
-    loginUser: { uid: loginUid, is_admin: isAdmin },
+    loginUser: { uid: loginUid },
     guest,
     ui: {
       ready,
@@ -68,7 +69,9 @@ function HomePage() {
     <>
       {roleChanged && <ReLoginModal />}
       {!guest && <UnreadTabTip />}
-      {!guest && isAdmin && <Voice />}
+      {!guest && <ServerVersionChecker empty={true} version="0.3.5">
+        <Voice />
+      </ServerVersionChecker>}
       <Manifest />
       {!guest && <Notification />}
       <div className={`vocechat-container flex w-screen h-screen bg-gray-200 dark:bg-gray-900`}>

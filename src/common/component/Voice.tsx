@@ -1,32 +1,29 @@
 import AgoraRTC, { IMicrophoneAudioTrack } from 'agora-rtc-sdk-ng';
 import { memo, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useGetAgoraConfigQuery, useGetAgoraVoicingListQuery, useLazyGetAgoraTokenQuery } from '../../app/services/server';
+import { useGetAgoraChannelsQuery, useGetAgoraStatusQuery, useLazyGetAgoraTokenQuery } from '../../app/services/server';
 import { updateChannelVisibleAside } from '../../app/slices/footprint';
 import { addVoiceMember, removeVoiceMember, updateConnectionState, updateDeafenStatus, updateMuteStatus, updateVoicingInfo, updateVoicingMember, updateVoicingNetworkQuality, upsertVoiceList } from '../../app/slices/voice';
 import { useAppSelector } from '../../app/store';
 import AudioJoin from '../../assets/join.wav';
+// import { compareVersion } from '../utils';
 // type Props = {}
 AgoraRTC.setLogLevel(process.env.NODE_ENV === 'development' ? 0 : 4);
 window.VOICE_TRACK_MAP = window.VOICE_TRACK_MAP ?? {};
 // let tmpUids: number[] = [];
 const Voice = () => {
-    const { isAdmin } = useAppSelector(store => {
+    const { serverVersion } = useAppSelector(store => {
         return {
-            isAdmin: !!store.authData.user?.is_admin,
+            serverVersion: store.server.version ?? 0,
             // joined: !!store.voice.voicing
         };
     });
-    const { data: agoraConfig } = useGetAgoraConfigQuery(undefined, {
-        skip: !isAdmin
-    });
-    useGetAgoraVoicingListQuery({
-        appid: agoraConfig?.app_id ?? "",
-        key: agoraConfig?.customer_id ?? "",
-        secret: agoraConfig?.customer_secret ?? "",
+    console.log("serverVersion", serverVersion);
 
-    }, {
-        skip: !isAdmin || !agoraConfig?.enabled || !navigator.onLine,
+    // const skipAgoraStatusCheck = compareVersion(serverVersion, '0.3.5') >= 0;
+    const { data: enabled } = useGetAgoraStatusQuery();
+    useGetAgoraChannelsQuery({ page_no: 0, page_size: 100 }, {
+        skip: !enabled || !navigator.onLine,
         pollingInterval: 5000
     });
     const dispatch = useDispatch();

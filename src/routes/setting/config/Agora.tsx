@@ -11,7 +11,11 @@ export default function ConfigAgora() {
   const { changed, reset, values, setValues, toggleEnable, updateConfig } = useConfig("agora");
   const handleUpdate = () => {
     // const { token_url, description } = values;
-    updateConfig(values);
+    const _values = values as AgoraConfig;
+    if (!_values.url) {
+      _values.url = "https://api.agora.io";
+    }
+    updateConfig(_values);
   };
 
   const handleChange = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -32,7 +36,7 @@ export default function ConfigAgora() {
     customer_secret,
     enabled = false
   } = values as AgoraConfig;
-
+  const _url = url || "https://api.agora.io";
   return (
     <div className="setting-container">
       <div className="inputs">
@@ -46,7 +50,7 @@ export default function ConfigAgora() {
             disabled={!enabled}
             data-type="url"
             onChange={handleChange}
-            value={url || "https://api.agora.io"}
+            value={_url}
             name="url"
             placeholder="Agora URL"
           />

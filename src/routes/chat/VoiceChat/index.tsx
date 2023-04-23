@@ -8,7 +8,7 @@ import { useAppSelector } from '../../../app/store';
 import IconHeadphone from '../../../assets/icons/headphone.svg';
 import Tooltip from '../../../common/component/Tooltip';
 import { useVoice } from '../../../common/component/Voice';
-import { useGetAgoraConfigQuery } from '../../../app/services/server';
+import { useGetAgoraStatusQuery } from '../../../app/services/server';
 
 type Props = {
     context?: "channel" | "dm"
@@ -26,7 +26,7 @@ const VoiceChat = ({ id, context = "channel" }: Props) => {
             visibleAside: context == "channel" ? store.footprint.channelAsides[id] : null,
         };
     });
-    const { data: agoraConfig } = useGetAgoraConfigQuery(undefined, { skip: !loginUser?.is_admin });
+    const { data: enabled } = useGetAgoraStatusQuery();
     const { t } = useTranslation("chat");
     const toggleDashboard = () => {
         if (context == "channel") {
@@ -50,8 +50,7 @@ const VoiceChat = ({ id, context = "channel" }: Props) => {
             }));
         }
     };
-    // 只有admin才能看到入口，后续会改
-    if (!loginUser || !loginUser.is_admin || !agoraConfig?.enabled) return null;
+    if (!loginUser || !enabled) return null;
     const visible = visibleAside == "voice";
     const memberCount = voiceList.find((v) => v.context == context && v.id == id)?.memberCount ?? 0;
     const badgeClass = `absolute -top-2 -right-2 w-4 h-4 rounded-full bg-primary-400 text-white `;

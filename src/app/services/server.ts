@@ -116,26 +116,8 @@ export const serverApi = createApi({
     getAgoraConfig: builder.query<AgoraConfig, void>({
       query: () => ({ url: `/admin/agora/config` })
     }),
-    updateAgoraConfig: builder.mutation<void, AgoraConfig>({
-      query: (data) => ({
-        url: `/admin/agora/config`,
-        method: "POST",
-        body: data
-      })
-    }),
-    getAgoraToken: builder.query<AgoraTokenResponse, number>({
-      query: (id) => ({
-        url: `group/${id}/agora_token`,
-      })
-    }),
-    // tmp API
-    getAgoraVoicingList: builder.query<AgoraVoicingListResponse, { appid: string, key: string, secret: string }>({
-      query: ({ appid, key, secret }) => ({
-        headers: {
-          Authorization: `Basic ${btoa(`${key}:${secret}`)}`
-        },
-        url: `https://api.agora.io/dev/v1/channel/${appid}`,
-      }),
+    getAgoraChannels: builder.query<AgoraVoicingListResponse, { page_no: number, page_size: number }>({
+      query: (param = { page_no: 0, page_size: 100 }) => ({ url: `/admin/agora/channel/${param.page_no}/${param.page_size}` }),
       async onQueryStarted(data, { dispatch, queryFulfilled }) {
         try {
           const { data: resp } = await queryFulfilled;
@@ -156,6 +138,21 @@ export const serverApi = createApi({
           console.error("get voice list error");
         }
       }
+    }),
+    updateAgoraConfig: builder.mutation<void, AgoraConfig>({
+      query: (data) => ({
+        url: `/admin/agora/config`,
+        method: "POST",
+        body: data
+      })
+    }),
+    getAgoraStatus: builder.query<boolean, void>({
+      query: () => ({ url: `/admin/agora/enabled` })
+    }),
+    getAgoraToken: builder.query<AgoraTokenResponse, number>({
+      query: (id) => ({
+        url: `group/${id}/agora_token`,
+      })
     }),
     getSystemCommon: builder.query<SystemCommon, void>({
       query: () => ({ url: `/admin/system/common` }),
@@ -401,7 +398,8 @@ export const {
   useGetFrontendUrlQuery,
   useLazyGetAgoraTokenQuery,
   useGetAgoraConfigQuery,
-  useGetAgoraVoicingListQuery,
+  useGetAgoraStatusQuery,
+  useGetAgoraChannelsQuery,
   useUpdateSystemCommonMutation,
   useLazyGetSystemCommonQuery,
   useGetSystemCommonQuery

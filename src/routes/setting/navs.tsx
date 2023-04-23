@@ -39,7 +39,9 @@ const navs = [
     items: [
       {
         name: "bot",
-        component: <ServerVersionChecker version="0.3.2"><BotConfig /></ServerVersionChecker>,
+        component: <ServerVersionChecker version="0.3.2">
+          <BotConfig />
+        </ServerVersionChecker>,
         admin: true
       },
       {
@@ -48,7 +50,9 @@ const navs = [
       },
       {
         name: "agora",
-        component: <ConfigAgora />
+        component: <ServerVersionChecker version="0.3.5">
+          <ConfigAgora />
+        </ServerVersionChecker>
       },
       {
         name: "smtp",

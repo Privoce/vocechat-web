@@ -19,6 +19,7 @@ import Members from "./Members";
 import VoiceChat from "../VoiceChat";
 import { updateChannelVisibleAside } from "../../../app/slices/footprint";
 import Dashboard from "../VoiceChat/Dashboard";
+import ServerVersionChecker from "../../../common/component/ServerVersionChecker";
 type Props = {
   cid?: number;
   dropFiles?: File[];
@@ -90,8 +91,9 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
             </li>
           </Tippy>
         </Tooltip>
-        {/* 音频 暂时只有admin有入口 */}
-        <VoiceChat context={`channel`} id={cid} />
+        <ServerVersionChecker version="0.3.5" empty={true}>
+          <VoiceChat context={`channel`} id={cid} />
+        </ServerVersionChecker>
         <Tooltip tip={t("fav")} placement="left">
           <Tippy
             placement="left-start"
