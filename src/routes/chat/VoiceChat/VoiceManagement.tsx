@@ -9,6 +9,9 @@ import IconHeadphone from '../../../assets/icons/sound.on.svg';
 import IconHeadphoneOff from '../../../assets/icons/sound.off.svg';
 import IconMic from '../../../assets/icons/mic.on.svg';
 import IconMicOff from '../../../assets/icons/mic.off.svg';
+import IconCameraOff from '../../../assets/icons/camera.off.svg';
+import IconCamera from '../../../assets/icons/camera.svg';
+import IconScreen from '../../../assets/icons/share.screen.svg';
 import StyledButton from '../../../common/component/styled/Button';
 import IconCallOff from '../../../assets/icons/call.off.svg';
 import Tooltip from '../../../common/component/Tooltip';
@@ -55,29 +58,32 @@ const VoiceManagement = ({ info, setMute, setDeafen, leave }: Props) => {
                     if (!curr) return null;
                     const { muted, speakingVolume = 0 } = membersData[uid];
                     const speaking = speakingVolume > 50;
-                    return <li key={uid} className="flex items-center justify-between gap-6 pb-4 ">
-                        <div className="flex items-center gap-2 transition-opacity">
-                            <div className={clsx("w-8 h-8 flex shrink-0 relative")}>
-                                {speaking && <div className="z-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 rounded-full bg-green-500 animate-speaking w-[36px] h-[36px]"></div>}
-                                <Avatar
-                                    width={32}
-                                    height={32}
-                                    className="w-full h-full rounded-full object-cover z-20"
-                                    src={curr.avatar}
-                                    name={curr.name}
-                                    alt="avatar"
-                                />
+                    return <li key={uid} className='pb-4'>
+                        <div className="flex items-center justify-between gap-6 pb-2">
+                            <div className="flex items-center gap-2 transition-opacity">
+                                <div className={clsx("w-8 h-8 flex shrink-0 relative")}>
+                                    {speaking && <div className="z-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 rounded-full bg-green-500 animate-speaking w-[36px] h-[36px]"></div>}
+                                    <Avatar
+                                        width={32}
+                                        height={32}
+                                        className="w-full h-full rounded-full object-cover z-20"
+                                        src={curr.avatar}
+                                        name={curr.name}
+                                        alt="avatar"
+                                    />
+                                </div>
+                                <span className={nameClass} title={curr?.name}>
+                                    {curr?.name}
+                                </span>
                             </div>
-                            <span className={nameClass} title={curr?.name}>
-                                {curr?.name}
-                            </span>
+                            <div className="flex items-center gap-2">
+                                {/* {deafen ? <IconHeadphoneOff className="w-4" /> : <IconHeadphone className="w-4" />} */}
+                                {muted ? <IconMicOff className="w-4 fill-gray-500 dark:fill-gray-400" /> : <IconMic className="w-4 fill-gray-500  dark:fill-gray-400" />}
+                            </div>
                         </div>
-                        <div className="flex items-center gap-2">
-                            {/* {deafen ? <IconHeadphoneOff className="w-4" /> : <IconHeadphone className="w-4" />} */}
-                            {muted ? <IconMicOff className="w-4 fill-gray-500 dark:fill-gray-400" /> : <IconMic className="w-4 fill-gray-500  dark:fill-gray-400" />}
+                        <div id={`CAMERA_${uid}`} className="w-[98%] h-[120px] rounded overflow-hidden m-auto">
+                            {/* camera placeholder */}
                         </div>
-                        {/* <User uid={uid} interactive={false} /> */}
-                        {/* {userData[uid]?.name} */}
                     </li>;
                 })}
 
@@ -93,6 +99,17 @@ const VoiceManagement = ({ info, setMute, setDeafen, leave }: Props) => {
                         <li role={"button"} onClick={setMute.bind(null, !muted)} className="py-2 px-3 rounded bg-gray-100 dark:bg-gray-900">
                             {muted ? <IconMicOff className="fill-gray-700 dark:fill-gray-300" /> : <IconMic className="fill-gray-700 dark:fill-gray-300" />}
 
+                        </li>
+                    </Tooltip>
+                    <Tooltip tip={"Camera"} placement="top">
+                        <li role={"button"} className="py-2 px-3 rounded bg-gray-100 dark:bg-gray-900">
+                            {muted ? <IconCameraOff className="fill-gray-700 dark:fill-gray-300" /> : <IconCamera className="fill-gray-700 dark:fill-gray-300" />}
+
+                        </li>
+                    </Tooltip>
+                    <Tooltip tip={"Share Screen"} placement="top">
+                        <li role={"button"} onClick={setMute.bind(null, !muted)} className="py-2 px-3 rounded bg-gray-100 dark:bg-gray-900">
+                            <IconScreen className="fill-gray-700 dark:fill-gray-300" />
                         </li>
                     </Tooltip>
                 </ul>

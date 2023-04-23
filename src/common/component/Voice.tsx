@@ -44,13 +44,15 @@ const Voice = () => {
                 if (mediaType == "audio") {
                     // 播放远端音频
                     user.audioTrack?.play();
-                    //    const playing= user.audioTrack?.isPlaying;
-                    // const level = user.audioTrack?.getVolumeLevel();
-                    // if (level === 0) {
-                    //     // 远端静音
-                    //     dispatch(updateVoicingMember({ uid: +user.uid, info: { muted: true } }));
-                    // }
                     window.VOICE_TRACK_MAP[+user.uid] = user.audioTrack;
+                }
+                if (mediaType == "video") {
+                    const id = `CAMERA_${user.uid}`;
+                    console.log("video container id", id);
+
+                    // 播放远端视频
+                    user.videoTrack?.play(id);
+                    window.VOICE_TRACK_MAP[+user.uid] = user.videoTrack;
                 }
                 agoraEngine.on("user-unpublished", (user) => {
                     //   远端用户取消了音频（muted）
@@ -102,8 +104,6 @@ const Voice = () => {
                         default:
                             break;
                     }
-                    // const { downlinkNetworkQuality } = qlt;
-                    // dispatch(updateVoicingNetworkQuality(downlinkNetworkQuality));
                 });
             });
             // 有新用户加入
@@ -127,13 +127,6 @@ const Voice = () => {
 
         return () => {
             window.removeEventListener("beforeunload", handlePageUnload, { capture: true });
-            // if (window.VOICE_CLIENT && localTrack) {
-            //     localTrack.close();
-            //     localTrack = null;
-            //     window.VOICE_CLIENT.leave();
-            //     dispatch(updateVoicingInfo(null));
-            // }
-            // window.VOICE_CLIENT=null
         };
     }, []);
 
@@ -148,9 +141,9 @@ type VoiceProps = {
 const audioJoin = new Audio(AudioJoin);
 const useVoice = ({ id, context = "channel" }: VoiceProps) => {
     const dispatch = useDispatch();
-    const { voicingInfo } = useAppSelector(store => {
+    const { voicingInfo, loginUid } = useAppSelector(store => {
         return {
-            // loginUid: store.authData.user?.uid,
+            loginUid: store.authData.user?.uid,
             voicingInfo: store.voice.voicing
         };
     });
@@ -197,6 +190,25 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
         }
         // setJoining(false);
     };
+    const openCamera = async () => {
+        if (localTrack) {
+            localTrack.close();
+            localTrack = null;
+        }
+        localTrack = await AgoraRTC.createCameraVideoTrack();
+        await window.VOICE_CLIENT?.publish(localTrack);
+        const id = `CAMERA_${loginUid}`;
+        localTrack?.play(id);
+    };
+    const closeCamera = async () => {
+        if (localTrack) {
+            localTrack.close();
+            localTrack = null;
+        }
+        localTrack = await AgoraRTC.createMicrophoneAudioTrack();
+        await window.VOICE_CLIENT?.publish(localTrack);
+    };
+
     const leave = async () => {
         if (window.VOICE_CLIENT && localTrack) {
             localTrack.close();
@@ -250,7 +262,9 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
         joining: voicingInfo ? voicingInfo.joining : undefined,
         joinedAtThisContext,
         joined: !!voicingInfo,
-        joinVoice
+        joinVoice,
+        openCamera,
+        closeCamera
     };
 };
 export { useVoice };
