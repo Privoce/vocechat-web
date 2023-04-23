@@ -53,5 +53,7 @@
   "undeafen": "取消静默",
   "mute": "静音",
   "unmute": "取消静音",
+  "camera_on": "开启摄像头",
+  "camera_off": "关闭摄像头",
   "leave_voice": "离开"
 }

@@ -52,5 +52,7 @@
   "undeafen": "Undeafen",
   "mute": "Mute",
   "unmute": "Unmute",
+  "camera_on": "Turn on camera",
+  "camera_off": "Turn off camera",
   "leave_voice": "Leave Voice Chat"
 }
