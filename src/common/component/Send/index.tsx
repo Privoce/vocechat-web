@@ -61,7 +61,7 @@ const Send: FC<IProps> = ({
       mode: store.ui.inputMode,
       from_uid: store.authData.user?.uid,
       replying_mid: store.message.replying[`${context}_${id}`],
-      uploadFiles: store.ui.uploadFiles[`${context}_${id}`]
+      uploadFiles: store.ui.uploadFiles[`${context}_${id}`] ?? []
     };
   });
   const { sendMessage } = useSendMessage({ context, from: from_uid, to: id });
@@ -100,7 +100,7 @@ const Send: FC<IProps> = ({
       }
     }
     // send files
-    if (uploadFiles && uploadFiles.length !== 0) {
+    if (uploadFiles.length !== 0) {
       uploadFiles.forEach((fileInfo) => {
         const ts = +new Date();
         const { url, name, size, type } = fileInfo;
@@ -177,7 +177,7 @@ const Send: FC<IProps> = ({
           )}
           <Toolbar
             sendMessages={handleSendMessage}
-            sendVisible={msgs.length > 0}
+            sendVisible={msgs.length > 0 || uploadFiles.length > 0}
             context={context}
             to={id}
             mode={mode}
