@@ -2,13 +2,14 @@
 import { PriceType } from "./common";
 import { User } from "./user";
 
-export interface Server {
+export interface Server extends SystemCommon {
   name: string;
   description: string;
 }
 export interface SystemCommon {
   show_user_online_status: boolean,
   webclient_auto_update: boolean,
+  webview_url?: string
 }
 export interface GithubAuthConfig {
   client_id?: string;

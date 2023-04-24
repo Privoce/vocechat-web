@@ -74,6 +74,10 @@
       "desc": "开启或关闭用户在线状态",
       "enable": "开启",
       "disable": "关闭"
+    },
+    "webview_url": {
+      "title": "自定义标签网址",
+      "desc": "设置自定义标签网址"
     }
   },
   "license": {

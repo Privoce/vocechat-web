@@ -10,6 +10,7 @@ import FrontendURL from "./FrontendURL";
 import DarkMode from "./DarkMode";
 import ServerVersionChecker from "../../../common/component/ServerVersionChecker";
 import OnlineStatus from "./OnlineStatus";
+import WebviewURL from "./WebviewURL";
 
 export default function Overview() {
   const { t } = useTranslation("setting");
@@ -62,6 +63,9 @@ export default function Overview() {
               }}
             />
           </div>
+          <ServerVersionChecker version="0.3.4" empty={true}>
+            <WebviewURL />
+          </ServerVersionChecker>
           <ServerVersionChecker version="0.3.4" empty={true}>
             <OnlineStatus />
           </ServerVersionChecker>

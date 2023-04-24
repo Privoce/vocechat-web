@@ -80,6 +80,10 @@
       "desc": "Toggle users' online status visible",
       "enable": "Enable",
       "disable": "Disable"
+    },
+    "webview_url": {
+      "title": "Custom Tab URL",
+      "desc": "Set the custom tab url"
     }
   },
   "license": {

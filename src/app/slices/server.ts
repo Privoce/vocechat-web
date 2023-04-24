@@ -9,8 +9,6 @@ export interface StoredServer extends Server {
     link: string;
     expire: number;
   };
-  show_user_online_status: boolean,
-  webclient_auto_update: boolean
 }
 const initialState: StoredServer = {
   version: "",
@@ -23,7 +21,7 @@ const initialState: StoredServer = {
     expire: 0
   },
   show_user_online_status: false,
-  webclient_auto_update: true
+  webclient_auto_update: true,
 };
 
 const serverSlice = createSlice({
@@ -45,9 +43,10 @@ const serverSlice = createSlice({
         name = "",
         description = "",
         show_user_online_status = true,
-        webclient_auto_update = true
+        webclient_auto_update = true,
+        webview_url
       } = action.payload || {};
-      return { version, upgraded, name, logo, description, inviteLink, show_user_online_status, webclient_auto_update };
+      return { version, upgraded, name, logo, description, inviteLink, show_user_online_status, webclient_auto_update, webview_url };
     },
     updateInfo(state, action: PayloadAction<Partial<StoredServer>>) {
       const values = action.payload || {};
