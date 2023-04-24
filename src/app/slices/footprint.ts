@@ -5,6 +5,7 @@ import { AutoDeleteMessageSettingDTO, AutoDeleteMsgForGroup, AutoDeleteMsgForUse
 import { resetAuthData } from "./auth.data";
 
 type ChannelAside = "members" | "voice" | null;
+type DMAside = "voice" | null;
 export interface State {
   og: { [url: string]: OG }
   usersVersion: number;
@@ -18,6 +19,7 @@ export interface State {
   autoDeleteMsgUsers: AutoDeleteMsgForUser[];
   autoDeleteMsgChannels: AutoDeleteMsgForGroup[];
   channelAsides: { [cid: number]: ChannelAside };
+  dmAsides: { [uid: number]: DMAside };
 }
 
 
@@ -33,7 +35,8 @@ const initialState: State = {
   muteChannels: {},
   autoDeleteMsgUsers: [],
   autoDeleteMsgChannels: [],
-  channelAsides: {}
+  channelAsides: {},
+  dmAsides: {}
 };
 
 const footprintSlice = createSlice({
@@ -56,7 +59,8 @@ const footprintSlice = createSlice({
         muteChannels = {},
         autoDeleteMsgUsers = [],
         autoDeleteMsgChannels = [],
-        channelAsides = {}
+        channelAsides = {},
+        dmAsides = {}
       } = action.payload;
       return {
         og,
@@ -70,7 +74,8 @@ const footprintSlice = createSlice({
         muteChannels,
         autoDeleteMsgUsers,
         autoDeleteMsgChannels,
-        channelAsides
+        channelAsides,
+        dmAsides
       };
     },
     updateUsersVersion(state, action: PayloadAction<number>) {
@@ -189,6 +194,10 @@ const footprintSlice = createSlice({
       const { id, aside } = action.payload;
       state.channelAsides[id] = aside;
     },
+    updateDMVisibleAside(state, action: PayloadAction<{ id: number, aside: DMAside }>) {
+      const { id, aside } = action.payload;
+      state.dmAsides[id] = aside;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(resetAuthData, (state) => {
@@ -196,6 +205,11 @@ const footprintSlice = createSlice({
       Object.keys(state.channelAsides).forEach((channel_id: string) => {
         if (state.channelAsides[+channel_id] === "voice") {
           state.channelAsides[+channel_id] = null;
+        }
+      });
+      Object.keys(state.dmAsides).forEach((uid: string) => {
+        if (state.dmAsides[+uid] === "voice") {
+          state.dmAsides[+uid] = null;
         }
       });
     });
@@ -213,7 +227,8 @@ export const {
   updateAutoDeleteSetting,
   updateHistoryMark,
   upsertOG,
-  updateChannelVisibleAside
+  updateChannelVisibleAside,
+  updateDMVisibleAside
 } = footprintSlice.actions;
 
 export default footprintSlice.reducer;

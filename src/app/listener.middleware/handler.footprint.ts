@@ -71,7 +71,16 @@ export default async function handler({ operation, data = {}, payload }: Params)
       break;
     case "updateChannelVisibleAside":
       {
-        await table?.setItem("channelAsides", data.channelAsides);
+        if (payload.aside !== "voice") {
+          await table?.setItem("channelAsides", data.channelAsides);
+        }
+      }
+      break;
+    case "updateDMVisibleAside":
+      {
+        if (payload.aside !== "voice") {
+          await table?.setItem("dmAsides", data.dmAsides);
+        }
       }
       break;
     default:

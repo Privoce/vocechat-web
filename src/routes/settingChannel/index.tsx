@@ -50,7 +50,7 @@ export default function ChannelSetting() {
         pathPrefix={`/setting/channel/${cid}`}
         nav={currNav}
         closeModal={close}
-        title="Channel Setting"
+        title="Channel Settings"
         navs={navs}
         dangers={[
           canLeave && {

@@ -3,7 +3,7 @@
 // import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { updateChannelVisibleAside } from '../../../app/slices/footprint';
+import { updateChannelVisibleAside, updateDMVisibleAside } from '../../../app/slices/footprint';
 import { useAppSelector } from '../../../app/store';
 import IconHeadphone from '../../../assets/icons/headphone.svg';
 import Tooltip from '../../../common/component/Tooltip';
@@ -29,13 +29,11 @@ const VoiceChat = ({ id, context = "channel" }: Props) => {
     const { data: enabled } = useGetAgoraStatusQuery();
     const { t } = useTranslation("chat");
     const toggleDashboard = () => {
-        if (context == "channel") {
-            dispatch(updateChannelVisibleAside({
-                id,
-                aside: visibleAside == "voice" ? null : "voice"
-            }));
-        }
-        // todo DM
+        const data = {
+            id,
+            aside: visibleAside == "voice" ? null : "voice" as const
+        };
+        dispatch(context == "channel" ? updateChannelVisibleAside(data) : updateDMVisibleAside(data));
     };
     const handleJoin = () => {
         if (joining || joined) {
@@ -43,12 +41,11 @@ const VoiceChat = ({ id, context = "channel" }: Props) => {
             return;
         }
         joinVoice();
-        if (context == "channel") {
-            dispatch(updateChannelVisibleAside({
-                id,
-                aside: "voice"
-            }));
-        }
+        const data = {
+            id,
+            aside: "voice" as const
+        };
+        dispatch(context == "channel" ? updateChannelVisibleAside(data) : updateDMVisibleAside(data));
     };
     if (!loginUser || !enabled) return null;
     const visible = visibleAside == "voice";

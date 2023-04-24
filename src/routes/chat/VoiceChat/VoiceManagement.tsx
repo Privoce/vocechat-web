@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-// import React from 'react';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { VoicingInfo } from '../../../app/slices/voice';
@@ -15,6 +15,7 @@ import IconScreen from '../../../assets/icons/share.screen.svg';
 import StyledButton from '../../../common/component/styled/Button';
 import IconCallOff from '../../../assets/icons/call.off.svg';
 import Tooltip from '../../../common/component/Tooltip';
+import { playAgoraVideo } from '../../../common/utils';
 // import User from '../../../common/component/User';
 
 type Props = {
@@ -34,6 +35,13 @@ const VoiceManagement = ({ info, setMute, setDeafen, leave, closeCamera, openCam
             voicingMembers: store.voice.voicingMembers
         };
     });
+    useEffect(() => {
+        const ids = voicingMembers.ids;
+        ids.forEach(id => {
+            playAgoraVideo(id);
+        });
+    }, [voicingMembers.ids]);
+
     if (!info) return null;
     const { deafen, muted, video } = info;
     const nameClass = clsx(`text-sm text-gray-500 max-w-[120px] truncate font-semibold dark:text-white`);

@@ -8,6 +8,8 @@ import User from "../../../common/component/User";
 import Layout from "../Layout";
 import { useAppSelector } from "../../../app/store";
 import GoBackNav from "../../../common/component/GoBackNav";
+import ServerVersionChecker from "../../../common/component/ServerVersionChecker";
+import VoiceChat from "../VoiceChat";
 type Props = {
   uid: number;
   dropFiles?: File[];
@@ -33,6 +35,9 @@ const DMChat: FC<Props> = ({ uid = 0, dropFiles }) => {
       dropFiles={dropFiles}
       aside={
         <ul className="flex flex-col gap-6">
+          <ServerVersionChecker version="0.3.6" empty={true}>
+            <VoiceChat context={`dm`} id={uid} />
+          </ServerVersionChecker>
           <Tooltip tip="Saved Items" placement="left">
             <Tippy
               placement="left-start"

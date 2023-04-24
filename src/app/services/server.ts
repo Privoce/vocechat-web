@@ -124,11 +124,12 @@ export const serverApi = createApi({
           const { success } = resp;
           if (success) {
             const arr = resp.data.channels.map(data => {
-              const [id] = data.channel_name.split(":").slice(-1);
+              const [type, id] = data.channel_name.split(":").slice(-2);
               const count = data.user_count;
+              const context = type === "group" ? "channel" as const : "dm" as const;
               return {
                 id: +id,
-                context: "channel" as const,
+                context,
                 memberCount: count
               };
             });
@@ -149,9 +150,11 @@ export const serverApi = createApi({
     getAgoraStatus: builder.query<boolean, void>({
       query: () => ({ url: `/admin/agora/enabled` })
     }),
-    getAgoraToken: builder.query<AgoraTokenResponse, number>({
-      query: (id) => ({
-        url: `group/${id}/agora_token`,
+    generateAgoraToken: builder.mutation<AgoraTokenResponse, { uid: number } | { gid: number }>({
+      query: (data) => ({
+        url: `/admin/agora/token`,
+        method: "POST",
+        body: data
       })
     }),
     getSystemCommon: builder.query<SystemCommon, void>({
@@ -396,11 +399,11 @@ export const {
   useSendMessageByBotMutation,
   useUpdateFrontendUrlMutation,
   useGetFrontendUrlQuery,
-  useLazyGetAgoraTokenQuery,
   useGetAgoraConfigQuery,
   useGetAgoraStatusQuery,
   useGetAgoraChannelsQuery,
   useUpdateSystemCommonMutation,
   useLazyGetSystemCommonQuery,
-  useGetSystemCommonQuery
+  useGetSystemCommonQuery,
+  useGenerateAgoraTokenMutation
 } = serverApi;
