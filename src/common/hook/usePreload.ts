@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import dayjs from "dayjs";
 import initCache, { useRehydrate } from "../../app/cache";
 import { useLazyGetFavoritesQuery } from "../../app/services/message";
-import { useLazyGetUsersQuery } from "../../app/services/user";
+import { useLazyGetContactsQuery, useLazyGetUsersQuery } from "../../app/services/user";
 import { useLazyGetSystemCommonQuery, useLazyGetServerQuery, useLazyGetServerVersionQuery } from "../../app/services/server";
 import useStreaming from "./useStreaming";
 import { useAppSelector } from "../../app/store";
