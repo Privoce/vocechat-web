@@ -56,8 +56,8 @@ const VoiceMessage = ({ file_path }: { file_path: string }) => {
         wave.on('pause', function () {
             setPlaying(false);
         });
-        wave.on('ready', function (wtf) {
-            console.log("voice message ready", wtf);
+        wave.on('ready', function () {
+            setStatus("ready");
             const current = VoiceMap[file_path];
             if (current) {
                 const dur = current.getDuration();
