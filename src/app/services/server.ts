@@ -364,7 +364,7 @@ export const serverApi = createApi({
 });
 
 export const {
-  useGetServerVersionQuery,
+  useLazyGetServerVersionQuery,
   useGetGithubAuthConfigQuery,
   useUpdateGithubAuthConfigMutation,
   useGetGoogleAuthConfigQuery,

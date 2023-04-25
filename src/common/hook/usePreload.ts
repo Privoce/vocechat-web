@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import dayjs from "dayjs";
 import initCache, { useRehydrate } from "../../app/cache";
 import { useLazyGetFavoritesQuery } from "../../app/services/message";
-import { useLazyGetContactsQuery, useLazyGetUsersQuery } from "../../app/services/user";
-import { useGetServerVersionQuery, useGetSystemCommonQuery, useLazyGetServerQuery } from "../../app/services/server";
+import { useLazyGetUsersQuery } from "../../app/services/user";
+import { useLazyGetSystemCommonQuery, useLazyGetServerQuery, useLazyGetServerVersionQuery } from "../../app/services/server";
 import useStreaming from "./useStreaming";
 import { useAppSelector } from "../../app/store";
 import { useLazyLoadMoreMessagesQuery } from "../../app/services/message";
@@ -53,10 +53,8 @@ export default function usePreload() {
     getServer,
     { isLoading: serverLoading, isSuccess: serverSuccess, isError: serverError, data: server }
   ] = useLazyGetServerQuery();
-  const { data: currServerVersion, isSuccess: serverVersionSuccess, isLoading: loadingServerVersion } = useGetServerVersionQuery();
-  // 根据版本号判断是否需要调用system common api
-  const skipSystemCommonApi = !(serverVersionSuccess && compareVersion(currServerVersion, '0.3.4') >= 0);
-  useGetSystemCommonQuery(undefined, { skip: skipSystemCommonApi });
+  const [getServerVersion, { isSuccess: serverVersionSuccess, isLoading: loadingServerVersion }] = useLazyGetServerVersionQuery();
+  const [getSystemCommon] = useLazyGetSystemCommonQuery();
   useEffect(() => {
     initCache();
     rehydrate();
@@ -84,6 +82,12 @@ export default function usePreload() {
       });
       getServer();
       getFavorites();
+      getServerVersion().then((resp) => {
+        if (resp.data && compareVersion(resp.data, '0.3.4') >= 0) {
+          // 根据版本号判断是否需要调用system common api
+          getSystemCommon();
+        }
+      });
     }
   }, [rehydrated]);
   const tokenAlmostExpire = dayjs().isAfter(new Date(expireTime - 20 * 1000));
