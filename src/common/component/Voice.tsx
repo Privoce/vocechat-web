@@ -7,6 +7,7 @@ import { addVoiceMember, removeVoiceMember, updateConnectionState, updateDeafenS
 import { useAppSelector } from '../../app/store';
 import AudioJoin from '../../assets/join.wav';
 import { playAgoraVideo } from '../utils';
+import { ShareScreenTrack } from '../../types/global';
 AgoraRTC.setLogLevel(process.env.NODE_ENV === 'development' ? 0 : 4);
 window.VOICE_TRACK_MAP = window.VOICE_TRACK_MAP ?? {};
 window.VIDEO_TRACK_MAP = window.VIDEO_TRACK_MAP ?? {};
@@ -214,6 +215,60 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
             }));
         }
     };
+    const stopShareScreen = async () => {
+        const localVideoTrack = window.VIDEO_TRACK_MAP[loginUid] as ShareScreenTrack;
+        if (localVideoTrack) {
+            await window.VOICE_CLIENT?.unpublish(localVideoTrack);
+            if ("close" in localVideoTrack) {
+                localVideoTrack.close();
+            } else {
+                localVideoTrack[0].close();
+            }
+            // localVideoTrack.close();
+            window.VIDEO_TRACK_MAP[loginUid] = null;
+            // 关闭视频后，需要把视频的高度设置回去
+            const playerEle = document.querySelector(`#CAMERA_${loginUid}`) as HTMLElement;
+            playerEle.classList.remove("h-[120px]");
+            dispatch(updateVoicingInfo({
+                video: false,
+                shareScreen: false,
+                id,
+                context,
+            }));
+        }
+    };
+    const startShareScreen = async () => {
+        try {
+            const localVideoTrack = await AgoraRTC.createScreenVideoTrack({
+                // 配置屏幕共享编码参数，详情请查看 API 文档。
+                encoderConfig: "1080p_1",
+                // 设置视频传输优化策略为清晰优先或流畅优先。
+                optimizationMode: "detail",
+            });
+
+            // 取消正在进行的视频
+            await closeCamera();
+            await window.VOICE_CLIENT?.publish(localVideoTrack);
+            dispatch(updateVoicingInfo({
+                video: false,
+                shareScreen: true,
+                id,
+                context,
+            }));
+            // 放到全局变量里
+            window.VIDEO_TRACK_MAP[loginUid] = localVideoTrack;
+            playAgoraVideo(loginUid);
+            // 监听屏幕共享结束事件 
+            if ("close" in localVideoTrack) {
+                localVideoTrack.getMediaStreamTrack().onended = () => {
+                    stopShareScreen();
+                };
+            }
+        } catch (error) {
+            console.log("start share screen error", error);
+
+        }
+    };
 
     const leave = async () => {
         const localAudioTrack = window.VOICE_TRACK_MAP[loginUid] as IMicrophoneAudioTrack;
@@ -285,7 +340,9 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
         joined: !!voicingInfo,
         joinVoice,
         openCamera,
-        closeCamera
+        closeCamera,
+        startShareScreen,
+        stopShareScreen,
     };
 };
 export { useVoice };

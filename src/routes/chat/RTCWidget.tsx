@@ -22,7 +22,7 @@ type Props = {
 
 const RTCWidget = ({ id, context = "channel" }: Props) => {
     const { t } = useTranslation("chat");
-    const { leave, voicingInfo, setMute, setDeafen, joining = true, openCamera, closeCamera } = useVoice({ context, id });
+    const { leave, voicingInfo, setMute, setDeafen, joining = true, openCamera, closeCamera, startShareScreen, stopShareScreen } = useVoice({ context, id });
     const { loginUser, channelData, userData } = useAppSelector(store => {
         return {
             userData: store.users.byId,
@@ -54,8 +54,8 @@ const RTCWidget = ({ id, context = "channel" }: Props) => {
                         <IconCamera className={clsx("dark:fill-gray-200 w-6 h-6", voicingInfo.video ? "fill-gray-200" : "fill-gray-800")} />
                         <span>Video</span>
                     </button>
-                    <button className='rounded-lg py-2 px-5 bg-white/50 dark:bg-black/50 flex items-center gap-1'>
-                        <IconScreen className="fill-gray-800 dark:fill-gray-200 w-6 h-6" />
+                    <button onClick={voicingInfo.shareScreen ? stopShareScreen : startShareScreen} className={clsx('rounded-lg py-2 px-5 flex items-center gap-1', voicingInfo.shareScreen ? "bg-green-700 text-gray-200" : "bg-white/50 dark:bg-black/50 ")}>
+                        <IconScreen className={clsx("dark:fill-gray-200 w-6 h-6", voicingInfo.shareScreen ? "fill-gray-200" : "fill-gray-800")} />
                         <span>Screen</span>
                     </button>
                 </div>

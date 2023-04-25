@@ -24,10 +24,12 @@ type Props = {
     setDeafen: (param: boolean) => void,
     leave: () => void,
     closeCamera: () => void,
-    openCamera: () => void
+    openCamera: () => void,
+    startShareScreen: () => void,
+    stopShareScreen: () => void
 }
 
-const VoiceManagement = ({ info, setMute, setDeafen, leave, closeCamera, openCamera }: Props) => {
+const VoiceManagement = ({ info, setMute, setDeafen, leave, closeCamera, openCamera, startShareScreen, stopShareScreen }: Props) => {
     const { t } = useTranslation("chat");
     const { userData, voicingMembers } = useAppSelector(store => {
         return {
@@ -43,7 +45,7 @@ const VoiceManagement = ({ info, setMute, setDeafen, leave, closeCamera, openCam
     }, [voicingMembers.ids]);
 
     if (!info) return null;
-    const { deafen, muted, video } = info;
+    const { deafen, muted, video, shareScreen } = info;
     const nameClass = clsx(`text-sm text-gray-500 max-w-[120px] truncate font-semibold dark:text-white`);
     const members = voicingMembers.ids;
     const membersData = voicingMembers.byId;
@@ -116,7 +118,7 @@ const VoiceManagement = ({ info, setMute, setDeafen, leave, closeCamera, openCam
                         </li>
                     </Tooltip>
                     <Tooltip tip={"Share Screen"} placement="top">
-                        <li role={"button"} onClick={setMute.bind(null, !muted)} className="py-2 px-3 rounded bg-gray-100 dark:bg-gray-900">
+                        <li role={"button"} onClick={shareScreen ? stopShareScreen : startShareScreen} className={clsx("py-2 px-3 rounded ", shareScreen ? "bg-green-700" : "bg-gray-100 dark:bg-gray-900")}>
                             <IconScreen className="fill-gray-700 dark:fill-gray-300" />
                         </li>
                     </Tooltip>

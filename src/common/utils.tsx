@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import BASE_URL, { FILE_IMAGE_SIZE, ContentTypes, KEY_TOKEN, KEY_REFRESH_TOKEN, KEY_EXPIRE } from "../app/config";
-import { ICameraVideoTrack } from "agora-rtc-sdk-ng";
+import { ICameraVideoTrack, ILocalAudioTrack, ILocalVideoTrack } from "agora-rtc-sdk-ng";
 import IconPdf from "../assets/icons/file.pdf.svg";
 import IconAudio from "../assets/icons/file.audio.svg";
 import IconVideo from "../assets/icons/file.video.svg";
@@ -381,7 +381,13 @@ export const playAgoraVideo = (uid: number, videoTrack?: ICameraVideoTrack | nul
     if (videoTrack) {
       videoTrack.play(playerEle);
     } else {
-      window.VIDEO_TRACK_MAP[uid]?.play(playerEle);
+      if (!window.VIDEO_TRACK_MAP[uid]) return;
+      if ("play" in (window.VIDEO_TRACK_MAP[uid] ?? {})) {
+        window.VIDEO_TRACK_MAP[uid]?.play(playerEle);
+      } else {
+        const tracks = window.VIDEO_TRACK_MAP[uid] as [ILocalVideoTrack, ILocalAudioTrack];
+        tracks[0].play(playerEle);
+      }
     }
   }
 };
