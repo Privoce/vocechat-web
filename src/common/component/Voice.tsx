@@ -227,15 +227,17 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
     const leave = async () => {
         const localAudioTrack = window.VOICE_TRACK_MAP[loginUid] as IMicrophoneAudioTrack;
         const localVideoTrack = window.VIDEO_TRACK_MAP[loginUid] as ICameraVideoTrack;
-        if (window.VOICE_CLIENT && localAudioTrack) {
-            localAudioTrack.close();
-            window.VOICE_TRACK_MAP[loginUid] = null;
+        if (window.VOICE_CLIENT) {
+            await window.VOICE_CLIENT.leave();
+            dispatch(updateVoicingInfo(null));
+            if (localAudioTrack) {
+                localAudioTrack.close();
+                window.VOICE_TRACK_MAP[loginUid] = null;
+            }
             if (localVideoTrack) {
                 localVideoTrack.close();
                 window.VIDEO_TRACK_MAP[loginUid] = null;
             }
-            await window.VOICE_CLIENT.leave();
-            dispatch(updateVoicingInfo(null));
             if (context == "channel") {
                 dispatch(updateChannelVisibleAside({
                     id, aside: null
