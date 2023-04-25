@@ -49,14 +49,14 @@ const RTCWidget = ({ id, context = "channel" }: Props) => {
                         <IconCallOff onClick={leave} role="button" className="fill-red-600" />
                     </Tooltip>
                 </div>
-                <div className="flex items-center gap-2 mt-3">
-                    <button onClick={voicingInfo.video ? closeCamera : openCamera} className={clsx('rounded-lg py-2 px-5 flex items-center gap-1', voicingInfo.video ? "bg-green-700" : "bg-white/50 dark:bg-black/50")}>
-                        <IconCamera className="fill-gray-800 dark:fill-gray-200 w-6 h-6" />
-                        <span className='text-sm text-gray-800 dark:text-gray-200 font-semibold'>Video</span>
+                <div className={clsx("flex items-center gap-2 mt-3 text-sm font-semibold text-gray-800 dark:text-gray-200")}>
+                    <button onClick={voicingInfo.video ? closeCamera : openCamera} className={clsx('rounded-lg py-2 px-5 flex items-center gap-1', voicingInfo.video ? "bg-green-700 text-gray-200" : "bg-white/50 dark:bg-black/50 ")}>
+                        <IconCamera className={clsx("dark:fill-gray-200 w-6 h-6", voicingInfo.video ? "fill-gray-200" : "fill-gray-800")} />
+                        <span>Video</span>
                     </button>
                     <button className='rounded-lg py-2 px-5 bg-white/50 dark:bg-black/50 flex items-center gap-1'>
                         <IconScreen className="fill-gray-800 dark:fill-gray-200 w-6 h-6" />
-                        <span className='text-sm text-gray-800 dark:text-gray-200 font-semibold'>Screen</span>
+                        <span>Screen</span>
                     </button>
                 </div>
             </div>

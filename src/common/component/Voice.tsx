@@ -7,19 +7,11 @@ import { addVoiceMember, removeVoiceMember, updateConnectionState, updateDeafenS
 import { useAppSelector } from '../../app/store';
 import AudioJoin from '../../assets/join.wav';
 import { playAgoraVideo } from '../utils';
-// import { compareVersion } from '../utils';
-// type Props = {}
 AgoraRTC.setLogLevel(process.env.NODE_ENV === 'development' ? 0 : 4);
 window.VOICE_TRACK_MAP = window.VOICE_TRACK_MAP ?? {};
 window.VIDEO_TRACK_MAP = window.VIDEO_TRACK_MAP ?? {};
 // let tmpUids: number[] = [];
 const Voice = () => {
-    // const { serverVersion } = useAppSelector(store => {
-    //     return {
-    //         serverVersion: store.server.version ?? 0,
-    //     };
-    // });
-    // const skipAgoraStatusCheck = compareVersion(serverVersion, '0.3.5') >= 0;
     const { data: enabled } = useGetAgoraStatusQuery();
     useGetAgoraChannelsQuery({ page_no: 0, page_size: 100 }, {
         skip: !enabled || !navigator.onLine,
@@ -66,6 +58,9 @@ const Voice = () => {
                         case "Quit":
                         case "ServerTimeOut": {
                             dispatch(removeVoiceMember(+user.uid as number));
+                            // clear tracks
+                            window.VOICE_TRACK_MAP[+user.uid] = null;
+                            window.VIDEO_TRACK_MAP[+user.uid] = null;
                         }
                             break;
                         default:
@@ -131,12 +126,8 @@ const Voice = () => {
 
         };
     }, []);
-
-
     return null;
 };
-// let localAudioTrack: IMicrophoneAudioTrack | null = null;
-// let localVideoTrack: ICameraVideoTrack | null = null;
 type VoiceProps = {
     id: number,
     context?: "channel" | "dm"
@@ -253,29 +244,34 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
     };
     const setMute = (mute: boolean) => {
         const localAudioTrack = window.VOICE_TRACK_MAP[loginUid] as IMicrophoneAudioTrack;
-        if (localAudioTrack) {
-            localAudioTrack.setMuted(mute);
-            dispatch(updateMuteStatus(mute));
+        if (!localAudioTrack) return;
+        localAudioTrack.setMuted(mute);
+        if (mute == false && voicingInfo?.deafen) {
+            // 远端音频，恢复原音
+            Object.entries(window.VOICE_TRACK_MAP).forEach(([, audioTrack]) => {
+                audioTrack?.setVolume(100);
+            });
+            dispatch(updateDeafenStatus(false));
         }
+        dispatch(updateMuteStatus(mute));
     };
     const setDeafen = (deafen: boolean) => {
         const localAudioTrack = window.VOICE_TRACK_MAP[loginUid] as IMicrophoneAudioTrack;
-        if (localAudioTrack) {
-            if (deafen) {
-                localAudioTrack.setMuted(true);
-                // 远端音频，全部静音
-                Object.entries(window.VOICE_TRACK_MAP).forEach(([, audioTrack]) => {
-                    audioTrack?.setVolume(0);
-                });
-            } else {
-                localAudioTrack.setMuted(false);
-                // 远端音频，恢复原音
-                Object.entries(window.VOICE_TRACK_MAP).forEach(([, audioTrack]) => {
-                    audioTrack?.setVolume(100);
-                });
-            }
-            dispatch(updateDeafenStatus(deafen));
+        if (!localAudioTrack) return;
+        if (deafen) {
+            localAudioTrack.setMuted(true);
+            // 远端音频，全部静音
+            Object.entries(window.VOICE_TRACK_MAP).forEach(([, audioTrack]) => {
+                audioTrack?.setVolume(0);
+            });
+        } else {
+            localAudioTrack.setMuted(false);
+            // 远端音频，恢复原音
+            Object.entries(window.VOICE_TRACK_MAP).forEach(([, audioTrack]) => {
+                audioTrack?.setVolume(100);
+            });
         }
+        dispatch(updateDeafenStatus(deafen));
     };
     const joinedAtThisContext = voicingInfo ? (voicingInfo.id == id && voicingInfo.context == context) : false;
     return {
