@@ -103,7 +103,7 @@ const VoiceMessage = ({ file_path }: { file_path: string }) => {
             <button className='disabled:opacity-60' onClick={handleClick} disabled={notReady}>
                 {playing ? <IconPause className="stroke-primary-500" /> : <IconPlay className="stroke-primary-500" />}
             </button>
-            <div ref={containerRef} className={clsx('flex-1 h-8 relative', notReady && "flex-center flex-1 whitespace-nowrap")} >
+            <div ref={containerRef} className={clsx('flex-1 h-8 w-fit', notReady && "flex-center flex-1 whitespace-nowrap")} >
                 {status == "loading" && <span className='text-xs'>Loading voice message...</span>}
                 {status == "error" && <span className='text-xs text-red-800'>Load voice message error</span>}
             </div>
