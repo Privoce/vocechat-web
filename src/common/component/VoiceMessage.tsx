@@ -65,6 +65,12 @@ const VoiceMessage = ({ file_path }: { file_path: string }) => {
                 const durDisplay = dayjs.duration(num, 'seconds').format('mm:ss');
                 setDuration(durDisplay);
             }
+            // tricky
+            if (containerRef.current) {
+                const container = containerRef.current as HTMLDivElement;
+                const w = (container.querySelector("wave>canvas") as HTMLCanvasElement)?.width;
+                container.style.width = `${w}px`;
+            }
         });
         VoiceMap[file_path] = wave;
     };
