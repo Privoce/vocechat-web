@@ -1,5 +1,4 @@
 import Input from "../../../common/component/styled/Input";
-import Textarea from "../../../common/component/styled/Textarea";
 import Label from "../../../common/component/styled/Label";
 import Toggle from "../../../common/component/styled/Toggle";
 import SaveTip from "../../../common/component/SaveTip";
@@ -93,7 +92,7 @@ export default function ConfigAgora() {
         </div>
         <div className="input">
           <Label htmlFor="customer_id">Customer ID</Label>
-          <Textarea
+          <Input
             spellCheck={false}
             disabled={!enabled}
             data-type="customer_id"
@@ -105,7 +104,7 @@ export default function ConfigAgora() {
         </div>
         <div className="input">
           <Label htmlFor="customer_secret">Customer Secret</Label>
-          <Textarea
+          <Input
             spellCheck={false}
             disabled={!enabled}
             data-type="customer_secret"
