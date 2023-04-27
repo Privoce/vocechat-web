@@ -4,7 +4,7 @@ import { OG } from "../../types/resource";
 import { AutoDeleteMessageSettingDTO, AutoDeleteMsgForGroup, AutoDeleteMsgForUser, AutoDeleteSettingForChannels, AutoDeleteSettingForUsers } from "../../types/sse";
 import { resetAuthData } from "./auth.data";
 
-type ChannelAside = "members" | "voice" | null;
+type ChannelAside = "members" | "voice" | "voice_fullscreen" | null;
 type DMAside = "voice" | null;
 export interface State {
   og: { [url: string]: OG }

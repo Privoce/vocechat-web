@@ -9,9 +9,10 @@ import IconHeadphone from '../../../assets/icons/headphone.svg';
 import Tooltip from '../../../common/component/Tooltip';
 import { useVoice } from '../../../common/component/Voice';
 import { useGetAgoraStatusQuery } from '../../../app/services/server';
+import { ChatContext } from '../../../types/common';
 
 type Props = {
-    context?: "channel" | "dm"
+    context?: ChatContext
     id: number,
 }
 

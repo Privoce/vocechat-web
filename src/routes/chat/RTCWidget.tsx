@@ -14,10 +14,11 @@ import IconScreen from '../../assets/icons/share.screen.svg';
 import { useVoice } from '../../common/component/Voice';
 import Signal from '../../common/component/Signal';
 import Tooltip from '../../common/component/Tooltip';
+import { ChatContext } from '../../types/common';
 
 type Props = {
     id: number,
-    context?: "channel" | "dm"
+    context?: ChatContext
 }
 
 const RTCWidget = ({ id, context = "channel" }: Props) => {

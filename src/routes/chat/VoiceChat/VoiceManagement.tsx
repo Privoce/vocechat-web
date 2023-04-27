@@ -5,23 +5,28 @@ import { useTranslation } from 'react-i18next';
 import { VoicingInfo } from '../../../app/slices/voice';
 import { useAppSelector } from '../../../app/store';
 import Avatar from '../../../common/component/Avatar';
-import IconHeadphone from '../../../assets/icons/sound.on.svg';
-import IconHeadphoneOff from '../../../assets/icons/sound.off.svg';
+// import IconHeadphone from '../../../assets/icons/sound.on.svg';
+// import IconHeadphoneOff from '../../../assets/icons/sound.off.svg';
 import IconMic from '../../../assets/icons/mic.on.svg';
 import IconMicOff from '../../../assets/icons/mic.off.svg';
 import IconCameraOff from '../../../assets/icons/camera.off.svg';
 import IconCamera from '../../../assets/icons/camera.svg';
+import IconFullscreen from '../../../assets/icons/fullscreen.svg';
 import IconScreen from '../../../assets/icons/share.screen.svg';
-import StyledButton from '../../../common/component/styled/Button';
 import IconCallOff from '../../../assets/icons/call.off.svg';
+import StyledButton from '../../../common/component/styled/Button';
 import Tooltip from '../../../common/component/Tooltip';
 import { playAgoraVideo } from '../../../common/utils';
+import { ChatContext } from '../../../types/common';
+import { updateChannelVisibleAside } from '../../../app/slices/footprint';
+import { useDispatch } from 'react-redux';
 // import User from '../../../common/component/User';
 
 type Props = {
+    id: number,
+    context: ChatContext,
     info: VoicingInfo | null,
     setMute: (param: boolean) => void,
-    setDeafen: (param: boolean) => void,
     leave: () => void,
     closeCamera: () => void,
     openCamera: () => void,
@@ -29,8 +34,9 @@ type Props = {
     stopShareScreen: () => void
 }
 
-const VoiceManagement = ({ info, setMute, setDeafen, leave, closeCamera, openCamera, startShareScreen, stopShareScreen }: Props) => {
+const VoiceManagement = ({ id, context, info, setMute, leave, closeCamera, openCamera, startShareScreen, stopShareScreen }: Props) => {
     const { t } = useTranslation("chat");
+    const dispatch = useDispatch();
     const { userData, voicingMembers } = useAppSelector(store => {
         return {
             userData: store.users.byId,
@@ -43,9 +49,13 @@ const VoiceManagement = ({ info, setMute, setDeafen, leave, closeCamera, openCam
             playAgoraVideo(id);
         });
     }, [voicingMembers.ids]);
-
+    const handleFullscreen = () => {
+        if (context == "channel") {
+            dispatch(updateChannelVisibleAside({ id, aside: "voice_fullscreen" }));
+        }
+    };
     if (!info) return null;
-    const { deafen, muted, video, shareScreen } = info;
+    const { muted, video, shareScreen } = info;
     const nameClass = clsx(`text-sm text-gray-500 max-w-[120px] truncate font-semibold dark:text-white`);
     const members = voicingMembers.ids;
     const membersData = voicingMembers.byId;
@@ -102,11 +112,6 @@ const VoiceManagement = ({ info, setMute, setDeafen, leave, closeCamera, openCam
             </ul>
             <div className="flex flex-col gap-2">
                 <ul className='flex justify-between'>
-                    <Tooltip tip={deafen ? t("undeafen") : t("deafen")} placement="top">
-                        <li role={"button"} onClick={setDeafen.bind(null, !deafen)} className="py-2 px-3 rounded bg-gray-100 dark:bg-gray-900">
-                            {deafen ? <IconHeadphoneOff className="fill-gray-700 dark:fill-gray-300" /> : <IconHeadphone className="fill-gray-700 dark:fill-gray-300" />}
-                        </li>
-                    </Tooltip>
                     <Tooltip tip={muted ? t("unmute") : t("mute")} placement="top">
                         <li role={"button"} onClick={setMute.bind(null, !muted)} className="py-2 px-3 rounded bg-gray-100 dark:bg-gray-900">
                             {muted ? <IconMicOff className="fill-gray-700 dark:fill-gray-300" /> : <IconMic className="fill-gray-700 dark:fill-gray-300" />}
@@ -120,6 +125,11 @@ const VoiceManagement = ({ info, setMute, setDeafen, leave, closeCamera, openCam
                     <Tooltip tip={"Share Screen"} placement="top">
                         <li role={"button"} onClick={shareScreen ? stopShareScreen : startShareScreen} className={clsx("py-2 px-3 rounded ", shareScreen ? "bg-green-700" : "bg-gray-100 dark:bg-gray-900")}>
                             <IconScreen className="fill-gray-700 dark:fill-gray-300" />
+                        </li>
+                    </Tooltip>
+                    <Tooltip tip={"Fullscreen"} placement="top">
+                        <li role={"button"} onClick={handleFullscreen} className="py-2 px-3 rounded bg-gray-100 dark:bg-gray-900">
+                            <IconFullscreen className="fill-gray-700 dark:fill-gray-300" />
                         </li>
                     </Tooltip>
                 </ul>

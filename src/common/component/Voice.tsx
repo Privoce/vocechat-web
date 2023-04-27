@@ -36,6 +36,17 @@ const Voice = () => {
                     window.VOICE_TRACK_MAP[+user.uid] = user.audioTrack;
                 }
                 if (mediaType == "video") {
+                    const label = user.videoTrack?.getMediaStreamTrack()?.label;
+                    console.log("labell", label);
+
+                    if (label?.includes("screen")) {
+                        // 远端用户共享屏幕
+                        // const screenTrack = user.videoTrack as ShareScreenTrack;
+                        // screenTrack.on("track-ended", () => {
+                        //     // 远端用户停止共享屏幕
+                        dispatch(updateVoicingMember({ uid: +user.uid, info: { shareScreen: true } }));
+                    }
+
                     window.VIDEO_TRACK_MAP[+user.uid] = user.videoTrack;
                     playAgoraVideo(+user.uid);
                 }
@@ -46,7 +57,9 @@ const Voice = () => {
                     }
                     if (!user.hasVideo) {
                         //   远端用户取消了视频
-                        dispatch(updateVoicingMember({ uid: +user.uid, info: { video: false } }));
+                        dispatch(updateVoicingMember({ uid: +user.uid, info: { video: false, shareScreen: false } }));
+                        // 注销本地视频变量
+                        window.VIDEO_TRACK_MAP[+user.uid] = null;
                         // 关闭视频后，需要把视频的高度设置回去
                         const playerEle = document.querySelector(`#CAMERA_${user.uid}`) as HTMLElement;
                         playerEle.classList.remove("h-[120px]");
@@ -216,30 +229,32 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
         }
     };
     const stopShareScreen = async () => {
-        const localVideoTrack = window.VIDEO_TRACK_MAP[loginUid] as ShareScreenTrack;
-        if (localVideoTrack) {
-            await window.VOICE_CLIENT?.unpublish(localVideoTrack);
-            if ("close" in localVideoTrack) {
-                localVideoTrack.close();
-            } else {
-                localVideoTrack[0].close();
-            }
-            // localVideoTrack.close();
-            window.VIDEO_TRACK_MAP[loginUid] = null;
-            // 关闭视频后，需要把视频的高度设置回去
-            const playerEle = document.querySelector(`#CAMERA_${loginUid}`) as HTMLElement;
-            playerEle.classList.remove("h-[120px]");
-            dispatch(updateVoicingInfo({
-                video: false,
-                shareScreen: false,
-                id,
-                context,
-            }));
+        let localVideoTrack = window.VIDEO_TRACK_MAP[loginUid] as ShareScreenTrack | null;
+        if (!localVideoTrack) return;
+        await window.VOICE_CLIENT?.unpublish(localVideoTrack);
+        if ("close" in localVideoTrack) {
+            localVideoTrack.close();
+        } else {
+            localVideoTrack[0].close();
+            // localVideoTrack[0]=null
         }
+        // localVideoTrack.close();
+        window.VIDEO_TRACK_MAP[loginUid] = null;
+        // 关闭视频后，需要把视频的高度设置回去
+        const playerEle = document.querySelector(`#CAMERA_${loginUid}`) as HTMLElement;
+        playerEle.classList.remove("h-[120px]");
+        dispatch(updateVoicingInfo({
+            video: false,
+            shareScreen: false,
+            id,
+            context,
+        }));
     };
     const startShareScreen = async () => {
         try {
             const localVideoTrack = await AgoraRTC.createScreenVideoTrack({
+                electronScreenSourceId: "share_screen",
+                selfBrowserSurface: "exclude",
                 // 配置屏幕共享编码参数，详情请查看 API 文档。
                 encoderConfig: "1080p_1",
                 // 设置视频传输优化策略为清晰优先或流畅优先。

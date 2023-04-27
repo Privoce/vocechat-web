@@ -72,7 +72,7 @@ const User: FC<Props> = ({
               name={curr.name}
               alt="avatar"
             />
-            {curr.is_bot ? <IconBot className={clsx(compact && "absolute -bottom-[2.5px] -right-[2.5px]", "!w-[15px] !h-[15px]")} /> : statusElement}
+            {curr.is_bot ? <IconBot className={clsx("absolute -bottom-[2.5px] -right-[2.5px]", "!w-[15px] !h-[15px]")} /> : statusElement}
           </div>
           {!compact && (
             <span className={nameClass} title={curr?.name}>

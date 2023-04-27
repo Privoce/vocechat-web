@@ -14,9 +14,10 @@ import useContextMenu from "../../../common/hook/useContextMenu";
 import useUploadFile from "../../../common/hook/useUploadFile";
 import { useAppSelector } from "../../../app/store";
 import { fromNowTime } from "../../../common/utils";
+import { ChatContext } from "../../../types/common";
 
 interface IProps {
-  type?: "dm" | "channel";
+  type?: ChatContext;
   id: number;
   mid: number;
   setDeleteChannelId: (param: number) => void;

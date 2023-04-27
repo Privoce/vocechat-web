@@ -5,6 +5,7 @@ interface Params {
   data: any;
   operation: string;
 }
+const ignores = ["voice_fullscreen", "voice"];
 export default async function handler({ operation, data = {}, payload }: Params) {
   const table = window.CACHE["footprint"] as typeof localforage;;
   if (operation.startsWith("reset")) {
@@ -71,14 +72,14 @@ export default async function handler({ operation, data = {}, payload }: Params)
       break;
     case "updateChannelVisibleAside":
       {
-        if (payload.aside !== "voice") {
+        if (!ignores.includes(payload.aside)) {
           await table?.setItem("channelAsides", data.channelAsides);
         }
       }
       break;
     case "updateDMVisibleAside":
       {
-        if (payload.aside !== "voice") {
+        if (!ignores.includes(payload.aside)) {
           await table?.setItem("dmAsides", data.dmAsides);
         }
       }

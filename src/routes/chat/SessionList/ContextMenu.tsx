@@ -9,8 +9,9 @@ import ContextMenu, { Item } from "../../../common/component/ContextMenu";
 import useUserOperation from "../../../common/hook/useUserOperation";
 import { useAppSelector } from "../../../app/store";
 import { useTranslation } from "react-i18next";
+import { ChatContext } from "../../../types/common";
 type Props = {
-  context: "dm" | "channel";
+  context: ChatContext;
   id: number;
   visible: boolean;
   mid: number;

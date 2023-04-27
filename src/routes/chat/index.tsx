@@ -15,6 +15,7 @@ import GuestChannelChat from "./GuestChannelChat";
 import GuestSessionList from "./GuestSessionList";
 import ErrorCatcher from "../../common/component/ErrorCatcher";
 import RTCWidget from "./RTCWidget";
+import VoiceFullscreen from "./VoiceFullscreen";
 
 function ChatPage() {
   const isHomePath = useMatch(`/`);
@@ -23,10 +24,11 @@ function ChatPage() {
   const [channelModalVisible, setChannelModalVisible] = useState(false);
   const [usersModalVisible, setUsersModalVisible] = useState(false);
   const { channel_id = 0, user_id = 0 } = useParams();
-  const { sessionUids, isGuest } = useAppSelector((store) => {
+  const { sessionUids, isGuest, aside = "" } = useAppSelector((store) => {
     return {
       isGuest: store.authData.guest,
-      sessionUids: store.userMessage.ids
+      sessionUids: store.userMessage.ids,
+      aside: channel_id ? store.footprint.channelAsides[+channel_id] : store.footprint.dmAsides[+user_id]
     };
   });
   const toggleUsersModalVisible = () => {
@@ -49,9 +51,14 @@ function ChatPage() {
       : undefined;
   // console.log("temp uid", tmpUid);
   const placeholderVisible = channel_id == 0 && user_id == 0;
+  const voiceFullscreenVisible = aside === "voice_fullscreen";
+  const channelChatVisible = channel_id != 0 && aside !== "voice_fullscreen";
+  const dmChatVisible = user_id != 0 && aside !== "voice_fullscreen";
   const isMainPath = isHomePath || isChatHomePath;
   const context = channel_id !== 0 ? "channel" : "dm";
-  const contextId = (channel_id || user_id) ?? 0;
+  const contextId = (+channel_id || +user_id) ?? 0;
+  console.log("fffff", channel_id, user_id, aside, channelChatVisible);
+
   return (
     <ErrorCatcher>
       {channelModalVisible && (
@@ -71,14 +78,15 @@ function ChatPage() {
           </footer> : <RTCWidget id={+contextId} context={context} />}
         </div>
         <div className={clsx(`right-container md:rounded-r-2xl w-full bg-white dark:!bg-gray-700`, placeholderVisible && "h-full flex-center", isMainPath && "hidden md:flex")}>
+          {voiceFullscreenVisible && <VoiceFullscreen id={contextId} context={context} />}
           {placeholderVisible && (isGuest ? <GuestBlankPlaceholder /> : <BlankPlaceholder />)}
-          {channel_id !== 0 &&
+          {channelChatVisible &&
             (isGuest ? (
               <GuestChannelChat cid={+channel_id} />
             ) : (
               <ChannelChat cid={+channel_id} />
             ))}
-          {user_id !== 0 && <DMChat uid={+user_id} />}
+          {dmChatVisible && <DMChat uid={+user_id} />}
         </div>
       </div>
     </ErrorCatcher>

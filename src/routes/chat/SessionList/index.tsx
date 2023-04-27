@@ -5,8 +5,9 @@ import Session from "./Session";
 import DeleteChannelConfirmModal from "../../settingChannel/DeleteConfirmModal";
 import InviteModal from "../../../common/component/InviteModal";
 import { useAppSelector } from "../../../app/store";
+import { ChatContext } from "../../../types/common";
 export interface ChatSession {
-  type: "dm" | "channel";
+  type: ChatContext;
   id: number;
   mid: number;
   unread: number;
