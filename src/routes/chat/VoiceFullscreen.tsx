@@ -18,6 +18,7 @@ import { updateChannelVisibleAside } from '../../app/slices/footprint';
 import Tooltip from '../../common/component/Tooltip';
 import { useVoice } from '../../common/component/Voice';
 import StyledButton from '../../common/component/styled/Button';
+import { updatePin } from '../../app/slices/voice';
 
 type Props = {
     context: ChatContext,
@@ -25,9 +26,8 @@ type Props = {
 }
 
 const VoiceFullscreen = ({ id, context }: Props) => {
-    const [speakingIndex, setSpeakingIndex] = useState(0);
-    const [pin, setPin] = useState<number | undefined>(undefined);
     const dispatch = useDispatch();
+    const [speakingUid, setSpeakingUid] = useState(0);
     const { t } = useTranslation("chat");
     const { voicingInfo, setMute, leave, closeCamera, openCamera, startShareScreen, stopShareScreen } = useVoice({ id, context });
     const { name, userData, voicingMembers } = useAppSelector(store => {
@@ -39,12 +39,12 @@ const VoiceFullscreen = ({ id, context }: Props) => {
     });
     useEffect(() => {
         const ids = voicingMembers.ids;
-        ids.forEach((id, idx) => {
+        ids.forEach((id) => {
             playAgoraVideo(id);
             const { speakingVolume = 0 } = voicingMembers.byId[id];
             const speaking = speakingVolume > 50;
             if (speaking) {
-                setSpeakingIndex(idx);
+                setSpeakingUid(id);
             }
         });
 
@@ -54,19 +54,29 @@ const VoiceFullscreen = ({ id, context }: Props) => {
             dispatch(updateChannelVisibleAside({ id, aside: "voice" }));
         }
     };
+
+    const handleDoubleClick = (evt: MouseEvent<HTMLLIElement>) => {
+        const uid = evt.currentTarget.dataset.uid;
+        if (uid) {
+            dispatch(updatePin({ uid: +uid, action: "pin" }));
+        }
+    };
+
     const handlePin = (evt: MouseEvent<HTMLButtonElement>) => {
-        const idx = evt.currentTarget.dataset.idx ?? "";
-        if (idx == "undefined") {
-            setPin(undefined);
+        const uid = evt.currentTarget.dataset.uid ?? "";
+        const action = evt.currentTarget.dataset.action ?? "pin";
+        if (action == "unpin") {
+            dispatch(updatePin({ uid: +uid, action }));
         } else {
-            setPin(parseInt(idx));
+            dispatch(updatePin({ uid: +uid, action: "pin" }));
         }
     };
     if (!voicingInfo) return null;
+    const pinUid = voicingMembers.pin;
     const _name = context == "channel" ? `# ${name}` : `@ ${name}`;
     const members = voicingMembers.ids;
     const membersData = voicingMembers.byId;
-    const hasPin = typeof pin !== "undefined";
+    const hasPin = typeof pinUid !== "undefined";
     const { muted, video, shareScreen } = voicingInfo;
     return (
         <div className='h-full bg-black text-gray-300 flex flex-col justify-between rounded-r-2xl'>
@@ -74,19 +84,19 @@ const VoiceFullscreen = ({ id, context }: Props) => {
             <div className="px-7 py-6 flex justify-between">
                 <span className='text-sm font-semibold'>{_name}</span>
                 <div className="flex gap-4">
-                    <IconExitScreen role="button" onClick={handleExitFullscreen} className="fill-gray-700 dark:fill-gray-300" />
+                    <IconExitScreen role="button" onClick={handleExitFullscreen} className="fill-gray-300" />
                 </div>
             </div>
             {/* middle */}
             <ul className='flex grow justify-center items-end relative gap-2'>
-                {members.map((uid, idx) => {
+                {members.map((uid) => {
                     const curr = userData[uid];
                     if (!curr) return null;
                     const { muted, speakingVolume = 0, shareScreen } = membersData[uid];
                     const speaking = speakingVolume > 50;
-                    const special = hasPin ? pin == idx : idx == speakingIndex;
+                    const special = hasPin ? pinUid == uid : uid == speakingUid;
                     const disablePin = special && !hasPin;
-                    return <li key={uid} className={clsx('bg-gray-700 group', special ? "absolute left-0 top-0 w-full h-[calc(100%_-_110px)] flex-center" : "relative rounded-lg py-1.5 px-12")}>
+                    return <li key={uid} data-uid={uid} onDoubleClick={handleDoubleClick} className={clsx('bg-gray-700 group', special ? "absolute left-0 top-0 w-full h-[calc(100%_-_110px)] flex-center" : "relative rounded-lg py-1.5 px-12")}>
                         <div className={clsx("w-20 h-20 flex shrink-0 relative transition-opacity")}>
                             {speaking && <div className={clsx("absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 rounded-full bg-green-500 animate-speaking", special ? "w-[88px] h-[88px]" : "w-[86px] h-[86px]")}></div>}
                             <Avatar
@@ -99,9 +109,12 @@ const VoiceFullscreen = ({ id, context }: Props) => {
                             />
                         </div>
                         {shareScreen ? <div className={clsx("w-1 h-1 absolute z-40 rounded-full bg-green-700/60", special ? "top-2 left-2" : "top-1 left-1 px-2")} /> : null}
-                        {!disablePin && <button data-idx={special ? "undefined" : idx} role={"button"} onClick={handlePin} className={clsx("absolute left-1 top-1 z-40 p-1 rounded bg-black/50", special ? "" : "invisible group-hover:visible")}>
-                            {special ? <IconPin className="w-3 h-3 fill-gray-700 dark:fill-gray-300" /> : <IconPin className="w-3 h-3 fill-gray-700 dark:fill-gray-300" />}
-                        </button>}
+                        {!disablePin &&
+                            <Tooltip tip={"Remove pin"} disabled={!special} placement="right">
+                                <button data-uid={uid} data-action={special ? "unpin" : "pin"} role={"button"} onClick={handlePin} className={clsx("absolute left-1 top-1 z-40 p-1 rounded bg-black/50", special ? "" : "invisible group-hover:visible")}>
+                                    {special ? <IconPin className="w-3 h-3 fill-gray-300" /> : <IconPin className="w-3 h-3 fill-gray-300" />}
+                                </button>
+                            </Tooltip>}
                         <span className={clsx("text-gray-300 bg-black/50 rounded-lg absolute  z-40", special ? "left-2 bottom-2 px-2 py-1 text-sm " : "left-1 bottom-1 p-1 text-xs")} title={curr?.name}>
                             {curr?.name}
                         </span>
@@ -129,7 +142,7 @@ const VoiceFullscreen = ({ id, context }: Props) => {
                 </Tooltip>
                 <Tooltip tip={"Share Screen"} placement="top">
                     <li role={"button"} onClick={shareScreen ? stopShareScreen : startShareScreen} className={clsx("flex-center py-1 px-3 rounded ", shareScreen ? "bg-green-700" : "bg-gray-100 dark:bg-gray-900")}>
-                        <IconScreen className="fill-gray-700 dark:fill-gray-300 w-6 h-6" />
+                        <IconScreen className={clsx("dark:fill-gray-300 w-6 h-6", shareScreen ? "fill-gray-300" : "fill-gray-700")} />
                     </li>
                 </Tooltip>
                 <StyledButton onClick={leave} className='bg-red-600 hover:!bg-red-700 text-center'>

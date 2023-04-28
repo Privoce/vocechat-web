@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { VoicingInfo } from '../../../app/slices/voice';
+import { VoicingInfo, updatePin } from '../../../app/slices/voice';
 import { useAppSelector } from '../../../app/store';
 import Avatar from '../../../common/component/Avatar';
 // import IconHeadphone from '../../../assets/icons/sound.on.svg';
@@ -49,9 +49,12 @@ const VoiceManagement = ({ id, context, info, setMute, leave, closeCamera, openC
             playAgoraVideo(id);
         });
     }, [voicingMembers.ids]);
-    const handleFullscreen = () => {
+    const handleFullscreen = (uid?: number) => {
         if (context == "channel") {
             dispatch(updateChannelVisibleAside({ id, aside: "voice_fullscreen" }));
+            if (uid) {
+                dispatch(updatePin({ uid, action: "pin" }));
+            }
         }
     };
     if (!info) return null;
@@ -103,7 +106,7 @@ const VoiceManagement = ({ id, context, info, setMute, leave, closeCamera, openC
                                 {muted ? <IconMicOff className="w-4 fill-gray-500 dark:fill-gray-400" /> : <IconMic className="w-4 fill-gray-500  dark:fill-gray-400" />}
                             </div>
                         </div>
-                        <div id={`CAMERA_${uid}`} className="w-[98%] rounded overflow-hidden m-auto">
+                        <div onDoubleClick={handleFullscreen.bind(null, uid)} id={`CAMERA_${uid}`} className="w-[98%] rounded overflow-hidden m-auto">
                             {/* camera placeholder */}
                         </div>
                     </li>;
@@ -128,7 +131,7 @@ const VoiceManagement = ({ id, context, info, setMute, leave, closeCamera, openC
                         </li>
                     </Tooltip>
                     <Tooltip tip={"Fullscreen"} placement="top">
-                        <li role={"button"} onClick={handleFullscreen} className="py-2 px-3 rounded bg-gray-100 dark:bg-gray-900">
+                        <li role={"button"} onClick={handleFullscreen.bind(null, undefined)} className="py-2 px-3 rounded bg-gray-100 dark:bg-gray-900">
                             <IconFullscreen className="fill-gray-700 dark:fill-gray-300" />
                         </li>
                     </Tooltip>

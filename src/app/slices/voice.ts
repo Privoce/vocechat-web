@@ -30,7 +30,8 @@ export type VoicingMembers = {
   ids: number[],
   byId: {
     [key: number]: VoicingMemberInfo
-  }
+  },
+  pin?: number
 }
 export type VoiceInfo = {
   memberCount: number
@@ -142,6 +143,12 @@ const voiceSlice = createSlice({
         const { uid, info } = payload;
         state.voicingMembers.byId[uid] = { ...state.voicingMembers.byId[uid], ...info };
       }
+    },
+    updatePin(state, { payload }: PayloadAction<{ uid: number, action: "pin" | "unpin" }>) {
+      const idx = state.voicingMembers.ids.findIndex((uid) => uid == payload.uid);
+      if (idx > -1) {
+        state.voicingMembers.pin = payload.action == "pin" ? payload.uid : undefined;
+      }
     }
   },
   extraReducers: (builder) => {
@@ -149,6 +156,14 @@ const voiceSlice = createSlice({
       //  reset voicing info
       if (window.VOICE_CLIENT) {
         window.VOICE_CLIENT.leave();
+        Object.entries(window.VOICE_TRACK_MAP).forEach(([uid, track]) => {
+          track?.close();
+          delete window.VOICE_TRACK_MAP[+uid];
+        });
+        Object.entries(window.VIDEO_TRACK_MAP).forEach(([uid, track]) => {
+          track?.close();
+          delete window.VOICE_TRACK_MAP[+uid];
+        });
       }
       state.voicing = null;
       state.voicingMembers = {
@@ -159,5 +174,5 @@ const voiceSlice = createSlice({
   }
 });
 
-export const { updateConnectionState, addVoiceMember, removeVoiceMember, upsertVoiceList, updateVoicingInfo, updateVoicingNetworkQuality, updateMuteStatus, updateVoicingMember, updateDeafenStatus } = voiceSlice.actions;
+export const { updatePin, updateConnectionState, addVoiceMember, removeVoiceMember, upsertVoiceList, updateVoicingInfo, updateVoicingNetworkQuality, updateMuteStatus, updateVoicingMember, updateDeafenStatus } = voiceSlice.actions;
 export default voiceSlice.reducer;
