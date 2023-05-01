@@ -8,6 +8,7 @@ import auth from "../public/locales/en/auth.json";
 import member from "../public/locales/en/member.json";
 import chat from "../public/locales/en/chat.json";
 import fav from "../public/locales/en/fav.json";
+import widget from "../public/locales/en/widget.json";
 import welcome from "../public/locales/en/welcome.json";
 import setting from "../public/locales/en/setting.json";
 import file from "../public/locales/en/file.json";
@@ -26,7 +27,8 @@ export const resources = {
     member,
     welcome,
     setting,
-    file
+    file,
+    widget
   }
 } as const;
 i18n.on("languageChanged", (lng) => {
@@ -46,7 +48,7 @@ i18n
   // init i18next
   // for all options read: https://www.i18next.com/overview/configuration-options
   .init<HttpBackendOptions>({
-    ns: ["common", "chat", "member", "setting", "fav", "file", "welcome", "auth"],
+    ns: ["common", "chat", "member", "setting", "fav", "file", "welcome", "auth", "widget"],
     defaultNS,
     load: "languageOnly",
     // lng: "jp",

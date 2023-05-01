@@ -11,7 +11,7 @@ const Index: FC<Props> = ({ handleClose }) => {
   return (
     <header className="relative flex justify-between items-center h-14 px-4 py-2" style={{ backgroundColor: color }}>
       <div className="relative w-8 h-8">
-        <img src={logo} alt="logo" className="w-full h-full rounded-full" />
+        {logo && <img src={logo} alt="logo" className="w-full h-full rounded-full" />}
       </div>
       <div className="flex-1 px-4 pr-2 text-lg">
         <span className="text-lg font-bold truncate text-gray-50" style={{ color: fgColor }}>{name}</span>

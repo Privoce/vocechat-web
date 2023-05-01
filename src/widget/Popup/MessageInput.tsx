@@ -2,6 +2,8 @@ import { useRef, useState, memo } from 'react';
 import clsx from 'clsx';
 import useSendMessage from '../../common/hook/useSendMessage';
 import { useWidget } from '../WidgetContext';
+import IconSend from '../../assets/icons/send.svg';
+import { useTranslation } from 'react-i18next';
 
 
 
@@ -11,6 +13,7 @@ type Props = {
 }
 let isComposing = false;
 const MessageInput = (props: Props) => {
+    const { t } = useTranslation("widget");
     const { color } = useWidget();
     const { from, to } = props;
     const { sendMessage } = useSendMessage({
@@ -27,16 +30,23 @@ const MessageInput = (props: Props) => {
         `ring-1 ring-gray-200 dark:ring-gray-800 focus:ring-2 focus:ring-[${color}]`,
         'focus:outline-none',
     );
+    const handleSend = () => {
+        sendMessage({
+            type: "text",
+            content
+        });
+        setContent("");
+    };
     return (
         <div className="relative border-t border-gray-300 dark:border-gray-600 w-full">
-            <div className={'px-3 py-2 min-h-[48px]'}>
+            <div className={'px-3 py-2 min-h-[48px] flex items-center gap-2'}>
                 <textarea
                     // disabled={isSending}
                     ref={ref}
                     maxLength={4096}
                     className={textareaClassName}
                     value={content}
-                    placeholder="Type and press enter"
+                    placeholder={t("placeholder_send")}
                     onChange={e => setContent(e.target.value)}
                     onCompositionStart={() => {
                         isComposing = true;
@@ -56,14 +66,13 @@ const MessageInput = (props: Props) => {
                             // e.stopPropagation();
                             e.preventDefault();
                             if (content.trim().length === 0) return;
-                            sendMessage({
-                                type: "text",
-                                content
-                            });
-                            setContent("");
+                            handleSend();
                         }
                     }}
                 />
+                <button onClick={handleSend} disabled={content.trim().length === 0} className='px-2 py-1 disabled:opacity-60'>
+                    <IconSend className="dark:stroke-white w-4 h-4" />
+                </button>
             </div>
         </div>
     );
