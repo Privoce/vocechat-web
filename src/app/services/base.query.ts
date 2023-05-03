@@ -27,9 +27,11 @@ const whiteList = [
   "createAdmin",
   "getBotRelatedChannels",
   "sendMessageByBot",
-  "getAgoraVoicingList"
+  "getAgoraVoicingList",
+  "preCheckFileFromUrl"
 ];
 const whiteList401 = ["getAgoraVoicingList"];
+const errorWhiteList = ["preCheckFileFromUrl"];
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
   prepareHeaders: (headers, { getState, endpoint }) => {
@@ -78,6 +80,7 @@ const baseQueryWithTokenCheck = async (args: any, api: any, extraOptions: any) =
   }
   if (result?.error) {
     console.error("api error", result.error, api.endpoint);
+    if (errorWhiteList.includes(api.endpoint)) return result;
     switch (result.error.originalStatus || result.error.status) {
       case "FETCH_ERROR":
         {
@@ -95,7 +98,7 @@ const baseQueryWithTokenCheck = async (args: any, api: any, extraOptions: any) =
           if (api.endpoint !== "login") {
             api.dispatch(resetAuthData());
             location.href = "/#/login";
-            toast.error("API Not Authenticated");
+            // toast.error("API Not Authenticated");
           }
         }
         break;
@@ -104,7 +107,7 @@ const baseQueryWithTokenCheck = async (args: any, api: any, extraOptions: any) =
         break;
       case 404:
         {
-          const whiteList404 = ["login", "getArchiveMessage"];
+          const whiteList404 = ["login", "getArchiveMessage", "preCheckFileFromUrl"];
           if (!whiteList404.includes(api.endpoint)) {
             toast.error("Request Not Found");
           }

@@ -237,11 +237,19 @@ export const messageApi = createApi({
           // todo
         }
       }
-    })
+    }),
+    preCheckFileFromUrl: builder.query<void, string>({
+      query: (url) => ({
+        url,
+        method: "HEAD",
+        responseHandler: "text"
+      })
+    }),
   })
 });
 
 export const {
+  useLazyPreCheckFileFromUrlQuery,
   useLazyRemoveFavoriteQuery,
   useUnpinMessageMutation,
   useLazyGetFavoritesQuery,
