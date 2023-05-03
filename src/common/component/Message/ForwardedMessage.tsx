@@ -21,7 +21,7 @@ const ForwardedMessage: FC<Props> = ({ context, to, from_uid, id }) => {
       const forward_mids = messages.map(({ from_mid }) => from_mid) || [];
       // console.log("fff", messages);
       setForwards(
-        <div data-forwarded-mids={forward_mids.join(",")} className="flex flex-col rounded-lg bg-gray-100 dark:bg-gray-900">
+        <div data-forwarded-mids={forward_mids.join(",")} className="flex flex-col rounded-lg bg-gray-200 dark:bg-gray-900">
           <h4 className="p-2 pb-0 flex items-center gap-1 text-gray-500 text-xs">
             <IconForward className="w-4 h-4 fill-gray-500" />
             {t("action.forward")}
