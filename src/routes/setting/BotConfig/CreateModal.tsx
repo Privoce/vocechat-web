@@ -6,6 +6,7 @@ import Modal from '../../../common/component/Modal';
 import Button from '../../../common/component/styled/Button';
 import Input from '../../../common/component/styled/Input';
 import StyledModal from '../../../common/component/styled/Modal';
+import { BASE_ORIGIN } from '../../../app/config';
 
 type Props = {
     closeModal: () => void
@@ -35,11 +36,12 @@ const CreateModal = ({ closeModal }: Props) => {
                 formDataObj[key] = value;
             }
         });
+        const hostname = new URL(BASE_ORIGIN).hostname;
         createUser({
             is_bot: true,
             is_admin: false,
             gender: 1,
-            email: `bot_${new Date().getTime()}@voce.chat`,
+            email: `bot_${new Date().getTime()}@${hostname}`,
             password: "",
             ...formDataObj
         });
