@@ -74,7 +74,7 @@ export const PAYMENT_URL_PREFIX =
   process.env.NODE_ENV === "production"
     ? `https://vera.nicegoodthings.com`
     : `http://localhost:4000`;
-export const CACHE_VERSION = `0.3.36`;
+export const CACHE_VERSION = `0.3.37`;
 export const GuestRoutes = ["/", "/chat", "/chat/channel/:channel_id"];
 export const ContentTypes = {
   text: "text/plain",
