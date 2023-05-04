@@ -97,7 +97,7 @@ const Message: FC<IProps> = ({
       onContextMenu={readOnly ? undefined : handleContextMenuEvent}
       data-msg-mid={mid}
       ref={inViewRef}
-      className={clsx(`group w-full relative flex items-start gap-2 md:gap-4 px-1 md:px-2 py-1 my-2 rounded-lg md:dark:hover:bg-gray-800 md:hover:bg-gray-100`,
+      className={clsx(`group w-full relative flex items-start gap-2 md:gap-4 p-1 md:p-2 my-2 rounded-lg md:dark:hover:bg-gray-800 md:hover:bg-gray-100`,
         readOnly && "hover:bg-transparent",
         showExpire && "bg-red-200 dark:bg-red-200/40",
         pinInfo && "bg-cyan-50 dark:bg-cyan-800 pt-7"

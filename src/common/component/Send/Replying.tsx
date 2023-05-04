@@ -44,10 +44,10 @@ const renderContent = (data: MessagePayload) => {
         } else {
           const icon = getFileIcon(content_type, name, "icon w-4 h-5");
           res = (
-            <>
+            <div className="flex items-center gap-1">
               {icon}
               <span className="ml-1 text-[10px] text-gray-400">{name}</span>
-            </>
+            </div>
           );
         }
       }

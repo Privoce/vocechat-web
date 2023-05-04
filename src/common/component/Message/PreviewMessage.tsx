@@ -9,7 +9,7 @@ interface Props {
   context?: "forward" | "pin"
 }
 
-const PreviewMessage: FC<Props> = ({ mid = 0, context }) => {
+const PreviewMessage: FC<Props> = ({ mid = 0, context = "forward" }) => {
   const { msg, usersData } = useAppSelector((store) => {
     return { msg: store.message[mid], usersData: store.users.byId };
   });
@@ -17,6 +17,7 @@ const PreviewMessage: FC<Props> = ({ mid = 0, context }) => {
   const { from_uid = 0, content_type, content, thumbnail = "", properties } = msg;
   const { name, avatar } = usersData[from_uid] ?? {};
   const pinMsg = context == "pin";
+  const forwardMsg = context == "forward";
   return (
     <div className={clsx(`w-full relative flex items-start gap-3 p-2 my-2 rounded-lg`, pinMsg && "max-h-64 overflow-auto overflow-x-hidden border border-solid border-gray-200 dark:border-gray-400")}>
       <div className="w-10 h-10 flex shrink-0">
@@ -26,7 +27,7 @@ const PreviewMessage: FC<Props> = ({ mid = 0, context }) => {
         <div className="flex items-center gap-2 font-semibold">
           <span className="text-gray-500 text-sm">{name}</span>
         </div>
-        <div className={`select-text text-gray-600 text-sm break-all whitespace-pre-wrap dark:text-white`}>
+        <div className={clsx(`select-text text-gray-600 text-sm break-all whitespace-pre-wrap dark:text-white`, forwardMsg && "max-h-72 overflow-y-scroll")}>
           {renderContent({
             content_type,
             content,
