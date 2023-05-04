@@ -50,7 +50,7 @@ const RTCWidget = ({ id, context = "channel" }: Props) => {
                         <IconCallOff onClick={leave} role="button" className="fill-red-600" />
                     </Tooltip>
                 </div>
-                <div className={clsx("flex items-center gap-2 mt-3 text-sm font-semibold text-gray-800 dark:text-gray-200")}>
+                <div className={clsx("flex items-center justify-around gap-2 mt-3 text-sm font-semibold text-gray-800 dark:text-gray-200")}>
                     <button onClick={voicingInfo.video ? closeCamera : openCamera} className={clsx('rounded-lg py-2 px-5 flex items-center gap-1', voicingInfo.video ? "bg-green-700 text-gray-200" : "bg-white/50 dark:bg-black/50 ")}>
                         <IconCamera className={clsx("dark:fill-gray-200 w-6 h-6", voicingInfo.video ? "fill-gray-200" : "fill-gray-800")} />
                         <span>Video</span>

@@ -69,7 +69,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
   const memberIds = is_public ? userIds : members.slice(0).sort((n) => (n == owner ? -1 : 0));
   const addVisible = loginUser?.is_admin || owner == loginUser?.uid;
   const pinCount = data?.pinned_messages?.length || 0;
-  const toolClass = `relative cursor-pointer`;
+  const toolClass = `relative cursor-pointer hidden md:block`;
   return <Layout
     to={cid}
     context="channel"

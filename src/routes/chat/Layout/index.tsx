@@ -116,13 +116,15 @@ const Layout: FC<Props> = ({
             </div>
           </div>
         </main>
-        {aside && <div className={clsx("z-50 p-3 absolute right-0 top-0 translate-x-full flex-col hidden md:flex")}>{aside}</div>}
+        {aside && <div className={clsx("flex z-50 p-3 absolute right-0 top-14 md:right-0 md:top-0 md:translate-x-full flex-col")}>
+          {aside}
+        </div>}
         {users && <div className="hidden md:block">{users}</div>}
-        {voice && <div className="hidden md:block">{voice}</div>}
+        {voice && <div className="absolute right-11 top-14 h-fit overflow-y-scroll bg-white dark:!bg-gray-700 md:block">{voice}</div>}
         {!readonly && inputMode == "text" && isActive && (
           <DnDTip context={context} name={name} />
         )}
-      </section>
+      </section >
     </>
   );
 };
