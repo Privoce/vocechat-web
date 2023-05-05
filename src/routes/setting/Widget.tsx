@@ -16,7 +16,7 @@ const Row = ({ paramKey, paramDefault, remarks }: { paramKey: string, paramDefau
       {paramKey}
     </td>
     <td className="text-sm font-light px-6 py-4 whitespace-nowrap">
-      {paramDefault}
+      {paramKey == "theme-color" ? <span style={{ color: paramDefault as string }}> {paramDefault}</span> : paramDefault}
     </td>
     <td className="text-sm font-light px-6 py-4 whitespace-nowrap">
       {remarks}
@@ -27,6 +27,7 @@ export default function Widget() {
   const loginUid = useAppSelector(store => store.authData.user?.uid);
   const widgetLink = `${location.origin}/widget.html?host=${loginUid}`;
   const { t } = useTranslation("setting", { keyPrefix: "widget" });
+  const { t: wt } = useTranslation("widget");
   const { t: ct } = useTranslation();
   const { copied, copy } = useCopy({ enableToast: false });
   const copyLink = () => {
@@ -42,7 +43,7 @@ export default function Widget() {
         {t('code')}:
       </label>
       <SyntaxHighlighter id="code" language="html" style={vscDarkPlus} className="rounded">
-        {`<!-- ${t('code_comment')} -->\n<script \n  data-host-id="${loginUid}" \n  data-theme-color="#1fe1f9" \n  data-close-width="48" \n  data-close-height="48" \n  data-open-width="380" \n  data-open-height="680" \n  src="${location.origin}/widget.js" \n  async \n></script>`}
+        {`<!-- ${t('code_comment')} -->\n<script \n  data-host-id="${loginUid}" \n  data-theme-color="#1fe1f9" \n  data-close-width="48" \n  data-close-height="48" \n  data-open-width="380" \n  data-open-height="680" \n  data-welcome="Your custom welcome text" \n  src="${location.origin}/widget.js" \n  async \n></script>`}
       </SyntaxHighlighter>
       <div className="text-gray-500 dark:text-white text-sm mt-5 mb-2">
         {t('config')}:
@@ -81,6 +82,10 @@ export default function Widget() {
               paramKey: "open-height",
               paramDefault: `680(px)`,
               remarks: t("param_open_height")
+            }, {
+              paramKey: "welcome",
+              paramDefault: wt("welcome"),
+              remarks: t("param_welcome")
             }
             ].map(row => <Row key={row.paramKey} {...row} />)}
           </tbody>

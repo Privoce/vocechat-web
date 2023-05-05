@@ -1,13 +1,14 @@
-// import clsx from 'clsx'
+import { useTranslation } from 'react-i18next';
 import { memo } from 'react';
 import { useAppSelector } from '../../app/store';
 import Login from './Login';
-import { useTranslation } from 'react-i18next';
+import { useWidget } from '../WidgetContext';
 
 type Props = {
   needLogin?: boolean
 }
 const Index = ({ needLogin = false }: Props) => {
+  const { welcome } = useWidget();
   const { logo } = useAppSelector(store => store.server);
   const { t } = useTranslation("widget");
   // console.log("logooo", logo);
@@ -20,10 +21,7 @@ const Index = ({ needLogin = false }: Props) => {
         <div className="pl-14">
           <div className="rounded-lg" style={{ maxWidth: 'min(((100vw - 56px) - 20px) - 64px, 360px)' }}>
             <div className="text-md text-gray-900 dark:text-gray-100 px-3 py-1.5 bg-gray-100 dark:bg-gray-900 rounded-lg mb-1.5">
-              {needLogin ?
-                t("welcome_not_login")
-                :
-                t("welcome")}
+              {welcome || t("welcome")}
             </div>
           </div>
         </div>

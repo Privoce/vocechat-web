@@ -4,12 +4,13 @@ import { useAppSelector } from '../app/store';
 import { getContrastColor } from '../common/utils';
 
 const query = new URLSearchParams(location.search);
+const welcome = decodeURIComponent(query.get("welcome") || "");
 const color = decodeURIComponent(query.get("themeColor") || "#1fe1f9");
 const from = decodeURIComponent(query.get("from") || "widget.link");
 const fgColor = getContrastColor(color);
 // 判断是否是iframe上下文
 const embed = window.location !== window.parent.location;
-const WidgetContext = createContext({ color, fgColor, embed, from, loading: true, inviteOnly: false, name: "", logo: "" });
+const WidgetContext = createContext({ color, fgColor, embed, from, loading: true, inviteOnly: false, name: "", logo: "", welcome });
 
 
 function WidgetProvider({ children }: { children: ReactNode }) {
@@ -19,7 +20,7 @@ function WidgetProvider({ children }: { children: ReactNode }) {
 
     const loading = loadingConfig || loadingServerData;
     // if(loading) return 
-    return <WidgetContext.Provider value={{ loading, color, fgColor, embed, from, inviteOnly: loginConfig?.who_can_sign_up == "InvitationOnly", name: serverData?.name, logo: serverData.logo }} >{children}</WidgetContext.Provider>;
+    return <WidgetContext.Provider value={{ welcome, loading, color, fgColor, embed, from, inviteOnly: loginConfig?.who_can_sign_up == "InvitationOnly", name: serverData?.name, logo: serverData.logo }} >{children}</WidgetContext.Provider>;
 }
 
 function useWidget() {
