@@ -3,7 +3,7 @@ import { memo, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useGetAgoraChannelsQuery, useGetAgoraStatusQuery, useGenerateAgoraTokenMutation } from '../../app/services/server';
 import { updateChannelVisibleAside } from '../../app/slices/footprint';
-import { addVoiceMember, removeVoiceMember, updateConnectionState, updateDeafenStatus, updateMuteStatus, updateVoicingInfo, updateVoicingMember, updateVoicingNetworkQuality, upsertVoiceList } from '../../app/slices/voice';
+import { addVoiceMember, removeVoiceMember, updateConnectionState, updateDeafenStatus, updateMuteStatus, updatePin, updateVoicingInfo, updateVoicingMember, updateVoicingNetworkQuality, upsertVoiceList } from '../../app/slices/voice';
 import { useAppSelector } from '../../app/store';
 import AudioJoin from '../../assets/join.wav';
 import { playAgoraVideo } from '../utils';
@@ -202,6 +202,8 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
     };
     const openCamera = async () => {
         const localVideoTrack = await AgoraRTC.createCameraVideoTrack();
+        // 取消正在进行的桌面共享
+        await stopShareScreen();
         await window.VOICE_CLIENT?.publish(localVideoTrack);
         dispatch(updateVoicingInfo({
             video: true,
@@ -253,7 +255,7 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
     const startShareScreen = async () => {
         try {
             const localVideoTrack = await AgoraRTC.createScreenVideoTrack({
-                electronScreenSourceId: "share_screen",
+                // electronScreenSourceId: "share_screen",
                 selfBrowserSurface: "exclude",
                 // 配置屏幕共享编码参数，详情请查看 API 文档。
                 encoderConfig: "1080p_1",
@@ -273,6 +275,11 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
             // 放到全局变量里
             window.VIDEO_TRACK_MAP[loginUid] = localVideoTrack;
             playAgoraVideo(loginUid);
+            // 进入全屏并Pin自己
+            if (context == "channel") {
+                dispatch(updateChannelVisibleAside({ id, aside: "voice_fullscreen" }));
+                dispatch(updatePin({ uid: loginUid, action: "pin" }));
+            }
             // 监听屏幕共享结束事件 
             if ("close" in localVideoTrack) {
                 localVideoTrack.getMediaStreamTrack().onended = () => {
@@ -281,7 +288,6 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
             }
         } catch (error) {
             console.log("start share screen error", error);
-
         }
     };
 

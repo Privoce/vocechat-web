@@ -120,7 +120,7 @@ const Layout: FC<Props> = ({
           {aside}
         </div>}
         {users && <div className="hidden md:block">{users}</div>}
-        {voice && <div className="absolute right-11 top-14 h-fit overflow-y-scroll bg-white dark:!bg-gray-700 md:block">{voice}</div>}
+        {voice && <div className="max-md:absolute max-md:right-11 max-md:top-14  max-md:h-fit max-md:overflow-y-scroll bg-white dark:!bg-gray-700 md:block">{voice}</div>}
         {!readonly && inputMode == "text" && isActive && (
           <DnDTip context={context} name={name} />
         )}

@@ -309,3 +309,8 @@ svg:focus {
   border: none;
   outline: none;
 }
+/* camera video object-fit */
+
+[id^="CAMERA_"] video {
+  object-fit: cover !important;
+}

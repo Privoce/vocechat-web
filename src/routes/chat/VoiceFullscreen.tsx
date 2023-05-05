@@ -84,7 +84,7 @@ const VoiceFullscreen = ({ id, context }: Props) => {
             <div className="px-7 py-6 flex justify-between">
                 <span className='text-sm font-semibold'>{_name}</span>
                 <div className="flex gap-4">
-                    <IconExitScreen role="button" onClick={handleExitFullscreen} className="fill-gray-300" />
+                    <IconExitScreen role="button" onClick={handleExitFullscreen} className="fill-gray-200" />
                 </div>
             </div>
             {/* middle */}
@@ -111,15 +111,15 @@ const VoiceFullscreen = ({ id, context }: Props) => {
                         {shareScreen ? <div className={clsx("w-1 h-1 absolute z-40 rounded-full bg-green-700/60", special ? "top-2 left-2" : "top-1 left-1 px-2")} /> : null}
                         {!disablePin &&
                             <Tooltip tip={"Remove pin"} disabled={!special} placement="right">
-                                <button data-uid={uid} data-action={special ? "unpin" : "pin"} role={"button"} onClick={handlePin} className={clsx("absolute left-1 top-1 z-40 p-1 rounded bg-black/50", special ? "" : "invisible group-hover:visible")}>
-                                    {special ? <IconPin className="w-3 h-3 fill-gray-300" /> : <IconPin className="w-3 h-3 fill-gray-300" />}
+                                <button data-uid={uid} data-action={special ? "unpin" : "pin"} role={"button"} onClick={handlePin} className={clsx("absolute left-1 top-1 z-40 p-1 rounded bg-black/50", special ? "px-2 py-0.5" : "invisible group-hover:visible")}>
+                                    {special ? <IconPin className={clsx("fill-gray-200", special ? "w-4" : "w-3")} /> : <IconPin className={clsx("fill-gray-200", special ? "w-4" : "w-3")} />}
                                 </button>
                             </Tooltip>}
                         <span className={clsx("text-gray-300 bg-black/50 rounded-lg absolute  z-40", special ? "left-2 bottom-2 px-2 py-1 text-sm " : "left-1 bottom-1 p-1 text-xs")} title={curr?.name}>
                             {curr?.name}
                         </span>
                         <div className={clsx("flex items-center gap-2 absolute z-40 rounded bg-black/50", special ? "bottom-2 right-2  px-2 py-0.5" : "bottom-1 right-1 px-2")}>
-                            {muted ? <IconMicOff className={clsx("fill-gray-300", special ? "w-4" : "w-3")} /> : <IconMic className={clsx(" fill-gray-300 ", special ? "w-4" : "w-3")} />}
+                            {muted ? <IconMicOff className={clsx("fill-gray-200", special ? "w-4" : "w-3")} /> : <IconMic className={clsx("fill-gray-200 ", special ? "w-4" : "w-3")} />}
                         </div>
                         <div id={`CAMERA_${uid}`} className={clsx("absolute top-0 left-0 z-30 w-full h-full overflow-hidden m-auto", special ? "" : "rounded")}>
                             {/* camera placeholder */}
@@ -132,17 +132,17 @@ const VoiceFullscreen = ({ id, context }: Props) => {
             <ul className='py-4 flex justify-center gap-2'>
                 <Tooltip tip={muted ? t("unmute") : t("mute")} placement="top">
                     <li role={"button"} onClick={setMute.bind(null, !muted)} className="flex-center py-1 px-3 rounded bg-gray-100 dark:bg-gray-900">
-                        {muted ? <IconMicOff className="fill-gray-700 dark:fill-gray-300" /> : <IconMic className="fill-gray-700 dark:fill-gray-300" />}
+                        {muted ? <IconMicOff className="fill-gray-700 dark:fill-gray-200" /> : <IconMic className="fill-gray-700 dark:fill-gray-200" />}
                     </li>
                 </Tooltip>
                 <Tooltip tip={video ? t("camera_off") : t("camera_on")} placement="top">
                     <li role={"button"} onClick={video ? closeCamera : openCamera} className="flex-center py-1 px-3 rounded bg-gray-100 dark:bg-gray-900">
-                        {video ? <IconCamera className="fill-gray-700 dark:fill-gray-300" /> : <IconCameraOff className="fill-gray-700 dark:fill-gray-300" />}
+                        {video ? <IconCamera className="fill-gray-700 dark:fill-gray-200" /> : <IconCameraOff className="fill-gray-700 dark:fill-gray-200" />}
                     </li>
                 </Tooltip>
                 <Tooltip tip={"Share Screen"} placement="top">
                     <li role={"button"} onClick={shareScreen ? stopShareScreen : startShareScreen} className={clsx("flex-center py-1 px-3 rounded ", shareScreen ? "bg-green-700" : "bg-gray-100 dark:bg-gray-900")}>
-                        <IconScreen className={clsx("dark:fill-gray-300 w-6 h-6", shareScreen ? "fill-gray-300" : "fill-gray-700")} />
+                        <IconScreen className={clsx("dark:fill-gray-200 w-6 h-6", shareScreen ? "fill-gray-200" : "fill-gray-700")} />
                     </li>
                 </Tooltip>
                 <StyledButton onClick={leave} className='bg-red-600 hover:!bg-red-700 text-center'>

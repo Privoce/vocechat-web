@@ -106,8 +106,13 @@ const VoiceManagement = ({ id, context, info, setMute, leave, closeCamera, openC
                                 {muted ? <IconMicOff className="w-4 fill-gray-500 dark:fill-gray-400" /> : <IconMic className="w-4 fill-gray-500  dark:fill-gray-400" />}
                             </div>
                         </div>
-                        <div onDoubleClick={handleFullscreen.bind(null, uid)} id={`CAMERA_${uid}`} className="w-[98%] rounded overflow-hidden m-auto">
-                            {/* camera placeholder */}
+                        <div className="overflow-hidden group rounded relative" onDoubleClick={handleFullscreen.bind(null, uid)}>
+                            <div id={`CAMERA_${uid}`} className="w-[98%] m-auto">
+                                {/* camera placeholder */}
+                            </div>
+                            <button onClick={handleFullscreen.bind(null, uid)} className="invisible group-hover:visible w-5 h-5 p-1 bg-black/40 top-1 right-1.5 absolute rounded">
+                                <IconFullscreen className="w-full h-full fill-white" />
+                            </button>
                         </div>
                     </li>;
                 })}
@@ -127,7 +132,7 @@ const VoiceManagement = ({ id, context, info, setMute, leave, closeCamera, openC
                     </Tooltip>
                     <Tooltip tip={"Share Screen"} placement="top">
                         <li role={"button"} onClick={shareScreen ? stopShareScreen : startShareScreen} className={clsx("py-2 px-3 rounded ", shareScreen ? "bg-green-700" : "bg-gray-100 dark:bg-gray-900")}>
-                            <IconScreen className="fill-gray-700 dark:fill-gray-300" />
+                            <IconScreen className={clsx("dark:fill-gray-300", shareScreen ? "fill-gray-200" : "fill-gray-800")} />
                         </li>
                     </Tooltip>
                     <Tooltip tip={"Fullscreen"} placement="top">
