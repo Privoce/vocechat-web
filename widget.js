@@ -5,7 +5,8 @@ const {
   openWidth = 380,
   openHeight = 680,
   themeColor = "#1fe1f9",
-  position = "right"
+  position = "right",
+  welcome = ""
 } = document.currentScript.dataset;
 const _src = document.currentScript.src;
 const wrapper = document.createElement("iframe");
@@ -23,7 +24,7 @@ const styles = {
 Object.assign(wrapper.style, styles);
 wrapper.src = `${new URL(_src).origin}/widget.html?host=${hostId}&themeColor=${encodeURIComponent(
   themeColor
-)}&from=${encodeURIComponent(location.hostname)}`;
+)}&from=${encodeURIComponent(location.hostname)}&welcome=${encodeURIComponent(welcome)}`;
 wrapper.width = closeWidth;
 wrapper.height = closeHeight;
 wrapper.frameborder = 0;
