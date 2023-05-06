@@ -19,7 +19,7 @@ interface SendMessagesDTO {
   channels: number[];
 }
 
-type SendMessageDTO = { type: ContentTypeKey } & Partial<MessagePayload>
+type SendMessageDTO = { type: ContentTypeKey } & Partial<MessagePayload> & { ignoreLocal?: boolean }
 const useSendMessage = (props?: Props) => {
   const { context = "user", from = 0, to = 0 } = props || {};
   const dispatch = useAppDispatch();
