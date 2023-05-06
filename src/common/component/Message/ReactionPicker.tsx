@@ -19,6 +19,13 @@ const ReactionPicker: FC<Props> = ({ mid, hidePicker }) => {
   const handleReact = (emoji: string) => {
     reactMessage({ mid, action: emoji });
     hidePicker();
+    // scroll in to view
+    const el = document.querySelector(`[data-msg-mid='${mid}']`);
+    // console.log("eee", el);
+    if (el) {
+      el.scrollIntoViewIfNeeded(false);
+    }
+
   };
   return (
     <div className="z-[999]">

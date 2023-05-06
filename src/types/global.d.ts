@@ -42,5 +42,8 @@ export declare global {
   interface WindowEventMap {
     beforeinstallprompt: BeforeInstallPromptEvent;
   }
+  interface Element {
+    scrollIntoViewIfNeeded?: any;
+  }
 }
 export type ShareScreenTrack = ILocalVideoTrack | [ILocalVideoTrack, ILocalAudioTrack];

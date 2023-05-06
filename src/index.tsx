@@ -14,6 +14,7 @@ import ReduxRoutes from "./routes";
 import NewVersion from "./common/component/NewVersion";
 // import i18n (needs to be bundled ;)) 
 import './i18n';
+import './common/polyfills';
 import { isDarkMode } from './common/utils';
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
