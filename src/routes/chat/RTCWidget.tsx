@@ -43,7 +43,7 @@ const RTCWidget = ({ id, context = "channel" }: Props) => {
                         <Signal strength={voicingInfo.downlinkNetworkQuality} />
                         <div className="flex flex-col">
                             <span className={clsx('text-green-800 font-bold', isReConnecting && `text-red-500`)}>{isReConnecting ? `Voice Reconnecting...` : `Voice Connected`}</span>
-                            <span className='text-gray-600 dark:text-gray-400 text-xs truncate max-w-[170px]' >{voicingInfo.context == "channel" ? "Channel" : "DM"} / {voicingInfo.context == "channel" ? channelData[voicingInfo.id].name : userData[voicingInfo.id].name}</span>
+                            <span className='text-gray-600 dark:text-gray-400 text-xs truncate max-w-[170px]' >{voicingInfo.context == "channel" ? "Channel" : "DM"} / {voicingInfo.context == "channel" ? channelData[voicingInfo.id]?.name : userData[voicingInfo.id]?.name}</span>
                         </div>
                     </div>
                     <Tooltip tip={t("leave_voice")} placement="top">

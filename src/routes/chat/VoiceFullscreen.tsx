@@ -112,7 +112,7 @@ const VoiceFullscreen = ({ id, context }: Props) => {
                         {!disablePin &&
                             <Tooltip tip={"Remove pin"} disabled={!special} placement="right">
                                 <button data-uid={uid} data-action={special ? "unpin" : "pin"} role={"button"} onClick={handlePin} className={clsx("absolute left-1 top-1 z-40 p-1 rounded bg-black/50", special ? "px-2 py-0.5" : "invisible group-hover:visible")}>
-                                    {special ? <IconPin className={clsx("fill-gray-200", special ? "w-4" : "w-3")} /> : <IconPin className={clsx("fill-gray-200", special ? "w-4" : "w-3")} />}
+                                    <IconPin className={clsx(special ? "w-4 fill-green-600" : "w-3 fill-gray-200")} />
                                 </button>
                             </Tooltip>}
                         <span className={clsx("text-gray-300 bg-black/50 rounded-lg absolute  z-40", special ? "left-2 bottom-2 px-2 py-1 text-sm " : "left-1 bottom-1 p-1 text-xs")} title={curr?.name}>
