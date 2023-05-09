@@ -19,7 +19,8 @@ import {
   RenewLicenseResponse,
   AgoraTokenResponse,
   AgoraVoicingListResponse,
-  SystemCommon
+  SystemCommon,
+  AgoraChannelUsersResponse
 } from "../../types/server";
 import { Channel } from "../../types/channel";
 import { ContentTypeKey } from "../../types/message";
@@ -130,7 +131,8 @@ export const serverApi = createApi({
               return {
                 id: +id,
                 context,
-                memberCount: count
+                memberCount: count,
+                channelName: data.channel_name
               };
             });
             dispatch(upsertVoiceList(arr));
@@ -138,6 +140,15 @@ export const serverApi = createApi({
         } catch {
           console.error("get voice list error");
         }
+      }
+    }),
+    getAgoraUsersByChannel: builder.query<number[], string>({
+      query: (channel_name) => ({ url: `/admin/agora/channel/user/${channel_name}/false` }),
+      transformResponse: (resp: AgoraChannelUsersResponse) => {
+        if (resp.success && resp.data.channel_exist) {
+          return resp.data.users ?? [];
+        }
+        return [];
       }
     }),
     updateAgoraConfig: builder.mutation<void, AgoraConfig>({
@@ -405,5 +416,6 @@ export const {
   useUpdateSystemCommonMutation,
   useLazyGetSystemCommonQuery,
   useGetSystemCommonQuery,
-  useGenerateAgoraTokenMutation
+  useGenerateAgoraTokenMutation,
+  useLazyGetAgoraUsersByChannelQuery
 } = serverApi;

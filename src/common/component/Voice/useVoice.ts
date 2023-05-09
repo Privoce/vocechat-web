@@ -1,147 +1,16 @@
 import AgoraRTC, { ICameraVideoTrack, IMicrophoneAudioTrack } from 'agora-rtc-sdk-ng';
-import { memo, useEffect } from 'react';
+
+import { ShareScreenTrack } from '../../../types/global';
+import AudioJoin from '../../../assets/join.wav';
 import { useDispatch } from 'react-redux';
-import { useGetAgoraChannelsQuery, useGetAgoraStatusQuery, useGenerateAgoraTokenMutation } from '../../app/services/server';
-import { updateChannelVisibleAside } from '../../app/slices/footprint';
-import { addVoiceMember, removeVoiceMember, updateConnectionState, updateDeafenStatus, updateMuteStatus, updatePin, updateVoicingInfo, updateVoicingMember, updateVoicingNetworkQuality, upsertVoiceList } from '../../app/slices/voice';
-import { useAppSelector } from '../../app/store';
-import AudioJoin from '../../assets/join.wav';
-import { playAgoraVideo } from '../utils';
-import { ShareScreenTrack } from '../../types/global';
-AgoraRTC.setLogLevel(process.env.NODE_ENV === 'development' ? 0 : 4);
-window.VOICE_TRACK_MAP = window.VOICE_TRACK_MAP ?? {};
-window.VIDEO_TRACK_MAP = window.VIDEO_TRACK_MAP ?? {};
-// let tmpUids: number[] = [];
-const Voice = () => {
-    const { data: enabled } = useGetAgoraStatusQuery();
-    useGetAgoraChannelsQuery({ page_no: 0, page_size: 100 }, {
-        skip: !enabled || !navigator.onLine,
-        pollingInterval: 5000
-    });
-    const dispatch = useDispatch();
-    useEffect(() => {
-        const initializeAgoraClient = async () => {
-            // 创建agora客户端实例
-            const agoraEngine = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
-            // 无论频道内是否有人说话，都会每两秒返回提示音量
-            agoraEngine.enableAudioVolumeIndicator();
-            // Listen for the "user-published" event to retrieve an AgoraRTCRemoteUser object.
-            agoraEngine.on("user-published", async (user, mediaType) => {
-                // Subscribe to the remote user when the SDK triggers the "user-published" event.
-                await agoraEngine.subscribe(user, mediaType);
-                console.log(user, " has published at the channel");
-                if (mediaType == "audio") {
-                    // 播放远端音频
-                    user.audioTrack?.play();
-                    window.VOICE_TRACK_MAP[+user.uid] = user.audioTrack;
-                }
-                if (mediaType == "video") {
-                    const label = user.videoTrack?.getMediaStreamTrack()?.label;
-                    console.log("labell", label);
+import { useGenerateAgoraTokenMutation } from '../../../app/services/server';
+import { updateChannelVisibleAside, updateDMVisibleAside } from '../../../app/slices/footprint';
 
-                    if (label?.includes("screen")) {
-                        // 远端用户共享屏幕
-                        // const screenTrack = user.videoTrack as ShareScreenTrack;
-                        // screenTrack.on("track-ended", () => {
-                        //     // 远端用户停止共享屏幕
-                        dispatch(updateVoicingMember({ uid: +user.uid, info: { shareScreen: true } }));
-                    }
+import { addVoiceMember, updateDeafenStatus, updateMuteStatus, updatePin, updateVoicingInfo, upsertVoiceList } from '../../../app/slices/voice';
+import { useAppSelector } from '../../../app/store';
+import { playAgoraVideo } from '../../utils';
 
-                    window.VIDEO_TRACK_MAP[+user.uid] = user.videoTrack;
-                    playAgoraVideo(+user.uid);
-                }
-                agoraEngine.on("user-unpublished", (user) => {
-                    if (!user.hasAudio) {
-                        //   远端用户取消了音频（muted）
-                        dispatch(updateVoicingMember({ uid: +user.uid, info: { muted: true } }));
-                    }
-                    if (!user.hasVideo) {
-                        //   远端用户取消了视频
-                        dispatch(updateVoicingMember({ uid: +user.uid, info: { video: false, shareScreen: false } }));
-                        // 注销本地视频变量
-                        window.VIDEO_TRACK_MAP[+user.uid] = null;
-                        // 关闭视频后，需要把视频的高度设置回去
-                        const playerEle = document.querySelector(`#CAMERA_${user.uid}`) as HTMLElement;
-                        playerEle.classList.remove("h-[120px]");
-                    }
-                });
-                //remote user leave
-                agoraEngine.on("user-left", (user, reason) => {
-                    console.log(user, "has left the channel");
-                    switch (reason) {
-                        case "Quit":
-                        case "ServerTimeOut": {
-                            dispatch(removeVoiceMember(+user.uid as number));
-                            // clear tracks
-                            window.VOICE_TRACK_MAP[+user.uid] = null;
-                            window.VIDEO_TRACK_MAP[+user.uid] = null;
-                        }
-                            break;
-                        default:
-                            break;
-                    }
-                });
-                // 报告频道内正在说话的远端用户及其音量的回调。
-                agoraEngine.on("volume-indicator", (vols) => {
-                    vols.forEach((vol, index) => {
-                        console.log(`${index} UID ${vol.uid} Level ${vol.level}`);
-                        const { uid, level } = vol;
-                        dispatch(updateVoicingMember({ uid: +uid, info: { speakingVolume: level } }));
-                    });
-                });
-                // 信号强度
-                agoraEngine.on("network-quality", (qlt) => {
-                    const { downlinkNetworkQuality } = qlt;
-                    dispatch(updateVoicingNetworkQuality(downlinkNetworkQuality));
-                });
-                // 连接状态有变化
-                agoraEngine.on("connection-state-change", (state, prevState, reason) => {
-                    console.log("connection-state-change", state, prevState, reason);
-                    dispatch(updateConnectionState(state));
-                });
-                // 用户状态变化
-                agoraEngine.on("user-info-updated", (uid, msg) => {
-                    console.log("user-info-updated", uid, msg);
-                    switch (msg) {
-                        case "mute-audio":
-                            // todo
-                            dispatch(updateVoicingMember({ uid: +uid, info: { muted: true } }));
-                            break;
-                        case "unmute-audio":
-                            // todo
-                            dispatch(updateVoicingMember({ uid: +uid, info: { muted: false } }));
-                            break;
-                        default:
-                            break;
-                    }
-                });
-            });
-            // 有新用户加入
-            agoraEngine.on("user-joined", async (user) => {
-                console.log(user.uid, agoraEngine.channelName, " has joined the channel");
-                dispatch(addVoiceMember(+user.uid));
-            });
-            window.VOICE_CLIENT = agoraEngine;
-        };
-        const handlePageUnload = (evt: BeforeUnloadEvent) => {
-            console.log("unload");
-            if (window.VOICE_CLIENT?.connectionState === "CONNECTED") {
-                evt.preventDefault();
-                return (evt.returnValue = "");
-            }
-        };
-        window.addEventListener("beforeunload", handlePageUnload, { capture: true });
-        if (!window.VOICE_CLIENT) {
-            initializeAgoraClient();
-        }
 
-        return () => {
-            window.removeEventListener("beforeunload", handlePageUnload, { capture: true });
-
-        };
-    }, []);
-    return null;
-};
 type VoiceProps = {
     id: number,
     context?: "channel" | "dm"
@@ -305,17 +174,16 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
                 localVideoTrack.close();
                 window.VIDEO_TRACK_MAP[loginUid] = null;
             }
-            if (context == "channel") {
-                dispatch(updateChannelVisibleAside({
-                    id, aside: null
-                }));
-                // 即时更新对应的活跃列表信息
-                dispatch(upsertVoiceList({
-                    id,
-                    context,
-                    memberCount: 0
-                }));
-            }
+            const updateAside = context == "channel" ? updateChannelVisibleAside : updateDMVisibleAside;
+            dispatch(updateAside({ id, aside: null }));
+            // 即时更新对应的活跃列表信息
+            dispatch(upsertVoiceList({
+                id,
+                context,
+                memberCount: 0,
+                // will fix it
+                channelName: `vocechat:${context}:${id}`,
+            }));
         }
     };
     const setMute = (mute: boolean) => {
@@ -366,5 +234,5 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
         stopShareScreen,
     };
 };
-export { useVoice };
-export default memo(Voice);
+
+export default useVoice;

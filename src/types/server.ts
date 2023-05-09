@@ -38,6 +38,15 @@ export interface AgoraVoicingListResponse {
     total_size: number
   }
 }
+export interface AgoraChannelUsersResponse {
+  success: boolean,
+  data: {
+    channel_exist: boolean,
+    mode?: number,
+    total?: number,
+    users?: number[]
+  }
+}
 export interface AgoraTokenResponse {
   agora_token: string,
   uid: number,

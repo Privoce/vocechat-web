@@ -4,8 +4,9 @@ import { ConnectionState } from "agora-rtc-sdk-ng";
 import { resetAuthData } from "./auth.data";
 
 export type VoiceBasicInfo = {
-  context: "channel" | "dm"
-  id: number,
+  context: "channel" | "dm",
+  from?: number,
+  id: number,// means to in dm context
 }
 
 export type VoicingInfo = {
@@ -34,9 +35,12 @@ export type VoicingMembers = {
   pin?: number
 }
 export type VoiceInfo = {
+  channelName: string,
   memberCount: number
 } & VoiceBasicInfo
 interface State {
+  callingFrom: number,
+  callingTo: number,
   voicing: VoicingInfo | null,
   voicingMembers: VoicingMembers,
   list: VoiceInfo[]
@@ -47,6 +51,8 @@ interface State {
 //   members: []
 // };
 const initialState: State = {
+  callingFrom: 0,
+  callingTo: 0,
   voicing: null,
   voicingMembers: {
     ids: [],
@@ -61,6 +67,11 @@ const voiceSlice = createSlice({
   name: "voice",
   initialState,
   reducers: {
+    updateCalling(state, { payload }: PayloadAction<{ from: number, to?: number }>) {
+      const { from, to = 0 } = payload;
+      state.callingFrom = from;
+      state.callingTo = to;
+    },
     updateVoicingInfo(state, { payload }: PayloadAction<VoicingInfo | null>) {
       if (payload) {
         state.voicing = { ...(state.voicing ?? {}), ...payload };
@@ -157,11 +168,15 @@ const voiceSlice = createSlice({
       if (window.VOICE_CLIENT) {
         window.VOICE_CLIENT.leave();
         Object.entries(window.VOICE_TRACK_MAP).forEach(([uid, track]) => {
-          track?.close();
+          if (track && 'close' in track) {
+            track.close();
+          }
           delete window.VOICE_TRACK_MAP[+uid];
         });
         Object.entries(window.VIDEO_TRACK_MAP).forEach(([uid, track]) => {
-          track?.close();
+          if (track && 'close' in track) {
+            track?.close();
+          }
           delete window.VOICE_TRACK_MAP[+uid];
         });
       }
@@ -174,5 +189,5 @@ const voiceSlice = createSlice({
   }
 });
 
-export const { updatePin, updateConnectionState, addVoiceMember, removeVoiceMember, upsertVoiceList, updateVoicingInfo, updateVoicingNetworkQuality, updateMuteStatus, updateVoicingMember, updateDeafenStatus } = voiceSlice.actions;
+export const { updateCalling, updatePin, updateConnectionState, addVoiceMember, removeVoiceMember, upsertVoiceList, updateVoicingInfo, updateVoicingNetworkQuality, updateMuteStatus, updateVoicingMember, updateDeafenStatus } = voiceSlice.actions;
 export default voiceSlice.reducer;
