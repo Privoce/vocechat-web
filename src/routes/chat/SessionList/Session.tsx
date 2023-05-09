@@ -101,7 +101,9 @@ const Session: FC<IProps> = ({
     messageData,
     loginUid
   });
-  const isVoicing = type == "channel" && voiceList.findIndex(item => item.id == id) > -1;
+  const isVoicing = voiceList.some((item) => {
+    return item.context == type && item.id === id;
+  });
   return (
     <li className="session">
       <ContextMenu
