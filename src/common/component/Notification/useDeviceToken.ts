@@ -27,14 +27,14 @@ const useDeviceToken = (vapidKey: string) => {
           // Perform any other necessary action with the token
         } else {
           // Show permission request UI
-          console.error("No registration token available. Request permission to generate one.");
+          console.info("No registration token available. Request permission to generate one.");
         }
         requesting = false;
       })
       .catch((err) => {
         requesting = false;
         error = true;
-        console.error("An error occurred while retrieving token. ", err);
+        console.info("An error occurred while retrieving token. ", err);
       });
   }
   return token;
