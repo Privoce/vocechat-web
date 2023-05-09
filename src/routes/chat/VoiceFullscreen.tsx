@@ -111,7 +111,7 @@ const VoiceFullscreen = ({ id, context }: Props) => {
                         {shareScreen ? <div className={clsx("w-1 h-1 absolute z-40 rounded-full bg-green-700/60", special ? "top-2 left-2" : "top-1 left-1 px-2")} /> : null}
                         {!disablePin &&
                             <Tooltip tip={"Remove pin"} disabled={!special} placement="right">
-                                <button data-uid={uid} data-action={special ? "unpin" : "pin"} role={"button"} onClick={handlePin} className={clsx("absolute left-1 top-1 z-40 p-1 rounded bg-black/50", special ? "px-2 py-0.5" : "invisible group-hover:visible")}>
+                                <button data-uid={uid} data-action={special ? "unpin" : "pin"} role={"button"} onClick={handlePin} className={clsx("absolute left-1 top-1 z-40 rounded bg-black/50", special ? "px-2 py-0.5" : "px-1 invisible group-hover:visible")}>
                                     <IconPin className={clsx(special ? "w-4 fill-green-600" : "w-3 fill-gray-200")} />
                                 </button>
                             </Tooltip>}

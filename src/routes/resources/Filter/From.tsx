@@ -16,7 +16,7 @@ const From: FC<Props> = ({ select = "", updateFilter }) => {
 
   return (
     <div className="rounded-lg p-1 pt-0 bg-white dark:bg-gray-800 overflow-auto max-h-[300px] flex flex-col items-start relative drop-shadow">
-      <div className="bg-white dark:bg-transparent sticky top-0 z-10">
+      <div className="bg-white dark:bg-gray-800 sticky top-0 z-10 w-full">
         <Search embed={true} value={input} updateSearchValue={updateInput} />
       </div>
       <ul className="w-full flex flex-col">

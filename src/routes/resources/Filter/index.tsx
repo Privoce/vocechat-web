@@ -66,7 +66,7 @@ export default function Filter({ filter, updateFilter }) {
             <Avatar
               width={16}
               height={16}
-              className="rounded-full"
+              className="rounded-full w-4 h-4"
               name={userMap[from].name}
               src={userMap[from].avatar}
             />
@@ -74,7 +74,7 @@ export default function Filter({ filter, updateFilter }) {
           <span className="txt">
             {t("from")} {from && userMap[from].name}
           </span>
-          <ArrowDown className="dark:stroke-gray-400" />
+          <ArrowDown className="dark:stroke-gray-100" />
         </div>
       </Tippy>
       <Tippy
@@ -89,7 +89,7 @@ export default function Filter({ filter, updateFilter }) {
           onClick={toggleFilterVisible.bind(null, { channel: true })}
         >
           <span className="txt">{channel ? `In ${channelMap[channel].name}` : t("channel")}</span>
-          <ArrowDown className="dark:stroke-gray-400" />
+          <ArrowDown className="dark:stroke-gray-100" />
         </div>
       </Tippy>
       <Tippy
@@ -104,7 +104,7 @@ export default function Filter({ filter, updateFilter }) {
           onClick={toggleFilterVisible.bind(null, { type: true })}
         >
           <span className="txt">{type ? FileTypes[type].title : t("type")}</span>
-          <ArrowDown className="dark:stroke-gray-400" />
+          <ArrowDown className="dark:stroke-gray-100" />
         </div>
       </Tippy>
       <Tippy
@@ -119,7 +119,7 @@ export default function Filter({ filter, updateFilter }) {
           onClick={toggleFilterVisible.bind(null, { date: true })}
         >
           <span className="txt">{date ? Dates[date].title : t("date")}</span>
-          <ArrowDown className="dark:stroke-gray-400" />
+          <ArrowDown className="dark:stroke-gray-100" />
         </div>
       </Tippy>
     </div>
