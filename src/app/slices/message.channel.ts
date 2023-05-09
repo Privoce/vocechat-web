@@ -13,6 +13,10 @@ const channelMsgSlice = createSlice({
     resetChannelMsg() {
       return initialState;
     },
+    clearChannelMessage(state, action: PayloadAction<number>) {
+      const id = action.payload;
+      state[id] = [];
+    },
     fillChannelMsg(state, action: PayloadAction<State>) {
       return action.payload;
     },
@@ -23,7 +27,7 @@ const channelMsgSlice = createSlice({
         const localMsgExisted = state[id]!.findIndex((id) => id == local_id) > -1;
         if (midExisted || localMsgExisted) return;
         // 每次入库，都排序
-        const newArr = [...state[id], +mid].sort((a, b) => a - b);
+        const newArr = [...state[id] as number[], +mid].sort((a, b) => a - b);
         state[id] = newArr;
       } else {
         state[id] = [+mid];
@@ -67,7 +71,8 @@ export const {
   fillChannelMsg,
   addChannelMsg,
   removeChannelMsg,
-  replaceChannelMsg
+  replaceChannelMsg,
+  clearChannelMessage
 } = channelMsgSlice.actions;
 
 export default channelMsgSlice.reducer;

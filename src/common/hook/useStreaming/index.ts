@@ -27,7 +27,7 @@ import { ServerEvent, UsersStateEvent } from "../../../types/sse";
 import { useRenewMutation } from "../../../app/services/auth";
 import { getLocalAuthData } from "../../utils";
 import { removeUserSession } from "../../../app/slices/message.user";
-import { removeChannelSession } from "../../../app/slices/message.channel";
+import { clearChannelMessage, removeChannelSession } from "../../../app/slices/message.channel";
 
 const getQueryString = (params: { [key: string]: string }) => {
   const sp = new URLSearchParams();
@@ -144,6 +144,11 @@ export default function useStreaming() {
           keepAlive();
           dispatch(setReady());
           break;
+        case "group_message_cleared": {
+          const { gid } = data;
+          dispatch(clearChannelMessage(gid));
+          break;
+        }
         case "users_snapshot": {
           const { version } = data;
           dispatch(updateUsersVersion(version));

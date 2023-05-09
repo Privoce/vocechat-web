@@ -95,6 +95,28 @@ export const channelApi = createApi({
         return `${location.origin}${invite.pathname}${invite.hash}${invite.search}`;
       }
     }),
+    clearChannelMessage: builder.query<void, number>({
+      query: (id) => ({
+        url: `/group/${id}/clear`,
+        method: "DELETE"
+      }),
+      async onQueryStarted(id, { dispatch, getState, queryFulfilled }) {
+        const {
+          channelMessage,
+        } = getState() as RootState;
+        try {
+          await queryFulfilled;
+          // 删掉该channel下的所有消息&reaction
+          const mids = channelMessage[id];
+          if (mids) {
+            dispatch(removeMessage(mids));
+            dispatch(removeReactionMessage(mids));
+          }
+        } catch {
+          console.error("clear channel msg error");
+        }
+      }
+    }),
     removeChannel: builder.query<void, number>({
       query: (id) => ({
         url: `/group/${id}`,
@@ -204,5 +226,6 @@ export const {
   useSendChannelMsgMutation,
   useAddMembersMutation,
   useRemoveMembersMutation,
-  useUpdateIconMutation
+  useUpdateIconMutation,
+  useLazyClearChannelMessageQuery
 } = channelApi;

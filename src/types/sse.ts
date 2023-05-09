@@ -191,6 +191,10 @@ interface HeartbeatEvent {
   type: "heartbeat";
   time: number;
 }
+interface GroupClearEvent {
+  type: "group_message_cleared";
+  gid: number;
+}
 
 export type ServerEvent =
   | ReadyEvent
@@ -209,4 +213,6 @@ export type ServerEvent =
   | KickFromGroupEvent
   | GroupChangedEvent
   | PinnedMessageUpdatedEvent
-  | HeartbeatEvent;
+  | HeartbeatEvent
+  | GroupClearEvent
+  ;

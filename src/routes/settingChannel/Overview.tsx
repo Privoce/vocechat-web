@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 import {
   useChangeChannelTypeMutation,
   useGetChannelQuery,
+  // useLazyClearChannelMessageQuery,
   useUpdateChannelMutation,
   useUpdateIconMutation
 } from "../../app/services/channel";
@@ -16,6 +17,7 @@ import IconChannel from "../../assets/icons/channel.svg";
 import { useAppSelector } from "../../app/store";
 import { Channel } from "../../types/channel";
 import { useTranslation } from "react-i18next";
+// import StyledButton from "../../common/component/styled/Button";
 
 export default function Overview({ id = 0 }) {
   const { t } = useTranslation("setting", { keyPrefix: "channel" });
@@ -30,6 +32,7 @@ export default function Overview({ id = 0 }) {
   const [changed, setChanged] = useState(false);
   const [values, setValues] = useState<Channel>();
   const [updateChannelIcon] = useUpdateIconMutation();
+  // const [clearMessage, { isSuccess: clearSuccess }] = useLazyClearChannelMessageQuery();
   const [updateChannel, { isSuccess: updated }] = useUpdateChannelMutation();
   const [changeChannelType, { isSuccess: changeTypeSuccess }] = useChangeChannelTypeMutation();
   const handleUpdate = () => {
@@ -51,6 +54,11 @@ export default function Overview({ id = 0 }) {
     updateChannelIcon({ gid: id, image });
   };
 
+  // const handleClear = () => {
+  //   if (confirm("are you sure?")) {
+  //     clearMessage(id);
+  //   }
+  // };
   const handleReset = () => {
     setValues(data);
   };
@@ -60,6 +68,11 @@ export default function Overview({ id = 0 }) {
       setValues(data);
     }
   }, [data]);
+  // useEffect(() => {
+  //   if (clearSuccess) {
+  //     toast.success("Cleared!");
+  //   }
+  // }, [clearSuccess]);
 
   useEffect(() => {
     if (data && values) {
@@ -132,6 +145,7 @@ export default function Overview({ id = 0 }) {
             }}
           />
         </div>}
+        {/* <StyledButton className="danger" onClick={handleClear}>Clear Message</StyledButton> */}
       </div>
       {changed && <SaveTip saveHandler={handleUpdate} resetHandler={handleReset} />}
     </div>
