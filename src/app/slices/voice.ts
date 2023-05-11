@@ -11,13 +11,9 @@ export type VoiceBasicInfo = {
 
 export type VoicingInfo = {
   downlinkNetworkQuality?: number,
-  muted?: boolean,
-  deafen?: boolean,
-  video?: boolean,
-  shareScreen?: boolean,
   joining?: boolean,
   connectionState?: ConnectionState
-} & VoiceBasicInfo
+} & VoiceBasicInfo & VoicingMemberInfo
 
 export type VoicingMemberInfo = {
   speakingVolume?: number,
@@ -75,6 +71,33 @@ const voiceSlice = createSlice({
     updateVoicingInfo(state, { payload }: PayloadAction<VoicingInfo | null>) {
       if (payload) {
         state.voicing = { ...(state.voicing ?? {}), ...payload };
+        // 更新登录用户在member list的状态
+        const loginUid = localStorage.getItem(KEY_UID) ?? 0;
+        const idx = state.voicingMembers.ids.findIndex((uid) => uid == loginUid);
+        if (idx > -1) {
+          state.voicingMembers.byId[+loginUid] = payload;
+          Object.keys(payload).forEach((key) => {
+            switch (key) {
+              case "video":
+                state.voicingMembers.byId[+loginUid].video = payload.video;
+                break;
+              case "muted":
+                state.voicingMembers.byId[+loginUid].muted = payload.muted;
+                break;
+              case "deafen":
+                state.voicingMembers.byId[+loginUid].deafen = payload.deafen;
+                state.voicingMembers.byId[+loginUid].muted = payload.deafen;
+                break;
+              case "shareScreen":
+                state.voicingMembers.byId[+loginUid].shareScreen = payload.shareScreen;
+                break;
+
+              default:
+                break;
+            }
+          });
+        }
+
       } else {
         // reset
         state.voicing = payload;
@@ -82,29 +105,6 @@ const voiceSlice = createSlice({
           ids: [],
           byId: {}
         };
-      }
-    },
-    updateMuteStatus(state, { payload }: PayloadAction<boolean>) {
-      if (state.voicing) {
-        state.voicing.muted = payload;
-        // 更新登录用户在member list的状态
-        const loginUid = localStorage.getItem(KEY_UID) ?? 0;
-        const idx = state.voicingMembers.ids.findIndex((uid) => uid == loginUid);
-        if (idx > -1) {
-          state.voicingMembers.byId[+loginUid].muted = payload;
-        }
-      }
-    },
-    updateDeafenStatus(state, { payload }: PayloadAction<boolean>) {
-      if (state.voicing) {
-        state.voicing.deafen = payload;
-        state.voicing.muted = payload;
-        // 更新登录用户在member list的状态
-        const loginUid = localStorage.getItem(KEY_UID) ?? 0;
-        const idx = state.voicingMembers.ids.findIndex((uid) => uid == loginUid);
-        if (idx > -1) {
-          state.voicingMembers.byId[+loginUid].muted = payload;
-        }
       }
     },
     updateConnectionState(state, { payload }: PayloadAction<ConnectionState>) {
@@ -189,5 +189,5 @@ const voiceSlice = createSlice({
   }
 });
 
-export const { updateCalling, updatePin, updateConnectionState, addVoiceMember, removeVoiceMember, upsertVoiceList, updateVoicingInfo, updateVoicingNetworkQuality, updateMuteStatus, updateVoicingMember, updateDeafenStatus } = voiceSlice.actions;
+export const { updateCalling, updatePin, updateConnectionState, addVoiceMember, removeVoiceMember, upsertVoiceList, updateVoicingInfo, updateVoicingNetworkQuality, updateVoicingMember } = voiceSlice.actions;
 export default voiceSlice.reducer;

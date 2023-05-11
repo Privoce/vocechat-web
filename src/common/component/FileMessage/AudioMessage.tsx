@@ -18,7 +18,7 @@ const AudioMessage = ({ url, name, size, download }: Props) => {
     };
     const _size = formatBytes(size);
     return (
-        <div className='w-96 flex flex-col gap-2 px-3 py-2 rounded-md border border-solid border-gray-300 dark:border-gray-500 overflow-hidden bg-stone-100 dark:bg-stone-900'>
+        <div className='md:w-96 flex flex-col gap-2 px-3 py-2 rounded-md border border-solid border-gray-300 dark:border-gray-500 overflow-hidden bg-stone-100 dark:bg-stone-900'>
             <div className="flex justify-between z-30 overflow-hidden">
                 <div className="flex gap-2 ">
                     <IconAudio className="w-9 h-auto" />
@@ -27,7 +27,7 @@ const AudioMessage = ({ url, name, size, download }: Props) => {
                         <span>{_size}</span>
                     </div>
                 </div>
-                <a href={download} className="mt-2"><IconDownload className="fill-gray-500 dark:fill-gray-400" /></a>
+                <a href={download} className="mt-2 hidden md:block"><IconDownload className="fill-gray-500 dark:fill-gray-400" /></a>
             </div>
             <audio src={url} onCanPlay={handleCanPlay} controls className={clsx("w-full object-cover z-10", canPlay ? "visible" : "invisible")} />
         </div>

@@ -17,6 +17,7 @@ import IconWarning from '../../../assets/icons/warning.svg';
 import ImagePreview from "../../../common/component/ImagePreview";
 
 import VirtualMessageFeed from "./VirtualMessageFeed";
+import DMVoice from "./DMVoicing";
 
 interface Props {
   readonly?: boolean;
@@ -98,6 +99,7 @@ const Layout: FC<Props> = ({
           {header}
           <div className="w-full h-full flex items-start justify-between relative" >
             <div className="rounded-br-2xl flex flex-col absolute bottom-0 w-full h-full" ref={messagesContainer}>
+              {context == "user" && <DMVoice uid={to} />}
               {/* 消息流 */}
               <VirtualMessageFeed key={`${context}_${to}`} context={context} id={to} />
               {/* 发送框 */}
@@ -120,7 +122,7 @@ const Layout: FC<Props> = ({
           {aside}
         </div>}
         {users && <div className="hidden md:block">{users}</div>}
-        {voice && <div className="max-md:absolute max-md:right-11 max-md:top-14  max-md:h-fit max-md:overflow-y-scroll bg-white dark:!bg-gray-700 md:block">{voice}</div>}
+        {voice && <div className="z-10 max-md:absolute max-md:right-11 max-md:top-14 max-md:overflow-y-scroll bg-white dark:!bg-gray-700 md:block">{voice}</div>}
         {!readonly && inputMode == "text" && isActive && (
           <DnDTip context={context} name={name} />
         )}

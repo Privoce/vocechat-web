@@ -63,9 +63,11 @@ const Session: FC<IProps> = ({
     mid: number;
     is_public: boolean;
   }>();
-  const { messageData, userData, channelData, readIndex, loginUid, mids, muted, voiceList } = useAppSelector(
+  const { callingFrom, callingTo, messageData, userData, channelData, readIndex, loginUid, mids, muted, voiceList } = useAppSelector(
     (store) => {
       return {
+        callingFrom: store.voice.callingFrom,
+        callingTo: store.voice.callingTo,
         voiceList: store.voice.list,
         mids: type == "dm" ? store.userMessage.byId[id] : store.channelMessage[id],
         loginUid: store.authData.user?.uid || 0,
@@ -101,9 +103,9 @@ const Session: FC<IProps> = ({
     messageData,
     loginUid
   });
-  const isVoicing = voiceList.some((item) => {
+  const isVoicing = type == "channel" ? voiceList.some((item) => {
     return item.context == type && item.id === id;
-  });
+  }) : (id == callingFrom || id == callingTo);
   return (
     <li className="session">
       <ContextMenu

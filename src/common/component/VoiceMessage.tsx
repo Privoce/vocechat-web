@@ -84,9 +84,13 @@ const VoiceMessage = ({ file_path }: { file_path: string }) => {
             if (!current.isPlaying()) {
                 // 先停掉其他的
                 Object.keys(VoiceMap).forEach((key) => {
-                    const item = VoiceMap[key];
-                    if (item && item.isPlaying()) {
-                        item.stop();
+                    try {
+                        const item = VoiceMap[key];
+                        if (item && item.backend && item.isPlaying()) {
+                            item.stop();
+                        }
+                    } catch (error) {
+                        console.log(error);
                     }
                 }
                 );

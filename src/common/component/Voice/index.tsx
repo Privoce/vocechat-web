@@ -13,8 +13,9 @@ window.VOICE_TRACK_MAP = window.VOICE_TRACK_MAP ?? {};
 window.VIDEO_TRACK_MAP = window.VIDEO_TRACK_MAP ?? {};
 // let tmpUids: number[] = [];
 const Voice = () => {
-    const { from, to, voiceList, loginUid } = useAppSelector(store => {
+    const { from, to, voiceList, loginUid, voicingInfo } = useAppSelector(store => {
         return {
+            voicingInfo: store.voice.voicing,
             voiceList: store.voice.list,
             from: store.voice.callingFrom,
             to: store.voice.callingTo,
@@ -83,6 +84,10 @@ const Voice = () => {
                             // clear tracks
                             window.VOICE_TRACK_MAP[+user.uid] = null;
                             window.VIDEO_TRACK_MAP[+user.uid] = null;
+                            if (voicingInfo && voicingInfo.context == "dm") {
+                                // 有人离开，就断开
+                                dispatch(updateCalling({ from: 0 }));
+                            }
                         }
                             break;
                         default:
@@ -119,6 +124,14 @@ const Voice = () => {
                             // todo
                             dispatch(updateVoicingMember({ uid: +uid, info: { muted: false } }));
                             break;
+                        case "mute-video":
+                            // todo
+                            dispatch(updateVoicingMember({ uid: +uid, info: { video: false } }));
+                            break;
+                        case "unmute-video":
+                            // todo
+                            dispatch(updateVoicingMember({ uid: +uid, info: { video: true } }));
+                            break;
                         default:
                             break;
                     }
@@ -147,7 +160,7 @@ const Voice = () => {
             window.removeEventListener("beforeunload", handlePageUnload, { capture: true });
 
         };
-    }, []);
+    }, [voicingInfo]);
     useEffect(() => {
         // 有人呼叫我
         const callMeList = voiceList.filter(item => item.context == "dm" && item.id == loginUid);

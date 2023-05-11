@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { useGenerateAgoraTokenMutation } from '../../../app/services/server';
 import { updateChannelVisibleAside, updateDMVisibleAside } from '../../../app/slices/footprint';
 
-import { addVoiceMember, updateDeafenStatus, updateMuteStatus, updatePin, updateVoicingInfo, upsertVoiceList } from '../../../app/slices/voice';
+import { addVoiceMember, updatePin, updateVoicingInfo, upsertVoiceList } from '../../../app/slices/voice';
 import { useAppSelector } from '../../../app/store';
 import { playAgoraVideo } from '../../utils';
 
@@ -76,6 +76,7 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
         await window.VOICE_CLIENT?.publish(localVideoTrack);
         dispatch(updateVoicingInfo({
             video: true,
+            shareScreen: false,
             id,
             context,
         }));
@@ -94,6 +95,7 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
             playerEle.classList.remove("h-[120px]");
             dispatch(updateVoicingInfo({
                 video: false,
+                shareScreen: false,
                 id,
                 context,
             }));
@@ -195,9 +197,17 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
             Object.entries(window.VOICE_TRACK_MAP).forEach(([, audioTrack]) => {
                 audioTrack?.setVolume(100);
             });
-            dispatch(updateDeafenStatus(false));
+            dispatch(updateVoicingInfo({
+                muted: false,
+                id,
+                context
+            }));
         }
-        dispatch(updateMuteStatus(mute));
+        dispatch(updateVoicingInfo({
+            muted: mute,
+            id,
+            context
+        }));
     };
     const setDeafen = (deafen: boolean) => {
         const localAudioTrack = window.VOICE_TRACK_MAP[loginUid] as IMicrophoneAudioTrack;
@@ -215,7 +225,7 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
                 audioTrack?.setVolume(100);
             });
         }
-        dispatch(updateDeafenStatus(deafen));
+        dispatch(updateVoicingInfo({ deafen, id, context }));
     };
     const joinedAtThisContext = voicingInfo ? (voicingInfo.id == id && voicingInfo.context == context) : false;
     return {

@@ -100,7 +100,7 @@ const Reply: FC<ReplyProps> = ({ mid, interactive = true }) => {
       )}
       onClick={interactive ? handleClick : undefined}
     >
-      <div className="flex shrink-0 w-6 h-6">
+      <div className="md:flex shrink-0 w-6 h-6 hidden ">
         <Avatar
           width={24}
           height={24}
