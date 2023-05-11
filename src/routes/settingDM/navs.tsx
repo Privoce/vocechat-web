@@ -29,7 +29,7 @@ const useNavs = (uid: number): Nav[] => {
         {
           name: "auto_delete_msg",
           title: t("nav.auto_delete_msg"),
-          component: <AutoDeleteMessages id={uid} type="user" />
+          component: <AutoDeleteMessages id={uid} type="dm" />
         },
       ]
     }

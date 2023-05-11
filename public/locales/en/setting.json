@@ -149,7 +149,10 @@
     "10_min": "10 minutes",
     "1_hour": "1 hour",
     "1_day": "1 day",
-    "1_week": "1 week"
+    "1_week": "1 week",
+    "clear": "Clear all channel messages",
+    "clear_title": "Clear all messages in this channel.",
+    "clear_desc": "This will remove all the messages data stored on both the server and client side."
   },
   "firebase": {
     "disable": "Disable",
