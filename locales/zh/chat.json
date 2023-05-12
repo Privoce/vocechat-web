@@ -41,7 +41,8 @@
 
   "new_msg": "{{num}} 条新消息",
   "mark_read": "设为已读",
-
+  "pin_chat": "置顶",
+  "unpin_chat": "取消置顶",
   "reply_msg_del": "被回复的消息已删除！",
 
   "file": "文件",
@@ -55,5 +56,10 @@
   "unmute": "取消静音",
   "camera_on": "开启摄像头",
   "camera_off": "关闭摄像头",
-  "leave_voice": "离开"
+  "leave_voice": "离开",
+  "add_contact": "加为联系人",
+  "block": "屏蔽",
+  "unblock": "解除屏蔽",
+  "contact_tip": "该用户不在您的联系人列表中",
+  "contact_block_tip": "该用户已被你屏蔽"
 }
