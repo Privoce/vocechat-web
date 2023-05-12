@@ -37,7 +37,7 @@ const VoicingBlocks = ({ sendByMe, connected, from, to }: BlockProps) => {
         const showWaiting = idx == 1 && !connected && sendByMe;
         return <div key={id} className={clsx("relative flex-center", video ? "w-80 h-60 overflow-hidden rounded" : "")}>
             <div className={clsx("w-20 h-20 flex shrink-0 relative transition-opacity", showWaiting && "animate-pulse")}>
-                {speaking && <div className={clsx("z-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 rounded-full bg-green-300 animate-speaking", "w-[86px] h-[86px]")}></div>}
+                {speaking && <div className={clsx("z-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 rounded-full bg-green-500 animate-speaking", "w-[86px] h-[86px]")}></div>}
                 {showWaiting && <div className={clsx("z-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gray-400", "w-[88px] h-[88px]")}></div>}
                 <Avatar
                     width={80}
