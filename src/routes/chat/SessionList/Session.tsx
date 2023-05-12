@@ -9,6 +9,7 @@ import getUnreadCount, { renderPreviewMessage } from "../utils";
 import User from "../../../common/component/User";
 import Avatar from "../../../common/component/Avatar";
 import IconLock from "../../../assets/icons/lock.svg";
+import IconMute from "../../../assets/icons/mute.svg";
 import IconVoicing from "../../../assets/icons/voicing.svg";
 import useContextMenu from "../../../common/hook/useContextMenu";
 import useUploadFile from "../../../common/hook/useUploadFile";
@@ -106,6 +107,8 @@ const Session: FC<IProps> = ({
   const isVoicing = type == "channel" ? voiceList.some((item) => {
     return item.context == type && item.id === id;
   }) : (id == callingFrom || id == callingTo);
+  console.log("unreads", unreads, isCurrentPath);
+
   return (
     <li className="session">
       <ContextMenu
@@ -152,11 +155,9 @@ const Session: FC<IProps> = ({
             </div>
             <div className="flex items-center justify-between">
               <span className={clsx("text-xs text-gray-500 dark:text-gray-400  truncate", unreads > 0 ? `w-36` : ``)}>{renderPreviewMessage(previewMsg)}</span>
-              {unreads > 0 && !isCurrentPath && (
-                <strong className={clsx(`text-white px-1.5 py-[3px] bg-primary-400 font-bold text-[10px] leading-[10px] rounded-[10px]`, muted && "bg-gray-500")}>
-                  {unreads > 99 ? "99+" : unreads}
-                </strong>
-              )}
+              {(unreads > 0 && !isCurrentPath) ? <strong className={clsx(`text-white px-1.5 py-[3px] font-bold text-[10px] leading-[10px] rounded-[10px]`, muted ? "bg-black/10 dark:bg-gray-500" : "bg-primary-400")}>
+                {unreads > 99 ? "99+" : unreads}
+              </strong> : (muted && <IconMute className="w-3 h-3 fill-black/10 dark:fill-gray-500" />)}
             </div>
           </div>
         </NavLink>
