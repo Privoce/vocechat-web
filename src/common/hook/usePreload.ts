@@ -79,7 +79,7 @@ export default function usePreload() {
   useEffect(() => {
     if (rehydrated && serverVersion) {
       getUsers().then(() => {
-        if (compareVersion(serverVersion, '0.3.7') >= 0) {
+        if (compareVersion(serverVersion, '0.3.7') >= 0 && !isGuest) {
           // 根据版本号判断是否需要初始化contact
           getContacts();
         }
@@ -91,7 +91,7 @@ export default function usePreload() {
         getSystemCommon();
       }
     }
-  }, [rehydrated, serverVersion]);
+  }, [rehydrated, serverVersion, isGuest]);
   const tokenAlmostExpire = dayjs().isAfter(new Date(expireTime - 20 * 1000));
   const canStreaming = !!loginUid && rehydrated && !!token && !tokenAlmostExpire;
   // console.log("ttt", loginUid, rehydrated, token);
