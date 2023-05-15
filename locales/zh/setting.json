@@ -76,6 +76,12 @@
       "desc": "开启或关闭用户在线状态",
       "enable": "开启",
       "disable": "关闭"
+    },
+    "chat_layout": {
+      "title": "聊天布局",
+      "desc": "你可以决定自己发的消息居左还是居右",
+      "left": "居左",
+      "self_right": "居右"
     }
   },
   "license": {

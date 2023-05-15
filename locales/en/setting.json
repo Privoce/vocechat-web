@@ -82,6 +82,12 @@
       "desc": "Toggle users' online status visible",
       "enable": "Enable",
       "disable": "Disable"
+    },
+    "chat_layout": {
+      "title": "Chat Layout",
+      "desc": "message self send on the left or right",
+      "left": "Left",
+      "self_right": "Self Right"
     }
   },
   "license": {
