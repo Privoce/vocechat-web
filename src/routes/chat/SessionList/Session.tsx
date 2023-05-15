@@ -125,7 +125,7 @@ const Session: FC<IProps> = ({
       >
         <NavLink
           ref={drop}
-          className={({ isActive: linkActive }) => clsx(`nav flex gap-2 rounded-lg p-2 w-full md:hover:bg-gray-500/20`, isActive && "shadow-[inset_0_0_0_2px_#52edff]", linkActive && "bg-gray-500/20")}
+          className={({ isActive: linkActive }) => clsx(`nav flex gap-2 rounded-lg p-2 w-full`, isActive && "shadow-[inset_0_0_0_2px_#52edff]", linkActive && "bg-gray-500/20", pinned ? "md:hover:bg-gray-300/20" : "md:hover:bg-gray-500/20")}
           to={navPath}
           onContextMenu={handleContextMenuEvent}
         >

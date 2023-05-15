@@ -105,7 +105,7 @@ const SessionList: FC<Props> = ({ tempSession }) => {
 
   return (
     <>
-      {pinSessions.length ? <ul className="flex flex-col gap-0.5 p-2 bg-primary-500/10">
+      {pinSessions.length ? <ul className="flex flex-col gap-0.5 py-1 px-2 bg-primary-500/10">
         {pinSessions.map((p) => {
           const { type, id, mid = 0 } = p;
           const key = `${type}_${id}`;
