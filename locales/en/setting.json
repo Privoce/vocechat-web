@@ -6,7 +6,7 @@
   "nav": {
     "general": "General",
     "overview": "Overview",
-    "members": "Contacts",
+    "members": "Members",
     "auto_delete_msg": "Auto-delete Messages",
     "user": "User",
     "my_account": "My Account",
@@ -88,6 +88,12 @@
       "desc": "message self send on the left or right",
       "left": "Left",
       "self_right": "Self Right"
+    },
+    "contact_verify": {
+      "title": "Contact Verification",
+      "desc": "Toggle contact verification",
+      "enable": "Enable",
+      "disable": "Disable"
     }
   },
   "license": {
