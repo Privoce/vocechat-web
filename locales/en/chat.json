@@ -39,9 +39,9 @@
   "delete_msg_these": "these messages",
 
   "new_msg": "{{num}} new messages",
-  "mark_read": "Mark As Read",
-  "pin_chat": "Sticky on top",
-  "unpin_chat": "Unsticky",
+  "mark_read": "Mark as Read",
+  "pin_chat": "Pin Chat",
+  "unpin_chat": "Unpin",
 
   "reply_msg_del": "This message has been deleted.",
 
