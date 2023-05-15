@@ -1,6 +1,7 @@
 // import React from 'react'
 import { useTranslation } from 'react-i18next';
 import StyledRadio from "../../../common/component/styled/Radio";
+import SettingBlock from './SettingBlock';
 
 // type Props = {}
 
@@ -10,11 +11,7 @@ const Index = () => {
         i18n.changeLanguage(v);
     };
     return (
-        <div className="text-sm">
-            <p className="dark:text-gray-100 font-semibold">{t("overview.lang.title")}</p>
-            <p className="flex justify-between w-full text-gray-400 mb-2">
-                {t("overview.lang.desc")}
-            </p>
+        <SettingBlock title={t("overview.lang.title")} desc={t("overview.lang.desc")}>
             <StyledRadio
                 options={[t("overview.lang.en"), t("overview.lang.zh"), t("overview.lang.jp"), t("overview.lang.tr")]}
                 values={["en", "zh", "jp", "tr"]}
@@ -25,7 +22,7 @@ const Index = () => {
                     handleGuestToggle(v);
                 }}
             />
-        </div>
+        </SettingBlock>
     );
 };
 

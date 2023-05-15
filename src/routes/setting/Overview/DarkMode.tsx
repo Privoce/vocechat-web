@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Radio from '../../../common/component/styled/Radio';
 import { Theme } from '../../../types/common';
+import SettingBlock from './SettingBlock';
 
 // type Props = {}
 
@@ -19,15 +20,10 @@ const DarkMode = () => {
         } else {
             const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             document.documentElement.classList.add(isDark ? "dark" : 'light');
-
         }
     };
     return (
-        <div className="text-sm">
-            <p className="dark:text-gray-100 font-semibold">{t("overview.theme.title")}</p>
-            <p className="flex justify-between w-full text-gray-400 mb-2">
-                {t("overview.theme.desc")}
-            </p>
+        <SettingBlock title={t("overview.theme.title")} desc={t("overview.theme.desc")}>
             <Radio
                 options={[t("overview.theme.auto"), t("overview.theme.dark"), t("overview.theme.light")]}
                 values={['auto', 'dark', 'light']}
@@ -36,7 +32,7 @@ const DarkMode = () => {
                     handleThemeToggle(v);
                 }}
             />
-        </div>
+        </SettingBlock>
     );
 };
 

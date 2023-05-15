@@ -78,7 +78,7 @@ const Index = () => {
                     </div>
                 )}
             </div>
-            <div className="flex flex-col items-start gap-6 mb-16">
+            <div className="flex flex-col items-start gap-6 mb-3">
                 <div className="w-full flex flex-col items-start gap-2">
                     <Label className='dark:text-gray-100' htmlFor="name">{t("overview.name")}</Label>
                     <Input

@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 import StyledRadio from "../../../common/component/styled/Radio";
 import { useAppSelector } from '../../../app/store';
+import SettingBlock from './SettingBlock';
 // type Props = {}
 
 const Index = () => {
@@ -24,20 +25,14 @@ const Index = () => {
     };
     // if (!loadSuccess) return null;
     return (
-        <div className="text-sm">
-            <p className="dark:text-gray-100 font-semibold">{t("title")}</p>
-            <p className="flex justify-between w-full text-gray-400 mb-2">
-                <span className="txt">
-                    {t("desc")}
-                </span>
-            </p>
+        <SettingBlock title={t("title")} desc={t('desc')} >
             <StyledRadio
                 options={[t("enable"), t("disable")]}
                 values={["true", "false"]}
                 value={`${currStatus}`}
                 onChange={handleToggle}
             />
-        </div>
+        </SettingBlock>
     );
 };
 

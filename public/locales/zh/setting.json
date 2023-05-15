@@ -38,6 +38,8 @@
     "private": "私密"
   },
   "overview": {
+    "title_feat": "特性开关",
+    "title_feat_desc": "根据你的需要开启或关闭特性",
     "name": "服务器名",
     "desc": "服务器描述",
     "upload_desc": "图片最小 128x128，我们推荐上传 512x512 大小的图片，最大不要超过5M。",
@@ -74,6 +76,12 @@
       "desc": "开启或关闭用户在线状态",
       "enable": "开启",
       "disable": "关闭"
+    },
+    "chat_layout": {
+      "title": "聊天布局",
+      "desc": "你可以决定自己发的消息居左还是居右",
+      "left": "居左",
+      "self_right": "居右"
     }
   },
   "license": {
