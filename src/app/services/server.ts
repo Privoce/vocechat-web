@@ -170,6 +170,13 @@ export const serverApi = createApi({
     }),
     getSystemCommon: builder.query<SystemCommon, void>({
       query: () => ({ url: `/admin/system/common` }),
+      transformResponse: (resp: SystemCommon) => {
+        let tmp = resp;
+        tmp.chat_layout_mode = resp.chat_layout_mode ?? "Left";
+        tmp.contact_verification_enable = resp.contact_verification_enable ?? false;
+        tmp.max_file_expiry_mode = resp.max_file_expiry_mode ?? "Off";
+        return tmp;
+      },
       async onQueryStarted(data, { dispatch, queryFulfilled }) {
         try {
           const resp = await queryFulfilled;

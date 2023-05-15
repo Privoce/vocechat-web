@@ -22,6 +22,8 @@ const initialState: StoredServer = {
   },
   show_user_online_status: false,
   webclient_auto_update: true,
+  contact_verification_enable: false,
+  chat_layout_mode: "Left"
 };
 
 const serverSlice = createSlice({
@@ -44,8 +46,10 @@ const serverSlice = createSlice({
         description = "",
         show_user_online_status = true,
         webclient_auto_update = true,
+        contact_verification_enable = false,
+        chat_layout_mode = "Left"
       } = action.payload || {};
-      return { version, upgraded, name, logo, description, inviteLink, show_user_online_status, webclient_auto_update };
+      return { version, upgraded, name, logo, description, inviteLink, show_user_online_status, webclient_auto_update, contact_verification_enable, chat_layout_mode };
     },
     updateInfo(state, action: PayloadAction<Partial<StoredServer>>) {
       const values = action.payload || {};

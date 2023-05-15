@@ -10,6 +10,8 @@ import FrontendURL from "./FrontendURL";
 import DarkMode from "./DarkMode";
 import ServerVersionChecker from "../../../common/component/ServerVersionChecker";
 import OnlineStatus from "./OnlineStatus";
+import ChatLayout from "./ChatLayout";
+import SettingBlock from "./SettingBlock";
 
 export default function Overview() {
   const { t } = useTranslation("setting");
@@ -34,9 +36,11 @@ export default function Overview() {
       <Server />
       {isAdmin && (
         <>
-          <div className="text-sm">
-            <p className="dark:text-gray-100 font-semibold">{t("overview.sign_up.title")}</p>
-            <p className="flex justify-between w-full text-gray-400 mb-2">{t("overview.sign_up.desc")}</p>
+          <div className="flex flex-col">
+            <h4 className="font-bold text-gray-700 dark:text-white">{t("overview.title_feat")}</h4>
+            <p className="text-gray-400 text-xs">{t("overview.title_feat_desc")}</p>
+          </div>
+          <SettingBlock title={t("overview.sign_up.title")} desc={t("overview.sign_up.desc")}>
             <StyledRadio
               options={[t("overview.sign_up.everyone"), t("overview.sign_up.invite")]}
               values={["EveryOne", "InvitationOnly"]}
@@ -45,14 +49,8 @@ export default function Overview() {
                 handleUpdateWhoCanSignUp(v);
               }}
             />
-          </div>
-          <div className="text-sm">
-            <p className="dark:text-gray-100 font-semibold">{t("overview.guest_mode.title")}</p>
-            <p className="flex justify-between w-full text-gray-400 mb-2">
-              <span className="txt">
-                {t("overview.guest_mode.desc")}
-              </span>
-            </p>
+          </SettingBlock>
+          <SettingBlock title={t("overview.guest_mode.title")} desc={t("overview.guest_mode.desc")}>
             <StyledRadio
               options={[t("overview.guest_mode.enable"), t("overview.guest_mode.disable")]}
               values={["true", "false"]}
@@ -61,10 +59,16 @@ export default function Overview() {
                 handleGuestToggle(v);
               }}
             />
-          </div>
+          </SettingBlock>
           <ServerVersionChecker version="0.3.4" empty={true}>
             <OnlineStatus />
           </ServerVersionChecker>
+          <ServerVersionChecker version="0.3.7" empty={true}>
+            <ChatLayout />
+          </ServerVersionChecker>
+          {/* <ServerVersionChecker version="0.3.7" empty={true}>
+            <FrontendURL />
+          </ServerVersionChecker> */}
           <ServerVersionChecker version="0.3.3" empty={true}>
             <FrontendURL />
           </ServerVersionChecker>

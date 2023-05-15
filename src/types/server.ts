@@ -6,9 +6,14 @@ export interface Server extends SystemCommon {
   name: string;
   description: string;
 }
+export type ChatLayout = "SelfRight" | "Left"
 export interface SystemCommon {
-  show_user_online_status: boolean,
-  webclient_auto_update: boolean,
+  show_user_online_status?: boolean,
+  webclient_auto_update?: boolean,
+  contact_verification_enable?: boolean,
+  chat_layout_mode?: ChatLayout,
+  max_file_expiry_mode?: "Off" | "Day1" | "Day7" | "Day30" | "Day90" | "Day180"
+
 }
 export interface GithubAuthConfig {
   client_id?: string;
