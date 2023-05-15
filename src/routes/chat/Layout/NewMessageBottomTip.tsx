@@ -3,9 +3,10 @@ import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../app/store';
 import getUnreadCount from '../utils';
+import { ChatContext } from '../../../types/common';
 
 type Props = {
-    context: "channel" | "user",
+    context: ChatContext,
     id: number,
     scrollToBottom?: () => void
 }
@@ -20,7 +21,7 @@ const NewMessageBottomTip = ({ context, id, scrollToBottom }: Props) => {
     } = useAppSelector((store) => {
         return {
             readIndex: context == "channel" ? store.footprint.readChannels[id] : store.footprint.readUsers[id],
-            mids: context == "user" ? store.userMessage.byId[id] : store.channelMessage[id],
+            mids: context == "dm" ? store.userMessage.byId[id] : store.channelMessage[id],
             selects: store.ui.selectMessages[`${context}_${id}`],
             loginUid: store.authData.user?.uid ?? 0,
             data: context == "channel" ? store.channels.byId[id] : undefined,

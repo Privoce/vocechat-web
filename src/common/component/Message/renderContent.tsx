@@ -8,9 +8,10 @@ import FileMessage from "../FileMessage";
 import { ContentType } from "../../../types/message";
 import LinkifyText from '../LinkifyText';
 import VoiceMessage from "../VoiceMessage";
+import { ChatContext } from "../../../types/common";
 
 type Props = {
-  context: "user" | "channel";
+  context: ChatContext;
   to?: number;
   from_uid?: number;
   created_at?: number;

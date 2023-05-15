@@ -3,6 +3,7 @@ import { MuteDTO } from "../../types/message";
 import { OG } from "../../types/resource";
 import { AutoDeleteMessageSettingDTO, AutoDeleteMsgForGroup, AutoDeleteMsgForUser, AutoDeleteSettingForChannels, AutoDeleteSettingForUsers, PinChat, PinChatTarget } from "../../types/sse";
 import { resetAuthData } from "./auth.data";
+import { ChatContext } from "../../types/common";
 
 type ChannelAside = "members" | "voice" | "voice_fullscreen" | null;
 type DMAside = "voice" | null;
@@ -188,7 +189,7 @@ const footprintSlice = createSlice({
       const { key, value } = action.payload;
       state.og[key] = value;
     },
-    updateHistoryMark(state, action: PayloadAction<{ type: "channel" | "user", id: number, mid: string, }>) {
+    updateHistoryMark(state, action: PayloadAction<{ type: ChatContext, id: number, mid: string, }>) {
       const { type, id, mid } = action.payload;
       if (type == "channel") {
         state.historyChannels[id] = mid;

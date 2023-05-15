@@ -9,11 +9,12 @@ import { updateChannelVisibleAside, updateDMVisibleAside } from '../../../app/sl
 import { addVoiceMember, updatePin, updateVoicingInfo, upsertVoiceList } from '../../../app/slices/voice';
 import { useAppSelector } from '../../../app/store';
 import { playAgoraVideo } from '../../utils';
+import { ChatContext } from '../../../types/common';
 
 
 type VoiceProps = {
     id: number,
-    context?: "channel" | "dm"
+    context?: ChatContext
 }
 const audioJoin = new Audio(AudioJoin);
 const useVoice = ({ id, context = "channel" }: VoiceProps) => {

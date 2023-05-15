@@ -18,11 +18,12 @@ import usePinMessage from "../../hook/usePinMessage";
 import { useAppSelector } from "../../../app/store";
 import ExpireTimer from "./ExpireTimer";
 import IconInfo from '../../../assets/icons/info.svg';
+import { ChatContext } from "../../../types/common";
 
 interface IProps {
   readOnly?: boolean;
   contextId: number;
-  context?: "user" | "channel";
+  context?: ChatContext;
   read?: boolean;
   mid: number;
   updateReadIndex?: (param: any) => void;
@@ -31,7 +32,7 @@ const Message: FC<IProps> = ({
   readOnly = false,
   contextId,
   mid,
-  context = "user",
+  context = "dm",
   updateReadIndex,
   read = true
 }) => {
@@ -40,8 +41,9 @@ const Message: FC<IProps> = ({
   const [edit, setEdit] = useState(false);
   const avatarRef = useRef(null);
   const { getPinInfo } = usePinMessage(context == "channel" ? contextId : 0);
-  const { message, reactionMessageData, usersData, loginUid } = useAppSelector((store) => {
+  const { message, reactionMessageData, usersData, loginUid, enableRightLayout } = useAppSelector((store) => {
     return {
+      enableRightLayout: store.server.chat_layout_mode == "SelfRight",
       reactionMessageData: store.reactionMessage,
       message: store.message[mid],
       usersData: store.users.byId,
@@ -57,7 +59,7 @@ const Message: FC<IProps> = ({
     if (!read) {
       // 标记已读
       const data =
-        context == "user"
+        context == "dm"
           ? { users: [{ uid: +contextId, mid }] }
           : { groups: [{ gid: +contextId, mid }] };
       if (updateReadIndex) {
@@ -94,7 +96,7 @@ const Message: FC<IProps> = ({
   // return null;
   const _key = properties?.local_id || mid;
   const showExpire = (expires_in ?? 0) > 0;
-  const isSelf = fromUid == loginUid;
+  const isSelf = fromUid == loginUid && enableRightLayout;
   return (
 
     <div
@@ -116,7 +118,7 @@ const Message: FC<IProps> = ({
         interactive
         placement="right"
         trigger="click"
-        content={<Profile uid={fromUid || 0} type="card" cid={context == "user" ? 0 : contextId} />}
+        content={<Profile uid={fromUid || 0} type="card" cid={context == "dm" ? 0 : contextId} />}
       >
         <div className="cursor-pointer w-10 h-10 shrink-0" data-uid={fromUid} ref={avatarRef}>
           <Avatar className="w-10 h-10 rounded-full object-cover" width={40} height={40} src={currUser?.avatar} name={currUser?.name} />

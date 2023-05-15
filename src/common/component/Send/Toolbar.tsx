@@ -7,6 +7,7 @@ import FullscreenIcon from "../../../assets/icons/fullscreen.svg";
 import ExitFullscreenIcon from "../../../assets/icons/fullscreen.exit.svg";
 import useUploadFile from "../../hook/useUploadFile";
 import { useTranslation } from "react-i18next";
+import { ChatContext } from "../../../types/common";
 
 type Props = {
   sendMessages: () => void;
@@ -15,7 +16,7 @@ type Props = {
   toggleMode: () => void;
   mode: "markdown" | "text";
   to: number;
-  context: "user" | "channel";
+  context: ChatContext;
   sendVisible: boolean
 };
 const Toolbar: FC<Props> = ({

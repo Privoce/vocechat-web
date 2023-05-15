@@ -11,13 +11,14 @@ import IconClose from "../../../assets/icons/close.circle.svg";
 import VideoMessage from "./VideoMessage";
 import AudioMessage from "./AudioMessage";
 import clsx from "clsx";
+import { ChatContext } from "../../../types/common";
 
 const isLocalFile = (content: string) => {
   return content.startsWith("blob:");
 };
 
 interface Props {
-  context: "user" | "channel";
+  context: ChatContext;
   to: number;
   created_at: number;
   from_uid: number;

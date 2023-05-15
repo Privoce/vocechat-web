@@ -1,8 +1,9 @@
 // import { useEffect } from "react";
 import { ChatPrefixes } from "../../../app/config";
 import { useTranslation } from "react-i18next";
+import { ChatContext } from "../../../types/common";
 type Props = {
-  context: "user" | "channel",
+  context: ChatContext,
   name: string
 };
 const DnDTip = ({ context, name }: Props) => {

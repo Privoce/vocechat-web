@@ -4,9 +4,10 @@ import Avatar from "../Avatar";
 import IconForward from "../../../assets/icons/forward.svg";
 import useNormalizeMessage from "../../hook/useNormalizeMessage";
 import { useTranslation } from "react-i18next";
+import { ChatContext } from "../../../types/common";
 
 type Props = {
-  context: "user" | "channel";
+  context: ChatContext;
   to: number;
   from_uid: number;
   id: string;

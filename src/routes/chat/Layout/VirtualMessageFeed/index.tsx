@@ -12,8 +12,9 @@ import CustomList from './CustomList';
 import CustomHeader from './CustomHeader';
 import { useDispatch } from 'react-redux';
 import { updateHistoryMark } from '../../../../app/slices/footprint';
+import { ChatContext } from '../../../../types/common';
 type Props = {
-    context: "user" | "channel",
+    context: ChatContext,
     id: number
 }
 // const firstMsgIndex = 10000;
@@ -36,8 +37,8 @@ const VirtualMessageFeed = ({ context, id }: Props) => {
         footprint
     } = useAppSelector((store) => {
         return {
-            historyMid: context == "user" ? store.footprint.historyUsers[id] : store.footprint.historyChannels[id],
-            mids: context == "user" ? store.userMessage.byId[id] : store.channelMessage[id],
+            historyMid: context == "dm" ? store.footprint.historyUsers[id] : store.footprint.historyChannels[id],
+            mids: context == "dm" ? store.userMessage.byId[id] : store.channelMessage[id],
             selects: store.ui.selectMessages[`${context}_${id}`],
             footprint: store.footprint,
             loginUser: store.authData.user,

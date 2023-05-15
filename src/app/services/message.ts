@@ -10,6 +10,7 @@ import { ChatMessage, ContentTypeKey, UploadFileResponse } from "../../types/mes
 import handleChatMessage from "../../common/hook/useStreaming/chat.handler";
 import { RootState } from "../store";
 import { upsertArchiveMessage } from "../slices/message.archive";
+import { ChatContext } from "../../types/common";
 
 export const messageApi = createApi({
   reducerPath: "messageApi",
@@ -175,7 +176,7 @@ export const messageApi = createApi({
         }
       }
     }),
-    loadMoreMessages: builder.query<ChatMessage[], { context?: "channel" | "user", id: number; mid?: number; limit?: number }>({
+    loadMoreMessages: builder.query<ChatMessage[], { context?: ChatContext, id: number; mid?: number; limit?: number }>({
       query: ({ context = "channel", id, mid = "", limit = 100 }) => {
         const url = context == "channel" ?
           `/group/${id}/history?limit=${limit}${mid ? `&before=${mid}` : ""}`

@@ -5,6 +5,7 @@ import { getFileIcon, formatBytes } from "../../../utils";
 import useUploadFile from "../../../hook/useUploadFile";
 import EditIcon from "../../../../assets/icons/edit.svg";
 import DeleteIcon from "../../../../assets/icons/delete.svg";
+import { ChatContext } from "../../../../types/common";
 
 type EditProps = {
   index: number;
@@ -14,7 +15,7 @@ export default function UploadFileList({
   context,
   id
 }: {
-  context: "user" | "channel";
+  context: ChatContext;
   id: number;
 }) {
   const eidtor = useMixedEditor(`${context}_${id}`);

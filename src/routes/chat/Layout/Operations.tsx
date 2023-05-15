@@ -11,9 +11,10 @@ import IconClose from "../../../assets/icons/close.circle.svg";
 import ForwardModal from "../../../common/component/ForwardModal";
 import DeleteMessageConfirmModal from "../../../common/component/DeleteMessageConfirm";
 import { useAppDispatch, useAppSelector } from "../../../app/store";
+import { ChatContext } from "../../../types/common";
 
 type Props = {
-  context: "user" | "channel";
+  context: ChatContext;
   id: number;
 };
 const Operations: FC<Props> = ({ context, id }) => {

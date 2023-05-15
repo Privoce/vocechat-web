@@ -6,9 +6,10 @@ import { usePrepareUploadFileMutation, useUploadFileMutation } from "../../app/s
 import { useAppDispatch, useAppSelector } from "../../app/store";
 import { Message } from "../../types/channel";
 import { UploadFileResponse } from "../../types/message";
+import { ChatContext } from "../../types/common";
 
 interface IProps {
-  context: "channel" | "user";
+  context: ChatContext;
   id: number;
 }
 const useUploadFile = (props?: IProps) => {

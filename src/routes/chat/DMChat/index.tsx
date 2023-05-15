@@ -31,11 +31,11 @@ const DMChat: FC<Props> = ({ uid = 0, dropFiles }) => {
   return (
     <Layout
       to={uid}
-      context="user"
+      context="dm"
       dropFiles={dropFiles}
       aside={
         <ul className="flex flex-col gap-6">
-          <ServerVersionChecker version="0.3.6" empty={true}>
+          <ServerVersionChecker version="0.3.7" empty={true}>
             <VoiceChat context={`dm`} id={uid} />
           </ServerVersionChecker>
           <Tooltip tip="Saved Items" placement="left">

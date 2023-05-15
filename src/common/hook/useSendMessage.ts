@@ -5,9 +5,10 @@ import { useSendMsgMutation } from "../../app/services/user";
 import { useReplyMessageMutation } from "../../app/services/message";
 import { useAppDispatch, useAppSelector } from "../../app/store";
 import { ContentTypeKey } from "../../types/message";
+import { ChatContext } from "../../types/common";
 
 interface Props {
-  context: "user" | "channel";
+  context: ChatContext;
   from?: number;
   to: number;
 }
@@ -21,7 +22,7 @@ interface SendMessagesDTO {
 
 type SendMessageDTO = { type: ContentTypeKey } & Partial<MessagePayload> & { ignoreLocal?: boolean }
 const useSendMessage = (props?: Props) => {
-  const { context = "user", from = 0, to = 0 } = props || {};
+  const { context = "dm", from = 0, to = 0 } = props || {};
   const dispatch = useAppDispatch();
   const stageFiles = useAppSelector((store) => store.ui.uploadFiles[`${context}_${to}`] || []);
   const [replyMessage, { isError: replyErr, isLoading: replying, isSuccess: replySuccess }] =
@@ -32,7 +33,7 @@ const useSendMessage = (props?: Props) => {
   ] = useSendChannelMsgMutation();
   const [sendUserMsg, { isLoading: userSending, isSuccess: userSuccess, isError: userError }] =
     useSendMsgMutation();
-  const sendFn = context == "user" ? sendUserMsg : sendChannelMsg;
+  const sendFn = context == "dm" ? sendUserMsg : sendChannelMsg;
   const sendMessages = async ({
     type = "text",
     content,

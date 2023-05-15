@@ -7,10 +7,11 @@ import { ContentTypes } from "../../../app/config";
 import useCopy from "../../hook/useCopy";
 import usePinMessage from "../../hook/usePinMessage";
 import { useAppSelector } from "../../../app/store";
+import { ChatContext } from "../../../types/common";
 
 interface Params {
   mid: number;
-  context: "user" | "channel";
+  context: ChatContext;
   contextId: number;
 }
 

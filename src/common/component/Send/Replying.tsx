@@ -7,6 +7,7 @@ import useSendMessage from "../../hook/useSendMessage";
 import { useAppSelector } from "../../../app/store";
 import { MessagePayload } from "../../../app/slices/message";
 import LinkifyText from "../LinkifyText";
+import { ChatContext } from "../../../types/common";
 
 const renderContent = (data: MessagePayload) => {
   const { content_type, content, thumbnail = "", properties } = data;
@@ -63,7 +64,7 @@ export default function Replying({
   id,
   mid
 }: {
-  context: "user" | "channel";
+  context: ChatContext;
   id: number;
   mid: number;
 }) {

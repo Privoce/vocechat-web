@@ -2,9 +2,10 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { KEY_UID } from "../config";
 import { ConnectionState } from "agora-rtc-sdk-ng";
 import { resetAuthData } from "./auth.data";
+import { ChatContext } from "../../types/common";
 
 export type VoiceBasicInfo = {
-  context: "channel" | "dm",
+  context: ChatContext,
   from?: number,
   id: number,// means to in dm context
 }

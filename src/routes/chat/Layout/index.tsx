@@ -19,6 +19,7 @@ import ImagePreview from "../../../common/component/ImagePreview";
 import VirtualMessageFeed from "./VirtualMessageFeed";
 import DMVoice from "./DMVoicing";
 import AddContactTip from "./AddContactTip";
+import { ChatContext } from "../../../types/common";
 
 interface Props {
   readonly?: boolean;
@@ -27,7 +28,7 @@ interface Props {
   users?: ReactElement | null;
   voice?: ReactElement | null;
   dropFiles?: File[];
-  context: "channel" | "user";
+  context: ChatContext;
   to: number;
 }
 
@@ -100,8 +101,8 @@ const Layout: FC<Props> = ({
           {header}
           <div className="w-full h-full flex items-start justify-between relative" >
             <div className="rounded-br-2xl flex flex-col absolute bottom-0 w-full h-full" ref={messagesContainer}>
-              {context == "user" && <DMVoice uid={to} />}
-              {context == "user" && <AddContactTip uid={to} />}
+              {context == "dm" && <DMVoice uid={to} />}
+              {context == "dm" && <AddContactTip uid={to} />}
               {/* 消息流 */}
               <VirtualMessageFeed key={`${context}_${to}`} context={context} id={to} />
               {/* 发送框 */}

@@ -21,14 +21,15 @@ import moreIcon from "../../../assets/icons/more.svg?url";
 import useMessageOperation from "./useMessageOperation";
 import { useTranslation } from "react-i18next";
 import clsx from "clsx";
+import { ChatContext } from "../../../types/common";
 type Props = {
   isSelf: boolean;
-  context: "user" | "channel";
+  context: ChatContext;
   contextId: number;
   mid: number;
   toggleEditMessage: () => void;
 };
-const Commands: FC<Props> = ({ isSelf, context = "user", contextId = 0, mid = 0, toggleEditMessage }) => {
+const Commands: FC<Props> = ({ isSelf, context = "dm", contextId = 0, mid = 0, toggleEditMessage }) => {
   const { t } = useTranslation();
   const {
     canDelete,

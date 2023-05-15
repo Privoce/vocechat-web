@@ -23,6 +23,7 @@ import { CONFIG } from "./config";
 import User from "../User";
 import { useAppSelector } from "../../../app/store";
 import { isMobile } from "../../utils";
+import { ChatContext } from "../../../types/common";
 export const TEXT_EDITOR_PREFIX = "_text_editor";
 
 let components = createPlateUI({
@@ -30,11 +31,10 @@ let components = createPlateUI({
   // customize your components by plugin key
 });
 const initials = [{ type: ELEMENT_PARAGRAPH, children: [{ text: "" }] }];
-type ctx = "channel" | "user";
 type Props = {
   updateDraft: (draft: any) => void | null;
   initialValue?: any;
-  id: `${ctx}_${number}`;
+  id: `${ChatContext}_${number}`;
   placeholder: string;
   sendMessages: any;
   updateMessages: any;
@@ -51,7 +51,7 @@ const Plugins: FC<Props> = ({
 }) => {
 
   // const { getMenuProps, getItemProps } = useComboboxControls();
-  const [context, to] = id.split("_") as [ctx, number];
+  const [context, to] = id.split("_") as [ChatContext, number];
   const { addStageFile } = useUploadFile({ context, id: to });
   const enableMentions = members.length > 0;
   const userData = useAppSelector((store) => store.users.byId);

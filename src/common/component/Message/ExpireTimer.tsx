@@ -5,8 +5,9 @@ import { removeMessage } from '../../../app/slices/message';
 import { removeChannelMsg } from '../../../app/slices/message.channel';
 import { removeUserMsg } from '../../../app/slices/message.user';
 import IconTimer from '../../../assets/icons/timer.svg';
+import { ChatContext } from '../../../types/common';
 type Props = {
-    context: "user" | "channel",
+    context: ChatContext,
     contextId: number,
     mid: number;
     expiresIn: number;
@@ -18,7 +19,7 @@ const ExpireTimer: FC<Props> = ({ mid, createAt, expiresIn, context, contextId }
     const dispatch = useDispatch();
     const clearMsgFromClient = useCallback(
         () => {
-            if (context == "user") {
+            if (context == "dm") {
                 dispatch(removeUserMsg({ mid, id: contextId }));
             } else {
                 dispatch(removeChannelMsg({ mid, id: contextId }));

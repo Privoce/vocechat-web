@@ -13,8 +13,9 @@ import { updateSelectMessages } from "../../../app/slices/ui";
 import useSendMessage from "../../hook/useSendMessage";
 import useMessageOperation from "./useMessageOperation";
 import { useTranslation } from "react-i18next";
+import { ChatContext } from "../../../types/common";
 type Props = {
-  context: "user" | "channel";
+  context: ChatContext;
   contextId: number;
   mid: number;
   visible: boolean;

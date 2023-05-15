@@ -3,9 +3,10 @@ import { useDispatch } from "react-redux";
 import { addMessage, MessagePayload } from "../../app/slices/message";
 import { addChannelMsg } from "../../app/slices/message.channel";
 import { addUserMsg } from "../../app/slices/message.user";
+import { ChatContext } from "../../types/common";
 
 interface IProps {
-  context: "channel" | "user";
+  context: ChatContext;
   to: number;
 }
 export default function useAddLocalFileMessage({ context, to }: IProps) {

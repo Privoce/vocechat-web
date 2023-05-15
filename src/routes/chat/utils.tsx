@@ -10,6 +10,7 @@ import { updateSelectMessages } from "../../app/slices/ui";
 import { useAppSelector } from "../../app/store";
 import LinkifyText from "../../common/component/LinkifyText";
 import i18n from "../../i18n";
+import { ChatContext } from "../../types/common";
 
 export function getUnreadCount({
   mids = [],
@@ -122,7 +123,7 @@ type Params = {
   prev?: object | null;
   curr: object | null;
   contextId: number;
-  context: "user" | "channel";
+  context: ChatContext;
 };
 export const renderMessageFragment = ({
   readonly = false,
@@ -132,7 +133,7 @@ export const renderMessageFragment = ({
   prev,
   curr = null,
   contextId = 0,
-  context = "user"
+  context = "dm"
 }: Params) => {
   if (!curr) return <div className="w-full h-[1px] invisible"></div>;
   let { created_at, mid } = curr;

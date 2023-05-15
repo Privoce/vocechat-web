@@ -19,7 +19,7 @@ const MessageInput = (props: Props) => {
     const { sendMessage } = useSendMessage({
         from,
         to,
-        context: "user"
+        context: "dm"
     });
 
     const [content, setContent] = useState('');

@@ -1,7 +1,8 @@
 import { updateDraftMarkdown, updateDraftMixedText } from "../../app/slices/ui";
 import { useAppDispatch, useAppSelector } from "../../app/store";
+import { ChatContext } from "../../types/common";
 
-const useDraft = ({ context = "user", id = 0 }: { context: "user" | "channel"; id: number }) => {
+const useDraft = ({ context = "dm", id = 0 }: { context: ChatContext; id: number }) => {
   const dispatch = useAppDispatch();
   const _key = `${context}_${id}`;
   const { draftMarkdown, draftMixedText } = useAppSelector((store) => {
