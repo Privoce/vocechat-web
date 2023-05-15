@@ -2,11 +2,11 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import toast from "react-hot-toast";
 import { useUpdateLogoMutation, useUpdateServerMutation } from '../../../app/services/server';
-import LogoUploader from "../../../common/component/AvatarUploader";
-import Input from "../../../common/component/styled/Input";
-import Label from "../../../common/component/styled/Label";
-import Textarea from "../../../common/component/styled/Textarea";
-import SaveTip from '../../../common/component/SaveTip';
+import LogoUploader from "@/components/AvatarUploader";
+import Input from "@/components/styled/Input";
+import Label from "@/components/styled/Label";
+import Textarea from "@/components/styled/Textarea";
+import SaveTip from '../../../components/SaveTip';
 import { useAppSelector } from '../../../app/store';
 
 const Index = () => {

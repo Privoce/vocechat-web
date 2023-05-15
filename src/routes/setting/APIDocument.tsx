@@ -1,8 +1,8 @@
 // import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../app/store';
-import IconCopy from '../../assets/icons/copy.svg';
-import useCopy from '../../common/hook/useCopy';
+import IconCopy from '@/assets/icons/copy.svg';
+import useCopy from '../../hooks/useCopy';
 // type Props = {}
 const APIUrl = `${location.origin}/api/swagger`;
 const APIDocument = () => {

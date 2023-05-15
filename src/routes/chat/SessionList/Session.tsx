@@ -6,16 +6,16 @@ import { NativeTypes } from "react-dnd-html5-backend";
 import { useNavigate, NavLink, useMatch } from "react-router-dom";
 import ContextMenu from "./ContextMenu";
 import getUnreadCount, { renderPreviewMessage } from "../utils";
-import User from "../../../common/component/User";
-import Avatar from "../../../common/component/Avatar";
-import IconLock from "../../../assets/icons/lock.svg";
-import IconMute from "../../../assets/icons/mute.svg";
-import IconVoicing from "../../../assets/icons/voicing.svg";
-import useContextMenu from "../../../common/hook/useContextMenu";
-import useUploadFile from "../../../common/hook/useUploadFile";
-import { useAppSelector } from "../../../app/store";
-import { fromNowTime } from "../../../common/utils";
-import { ChatContext } from "../../../types/common";
+import User from "@/components/User";
+import Avatar from "@/components/Avatar";
+import IconLock from "@/assets/icons/lock.svg";
+import IconMute from "@/assets/icons/mute.svg";
+import IconVoicing from "@/assets/icons/voicing.svg";
+import useContextMenu from "@/hooks/useContextMenu";
+import useUploadFile from "@/hooks/useUploadFile";
+import { useAppSelector } from "@/app/store";
+import { fromNowTime } from "@/utils";
+import { ChatContext } from "@/types/common";
 
 interface IProps {
   type?: ChatContext;

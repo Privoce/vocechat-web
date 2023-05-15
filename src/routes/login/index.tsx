@@ -1,20 +1,20 @@
 /* eslint-disable no-undef */
 import { useState, useEffect, FormEvent, ChangeEvent } from "react";
 import toast from "react-hot-toast";
-import BASE_URL from "../../app/config";
+import BASE_URL from "@/app/config";
 
-import Input from "../../common/component/styled/Input";
-import Button from "../../common/component/styled/Button";
+import Input from "@/components/styled/Input";
+import Button from "@/components/styled/Button";
 import MagicLinkLogin from "./MagicLinkLogin";
 import SignUpLink from "./SignUpLink";
-import { useLoginMutation } from "../../app/services/auth";
-import { useGetLoginConfigQuery, useGetSMTPStatusQuery } from "../../app/services/server";
-import useGoogleAuthConfig from "../../common/hook/useGoogleAuthConfig";
+import { useLoginMutation } from "@/app/services/auth";
+import { useGetLoginConfigQuery, useGetSMTPStatusQuery } from "@/app/services/server";
+import useGoogleAuthConfig from "@/hooks/useGoogleAuthConfig";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useTranslation } from "react-i18next";
 import SocialLoginButtons from "./SocialLoginButtons";
-import Divider from "../../common/component/Divider";
-import { useAppSelector } from "../../app/store";
+import Divider from "@/components/Divider";
+import { useAppSelector } from "@/app/store";
 
 export default function LoginPage() {
   const serverName = useAppSelector(store => store.server.name);

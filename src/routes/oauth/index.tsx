@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { useLoginMutation } from "../../app/services/auth";
+import { useLoginMutation } from "@/app/services/auth";
 import toast from "react-hot-toast";
-import { setAuthData } from "../../app/slices/auth.data";
+import { setAuthData } from "@/app/slices/auth.data";
 import { useTranslation } from "react-i18next";
 
 export default function OAuthPage() {

@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
-import StyledSettingContainer from "../../common/component/StyledSettingContainer";
+import StyledSettingContainer from "@/components/StyledSettingContainer";
 import DeleteConfirmModal from "./DeleteConfirmModal";
 import useNavs from "./navs";
-import { useAppSelector } from "../../app/store";
+import { useAppSelector } from "@/app/store";
 import { useTranslation } from "react-i18next";
 
 let from: string = "";

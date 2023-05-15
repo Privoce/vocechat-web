@@ -3,16 +3,16 @@ import { NavLink, useParams, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { ViewportList } from 'react-viewport-list';
 
-import { updateRememberedNavs } from "../../app/slices/ui";
+import { updateRememberedNavs } from "@/app/slices/ui";
 import Search from "./Search";
-import User from "../../common/component/User";
-import Profile from "../../common/component/Profile";
+import User from "@/components/User";
+import Profile from "@/components/Profile";
 
-import BlankPlaceholder from "../../common/component/BlankPlaceholder";
-import useFilteredUsers from "../../common/hook/useFilteredUsers";
+import BlankPlaceholder from "@/components/BlankPlaceholder";
+import useFilteredUsers from "@/hooks/useFilteredUsers";
 import clsx from "clsx";
-import GoBackNav from "../../common/component/GoBackNav";
-import SearchUser from "../../common/component/SearchUser";
+import GoBackNav from "@/components/GoBackNav";
+import SearchUser from "@/components/SearchUser";
 
 function UsersPage() {
   const ref = useRef<HTMLDivElement | null>(

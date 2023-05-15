@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import Tooltip from "../../common/component/Tooltip";
-import IconSetting from "../../assets/icons/setting.svg";
+import Tooltip from "@/components/Tooltip";
+import IconSetting from "@/assets/icons/setting.svg";
 type Props = {};
 const Menu: FC<Props> = () => {
   const { pathname } = useLocation();

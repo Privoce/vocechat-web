@@ -5,8 +5,8 @@ import { updateAutoDeleteSetting, updateMute } from "../slices/footprint";
 import { fillUsers, updateContactStatus as updateStatus } from "../slices/users";
 import BASE_URL, { ContentTypes } from "../config";
 import { onMessageSendStarted } from "./handlers";
-import { AutoDeleteMsgDTO, BotAPIKey, ContactAction, ContactResponse, ContactStatus, User, UserCreateDTO, UserDTO, UserForAdmin, UserForAdminDTO } from "../../types/user";
-import { ContentTypeKey, MuteDTO } from "../../types/message";
+import { AutoDeleteMsgDTO, BotAPIKey, ContactAction, ContactResponse, ContactStatus, User, UserCreateDTO, UserDTO, UserForAdmin, UserForAdminDTO } from "@/types/user";
+import { ContentTypeKey, MuteDTO } from "@/types/message";
 import { RootState } from "../store";
 
 export const userApi = createApi({

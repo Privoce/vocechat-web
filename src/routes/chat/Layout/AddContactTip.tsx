@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
-import IconAdd from '../../../assets/icons/add.person.svg';
-import IconBlock from '../../../assets/icons/block.svg';
+import IconAdd from '@/assets/icons/add.person.svg';
+import IconBlock from '@/assets/icons/block.svg';
 import { useAppSelector } from '../../../app/store';
 import { useUpdateContactStatusMutation } from '../../../app/services/user';
 import { ContactAction } from '../../../types/user';

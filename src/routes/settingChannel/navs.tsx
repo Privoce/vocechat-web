@@ -1,8 +1,8 @@
 import { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import Overview from "./Overview";
-import AutoDeleteMessages from '../../common/component/AutoDeleteMessages';
-import ManageMembers from "../../common/component/ManageMembers";
+import AutoDeleteMessages from '../../components/AutoDeleteMessages';
+import ManageMembers from "@/components/ManageMembers";
 
 export interface NavItem {
   name: string;

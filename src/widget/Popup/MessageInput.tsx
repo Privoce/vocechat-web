@@ -1,8 +1,8 @@
 import { useRef, useState, memo } from 'react';
 import clsx from 'clsx';
-import useSendMessage from '../../common/hook/useSendMessage';
+import useSendMessage from '../../hooks/useSendMessage';
 import { useWidget } from '../WidgetContext';
-import IconSend from '../../assets/icons/send.svg';
+import IconSend from '@/assets/icons/send.svg';
 import { useTranslation } from 'react-i18next';
 
 

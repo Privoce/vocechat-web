@@ -1,7 +1,7 @@
 import { useEffect, FC } from "react";
-import { useGetOpenidMutation } from "../../app/services/auth";
-import Button from "../../common/component/styled/Button";
-import { OIDCConfig } from "../../types/auth";
+import { useGetOpenidMutation } from "@/app/services/auth";
+import Button from "@/components/styled/Button";
+import { OIDCConfig } from "@/types/auth";
 
 const OidcLoginEntry: FC<{ issuer: OIDCConfig }> = ({ issuer }) => {
   const [getOpenId, { data, isLoading, isSuccess }] = useGetOpenidMutation();

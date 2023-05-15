@@ -1,10 +1,10 @@
 // import { useState, useEffect } from "react";
 // import { NavLink } from "react-router-dom";
 // import { useTranslation } from "react-i18next";
-import ChannelIcon from "../../../common/component/ChannelIcon";
+import ChannelIcon from "@/components/ChannelIcon";
 import Layout from "../Layout";
-import { useAppSelector } from "../../../app/store";
-import GoBackNav from "../../../common/component/GoBackNav";
+import { useAppSelector } from "@/app/store";
+import GoBackNav from "@/components/GoBackNav";
 
 type Props = {
   cid?: number;

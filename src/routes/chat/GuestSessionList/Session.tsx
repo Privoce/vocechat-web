@@ -2,10 +2,10 @@
 import { useState, useEffect, FC } from "react";
 import clsx from "clsx";
 import { renderPreviewMessage } from "../../chat/utils";
-import Avatar from "../../../common/component/Avatar";
+import Avatar from "@/components/Avatar";
 import { NavLink } from "react-router-dom";
-import { useAppSelector } from "../../../app/store";
-import { fromNowTime } from "../../../common/utils";
+import { useAppSelector } from "@/app/store";
+import { fromNowTime } from "@/utils";
 
 interface IProps {
   id: number;

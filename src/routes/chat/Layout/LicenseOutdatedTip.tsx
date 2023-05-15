@@ -1,7 +1,7 @@
 // import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import Button from "../../../common/component/styled/Button";
+import Button from "@/components/styled/Button";
 // type Props = {};
 
 const LicenseUpgradeTip = () => {

@@ -8,9 +8,9 @@ import { removeMessage } from "../slices/message";
 import { removeChannelSession } from "../slices/message.channel";
 import { removeReactionMessage } from "../slices/message.reaction";
 import { onMessageSendStarted } from "./handlers";
-import { Channel, ChannelDTO, CreateChannelDTO } from "../../types/channel";
+import { Channel, ChannelDTO, CreateChannelDTO } from "@/types/channel";
 import { RootState } from "../store";
-import { ContentTypeKey } from "../../types/message";
+import { ContentTypeKey } from "@/types/message";
 
 export const channelApi = createApi({
   reducerPath: "channelApi",

@@ -1,5 +1,5 @@
 import localforage from "localforage";
-import { Channel } from "../../types/channel";
+import { Channel } from "@/types/channel";
 import clearTable from "./clear.handler";
 interface Params {
   data: any;

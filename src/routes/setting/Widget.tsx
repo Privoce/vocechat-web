@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { useAppSelector } from '../../app/store';
-import Button from '../../common/component/styled/Button';
-import Input from '../../common/component/styled/Input';
-import useCopy from '../../common/hook/useCopy';
-import IconQuestion from '../../assets/icons/question.svg';
+import Button from '../../components/styled/Button';
+import Input from '../../components/styled/Input';
+import useCopy from '../../hooks/useCopy';
+import IconQuestion from '@/assets/icons/question.svg';
 
 
 const Row = ({ paramKey, paramDefault, remarks }: { paramKey: string, paramDefault: string | number, remarks: string }) => {

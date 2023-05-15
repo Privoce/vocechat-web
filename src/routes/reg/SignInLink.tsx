@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink, useSearchParams } from 'react-router-dom';
-import { isMobile } from '../../common/utils';
+import { isMobile } from '../../utils';
 
 export default function SignInLink({ token }: { token?: string }) {
   const { t } = useTranslation("auth");

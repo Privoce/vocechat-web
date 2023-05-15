@@ -1,20 +1,22 @@
 import { useState, useEffect, MouseEvent } from "react";
-import FavoredMessage from "../../common/component/Message/FavoredMessage";
 import dayjs from "dayjs";
-import IconAudio from "../../assets/icons/file.audio.svg";
-import IconVideo from "../../assets/icons/file.video.svg";
-import IconUnknown from "../../assets/icons/file.unknown.svg";
-import IconImage from "../../assets/icons/file.image.svg";
-import IconChannel from "../../assets/icons/channel.svg";
-import IconRemove from "../../assets/icons/close.svg";
-import { ContentTypes } from "../../app/config";
-import { useAppSelector } from "../../app/store";
-import { Favorite } from "../../app/slices/favorites";
 import { useTranslation } from "react-i18next";
 import clsx from "clsx";
-import useFavMessage from "../../common/hook/useFavMessage";
+
+import FavoredMessage from "@/components/Message/FavoredMessage";
+import IconAudio from "@/assets/icons/file.audio.svg";
+import IconVideo from "@/assets/icons/file.video.svg";
+import IconUnknown from "@/assets/icons/file.unknown.svg";
+import IconImage from "@/assets/icons/file.image.svg";
+import IconChannel from "@/assets/icons/channel.svg";
+import IconRemove from "@/assets/icons/close.svg";
+import { ContentTypes } from "@/app/config";
+import { useAppSelector } from "@/app/store";
+import { Favorite } from "@/app/slices/favorites";
+import useFavMessage from "@/hooks/useFavMessage";
 
 type filter = "audio" | "video" | "image" | "";
+
 function FavsPage() {
   const { t } = useTranslation("fav");
   const [filter, setFilter] = useState<filter>("");

@@ -1,11 +1,11 @@
-import IconPdf from "../../../assets/icons/file.pdf.svg";
-import IconAudio from "../../../assets/icons/file.audio.svg";
-import IconVideo from "../../../assets/icons/file.video.svg";
-import IconUnknown from "../../../assets/icons/file.unknown.svg";
-import IconDoc from "../../../assets/icons/file.doc.svg";
-import IconCode from "../../../assets/icons/file.code.svg";
-import IconImage from "../../../assets/icons/file.image.svg";
-import CheckSign from "../../../assets/icons/check.sign.svg";
+import IconPdf from "@/assets/icons/file.pdf.svg";
+import IconAudio from "@/assets/icons/file.audio.svg";
+import IconVideo from "@/assets/icons/file.video.svg";
+import IconUnknown from "@/assets/icons/file.unknown.svg";
+import IconDoc from "@/assets/icons/file.doc.svg";
+import IconCode from "@/assets/icons/file.code.svg";
+import IconImage from "@/assets/icons/file.image.svg";
+import CheckSign from "@/assets/icons/check.sign.svg";
 import { FC } from "react";
 
 export const FileTypes = {

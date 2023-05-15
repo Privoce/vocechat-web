@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import Overview from "./Overview";
-import AutoDeleteMessages from '../../common/component/AutoDeleteMessages';
+import AutoDeleteMessages from '../../components/AutoDeleteMessages';
 
 export interface NavItem {
   name: string;

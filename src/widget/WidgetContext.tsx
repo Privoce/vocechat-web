@@ -1,7 +1,7 @@
 import { createContext, useContext, ReactNode } from 'react';
 import { useGetLoginConfigQuery, useGetServerQuery } from '../app/services/server';
 import { useAppSelector } from '../app/store';
-import { getContrastColor } from '../common/utils';
+import { getContrastColor } from '../utils';
 
 const query = new URLSearchParams(location.search);
 const welcome = decodeURIComponent(query.get("welcome") || "");

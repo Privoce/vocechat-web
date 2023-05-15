@@ -1,10 +1,10 @@
 import toast from "react-hot-toast";
 import { batch } from "react-redux";
+
 import { ContentTypes } from "../config";
 import { addChannelMsg, removeChannelMsg } from "../slices/message.channel";
 import { addUserMsg, removeUserMsg } from "../slices/message.user";
 import { addMessage, removeMessage, updateMessage } from "../slices/message";
-// import { ContentType } from "../../types/message";
 
 export const onMessageSendStarted = async (
   {

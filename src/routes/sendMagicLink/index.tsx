@@ -1,16 +1,16 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import BASE_URL from "../../app/config";
-import Input from "../../common/component/styled/Input";
-import Button from "../../common/component/styled/Button";
-import { useSendLoginMagicLinkMutation } from "../../app/services/auth";
+import BASE_URL from "@/app/config";
+import Input from "@/components/styled/Input";
+import Button from "@/components/styled/Button";
+import { useSendLoginMagicLinkMutation } from "@/app/services/auth";
 import SentTip from "./SentTip";
 import { useTranslation } from "react-i18next";
 import SocialLoginButtons from "../login/SocialLoginButtons";
-import Divider from "../../common/component/Divider";
+import Divider from "@/components/Divider";
 import SignInLink from "../reg/SignInLink";
-import { useAppSelector } from "../../app/store";
+import { useAppSelector } from "@/app/store";
 
 export default function SendMagicLinkPage() {
   const { t } = useTranslation("auth");

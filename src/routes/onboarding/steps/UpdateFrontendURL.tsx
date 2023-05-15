@@ -1,9 +1,9 @@
 import { useState, useEffect, ChangeEvent } from 'react';
 import { toast } from "react-hot-toast";
-import StyledInput from "../../../common/component/styled/Input";
-import StyledButton from "../../../common/component/styled/Button";
-import { useGetFrontendUrlQuery, useUpdateFrontendUrlMutation } from "../../../app/services/server";
-import InfoIcon from '../../../assets/icons/info.svg';
+import StyledInput from "@/components/styled/Input";
+import StyledButton from "@/components/styled/Button";
+import { useGetFrontendUrlQuery, useUpdateFrontendUrlMutation } from "@/app/services/server";
+import InfoIcon from '@/assets/icons/info.svg';
 import { useTranslation } from 'react-i18next';
 
 

@@ -1,8 +1,8 @@
 import { FC } from "react";
-import CheckSign from "../../../assets/icons/check.sign.svg";
-import ChannelIcon from "../../../common/component/ChannelIcon";
+import CheckSign from "@/assets/icons/check.sign.svg";
+import ChannelIcon from "@/components/ChannelIcon";
 import Search from "../Search";
-import useFilteredChannels from "../../../common/hook/useFilteredChannels";
+import useFilteredChannels from "@/hooks/useFilteredChannels";
 
 type Props = {
   select: number;

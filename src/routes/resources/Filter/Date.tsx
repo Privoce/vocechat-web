@@ -1,5 +1,5 @@
 import { FC } from "react";
-import CheckSign from "../../../assets/icons/check.sign.svg";
+import CheckSign from "@/assets/icons/check.sign.svg";
 
 
 export const Dates = {

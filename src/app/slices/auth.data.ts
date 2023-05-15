@@ -8,7 +8,7 @@ import {
   KEY_TOKEN,
   KEY_UID
 } from "../config";
-import { AuthData, RenewTokenResponse } from "../../types/auth";
+import { AuthData, RenewTokenResponse } from "@/types/auth";
 import { StoredUser } from "./users";
 // import { updateUsersByLogs } from './users';
 

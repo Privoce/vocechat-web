@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Server } from "../../types/server";
+import { Server } from "@/types/server";
 
 export interface StoredServer extends Server {
   version: string,

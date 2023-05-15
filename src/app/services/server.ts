@@ -3,7 +3,7 @@ import BASE_URL, { ContentTypes, IS_OFFICIAL_DEMO, PAYMENT_URL_PREFIX } from "..
 import { updateInfo } from "../slices/server";
 import baseQuery from "./base.query";
 import { RootState } from "../store";
-import { User } from "../../types/user";
+import { User } from "@/types/user";
 import {
   FirebaseConfig,
   GoogleAuthConfig,
@@ -21,9 +21,9 @@ import {
   AgoraVoicingListResponse,
   SystemCommon,
   AgoraChannelUsersResponse
-} from "../../types/server";
-import { Channel } from "../../types/channel";
-import { ContentTypeKey } from "../../types/message";
+} from "@/types/server";
+import { Channel } from "@/types/channel";
+import { ContentTypeKey } from "@/types/message";
 import { upsertVoiceList } from "../slices/voice";
 
 const defaultExpireDuration = 2 * 24 * 60 * 60;

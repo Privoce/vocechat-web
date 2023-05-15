@@ -2,8 +2,8 @@
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-hot-toast';
 import { useGetFrontendUrlQuery, useUpdateFrontendUrlMutation } from '../../../app/services/server';
-import StyledInput from "../../../common/component/styled/Input";
-import StyledButton from "../../../common/component/styled/Button";
+import StyledInput from "@/components/styled/Input";
+import StyledButton from "@/components/styled/Button";
 import { ChangeEvent, useState, useEffect } from 'react';
 import SettingBlock from './SettingBlock';
 // type Props = {}

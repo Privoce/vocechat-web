@@ -1,10 +1,10 @@
 import { useEffect, FC } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import Modal from "../../common/component/Modal";
-import { useLazyDeleteUserQuery } from "../../app/services/user";
-import StyledModal from "../../common/component/styled/Modal";
-import Button from "../../common/component/styled/Button";
+import Modal from "@/components/Modal";
+import { useLazyDeleteUserQuery } from "@/app/services/user";
+import StyledModal from "@/components/styled/Modal";
+import Button from "@/components/styled/Button";
 import { useTranslation } from "react-i18next";
 
 interface Props {

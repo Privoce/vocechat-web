@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import Avatar from "../../common/component/Avatar";
-import { useAppSelector } from "../../app/store";
+import Avatar from "@/components/Avatar";
+import { useAppSelector } from "@/app/store";
 
 interface Props {
   uid: number;

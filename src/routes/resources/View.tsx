@@ -1,8 +1,8 @@
 import { MouseEvent } from "react";
 import { useDispatch } from "react-redux";
-import { updateFileListView } from "../../app/slices/ui";
-import IconList from "../../assets/icons/file.list.svg";
-import IconGrid from "../../assets/icons/file.grid.svg";
+import { updateFileListView } from "@/app/slices/ui";
+import IconList from "@/assets/icons/file.list.svg";
+import IconGrid from "@/assets/icons/file.grid.svg";
 import clsx from "clsx";
 
 const getClass = (selected: boolean) => clsx(`cursor-pointer p-2 box-border flex-center`, selected && `border border-solid border-primary-400 shadow rounded-lg`);

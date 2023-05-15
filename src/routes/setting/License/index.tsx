@@ -1,7 +1,7 @@
 import { useState, HTMLAttributes } from "react";
 import dayjs from "dayjs";
-import Button from "../../../common/component/styled/Button";
-import useLicense from "../../../common/hook/useLicense";
+import Button from "@/components/styled/Button";
+import useLicense from "@/hooks/useLicense";
 import LicensePriceListModal from "./LicensePriceListModal";
 import clsx from "clsx";
 import { useTranslation } from "react-i18next";

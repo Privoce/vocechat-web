@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { MuteDTO } from "../../types/message";
-import { OG } from "../../types/resource";
-import { AutoDeleteMessageSettingDTO, AutoDeleteMsgForGroup, AutoDeleteMsgForUser, AutoDeleteSettingForChannels, AutoDeleteSettingForUsers, PinChat, PinChatTarget } from "../../types/sse";
+import { MuteDTO } from "@/types/message";
+import { OG } from "@/types/resource";
+import { AutoDeleteMessageSettingDTO, AutoDeleteMsgForGroup, AutoDeleteMsgForUser, AutoDeleteSettingForChannels, AutoDeleteSettingForUsers, PinChat, PinChatTarget } from "@/types/sse";
 import { resetAuthData } from "./auth.data";
-import { ChatContext } from "../../types/common";
+import { ChatContext } from "@/types/common";
 
 type ChannelAside = "members" | "voice" | "voice_fullscreen" | null;
 type DMAside = "voice" | null;

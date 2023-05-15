@@ -1,15 +1,15 @@
 import { ChangeEvent } from "react";
 import toast from "react-hot-toast";
-import Toggle from "../../../common/component/styled/Toggle";
-import Label from "../../../common/component/styled/Label";
-import Input from "../../../common/component/styled/Input";
-import SaveTip from "../../../common/component/SaveTip";
-import useConfig from "../../../common/hook/useConfig";
+import Toggle from "@/components/styled/Toggle";
+import Label from "@/components/styled/Label";
+import Input from "@/components/styled/Input";
+import SaveTip from "@/components/SaveTip";
+import useConfig from "@/hooks/useConfig";
 import Tooltip from "./Tooltip";
 import IssuerList from "./IssuerList";
-import useGoogleAuthConfig from "../../../common/hook/useGoogleAuthConfig";
-import useGithubAuthConfig from "../../../common/hook/useGithubAuthConfig";
-import { LoginConfig } from "../../../types/server";
+import useGoogleAuthConfig from "@/hooks/useGoogleAuthConfig";
+import useGithubAuthConfig from "@/hooks/useGithubAuthConfig";
+import { LoginConfig } from "@/types/server";
 import { useTranslation } from "react-i18next";
 
 export default function Logins() {

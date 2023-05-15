@@ -1,9 +1,9 @@
 import { FC } from "react";
 import toast from "react-hot-toast";
-import Modal from "../../common/component/Modal";
-import StyledModal from "../../common/component/styled/Modal";
-import Button from "../../common/component/styled/Button";
-import { useLazyDeleteCurrentAccountQuery } from "../../app/services/auth";
+import Modal from "@/components/Modal";
+import StyledModal from "@/components/styled/Modal";
+import Button from "@/components/styled/Button";
+import { useLazyDeleteCurrentAccountQuery } from "@/app/services/auth";
 import { useTranslation } from "react-i18next";
 
 interface Props {

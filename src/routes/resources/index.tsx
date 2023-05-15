@@ -4,8 +4,8 @@ import Masonry from "masonry-layout";
 import View from "./View";
 import Search from "./Search";
 import Filter from "./Filter";
-import FileBox from "../../common/component/FileBox";
-import { useAppSelector } from "../../app/store";
+import FileBox from "@/components/FileBox";
+import { useAppSelector } from "@/app/store";
 import clsx from "clsx";
 const checkFilter = (data, filter, channelMessage) => {
   let selected = true;

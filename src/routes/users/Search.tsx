@@ -1,12 +1,12 @@
 import { FC, ChangeEvent } from "react";
 import Tippy from "@tippyjs/react";
-import IconSearch from "../../assets/icons/search.svg";
-import IconAdd from "../../assets/icons/add.svg";
+import IconSearch from "@/assets/icons/search.svg";
+import IconAdd from "@/assets/icons/add.svg";
 import { useTranslation } from "react-i18next";
-import { useAppSelector } from "../../app/store";
-import { compareVersion } from "../../common/utils";
-import Tooltip from "../../common/component/Tooltip";
-import AddEntriesMenu from "../../common/component/AddEntriesMenu";
+import { useAppSelector } from "@/app/store";
+import { compareVersion } from "@/utils";
+import Tooltip from "@/components/Tooltip";
+import AddEntriesMenu from "@/components/AddEntriesMenu";
 type Props = {
   input: string,
   openModal: () => void,

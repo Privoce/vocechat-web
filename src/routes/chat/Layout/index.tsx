@@ -5,21 +5,21 @@ import clsx from "clsx";
 import { toast } from "react-hot-toast";
 
 
-import Send from "../../../common/component/Send";
+import Send from "@/components/Send";
 import Operations from "./Operations";
-import useUploadFile from "../../../common/hook/useUploadFile";
-import { useAppSelector } from "../../../app/store";
+import useUploadFile from "@/hooks/useUploadFile";
+import { useAppSelector } from "@/app/store";
 import LoginTip from "./LoginTip";
-import useLicense from "../../../common/hook/useLicense";
+import useLicense from "@/hooks/useLicense";
 import LicenseUpgradeTip from "./LicenseOutdatedTip";
 import DnDTip from "./DnDTip";
-import IconWarning from '../../../assets/icons/warning.svg';
-import ImagePreview from "../../../common/component/ImagePreview";
+import IconWarning from '@/assets/icons/warning.svg';
+import ImagePreview from "@/components/ImagePreview";
 
 import VirtualMessageFeed from "./VirtualMessageFeed";
 import DMVoice from "./DMVoicing";
 import AddContactTip from "./AddContactTip";
-import { ChatContext } from "../../../types/common";
+import { ChatContext } from "@/types/common";
 
 interface Props {
   readonly?: boolean;

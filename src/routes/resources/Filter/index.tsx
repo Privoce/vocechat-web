@@ -2,13 +2,13 @@ import { useState } from "react";
 import Tippy from "@tippyjs/react";
 import clsx from "clsx";
 import { useTranslation } from "react-i18next";
-import Avatar from "../../../common/component/Avatar";
+import Avatar from "@/components/Avatar";
 import FilterDate, { Dates } from "./Date";
 import FilterFrom from "./From";
 import FilterChannel from "./Channel";
 import FilterType, { FileTypes } from "./Type";
-import ArrowDown from "../../../assets/icons/arrow.down.svg";
-import { useAppSelector } from "../../../app/store";
+import ArrowDown from "@/assets/icons/arrow.down.svg";
+import { useAppSelector } from "@/app/store";
 
 const getClass = (selected: boolean) => {
   return clsx(`cursor-pointer flex items-center gap-1 md:gap-2 shadow rounded-lg p-1 md:py-2 md:px-3 text-xs text-gray-900 dark:text-gray-200`, selected ? 'text-white bg-primary-400' : 'border border-solid border-gray-300 dark:border-gray-400 ');

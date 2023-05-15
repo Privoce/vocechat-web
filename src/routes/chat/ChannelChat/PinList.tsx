@@ -1,9 +1,9 @@
 import { FC, FormEvent } from "react";
-import usePinMessage from "../../../common/hook/usePinMessage";
-import IconSurprise from "../../../assets/icons/emoji.surprise.svg";
-import IconClose from "../../../assets/icons/close.svg";
+import usePinMessage from "@/hooks/usePinMessage";
+import IconSurprise from "@/assets/icons/emoji.surprise.svg";
+import IconClose from "@/assets/icons/close.svg";
 import { useTranslation } from "react-i18next";
-import PinnedMessage from "../../../common/component/PinnedMessage";
+import PinnedMessage from "@/components/PinnedMessage";
 
 type Props = {
   id: number;

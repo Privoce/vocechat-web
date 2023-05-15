@@ -5,16 +5,16 @@ import {
   useGetChannelQuery,
   useUpdateChannelMutation,
   useUpdateIconMutation
-} from "../../app/services/channel";
-import AvatarUploader from "../../common/component/AvatarUploader";
-import Input from "../../common/component/styled/Input";
-import Label from "../../common/component/styled/Label";
-import Radio from "../../common/component/styled/Radio";
-import Textarea from "../../common/component/styled/Textarea";
-import SaveTip from "../../common/component/SaveTip";
-import IconChannel from "../../assets/icons/channel.svg";
-import { useAppSelector } from "../../app/store";
-import { Channel } from "../../types/channel";
+} from "@/app/services/channel";
+import AvatarUploader from "@/components/AvatarUploader";
+import Input from "@/components/styled/Input";
+import Label from "@/components/styled/Label";
+import Radio from "@/components/styled/Radio";
+import Textarea from "@/components/styled/Textarea";
+import SaveTip from "@/components/SaveTip";
+import IconChannel from "@/assets/icons/channel.svg";
+import { useAppSelector } from "@/app/store";
+import { Channel } from "@/types/channel";
 import { useTranslation } from "react-i18next";
 
 

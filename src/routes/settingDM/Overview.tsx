@@ -1,5 +1,5 @@
 // import { useState, useEffect, ChangeEvent } from "react";
-import Profile from "../../common/component/Profile";
+import Profile from "@/components/Profile";
 export default function Overview({ id = 0 }) {
 
   return (

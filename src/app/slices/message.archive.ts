@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 // import  { ContentTypes } from "../config";
 // import { normalizeFileMessage } from "../../common/utils";
-// import { ContentType } from "../../types/message";
-import { Archive } from "../../types/resource";
+// import { ContentType } from "@/types/message";
+import { Archive } from "@/types/resource";
 export interface State {
   [key: string]: Archive;
 }

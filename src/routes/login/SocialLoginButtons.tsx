@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
-import { useGetLoginConfigQuery } from "../../app/services/server";
-import useGithubAuthConfig from "../../common/hook/useGithubAuthConfig";
-import useGoogleAuthConfig from "../../common/hook/useGoogleAuthConfig";
-import GoogleLoginButton from "../../common/component/GoogleLoginButton";
-import GithubLoginButton from "../../common/component/GithubLoginButton";
+import { useGetLoginConfigQuery } from "@/app/services/server";
+import useGithubAuthConfig from "@/hooks/useGithubAuthConfig";
+import useGoogleAuthConfig from "@/hooks/useGoogleAuthConfig";
+import GoogleLoginButton from "@/components/GoogleLoginButton";
+import GithubLoginButton from "@/components/GithubLoginButton";
 import MetamaskLoginButton from "./MetamaskLoginButton";
 import OidcLoginButton from "./OidcLoginButton";
 import { useLoginMutation } from '../../app/services/auth';

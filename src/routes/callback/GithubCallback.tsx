@@ -1,10 +1,10 @@
 import { useEffect, FC } from 'react';
-import { KEY_LOCAL_MAGIC_TOKEN } from "../../app/config";
-import { useLoginMutation } from "../../app/services/auth";
+import { KEY_LOCAL_MAGIC_TOKEN } from "@/app/config";
+import { useLoginMutation } from "@/app/services/auth";
 import toast from "react-hot-toast";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useTranslation } from 'react-i18next';
-import StyledButton from '../../common/component/styled/Button';
+import StyledButton from '../../components/styled/Button';
 
 export type GithubLoginSource = "widget" | "webapp"
 type Props = {

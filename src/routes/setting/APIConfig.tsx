@@ -2,15 +2,15 @@ import { useEffect } from "react";
 import Tippy from "@tippyjs/react";
 import toast from "react-hot-toast";
 import { hideAll } from "tippy.js";
-import Input from "../../common/component/styled/Input";
-import Toggle from "../../common/component/styled/Toggle";
-import Button from "../../common/component/styled/Button";
+import Input from "@/components/styled/Input";
+import Toggle from "@/components/styled/Toggle";
+import Button from "@/components/styled/Button";
 import {
   useGetThirdPartySecretQuery,
   useUpdateThirdPartySecretMutation
-} from "../../app/services/server";
-import useConfig from "../../common/hook/useConfig";
-import { LoginConfig } from "../../types/server";
+} from "@/app/services/server";
+import useConfig from "@/hooks/useConfig";
+import { LoginConfig } from "@/types/server";
 import { useTranslation } from "react-i18next";
 
 

@@ -3,9 +3,9 @@ import React from 'react';
 import { NavLink, useLocation, useMatch } from 'react-router-dom';
 import { useAppSelector } from '../../app/store';
 
-import ChatIcon from "../../assets/icons/chat.svg";
-import UserIcon from "../../assets/icons/user.svg";
-import SettingIcon from "../../assets/icons/setting.svg";
+import ChatIcon from "@/assets/icons/chat.svg";
+import UserIcon from "@/assets/icons/user.svg";
+import SettingIcon from "@/assets/icons/setting.svg";
 
 // type Props = {}
 

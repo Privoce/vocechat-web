@@ -1,8 +1,8 @@
 import { FC } from "react";
 import Search from "../Search";
-import CheckSign from "../../../assets/icons/check.sign.svg";
-import User from "../../../common/component/User";
-import useFilteredUsers from "../../../common/hook/useFilteredUsers";
+import CheckSign from "@/assets/icons/check.sign.svg";
+import User from "@/components/User";
+import useFilteredUsers from "@/hooks/useFilteredUsers";
 
 type Props = {
   select: number;

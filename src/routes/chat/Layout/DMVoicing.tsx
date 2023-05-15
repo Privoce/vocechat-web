@@ -4,19 +4,19 @@ import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import clsx from "clsx";
 
-import { useAppSelector } from "../../../app/store";
-import Tooltip from "../../../common/component/Tooltip";
-import IconCallOff from '../../../assets/icons/call.off.svg';
-import IconCallAnswer from '../../../assets/icons/call.svg';
-import IconMicOff from '../../../assets/icons/mic.off.svg';
-import IconMic from '../../../assets/icons/mic.on.svg';
-import IconCamera from '../../../assets/icons/camera.svg';
-import IconCameraOff from '../../../assets/icons/camera.off.svg';
-import IconScreen from '../../../assets/icons/share.screen.svg';
-import { VoicingInfo, updateCalling } from "../../../app/slices/voice";
-import { useVoice } from "../../../common/component/Voice";
-import { playAgoraVideo } from "../../../common/utils";
-import Avatar from "../../../common/component/Avatar";
+import { useAppSelector } from "@/app/store";
+import Tooltip from "@/components/Tooltip";
+import IconCallOff from '@/assets/icons/call.off.svg';
+import IconCallAnswer from '@/assets/icons/call.svg';
+import IconMicOff from '@/assets/icons/mic.off.svg';
+import IconMic from '@/assets/icons/mic.on.svg';
+import IconCamera from '@/assets/icons/camera.svg';
+import IconCameraOff from '@/assets/icons/camera.off.svg';
+import IconScreen from '@/assets/icons/share.screen.svg';
+import { VoicingInfo, updateCalling } from "@/app/slices/voice";
+import { useVoice } from "@/components/Voice";
+import { playAgoraVideo } from "@/utils";
+import Avatar from "@/components/Avatar";
 
 type VoicingMember = {
     id: number,

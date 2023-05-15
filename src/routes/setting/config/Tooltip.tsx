@@ -1,7 +1,7 @@
 import Tippy from "@tippyjs/react";
 import { roundArrow } from "tippy.js";
 import "tippy.js/dist/svg-arrow.css";
-import IconQuestion from "../../../assets/icons/question.svg";
+import IconQuestion from "@/assets/icons/question.svg";
 // import { useTranslation } from "react-i18next";
 import { PropsWithChildren } from "react";
 import { Trans } from 'react-i18next';

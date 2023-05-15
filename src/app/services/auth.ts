@@ -9,8 +9,8 @@ import {
   LoginCredential,
   RenewTokenDTO,
   RenewTokenResponse
-} from "../../types/auth";
-import { UserRegDTO, UserRegResponse } from "../../types/user";
+} from "@/types/auth";
+import { UserRegDTO, UserRegResponse } from "@/types/user";
 
 const getDeviceId = () => {
   let d = localStorage.getItem(KEY_DEVICE_ID);

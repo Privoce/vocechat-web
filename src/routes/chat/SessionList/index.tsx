@@ -3,10 +3,10 @@ import { useState, useEffect } from "react";
 import { ViewportList } from "react-viewport-list";
 import Session from "./Session";
 import DeleteChannelConfirmModal from "../../settingChannel/DeleteConfirmModal";
-import InviteModal from "../../../common/component/InviteModal";
-import { useAppSelector } from "../../../app/store";
-import { ChatContext } from "../../../types/common";
-import { PinChatTargetChannel, PinChatTargetUser } from "../../../types/sse";
+import InviteModal from "@/components/InviteModal";
+import { useAppSelector } from "@/app/store";
+import { ChatContext } from "@/types/common";
+import { PinChatTargetChannel, PinChatTargetUser } from "@/types/sse";
 export interface ChatSession {
   type: ChatContext;
   id: number;

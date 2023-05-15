@@ -1,12 +1,12 @@
 import { useEffect, useState, MouseEvent } from "react";
 import toast from "react-hot-toast";
-import { useUpdateAvatarMutation } from "../../app/services/user";
-import AvatarUploader from "../../common/component/AvatarUploader";
-import Button from "../../common/component/styled/Button";
+import { useUpdateAvatarMutation } from "@/app/services/user";
+import AvatarUploader from "@/components/AvatarUploader";
+import Button from "@/components/styled/Button";
 import ProfileBasicEditModal from "./ProfileBasicEditModal";
 import RemoveAccountConfirmModal from "./RemoveAccountConfirmModal";
 import UpdatePasswordModal from "./UpdatePasswordModal";
-import { useAppSelector } from "../../app/store";
+import { useAppSelector } from "@/app/store";
 import { useTranslation } from "react-i18next";
 
 type EditField = "name" | "email" | "";

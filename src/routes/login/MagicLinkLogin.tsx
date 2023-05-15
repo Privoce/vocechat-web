@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import Button from "../../common/component/styled/Button";
+import Button from "@/components/styled/Button";
 
 export default function MagicLinkLogin() {
   const navigate = useNavigate();

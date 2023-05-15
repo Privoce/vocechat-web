@@ -1,16 +1,16 @@
 import React from "react";
 import dayjs from "dayjs";
 import { useDispatch } from "react-redux";
-import { isImage } from "../../common/utils";
-import { ContentTypes } from "../../app/config";
-import Checkbox from "../../common/component/styled/Checkbox";
-import Divider from "../../common/component/Divider";
-import Message from "../../common/component/Message";
-import { updateSelectMessages } from "../../app/slices/ui";
-import { useAppSelector } from "../../app/store";
-import LinkifyText from "../../common/component/LinkifyText";
+import { isImage } from "@/utils";
+import { ContentTypes } from "@/app/config";
+import Checkbox from "@/components/styled/Checkbox";
+import Divider from "@/components/Divider";
+import Message from "@/components/Message";
+import { updateSelectMessages } from "@/app/slices/ui";
+import { useAppSelector } from "@/app/store";
+import LinkifyText from "@/components/LinkifyText";
 import i18n from "../../i18n";
-import { ChatContext } from "../../types/common";
+import { ChatContext } from "@/types/common";
 
 export function getUnreadCount({
   mids = [],

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import StyledRadio from "../../../common/component/styled/Radio";
-import StyledButton from "../../../common/component/styled/Button";
-import { useGetLoginConfigQuery, useUpdateLoginConfigMutation } from "../../../app/services/server";
-import { WhoCanSignUp } from "../../../types/server";
+import StyledRadio from "@/components/styled/Radio";
+import StyledButton from "@/components/styled/Button";
+import { useGetLoginConfigQuery, useUpdateLoginConfigMutation } from "@/app/services/server";
+import { WhoCanSignUp } from "@/types/server";
 import { useTranslation } from "react-i18next";
 import { useWizard } from "react-use-wizard";
 

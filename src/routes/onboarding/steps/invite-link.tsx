@@ -1,10 +1,10 @@
 
 import { useTranslation } from "react-i18next";
 import { useWizard } from "react-use-wizard";
-import StyledInput from "../../../common/component/styled/Input";
-import StyledButton from "../../../common/component/styled/Button";
-import useInviteLink from "../../../common/hook/useInviteLink";
-import ServerVersionChecker from "../../../common/component/ServerVersionChecker";
+import StyledInput from "@/components/styled/Input";
+import StyledButton from "@/components/styled/Button";
+import useInviteLink from "@/hooks/useInviteLink";
+import ServerVersionChecker from "@/components/ServerVersionChecker";
 import UpdateFrontendURL from "./UpdateFrontendURL";
 
 export default function InviteLink() {

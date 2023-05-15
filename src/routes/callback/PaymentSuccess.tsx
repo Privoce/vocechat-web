@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import { useLazyGetGeneratedLicenseQuery } from "../../app/services/server";
-import useLicense from "../../common/hook/useLicense";
-import Button from "../../common/component/styled/Button";
+import { useLazyGetGeneratedLicenseQuery } from "@/app/services/server";
+import useLicense from "@/hooks/useLicense";
+import Button from "@/components/styled/Button";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 

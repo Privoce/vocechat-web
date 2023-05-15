@@ -2,10 +2,10 @@ import { useRef, useState, useEffect, ChangeEvent } from 'react';
 import { toast } from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useUpdateUserMutation } from '../../../app/services/user';
-import Modal from '../../../common/component/Modal';
-import Button from '../../../common/component/styled/Button';
-import Input from '../../../common/component/styled/Input';
-import StyledModal from '../../../common/component/styled/Modal';
+import Modal from '../../../components/Modal';
+import Button from '../../../components/styled/Button';
+import Input from '../../../components/styled/Input';
+import StyledModal from '../../../components/styled/Modal';
 
 type Props = {
     uid: number,

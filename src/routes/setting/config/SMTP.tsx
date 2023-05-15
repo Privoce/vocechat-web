@@ -2,15 +2,15 @@ import { useState, useEffect, ChangeEvent } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 
-import { useSendTestEmailMutation } from "../../../app/services/server";
-import IconQuestion from "../../../assets/icons/question.svg";
-import useConfig from "../../../common/hook/useConfig";
-import Input from "../../../common/component/styled/Input";
-import Button from "../../../common/component/styled/Button";
-import Toggle from "../../../common/component/styled/Toggle";
-import Label from "../../../common/component/styled/Label";
-import SaveTip from "../../../common/component/SaveTip";
-import { SMTPConfig } from "../../../types/server";
+import { useSendTestEmailMutation } from "@/app/services/server";
+import IconQuestion from "@/assets/icons/question.svg";
+import useConfig from "@/hooks/useConfig";
+import Input from "@/components/styled/Input";
+import Button from "@/components/styled/Button";
+import Toggle from "@/components/styled/Toggle";
+import Label from "@/components/styled/Label";
+import SaveTip from "@/components/SaveTip";
+import { SMTPConfig } from "@/types/server";
 
 export default function ConfigSMTP() {
   const { t } = useTranslation("setting", { keyPrefix: "smtp" });

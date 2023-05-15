@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 // import { toast } from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
-import Modal from '../../../common/component/Modal';
-import Button from '../../../common/component/styled/Button';
-import Textarea from '../../../common/component/styled/Textarea';
-import StyledModal from '../../../common/component/styled/Modal';
+import Modal from '../../../components/Modal';
+import Button from '../../../components/styled/Button';
+import Textarea from '../../../components/styled/Textarea';
+import StyledModal from '../../../components/styled/Modal';
 import { useLazyGetBotRelatedChannelsQuery, useSendMessageByBotMutation } from '../../../app/services/server';
 import clsx from 'clsx';
 import { MessageTypes } from '../../../app/config';

@@ -1,5 +1,5 @@
 import localforage from "localforage";
-import { ContactStatus, User } from "../../types/user";
+import { ContactStatus, User } from "@/types/user";
 import clearTable from "./clear.handler";
 
 export default async function handler({ operation, data, payload }) {

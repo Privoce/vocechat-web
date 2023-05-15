@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { ChangeEvent, FC } from "react";
 import { useTranslation } from "react-i18next";
-import IconSearch from "../../assets/icons/search.svg";
+import IconSearch from "@/assets/icons/search.svg";
 interface Props {
   value?: string;
   updateSearchValue?: (value: string) => void;

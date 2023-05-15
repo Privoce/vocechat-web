@@ -1,9 +1,9 @@
 import { ChangeEvent, FC, useState, useEffect } from "react";
 import toast from "react-hot-toast";
-import Modal from "../../../common/component/Modal";
-import StyledModal from "../../../common/component/styled/Modal";
-import Button from "../../../common/component/styled/Button";
-import Textarea from "../../../common/component/styled/Textarea";
+import Modal from "@/components/Modal";
+import StyledModal from "@/components/styled/Modal";
+import Button from "@/components/styled/Button";
+import Textarea from "@/components/styled/Textarea";
 
 import { useTranslation } from "react-i18next";
 interface Props {

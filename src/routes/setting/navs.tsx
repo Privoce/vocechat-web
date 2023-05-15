@@ -9,11 +9,11 @@ import License from "./License";
 import Widget from "./Widget";
 import BotConfig from "./BotConfig";
 import APIDocument from "./APIDocument";
-import ManageMembers from "../../common/component/ManageMembers";
-import Version from "../../common/component/Version";
+import ManageMembers from "@/components/ManageMembers";
+import Version from "@/components/Version";
 import ConfigAgora from "./config/Agora";
-import { useAppSelector } from "../../app/store";
-import ServerVersionChecker from "../../common/component/ServerVersionChecker";
+import { useAppSelector } from "@/app/store";
+import ServerVersionChecker from "@/components/ServerVersionChecker";
 
 const navs = [
   {

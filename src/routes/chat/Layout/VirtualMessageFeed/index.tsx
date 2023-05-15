@@ -4,15 +4,15 @@ import { useEffect, useRef, useCallback, useState } from 'react';
 import { useDebounce } from 'rooks';
 import { Virtuoso, VirtuosoHandle } from 'react-virtuoso';
 
-import { useLazyLoadMoreMessagesQuery, useReadMessageMutation } from '../../../../app/services/message';
-import { useAppSelector } from '../../../../app/store';
+import { useLazyLoadMoreMessagesQuery, useReadMessageMutation } from '@/app/services/message';
+import { useAppSelector } from '@/app/store';
 import { renderMessageFragment } from '../../utils';
 import NewMessageBottomTip from "../NewMessageBottomTip";
 import CustomList from './CustomList';
 import CustomHeader from './CustomHeader';
 import { useDispatch } from 'react-redux';
-import { updateHistoryMark } from '../../../../app/slices/footprint';
-import { ChatContext } from '../../../../types/common';
+import { updateHistoryMark } from '@/app/slices/footprint';
+import { ChatContext } from '@/types/common';
 type Props = {
     context: ChatContext,
     id: number

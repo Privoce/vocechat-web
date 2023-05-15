@@ -1,9 +1,10 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import StyledSettingContainer from "../../common/component/StyledSettingContainer";
+
+import StyledSettingContainer from "@/components/StyledSettingContainer";
 import useNavs from "./navs";
 import LogoutConfirmModal from "./LogoutConfirmModal";
-import { useTranslation } from "react-i18next";
 
 let pageFrom: string = "";
 

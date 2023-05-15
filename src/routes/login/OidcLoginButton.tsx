@@ -1,13 +1,13 @@
 /* eslint-disable no-undef */
 import { FC, useState } from "react";
-import StyledModal from "../../common/component/styled/Modal";
-import Modal from "../../common/component/Modal";
-import StyledButton from "../../common/component/styled/Button";
+import StyledModal from "@/components/styled/Modal";
+import Modal from "@/components/Modal";
+import StyledButton from "@/components/styled/Button";
 import OidcLoginEntry from "./OidcLoginEntry";
-import { OIDCConfig } from "../../types/auth";
+import { OIDCConfig } from "@/types/auth";
 import { useTranslation } from "react-i18next";
-import { AuthType } from "../../types/common";
-import Button from "../../common/component/styled/Button";
+import { AuthType } from "@/types/common";
+import Button from "@/components/styled/Button";
 interface IProps {
   issuers?: OIDCConfig[];
   type?: AuthType

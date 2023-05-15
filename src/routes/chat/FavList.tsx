@@ -1,9 +1,9 @@
 import { MouseEvent, FC } from "react";
 import { useTranslation } from "react-i18next";
-import FavoredMessage from "../../common/component/Message/FavoredMessage";
-import IconSurprise from "../../assets/icons/emoji.surprise.svg";
-import IconRemove from "../../assets/icons/close.svg";
-import useFavMessage from "../../common/hook/useFavMessage";
+import FavoredMessage from "@/components/Message/FavoredMessage";
+import IconSurprise from "@/assets/icons/emoji.surprise.svg";
+import IconRemove from "@/assets/icons/close.svg";
+import useFavMessage from "@/hooks/useFavMessage";
 
 type Props = { cid?: number; uid?: number };
 const FavList: FC<Props> = ({ cid = null, uid = null }) => {

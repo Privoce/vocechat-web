@@ -3,9 +3,9 @@ import clsx from "clsx";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { resetAuthData } from "../../../app/slices/auth.data";
-import Button from "../../../common/component/styled/Button";
-import useLogout from "../../../common/hook/useLogout";
+import { resetAuthData } from "@/app/slices/auth.data";
+import Button from "@/components/styled/Button";
+import useLogout from "@/hooks/useLogout";
 type Props = {
   placement?: "session" | "chat"
 };

@@ -2,18 +2,18 @@ import { memo, useState } from "react";
 import { useMatch, useParams } from "react-router-dom";
 import clsx from "clsx";
 
-import BlankPlaceholder from "../../common/component/BlankPlaceholder";
-import Server from "../../common/component/Server";
+import BlankPlaceholder from "@/components/BlankPlaceholder";
+import Server from "@/components/Server";
 import ChannelChat from "./ChannelChat";
 import DMChat from "./DMChat";
-import UsersModal from "../../common/component/UsersModal";
-import ChannelModal from "../../common/component/ChannelModal";
+import UsersModal from "@/components/UsersModal";
+import ChannelModal from "@/components/ChannelModal";
 import SessionList from "./SessionList";
-import { useAppSelector } from "../../app/store";
+import { useAppSelector } from "@/app/store";
 import GuestBlankPlaceholder from "./GuestBlankPlaceholder";
 import GuestChannelChat from "./GuestChannelChat";
 import GuestSessionList from "./GuestSessionList";
-import ErrorCatcher from "../../common/component/ErrorCatcher";
+import ErrorCatcher from "@/components/ErrorCatcher";
 import RTCWidget from "./RTCWidget";
 import VoiceFullscreen from "./VoiceFullscreen";
 

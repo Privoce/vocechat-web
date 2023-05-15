@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { isNull, omitBy } from "lodash";
 import BASE_URL from "../config";
-import { Contact, ContactStatus } from "../../types/user";
-import { UserLog, UserState } from "../../types/sse";
+import { Contact, ContactStatus } from "@/types/user";
+import { UserLog, UserState } from "@/types/sse";
 
 type DMAside = "voice" | null;
 export interface StoredUser extends Contact {

@@ -1,10 +1,10 @@
 import { ChangeEvent, FC, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import Modal from "../../common/component/Modal";
-import StyledModal from "../../common/component/styled/Modal";
-import Button from "../../common/component/styled/Button";
-import Checkbox from "../../common/component/styled/Checkbox";
-import useLogout from "../../common/hook/useLogout";
+import Modal from "@/components/Modal";
+import StyledModal from "@/components/styled/Modal";
+import Button from "@/components/styled/Button";
+import Checkbox from "@/components/styled/Checkbox";
+import useLogout from "@/hooks/useLogout";
 import { useTranslation } from "react-i18next";
 
 

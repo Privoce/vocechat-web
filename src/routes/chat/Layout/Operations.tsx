@@ -1,17 +1,17 @@
 import { FC, useState } from "react";
 import { useKey } from "rooks";
 import toast from "react-hot-toast";
-import useDeleteMessage from "../../../common/hook/useDeleteMessage";
-import useFavMessage from "../../../common/hook/useFavMessage";
-import { updateSelectMessages } from "../../../app/slices/ui";
-import IconForward from "../../../assets/icons/forward.svg";
-import IconBookmark from "../../../assets/icons/bookmark.svg";
-import IconDelete from "../../../assets/icons/delete.svg";
-import IconClose from "../../../assets/icons/close.circle.svg";
-import ForwardModal from "../../../common/component/ForwardModal";
-import DeleteMessageConfirmModal from "../../../common/component/DeleteMessageConfirm";
-import { useAppDispatch, useAppSelector } from "../../../app/store";
-import { ChatContext } from "../../../types/common";
+import useDeleteMessage from "@/hooks/useDeleteMessage";
+import useFavMessage from "@/hooks/useFavMessage";
+import { updateSelectMessages } from "@/app/slices/ui";
+import IconForward from "@/assets/icons/forward.svg";
+import IconBookmark from "@/assets/icons/bookmark.svg";
+import IconDelete from "@/assets/icons/delete.svg";
+import IconClose from "@/assets/icons/close.circle.svg";
+import ForwardModal from "@/components/ForwardModal";
+import DeleteMessageConfirmModal from "@/components/DeleteMessageConfirm";
+import { useAppDispatch, useAppSelector } from "@/app/store";
+import { ChatContext } from "@/types/common";
 
 type Props = {
   context: ChatContext;

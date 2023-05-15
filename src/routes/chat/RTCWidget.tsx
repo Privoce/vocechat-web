@@ -2,18 +2,18 @@
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import { useAppSelector } from '../../app/store';
-import User from '../../common/component/User';
-import IconMic from '../../assets/icons/mic.on.svg';
-import IconMicOff from '../../assets/icons/mic.off.svg';
-import IconCallOff from '../../assets/icons/headphone.svg';
-import IconSoundOn from '../../assets/icons/sound.on.svg';
-import IconSoundOff from '../../assets/icons/sound.off.svg';
-// import IconCameraOff from '../../assets/icons/camera.off.svg';
-import IconCamera from '../../assets/icons/camera.svg';
-import IconScreen from '../../assets/icons/share.screen.svg';
-import { useVoice } from '../../common/component/Voice';
-import Signal from '../../common/component/Signal';
-import Tooltip from '../../common/component/Tooltip';
+import User from '../../components/User';
+import IconMic from '@/assets/icons/mic.on.svg';
+import IconMicOff from '@/assets/icons/mic.off.svg';
+import IconCallOff from '@/assets/icons/headphone.svg';
+import IconSoundOn from '@/assets/icons/sound.on.svg';
+import IconSoundOff from '@/assets/icons/sound.off.svg';
+// import IconCameraOff from '@/assets/icons/camera.off.svg';
+import IconCamera from '@/assets/icons/camera.svg';
+import IconScreen from '@/assets/icons/share.screen.svg';
+import { useVoice } from '../../components/Voice';
+import Signal from '../../components/Signal';
+import Tooltip from '../../components/Tooltip';
 import { ChatContext } from '../../types/common';
 
 type Props = {

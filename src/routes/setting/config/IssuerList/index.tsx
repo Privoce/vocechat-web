@@ -1,11 +1,11 @@
 import { ChangeEvent, FC, useState } from "react";
 import { useTranslation } from "react-i18next";
-import Select, { Option } from "../../../../common/component/styled/Select";
-import Button from "../../../../common/component/styled/Button";
-import Input from "../../../../common/component/styled/Input";
-import Toggle from "../../../../common/component/styled/Toggle";
+import Select, { Option } from "@/components/styled/Select";
+import Button from "@/components/styled/Button";
+import Input from "@/components/styled/Input";
+import Toggle from "@/components/styled/Toggle";
 import options from "./items.json";
-import IconMinus from "../../../../assets/icons/minus.circle.svg";
+import IconMinus from "@/assets/icons/minus.circle.svg";
 
 interface Issuer {
   domain: string;

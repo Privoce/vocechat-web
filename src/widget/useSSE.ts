@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import dayjs from "dayjs";
 import { useAppSelector } from "../app/store";
-import useStreaming from "../common/hook/useStreaming";
+import useStreaming from "@/hooks/useStreaming";
 
 export default function useSSE() {
     const {

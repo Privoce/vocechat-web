@@ -1,10 +1,11 @@
-import Input from "../../../common/component/styled/Input";
-import Label from "../../../common/component/styled/Label";
-import Toggle from "../../../common/component/styled/Toggle";
-import SaveTip from "../../../common/component/SaveTip";
-import useConfig from "../../../common/hook/useConfig";
 import { ChangeEvent } from "react";
-import { AgoraConfig } from "../../../types/server";
+
+import Input from "@/components/styled/Input";
+import Label from "@/components/styled/Label";
+import Toggle from "@/components/styled/Toggle";
+import SaveTip from "@/components/SaveTip";
+import useConfig from "@/hooks/useConfig";
+import { AgoraConfig } from "@/types/server";
 
 export default function ConfigAgora() {
   const { changed, reset, values, setValues, toggleEnable, updateConfig } = useConfig("agora");

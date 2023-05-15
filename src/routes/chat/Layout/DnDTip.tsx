@@ -1,7 +1,7 @@
 // import { useEffect } from "react";
-import { ChatPrefixes } from "../../../app/config";
+import { ChatPrefixes } from "@/app/config";
 import { useTranslation } from "react-i18next";
-import { ChatContext } from "../../../types/common";
+import { ChatContext } from "@/types/common";
 type Props = {
   context: ChatContext,
   name: string

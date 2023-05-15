@@ -3,12 +3,12 @@ import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
-import { setAuthData } from "../../app/slices/auth.data";
-import Input from "../../common/component/styled/Input";
-import Button from "../../common/component/styled/Button";
-import { useLoginMutation, useCheckMagicTokenValidMutation } from "../../app/services/auth";
+import { setAuthData } from "@/app/slices/auth.data";
+import Input from "@/components/styled/Input";
+import Button from "@/components/styled/Button";
+import { useLoginMutation, useCheckMagicTokenValidMutation } from "@/app/services/auth";
 import ExpiredTip from "./ExpiredTip";
-import { useRegisterMutation } from "../../app/services/auth";
+import { useRegisterMutation } from "@/app/services/auth";
 import { useMagicToken } from "./index";
 
 const RegWithUsername: FC = () => {

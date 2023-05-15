@@ -1,10 +1,10 @@
-import { Waveform } from '@uiball/loaders';
-import clsx from 'clsx';
-// import React from 'react'
-import { useTranslation } from 'react-i18next';
 import { NavLink, useLocation } from 'react-router-dom';
-import { useAppSelector } from '../../../../app/store';
-import EditIcon from "../../../../assets/icons/edit.svg";
+import clsx from 'clsx';
+import { useTranslation } from 'react-i18next';
+import { Waveform } from '@uiball/loaders';
+
+import { useAppSelector } from '@/app/store';
+import EditIcon from "@/assets/icons/edit.svg";
 
 type ChannelHeaderProps = {
     cid: number

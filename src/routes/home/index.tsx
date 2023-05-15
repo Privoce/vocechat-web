@@ -4,23 +4,23 @@ import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 
 import User from "./User";
-import Loading from "../../common/component/Loading";
+import Loading from "@/components/Loading";
 import Menu from "./Menu";
-import usePreload from "../../common/hook/usePreload";
-import Tooltip from "../../common/component/Tooltip";
-import Notification from "../../common/component/Notification";
-import Manifest from "../../common/component/Manifest";
-import ChatIcon from "../../assets/icons/chat.svg";
-import UserIcon from "../../assets/icons/user.svg";
-import FavIcon from "../../assets/icons/bookmark.svg";
-import FolderIcon from "../../assets/icons/folder.svg";
-import { useAppSelector } from "../../app/store";
+import usePreload from "@/hooks/usePreload";
+import Tooltip from "@/components/Tooltip";
+import Notification from "@/components/Notification";
+import Manifest from "@/components/Manifest";
+import ChatIcon from "@/assets/icons/chat.svg";
+import UserIcon from "@/assets/icons/user.svg";
+import FavIcon from "@/assets/icons/bookmark.svg";
+import FolderIcon from "@/assets/icons/folder.svg";
+import { useAppSelector } from "@/app/store";
 import MobileNavs from "./MobileNavs";
-import { updateRememberedNavs } from "../../app/slices/ui";
-import UnreadTabTip from "../../common/component/UnreadTabTip";
-import ReLoginModal from "../../common/component/ReLoginModal";
-import Voice from "../../common/component/Voice";
-import ServerVersionChecker from "../../common/component/ServerVersionChecker";
+import { updateRememberedNavs } from "@/app/slices/ui";
+import UnreadTabTip from "@/components/UnreadTabTip";
+import ReLoginModal from "@/components/ReLoginModal";
+import Voice from "@/components/Voice";
+import ServerVersionChecker from "@/components/ServerVersionChecker";
 
 
 function HomePage() {

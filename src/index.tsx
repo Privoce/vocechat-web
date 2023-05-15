@@ -6,16 +6,16 @@ import toast, { Toaster } from "react-hot-toast";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import "./assets/index.css";
-import "./common/DayjsSetting";
-import "./common/TippySetting";
+import "./libs/DayjsSetting";
+import "./libs/TippySetting";
 import { register } from "./serviceWorkerRegistration";
-import MobileAppTip from "./common/component/MobileAppTip";
+import MobileAppTip from "./components/MobileAppTip";
 import ReduxRoutes from "./routes";
-import NewVersion from "./common/component/NewVersion";
+import NewVersion from "./components/NewVersion";
 // import i18n (needs to be bundled ;)) 
 import './i18n';
-import './common/polyfills';
-import { isDarkMode } from './common/utils';
+import './libs/polyfills';
+import { isDarkMode } from './utils';
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 // dark mode

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import StyledButton from "../../../common/component/styled/Button";
-import PlayIcon from "../../../assets/icons/play.svg?url";
+import StyledButton from "@/components/styled/Button";
+import PlayIcon from "@/assets/icons/play.svg?url";
 import { Trans, useTranslation } from "react-i18next";
 
 

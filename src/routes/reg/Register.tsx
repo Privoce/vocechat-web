@@ -2,19 +2,19 @@ import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import BASE_URL, { KEY_LOCAL_MAGIC_TOKEN } from "../../app/config";
-import Input from "../../common/component/styled/Input";
-import Button from "../../common/component/styled/Button";
-import { useLazyCheckEmailQuery, useRegisterMutation, useSendRegMagicLinkMutation } from "../../app/services/auth";
+import BASE_URL, { KEY_LOCAL_MAGIC_TOKEN } from "@/app/config";
+import Input from "@/components/styled/Input";
+import Button from "@/components/styled/Button";
+import { useLazyCheckEmailQuery, useRegisterMutation, useSendRegMagicLinkMutation } from "@/app/services/auth";
 import EmailNextTip from "./EmailNextStepTip";
 import SignInLink from "./SignInLink";
-import Divider from "../../common/component/Divider";
+import Divider from "@/components/Divider";
 
-import { useGetLoginConfigQuery } from "../../app/services/server";
+import { useGetLoginConfigQuery } from "@/app/services/server";
 import SocialLoginButtons from "../login/SocialLoginButtons";
-import { setAuthData } from "../../app/slices/auth.data";
+import { setAuthData } from "@/app/slices/auth.data";
 import { useDispatch } from "react-redux";
-import { useAppSelector } from "../../app/store";
+import { useAppSelector } from "@/app/store";
 import { useMagicToken } from "./index";
 
 interface AuthForm {

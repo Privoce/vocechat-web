@@ -1,9 +1,9 @@
 import { useRef, useState } from 'react';
 import { ViewportList } from 'react-viewport-list';
 import { useTranslation } from 'react-i18next';
-import User from "../../../common/component/User";
-import IconAdd from "../../../assets/icons/add.svg";
-import InviteModal from "../../../common/component/InviteModal";
+import User from "@/components/User";
+import IconAdd from "@/assets/icons/add.svg";
+import InviteModal from "@/components/InviteModal";
 
 
 type Props = {

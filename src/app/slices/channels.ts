@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { isNull, omitBy } from "lodash";
 import BASE_URL from "../config";
-import { Channel, UpdateChannelDTO, UpdatePinnedMessageDTO } from "../../types/channel";
+import { Channel, UpdateChannelDTO, UpdatePinnedMessageDTO } from "@/types/channel";
 // import { updateVoicingInfo } from "./voice";
 
 interface StoredChannel extends Channel {

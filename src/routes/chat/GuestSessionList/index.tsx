@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { useState, useEffect } from "react";
 import Session from "./Session";
-import { useAppSelector } from "../../../app/store";
+import { useAppSelector } from "@/app/store";
 import LoginTip from "../Layout/LoginTip";
 export interface ChatSession {
   key: string;

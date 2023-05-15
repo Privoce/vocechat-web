@@ -1,12 +1,12 @@
 /* eslint-disable no-undef */
 import { useState, useEffect, useRef } from "react";
 import MetaMaskOnboarding from "@metamask/onboarding";
-import { useLazyGetMetamaskNonceQuery } from "../../app/services/auth";
-import metamaskSvg from "../../assets/icons/metamask.svg?url";
-import { LoginCredential } from "../../types/auth";
+import { useLazyGetMetamaskNonceQuery } from "@/app/services/auth";
+import metamaskSvg from "@/assets/icons/metamask.svg?url";
+import { LoginCredential } from "@/types/auth";
 import { useTranslation } from "react-i18next";
-import { AuthType } from "../../types/common";
-import Button from "../../common/component/styled/Button";
+import { AuthType } from "@/types/common";
+import Button from "@/components/styled/Button";
 // import toast from "react-hot-toast";
 
 export default function MetamaskLoginButton({

@@ -2,12 +2,12 @@
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { BASE_ORIGIN } from "../../app/config";
-import { resetAuthData } from "../../app/slices/auth.data";
-import { useAppSelector } from "../../app/store";
-import QRCode from "../../common/component/QRCode";
-import Button from "../../common/component/styled/Button";
-import useLogout from "../../common/hook/useLogout";
+import { BASE_ORIGIN } from "@/app/config";
+import { resetAuthData } from "@/app/slices/auth.data";
+import { useAppSelector } from "@/app/store";
+import QRCode from "@/components/QRCode";
+import Button from "@/components/styled/Button";
+import useLogout from "@/hooks/useLogout";
 // type Props = {};
 
 const GuestBlankPlaceholder = () => {

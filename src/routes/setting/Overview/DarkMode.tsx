@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Radio from '../../../common/component/styled/Radio';
+import Radio from '../../../components/styled/Radio';
 import { Theme } from '../../../types/common';
 import SettingBlock from './SettingBlock';
 

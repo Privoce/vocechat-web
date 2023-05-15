@@ -3,9 +3,9 @@ import { useState, useEffect, useRef } from 'react';
 import { toast } from 'react-hot-toast';
 import { Orbit } from "@uiball/loaders";
 import { useGetUserByAdminQuery, useUpdateUserMutation } from '../../../app/services/user';
-import IconEdit from '../../../assets/icons/edit.svg';
-import IconSave from '../../../assets/icons/save.svg';
-import IconCancel from '../../../assets/icons/close.circle.svg';
+import IconEdit from '@/assets/icons/edit.svg';
+import IconSave from '@/assets/icons/save.svg';
+import IconCancel from '@/assets/icons/close.circle.svg';
 type Props = {
     uid: number
 }

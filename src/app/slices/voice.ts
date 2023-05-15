@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { KEY_UID } from "../config";
 import { ConnectionState } from "agora-rtc-sdk-ng";
 import { resetAuthData } from "./auth.data";
-import { ChatContext } from "../../types/common";
+import { ChatContext } from "@/types/common";
 
 export type VoiceBasicInfo = {
   context: ChatContext,

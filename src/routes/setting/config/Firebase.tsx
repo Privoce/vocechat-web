@@ -1,12 +1,12 @@
 import { ChangeEvent } from "react";
-import Input from "../../../common/component/styled/Input";
-import Textarea from "../../../common/component/styled/Textarea";
-import Label from "../../../common/component/styled/Label";
-import SaveTip from "../../../common/component/SaveTip";
-import useConfig from "../../../common/hook/useConfig";
-import StyledRadio from "../../../common/component/styled/Radio";
+import Input from "@/components/styled/Input";
+import Textarea from "@/components/styled/Textarea";
+import Label from "@/components/styled/Label";
+import SaveTip from "@/components/SaveTip";
+import useConfig from "@/hooks/useConfig";
+import StyledRadio from "@/components/styled/Radio";
 
-import { FirebaseConfig } from "../../../types/server";
+import { FirebaseConfig } from "@/types/server";
 import { useTranslation } from "react-i18next";
 
 interface IOptions {

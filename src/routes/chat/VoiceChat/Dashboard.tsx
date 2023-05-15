@@ -1,7 +1,7 @@
 // import { useEffect } from 'react';
 // import { useDispatch } from 'react-redux';
 import VoiceManagement from './VoiceManagement';
-import { useVoice } from '../../../common/component/Voice';
+import { useVoice } from '../../../components/Voice';
 import { ChatContext } from '../../../types/common';
 
 type Props = {

@@ -3,14 +3,14 @@ import { ContentTypes } from "../config";
 import { updateReadChannels, updateReadUsers, upsertOG } from "../slices/footprint";
 import { fillFavorites, populateFavorite, addFavorite, deleteFavorite } from "../slices/favorites";
 import { onMessageSendStarted } from "./handlers";
-import { normalizeArchiveData } from "../../common/utils";
+import { normalizeArchiveData } from "@/utils";
 import baseQuery from "./base.query";
-import { Archive, FavoriteArchive, OG } from "../../types/resource";
-import { ChatMessage, ContentTypeKey, UploadFileResponse } from "../../types/message";
-import handleChatMessage from "../../common/hook/useStreaming/chat.handler";
+import { Archive, FavoriteArchive, OG } from "@/types/resource";
+import { ChatMessage, ContentTypeKey, UploadFileResponse } from "@/types/message";
+import { ChatContext } from "@/types/common";
+import handleChatMessage from "@/hooks/useStreaming/chat.handler";
 import { RootState } from "../store";
 import { upsertArchiveMessage } from "../slices/message.archive";
-import { ChatContext } from "../../types/common";
 
 export const messageApi = createApi({
   reducerPath: "messageApi",

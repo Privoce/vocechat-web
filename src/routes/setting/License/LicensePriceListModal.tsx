@@ -1,19 +1,19 @@
 import { ChangeEvent, FC, useState } from "react";
 import toast from "react-hot-toast";
 import * as linkify from 'linkifyjs';
-import Modal from "../../../common/component/Modal";
-import StyledModal from "../../../common/component/styled/Modal";
-import Button from "../../../common/component/styled/Button";
-import StyledRadio from "../../../common/component/styled/Radio";
-import Input from "../../../common/component/styled/Input";
+import Modal from "@/components/Modal";
+import StyledModal from "@/components/styled/Modal";
+import Button from "@/components/styled/Button";
+import StyledRadio from "@/components/styled/Radio";
+import Input from "@/components/styled/Input";
 
-import { useGetLicensePaymentUrlMutation } from "../../../app/services/server";
-import { getLicensePriceList } from "../../../app/config";
+import { useGetLicensePaymentUrlMutation } from "@/app/services/server";
+import { getLicensePriceList } from "@/app/config";
 import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
-import { PriceSubscriptionDuration, PriceType } from "../../../types/common";
+import { PriceSubscriptionDuration, PriceType } from "@/types/common";
 import Tippy from "@tippyjs/react";
-// import { LicenseMetadata, RenewLicense } from "../../types/server";
+// import { LicenseMetadata, RenewLicense } from "@/types/server";
 
 interface Props {
   closeModal: () => void;
