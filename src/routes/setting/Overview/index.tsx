@@ -12,6 +12,7 @@ import ServerVersionChecker from "../../../common/component/ServerVersionChecker
 import OnlineStatus from "./OnlineStatus";
 import ChatLayout from "./ChatLayout";
 import SettingBlock from "./SettingBlock";
+import ContactVerification from "./ContactVerification";
 
 export default function Overview() {
   const { t } = useTranslation("setting");
@@ -40,6 +41,7 @@ export default function Overview() {
             <h4 className="font-bold text-gray-700 dark:text-white">{t("overview.title_feat")}</h4>
             <p className="text-gray-400 text-xs">{t("overview.title_feat_desc")}</p>
           </div>
+          {/* 注册开放与否 */}
           <SettingBlock title={t("overview.sign_up.title")} desc={t("overview.sign_up.desc")}>
             <StyledRadio
               options={[t("overview.sign_up.everyone"), t("overview.sign_up.invite")]}
@@ -50,6 +52,7 @@ export default function Overview() {
               }}
             />
           </SettingBlock>
+          {/* 访客模式 */}
           <SettingBlock title={t("overview.guest_mode.title")} desc={t("overview.guest_mode.desc")}>
             <StyledRadio
               options={[t("overview.guest_mode.enable"), t("overview.guest_mode.disable")]}
@@ -60,15 +63,19 @@ export default function Overview() {
               }}
             />
           </SettingBlock>
+          {/* 是否显示在线提示 */}
           <ServerVersionChecker version="0.3.4" empty={true}>
             <OnlineStatus />
           </ServerVersionChecker>
+          {/* 会话布局 */}
           <ServerVersionChecker version="0.3.7" empty={true}>
             <ChatLayout />
           </ServerVersionChecker>
-          {/* <ServerVersionChecker version="0.3.7" empty={true}>
-            <FrontendURL />
-          </ServerVersionChecker> */}
+          {/* 联系人验证模式 */}
+          <ServerVersionChecker version="0.3.7" empty={true}>
+            <ContactVerification />
+          </ServerVersionChecker>
+          {/* 设置前端url */}
           <ServerVersionChecker version="0.3.3" empty={true}>
             <FrontendURL />
           </ServerVersionChecker>

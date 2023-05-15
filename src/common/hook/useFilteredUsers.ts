@@ -1,17 +1,15 @@
 import { useState, useEffect } from "react";
 import { StoredUser } from "../../app/slices/users";
 import { useAppSelector } from "../../app/store";
-import { compareVersion } from "../utils";
 
 export default function useFilteredUsers() {
   const [input, setInput] = useState("");
-  const { originUsers, serverVersion } = useAppSelector((store) => {
+  const { originUsers, enableContact } = useAppSelector((store) => {
     return {
+      enableContact: store.server.contact_verification_enable,
       originUsers: Object.values(store.users.byId),
-      serverVersion: store.server.version
     };
   });
-  const enableContact = compareVersion(serverVersion, "0.3.7") >= 0;
   const [filteredUsers, setFilteredUsers] = useState<StoredUser[]>([]);
   const users = enableContact ? originUsers.filter((u) => u.status == "added") : originUsers;
   useEffect(() => {

@@ -6,7 +6,7 @@
   "nav": {
     "general": "通用",
     "overview": "概况",
-    "members": "联系人",
+    "members": "成员",
     "auto_delete_msg": "自动删除消息",
     "my_account": "我的账号",
     "config": "配置",
@@ -82,6 +82,12 @@
       "desc": "你可以决定自己发的消息居左还是居右",
       "left": "居左",
       "self_right": "居右"
+    },
+    "contact_verify": {
+      "title": "联系人验证",
+      "desc": "是否开启联系人验证",
+      "enable": "开启",
+      "disable": "关闭"
     }
   },
   "license": {
