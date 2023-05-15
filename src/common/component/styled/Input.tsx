@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { useState, FC, DetailedHTMLProps, InputHTMLAttributes } from "react";
+import { useState, FC, DetailedHTMLProps, InputHTMLAttributes, ReactElement } from "react";
 import IconEyeOpen from "../../../assets/icons/eye.open.svg";
 import IconEyeClose from "../../../assets/icons/eye.close.svg";
 interface Props
@@ -24,7 +24,7 @@ interface Props
     >,
     HTMLInputElement
   > {
-  prefix?: string;
+  prefix?: string | ReactElement;
   ref?: any;
 }
 
@@ -46,7 +46,7 @@ const Input: FC<Props> = ({ type = "text", prefix = "", className = "", ...rest 
   placeholder:text-gray-400`,
     // noInner && 'rounded border border-solid border-gray-200 shadow',
     isLarge && 'py-3',
-    isNone && "border-none bg-transparent shadow-none",
+    isNone && "!border-none bg-transparent shadow-none",
     isPwd && "pr-[30px]"
   );
   return type == "password" ? (
@@ -59,7 +59,7 @@ const Input: FC<Props> = ({ type = "text", prefix = "", className = "", ...rest 
   ) : prefix ? (
     <div className={`w-full relative flex overflow-hidden rounded border border-solid border-gray-200 dark:border-gray-400 shadow-sm ${className}`}>
       {typeof prefix === "string" ? <span className="px-4 py-2 text-sm text-gray-500 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 shadow-[rgb(0_0_0_/_10%)_-1px_0px_0px_inset]">{prefix}</span> : <span className="flex-center p-2 bg-gray-100 dark:bg-gray-800 ">{prefix}</span>}
-      <input className={`${inputClass} ${className}`} type={inputType} {...rest} />
+      <input className={`${inputClass} ${className}`} type={type} {...rest} />
     </div>
   ) : (
     <input type={inputType} className={`${inputClass} rounded border border-solid border-gray-200 dark:border-gray-400 shadow-sm ${className}`} {...rest} />

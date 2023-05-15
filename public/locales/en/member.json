@@ -13,14 +13,19 @@
   "new_pwd": "New Password",
   "confirm_new_pwd": "Confirm New Password",
 
-  "manage_members": "Manage Members",
+  "manage_members": "Manage Contacts",
   "manage_tip": "Disabling your account means you can recover it at any time after taking this action.",
   "admin": "Admin",
   "user": "User",
   "copy_email": "Copy Email",
   "send_msg": "Send Message",
-  "remove": "Remove",
+  "remove": "Remove from Server",
+  "remove_from_contact": "Remove From Contact",
   "remove_account": "Remove Account",
   "remove_account_desc": "Are you sure remove this account?",
-  "remove_from_channel": "Remove From Channel"
+  "remove_from_channel": "Remove From Channel",
+
+  "search_not_found": "Not found, or this user is not allowed to be searched.",
+  "search_by_id": "Search by ID",
+  "search_by_email": "Search by Email"
 }

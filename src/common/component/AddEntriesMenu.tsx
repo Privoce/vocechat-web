@@ -3,18 +3,21 @@ import { hideAll } from "tippy.js";
 import { useAppSelector } from "../../app/store";
 import IconInvite from "../../assets/icons/add.person.svg";
 import IconMention from "../../assets/icons/mention.svg";
+import IconSearch from "../../assets/icons/search.svg";
 import ChannelIcon from "./ChannelIcon";
 import ChannelModal from "./ChannelModal";
 import UsersModal from "./UsersModal";
 import InviteModal from "./InviteModal";
 import { useTranslation } from "react-i18next";
+import SearchUser from "./SearchUser";
+import ServerVersionChecker from "./ServerVersionChecker";
 
 export default function AddEntriesMenu() {
   const { t } = useTranslation();
   const currentUser = useAppSelector((store) => store.authData.user);
   const [isPrivate, setIsPrivate] = useState(false);
   const [inviteModalVisible, setInviteModalVisible] = useState(false);
-
+  const [searchModalVisible, setSearchModalVisible] = useState(false);
   const [channelModalVisible, setChannelModalVisible] = useState(false);
   const [usersModalVisible, setUsersModalVisible] = useState(false);
   const toggleInviteModalVisible = () => {
@@ -23,6 +26,14 @@ export default function AddEntriesMenu() {
         hideAll();
       }
       return !prev;
+    });
+  };
+  const toggleSearchModalVisible = () => {
+    setSearchModalVisible((prevVisible) => {
+      if (!prevVisible) {
+        hideAll();
+      }
+      return !prevVisible;
     });
   };
   const toggleUsersModalVisible = () => {
@@ -66,10 +77,17 @@ export default function AddEntriesMenu() {
           <IconInvite className={iconClass} />
           {t("action.invite_people")}
         </li>
+        <ServerVersionChecker version="0.3.7" empty={true}>
+          <li className={itemClass} onClick={toggleSearchModalVisible}>
+            <IconSearch className={iconClass} />
+            {t("action.search_people")}
+          </li>
+        </ServerVersionChecker>
       </ul>
       {channelModalVisible && <ChannelModal personal={isPrivate} closeModal={handleCloseModal} />}
       {usersModalVisible && <UsersModal closeModal={toggleUsersModalVisible} />}
       {inviteModalVisible && <InviteModal closeModal={toggleInviteModalVisible} />}
+      {searchModalVisible && <SearchUser closeModal={toggleSearchModalVisible} />}
     </>
   );
 }

@@ -2,18 +2,19 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 // import toast from "react-hot-toast";
 import baseQuery from "./base.query";
 import { updateAutoDeleteSetting, updateMute } from "../slices/footprint";
-import { fillUsers } from "../slices/users";
+import { fillUsers, updateContactStatus as updateStatus } from "../slices/users";
 import BASE_URL, { ContentTypes } from "../config";
 import { onMessageSendStarted } from "./handlers";
-import { AutoDeleteMsgDTO, BotAPIKey, User, UserCreateDTO, UserDTO, UserForAdmin, UserForAdminDTO } from "../../types/user";
+import { AutoDeleteMsgDTO, BotAPIKey, ContactAction, ContactResponse, ContactStatus, User, UserCreateDTO, UserDTO, UserForAdmin, UserForAdminDTO } from "../../types/user";
 import { ContentTypeKey, MuteDTO } from "../../types/message";
+import { RootState } from "../store";
 
 export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery,
   endpoints: (builder) => ({
     getUsers: builder.query<User[], void>({
-      query: () => ({ url: `user` }),
+      query: () => ({ url: `/user` }),
       transformResponse: (data: User[]) => {
         return data.map((user) => {
           return {
@@ -25,12 +26,38 @@ export const userApi = createApi({
           };
         });
       },
+      async onQueryStarted(data, { dispatch, queryFulfilled, getState }) {
+        try {
+          const { data: users } = await queryFulfilled;
+          const { authData: { user: loginUser } } = getState() as RootState;
+          dispatch(fillUsers(users.map((u) => {
+            const status = loginUser?.uid == u.uid ? "added" : "";
+            return {
+              ...u,
+              status
+            };
+          })));
+        } catch {
+          console.log("get user list error");
+        }
+      }
+    }),
+    getContacts: builder.query<ContactResponse[], void>({
+      query: () => ({ url: `/user/contacts` }),
       async onQueryStarted(data, { dispatch, queryFulfilled }) {
         try {
           const { data: users } = await queryFulfilled;
-          dispatch(fillUsers(users));
+          const payloads = users.map((c) => {
+            const uid = c.target_uid;
+            const status = c.contact_info.status;
+            return {
+              uid,
+              status
+            };
+          });
+          dispatch(updateStatus(payloads));
         } catch {
-          console.log("get user list error");
+          console.log("get contact list error");
         }
       }
     }),
@@ -42,6 +69,27 @@ export const userApi = createApi({
         url: `/admin/user`,
         body: data,
         method: "POST"
+      })
+    }),
+    searchUser: builder.mutation<User, { search_type: "id" | "email", keyword: string }>({
+      query: (input) => ({
+        url: `/user/search`,
+        body: input,
+        method: "POST"
+      })
+    }),
+    pinChat: builder.mutation<void, { uid: number } | { gid: number }>({
+      query: (data) => ({
+        url: `/user/pin_chat`,
+        method: "POST",
+        body: { target: data }
+      })
+    }),
+    unpinChat: builder.mutation<void, { uid: number } | { gid: number }>({
+      query: (data) => ({
+        url: `/user/unpin_chat`,
+        method: "POST",
+        body: { target: data }
       })
     }),
     updateUser: builder.mutation<UserForAdmin, UserForAdminDTO>({
@@ -75,6 +123,28 @@ export const userApi = createApi({
       }
     }),
 
+    updateContactStatus: builder.mutation<void, { action: ContactAction, target_uid: number }>({
+      query: (payload) => ({
+        url: `/user/update_contact_status`,
+        method: "POST",
+        body: payload
+      }),
+      async onQueryStarted(data, { dispatch, queryFulfilled }) {
+        const map = {
+          "add": "added",
+          "block": "blocked",
+          "remove": "",
+          "unblock": "",
+        };
+        try {
+          await queryFulfilled;
+          const status = map[data.action] as ContactStatus;
+          dispatch(updateStatus({ uid: data.target_uid, status }));
+        } catch (error) {
+          console.log("update mute failed", error);
+        }
+      }
+    }),
     updateMuteSetting: builder.mutation<void, MuteDTO>({
       query: (data) => ({
         url: `/user/mute`,
@@ -152,6 +222,7 @@ export const userApi = createApi({
         body: type == "file" ? JSON.stringify(content) : content
       }),
       async onQueryStarted(param1, param2) {
+        // @ts-ignore
         await onMessageSendStarted.call(this, param1, param2, "user");
       }
     }),
@@ -160,6 +231,7 @@ export const userApi = createApi({
 });
 
 export const {
+  useLazyGetUsersQuery,
   useGetUserByAdminQuery,
   useUpdateAvatarByAdminMutation,
   useUpdateAutoDeleteMsgMutation,
@@ -169,10 +241,13 @@ export const {
   useLazyDeleteUserQuery,
   useUpdateInfoMutation,
   useUpdateAvatarMutation,
-  useGetUsersQuery,
-  useLazyGetUsersQuery,
+  useLazyGetContactsQuery,
   useSendMsgMutation,
   useCreateBotAPIKeyMutation,
   useLazyDeleteBotAPIKeyQuery,
-  useGetBotAPIKeysQuery
+  useGetBotAPIKeysQuery,
+  useSearchUserMutation,
+  useUpdateContactStatusMutation,
+  usePinChatMutation,
+  useUnpinChatMutation
 } = userApi;

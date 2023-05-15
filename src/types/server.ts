@@ -2,7 +2,7 @@
 import { PriceType } from "./common";
 import { User } from "./user";
 
-export interface Server {
+export interface Server extends SystemCommon {
   name: string;
   description: string;
 }

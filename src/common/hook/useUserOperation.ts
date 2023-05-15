@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { useNavigate, useMatch } from "react-router-dom";
 import { hideAll } from "tippy.js";
 import { useRemoveMembersMutation } from "../../app/services/channel";
-import { useLazyDeleteUserQuery } from "../../app/services/user";
+import { useLazyDeleteUserQuery, useUpdateContactStatusMutation } from "../../app/services/user";
 // import useConfig from "./useConfig";
 import useCopy from "./useCopy";
 import { useAppSelector } from "../../app/store";
@@ -18,6 +18,7 @@ const useUserOperation = ({ uid, cid }: IProps) => {
   const { t: ct } = useTranslation();
   const [passedUid, setPassedUid] = useState<number | undefined>(undefined);
   const isUserDetailPath = useMatch(`/users/${uid}`);
+  const [updateContactStatus] = useUpdateContactStatusMutation();
   const [removeUser, { isSuccess: removeUserSuccess }] = useLazyDeleteUserQuery();
   const [removeInChannel, { isSuccess: removeSuccess }] = useRemoveMembersMutation();
   const navigateTo = useNavigate();
@@ -71,6 +72,19 @@ const useUserOperation = ({ uid, cid }: IProps) => {
   const startChat = () => {
     navigateTo(`/chat/dm/${uid}`);
   };
+  const removeFromContact = () => {
+    if (uid) {
+      updateContactStatus({ target_uid: uid, action: "remove" });
+    }
+  };
+  const blockThisContact = () => {
+    if (uid === undefined) return;
+    updateContactStatus({ target_uid: uid, action: "block" });
+  };
+  const unblockThisContact = () => {
+    if (uid === undefined) return;
+    updateContactStatus({ target_uid: uid, action: "unblock" });
+  };
 
   const isAdmin = !!loginUser?.is_admin;
   const loginUid = loginUser?.uid;
@@ -81,8 +95,16 @@ const useUserOperation = ({ uid, cid }: IProps) => {
     (isAdmin || channel?.owner == loginUid) &&
     uid != channel?.owner;
   const canRemove: boolean = isAdmin && loginUid != uid && !cid && uid !== 1;
+  const canBlock: boolean = loginUid != uid;
+  const canRemoveFromContact: boolean = loginUid != uid;
   const canInviteChannel = !!cid && (loginUser?.is_admin || channel?.owner == loginUser?.uid);
   return {
+    removeFromContact,
+    canBlock,
+    canRemoveFromContact,
+    blocked: user?.status == "blocked",
+    blockThisContact,
+    unblockThisContact,
     canInviteChannel,
     canDeleteChannel,
     canRemove,

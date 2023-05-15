@@ -102,8 +102,13 @@ const baseQueryWithTokenCheck = async (args: any, api: any, extraOptions: any) =
           }
         }
         break;
-      case 403:
-        toast.error("Request Not Allowed");
+      case 403: {
+        const whiteList403 = ["sendMsg"];
+        if (!whiteList403.includes(api.endpoint)) {
+          toast.error("Request Not Allowed");
+        }
+      }
+
         break;
       case 404:
         {

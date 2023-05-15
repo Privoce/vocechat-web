@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { isNull, omitBy } from "lodash";
 import BASE_URL from "../config";
-import { User } from "../../types/user";
+import { Contact, ContactStatus } from "../../types/user";
 import { UserLog, UserState } from "../../types/sse";
 
 type DMAside = "voice" | null;
-export interface StoredUser extends User {
+export interface StoredUser extends Contact {
   online?: boolean;
   voice?: boolean;
   avatar?: string;
@@ -16,7 +16,6 @@ export interface State {
   ids: number[];
   byId: { [id: number]: StoredUser };
 }
-
 const initialState: State = {
   ids: [],
   byId: {}
@@ -69,6 +68,7 @@ const usersSlice = createSlice({
                   ? ""
                   : `${BASE_URL}/resource/avatar?uid=${uid}&t=${rest.avatar_updated_at}`,
               create_by: "", // todo: missing properties create_by
+              status: state.byId[uid]?.status ?? "",
               ...rest
             };
             const idx = state.ids.findIndex((i) => i == uid);
@@ -98,9 +98,17 @@ const usersSlice = createSlice({
           state.byId[uid]!.online = online;
         }
       });
+    },
+    updateContactStatus(state, action: PayloadAction<{ uid: number, status: ContactStatus } | { uid: number, status: ContactStatus }[]>) {
+      const arr = Array.isArray(action.payload) ? action.payload : [action.payload];
+      arr.forEach((data) => {
+        if (state.byId[data.uid]) {
+          state.byId[data.uid]!.status = data.status;
+        }
+      });
     }
   }
 });
 
-export const { resetUsers, fillUsers, updateUsersByLogs, updateUsersStatus } = usersSlice.actions;
+export const { updateContactStatus, resetUsers, fillUsers, updateUsersByLogs, updateUsersStatus } = usersSlice.actions;
 export default usersSlice.reducer;

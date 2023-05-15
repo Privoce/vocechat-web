@@ -72,10 +72,7 @@ function ChatPage() {
         )}>
           <Server readonly={isGuest} />
           {isGuest ? <GuestSessionList /> : <SessionList tempSession={tmpSession} />}
-
-          {isGuest ? <footer className="hidden md:block py-1 text-xs text-gray-300 dark:text-gray-700 text-center">
-            Host your own <a href="https://voce.chat" target="_blank" rel="noopener noreferrer" className="text-gray-400  dark:text-gray-600">voce.chat</a>
-          </footer> : <RTCWidget id={+contextId} context={context} />}
+          <RTCWidget id={+contextId} context={context} />
         </div>
         <div className={clsx(`right-container md:rounded-r-2xl w-full bg-white dark:!bg-gray-700`, placeholderVisible && "h-full flex-center", isMainPath && "hidden md:flex")}>
           {voiceFullscreenVisible && <VoiceFullscreen id={contextId} context={context} />}

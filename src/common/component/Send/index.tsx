@@ -18,6 +18,8 @@ import useDraft from "../../hook/useDraft";
 import useUploadFile from "../../hook/useUploadFile";
 import { useAppDispatch, useAppSelector } from "../../../app/store";
 import TextInput from "../TextInput";
+import useUserOperation from "../../hook/useUserOperation";
+import StyledButton from "../styled/Button";
 
 const Modes = {
   text: "text",
@@ -33,9 +35,11 @@ const Send: FC<IProps> = ({
   id
 }) => {
   const { t } = useTranslation("chat");
+  const { unblockThisContact, blocked } = useUserOperation({ uid: context == "user" ? id : undefined, cid: context == "channel" ? id : undefined });
   const { resetStageFiles } = useUploadFile({ context, id });
   const { getDraft, getUpdateDraft } = useDraft({ context, id });
   const editor = useMixedEditor(`${context}_${id}`);
+  const [msgs, setMsgs] = useState([]);
   const [markdownEditor, setMarkdownEditor] = useState(null);
   const [markdownFullscreen, setMarkdownFullscreen] = useState(false);
   const dispatch = useAppDispatch();
@@ -57,7 +61,7 @@ const Send: FC<IProps> = ({
       mode: store.ui.inputMode,
       from_uid: store.authData.user?.uid,
       replying_mid: store.message.replying[`${context}_${id}`],
-      uploadFiles: store.ui.uploadFiles[`${context}_${id}`]
+      uploadFiles: store.ui.uploadFiles[`${context}_${id}`] ?? []
     };
   });
   const { sendMessage } = useSendMessage({ context, from: from_uid, to: id });
@@ -76,12 +80,14 @@ const Send: FC<IProps> = ({
       editor.insertText(emoji);
     }
   };
-  const handleSendMessage = async (msgs = []) => {
+  const handleSendMessage = async () => {
     if (!id) return;
+    editor.resetInput();
     if (msgs && msgs.length) {
       // send text msgs
       for await (const msg of msgs) {
         const { type: content_type, content, properties = {} } = msg;
+        if ((content as string).trim() === '') continue; // 空消息不发送
         properties.local_id = properties.local_id ?? +new Date();
         await sendMessage({
           id,
@@ -94,7 +100,7 @@ const Send: FC<IProps> = ({
       }
     }
     // send files
-    if (uploadFiles && uploadFiles.length !== 0) {
+    if (uploadFiles.length !== 0) {
       uploadFiles.forEach((fileInfo) => {
         const ts = +new Date();
         const { url, name, size, type } = fileInfo;
@@ -138,6 +144,12 @@ const Send: FC<IProps> = ({
   const members =
     context == "channel" ? (channelsData[id]?.is_public ? uids : channelsData[id]?.members) : [];
   const isMarkdownMode = mode == Modes.markdown;
+  if (context == "user" && blocked) {
+    return <div className="p-5 bg-gray-200 rounded-lg w-full dark:bg-gray-600 text-red-300">
+      {t("contact_block_tip")}
+      <StyledButton className="mini ml-4" onClick={unblockThisContact}>{t("unblock")}</StyledButton>
+    </div>;
+  }
   return (
     <>
       {/* mobile input */}
@@ -154,6 +166,7 @@ const Send: FC<IProps> = ({
           <EmojiPicker selectEmoji={insertEmoji} />
           {mode == Modes.text && (
             <MixedInput
+              updateMessages={setMsgs}
               updateDraft={getUpdateDraft()}
               initialValue={getDraft()}
               members={members}
@@ -163,6 +176,8 @@ const Send: FC<IProps> = ({
             />
           )}
           <Toolbar
+            sendMessages={handleSendMessage}
+            sendVisible={msgs.length > 0 || uploadFiles.length > 0}
             context={context}
             to={id}
             mode={mode}

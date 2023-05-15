@@ -38,6 +38,7 @@ const VoiceMessage = ({ file_path }: { file_path: string }) => {
             hideScrollbar: true,
             // mediaControls: true,
             normalize: true,
+            responsive: true
         });
         wave.load(audioSrc);
 
@@ -63,6 +64,12 @@ const VoiceMessage = ({ file_path }: { file_path: string }) => {
                 const num = Math.ceil(dur);
                 const durDisplay = dayjs.duration(num, 'seconds').format('mm:ss');
                 setDuration(durDisplay);
+            }
+            // tricky
+            if (containerRef.current) {
+                const container = containerRef.current as HTMLDivElement;
+                const w = (container.querySelector("wave>canvas") as HTMLCanvasElement)?.width;
+                container.style.width = `${w}px`;
             }
         });
         VoiceMap[file_path] = wave;
@@ -103,11 +110,11 @@ const VoiceMessage = ({ file_path }: { file_path: string }) => {
     };
     const notReady = status !== "ready";
     return (
-        <div className={clsx("relative select-none flex items-center gap-2 p-2 rounded-lg max-w-sm", status === "error" ? "bg-red-200" : "bg-primary-100 dark:bg-primary-900")}>
+        <div className={clsx("relative whitespace-nowrap select-none flex items-center gap-2 p-2 rounded-lg max-w-sm", status === "error" ? "bg-red-200" : "bg-primary-100 dark:bg-primary-900")}>
             <button className='disabled:opacity-60' onClick={handleClick} disabled={notReady}>
                 {playing ? <IconPause className="stroke-primary-500" /> : <IconPlay className="stroke-primary-500" />}
             </button>
-            <div ref={containerRef} className={clsx('flex-1 h-8', notReady && "flex-center flex-1 whitespace-nowrap")} >
+            <div ref={containerRef} className={clsx('flex-1 h-8 min-w-[100px]')} >
                 {status == "loading" && <span className='text-xs'>Loading voice message...</span>}
                 {status == "error" && <span className='text-xs text-red-800'>Load voice message error</span>}
             </div>

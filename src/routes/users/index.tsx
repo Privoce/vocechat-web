@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { NavLink, useParams, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { ViewportList } from 'react-viewport-list';
@@ -12,6 +12,7 @@ import BlankPlaceholder from "../../common/component/BlankPlaceholder";
 import useFilteredUsers from "../../common/hook/useFilteredUsers";
 import clsx from "clsx";
 import GoBackNav from "../../common/component/GoBackNav";
+import SearchUser from "../../common/component/SearchUser";
 
 function UsersPage() {
   const ref = useRef<HTMLDivElement | null>(
@@ -19,6 +20,7 @@ function UsersPage() {
   );
   const dispatch = useDispatch();
   const { pathname } = useLocation();
+  const [modalVisible, setModalVisible] = useState(false);
   const { input, updateInput, users } = useFilteredUsers();
   const { user_id } = useParams();
   // 记住路由
@@ -28,7 +30,9 @@ function UsersPage() {
       dispatch(updateRememberedNavs({ key: "user", path: pathname }));
     };
   }, [pathname]);
-
+  const toggleModal = () => {
+    setModalVisible(prev => !prev);
+  };
   if (!users) return null;
   const isUserDetail = !!user_id;
   return (
@@ -36,7 +40,8 @@ function UsersPage() {
       <div className={clsx("md:rounded-l-2xl bg-white dark:bg-gray-800 relative flex flex-col w-full md:w-auto md:min-w-[268px] shadow-[inset_-1px_0px_0px_rgba(0,_0,_0,_0.1)]",
         isUserDetail && "hidden md:flex"
       )}>
-        <Search input={input} updateInput={updateInput} />
+        <Search input={input} updateInput={updateInput} openModal={toggleModal} />
+        {modalVisible && <SearchUser closeModal={toggleModal} />}
         <div className="flex flex-col md:gap-1 px-2 pt-3 pb-20 md:py-3 overflow-scroll" ref={ref}>
           <ViewportList
             viewportRef={ref}

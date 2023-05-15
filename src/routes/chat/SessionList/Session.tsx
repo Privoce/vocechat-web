@@ -21,11 +21,13 @@ interface IProps {
   type?: ChatContext;
   id: number;
   mid: number;
+  pinned?: boolean;
   setDeleteChannelId: (param: number) => void;
   setInviteChannelId: (param: number) => void;
 }
 const Session: FC<IProps> = ({
   type = "dm",
+  pinned = false,
   id,
   mid,
   setDeleteChannelId,
@@ -85,7 +87,7 @@ const Session: FC<IProps> = ({
   useEffect(() => {
     const tmp = type == "dm" ? userData[id] : channelData[id];
     if (!tmp) return;
-    if ("avatar" in tmp) {
+    if (type == "dm") {
       // user
       const { name, avatar } = tmp;
       setData({ name, icon: avatar, mid, is_public: true });
@@ -110,13 +112,14 @@ const Session: FC<IProps> = ({
   console.log("unreads", unreads, isCurrentPath);
 
   return (
-    <li className="session">
+    <li className={clsx("session")}>
       <ContextMenu
         visible={contextMenuVisible}
         hide={hideContextMenu}
         context={type}
         id={id}
         mid={mid}
+        pinned={pinned}
         setInviteChannelId={setInviteChannelId}
         deleteChannel={setDeleteChannelId}
       >

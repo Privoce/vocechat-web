@@ -32,11 +32,10 @@ import LazyIt from './lazy';
 import store, { useAppSelector } from "../app/store";
 import useDeviceToken from "../common/component/Notification/useDeviceToken";
 import { vapidKey } from "../app/config";
-import useTabBroadcast from "../common/hook/useTabBroadcast";
-import InactiveScreen from "../common/component/InactiveScreen";
+import RequireSingleTab from "../common/component/RequireSingleTab";
+import InvitePrivate from "./invitePrivate";
 let toastId: string;
 const PageRoutes = () => {
-
   const {
     ui: { online },
     fileMessages
@@ -59,6 +58,7 @@ const PageRoutes = () => {
     <HashRouter>
       <Routes>
         <Route path="/guest_login" element={<LazyIt><GuestLogin /></LazyIt>} />
+        <Route path="/invite_private/:channel_id" element={<LazyIt><RequireAuth><InvitePrivate /></RequireAuth></LazyIt>} />
         <Route path="/cb/:type/:payload" element={<LazyIt><CallbackPage /></LazyIt>} />
         <Route path="/oauth/:token" element={<LazyIt><OAuthPage /></LazyIt>} />
         <Route
@@ -112,7 +112,10 @@ const PageRoutes = () => {
           element={
             <LazyIt>
               <RequireAuth>
-                <HomePage />
+                {/* 只允许活跃一个tab标签 */}
+                <RequireSingleTab>
+                  <HomePage />
+                </RequireSingleTab>
               </RequireAuth>
             </LazyIt>
           }
@@ -199,11 +202,11 @@ const PageRoutes = () => {
 };
 
 export default function ReduxRoutes() {
-  const { tabActive } = useTabBroadcast();
+
   return (
     <Provider store={store}>
       <Meta />
-      {tabActive ? <PageRoutes /> : <InactiveScreen />}
+      <PageRoutes />
     </Provider>
   );
 }

@@ -17,13 +17,15 @@ import {
   updateReadChannels,
   updateReadUsers,
   updateMute,
-  updateAutoDeleteSetting
+  updateAutoDeleteSetting,
+  upsertPinChats,
+  removePinChats
 } from "../../../app/slices/footprint";
-import { updateUsersByLogs, updateUsersStatus } from "../../../app/slices/users";
+import { updateContactStatus, updateUsersByLogs, updateUsersStatus } from "../../../app/slices/users";
 import { resetAuthData, updateLoginUser, updateRoleChanged } from "../../../app/slices/auth.data";
 import chatMessageHandler from "./chat.handler";
 import { useAppDispatch, useAppSelector } from "../../../app/store";
-import { ServerEvent, UsersStateEvent } from "../../../types/sse";
+import { ServerEvent, UserSettingsChangedEvent, UsersStateEvent } from "../../../types/sse";
 import { useRenewMutation } from "../../../app/services/auth";
 import { getLocalAuthData } from "../../utils";
 import { removeUserSession } from "../../../app/slices/message.user";
@@ -149,6 +151,11 @@ export default function useStreaming() {
           dispatch(clearChannelMessage(gid));
           break;
         }
+        case "pinned_chats": {
+          const { chats } = data;
+          dispatch(upsertPinChats({ pins: chats, override: true }));
+          break;
+        }
         case "users_snapshot": {
           const { version } = data;
           dispatch(updateUsersVersion(version));
@@ -187,6 +194,20 @@ export default function useStreaming() {
               case "read_index_users":
                 dispatch(updateReadUsers(data[key]));
                 break;
+              case "add_pin_chats": {
+                const pins = (data as UserSettingsChangedEvent).add_pin_chats ?? [];
+                if (pins.length) {
+                  dispatch(upsertPinChats({ pins }));
+                }
+              }
+                break;
+              case "remove_pin_chats": {
+                const pins = (data as UserSettingsChangedEvent).remove_pin_chats ?? [];
+                if (pins.length) {
+                  dispatch(removePinChats(pins));
+                }
+              }
+                break;
               case "add_mute_users":
               case "mute_users":
               case "add_mute_groups":
@@ -198,6 +219,31 @@ export default function useStreaming() {
                     dispatch(updateMute({ [_key]: arr }));
                   }
                 }
+                break;
+              case "remove_contacts": {
+                const arr = (data as UserSettingsChangedEvent).remove_contacts ?? [];
+                if (arr.length) {
+                  dispatch(updateContactStatus(
+                    arr.map(
+                      (uid: number) => {
+                        return { uid, status: "" };
+                      }
+                    )
+                  ));
+                }
+              }
+                break;
+              case "add_contacts": {
+                const arr = (data as UserSettingsChangedEvent).add_contacts ?? [];
+                if (arr.length) {
+                  const transformed = arr.map(
+                    ({ target_uid, info: { status } }) => {
+                      return { uid: target_uid, status };
+                    }
+                  );
+                  dispatch(updateContactStatus(transformed));
+                }
+              }
                 break;
               case "remove_mute_users":
               case "remove_mute_groups":

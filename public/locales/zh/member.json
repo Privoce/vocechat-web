@@ -12,14 +12,19 @@
   "current_pwd": "当前密码",
   "new_pwd": "新密码",
   "confirm_new_pwd": "确认密码",
-  "manage_members": "成员管理",
-  "manage_tip": "请在此管理你的成员",
+  "manage_members": "联系人管理",
+  "manage_tip": "请在此管理你的联系人",
   "admin": "管理员",
   "user": "普通用户",
   "copy_email": "复制邮箱",
   "send_msg": "发消息",
-  "remove": "删除",
+  "remove": "从服务器删除",
+  "remove_from_contact": "从联系人中移除",
   "remove_account": "注销账号",
   "remove_account_desc": "确定永久注销该账号？",
-  "remove_from_channel": "从频道移除"
+  "remove_from_channel": "从频道移除",
+
+  "search_not_found": "用户不存在，或者不允许搜索",
+  "search_by_id": "用户ID",
+  "search_by_email": "用户邮箱"
 }

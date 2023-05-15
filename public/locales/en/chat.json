@@ -40,6 +40,8 @@
 
   "new_msg": "{{num}} new messages",
   "mark_read": "Mark As Read",
+  "pin_chat": "Sticky on top",
+  "unpin_chat": "Unsticky",
 
   "reply_msg_del": "This message has been deleted.",
 
@@ -54,5 +56,10 @@
   "unmute": "Unmute",
   "camera_on": "Turn on camera",
   "camera_off": "Turn off camera",
-  "leave_voice": "Leave Voice Chat"
+  "leave_voice": "Leave Voice Chat",
+  "add_contact": "Add to contacts",
+  "block": "Block",
+  "unblock": "Unblock",
+  "contact_tip": "This user is not in your contact",
+  "contact_block_tip": "This user has been blocked by you"
 }

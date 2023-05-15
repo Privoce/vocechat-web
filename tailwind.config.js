@@ -23,9 +23,18 @@ module.exports = {
         }
       },
       animation: {
-        speaking: "speaking 0.5s infinite cubic-bezier(.36, .11, .89, .32) alternate"
+        speaking: "speaking 0.5s infinite cubic-bezier(.36, .11, .89, .32) alternate",
+        zoomIn: "zoomIn 0.2s ease-in forwards"
       },
       keyframes: {
+        zoomIn: {
+          from: {
+            transform: `scale(0.2)`
+          },
+          to: {
+            transform: `scale(1)`
+          }
+        },
         fadeInUp: {
           from: {
             opacity: 0,

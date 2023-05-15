@@ -1,4 +1,4 @@
-import { User } from "./user";
+import { ContactInfo, User } from "./user";
 import { Channel } from "./channel";
 import { ContentType } from "./message";
 
@@ -52,7 +52,7 @@ export type AutoDeleteMsgForUser = {
 export type AutoDeleteMsgForGroup = {
   gid: number; expires_in: number | null
 }
-export interface UserSettingsEvent {
+export type UserSettingsEvent = {
   type: "user_settings";
   mute_users?: MuteUser[];
   mute_groups?: MuteChannel[];
@@ -68,13 +68,17 @@ export type AutoDeleteSettingForChannels = {
   burn_after_reading_groups: AutoDeleteMsgForGroup[]
 }
 export type AutoDeleteMessageSettingDTO = AutoDeleteSettingForUsers | AutoDeleteSettingForChannels
-export interface UserSettingsChangedEvent {
+export type UserSettingsChangedEvent = {
   type: "user_settings_changed";
   from_device?: string;
   add_mute_users?: MuteUser[];
   remove_mute_users?: number[];
   add_mute_groups?: MuteChannel[];
+  add_contacts?: { target_uid: number, info: ContactInfo }[];
+  remove_contacts?: number[];
   remove_mute_groups?: number[];
+  add_pin_chats?: PinChat[];
+  remove_pin_chats?: PinChatTarget[];
   read_index_users?: { uid: number; mid: number }[];
   read_index_groups?: { gid: number; mid: number }[];
   burn_after_reading_users?: AutoDeleteMsgForUser[];
@@ -84,6 +88,18 @@ export interface UserSettingsChangedEvent {
 export interface RelatedGroupsEvent {
   type: "related_groups";
   groups: Channel[];
+}
+export type PinChatTargetUser = {
+  uid: number;
+};
+export type PinChatTargetChannel = {
+  gid: number;
+};
+export type PinChatTarget = PinChatTargetUser | PinChatTargetChannel;
+export type PinChat = { target: PinChatTarget[], updated_at: number }
+export interface PinnedChatsEvent {
+  type: "pinned_chats";
+  chats: PinChat[];
 }
 
 export interface NormalMessage {
@@ -215,4 +231,4 @@ export type ServerEvent =
   | PinnedMessageUpdatedEvent
   | HeartbeatEvent
   | GroupClearEvent
-  ;
+  | PinnedChatsEvent;
