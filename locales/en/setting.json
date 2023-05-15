@@ -41,6 +41,8 @@
     "delete_desc": "Are you sure want to delete this user?"
   },
   "overview": {
+    "title_feat": "Features",
+    "title_feat_desc": "you can toggle features as you need",
     "name": "Server Name",
     "desc": "Server Description",
     "upload_desc": "Minimum size is 128x128, We recommend at least 512x512 for the server. Max size limited to 5M.",
