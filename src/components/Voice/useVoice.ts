@@ -52,7 +52,11 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
                 // Publish the local audio track in the channel.
                 await window.VOICE_CLIENT.publish(localAudioTrack);
                 // play the join audio
-                audioJoin.play();
+                try {
+                    await audioJoin.play();
+                } catch (error) {
+                    console.warn("play join sound failed!", error);
+                }
                 console.log("Publish success!,joined the channel");
                 dispatch(updateVoicingInfo({
                     deafen: false,

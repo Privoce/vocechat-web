@@ -2,7 +2,7 @@ import AgoraRTC from 'agora-rtc-sdk-ng';
 import { memo, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useGetAgoraChannelsQuery, useGetAgoraStatusQuery, useLazyGetAgoraUsersByChannelQuery } from '../../app/services/server';
-import { addVoiceMember, removeVoiceMember, updateCalling, updateConnectionState, updateVoicingMember, updateVoicingNetworkQuality } from '../../app/slices/voice';
+import { addVoiceMember, removeVoiceMember, updateCallInfo, updateConnectionState, updateVoicingMember, updateVoicingNetworkQuality } from '../../app/slices/voice';
 import { useAppSelector } from '../../app/store';
 import { playAgoraVideo } from '../../utils';
 import useVoice from './useVoice';
@@ -86,7 +86,7 @@ const Voice = () => {
                             window.VIDEO_TRACK_MAP[+user.uid] = null;
                             if (voicingInfo && voicingInfo.context == "dm") {
                                 // 有人离开，就断开
-                                dispatch(updateCalling({ from: 0 }));
+                                dispatch(updateCallInfo({ from: 0 }));
                             }
                         }
                             break;
@@ -161,6 +161,7 @@ const Voice = () => {
 
         };
     }, [voicingInfo]);
+
     useEffect(() => {
         // 有人呼叫我
         const callMeList = voiceList.filter(item => item.context == "dm" && item.id == loginUid);
@@ -168,14 +169,18 @@ const Voice = () => {
             const [firstCall] = callMeList;
             const { memberCount, channelName, id } = firstCall;
             if (memberCount == 1) {
+                // 呼叫的人在频道里
                 getUsersByChannel(channelName).then(resp => {
                     const [uid] = resp.data ?? [];
                     if (uid) {
-                        dispatch(updateCalling({ from: uid, to: id }));
+                        dispatch(updateCallInfo({ from: uid, to: id }));
                     }
                 });
             }
         }
+        // else {
+        //     dispatch(updateCallInfo({ from: 0, to: 0, calling: false }));
+        // }
     }, [voiceList, loginUid]);
     // return <DMCalling uid={1} sendByMe={calling !== loginUid} />;
     if (from !== 0) return <DMCalling from={from} to={to} />;

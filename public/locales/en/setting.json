@@ -42,7 +42,6 @@
   },
   "overview": {
     "title_feat": "Features",
-    "title_feat_desc": "you can toggle features as you need",
     "name": "Server Name",
     "desc": "Server Description",
     "upload_desc": "Minimum size is 128x128, We recommend at least 512x512 for the server. Max size limited to 5M.",
@@ -85,9 +84,9 @@
     },
     "chat_layout": {
       "title": "Chat Layout",
-      "desc": "message self send on the left or right",
+      "desc": "Which side to show messages sent by yourself",
       "left": "Left",
-      "self_right": "Self Right"
+      "self_right": "Right"
     },
     "contact_verify": {
       "title": "Contact Verification",

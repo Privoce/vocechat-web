@@ -13,7 +13,7 @@ import IconMic from '@/assets/icons/mic.on.svg';
 import IconCamera from '@/assets/icons/camera.svg';
 import IconCameraOff from '@/assets/icons/camera.off.svg';
 import IconScreen from '@/assets/icons/share.screen.svg';
-import { VoicingInfo, updateCalling } from "@/app/slices/voice";
+import { VoicingInfo, updateCallInfo } from "@/app/slices/voice";
 import { useVoice } from "@/components/Voice";
 import { playAgoraVideo } from "@/utils";
 import Avatar from "@/components/Avatar";
@@ -32,13 +32,13 @@ type BlockProps = {
     to: VoicingMember
 }
 const VoicingBlocks = ({ sendByMe, connected, from, to }: BlockProps) => {
-
     const blocks = [from, to].map(({ id, speaking, name, avatar, video }, idx) => {
-        const showWaiting = idx == 1 && !connected && sendByMe;
+        const showWaiting = idx == 1 && !connected && !sendByMe;
+        const showToWaiting = idx == 1 && !connected && sendByMe;
         return <div key={id} className={clsx("relative flex-center", video ? "w-80 h-60 overflow-hidden rounded" : "")}>
-            <div className={clsx("w-20 h-20 flex shrink-0 relative transition-opacity", showWaiting && "animate-pulse")}>
+            <div className={clsx("w-20 h-20 flex shrink-0 relative transition-opacity", showToWaiting && "animate-pulse", showWaiting && "opacity-40")}>
                 {speaking && <div className={clsx("z-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 rounded-full bg-green-500 animate-speaking", "w-[86px] h-[86px]")}></div>}
-                {showWaiting && <div className={clsx("z-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gray-400", "w-[88px] h-[88px]")}></div>}
+                {showToWaiting && <div className={clsx("z-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gray-400", "w-[88px] h-[88px]")}></div>}
                 <Avatar
                     width={80}
                     height={80}
@@ -88,7 +88,7 @@ const DMVoice = ({ uid }: Props) => {
         if (sendByMe || voicingMembers.ids.length == 2) {
             leave();
         }
-        dispatch(updateCalling({ from: 0, to: 0 }));
+        dispatch(updateCallInfo({ from: 0, to: 0 }));
     };
     const handleAnswer = () => {
         joinVoice();
@@ -117,11 +117,11 @@ const DMVoice = ({ uid }: Props) => {
                 }} />
             </div>
             <div className={clsx("flex gap-3", connected ? "h-full items-end" : "")}>
-                <Tooltip tip={"Disconnect"} placement="top">
+                {(sendByMe || connected) && <Tooltip tip={"Disconnect"} placement="top">
                     <button onClick={handleCancel} className='flex-center bg-red-600 hover:bg-red-700 py-2 px-3 rounded-lg'>
                         <IconCallOff className="w-6 h-6" />
                     </button>
-                </Tooltip>
+                </Tooltip>}
                 {!sendByMe && !connected &&
                     <Tooltip tip={"Answer"} placement="top">
                         <button disabled={joining} onClick={handleAnswer} className='flex-center bg-green-600 hover:bg-green-700 py-2 px-3 rounded-lg'>

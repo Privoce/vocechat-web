@@ -10,7 +10,7 @@ import Tooltip from '../../../components/Tooltip';
 import { useVoice } from '../../../components/Voice';
 import { useGetAgoraStatusQuery } from '../../../app/services/server';
 import { ChatContext } from '../../../types/common';
-import { updateCalling } from '../../../app/slices/voice';
+import { updateCallInfo } from '../../../app/slices/voice';
 
 type Props = {
     context?: ChatContext
@@ -50,7 +50,7 @@ const VoiceChat = ({ id, context = "channel" }: Props) => {
         dispatch(context == "channel" ? updateChannelVisibleAside(data) : updateDMVisibleAside(data));
         // 实时显示calling box
         if (!joinedAtThisContext && context == "dm") {
-            dispatch(updateCalling({ from: loginUser?.uid ?? 0, to: id }));
+            dispatch(updateCallInfo({ from: loginUser?.uid ?? 0, to: id, calling: true }));
         }
     };
     if (!loginUser || !enabled) return null;

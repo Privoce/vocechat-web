@@ -30,6 +30,7 @@ import { useRenewMutation } from "@/app/services/auth";
 import { getLocalAuthData } from "@/utils";
 import { removeUserSession } from "@/app/slices/message.user";
 import { clearChannelMessage, removeChannelSession } from "@/app/slices/message.channel";
+import { updateCallInfo } from "@/app/slices/voice";
 
 const getQueryString = (params: { [key: string]: string }) => {
   const sp = new URLSearchParams();
@@ -149,6 +150,11 @@ export default function useStreaming() {
         case "group_message_cleared": {
           const { gid } = data;
           dispatch(clearChannelMessage(gid));
+          break;
+        }
+        case "user_calling": {
+          const { target, uid } = data;
+          dispatch(updateCallInfo({ from: uid, to: target, calling: true }));
           break;
         }
         case "pinned_chats": {

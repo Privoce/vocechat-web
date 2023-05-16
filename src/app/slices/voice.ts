@@ -38,6 +38,7 @@ export type VoiceInfo = {
 interface State {
   callingFrom: number,
   callingTo: number,
+  calling: boolean,
   voicing: VoicingInfo | null,
   voicingMembers: VoicingMembers,
   list: VoiceInfo[]
@@ -48,6 +49,7 @@ interface State {
 //   members: []
 // };
 const initialState: State = {
+  calling: false,
   callingFrom: 0,
   callingTo: 0,
   voicing: null,
@@ -64,10 +66,16 @@ const voiceSlice = createSlice({
   name: "voice",
   initialState,
   reducers: {
-    updateCalling(state, { payload }: PayloadAction<{ from: number, to?: number }>) {
-      const { from, to = 0 } = payload;
+    updateCallInfo(state, { payload }: PayloadAction<{ from: number, to?: number, calling?: boolean }>) {
+      const { from, to = 0, calling } = payload;
       state.callingFrom = from;
       state.callingTo = to;
+      if (typeof calling === "boolean") {
+        state.calling = calling;
+      }
+    },
+    updateCalling(state, { payload }: PayloadAction<boolean>) {
+      state.calling = payload;
     },
     updateVoicingInfo(state, { payload }: PayloadAction<VoicingInfo | null>) {
       if (payload) {
@@ -182,6 +190,7 @@ const voiceSlice = createSlice({
         });
       }
       state.voicing = null;
+      state.calling = false;
       state.voicingMembers = {
         ids: [],
         byId: {}
@@ -190,5 +199,5 @@ const voiceSlice = createSlice({
   }
 });
 
-export const { updateCalling, updatePin, updateConnectionState, addVoiceMember, removeVoiceMember, upsertVoiceList, updateVoicingInfo, updateVoicingNetworkQuality, updateVoicingMember } = voiceSlice.actions;
+export const { updateCalling, updateCallInfo, updatePin, updateConnectionState, addVoiceMember, removeVoiceMember, upsertVoiceList, updateVoicingInfo, updateVoicingNetworkQuality, updateVoicingMember } = voiceSlice.actions;
 export default voiceSlice.reducer;

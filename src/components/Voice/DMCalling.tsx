@@ -26,9 +26,10 @@ const DMCalling = ({ from, to = 0 }: Props) => {
     const dispatch = useDispatch();
     const { leave, joinVoice, joining } = useVoice({ id: to, context: "dm" });
     const containerRef = useRef(null);
-    const { voicingInfo, voicingMembers, fromUser, toUser, loginUser } = useAppSelector(store => {
+    const { calling, voicingMembers, fromUser, toUser, loginUser } = useAppSelector(store => {
         return {
-            voicingInfo: store.voice.voicing ?? {},
+            calling: store.voice.calling,
+            // voicingInfo: store.voice.voicing ?? {},
             voicingMembers: store.voice.voicingMembers,
             fromUser: store.users.byId[from],
             toUser: store.users.byId[to],
@@ -48,7 +49,8 @@ const DMCalling = ({ from, to = 0 }: Props) => {
         if (sendByMe || voicingMembers.ids.length == 2) {
             leave();
         }
-        dispatch(updateCalling({ from: 0, to: 0 }));
+        // 拒绝
+        dispatch(updateCalling(false));
     };
     const handleAnswer = () => {
         joinVoice();
@@ -58,7 +60,7 @@ const DMCalling = ({ from, to = 0 }: Props) => {
     const connected = voicingMembers.ids.length == 2;
     console.log("dm calling", !fromUser, !toUser, connected);
     const atChatPath = sendByMe ? pathname == `/chat/dm/${to}` : pathname == `/chat/dm/${from}`;
-    if (!fromUser || !toUser || connected || atChatPath) return null;
+    if (!fromUser || !toUser || connected || atChatPath || !calling) return null;
 
     return (
         <div ref={containerRef} className="fixed top-0 left-0 w-full h-screen z-[999] pointer-events-none flex items-center justify-end pr-10">

@@ -211,6 +211,11 @@ interface GroupClearEvent {
   type: "group_message_cleared";
   gid: number;
 }
+interface UserCallEvent {
+  type: "user_calling";
+  target: number;
+  uid: number
+}
 
 export type ServerEvent =
   | ReadyEvent
@@ -231,4 +236,5 @@ export type ServerEvent =
   | PinnedMessageUpdatedEvent
   | HeartbeatEvent
   | GroupClearEvent
-  | PinnedChatsEvent;
+  | PinnedChatsEvent
+  | UserCallEvent;
