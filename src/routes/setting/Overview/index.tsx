@@ -35,11 +35,14 @@ export default function Overview() {
   return (
     <div className="relative w-full md:w-[512px] flex flex-col gap-6">
       <Server />
+      {/* 设置前端url */}
+      <ServerVersionChecker version="0.3.3" empty={true}>
+        <FrontendURL />
+      </ServerVersionChecker>
       {isAdmin && (
         <>
           <div className="flex flex-col">
             <h4 className="font-bold text-gray-700 dark:text-white">{t("overview.title_feat")}</h4>
-            <p className="text-gray-400 text-xs">{t("overview.title_feat_desc")}</p>
           </div>
           {/* 注册开放与否 */}
           <SettingBlock title={t("overview.sign_up.title")} desc={t("overview.sign_up.desc")}>
@@ -75,10 +78,7 @@ export default function Overview() {
           <ServerVersionChecker version="0.3.7" empty={true}>
             <ContactVerification />
           </ServerVersionChecker>
-          {/* 设置前端url */}
-          <ServerVersionChecker version="0.3.3" empty={true}>
-            <FrontendURL />
-          </ServerVersionChecker>
+
 
         </>
       )}

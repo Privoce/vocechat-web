@@ -11,7 +11,7 @@ export default function RegContainer() {
 
   return (
     <div className="flex-center h-screen overflow-x-hidden overflow-y-auto dark:bg-gray-700">
-      <div className="py-8 px-10 shadow-md rounded-xl">
+      <div className="py-8 px-10 shadow-md rounded-xl max-h-[95vh] overflow-y-auto overflow-x-hidden">
         <Outlet context={{ token }} />
       </div>
     </div>
