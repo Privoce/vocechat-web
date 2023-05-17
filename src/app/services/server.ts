@@ -24,7 +24,7 @@ import {
 } from "@/types/server";
 import { Channel } from "@/types/channel";
 import { ContentTypeKey } from "@/types/message";
-import { upsertVoiceList } from "../slices/voice";
+import { updateCallInfo, upsertVoiceList } from "../slices/voice";
 
 const defaultExpireDuration = 2 * 24 * 60 * 60;
 
@@ -119,8 +119,9 @@ export const serverApi = createApi({
     }),
     getAgoraChannels: builder.query<AgoraVoicingListResponse, { page_no: number, page_size: number }>({
       query: (param = { page_no: 0, page_size: 100 }) => ({ url: `/admin/agora/channel/${param.page_no}/${param.page_size}` }),
-      async onQueryStarted(data, { dispatch, queryFulfilled }) {
+      async onQueryStarted(data, { dispatch, queryFulfilled, getState }) {
         try {
+          const { voice: { callingFrom }, authData } = getState() as RootState;
           const { data: resp } = await queryFulfilled;
           const { success } = resp;
           if (success) {
@@ -136,6 +137,12 @@ export const serverApi = createApi({
               };
             });
             dispatch(upsertVoiceList(arr));
+            const hasMyself = arr.some(data => data.context === "dm" && data.id == authData?.user?.uid);
+            const sendByMe = callingFrom && callingFrom === authData?.user?.uid;
+            // reset dm call setting
+            if (callingFrom && !sendByMe && !hasMyself) {
+              dispatch(updateCallInfo({ from: 0, to: 0, calling: false }));
+            }
           }
         } catch {
           console.error("get voice list error");

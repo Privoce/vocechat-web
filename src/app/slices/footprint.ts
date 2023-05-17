@@ -6,7 +6,7 @@ import { resetAuthData } from "./auth.data";
 import { ChatContext } from "@/types/common";
 
 type ChannelAside = "members" | "voice" | "voice_fullscreen" | null;
-type DMAside = "voice" | null;
+type DMAside = "voice" | "voice_fullscreen" | null;
 export interface State {
   og: { [url: string]: OG }
   usersVersion: number;

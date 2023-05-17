@@ -1,8 +1,9 @@
 import AgoraRTC, { ICameraVideoTrack, IMicrophoneAudioTrack } from 'agora-rtc-sdk-ng';
+import { useDispatch } from 'react-redux';
 
 import { ShareScreenTrack } from '../../types/global';
 import AudioJoin from '@/assets/join.wav';
-import { useDispatch } from 'react-redux';
+
 import { useGenerateAgoraTokenMutation } from '../../app/services/server';
 import { updateChannelVisibleAside, updateDMVisibleAside } from '../../app/slices/footprint';
 
@@ -19,10 +20,15 @@ type VoiceProps = {
 const audioJoin = new Audio(AudioJoin);
 const useVoice = ({ id, context = "channel" }: VoiceProps) => {
     const dispatch = useDispatch();
-    const { voicingInfo, loginUid } = useAppSelector(store => {
+    const { voicingInfo, loginUid, audioInputDevices, audioOutputDevices, videoInputDevices, audioInputDeviceId, videoInputDeviceId } = useAppSelector(store => {
         return {
             loginUid: store.authData.user?.uid ?? 0,
-            voicingInfo: store.voice.voicing
+            voicingInfo: store.voice.voicing,
+            audioInputDevices: store.voice.devices.filter(d => d.kind == "audioinput") ?? [],
+            audioOutputDevices: store.voice.devices.filter(d => d.kind == "audiooutput") ?? [],
+            videoInputDevices: store.voice.devices.filter(d => d.kind == "videoinput") ?? [],
+            audioInputDeviceId: store.voice.audioInputDeviceId,
+            videoInputDeviceId: store.voice.videoInputDeviceId,
         };
     });
     const [generateToken] = useGenerateAgoraTokenMutation();
@@ -154,8 +160,10 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
             // 进入全屏并Pin自己
             if (context == "channel") {
                 dispatch(updateChannelVisibleAside({ id, aside: "voice_fullscreen" }));
-                dispatch(updatePin({ uid: loginUid, action: "pin" }));
+            } else {
+                dispatch(updateDMVisibleAside({ id, aside: "voice_fullscreen" }));
             }
+            dispatch(updatePin({ uid: loginUid, action: "pin" }));
             // 监听屏幕共享结束事件 
             if ("close" in localVideoTrack) {
                 localVideoTrack.getMediaStreamTrack().onended = () => {
@@ -232,6 +240,23 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
         }
         dispatch(updateVoicingInfo({ deafen, id, context }));
     };
+    const enterFullscreen = (uid?: number) => {
+        if (context == "channel") {
+            dispatch(updateChannelVisibleAside({ id, aside: "voice_fullscreen" }));
+        } else {
+            dispatch(updateDMVisibleAside({ id, aside: "voice_fullscreen" }));
+        }
+        if (uid) {
+            dispatch(updatePin({ uid, action: "pin" }));
+        }
+    };
+    const exitFullscreen = () => {
+        if (context == "channel") {
+            dispatch(updateChannelVisibleAside({ id, aside: "voice" }));
+        } else {
+            dispatch(updateDMVisibleAside({ id, aside: null }));
+        }
+    };
     const joinedAtThisContext = voicingInfo ? (voicingInfo.id == id && voicingInfo.context == context) : false;
     return {
         setMute,
@@ -247,6 +272,13 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
         closeCamera,
         startShareScreen,
         stopShareScreen,
+        enterFullscreen,
+        exitFullscreen,
+        audioInputDevices,
+        audioOutputDevices,
+        videoInputDevices,
+        audioInputDeviceId,
+        videoInputDeviceId
     };
 };
 

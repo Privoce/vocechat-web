@@ -24,11 +24,12 @@ function ChatPage() {
   const [channelModalVisible, setChannelModalVisible] = useState(false);
   const [usersModalVisible, setUsersModalVisible] = useState(false);
   const { channel_id = 0, user_id = 0 } = useParams();
-  const { sessionUids, isGuest, aside = "" } = useAppSelector((store) => {
+  const { sessionUids, isGuest, aside = "", callingTo } = useAppSelector((store) => {
     return {
+      callingTo: store.voice.callingTo,
       isGuest: store.authData.guest,
       sessionUids: store.userMessage.ids,
-      aside: channel_id ? store.footprint.channelAsides[+channel_id] : store.footprint.dmAsides[+user_id]
+      aside: channel_id ? store.footprint.channelAsides[+channel_id] : store.footprint.dmAsides[store.voice.callingTo]
     };
   });
   const toggleUsersModalVisible = () => {
@@ -56,7 +57,7 @@ function ChatPage() {
   const dmChatVisible = user_id != 0 && aside !== "voice_fullscreen";
   const isMainPath = isHomePath || isChatHomePath;
   const context = channel_id !== 0 ? "channel" : "dm";
-  const contextId = (+channel_id || +user_id) ?? 0;
+  const contextId = (+channel_id || callingTo) ?? 0;
   console.log("fffff", channel_id, user_id, aside, channelChatVisible);
 
   return (

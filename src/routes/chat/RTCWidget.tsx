@@ -8,7 +8,6 @@ import IconMicOff from '@/assets/icons/mic.off.svg';
 import IconCallOff from '@/assets/icons/headphone.svg';
 import IconSoundOn from '@/assets/icons/sound.on.svg';
 import IconSoundOff from '@/assets/icons/sound.off.svg';
-// import IconCameraOff from '@/assets/icons/camera.off.svg';
 import IconCamera from '@/assets/icons/camera.svg';
 import IconScreen from '@/assets/icons/share.screen.svg';
 import { useVoice } from '../../components/Voice';
@@ -24,8 +23,10 @@ type Props = {
 const RTCWidget = ({ id, context = "channel" }: Props) => {
     const { t } = useTranslation("chat");
     const { leave, voicingInfo, setMute, setDeafen, joining = true, openCamera, closeCamera, startShareScreen, stopShareScreen } = useVoice({ context, id });
-    const { loginUser, channelData, userData } = useAppSelector(store => {
+    const { callFrom, callTo, loginUser, channelData, userData } = useAppSelector(store => {
         return {
+            callFrom: store.voice.callingFrom,
+            callTo: store.voice.callingTo,
             userData: store.users.byId,
             channelData: store.channels.byId,
             loginUser: store.authData.user,
@@ -35,6 +36,7 @@ const RTCWidget = ({ id, context = "channel" }: Props) => {
     // const name = voicingInfo.context == "channel" ? channelData[voicingInfo.id]?.name : userData[voicingInfo.id]?.name;
     // if (!name) return null;
     const isReConnecting = voicingInfo.connectionState == "RECONNECTING";
+    const targetDMUsername = callFrom == loginUser.uid ? userData[callTo]?.name : userData[callFrom]?.name;
     return (
         <div className='bg-gray-100 dark:bg-gray-900 flex flex-col p-2 rounded-3xl m-3 mb-4 text-sm'>
             <div className="border-b border-b-gray-200 dark:border-b-gray-800 pb-2">
@@ -43,7 +45,9 @@ const RTCWidget = ({ id, context = "channel" }: Props) => {
                         <Signal strength={voicingInfo.downlinkNetworkQuality} />
                         <div className="flex flex-col">
                             <span className={clsx('text-green-800 font-bold', isReConnecting && `text-red-500`)}>{isReConnecting ? `Voice Reconnecting...` : `Voice Connected`}</span>
-                            <span className='text-gray-600 dark:text-gray-400 text-xs truncate max-w-[170px]' >{voicingInfo.context == "channel" ? "Channel" : "DM"} / {voicingInfo.context == "channel" ? channelData[voicingInfo.id]?.name : userData[voicingInfo.id]?.name}</span>
+                            <span className='text-gray-600 dark:text-gray-400 text-xs truncate max-w-[170px]' >
+                                {voicingInfo.context == "channel" ? "Channel" : "DM"} / {voicingInfo.context == "channel" ? channelData[voicingInfo.id]?.name : targetDMUsername}
+                            </span>
                         </div>
                     </div>
                     <Tooltip tip={t("leave_voice")} placement="top">

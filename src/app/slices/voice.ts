@@ -35,19 +35,18 @@ export type VoiceInfo = {
   channelName: string,
   memberCount: number
 } & VoiceBasicInfo
+export type DeviceInfo = Pick<MediaDeviceInfo, "deviceId" | "groupId" | "kind" | "label">;
 interface State {
   callingFrom: number,
   callingTo: number,
   calling: boolean,
   voicing: VoicingInfo | null,
   voicingMembers: VoicingMembers,
-  list: VoiceInfo[]
+  list: VoiceInfo[],
+  devices: DeviceInfo[],
+  audioInputDeviceId: string,
+  videoInputDeviceId: string,
 }
-// const initialInfo = {
-//   context: "channel" as const,
-//   id: 0,
-//   members: []
-// };
 const initialState: State = {
   calling: false,
   callingFrom: 0,
@@ -57,11 +56,11 @@ const initialState: State = {
     ids: [],
     byId: {}
   },
-  list: []
+  list: [],
+  devices: [],
+  audioInputDeviceId: "",
+  videoInputDeviceId: ""
 };
-
-
-
 const voiceSlice = createSlice({
   name: "voice",
   initialState,
@@ -74,8 +73,29 @@ const voiceSlice = createSlice({
         state.calling = calling;
       }
     },
+    updateDevices(state, { payload }: PayloadAction<DeviceInfo[]>) {
+      state.devices = payload;
+      if (payload.length > 0) {
+        const audioInputDevice = payload.find(v => v.kind == "audioinput" && v.deviceId == "default");
+        const videoInputDevice = payload.find(v => v.kind == "videoinput");
+        if (audioInputDevice) {
+          state.audioInputDeviceId = audioInputDevice.deviceId;
+        }
+        if (videoInputDevice) {
+          state.videoInputDeviceId = videoInputDevice.deviceId;
+        }
+      }
+    },
     updateCalling(state, { payload }: PayloadAction<boolean>) {
       state.calling = payload;
+    },
+    updateSelectDeviceId(state, { payload }: PayloadAction<{ type: "video" | "audio", value: string }>) {
+      const { type, value } = payload;
+      if (type == "video") {
+        state.videoInputDeviceId = value;
+      } else {
+        state.audioInputDeviceId = value;
+      }
     },
     updateVoicingInfo(state, { payload }: PayloadAction<VoicingInfo | null>) {
       if (payload) {
@@ -84,7 +104,7 @@ const voiceSlice = createSlice({
         const loginUid = localStorage.getItem(KEY_UID) ?? 0;
         const idx = state.voicingMembers.ids.findIndex((uid) => uid == loginUid);
         if (idx > -1) {
-          state.voicingMembers.byId[+loginUid] = payload;
+          // state.voicingMembers.byId[+loginUid] = payload;
           Object.keys(payload).forEach((key) => {
             switch (key) {
               case "video":
@@ -92,8 +112,17 @@ const voiceSlice = createSlice({
                 break;
               case "muted":
                 state.voicingMembers.byId[+loginUid].muted = payload.muted;
+                if (!payload.muted) {
+                  state.voicingMembers.byId[+loginUid].deafen = false;
+                  if (state.voicing) {
+                    state.voicing.deafen = false;
+                  }
+                }
                 break;
               case "deafen":
+                if (state.voicing) {
+                  state.voicing.muted = payload.deafen;
+                }
                 state.voicingMembers.byId[+loginUid].deafen = payload.deafen;
                 state.voicingMembers.byId[+loginUid].muted = payload.deafen;
                 break;
@@ -199,5 +228,18 @@ const voiceSlice = createSlice({
   }
 });
 
-export const { updateCalling, updateCallInfo, updatePin, updateConnectionState, addVoiceMember, removeVoiceMember, upsertVoiceList, updateVoicingInfo, updateVoicingNetworkQuality, updateVoicingMember } = voiceSlice.actions;
+export const {
+  updateSelectDeviceId,
+  updateDevices,
+  updateCalling,
+  updateCallInfo,
+  updatePin,
+  updateConnectionState,
+  addVoiceMember,
+  removeVoiceMember,
+  upsertVoiceList,
+  updateVoicingInfo,
+  updateVoicingNetworkQuality,
+  updateVoicingMember
+} = voiceSlice.actions;
 export default voiceSlice.reducer;

@@ -50,7 +50,7 @@ const VoiceChat = ({ id, context = "channel" }: Props) => {
         dispatch(context == "channel" ? updateChannelVisibleAside(data) : updateDMVisibleAside(data));
         // 实时显示calling box
         if (!joinedAtThisContext && context == "dm") {
-            dispatch(updateCallInfo({ from: loginUser?.uid ?? 0, to: id, calling: true }));
+            dispatch(updateCallInfo({ from: loginUser?.uid ?? 0, to: id, calling: false }));
         }
     };
     if (!loginUser || !enabled) return null;

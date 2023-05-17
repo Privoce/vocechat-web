@@ -1,24 +1,18 @@
 import { useEffect, useState, MouseEvent } from 'react';
 import { useDispatch } from 'react-redux';
-import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import IconMic from '@/assets/icons/mic.on.svg';
 import IconMicOff from '@/assets/icons/mic.off.svg';
-import IconCameraOff from '@/assets/icons/camera.off.svg';
 import IconPin from '@/assets/icons/pin.svg';
-import IconCamera from '@/assets/icons/camera.svg';
-import IconScreen from '@/assets/icons/share.screen.svg';
 import IconExitScreen from '@/assets/icons/fullscreen.exit.svg';
-import IconCallOff from '@/assets/icons/call.off.svg';
 import { ChatContext } from '../../types/common';
 import { useAppSelector } from '../../app/store';
 import Avatar from '../../components/Avatar';
 import { playAgoraVideo } from '../../utils';
-import { updateChannelVisibleAside } from '../../app/slices/footprint';
 import Tooltip from '../../components/Tooltip';
 import { useVoice } from '../../components/Voice';
-import StyledButton from '../../components/styled/Button';
 import { updatePin } from '../../app/slices/voice';
+import Operations from '@/components/Voice/Operations';
 
 type Props = {
     context: ChatContext,
@@ -28,8 +22,7 @@ type Props = {
 const VoiceFullscreen = ({ id, context }: Props) => {
     const dispatch = useDispatch();
     const [speakingUid, setSpeakingUid] = useState(0);
-    const { t } = useTranslation("chat");
-    const { voicingInfo, setMute, leave, closeCamera, openCamera, startShareScreen, stopShareScreen } = useVoice({ id, context });
+    const { voicingInfo, exitFullscreen } = useVoice({ id, context });
     const { name, userData, voicingMembers } = useAppSelector(store => {
         return {
             userData: store.users.byId,
@@ -49,11 +42,6 @@ const VoiceFullscreen = ({ id, context }: Props) => {
         });
 
     }, [voicingMembers]);
-    const handleExitFullscreen = () => {
-        if (context == "channel") {
-            dispatch(updateChannelVisibleAside({ id, aside: "voice" }));
-        }
-    };
 
     const handleDoubleClick = (evt: MouseEvent<HTMLLIElement>) => {
         const uid = evt.currentTarget.dataset.uid;
@@ -77,14 +65,13 @@ const VoiceFullscreen = ({ id, context }: Props) => {
     const members = voicingMembers.ids;
     const membersData = voicingMembers.byId;
     const hasPin = typeof pinUid !== "undefined";
-    const { muted, video, shareScreen } = voicingInfo;
     return (
         <div className='h-full bg-black text-gray-300 flex flex-col justify-between rounded-r-2xl'>
             {/* top */}
             <div className="px-7 py-6 flex justify-between">
                 <span className='text-sm font-semibold'>{_name}</span>
                 <div className="flex gap-4">
-                    <IconExitScreen role="button" onClick={handleExitFullscreen} className="fill-gray-200" />
+                    <IconExitScreen role="button" onClick={exitFullscreen} className="fill-gray-200" />
                 </div>
             </div>
             {/* middle */}
@@ -129,28 +116,9 @@ const VoiceFullscreen = ({ id, context }: Props) => {
 
             </ul>
             {/* bottom */}
-            <ul className='py-4 flex justify-center gap-2'>
-                <Tooltip tip={muted ? t("unmute") : t("mute")} placement="top">
-                    <li role={"button"} onClick={setMute.bind(null, !muted)} className="flex-center py-1 px-3 rounded bg-gray-100 dark:bg-gray-900">
-                        {muted ? <IconMicOff className="fill-gray-700 dark:fill-gray-200" /> : <IconMic className="fill-gray-700 dark:fill-gray-200" />}
-                    </li>
-                </Tooltip>
-                <Tooltip tip={video ? t("camera_off") : t("camera_on")} placement="top">
-                    <li role={"button"} onClick={video ? closeCamera : openCamera} className="flex-center py-1 px-3 rounded bg-gray-100 dark:bg-gray-900">
-                        {video ? <IconCamera className="fill-gray-700 dark:fill-gray-200" /> : <IconCameraOff className="fill-gray-700 dark:fill-gray-200" />}
-                    </li>
-                </Tooltip>
-                <Tooltip tip={"Share Screen"} placement="top">
-                    <li role={"button"} onClick={shareScreen ? stopShareScreen : startShareScreen} className={clsx("flex-center py-1 px-3 rounded ", shareScreen ? "bg-green-700" : "bg-gray-100 dark:bg-gray-900")}>
-                        <IconScreen className={clsx("dark:fill-gray-200 w-6 h-6", shareScreen ? "fill-gray-200" : "fill-gray-700")} />
-                    </li>
-                </Tooltip>
-                <StyledButton onClick={leave} className='bg-red-600 hover:!bg-red-700 text-center'>
-                    <Tooltip tip={t("leave_voice")} placement="top" offset={[0, 24]} >
-                        <IconCallOff className="m-auto" />
-                    </Tooltip>
-                </StyledButton>
-            </ul>
+            <div className='py-4 flex justify-center gap-2'>
+                <Operations id={id} context={context} mode="fullscreen" />
+            </div>
         </div>
     );
 };

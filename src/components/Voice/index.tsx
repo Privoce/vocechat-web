@@ -2,7 +2,7 @@ import AgoraRTC from 'agora-rtc-sdk-ng';
 import { memo, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useGetAgoraChannelsQuery, useGetAgoraStatusQuery, useLazyGetAgoraUsersByChannelQuery } from '../../app/services/server';
-import { addVoiceMember, removeVoiceMember, updateCallInfo, updateConnectionState, updateVoicingMember, updateVoicingNetworkQuality } from '../../app/slices/voice';
+import { addVoiceMember, removeVoiceMember, updateCallInfo, updateConnectionState, updateDevices, updateVoicingMember, updateVoicingNetworkQuality } from '../../app/slices/voice';
 import { useAppSelector } from '../../app/store';
 import { playAgoraVideo } from '../../utils';
 import useVoice from './useVoice';
@@ -40,12 +40,12 @@ const Voice = () => {
                 // Subscribe to the remote user when the SDK triggers the "user-published" event.
                 await agoraEngine.subscribe(user, mediaType);
                 console.log(user, " has published at the channel");
-                if (mediaType == "audio") {
+                if (mediaType == "audio" && user.hasAudio) {
                     // 播放远端音频
                     user.audioTrack?.play();
                     window.VOICE_TRACK_MAP[+user.uid] = user.audioTrack;
                 }
-                if (mediaType == "video") {
+                if (mediaType == "video" && user.hasVideo) {
                     // const label = user.videoTrack?.getMediaStreamTrack()?.label;
                     // console.log("labell", label);
 
@@ -56,6 +56,7 @@ const Voice = () => {
                     //     //     // 远端用户停止共享屏幕
                     //     dispatch(updateVoicingMember({ uid: +user.uid, info: { shareScreen: true } }));
                     // }
+                    dispatch(updateVoicingMember({ uid: +user.uid, info: { video: true } }));
                     window.VIDEO_TRACK_MAP[+user.uid] = user.videoTrack;
                     playAgoraVideo(+user.uid);
                 }
@@ -84,10 +85,10 @@ const Voice = () => {
                             // clear tracks
                             window.VOICE_TRACK_MAP[+user.uid] = null;
                             window.VIDEO_TRACK_MAP[+user.uid] = null;
-                            if (voicingInfo && voicingInfo.context == "dm") {
-                                // 有人离开，就断开
-                                dispatch(updateCallInfo({ from: 0 }));
-                            }
+                            // if (voicingInfo && voicingInfo.context == "dm") {
+                            //     // 有人离开，就断开
+                            //     dispatch(updateCallInfo({ from: 0 }));
+                            // }
                         }
                             break;
                         default:
@@ -139,8 +140,20 @@ const Voice = () => {
             });
             // 有新用户加入
             agoraEngine.on("user-joined", async (user) => {
-                console.log(user.uid, agoraEngine.channelName, " has joined the channel");
+                console.log(user.uid, " has joined the channel", user);
                 dispatch(addVoiceMember(+user.uid));
+            });
+            AgoraRTC.onMicrophoneChanged = (info) => {
+                console.log("onMicrophoneChanged", info);
+            };
+            AgoraRTC.getDevices().then((devices) => {
+                console.log("devices", devices);
+                dispatch(updateDevices(devices.map((d) => {
+                    const { deviceId, groupId, label, kind } = d;
+                    return { deviceId, groupId, label, kind };
+                })));
+            }).catch((err) => {
+                console.log("err", err);
             });
             window.VOICE_CLIENT = agoraEngine;
         };
@@ -172,7 +185,7 @@ const Voice = () => {
                 // 呼叫的人在频道里
                 getUsersByChannel(channelName).then(resp => {
                     const [uid] = resp.data ?? [];
-                    if (uid) {
+                    if (uid && uid != loginUid) {
                         dispatch(updateCallInfo({ from: uid, to: id }));
                     }
                 });
