@@ -79,9 +79,9 @@ const RTCWidget = ({ id, context = "channel" }: Props) => {
                     </Tooltip>
                     <Tooltip tip={voicingInfo.muted ? t("unmute") : t("mute")} placement="top">
                         {voicingInfo.muted ?
-                            <IconMicOff onClick={setMute.bind(null, false)} role="button" />
+                            <IconMicOff className="w-6 h-6" onClick={setMute.bind(null, false)} role="button" />
                             :
-                            <IconMic onClick={setMute.bind(null, true)} role="button" />}
+                            <IconMic className="w-6 h-6" onClick={setMute.bind(null, true)} role="button" />}
                     </Tooltip>
                 </div>
             </div>

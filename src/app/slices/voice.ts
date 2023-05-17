@@ -36,6 +36,7 @@ export type VoiceInfo = {
   memberCount: number
 } & VoiceBasicInfo
 export type DeviceInfo = Pick<MediaDeviceInfo, "deviceId" | "groupId" | "kind" | "label">;
+export type MediaDeviceKind = "audioinput" | "audiooutput" | "videoinput"
 interface State {
   callingFrom: number,
   callingTo: number,
@@ -45,6 +46,7 @@ interface State {
   list: VoiceInfo[],
   devices: DeviceInfo[],
   audioInputDeviceId: string,
+  audioOutputDeviceId: string,
   videoInputDeviceId: string,
 }
 const initialState: State = {
@@ -59,6 +61,7 @@ const initialState: State = {
   list: [],
   devices: [],
   audioInputDeviceId: "",
+  audioOutputDeviceId: "",
   videoInputDeviceId: ""
 };
 const voiceSlice = createSlice({
@@ -76,10 +79,15 @@ const voiceSlice = createSlice({
     updateDevices(state, { payload }: PayloadAction<DeviceInfo[]>) {
       state.devices = payload;
       if (payload.length > 0) {
-        const audioInputDevice = payload.find(v => v.kind == "audioinput" && v.deviceId == "default");
+        // 默认选择第一个
+        const audioInputDevice = payload.find(v => v.kind == "audioinput");
+        const audioOutputDevice = payload.find(v => v.kind == "audiooutput");
         const videoInputDevice = payload.find(v => v.kind == "videoinput");
         if (audioInputDevice) {
           state.audioInputDeviceId = audioInputDevice.deviceId;
+        }
+        if (audioOutputDevice) {
+          state.audioOutputDeviceId = audioOutputDevice.deviceId;
         }
         if (videoInputDevice) {
           state.videoInputDeviceId = videoInputDevice.deviceId;
@@ -89,12 +97,21 @@ const voiceSlice = createSlice({
     updateCalling(state, { payload }: PayloadAction<boolean>) {
       state.calling = payload;
     },
-    updateSelectDeviceId(state, { payload }: PayloadAction<{ type: "video" | "audio", value: string }>) {
-      const { type, value } = payload;
-      if (type == "video") {
-        state.videoInputDeviceId = value;
-      } else {
-        state.audioInputDeviceId = value;
+    updateSelectDeviceId(state, { payload }: PayloadAction<{ kind: MediaDeviceKind, value: string }>) {
+      const { kind, value } = payload;
+      switch (kind) {
+        case "audioinput":
+          state.audioInputDeviceId = value;
+          break;
+        case "audiooutput":
+          state.audioOutputDeviceId = value;
+          break;
+        case "videoinput":
+          state.videoInputDeviceId = value;
+          break;
+
+        default:
+          break;
       }
     },
     updateVoicingInfo(state, { payload }: PayloadAction<VoicingInfo | null>) {

@@ -20,7 +20,7 @@ type VoiceProps = {
 const audioJoin = new Audio(AudioJoin);
 const useVoice = ({ id, context = "channel" }: VoiceProps) => {
     const dispatch = useDispatch();
-    const { voicingInfo, loginUid, audioInputDevices, audioOutputDevices, videoInputDevices, audioInputDeviceId, videoInputDeviceId } = useAppSelector(store => {
+    const { voicingInfo, loginUid, audioInputDevices, audioOutputDevices, videoInputDevices, audioInputDeviceId, audioOutputDeviceId, videoInputDeviceId } = useAppSelector(store => {
         return {
             loginUid: store.authData.user?.uid ?? 0,
             voicingInfo: store.voice.voicing,
@@ -28,6 +28,7 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
             audioOutputDevices: store.voice.devices.filter(d => d.kind == "audiooutput") ?? [],
             videoInputDevices: store.voice.devices.filter(d => d.kind == "videoinput") ?? [],
             audioInputDeviceId: store.voice.audioInputDeviceId,
+            audioOutputDeviceId: store.voice.audioOutputDeviceId,
             videoInputDeviceId: store.voice.videoInputDeviceId,
         };
     });
@@ -54,7 +55,7 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
             if (window.VOICE_CLIENT) {
                 await window.VOICE_CLIENT.join(app_id, channel_name, agora_token, uid);
                 // Create a local audio track from the microphone audio.
-                const localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+                const localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack({ microphoneId: audioInputDeviceId });
                 // Publish the local audio track in the channel.
                 await window.VOICE_CLIENT.publish(localAudioTrack);
                 // play the join audio
@@ -81,7 +82,7 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
         // setJoining(false);
     };
     const openCamera = async () => {
-        const localVideoTrack = await AgoraRTC.createCameraVideoTrack();
+        const localVideoTrack = await AgoraRTC.createCameraVideoTrack({ cameraId: videoInputDeviceId });
         // 取消正在进行的桌面共享
         await stopShareScreen();
         await window.VOICE_CLIENT?.publish(localVideoTrack);
@@ -278,6 +279,7 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
         audioOutputDevices,
         videoInputDevices,
         audioInputDeviceId,
+        audioOutputDeviceId,
         videoInputDeviceId
     };
 };
