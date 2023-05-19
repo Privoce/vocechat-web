@@ -89,10 +89,10 @@ const VoiceFullscreen = ({ id, context }: Props) => {
               data-uid={uid}
               onDoubleClick={handleDoubleClick}
               className={clsx(
-                "bg-gray-700 group",
+                "bg-gray-700 group overflow-hidden",
                 special
                   ? "absolute left-0 top-0 w-full h-[calc(100%_-_110px)] flex-center"
-                  : "relative rounded-lg py-1.5 px-12"
+                  : "relative border border-gray-600/50 rounded-lg py-1.5 px-12"
               )}
             >
               <div className={clsx("w-20 h-20 flex shrink-0 relative transition-opacity")}>

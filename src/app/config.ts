@@ -1,14 +1,14 @@
-import i18n from '../i18n';
+import i18n from "../i18n";
 import { Price } from "../types/common";
 
 let prices: Price[] = [
   {
     type: "payment",
     limit: 999999,
-    pid: "price_1MbF30GGoUDRyc3jwOg30dVQ",
+    pid: "price_1MbF30GGoUDRyc3jwOg30dVQ"
   },
   {
-    type: "booking",
+    type: "booking"
   }
 ];
 const official_dev = `https://dev.voce.chat`;
@@ -17,9 +17,7 @@ const local_dev = official_dev;
 
 // const local_dev = `http://07333.qicp.vip:3030`;
 // const local_dev = `https://im.ttt.td`;
-export const BASE_ORIGIN = process.env.REACT_APP_RELEASE
-  ? `${location.origin}`
-  : local_dev;
+export const BASE_ORIGIN = process.env.REACT_APP_RELEASE ? `${location.origin}` : local_dev;
 export const IS_OFFICIAL_DEMO = BASE_ORIGIN === official_dev;
 
 const BASE_URL = `${BASE_ORIGIN}/api`;
@@ -27,18 +25,20 @@ export const getLicensePriceList = () => {
   const ps = prices.map((p, idx) => {
     switch (idx) {
       // pro
-      case 0: {
-        p.title = i18n.t("price.pro.title");
-        p.desc = i18n.t("price.pro.desc");
-        p.price = i18n.t("price.pro.price");
-      }
+      case 0:
+        {
+          p.title = i18n.t("price.pro.title");
+          p.desc = i18n.t("price.pro.desc");
+          p.price = i18n.t("price.pro.price");
+        }
         break;
       // supreme
-      case 1: {
-        p.title = i18n.t("price.supreme.title");
-        p.desc = i18n.t("price.supreme.desc");
-        p.price = i18n.t("price.supreme.price");
-      }
+      case 1:
+        {
+          p.title = i18n.t("price.supreme.title");
+          p.desc = i18n.t("price.supreme.desc");
+          p.price = i18n.t("price.supreme.price");
+        }
         break;
 
       default:
@@ -47,27 +47,27 @@ export const getLicensePriceList = () => {
     return p;
   });
   return process.env.NODE_ENV === "development"
-    // 开发环境加入两个测试价格
-    ? [
-      ...ps,
-      {
-        type: "payment",
-        price: "1",
-        title: "Test VoceChat Enterprise",
-        limit: 99999,
-        pid: "price_1LkQGpGGoUDRyc3jGTh3GYHw",
-        desc: "test price"
-      },
-      {
-        title: "VoceChat Pro",
-        price: "1",
-        limit: 100,
-        pid: "price_1MMNNCGGoUDRyc3jSIGIsb3C",
-        desc: "test subscription price",
-        type: "subscription",
-        sub_dur: "year", //day month year
-      },
-    ]
+    ? // 开发环境加入两个测试价格
+      [
+        ...ps,
+        {
+          type: "payment",
+          price: "1",
+          title: "Test VoceChat Enterprise",
+          limit: 99999,
+          pid: "price_1LkQGpGGoUDRyc3jGTh3GYHw",
+          desc: "test price"
+        },
+        {
+          title: "VoceChat Pro",
+          price: "1",
+          limit: 100,
+          pid: "price_1MMNNCGGoUDRyc3jSIGIsb3C",
+          desc: "test subscription price",
+          type: "subscription",
+          sub_dur: "year" //day month year
+        }
+      ]
     : ps;
 };
 export const PAYMENT_URL_PREFIX =
@@ -90,7 +90,7 @@ export const MessageTypes = {
   markdown: "text/markdown",
   audio: "vocechat/audio",
   file: "vocechat/file",
-  archive: "vocechat/archive",
+  archive: "vocechat/archive"
 };
 export const firebaseConfig = {
   apiKey: "AIzaSyCc3VuCJZgzQLIH2wrYdQzsUOc1DuZiIOA",
