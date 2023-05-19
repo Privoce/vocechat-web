@@ -2,7 +2,6 @@ import { useTranslation } from "react-i18next";
 
 import { useAppSelector } from "@/app/store";
 import ManageMembers from "@/components/ManageMembers";
-import ServerVersionChecker from "@/components/ServerVersionChecker";
 import Version from "@/components/Version";
 import APIConfig from "./APIConfig";
 import APIDocument from "./APIDocument";
@@ -40,11 +39,7 @@ const navs = [
     items: [
       {
         name: "bot",
-        component: (
-          <ServerVersionChecker version="0.3.2">
-            <BotConfig />
-          </ServerVersionChecker>
-        ),
+        component: <BotConfig />,
         admin: true
       },
       {
@@ -53,11 +48,7 @@ const navs = [
       },
       {
         name: "agora",
-        component: (
-          <ServerVersionChecker version="0.3.5">
-            <ConfigAgora />
-          </ServerVersionChecker>
-        )
+        component: <ConfigAgora />
       },
       {
         name: "smtp",

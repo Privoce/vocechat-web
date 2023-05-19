@@ -10,7 +10,6 @@ import {
 } from "@/app/services/server";
 import { useLazyGetContactsQuery, useLazyGetUsersQuery } from "@/app/services/user";
 import { useAppSelector } from "@/app/store";
-import { compareVersion } from "../utils";
 import useLicense from "./useLicense";
 import useStreaming from "./useStreaming";
 
@@ -28,7 +27,8 @@ export default function usePreload() {
     isGuest,
     expireTime = +new Date(),
     channelMessageData,
-    channelIds
+    channelIds,
+    enableContacts
   } = useAppSelector((store) => {
     return {
       channelIds: store.channels.ids,
@@ -36,7 +36,8 @@ export default function usePreload() {
       loginUid: store.authData.user?.uid,
       isGuest: store.authData.guest,
       token: store.authData.token,
-      expireTime: store.authData.expireTime
+      expireTime: store.authData.expireTime,
+      enableContacts: store.server.contact_verification_enable
     };
   });
   const { setStreamingReady } = useStreaming();
@@ -95,17 +96,11 @@ export default function usePreload() {
   useEffect(() => {
     if (rehydrated && serverVersion) {
       getUsers().then(() => {
-        if (compareVersion(serverVersion, "0.3.7") >= 0 && !isGuest) {
-          // 根据版本号判断是否需要初始化contact
-          getContacts();
-        }
+        getContacts();
       });
       getServer();
       getFavorites();
-      if (compareVersion(serverVersion, "0.3.4") >= 0) {
-        // 根据版本号判断是否需要调用system common api
-        getSystemCommon();
-      }
+      getSystemCommon();
     }
   }, [rehydrated, serverVersion, isGuest]);
   const tokenAlmostExpire = dayjs().isAfter(new Date(expireTime - 20 * 1000));
@@ -115,7 +110,6 @@ export default function usePreload() {
   useEffect(() => {
     setStreamingReady(canStreaming);
   }, [canStreaming]);
-  const enableContact = serverVersion ? compareVersion(serverVersion, "0.3.7") >= 0 : false;
   return {
     loading:
       usersLoading ||
@@ -127,7 +121,7 @@ export default function usePreload() {
     error: usersError && serverError && favoritesError,
     success: usersSuccess && serverSuccess && favoritesSuccess && serverVersionSuccess,
     data: {
-      users: enableContact ? contacts : users,
+      users: enableContacts ? contacts : users,
       server,
       favorites
     }

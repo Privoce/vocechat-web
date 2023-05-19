@@ -9,7 +9,6 @@ import { updateRememberedNavs } from "@/app/slices/ui";
 import { useAppSelector } from "@/app/store";
 import ChannelIcon from "@/components/ChannelIcon";
 import GoBackNav from "@/components/GoBackNav";
-import ServerVersionChecker from "@/components/ServerVersionChecker";
 import Tooltip from "@/components/Tooltip";
 import IconFav from "@/assets/icons/bookmark.svg";
 import IconPeople from "@/assets/icons/people.svg";
@@ -93,9 +92,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
               </li>
             </Tippy>
           </Tooltip>
-          <ServerVersionChecker version="0.3.5" empty={true}>
-            <VoiceChat context={`channel`} id={cid} />
-          </ServerVersionChecker>
+          <VoiceChat context={`channel`} id={cid} />
           <Tooltip tip={t("fav")} placement="left">
             <Tippy
               placement="left-start"

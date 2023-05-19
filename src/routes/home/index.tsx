@@ -9,7 +9,6 @@ import Loading from "@/components/Loading";
 import Manifest from "@/components/Manifest";
 import Notification from "@/components/Notification";
 import ReLoginModal from "@/components/ReLoginModal";
-import ServerVersionChecker from "@/components/ServerVersionChecker";
 import Tooltip from "@/components/Tooltip";
 import UnreadTabTip from "@/components/UnreadTabTip";
 import Voice from "@/components/Voice";
@@ -68,11 +67,7 @@ function HomePage() {
     <>
       {roleChanged && <ReLoginModal />}
       {!guest && <UnreadTabTip />}
-      {!guest && (
-        <ServerVersionChecker empty={true} version="0.3.5">
-          <Voice />
-        </ServerVersionChecker>
-      )}
+      {!guest && <Voice />}
       <Manifest />
       {!guest && <Notification />}
       <div className={`vocechat-container flex w-screen h-screen bg-gray-200 dark:bg-gray-900`}>

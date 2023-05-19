@@ -15,7 +15,6 @@ import { useAppSelector } from "@/app/store";
 import { ChatContext } from "@/types/common";
 import ContextMenu, { Item } from "@/components/ContextMenu";
 import useUserOperation from "@/hooks/useUserOperation";
-import { compareVersion } from "@/utils";
 
 type Props = {
   context: ChatContext;
@@ -52,9 +51,8 @@ const SessionContextMenu: FC<Props> = ({
   const dispatch = useDispatch();
   const navigateTo = useNavigate();
   const { pathname } = useLocation();
-  const { channelMuted, serverVersion } = useAppSelector((store) => {
+  const { channelMuted } = useAppSelector((store) => {
     return {
-      serverVersion: store.server.version,
       channelMuted: context == "channel" ? store.footprint.muteChannels[id] : false
     };
   });
@@ -95,11 +93,10 @@ const SessionContextMenu: FC<Props> = ({
   };
   const pinTxt = t(pinned ? "unpin_chat" : "pin_chat", { ns: "chat" });
 
-  const pinVisible = compareVersion(serverVersion, "0.3.7") >= 0;
   const items =
     context == "dm"
       ? [
-          pinVisible && {
+          {
             title: pinTxt,
             handler: handlePinChat
           },
@@ -122,7 +119,7 @@ const SessionContextMenu: FC<Props> = ({
           }
         ]
       : [
-          pinVisible && {
+          {
             title: pinTxt,
             handler: handlePinChat
           },

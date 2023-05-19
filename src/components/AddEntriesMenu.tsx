@@ -10,7 +10,6 @@ import ChannelIcon from "./ChannelIcon";
 import ChannelModal from "./ChannelModal";
 import InviteModal from "./InviteModal";
 import SearchUser from "./SearchUser";
-import ServerVersionChecker from "./ServerVersionChecker";
 import UsersModal from "./UsersModal";
 
 export default function AddEntriesMenu() {
@@ -79,12 +78,10 @@ export default function AddEntriesMenu() {
           <IconInvite className={iconClass} />
           {t("action.invite_people")}
         </li>
-        <ServerVersionChecker version="0.3.7" empty={true}>
-          <li className={itemClass} onClick={toggleSearchModalVisible}>
-            <IconSearch className={iconClass} />
-            {t("action.search_people")}
-          </li>
-        </ServerVersionChecker>
+        <li className={itemClass} onClick={toggleSearchModalVisible}>
+          <IconSearch className={iconClass} />
+          {t("action.search_people")}
+        </li>
       </ul>
       {channelModalVisible && <ChannelModal personal={isPrivate} closeModal={handleCloseModal} />}
       {usersModalVisible && <UsersModal closeModal={toggleUsersModalVisible} />}

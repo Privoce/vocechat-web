@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 
 import { useAppSelector } from "@/app/store";
 import { LoginConfig, WhoCanSignUp } from "@/types/server";
-import ServerVersionChecker from "@/components/ServerVersionChecker";
 import StyledRadio from "@/components/styled/Radio";
 import useConfig from "@/hooks/useConfig";
 import ChatLayout from "./ChatLayout";
@@ -37,9 +36,7 @@ export default function Overview() {
     <div className="relative w-full md:w-[512px] flex flex-col gap-6">
       <Server />
       {/* 设置前端url */}
-      <ServerVersionChecker version="0.3.3" empty={true}>
-        <FrontendURL />
-      </ServerVersionChecker>
+      <FrontendURL />
       {isAdmin && (
         <>
           <div className="flex flex-col">
@@ -68,17 +65,11 @@ export default function Overview() {
             />
           </SettingBlock>
           {/* 是否显示在线提示 */}
-          <ServerVersionChecker version="0.3.4" empty={true}>
-            <OnlineStatus />
-          </ServerVersionChecker>
+          <OnlineStatus />
           {/* 会话布局 */}
-          <ServerVersionChecker version="0.3.7" empty={true}>
-            <ChatLayout />
-          </ServerVersionChecker>
+          <ChatLayout />
           {/* 联系人验证模式 */}
-          <ServerVersionChecker version="0.3.7" empty={true}>
-            <ContactVerification />
-          </ServerVersionChecker>
+          <ContactVerification />
         </>
       )}
 

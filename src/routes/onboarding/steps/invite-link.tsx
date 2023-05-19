@@ -1,7 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { useWizard } from "react-use-wizard";
 
-import ServerVersionChecker from "@/components/ServerVersionChecker";
 import StyledButton from "@/components/styled/Button";
 import StyledInput from "@/components/styled/Input";
 import useInviteLink from "@/hooks/useInviteLink";
@@ -35,9 +34,7 @@ export default function InviteLink() {
       <StyledButton className="w-32 h-11 mt-6" onClick={nextStep}>
         {t("done")}
       </StyledButton>
-      <ServerVersionChecker version="0.3.3" empty={true}>
-        <UpdateFrontendURL refreshInviteLink={generateNewLink} />
-      </ServerVersionChecker>
+      <UpdateFrontendURL refreshInviteLink={generateNewLink} />
     </div>
   );
 }

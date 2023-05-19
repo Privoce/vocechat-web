@@ -4,7 +4,6 @@ import Tippy from "@tippyjs/react";
 
 import { useAppSelector } from "@/app/store";
 import GoBackNav from "@/components/GoBackNav";
-import ServerVersionChecker from "@/components/ServerVersionChecker";
 import Tooltip from "@/components/Tooltip";
 import User from "@/components/User";
 import FavIcon from "@/assets/icons/bookmark.svg";
@@ -37,9 +36,7 @@ const DMChat: FC<Props> = ({ uid = 0, dropFiles }) => {
       dropFiles={dropFiles}
       aside={
         <ul className="flex flex-col gap-6">
-          <ServerVersionChecker version="0.3.7" empty={true}>
-            <VoiceChat context={`dm`} id={uid} />
-          </ServerVersionChecker>
+          <VoiceChat context={`dm`} id={uid} />
           <Tooltip tip="Saved Items" placement="left">
             <Tippy
               placement="left-start"
