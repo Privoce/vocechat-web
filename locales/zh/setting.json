@@ -180,6 +180,10 @@
     "how_to": "如何设置SMTP？",
     "send_test_email": "发送测试邮件"
   },
+  "agora": {
+    "enable": "开启",
+    "how_to": "如何配置Agora？"
+  },
   "third_app": {
     "key": "API 安全密钥",
     "update": "更新安全密钥",

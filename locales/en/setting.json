@@ -47,7 +47,7 @@
     "upload_desc": "Minimum size is 128x128, We recommend at least 512x512 for the server. Max size limited to 5M.",
     "sign_up": {
       "title": "Default Sign Up",
-      "desc": "Who can sign up this server.",
+      "desc": "Who can sign up to this server.",
       "everyone": "Everyone",
       "invite": "Invitation Link Only"
     },
@@ -62,8 +62,8 @@
       "desc": "Update the frontend url"
     },
     "lang": {
-      "title": "Language",
-      "desc": "Setting the language",
+      "title": "Languages",
+      "desc": "Set the system language",
       "en": "English",
       "tr": "Türkçe",
       "zh": "中文",
@@ -71,14 +71,14 @@
     },
     "theme": {
       "title": "Theme",
-      "desc": "Setting the theme",
+      "desc": "Choose your theme",
       "auto": "Auto",
       "dark": "Dark",
       "light": "Light"
     },
     "online_status": {
       "title": "Online Status",
-      "desc": "Toggle users' online status visible",
+      "desc": "If enabled, members will see the online/offline status of each other.",
       "enable": "Enable",
       "disable": "Disable"
     },
@@ -90,7 +90,7 @@
     },
     "contact_verify": {
       "title": "Contact Verification",
-      "desc": "Toggle contact verification",
+      "desc": "By default all server members can see each other. If you want server members to add and manage their own contacts, please enable the contact feature (admin will be in the contacts list by default).",
       "enable": "Enable",
       "disable": "Disable"
     }
@@ -170,7 +170,7 @@
     "use_official": "Use Official Configuration",
     "custom": "Custom",
     "enable": "Enable",
-    "token_url": "Token Url",
+    "token_url": "Token URL",
     "project_id": "Project ID",
     "private_key": "Private Key",
     "client_email": "Client Email"
@@ -184,6 +184,10 @@
     "password": "Password",
     "how_to": "How to setup SMTP?",
     "send_test_email": "Send Test Email"
+  },
+  "agora": {
+    "enable": "Enable",
+    "how_to": "How to setup Agora?"
   },
   "third_app": {
     "key": "API Secure Key",

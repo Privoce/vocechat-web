@@ -150,7 +150,7 @@
     "use_official": "Resmi Yapılandırmayı Kullanın",
     "custom": "Özel",
     "enable": "Etkin",
-    "token_url": "Jeton Url",
+    "token_url": "Jeton URL",
     "project_id": "Tasarı Kimliği",
     "private_key": "Gizli Anahtar",
     "client_email": "İstemci E-Posta'sı"
