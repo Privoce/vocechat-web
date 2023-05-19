@@ -1,8 +1,9 @@
 import { ChangeEvent, FC, useState } from "react";
-import Avatar from "./Avatar";
-import uploadIcon from "@/assets/icons/upload.image.svg?url";
 import { useTranslation } from "react-i18next";
 import clsx from "clsx";
+
+import uploadIcon from "@/assets/icons/upload.image.svg?url";
+import Avatar from "./Avatar";
 
 type UID = number;
 interface Props {
@@ -41,11 +42,20 @@ const AvatarUploader: FC<Props> = ({
     setUploading(false);
   };
 
-
   return (
-    <div style={{ width: `${size}px`, height: `${size}px` }} className={clsx(className, "relative group")}>
+    <div
+      style={{ width: `${size}px`, height: `${size}px` }}
+      className={clsx(className, "relative group")}
+    >
       <div className="group overflow-hidden relative w-full h-full rounded-full bg-gray-50">
-        <Avatar width={size} height={size} type={type} src={url} name={name} className={`${className} object-cover w-full h-full`} />
+        <Avatar
+          width={size}
+          height={size}
+          type={type}
+          src={url}
+          name={name}
+          className={`${className} object-cover w-full h-full`}
+        />
         {!disabled && (
           <>
             <div className="flex-center flex-col whitespace-nowrap hidden group-hover:flex p-1 absolute inset-0 bg-black/50 text-white font-bold text-xs">
@@ -63,7 +73,13 @@ const AvatarUploader: FC<Props> = ({
           </>
         )}
       </div>
-      {!disabled && <img src={uploadIcon} alt="icon" className="hidden w-7 h-7 absolute top-0 right-0 group-hover:block" />}
+      {!disabled && (
+        <img
+          src={uploadIcon}
+          alt="icon"
+          className="hidden w-7 h-7 absolute top-0 right-0 group-hover:block"
+        />
+      )}
     </div>
   );
 };

@@ -1,22 +1,22 @@
-import { useState, useEffect, ChangeEvent } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
+
 import {
   useChangeChannelTypeMutation,
   useGetChannelQuery,
   useUpdateChannelMutation,
   useUpdateIconMutation
 } from "@/app/services/channel";
+import { useAppSelector } from "@/app/store";
+import { Channel } from "@/types/channel";
 import AvatarUploader from "@/components/AvatarUploader";
+import SaveTip from "@/components/SaveTip";
 import Input from "@/components/styled/Input";
 import Label from "@/components/styled/Label";
 import Radio from "@/components/styled/Radio";
 import Textarea from "@/components/styled/Textarea";
-import SaveTip from "@/components/SaveTip";
 import IconChannel from "@/assets/icons/channel.svg";
-import { useAppSelector } from "@/app/store";
-import { Channel } from "@/types/channel";
-import { useTranslation } from "react-i18next";
-
 
 export default function Overview({ id = 0 }) {
   const { t } = useTranslation("setting", { keyPrefix: "channel" });
@@ -52,7 +52,6 @@ export default function Overview({ id = 0 }) {
     updateChannelIcon({ gid: id, image });
   };
 
-
   const handleReset = () => {
     setValues(data);
   };
@@ -62,7 +61,6 @@ export default function Overview({ id = 0 }) {
       setValues(data);
     }
   }, [data]);
-
 
   useEffect(() => {
     if (data && values) {
@@ -120,22 +118,24 @@ export default function Overview({ id = 0 }) {
             rows={4}
             name="name"
             id="name"
-            placeholder={t("topic_placeholder")} />
-        </div>
-        {!readOnly && loginUser.is_admin && <div className={inputClass}>
-          <Label htmlFor="desc">{t("visibility")}</Label>
-          <Radio
-            options={[t("public"), t("private")]}
-            values={["true", "false"]}
-            value={String(channel.is_public)}
-            onChange={(v: string) => {
-              // console.log("wtff", typeof v, v);
-              changeChannelType({ is_public: v.toLowerCase() === 'true', id });
-              // handleGuestToggle(v);
-            }}
+            placeholder={t("topic_placeholder")}
           />
-        </div>}
-
+        </div>
+        {!readOnly && loginUser.is_admin && (
+          <div className={inputClass}>
+            <Label htmlFor="desc">{t("visibility")}</Label>
+            <Radio
+              options={[t("public"), t("private")]}
+              values={["true", "false"]}
+              value={String(channel.is_public)}
+              onChange={(v: string) => {
+                // console.log("wtff", typeof v, v);
+                changeChannelType({ is_public: v.toLowerCase() === "true", id });
+                // handleGuestToggle(v);
+              }}
+            />
+          </div>
+        )}
       </div>
       {changed && <SaveTip saveHandler={handleUpdate} resetHandler={handleReset} />}
     </div>

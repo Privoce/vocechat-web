@@ -1,11 +1,12 @@
-import { useEffect, FC } from "react";
+import { FC, useEffect } from "react";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+
 import useLeaveChannel from "@/hooks/useLeaveChannel";
 import Modal from "../Modal";
-import StyledModal from "../styled/Modal";
 import Button from "../styled/Button";
-import { useTranslation } from "react-i18next";
+import StyledModal from "../styled/Modal";
 
 interface Props {
   id: number;
@@ -31,11 +32,7 @@ const LeaveConfirmModal: FC<Props> = ({ id, closeModal, handleNextStep }) => {
       <StyledModal
         className="compact"
         title={t("channel.leave")}
-        description={
-          isOwner
-            ? t("channel.transfer_desc")
-            : t("channel.leave_desc")
-        }
+        description={isOwner ? t("channel.transfer_desc") : t("channel.leave_desc")}
         buttons={
           <>
             <Button onClick={closeModal.bind(null, undefined)} className="cancel">

@@ -1,11 +1,12 @@
 import { ChangeEvent, FC, useState } from "react";
 import { useTranslation } from "react-i18next";
-import Select, { Option } from "@/components/styled/Select";
+
 import Button from "@/components/styled/Button";
 import Input from "@/components/styled/Input";
+import Select, { Option } from "@/components/styled/Select";
 import Toggle from "@/components/styled/Toggle";
-import options from "./items.json";
 import IconMinus from "@/assets/icons/minus.circle.svg";
+import options from "./items.json";
 
 interface Issuer {
   domain: string;

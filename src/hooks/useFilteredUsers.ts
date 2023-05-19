@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+
 import { StoredUser } from "@/app/slices/users";
 import { useAppSelector } from "@/app/store";
 
@@ -7,7 +8,7 @@ export default function useFilteredUsers() {
   const { originUsers, enableContact } = useAppSelector((store) => {
     return {
       enableContact: store.server.contact_verification_enable,
-      originUsers: Object.values(store.users.byId),
+      originUsers: Object.values(store.users.byId)
     };
   });
   const [filteredUsers, setFilteredUsers] = useState<StoredUser[]>([]);

@@ -1,11 +1,11 @@
-import InviteByEmail from "./InviteByEmail";
-import AddMembers from "./AddMembers";
-import CloseIcon from "@/assets/icons/close.svg";
-import Modal from "../Modal";
-import { useAppSelector } from "@/app/store";
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
 
+import { useAppSelector } from "@/app/store";
+import CloseIcon from "@/assets/icons/close.svg";
+import Modal from "../Modal";
+import AddMembers from "./AddMembers";
+import InviteByEmail from "./InviteByEmail";
 
 interface Props {
   type?: "server" | "channel";

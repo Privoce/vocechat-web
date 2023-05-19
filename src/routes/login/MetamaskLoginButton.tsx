@@ -1,12 +1,14 @@
 /* eslint-disable no-undef */
-import { useState, useEffect, useRef } from "react";
-import MetaMaskOnboarding from "@metamask/onboarding";
-import { useLazyGetMetamaskNonceQuery } from "@/app/services/auth";
-import metamaskSvg from "@/assets/icons/metamask.svg?url";
-import { LoginCredential } from "@/types/auth";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import MetaMaskOnboarding from "@metamask/onboarding";
+
+import { useLazyGetMetamaskNonceQuery } from "@/app/services/auth";
+import { LoginCredential } from "@/types/auth";
 import { AuthType } from "@/types/common";
 import Button from "@/components/styled/Button";
+import metamaskSvg from "@/assets/icons/metamask.svg?url";
+
 // import toast from "react-hot-toast";
 
 export default function MetamaskLoginButton({
@@ -14,7 +16,7 @@ export default function MetamaskLoginButton({
   type = "login"
 }: {
   login: (params: LoginCredential) => void;
-  type?: AuthType
+  type?: AuthType;
 }) {
   const { t } = useTranslation("auth");
   const [requesting, setRequesting] = useState(false);
@@ -93,7 +95,11 @@ export default function MetamaskLoginButton({
     }
   };
   return (
-    <Button className="flex ghost flex-center gap-2" disabled={requesting} onClick={handleMetamaskLogin}>
+    <Button
+      className="flex ghost flex-center gap-2"
+      disabled={requesting}
+      onClick={handleMetamaskLogin}
+    >
       <img className="w-6 h-6" src={metamaskSvg} alt="meta mask icon" />
       {type == "login" ? t("login.metamask") : t("reg.metamask")}
     </Button>

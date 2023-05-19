@@ -1,8 +1,9 @@
-import { useState, useRef, useEffect, ChangeEvent, KeyboardEvent, FC } from "react";
+import { ChangeEvent, FC, KeyboardEvent, useEffect, useRef, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import { useKey } from "rooks";
-import { useEditMessageMutation } from "@/app/services/message";
+
 import { ContentTypes } from "@/app/config";
+import { useEditMessageMutation } from "@/app/services/message";
 import { useAppSelector } from "@/app/store";
 
 type Props = {
@@ -56,7 +57,6 @@ const EditMessage: FC<Props> = ({ mid, cancelEdit }) => {
   };
   if (!msg) return null;
 
-
   return (
     <div className="w-full">
       <div className="bg-gray-200 rounded-lg p-4">
@@ -80,10 +80,16 @@ const EditMessage: FC<Props> = ({ mid, cancelEdit }) => {
       </div>
       <div className="flex items-center p-1 gap-4 text-xs">
         <span>
-          esc to <button className="text-primary-500 cursor-pointer px-1" onClick={cancelEdit}>cancel</button>
+          esc to{" "}
+          <button className="text-primary-500 cursor-pointer px-1" onClick={cancelEdit}>
+            cancel
+          </button>
         </span>
         <span>
-          enter to <button className="text-primary-500 cursor-pointer px-1" onClick={handleSave}>{isEditing ? "saving" : `save`}</button>
+          enter to{" "}
+          <button className="text-primary-500 cursor-pointer px-1" onClick={handleSave}>
+            {isEditing ? "saving" : `save`}
+          </button>
         </span>
       </div>
     </div>

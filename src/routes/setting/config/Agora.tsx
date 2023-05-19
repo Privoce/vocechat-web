@@ -1,12 +1,12 @@
 import { ChangeEvent } from "react";
 import { useTranslation } from "react-i18next";
 
+import { AgoraConfig } from "@/types/server";
+import SaveTip from "@/components/SaveTip";
 import Input from "@/components/styled/Input";
 import Label from "@/components/styled/Label";
 import Toggle from "@/components/styled/Toggle";
-import SaveTip from "@/components/SaveTip";
 import useConfig from "@/hooks/useConfig";
-import { AgoraConfig } from "@/types/server";
 import HowToTip from "./HowToTip";
 
 export default function ConfigAgora() {

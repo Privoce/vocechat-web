@@ -1,8 +1,9 @@
 import { FC, ReactElement } from "react";
+import { useTranslation } from "react-i18next";
 import Tippy from "@tippyjs/react";
+
 import useUserOperation from "@/hooks/useUserOperation";
 import ContextMenu, { Item } from "../ContextMenu";
-import { useTranslation } from "react-i18next";
 
 interface Props {
   enable?: boolean;
@@ -75,7 +76,6 @@ const UserContextMenu: FC<Props> = ({ enable = false, uid, cid, visible, hide, c
                 title: t("remove"),
                 handler: removeUser
               }
-
             ].filter(Boolean) as Item[]
           }
         />

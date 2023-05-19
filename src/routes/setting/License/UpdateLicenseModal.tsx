@@ -1,16 +1,17 @@
-import { ChangeEvent, FC, useState, useEffect } from "react";
+import { ChangeEvent, FC, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
+
 import Modal from "@/components/Modal";
-import StyledModal from "@/components/styled/Modal";
 import Button from "@/components/styled/Button";
+import StyledModal from "@/components/styled/Modal";
 import Textarea from "@/components/styled/Textarea";
 
-import { useTranslation } from "react-i18next";
 interface Props {
   closeModal: () => void;
   updateLicense: (param: string) => Promise<any>;
   updated: boolean;
-  updating: boolean
+  updating: boolean;
   // domain: string;
 }
 
@@ -43,13 +44,18 @@ const UpdateLicenseModal: FC<Props> = ({ closeModal, updateLicense, updating, up
             <Button onClick={closeModal} className="ghost">
               {ct("action.cancel")}
             </Button>
-            <Button disabled={updating || updated || !value} onClick={handleRenew} >
+            <Button disabled={updating || updated || !value} onClick={handleRenew}>
               {updating ? "Updating" : updated ? "Update Successfully" : t("license.update")}
             </Button>
           </>
         }
       >
-        <Textarea rows={18} placeholder={t("license.update_placeholder")} value={value} onChange={handleLicenseUpdate} />
+        <Textarea
+          rows={18}
+          placeholder={t("license.update_placeholder")}
+          value={value}
+          onChange={handleLicenseUpdate}
+        />
       </StyledModal>
     </Modal>
   );

@@ -1,7 +1,8 @@
 import { FC } from "react";
-import InviteLink from "../InviteLink";
-import { useAppSelector } from "@/app/store";
 import { useTranslation } from "react-i18next";
+
+import { useAppSelector } from "@/app/store";
+import InviteLink from "../InviteLink";
 import MemberList from "./MemberList";
 
 interface Props {
@@ -20,9 +21,7 @@ const ManageMembers: FC<Props> = ({ cid }) => {
       {loginUser?.is_admin && <InviteLink />}
       <div className="flex flex-col mb-10">
         <h4 className="font-bold text-gray-700 dark:text-white">{t("manage_members")}</h4>
-        <p className="text-gray-400 dark:text-gray-100 text-xs">
-          {t("manage_tip")}
-        </p>
+        <p className="text-gray-400 dark:text-gray-100 text-xs">{t("manage_tip")}</p>
       </div>
       <MemberList cid={cid} />
     </section>

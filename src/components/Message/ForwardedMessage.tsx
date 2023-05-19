@@ -1,10 +1,11 @@
-import { useEffect, useState, FC, ReactElement } from "react";
-import renderContent from "./renderContent";
-import Avatar from "../Avatar";
-import IconForward from "@/assets/icons/forward.svg";
-import useNormalizeMessage from "@/hooks/useNormalizeMessage";
+import { FC, ReactElement, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+
 import { ChatContext } from "@/types/common";
+import useNormalizeMessage from "@/hooks/useNormalizeMessage";
+import IconForward from "@/assets/icons/forward.svg";
+import Avatar from "../Avatar";
+import renderContent from "./renderContent";
 
 type Props = {
   context: ChatContext;
@@ -22,7 +23,10 @@ const ForwardedMessage: FC<Props> = ({ context, to, from_uid, id }) => {
       const forward_mids = messages.map(({ from_mid }) => from_mid) || [];
       // console.log("fff", messages);
       setForwards(
-        <div data-forwarded-mids={forward_mids.join(",")} className="flex flex-col text-left rounded-lg bg-gray-200 dark:bg-gray-900">
+        <div
+          data-forwarded-mids={forward_mids.join(",")}
+          className="flex flex-col text-left rounded-lg bg-gray-200 dark:bg-gray-900"
+        >
           <h4 className="p-2 pb-0 flex items-center gap-1 text-gray-500 text-xs">
             <IconForward className="w-4 h-4 fill-gray-500" />
             {t("action.forward")}
@@ -31,7 +35,10 @@ const ForwardedMessage: FC<Props> = ({ context, to, from_uid, id }) => {
             {messages.map((msg, idx) => {
               const { user = {}, download, content, content_type, properties, thumbnail } = msg;
               return (
-                <div className="w-full relative flex items-start gap-4 px-2 py-1 my-2 rounded-lg" key={idx}>
+                <div
+                  className="w-full relative flex items-start gap-4 px-2 py-1 my-2 rounded-lg"
+                  key={idx}
+                >
                   {user && (
                     <div className="w-6 h-6 rounded-full flex shrink-0 overflow-hidden">
                       <Avatar width={24} height={24} src={user.avatar} name={user.name} />

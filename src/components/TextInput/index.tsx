@@ -1,15 +1,15 @@
-import { ChangeEvent, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { ChangeEvent, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import TextareaAutoSize from "react-textarea-autosize";
-import { useKey } from 'rooks';
-import { isMobile } from '../../utils';
+import { useKey } from "rooks";
 
+import { isMobile } from "../../utils";
 import Button from "../styled/Button";
 
 type Props = {
-  placeholder: string,
-  sendMessage: any
-}
+  placeholder: string;
+  sendMessage: any;
+};
 const TextInput = ({ sendMessage, placeholder }: Props) => {
   const { t } = useTranslation();
   const inputRef = useRef(null);
@@ -34,11 +34,11 @@ const TextInput = ({ sendMessage, placeholder }: Props) => {
     },
     {
       when: !isMobile(),
-      target: inputRef,
+      target: inputRef
     }
   );
   return (
-    <div className='md:hidden relative mb-1 p-1 flex items-center w-full text-gray-600 dark:text-white bg-gray-200 dark:bg-gray-600 rounded-lg'>
+    <div className="md:hidden relative mb-1 p-1 flex items-center w-full text-gray-600 dark:text-white bg-gray-200 dark:bg-gray-600 rounded-lg">
       <TextareaAutoSize
         // autoFocus
         onFocus={(e) =>
@@ -56,7 +56,9 @@ const TextInput = ({ sendMessage, placeholder }: Props) => {
         value={currMsg}
         placeholder={placeholder}
       />
-      <Button onClick={handleSend} className="mini absolute right-1.5 bottom-1.5">{t("action.send")}</Button>
+      <Button onClick={handleSend} className="mini absolute right-1.5 bottom-1.5">
+        {t("action.send")}
+      </Button>
     </div>
   );
 };

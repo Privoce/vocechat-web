@@ -1,6 +1,7 @@
-import { useState, MouseEvent, ReactElement } from "react";
-import { hideAll } from "tippy.js";
+import { MouseEvent, ReactElement, useState } from "react";
 import Tippy from "@tippyjs/react";
+import { hideAll } from "tippy.js";
+
 import Menu, { Item } from "@/components/ContextMenu";
 
 interface ContextMenuProps {

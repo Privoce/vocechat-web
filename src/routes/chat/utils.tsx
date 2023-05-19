@@ -1,16 +1,17 @@
 import React from "react";
-import dayjs from "dayjs";
 import { useDispatch } from "react-redux";
-import { isImage } from "@/utils";
+import dayjs from "dayjs";
+
 import { ContentTypes } from "@/app/config";
-import Checkbox from "@/components/styled/Checkbox";
-import Divider from "@/components/Divider";
-import Message from "@/components/Message";
 import { updateSelectMessages } from "@/app/slices/ui";
 import { useAppSelector } from "@/app/store";
-import LinkifyText from "@/components/LinkifyText";
-import i18n from "../../i18n";
 import { ChatContext } from "@/types/common";
+import Divider from "@/components/Divider";
+import LinkifyText from "@/components/LinkifyText";
+import Message from "@/components/Message";
+import Checkbox from "@/components/styled/Checkbox";
+import { isImage } from "@/utils";
+import i18n from "../../i18n";
 
 export function getUnreadCount({
   mids = [],
@@ -105,12 +106,19 @@ const MessageWrapper = ({ selectMode = false, context, id, mid, divider, childre
   return (
     <div className={`group flex flex-col items-start gap-2 relative w-full `} {...rest}>
       {divider}
-      <div className={`w-full flex items-center ${selectMode ? "group-hover:bg-slate-100 dark:group-hover:bg-slate-900" : ""}`}>
+      <div
+        className={`w-full flex items-center ${
+          selectMode ? "group-hover:bg-slate-100 dark:group-hover:bg-slate-900" : ""
+        }`}
+      >
         {selectMode && <Checkbox className="!ml-2" checked={selected} />}
         {children}
       </div>
       {selectMode && (
-        <div className="absolute left-0 top-0 w-full h-full cursor-pointer" onClick={selectMode ? toggleSelect : undefined}></div>
+        <div
+          className="absolute left-0 top-0 w-full h-full cursor-pointer"
+          onClick={selectMode ? toggleSelect : undefined}
+        ></div>
       )}
     </div>
   );
@@ -140,7 +148,7 @@ export const renderMessageFragment = ({
   const local_id = curr.properties?.local_id;
   let divider = null;
   let time = dayjs(created_at).format("YYYY/MM/DD");
-  if (!prev && typeof prev !== 'undefined') {
+  if (!prev && typeof prev !== "undefined") {
     // 首条信息
     divider = time;
   } else if (prev) {

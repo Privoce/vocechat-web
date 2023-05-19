@@ -1,8 +1,8 @@
+import { Trans, useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+
 import StyledButton from "@/components/styled/Button";
 import PlayIcon from "@/assets/icons/play.svg?url";
-import { Trans, useTranslation } from "react-i18next";
-
 
 export default function DonePage({ serverName }: { serverName: string }) {
   const { t } = useTranslation("welcome", { keyPrefix: "onboarding" });
@@ -17,7 +17,10 @@ export default function DonePage({ serverName }: { serverName: string }) {
           <span className="font-bold" />
         </Trans>
       </span>
-      <StyledButton className="!w-32 h-auto flex flex-col items-center py-3" onClick={() => navigate("/")}>
+      <StyledButton
+        className="!w-32 h-auto flex flex-col items-center py-3"
+        onClick={() => navigate("/")}
+      >
         <img className="mb-2" src={PlayIcon} alt="play icon" />
         <span className="text-sm">{t("enter")}</span>
       </StyledButton>

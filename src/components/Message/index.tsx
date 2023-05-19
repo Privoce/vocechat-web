@@ -1,24 +1,24 @@
-import React, { useRef, useState, useEffect, FC } from "react";
-import dayjs from "dayjs";
+import React, { FC, useEffect, useRef, useState } from "react";
 import Tippy from "@tippyjs/react";
 import clsx from "clsx";
+import dayjs from "dayjs";
 
-import useInView from "./useInView";
-import Reaction from "./Reaction";
-import Reply from "./Reply";
-import Profile from "../Profile";
-import Avatar from "../Avatar";
-import Commands from "./Commands";
-import EditMessage from "./EditMessage";
-import renderContent from "./renderContent";
-import Tooltip from "../Tooltip";
-import ContextMenu from "./ContextMenu";
+import { useAppSelector } from "@/app/store";
+import { ChatContext } from "@/types/common";
 import useContextMenu from "@/hooks/useContextMenu";
 import usePinMessage from "@/hooks/usePinMessage";
-import { useAppSelector } from "@/app/store";
+import IconInfo from "@/assets/icons/info.svg";
+import Avatar from "../Avatar";
+import Profile from "../Profile";
+import Tooltip from "../Tooltip";
+import Commands from "./Commands";
+import ContextMenu from "./ContextMenu";
+import EditMessage from "./EditMessage";
 import ExpireTimer from "./ExpireTimer";
-import IconInfo from '@/assets/icons/info.svg';
-import { ChatContext } from "@/types/common";
+import Reaction from "./Reaction";
+import renderContent from "./renderContent";
+import Reply from "./Reply";
+import useInView from "./useInView";
 
 interface IProps {
   readOnly?: boolean;
@@ -41,15 +41,17 @@ const Message: FC<IProps> = ({
   const [edit, setEdit] = useState(false);
   const avatarRef = useRef(null);
   const { getPinInfo } = usePinMessage(context == "channel" ? contextId : 0);
-  const { message, reactionMessageData, usersData, loginUid, enableRightLayout } = useAppSelector((store) => {
-    return {
-      enableRightLayout: store.server.chat_layout_mode == "SelfRight",
-      reactionMessageData: store.reactionMessage,
-      message: store.message[mid],
-      usersData: store.users.byId,
-      loginUid: store.authData.user?.uid
-    };
-  });
+  const { message, reactionMessageData, usersData, loginUid, enableRightLayout } = useAppSelector(
+    (store) => {
+      return {
+        enableRightLayout: store.server.chat_layout_mode == "SelfRight",
+        reactionMessageData: store.reactionMessage,
+        message: store.message[mid],
+        usersData: store.users.byId,
+        loginUid: store.authData.user?.uid
+      };
+    }
+  );
 
   const toggleEditMessage = () => {
     setEdit((prev) => !prev);
@@ -81,9 +83,7 @@ const Message: FC<IProps> = ({
     properties,
     expires_in = 0,
     failed = false
-
   } = message;
-
 
   const reactions = reactionMessageData[mid];
   const currUser = usersData[fromUid || 0];
@@ -98,17 +98,17 @@ const Message: FC<IProps> = ({
   const showExpire = (expires_in ?? 0) > 0;
   const isSelf = fromUid == loginUid && enableRightLayout;
   return (
-
     <div
       key={_key}
       onContextMenu={readOnly ? undefined : handleContextMenuEvent}
       data-msg-mid={mid}
       ref={inViewRef}
-      className={clsx(`group w-full relative flex items-start gap-2 md:gap-4 p-1 md:p-2 my-2 rounded-lg md:dark:hover:bg-gray-800 md:hover:bg-gray-100`,
+      className={clsx(
+        `group w-full relative flex items-start gap-2 md:gap-4 p-1 md:p-2 my-2 rounded-lg md:dark:hover:bg-gray-800 md:hover:bg-gray-100`,
         readOnly && "hover:bg-transparent",
         showExpire && "bg-red-200 dark:bg-red-200/40",
         pinInfo && "bg-cyan-50 dark:bg-cyan-800 pt-7",
-        isSelf && "flex-row-reverse",
+        isSelf && "flex-row-reverse"
       )}
     >
       <Tippy
@@ -121,7 +121,13 @@ const Message: FC<IProps> = ({
         content={<Profile uid={fromUid || 0} type="card" cid={context == "dm" ? 0 : contextId} />}
       >
         <div className="cursor-pointer w-10 h-10 shrink-0" data-uid={fromUid} ref={avatarRef}>
-          <Avatar className="w-10 h-10 rounded-full object-cover" width={40} height={40} src={currUser?.avatar} name={currUser?.name} />
+          <Avatar
+            className="w-10 h-10 rounded-full object-cover"
+            width={40}
+            height={40}
+            src={currUser?.avatar}
+            name={currUser?.name}
+          />
         </div>
       </Tippy>
       <ContextMenu
@@ -133,14 +139,23 @@ const Message: FC<IProps> = ({
         hide={hideContextMenu}
       >
         <div
-          className={clsx("w-full flex flex-col gap-2", pinInfo && "relative", isSelf && "items-end")}
-          data-pin-tip={`pinned by ${pinInfo?.created_by ? usersData[pinInfo.created_by]?.name : ""
-            }`}
+          className={clsx(
+            "w-full flex flex-col gap-2",
+            pinInfo && "relative",
+            isSelf && "items-end"
+          )}
+          data-pin-tip={`pinned by ${
+            pinInfo?.created_by ? usersData[pinInfo.created_by]?.name : ""
+          }`}
         >
-          {pinInfo && <span className="absolute left-0 -top-1 -translate-y-full text-xs text-gray-400">
-            {`pinned by ${pinInfo.created_by ? usersData[pinInfo.created_by]?.name : ""}`}
-          </span>}
-          <div className={clsx(`flex items-center gap-2 font-semibold`, isSelf && "flex-row-reverse")}>
+          {pinInfo && (
+            <span className="absolute left-0 -top-1 -translate-y-full text-xs text-gray-400">
+              {`pinned by ${pinInfo.created_by ? usersData[pinInfo.created_by]?.name : ""}`}
+            </span>
+          )}
+          <div
+            className={clsx(`flex items-center gap-2 font-semibold`, isSelf && "flex-row-reverse")}
+          >
             <span className="text-primary-500 text-sm">{currUser?.name || "Deleted User"}</span>
             <Tooltip
               delay={200}
@@ -154,13 +169,18 @@ const Message: FC<IProps> = ({
                   : dayjsTime.format("YYYY-MM-DD h:mm:ss A")}
               </time>
             </Tooltip>
-            {failed && <span className="text-red-500 text-xs flex items-center gap-1">
-              <IconInfo className="stroke-red-600 w-4 h-4" /> Send Failed
-            </span>}
+            {failed && (
+              <span className="text-red-500 text-xs flex items-center gap-1">
+                <IconInfo className="stroke-red-600 w-4 h-4" /> Send Failed
+              </span>
+            )}
           </div>
-          <div className={clsx(`select-text text-gray-800 text-sm break-all whitespace-pre-wrap dark:!text-white`,
-            sending && "opacity-90",
-          )}>
+          <div
+            className={clsx(
+              `select-text text-gray-800 text-sm break-all whitespace-pre-wrap dark:!text-white`,
+              sending && "opacity-90"
+            )}
+          >
             {reply_mid && <Reply key={reply_mid} mid={reply_mid} />}
             {edit ? (
               <EditMessage mid={mid} cancelEdit={toggleEditMessage} />

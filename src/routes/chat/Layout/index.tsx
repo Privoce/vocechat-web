@@ -1,25 +1,23 @@
-import { useRef, useEffect, FC, ReactElement } from "react";
+import { FC, ReactElement, useEffect, useRef } from "react";
 import { useDrop } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
-import clsx from "clsx";
 import { toast } from "react-hot-toast";
+import clsx from "clsx";
 
-
-import Send from "@/components/Send";
-import Operations from "./Operations";
-import useUploadFile from "@/hooks/useUploadFile";
 import { useAppSelector } from "@/app/store";
-import LoginTip from "./LoginTip";
-import useLicense from "@/hooks/useLicense";
-import LicenseUpgradeTip from "./LicenseOutdatedTip";
-import DnDTip from "./DnDTip";
-import IconWarning from '@/assets/icons/warning.svg';
-import ImagePreview from "@/components/ImagePreview";
-
-import VirtualMessageFeed from "./VirtualMessageFeed";
-import DMVoice from "./DMVoicing";
-import AddContactTip from "./AddContactTip";
 import { ChatContext } from "@/types/common";
+import ImagePreview from "@/components/ImagePreview";
+import Send from "@/components/Send";
+import useLicense from "@/hooks/useLicense";
+import useUploadFile from "@/hooks/useUploadFile";
+import IconWarning from "@/assets/icons/warning.svg";
+import AddContactTip from "./AddContactTip";
+import DMVoice from "./DMVoicing";
+import DnDTip from "./DnDTip";
+import LicenseUpgradeTip from "./LicenseOutdatedTip";
+import LoginTip from "./LoginTip";
+import Operations from "./Operations";
+import VirtualMessageFeed from "./VirtualMessageFeed";
 
 interface Props {
   readonly?: boolean;
@@ -62,10 +60,10 @@ const Layout: FC<Props> = ({
         // console.log("iii", inputMode);
         if (inputMode !== "text") {
           toast("DnD not allowed in this input mode", {
-            icon: <IconWarning className="w-5 h-5" />,
+            icon: <IconWarning className="w-5 h-5" />
           });
           return;
-        };
+        }
         if (files.length) {
           const filesData = files.map((file) => {
             const { size, type, name } = file;
@@ -99,8 +97,11 @@ const Layout: FC<Props> = ({
       <section ref={drop} className={`relative h-full w-full rounded-r-2xl flex`}>
         <main className="flex flex-col flex-1">
           {header}
-          <div className="w-full h-full flex items-start justify-between relative" >
-            <div className="rounded-br-2xl flex flex-col absolute bottom-0 w-full h-full" ref={messagesContainer}>
+          <div className="w-full h-full flex items-start justify-between relative">
+            <div
+              className="rounded-br-2xl flex flex-col absolute bottom-0 w-full h-full"
+              ref={messagesContainer}
+            >
               {context == "dm" && <DMVoice uid={to} />}
               {context == "dm" && <AddContactTip uid={to} />}
               {/* 消息流 */}
@@ -121,15 +122,23 @@ const Layout: FC<Props> = ({
             </div>
           </div>
         </main>
-        {aside && <div className={clsx("flex z-50 p-3 absolute right-0 top-14 md:right-0 md:top-0 md:translate-x-full flex-col")}>
-          {aside}
-        </div>}
-        {users && <div className="hidden md:block">{users}</div>}
-        {voice && <div className="z-10 max-md:absolute max-md:right-11 max-md:top-14 max-md:overflow-y-scroll bg-white dark:!bg-gray-700 md:block">{voice}</div>}
-        {!readonly && inputMode == "text" && isActive && (
-          <DnDTip context={context} name={name} />
+        {aside && (
+          <div
+            className={clsx(
+              "flex z-50 p-3 absolute right-0 top-14 md:right-0 md:top-0 md:translate-x-full flex-col"
+            )}
+          >
+            {aside}
+          </div>
         )}
-      </section >
+        {users && <div className="hidden md:block">{users}</div>}
+        {voice && (
+          <div className="z-10 max-md:absolute max-md:right-11 max-md:top-14 max-md:overflow-y-scroll bg-white dark:!bg-gray-700 md:block">
+            {voice}
+          </div>
+        )}
+        {!readonly && inputMode == "text" && isActive && <DnDTip context={context} name={name} />}
+      </section>
     </>
   );
 };

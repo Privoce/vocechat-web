@@ -1,18 +1,19 @@
 // import { useState, useEffect, ChangeEvent } from "react";
 import { useTranslation } from "react-i18next";
-import StyledRadio from "@/components/styled/Radio";
+
 import { useAppSelector } from "@/app/store";
 import { LoginConfig, WhoCanSignUp } from "@/types/server";
-import useConfig from "@/hooks/useConfig";
-import Server from './Server';
-import Language from './Language';
-import FrontendURL from "./FrontendURL";
-import DarkMode from "./DarkMode";
 import ServerVersionChecker from "@/components/ServerVersionChecker";
-import OnlineStatus from "./OnlineStatus";
+import StyledRadio from "@/components/styled/Radio";
+import useConfig from "@/hooks/useConfig";
 import ChatLayout from "./ChatLayout";
-import SettingBlock from "./SettingBlock";
 import ContactVerification from "./ContactVerification";
+import DarkMode from "./DarkMode";
+import FrontendURL from "./FrontendURL";
+import Language from "./Language";
+import OnlineStatus from "./OnlineStatus";
+import Server from "./Server";
+import SettingBlock from "./SettingBlock";
 
 export default function Overview() {
   const { t } = useTranslation("setting");
@@ -78,8 +79,6 @@ export default function Overview() {
           <ServerVersionChecker version="0.3.7" empty={true}>
             <ContactVerification />
           </ServerVersionChecker>
-
-
         </>
       )}
 

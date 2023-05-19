@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+
 import { useLoginMutation } from "@/app/services/auth";
-import toast from "react-hot-toast";
 import { setAuthData } from "@/app/slices/auth.data";
-import { useTranslation } from "react-i18next";
 
 export default function OAuthPage() {
   const { t: ct } = useTranslation();

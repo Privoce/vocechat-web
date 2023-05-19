@@ -1,8 +1,8 @@
-import VideoPreview from "./Video";
 import AudioPreview from "./Audio";
-import ImagePreview from "./Image";
-import PdfPreview from "./Pdf";
 import CodePreview from "./Code";
 import DocPreview from "./Doc";
+import ImagePreview from "./Image";
+import PdfPreview from "./Pdf";
+import VideoPreview from "./Video";
 
 export { VideoPreview, AudioPreview, ImagePreview, PdfPreview, CodePreview, DocPreview };

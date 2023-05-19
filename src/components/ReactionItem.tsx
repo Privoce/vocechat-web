@@ -1,12 +1,13 @@
 import { FC, ReactElement } from "react";
-import EmojiThumbUp from "@/assets/icons/emoji.thumb.up.svg";
-import EmojiThumbDown from "@/assets/icons/emoji.thumb.down.svg";
-import EmojiSmile from "@/assets/icons/emoji.smile.svg";
+
 import EmojiCelebrate from "@/assets/icons/emoji.celebrate.svg";
-import EmojiUnhappy from "@/assets/icons/emoji.unhappy.svg";
 import EmojiHeart from "@/assets/icons/emoji.heart.svg";
-import EmojiRocket from "@/assets/icons/emoji.rocket.svg";
 import EmojiLook from "@/assets/icons/emoji.look.svg";
+import EmojiRocket from "@/assets/icons/emoji.rocket.svg";
+import EmojiSmile from "@/assets/icons/emoji.smile.svg";
+import EmojiThumbDown from "@/assets/icons/emoji.thumb.down.svg";
+import EmojiThumbUp from "@/assets/icons/emoji.thumb.up.svg";
+import EmojiUnhappy from "@/assets/icons/emoji.unhappy.svg";
 
 export interface Emojis {
   "👍": ReactElement;
@@ -26,7 +27,7 @@ export const ReactionMap = {
   "👎": ":thumb_down:",
   "😄": ":smile:",
   "👀": ":eyes:",
-  "🚀": ":rocket:",
+  "🚀": ":rocket:"
 };
 const emojis: Emojis = {
   "👍": <EmojiThumbUp className="emoji w-full h-full min-w-[16px] min-h-[16px]" />,

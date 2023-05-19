@@ -1,16 +1,21 @@
-import { useState, useEffect } from "react";
-import useCopy from "./useCopy";
+import { useEffect, useState } from "react";
+
+import {
+  useLazyCreateInviteLinkQuery as useCreateChannelInviteLinkQuery,
+  useLazyCreatePrivateInviteLinkQuery
+} from "@/app/services/channel";
 import { useGetSMTPStatusQuery } from "@/app/services/server";
-import { useLazyCreateInviteLinkQuery as useCreateChannelInviteLinkQuery, useLazyCreatePrivateInviteLinkQuery } from "@/app/services/channel";
 import { useAppSelector } from "@/app/store";
+import useCopy from "./useCopy";
 
 export default function useInviteLink(cid?: number) {
   const [finalLink, setFinalLink] = useState("");
-  const channel = useAppSelector(store => store.channels.byId[cid ?? 0]);
+  const channel = useAppSelector((store) => store.channels.byId[cid ?? 0]);
   const { data: SMTPEnabled, isSuccess: smtpStatusFetchSuccess } = useGetSMTPStatusQuery();
   const [generateChannelInviteLink, { data: channelInviteLink, isLoading: generatingChannelLink }] =
     useCreateChannelInviteLinkQuery();
-  const [generatePrivateInviteLink, { data: privateInviteLink, isLoading: generatingPrivateLink }] = useLazyCreatePrivateInviteLinkQuery();
+  const [generatePrivateInviteLink, { data: privateInviteLink, isLoading: generatingPrivateLink }] =
+    useLazyCreatePrivateInviteLinkQuery();
 
   const { copied, copy } = useCopy({ enableToast: false });
   const copyLink = () => {

@@ -1,20 +1,20 @@
-import { useState, useEffect, FC, MouseEvent, ChangeEvent } from "react";
+import { ChangeEvent, FC, MouseEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import i18n from "@/i18n";
 import clsx from "clsx";
 
-import Modal from "../Modal";
-import Button from "../styled/Button";
-import ChannelIcon from "../ChannelIcon";
-import User from "../User";
-import StyledCheckbox from "../styled/Checkbox";
-import StyledToggle from "../styled/Toggle";
-import useFilteredUsers from "@/hooks/useFilteredUsers";
 import { useCreateChannelMutation, useSendChannelMsgMutation } from "@/app/services/channel";
 import { useAppSelector } from "@/app/store";
 import { CreateChannelDTO } from "@/types/channel";
-import i18n from "@/i18n";
+import useFilteredUsers from "@/hooks/useFilteredUsers";
+import ChannelIcon from "../ChannelIcon";
+import Modal from "../Modal";
+import Button from "../styled/Button";
+import StyledCheckbox from "../styled/Checkbox";
+import StyledToggle from "../styled/Toggle";
+import User from "../User";
 
 interface Props {
   personal?: boolean;
@@ -66,7 +66,7 @@ const ChannelModal: FC<Props> = ({ personal = false, closeModal }) => {
   }, [isError]);
 
   useEffect(() => {
-    const id = typeof newChannel == 'object' ? newChannel.gid : newChannel;
+    const id = typeof newChannel == "object" ? newChannel.gid : newChannel;
     if (isSuccess && id && channelData[id]) {
       const name = channelData[id].name;
       // 发个欢迎消息
@@ -77,7 +77,6 @@ const ChannelModal: FC<Props> = ({ personal = false, closeModal }) => {
       navigateTo(`/chat/channel/${id}`);
     }
   }, [isSuccess, newChannel, channelData]);
-
 
   const handleNameInput = (evt: ChangeEvent<HTMLInputElement>) => {
     setData((prev) => ({ ...prev, name: evt.target.value }));
@@ -138,18 +137,31 @@ const ChannelModal: FC<Props> = ({ personal = false, closeModal }) => {
             )}
           </div>
         )}
-        <div className={clsx(`w-80 md:min-w-[400px] flex flex-col items-center p-8 box-border`, !is_public && "w-[344px] justify-evenly")}>
-          <h3 className="font-semibold text-xl text-gray-600 mb-4 dark:text-white">{t("create_channel")}</h3>
+        <div
+          className={clsx(
+            `w-80 md:min-w-[400px] flex flex-col items-center p-8 box-border`,
+            !is_public && "w-[344px] justify-evenly"
+          )}
+        >
+          <h3 className="font-semibold text-xl text-gray-600 mb-4 dark:text-white">
+            {t("create_channel")}
+          </h3>
           <p className="text-gray-400 mb-2 md:mb-12 text-sm font-normal">
-            {!is_public
-              ? t("create_private_channel_desc")
-              : t("create_channel_desc")}
+            {!is_public ? t("create_private_channel_desc") : t("create_channel_desc")}
           </p>
           <div className="w-full flex flex-col justify-start gap-2 mb-2 md:mb-8">
             <span className="text-gray-400 text-sm font-normal">{t("channel_name")}</span>
             <div className="relative">
-              <input className="text-gray-600 dark:text-gray-300 rounded p-2 pl-9 border border-solid border-gray-300 w-full bg-transparent" onChange={handleNameInput} value={name} placeholder="new channel" />
-              <ChannelIcon personal={!is_public} className="absolute left-2 top-1/2 -translate-y-1/2" />
+              <input
+                className="text-gray-600 dark:text-gray-300 rounded p-2 pl-9 border border-solid border-gray-300 w-full bg-transparent"
+                onChange={handleNameInput}
+                value={name}
+                placeholder="new channel"
+              />
+              <ChannelIcon
+                personal={!is_public}
+                className="absolute left-2 top-1/2 -translate-y-1/2"
+              />
             </div>
           </div>
           <div className="w-full flex items-center justify-between mb-8 md:mb-12">

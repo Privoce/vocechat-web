@@ -1,10 +1,10 @@
-
 import { useTranslation } from "react-i18next";
 import { useWizard } from "react-use-wizard";
-import StyledInput from "@/components/styled/Input";
-import StyledButton from "@/components/styled/Button";
-import useInviteLink from "@/hooks/useInviteLink";
+
 import ServerVersionChecker from "@/components/ServerVersionChecker";
+import StyledButton from "@/components/styled/Button";
+import StyledInput from "@/components/styled/Input";
+import useInviteLink from "@/hooks/useInviteLink";
 import UpdateFrontendURL from "./UpdateFrontendURL";
 
 export default function InviteLink() {
@@ -19,8 +19,16 @@ export default function InviteLink() {
       <span className="text-sm mb-10 text-gray-400 dark:text-gray-600">{t("last_tip")}</span>
       <span className="text-sm text-gray-500 mb-2 font-semibold">{t("last_desc")}</span>
       <div className="w-full md:w-[400px] rounded shadow-md flex border border-solid border-gray-100">
-        <StyledInput className="large !border-none !shadow-none" readOnly placeholder="Generating" value={link} />
-        <StyledButton onClick={copyLink} className="ghost small border_less !px-2 md:hover:!text-primary-600">
+        <StyledInput
+          className="large !border-none !shadow-none"
+          readOnly
+          placeholder="Generating"
+          value={link}
+        />
+        <StyledButton
+          onClick={copyLink}
+          className="ghost small border_less !px-2 md:hover:!text-primary-600"
+        >
           {linkCopied ? "Copied" : ct("action.copy")}
         </StyledButton>
       </div>

@@ -1,5 +1,6 @@
-import { useState, useEffect, FC } from "react";
-import { Ping, LineWobble } from '@uiball/loaders';
+import { FC, useEffect, useState } from "react";
+import { LineWobble, Ping } from "@uiball/loaders";
+
 import { getDefaultSize, isMobile } from "@/utils";
 
 type Props = {
@@ -21,7 +22,10 @@ const ImageMessage: FC<Props> = ({
 }) => {
   const url = thumbnail || content;
   const [status, setStatus] = useState<"loading" | "error" | "loaded">("loading");
-  const { width = 0, height = 0 } = getDefaultSize(properties, { min: 200, max: isMobile() ? 300 : 480 });
+  const { width = 0, height = 0 } = getDefaultSize(properties, {
+    min: 200,
+    max: isMobile() ? 300 : 480
+  });
   useEffect(() => {
     const img = new Image();
     img.onload = () => {
@@ -34,25 +38,29 @@ const ImageMessage: FC<Props> = ({
   }, [url]);
 
   return (
-    <div className={`relative`} style={{
-      width: width ? `${width}px` : "",
-      height: height ? `${height}px` : ""
-    }}
+    <div
+      className={`relative`}
+      style={{
+        width: width ? `${width}px` : "",
+        height: height ? `${height}px` : ""
+      }}
     >
       {uploading && (
         <div className="absolute left-0 top-0 w-full h-full bg-white/50 flex flex-col justify-center items-center gap-1">
-          <Ping
-            size={45}
-            speed={2}
-            color="#555"
-          />
+          <Ping size={45} speed={2} color="#555" />
           <span className="text-xs text-gray-500">{progress}%</span>
         </div>
       )}
-      {status == "error" ? <p className="w-full h-full flex-center text-lg text-red-800 bg-red-100">load image error</p> :
-        status == "loading" ? <p className="w-full h-full flex-center bg-primary-50/80 dark:bg-primary-900/70">
+      {status == "error" ? (
+        <p className="w-full h-full flex-center text-lg text-red-800 bg-red-100">
+          load image error
+        </p>
+      ) : status == "loading" ? (
+        <p className="w-full h-full flex-center bg-primary-50/80 dark:bg-primary-900/70">
           <LineWobble />
-        </p> : <img
+        </p>
+      ) : (
+        <img
           className="h-auto w-full cursor-zoom-in object-cover preview"
           // style={{
           //   width: width ? `${width}px` : "",
@@ -62,7 +70,8 @@ const ImageMessage: FC<Props> = ({
           data-origin={content}
           data-download={download}
           src={url}
-        />}
+        />
+      )}
     </div>
   );
 };

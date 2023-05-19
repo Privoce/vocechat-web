@@ -1,27 +1,26 @@
 import { memo, useEffect } from "react";
-import { Outlet, NavLink, useLocation, useMatch } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
+import { NavLink, Outlet, useLocation, useMatch } from "react-router-dom";
 
-import User from "./User";
-import Loading from "@/components/Loading";
-import Menu from "./Menu";
-import usePreload from "@/hooks/usePreload";
-import Tooltip from "@/components/Tooltip";
-import Notification from "@/components/Notification";
-import Manifest from "@/components/Manifest";
-import ChatIcon from "@/assets/icons/chat.svg";
-import UserIcon from "@/assets/icons/user.svg";
-import FavIcon from "@/assets/icons/bookmark.svg";
-import FolderIcon from "@/assets/icons/folder.svg";
-import { useAppSelector } from "@/app/store";
-import MobileNavs from "./MobileNavs";
 import { updateRememberedNavs } from "@/app/slices/ui";
-import UnreadTabTip from "@/components/UnreadTabTip";
+import { useAppSelector } from "@/app/store";
+import Loading from "@/components/Loading";
+import Manifest from "@/components/Manifest";
+import Notification from "@/components/Notification";
 import ReLoginModal from "@/components/ReLoginModal";
-import Voice from "@/components/Voice";
 import ServerVersionChecker from "@/components/ServerVersionChecker";
-
+import Tooltip from "@/components/Tooltip";
+import UnreadTabTip from "@/components/UnreadTabTip";
+import Voice from "@/components/Voice";
+import usePreload from "@/hooks/usePreload";
+import FavIcon from "@/assets/icons/bookmark.svg";
+import ChatIcon from "@/assets/icons/chat.svg";
+import FolderIcon from "@/assets/icons/folder.svg";
+import UserIcon from "@/assets/icons/user.svg";
+import Menu from "./Menu";
+import MobileNavs from "./MobileNavs";
+import User from "./User";
 
 function HomePage() {
   const { t } = useTranslation();
@@ -69,45 +68,76 @@ function HomePage() {
     <>
       {roleChanged && <ReLoginModal />}
       {!guest && <UnreadTabTip />}
-      {!guest && <ServerVersionChecker empty={true} version="0.3.5">
-        <Voice />
-      </ServerVersionChecker>}
+      {!guest && (
+        <ServerVersionChecker empty={true} version="0.3.5">
+          <Voice />
+        </ServerVersionChecker>
+      )}
       <Manifest />
       {!guest && <Notification />}
       <div className={`vocechat-container flex w-screen h-screen bg-gray-200 dark:bg-gray-900`}>
         {!guest && (
-          <div className={`hidden md:flex h-full flex-col items-center relative w-16 bg-gray-200 dark:bg-gray-900 transition-all`}>
+          <div
+            className={`hidden md:flex h-full flex-col items-center relative w-16 bg-gray-200 dark:bg-gray-900 transition-all`}
+          >
             {loginUid && <User uid={loginUid} />}
             <nav className="flex flex-col gap-1 px-3 py-6">
               <NavLink
-                className={({ isActive }) => `${linkClass} ${(isActive || isChattingPage) ? "bg-primary-400 md:hover:bg-primary-400" : ""}`}
+                className={({ isActive }) =>
+                  `${linkClass} ${
+                    isActive || isChattingPage ? "bg-primary-400 md:hover:bg-primary-400" : ""
+                  }`
+                }
                 to={chatNav}
               >
                 {({ isActive }) => {
-                  return <Tooltip tip={t("chat")}>
-                    <ChatIcon className={(isActive || isChattingPage) ? "fill-white" : ""} />
-                  </Tooltip>;
+                  return (
+                    <Tooltip tip={t("chat")}>
+                      <ChatIcon className={isActive || isChattingPage ? "fill-white" : ""} />
+                    </Tooltip>
+                  );
                 }}
               </NavLink>
-              <NavLink className={({ isActive }) => `${linkClass} ${isActive ? 'bg-primary-400 md:hover:bg-primary-400' : ""}`} to={userNav}>
+              <NavLink
+                className={({ isActive }) =>
+                  `${linkClass} ${isActive ? "bg-primary-400 md:hover:bg-primary-400" : ""}`
+                }
+                to={userNav}
+              >
                 {({ isActive }) => {
-                  return <Tooltip tip={t("members")}>
-                    <UserIcon className={isActive ? "fill-white" : ""} />
-                  </Tooltip>;
+                  return (
+                    <Tooltip tip={t("members")}>
+                      <UserIcon className={isActive ? "fill-white" : ""} />
+                    </Tooltip>
+                  );
                 }}
               </NavLink>
-              <NavLink className={({ isActive }) => `${linkClass} ${isActive ? 'bg-primary-400 md:hover:bg-primary-400' : ""}`} to={"/favs"}>
+              <NavLink
+                className={({ isActive }) =>
+                  `${linkClass} ${isActive ? "bg-primary-400 md:hover:bg-primary-400" : ""}`
+                }
+                to={"/favs"}
+              >
                 {({ isActive }) => {
-                  return <Tooltip tip={t("favs")}>
-                    <FavIcon className={isActive ? "fill-white" : ""} />
-                  </Tooltip>;
+                  return (
+                    <Tooltip tip={t("favs")}>
+                      <FavIcon className={isActive ? "fill-white" : ""} />
+                    </Tooltip>
+                  );
                 }}
               </NavLink>
-              <NavLink className={({ isActive }) => `${linkClass} ${isActive ? 'bg-primary-400 md:hover:bg-primary-400' : ""}`} to={"/files"}>
+              <NavLink
+                className={({ isActive }) =>
+                  `${linkClass} ${isActive ? "bg-primary-400 md:hover:bg-primary-400" : ""}`
+                }
+                to={"/files"}
+              >
                 {({ isActive }) => {
-                  return <Tooltip tip={t("files")}>
-                    <FolderIcon className={isActive ? "fill-white" : ""} />
-                  </Tooltip>;
+                  return (
+                    <Tooltip tip={t("files")}>
+                      <FolderIcon className={isActive ? "fill-white" : ""} />
+                    </Tooltip>
+                  );
                 }}
               </NavLink>
             </nav>

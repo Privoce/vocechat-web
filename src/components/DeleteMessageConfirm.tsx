@@ -1,10 +1,11 @@
 import { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
+
 import useDeleteMessage from "@/hooks/useDeleteMessage";
-import StyledModal from "./styled/Modal";
-import Button from "./styled/Button";
-import Modal from "./Modal";
 import PreviewMessage from "./Message/PreviewMessage";
+import Modal from "./Modal";
+import Button from "./styled/Button";
+import StyledModal from "./styled/Modal";
 
 interface Props {
   closeModal: (b: boolean) => void;

@@ -1,36 +1,36 @@
-import { useEffect, useState, useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import dayjs from "dayjs";
 import { isNull, omitBy } from "lodash";
 
 import BASE_URL from "@/app/config";
-import { setReady } from "@/app/slices/ui";
+import { useRenewMutation } from "@/app/services/auth";
+import { resetAuthData, updateLoginUser, updateRoleChanged } from "@/app/slices/auth.data";
 import {
-  fillChannels,
   addChannel,
+  fillChannels,
   removeChannel,
   updateChannel,
   updatePinMessage
 } from "@/app/slices/channels";
 import {
-  updateUsersVersion,
+  removePinChats,
+  updateAutoDeleteSetting,
+  updateMute,
   updateReadChannels,
   updateReadUsers,
-  updateMute,
-  updateAutoDeleteSetting,
-  upsertPinChats,
-  removePinChats
+  updateUsersVersion,
+  upsertPinChats
 } from "@/app/slices/footprint";
+import { clearChannelMessage, removeChannelSession } from "@/app/slices/message.channel";
+import { removeUserSession } from "@/app/slices/message.user";
+import { setReady } from "@/app/slices/ui";
 import { updateContactStatus, updateUsersByLogs, updateUsersStatus } from "@/app/slices/users";
-import { resetAuthData, updateLoginUser, updateRoleChanged } from "@/app/slices/auth.data";
-import chatMessageHandler from "./chat.handler";
+import { updateCallInfo } from "@/app/slices/voice";
 import { useAppDispatch, useAppSelector } from "@/app/store";
 import { ServerEvent, UserSettingsChangedEvent, UsersStateEvent } from "@/types/sse";
-import { useRenewMutation } from "@/app/services/auth";
 import { getLocalAuthData } from "@/utils";
-import { removeUserSession } from "@/app/slices/message.user";
-import { clearChannelMessage, removeChannelSession } from "@/app/slices/message.channel";
-import { updateCallInfo } from "@/app/slices/voice";
+import chatMessageHandler from "./chat.handler";
 
 const getQueryString = (params: { [key: string]: string }) => {
   const sp = new URLSearchParams();
@@ -178,7 +178,12 @@ export default function useStreaming() {
               dispatch(updateLoginUser(purified));
               console.log("upppp 3", purified, ready, user?.is_admin);
 
-              if (!guest && typeof purified.is_admin !== "undefined" && ready && user?.is_admin !== purified.is_admin) {
+              if (
+                !guest &&
+                typeof purified.is_admin !== "undefined" &&
+                ready &&
+                user?.is_admin !== purified.is_admin
+              ) {
                 // ready 之后，登录用户有角色变动
                 dispatch(updateRoleChanged(true));
               }
@@ -200,19 +205,21 @@ export default function useStreaming() {
               case "read_index_users":
                 dispatch(updateReadUsers(data[key]));
                 break;
-              case "add_pin_chats": {
-                const pins = (data as UserSettingsChangedEvent).add_pin_chats ?? [];
-                if (pins.length) {
-                  dispatch(upsertPinChats({ pins }));
+              case "add_pin_chats":
+                {
+                  const pins = (data as UserSettingsChangedEvent).add_pin_chats ?? [];
+                  if (pins.length) {
+                    dispatch(upsertPinChats({ pins }));
+                  }
                 }
-              }
                 break;
-              case "remove_pin_chats": {
-                const pins = (data as UserSettingsChangedEvent).remove_pin_chats ?? [];
-                if (pins.length) {
-                  dispatch(removePinChats(pins));
+              case "remove_pin_chats":
+                {
+                  const pins = (data as UserSettingsChangedEvent).remove_pin_chats ?? [];
+                  if (pins.length) {
+                    dispatch(removePinChats(pins));
+                  }
                 }
-              }
                 break;
               case "add_mute_users":
               case "mute_users":
@@ -226,30 +233,30 @@ export default function useStreaming() {
                   }
                 }
                 break;
-              case "remove_contacts": {
-                const arr = (data as UserSettingsChangedEvent).remove_contacts ?? [];
-                if (arr.length) {
-                  dispatch(updateContactStatus(
-                    arr.map(
-                      (uid: number) => {
-                        return { uid, status: "" };
-                      }
-                    )
-                  ));
+              case "remove_contacts":
+                {
+                  const arr = (data as UserSettingsChangedEvent).remove_contacts ?? [];
+                  if (arr.length) {
+                    dispatch(
+                      updateContactStatus(
+                        arr.map((uid: number) => {
+                          return { uid, status: "" };
+                        })
+                      )
+                    );
+                  }
                 }
-              }
                 break;
-              case "add_contacts": {
-                const arr = (data as UserSettingsChangedEvent).add_contacts ?? [];
-                if (arr.length) {
-                  const transformed = arr.map(
-                    ({ target_uid, info: { status } }) => {
+              case "add_contacts":
+                {
+                  const arr = (data as UserSettingsChangedEvent).add_contacts ?? [];
+                  if (arr.length) {
+                    const transformed = arr.map(({ target_uid, info: { status } }) => {
                       return { uid: target_uid, status };
-                    }
-                  );
-                  dispatch(updateContactStatus(transformed));
+                    });
+                    dispatch(updateContactStatus(transformed));
+                  }
                 }
-              }
                 break;
               case "remove_mute_users":
               case "remove_mute_groups":
@@ -336,11 +343,12 @@ export default function useStreaming() {
           }
           break;
         }
-        case "kick_from_group": {
-          dispatch(removeChannel(data.gid));
-          // 同时清掉channel聊天记录
-          dispatch(removeChannelSession(data.gid));
-        }
+        case "kick_from_group":
+          {
+            dispatch(removeChannel(data.gid));
+            // 同时清掉channel聊天记录
+            dispatch(removeChannelSession(data.gid));
+          }
           break;
         case "pinned_message_updated":
           dispatch(updatePinMessage(data));

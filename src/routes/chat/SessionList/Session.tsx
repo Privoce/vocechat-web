@@ -1,21 +1,22 @@
 // @ts-nocheck
-import { useState, useEffect, FC } from "react";
-import clsx from "clsx";
+import { FC, useEffect, useState } from "react";
 import { useDrop } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
-import { useNavigate, NavLink, useMatch } from "react-router-dom";
-import ContextMenu from "./ContextMenu";
-import getUnreadCount, { renderPreviewMessage } from "../utils";
-import User from "@/components/User";
+import { NavLink, useMatch, useNavigate } from "react-router-dom";
+import clsx from "clsx";
+
+import { useAppSelector } from "@/app/store";
+import { ChatContext } from "@/types/common";
 import Avatar from "@/components/Avatar";
+import User from "@/components/User";
+import useContextMenu from "@/hooks/useContextMenu";
+import useUploadFile from "@/hooks/useUploadFile";
+import { fromNowTime } from "@/utils";
 import IconLock from "@/assets/icons/lock.svg";
 import IconMute from "@/assets/icons/mute.svg";
 import IconVoicing from "@/assets/icons/voicing.svg";
-import useContextMenu from "@/hooks/useContextMenu";
-import useUploadFile from "@/hooks/useUploadFile";
-import { useAppSelector } from "@/app/store";
-import { fromNowTime } from "@/utils";
-import { ChatContext } from "@/types/common";
+import getUnreadCount, { renderPreviewMessage } from "../utils";
+import ContextMenu from "./ContextMenu";
 
 interface IProps {
   type?: ChatContext;
@@ -66,23 +67,31 @@ const Session: FC<IProps> = ({
     mid: number;
     is_public: boolean;
   }>();
-  const { callingFrom, callingTo, messageData, userData, channelData, readIndex, loginUid, mids, muted, voiceList } = useAppSelector(
-    (store) => {
-      return {
-        callingFrom: store.voice.callingFrom,
-        callingTo: store.voice.callingTo,
-        voiceList: store.voice.list,
-        mids: type == "dm" ? store.userMessage.byId[id] : store.channelMessage[id],
-        loginUid: store.authData.user?.uid || 0,
-        readIndex:
-          type == "dm" ? store.footprint.readUsers[id] : store.footprint.readChannels[id],
-        messageData: store.message,
-        userData: store.users.byId,
-        channelData: store.channels.byId,
-        muted: type == "dm" ? store.footprint.muteUsers[id] : store.footprint.muteChannels[id]
-      };
-    }
-  );
+  const {
+    callingFrom,
+    callingTo,
+    messageData,
+    userData,
+    channelData,
+    readIndex,
+    loginUid,
+    mids,
+    muted,
+    voiceList
+  } = useAppSelector((store) => {
+    return {
+      callingFrom: store.voice.callingFrom,
+      callingTo: store.voice.callingTo,
+      voiceList: store.voice.list,
+      mids: type == "dm" ? store.userMessage.byId[id] : store.channelMessage[id],
+      loginUid: store.authData.user?.uid || 0,
+      readIndex: type == "dm" ? store.footprint.readUsers[id] : store.footprint.readChannels[id],
+      messageData: store.message,
+      userData: store.users.byId,
+      channelData: store.channels.byId,
+      muted: type == "dm" ? store.footprint.muteUsers[id] : store.footprint.muteChannels[id]
+    };
+  });
 
   useEffect(() => {
     const tmp = type == "dm" ? userData[id] : channelData[id];
@@ -106,9 +115,12 @@ const Session: FC<IProps> = ({
     messageData,
     loginUid
   });
-  const isVoicing = type == "channel" ? voiceList.some((item) => {
-    return item.context == type && item.id === id;
-  }) : (id == callingFrom || id == callingTo);
+  const isVoicing =
+    type == "channel"
+      ? voiceList.some((item) => {
+          return item.context == type && item.id === id;
+        })
+      : id == callingFrom || id == callingTo;
   console.log("unreads", unreads, isCurrentPath);
 
   return (
@@ -125,7 +137,14 @@ const Session: FC<IProps> = ({
       >
         <NavLink
           ref={drop}
-          className={({ isActive: linkActive }) => clsx(`nav flex gap-2 rounded-lg p-2 w-full`, isActive && "shadow-[inset_0_0_0_2px_#52edff]", linkActive && "bg-gray-500/20", pinned ? "md:hover:bg-gray-300/20" : "md:hover:bg-gray-500/20")}
+          className={({ isActive: linkActive }) =>
+            clsx(
+              `nav flex gap-2 rounded-lg p-2 w-full`,
+              isActive && "shadow-[inset_0_0_0_2px_#52edff]",
+              linkActive && "bg-gray-500/20",
+              pinned ? "md:hover:bg-gray-300/20" : "md:hover:bg-gray-500/20"
+            )
+          }
           to={navPath}
           onContextMenu={handleContextMenuEvent}
         >
@@ -147,7 +166,12 @@ const Session: FC<IProps> = ({
           <div className="w-full flex flex-col justify-between overflow-hidden">
             <div className="flex items-center justify-between ">
               <span className={clsx(`flex items-center gap-1`)}>
-                <i className={clsx("not-italic font-semibold text-sm text-gray-500 dark:text-white max-w-[120px] truncate", !previewMsg.created_at && "max-w-[190px]")}>
+                <i
+                  className={clsx(
+                    "not-italic font-semibold text-sm text-gray-500 dark:text-white max-w-[120px] truncate",
+                    !previewMsg.created_at && "max-w-[190px]"
+                  )}
+                >
                   {name}
                 </i>
                 {!is_public && <IconLock className="dark:fill-gray-400" />}
@@ -157,10 +181,21 @@ const Session: FC<IProps> = ({
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className={clsx("text-xs text-gray-500  truncate", unreads > 0 ? `w-36` : ``)}>{renderPreviewMessage(previewMsg)}</span>
-              {(unreads > 0 && !isCurrentPath) ? <strong className={clsx(`text-white px-1.5 py-[3px] font-bold text-[10px] leading-[10px] rounded-[10px]`, muted ? "bg-black/10 dark:bg-gray-500" : "bg-primary-400")}>
-                {unreads > 99 ? "99+" : unreads}
-              </strong> : (muted && <IconMute className="w-3 h-3 fill-black/10 dark:fill-gray-500" />)}
+              <span className={clsx("text-xs text-gray-500  truncate", unreads > 0 ? `w-36` : ``)}>
+                {renderPreviewMessage(previewMsg)}
+              </span>
+              {unreads > 0 && !isCurrentPath ? (
+                <strong
+                  className={clsx(
+                    `text-white px-1.5 py-[3px] font-bold text-[10px] leading-[10px] rounded-[10px]`,
+                    muted ? "bg-black/10 dark:bg-gray-500" : "bg-primary-400"
+                  )}
+                >
+                  {unreads > 99 ? "99+" : unreads}
+                </strong>
+              ) : (
+                muted && <IconMute className="w-3 h-3 fill-black/10 dark:fill-gray-500" />
+              )}
             </div>
           </div>
         </NavLink>

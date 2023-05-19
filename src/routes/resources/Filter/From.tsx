@@ -1,8 +1,9 @@
 import { FC } from "react";
-import Search from "../Search";
-import CheckSign from "@/assets/icons/check.sign.svg";
+
 import User from "@/components/User";
 import useFilteredUsers from "@/hooks/useFilteredUsers";
+import CheckSign from "@/assets/icons/check.sign.svg";
+import Search from "../Search";
 
 type Props = {
   select: number;
@@ -20,7 +21,10 @@ const From: FC<Props> = ({ select = "", updateFilter }) => {
         <Search embed={true} value={input} updateSearchValue={updateInput} />
       </div>
       <ul className="w-full flex flex-col">
-        <li className="relative cursor-pointer p-2.5 font-semibold text-sm text-gray-500" onClick={handleClick.bind(null, undefined)}>
+        <li
+          className="relative cursor-pointer p-2.5 font-semibold text-sm text-gray-500"
+          onClick={handleClick.bind(null, undefined)}
+        >
           Anyone
           {!select && <CheckSign className="absolute right-1.5 top-1/2 -translate-y-1/2" />}
         </li>
@@ -28,7 +32,9 @@ const From: FC<Props> = ({ select = "", updateFilter }) => {
           return (
             <li key={uid} className="relative cursor-pointer" onClick={handleClick.bind(null, uid)}>
               <User uid={uid} interactive={true} />
-              {select == uid && <CheckSign className="absolute right-1.5 top-1/2 -translate-y-1/2" />}
+              {select == uid && (
+                <CheckSign className="absolute right-1.5 top-1/2 -translate-y-1/2" />
+              )}
             </li>
           );
         })}

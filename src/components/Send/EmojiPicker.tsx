@@ -1,11 +1,10 @@
-import { useState, useRef, useEffect } from "react";
-import { useOutsideClick } from "rooks";
+import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
-import { Picker } from 'emoji-mart';
+import { Picker } from "emoji-mart";
+import { useOutsideClick } from "rooks";
 
-import Tooltip from "../Tooltip";
 import SmileIcon from "@/assets/icons/emoji.smile.svg";
-
+import Tooltip from "../Tooltip";
 
 export default function EmojiPicker({ selectEmoji }: { selectEmoji: (e: string) => void }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -18,9 +17,7 @@ export default function EmojiPicker({ selectEmoji }: { selectEmoji: (e: string) 
       ref.current.innerHTML = "";
       new Picker({
         data: async () => {
-          const response = await fetch(
-            'https://cdn.jsdelivr.net/npm/@emoji-mart/data',
-          );
+          const response = await fetch("https://cdn.jsdelivr.net/npm/@emoji-mart/data");
 
           return response.json();
         },
@@ -29,7 +26,7 @@ export default function EmojiPicker({ selectEmoji }: { selectEmoji: (e: string) 
           console.log("eee333", item);
 
           selectEmoji(item.native);
-        },
+        }
         // onClickOutside: () => {
         //   setVisible(false);
         // }
@@ -44,7 +41,9 @@ export default function EmojiPicker({ selectEmoji }: { selectEmoji: (e: string) 
       if (!clickEle) return;
       const ignore =
         (clickEle.nodeName == "svg" && clickEle.dataset.emoji == "toggler") ||
-        (clickEle.nodeName == "path" && clickEle.parentElement && clickEle.parentElement.dataset.emoji == "toggler");
+        (clickEle.nodeName == "path" &&
+          clickEle.parentElement &&
+          clickEle.parentElement.dataset.emoji == "toggler");
       if (ignore) return;
       setVisible(false);
     },
@@ -54,10 +53,20 @@ export default function EmojiPicker({ selectEmoji }: { selectEmoji: (e: string) 
   return (
     <Tooltip placement="top" tip="Emojis" disabled={visible}>
       <div className="hidden md:flex relative w-fit items-center">
-        <div ref={ref} className={clsx(`z-50 absolute -top-5 -left-5 -translate-y-full`, visible ? 'block' : 'hidden')}>
+        <div
+          ref={ref}
+          className={clsx(
+            `z-50 absolute -top-5 -left-5 -translate-y-full`,
+            visible ? "block" : "hidden"
+          )}
+        >
           {/* emoji picker */}
         </div>
-        <SmileIcon data-emoji="toggler" className="cursor-pointer select-none !w-[22px] !h-[22px]" onClick={togglePickerVisible} />
+        <SmileIcon
+          data-emoji="toggler"
+          className="cursor-pointer select-none !w-[22px] !h-[22px]"
+          onClick={togglePickerVisible}
+        />
       </div>
     </Tooltip>
   );

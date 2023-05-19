@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
-import { useLazyRemoveFavoriteQuery, useFavoriteMessageMutation } from "@/app/services/message";
+import { useEffect, useState } from "react";
+
+import { useFavoriteMessageMutation, useLazyRemoveFavoriteQuery } from "@/app/services/message";
 import { Favorite } from "@/app/slices/favorites";
 import { useAppSelector } from "@/app/store";
 
@@ -46,15 +47,15 @@ export default function useFavMessage({
     let filtereds: Favorite[] = [];
     filtereds = cid
       ? favs.filter((f) => {
-        if (!f.messages) return false;
-        return f.messages.every((m) => m.source.gid == cid);
-      })
+          if (!f.messages) return false;
+          return f.messages.every((m) => m.source.gid == cid);
+        })
       : favs;
     filtereds = uid
       ? filtereds.filter((f) => {
-        if (!f.messages) return false;
-        return f.messages.every((m) => m.source.uid == uid);
-      })
+          if (!f.messages) return false;
+          return f.messages.every((m) => m.source.uid == uid);
+        })
       : filtereds;
 
     setFavorites(filtereds);

@@ -1,31 +1,33 @@
-import React, { MouseEvent, FC } from "react";
-import clsx from "clsx";
-import MarkdownRender from "../MarkdownRender";
-import { ContentTypes } from "@/app/config";
-import { getFileIcon, isImage } from "@/utils";
-import LinkifyText from '../LinkifyText';
-
-import Avatar from "../Avatar";
-import { useAppSelector } from "@/app/store";
-import { MessagePayload } from "@/app/slices/message";
+import React, { FC, MouseEvent } from "react";
 import { useTranslation } from "react-i18next";
+import clsx from "clsx";
+
+import { ContentTypes } from "@/app/config";
+import { MessagePayload } from "@/app/slices/message";
+import { useAppSelector } from "@/app/store";
+import { getFileIcon, isImage } from "@/utils";
+import Avatar from "../Avatar";
+import LinkifyText from "../LinkifyText";
+import MarkdownRender from "../MarkdownRender";
 
 const renderContent = (data: MessagePayload) => {
-
   const { content_type, content, thumbnail, properties } = data;
   let res = null;
   switch (content_type) {
     case ContentTypes.text:
       res = (
         <span className="max-w-lg md:truncate md:break-words md:break-all text-gray-800 dark:text-gray-100">
-          <LinkifyText text={content as string} url={false} mentionTextOnly={true} mentionPopOver={false} />
+          <LinkifyText
+            text={content as string}
+            url={false}
+            mentionTextOnly={true}
+            mentionPopOver={false}
+          />
         </span>
       );
       break;
     case ContentTypes.audio:
-      res = (
-        <span className=" text-primary-400 text-sm">[Voice Message]</span>
-      );
+      res = <span className=" text-primary-400 text-sm">[Voice Message]</span>;
       break;
     case ContentTypes.markdown:
       res = (
@@ -83,11 +85,12 @@ const Reply: FC<ReplyProps> = ({ mid, interactive = true }) => {
     }
   };
   const defaultClass = `w-fit flex items-start flex-col md:flex-row p-2 bg-gray-200 dark:bg-gray-900 rounded-lg gap-2 mb-1`;
-  if (!data) return <div
-    key={mid}
-    data-mid={mid}
-    className={clsx(defaultClass, 'italic')}
-  >{t("reply_msg_del")}</div>;
+  if (!data)
+    return (
+      <div key={mid} data-mid={mid} className={clsx(defaultClass, "italic")}>
+        {t("reply_msg_del")}
+      </div>
+    );
   const currUser = users[data.from_uid || 0];
   if (!currUser) return null;
 
@@ -95,9 +98,7 @@ const Reply: FC<ReplyProps> = ({ mid, interactive = true }) => {
     <div
       key={mid}
       data-mid={mid}
-      className={clsx(defaultClass,
-        interactive ? "cursor-pointer" : "!bg-transparent"
-      )}
+      className={clsx(defaultClass, interactive ? "cursor-pointer" : "!bg-transparent")}
       onClick={interactive ? handleClick : undefined}
     >
       <div className="md:flex shrink-0 w-6 h-6 hidden ">

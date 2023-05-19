@@ -1,12 +1,12 @@
-import { ChangeEvent, useEffect, useState, FC } from "react";
+import { ChangeEvent, FC, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import Input from "@/components/styled/Input";
-import { useUpdatePasswordMutation, useGetCredentialsQuery } from "@/app/services/auth";
-import StyledModal from "@/components/styled/Modal";
-import Button from "@/components/styled/Button";
-import Modal from "@/components/Modal";
 import { useTranslation } from "react-i18next";
 
+import { useGetCredentialsQuery, useUpdatePasswordMutation } from "@/app/services/auth";
+import Modal from "@/components/Modal";
+import Button from "@/components/styled/Button";
+import Input from "@/components/styled/Input";
+import StyledModal from "@/components/styled/Modal";
 
 interface Props {
   closeModal: () => void;
@@ -80,7 +80,9 @@ const ProfileBasicEditModal: FC<Props> = ({ closeModal }) => {
       >
         {data?.password && (
           <div className={inputClass}>
-            <label className={labelClass} htmlFor={"current"}>{t("current_pwd")}</label>
+            <label className={labelClass} htmlFor={"current"}>
+              {t("current_pwd")}
+            </label>
             <Input
               type="password"
               id="current"
@@ -92,7 +94,9 @@ const ProfileBasicEditModal: FC<Props> = ({ closeModal }) => {
           </div>
         )}
         <div className={inputClass}>
-          <label className={labelClass} htmlFor={"newPassword"}>{t("new_pwd")}</label>
+          <label className={labelClass} htmlFor={"newPassword"}>
+            {t("new_pwd")}
+          </label>
           <Input
             type="password"
             name={"newPassword"}
@@ -102,7 +106,9 @@ const ProfileBasicEditModal: FC<Props> = ({ closeModal }) => {
           ></Input>
         </div>
         <div className={inputClass}>
-          <label className={labelClass} htmlFor={"confirmPassword"}>{t("confirm_new_pwd")}</label>
+          <label className={labelClass} htmlFor={"confirmPassword"}>
+            {t("confirm_new_pwd")}
+          </label>
           <Input
             onBlur={handleCompare}
             type="password"

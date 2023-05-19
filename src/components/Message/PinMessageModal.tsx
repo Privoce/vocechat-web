@@ -1,13 +1,12 @@
-import { FC } from "react";
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
 import toast from "react-hot-toast";
-import usePinMessage from "@/hooks/usePinMessage";
-import StyledModal from "../styled/Modal";
-import Button from "../styled/Button";
-import Modal from "../Modal";
-import PreviewMessage from "./PreviewMessage";
 import { useTranslation } from "react-i18next";
 
+import usePinMessage from "@/hooks/usePinMessage";
+import Modal from "../Modal";
+import Button from "../styled/Button";
+import StyledModal from "../styled/Modal";
+import PreviewMessage from "./PreviewMessage";
 
 interface Props {
   closeModal: () => void;

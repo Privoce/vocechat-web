@@ -1,13 +1,19 @@
-import { FC } from 'react';
+import { FC } from "react";
 
-type Props = {
-
-};
+type Props = {};
 
 const Index: FC<Props> = () => {
   return (
     <footer className="text-xs text-gray-300 text-center pb-2">
-      Host your own <a href="https://voce.chat" target="_blank" rel="noopener noreferrer" className="text-gray-400">voce.chat</a>
+      Host your own{" "}
+      <a
+        href="https://voce.chat"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-gray-400"
+      >
+        voce.chat
+      </a>
     </footer>
   );
 };

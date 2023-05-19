@@ -1,19 +1,20 @@
 import { useTranslation } from "react-i18next";
+
+import { useAppSelector } from "@/app/store";
+import ManageMembers from "@/components/ManageMembers";
+import ServerVersionChecker from "@/components/ServerVersionChecker";
+import Version from "@/components/Version";
+import APIConfig from "./APIConfig";
+import APIDocument from "./APIDocument";
+import BotConfig from "./BotConfig";
+import ConfigAgora from "./config/Agora";
+import ConfigFirebase from "./config/Firebase";
+import Logins from "./config/Logins";
+import ConfigSMTP from "./config/SMTP";
+import License from "./License";
 import MyAccount from "./MyAccount";
 import Overview from "./Overview";
-import Logins from "./config/Logins";
-import ConfigFirebase from "./config/Firebase";
-import ConfigSMTP from "./config/SMTP";
-import APIConfig from "./APIConfig";
-import License from "./License";
 import Widget from "./Widget";
-import BotConfig from "./BotConfig";
-import APIDocument from "./APIDocument";
-import ManageMembers from "@/components/ManageMembers";
-import Version from "@/components/Version";
-import ConfigAgora from "./config/Agora";
-import { useAppSelector } from "@/app/store";
-import ServerVersionChecker from "@/components/ServerVersionChecker";
 
 const navs = [
   {
@@ -31,7 +32,7 @@ const navs = [
         name: "members",
         component: <ManageMembers />,
         admin: true
-      },
+      }
     ]
   },
   {
@@ -39,9 +40,11 @@ const navs = [
     items: [
       {
         name: "bot",
-        component: <ServerVersionChecker version="0.3.2">
-          <BotConfig />
-        </ServerVersionChecker>,
+        component: (
+          <ServerVersionChecker version="0.3.2">
+            <BotConfig />
+          </ServerVersionChecker>
+        ),
         admin: true
       },
       {
@@ -50,9 +53,11 @@ const navs = [
       },
       {
         name: "agora",
-        component: <ServerVersionChecker version="0.3.5">
-          <ConfigAgora />
-        </ServerVersionChecker>
+        component: (
+          <ServerVersionChecker version="0.3.5">
+            <ConfigAgora />
+          </ServerVersionChecker>
+        )
       },
       {
         name: "smtp",
@@ -87,7 +92,7 @@ const navs = [
       {
         name: "version",
         component: <Version />
-      },
+      }
     ]
   }
 ];
@@ -97,13 +102,13 @@ const useNavs = () => {
   const { loginUser, upgraded } = useAppSelector((store) => {
     return { loginUser: store.authData.user, upgraded: store.server.upgraded };
   });
-  const transformedNavs = navs.map(n => {
+  const transformedNavs = navs.map((n) => {
     const { name, items, ...rest } = n;
     return {
       name,
       // @ts-ignore
       title: t(`nav.${name}`),
-      items: items.map(item => {
+      items: items.map((item) => {
         const { name, ...rest } = item;
         return {
           name,

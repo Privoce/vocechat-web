@@ -1,16 +1,18 @@
 /* eslint-disable no-undef */
 import { FC, useState } from "react";
-import StyledModal from "@/components/styled/Modal";
+import { useTranslation } from "react-i18next";
+
+import { OIDCConfig } from "@/types/auth";
+import { AuthType } from "@/types/common";
 import Modal from "@/components/Modal";
 import StyledButton from "@/components/styled/Button";
-import OidcLoginEntry from "./OidcLoginEntry";
-import { OIDCConfig } from "@/types/auth";
-import { useTranslation } from "react-i18next";
-import { AuthType } from "@/types/common";
 import Button from "@/components/styled/Button";
+import StyledModal from "@/components/styled/Modal";
+import OidcLoginEntry from "./OidcLoginEntry";
+
 interface IProps {
   issuers?: OIDCConfig[];
-  type?: AuthType
+  type?: AuthType;
 }
 const OidcLoginButton: FC<IProps> = ({ issuers, type = "login" }) => {
   const { t } = useTranslation("auth");

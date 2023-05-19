@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
-import { useWidget } from "./WidgetContext";
+import { useEffect, useState } from "react";
+
 import Icon from "./Icon";
 import Popup from "./Popup";
 import useCache from "./useCache";
+import { useWidget } from "./WidgetContext";
+
 type Props = {
-  hostId: number,
+  hostId: number;
 };
 
 function Widget({ hostId }: Props) {
@@ -16,7 +18,7 @@ function Widget({ hostId }: Props) {
     // 有无iframe内嵌
     const parentWindow = window.parent;
     if (parentWindow) {
-      parentWindow.postMessage(visible ? 'CLOSE' : 'OPEN', '*');
+      parentWindow.postMessage(visible ? "CLOSE" : "OPEN", "*");
     }
     setVisible((prev) => !prev);
   };
@@ -32,7 +34,11 @@ function Widget({ hostId }: Props) {
 
   if (!rehydrated) return null;
   if (!embed) return <Popup handleClose={toggleVisible} hostId={hostId} />;
-  return visible ? <Popup handleClose={toggleVisible} hostId={hostId} /> : <Icon handleClick={toggleVisible} />;
+  return visible ? (
+    <Popup handleClose={toggleVisible} hostId={hostId} />
+  ) : (
+    <Icon handleClick={toggleVisible} />
+  );
 }
 
 export default Widget;

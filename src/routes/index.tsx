@@ -1,10 +1,20 @@
-import { useEffect, lazy } from "react";
-import { Route, Routes, HashRouter } from "react-router-dom";
-import { Provider } from "react-redux";
+import { lazy, useEffect } from "react";
 import toast from "react-hot-toast";
+import { Provider } from "react-redux";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import { isEqual } from "lodash";
 
+import Meta from "@/components/Meta";
+import useDeviceToken from "@/components/Notification/useDeviceToken";
+import RequireAuth from "@/components/RequireAuth";
+import RequireNoAuth from "@/components/RequireNoAuth";
+import RequireSingleTab from "@/components/RequireSingleTab";
+import { vapidKey } from "../app/config";
+import store, { useAppSelector } from "../app/store";
 import NotFoundPage from "./404";
+import InvitePrivate from "./invitePrivate";
+import LazyIt from "./lazy";
+
 // import Welcome from './Welcome'
 // const HomePage = lazy(() => import("./home"));
 // const ChatPage = lazy(() => import("./chat"));
@@ -25,15 +35,7 @@ const ResourceManagement = lazy(() => import("./resources"));
 const GuestLogin = lazy(() => import("./guest"));
 const ChatPage = lazy(() => import("./chat"));
 const HomePage = lazy(() => import("./home"));
-import RequireAuth from "@/components/RequireAuth";
-import RequireNoAuth from "@/components/RequireNoAuth";
-import Meta from "@/components/Meta";
-import LazyIt from './lazy';
-import store, { useAppSelector } from "../app/store";
-import useDeviceToken from "@/components/Notification/useDeviceToken";
-import { vapidKey } from "../app/config";
-import RequireSingleTab from "@/components/RequireSingleTab";
-import InvitePrivate from "./invitePrivate";
+
 let toastId: string;
 const PageRoutes = () => {
   const {
@@ -57,10 +59,40 @@ const PageRoutes = () => {
   return (
     <HashRouter>
       <Routes>
-        <Route path="/guest_login" element={<LazyIt><GuestLogin /></LazyIt>} />
-        <Route path="/invite_private/:channel_id" element={<LazyIt><RequireAuth><InvitePrivate /></RequireAuth></LazyIt>} />
-        <Route path="/cb/:type/:payload" element={<LazyIt><CallbackPage /></LazyIt>} />
-        <Route path="/oauth/:token" element={<LazyIt><OAuthPage /></LazyIt>} />
+        <Route
+          path="/guest_login"
+          element={
+            <LazyIt>
+              <GuestLogin />
+            </LazyIt>
+          }
+        />
+        <Route
+          path="/invite_private/:channel_id"
+          element={
+            <LazyIt>
+              <RequireAuth>
+                <InvitePrivate />
+              </RequireAuth>
+            </LazyIt>
+          }
+        />
+        <Route
+          path="/cb/:type/:payload"
+          element={
+            <LazyIt>
+              <CallbackPage />
+            </LazyIt>
+          }
+        />
+        <Route
+          path="/oauth/:token"
+          element={
+            <LazyIt>
+              <OAuthPage />
+            </LazyIt>
+          }
+        />
         <Route
           path="/login"
           element={
@@ -91,8 +123,22 @@ const PageRoutes = () => {
             </LazyIt>
           }
         >
-          <Route index element={<LazyIt><RegPage /></LazyIt>} />
-          <Route path="set_name/:from?" element={<LazyIt><RegWithUsernamePage /></LazyIt>} />
+          <Route
+            index
+            element={
+              <LazyIt>
+                <RegPage />
+              </LazyIt>
+            }
+          />
+          <Route
+            path="set_name/:from?"
+            element={
+              <LazyIt>
+                <RegWithUsernamePage />
+              </LazyIt>
+            }
+          />
         </Route>
         <Route
           path="/email_login"
@@ -104,7 +150,14 @@ const PageRoutes = () => {
             </LazyIt>
           }
         />
-        <Route path="/onboarding" element={<LazyIt><OnboardingPage /></LazyIt>} />
+        <Route
+          path="/onboarding"
+          element={
+            <LazyIt>
+              <OnboardingPage />
+            </LazyIt>
+          }
+        />
 
         <Route
           key={"main"}
@@ -129,9 +182,30 @@ const PageRoutes = () => {
                 </LazyIt>
               }
             />
-            <Route path=":nav?" element={<LazyIt><SettingPage /></LazyIt>} />
-            <Route path="channel/:cid/:nav?" element={<LazyIt><SettingChannelPage /></LazyIt>} />
-            <Route path="dm/:uid/:nav?" element={<LazyIt><SettingDMPage /></LazyIt>} />
+            <Route
+              path=":nav?"
+              element={
+                <LazyIt>
+                  <SettingPage />
+                </LazyIt>
+              }
+            />
+            <Route
+              path="channel/:cid/:nav?"
+              element={
+                <LazyIt>
+                  <SettingChannelPage />
+                </LazyIt>
+              }
+            />
+            <Route
+              path="dm/:uid/:nav?"
+              element={
+                <LazyIt>
+                  <SettingDMPage />
+                </LazyIt>
+              }
+            />
           </Route>
           <Route
             index
@@ -142,7 +216,14 @@ const PageRoutes = () => {
             }
           />
           <Route path="chat">
-            <Route index element={<LazyIt><ChatPage /></LazyIt>} />
+            <Route
+              index
+              element={
+                <LazyIt>
+                  <ChatPage />
+                </LazyIt>
+              }
+            />
             <Route
               path="channel/:channel_id"
               element={
@@ -202,7 +283,6 @@ const PageRoutes = () => {
 };
 
 export default function ReduxRoutes() {
-
   return (
     <Provider store={store}>
       <Meta />

@@ -1,18 +1,25 @@
-import dayjs from "dayjs";
 import { ICameraVideoTrack, ILocalAudioTrack, ILocalVideoTrack } from "agora-rtc-sdk-ng";
+import dayjs from "dayjs";
 
-import BASE_URL, { FILE_IMAGE_SIZE, ContentTypes, KEY_TOKEN, KEY_REFRESH_TOKEN, KEY_EXPIRE } from "@/app/config";
-import IconPdf from "@/assets/icons/file.pdf.svg";
-import IconAudio from "@/assets/icons/file.audio.svg";
-import IconVideo from "@/assets/icons/file.video.svg";
-import IconUnknown from "@/assets/icons/file.unknown.svg";
-import IconDoc from "@/assets/icons/file.doc.svg";
-import IconCode from "@/assets/icons/file.code.svg";
-import IconImage from "@/assets/icons/file.image.svg";
-import { Archive, ArchiveMessage } from "@/types/resource";
+import BASE_URL, {
+  ContentTypes,
+  FILE_IMAGE_SIZE,
+  KEY_EXPIRE,
+  KEY_REFRESH_TOKEN,
+  KEY_TOKEN
+} from "@/app/config";
 import { MessagePayload } from "@/app/slices/message";
+import { Archive, ArchiveMessage } from "@/types/resource";
+import IconAudio from "@/assets/icons/file.audio.svg";
+import IconCode from "@/assets/icons/file.code.svg";
+import IconDoc from "@/assets/icons/file.doc.svg";
+import IconImage from "@/assets/icons/file.image.svg";
+import IconPdf from "@/assets/icons/file.pdf.svg";
+import IconUnknown from "@/assets/icons/file.unknown.svg";
+import IconVideo from "@/assets/icons/file.video.svg";
 
-export const isMobile = () => /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+export const isMobile = () =>
+  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
 export const getLocalAuthData = () => {
   return {
@@ -37,35 +44,38 @@ export const isElementVisible = (el: Element | null) => {
   const rect = el.getBoundingClientRect(),
     vWidth = window.innerWidth || document.documentElement.clientWidth,
     vHeight = window.innerHeight || document.documentElement.clientHeight,
-    efp = function (x: number, y: number) { return document.elementFromPoint(x, y); };
+    efp = function (x: number, y: number) {
+      return document.elementFromPoint(x, y);
+    };
   // Return false if it's not in the viewport
-  if (rect.right < 0 || rect.bottom < 0
-    || rect.left > vWidth || rect.top > vHeight)
-    return false;
+  if (rect.right < 0 || rect.bottom < 0 || rect.left > vWidth || rect.top > vHeight) return false;
   // Return true if any of its four corners are visible
   return (
-    el.contains(efp(rect.left, rect.top))
-    || el.contains(efp(rect.right, rect.top))
-    || el.contains(efp(rect.right, rect.bottom))
-    || el.contains(efp(rect.left, rect.bottom))
+    el.contains(efp(rect.left, rect.top)) ||
+    el.contains(efp(rect.right, rect.top)) ||
+    el.contains(efp(rect.right, rect.bottom)) ||
+    el.contains(efp(rect.left, rect.bottom))
   );
 };
-export function getDefaultSize(size?: { width: number; height: number }, limit?: { min: number; max: number }) {
+export function getDefaultSize(
+  size?: { width: number; height: number },
+  limit?: { min: number; max: number }
+) {
   if (!size) return { width: 0, height: 0 };
   const { min, max } = limit ?? { min: 200, max: 320 };
   const { width: oWidth, height: oHeight } = size;
   if (oWidth == oHeight) {
-    const tmp = min > oWidth ? min : (oWidth < max ? oWidth : max);
+    const tmp = min > oWidth ? min : oWidth < max ? oWidth : max;
     return { width: tmp, height: tmp };
   }
   const isVertical = oWidth <= oHeight;
   let dWidth = 0;
   let dHeight = 0;
   if (isVertical) {
-    dHeight = oHeight < min ? min : (oHeight < max ? oHeight : max);
+    dHeight = oHeight < min ? min : oHeight < max ? oHeight : max;
     dWidth = (oWidth / oHeight) * dHeight;
   } else {
-    dWidth = oWidth < min ? min : (oWidth < max ? oWidth : max);
+    dWidth = oWidth < min ? min : oWidth < max ? oWidth : max;
     dHeight = (oHeight / oWidth) * dWidth;
   }
   return { width: dWidth, height: dHeight };
@@ -203,23 +213,21 @@ export const normalizeFileMessage = (data: MessagePayload) => {
   const isPic = isImage(properties?.content_type, properties?.size);
   // gif暂不支持缩略图
   const isGif = isPic && properties?.content_type == "image/gif";
-  let res: null | { file_path?: string, content?: string, download?: string, thumbnail: string } = null;
+  let res: null | { file_path?: string; content?: string; download?: string; thumbnail: string } =
+    null;
   if (isFile) {
     if (!sending) {
       const file_path = typeof content == "string" ? content : content.path;
       res = {
         file_path,
-        content: `${BASE_URL}/resource/file?file_path=${encodeURIComponent(
-          file_path
-        )}`,
+        content: `${BASE_URL}/resource/file?file_path=${encodeURIComponent(file_path)}`,
         download: `${BASE_URL}/resource/file?file_path=${encodeURIComponent(
           file_path
         )}&download=true`,
-        thumbnail: (isPic && !isGif)
-          ? `${BASE_URL}/resource/file?file_path=${encodeURIComponent(
-            file_path
-          )}&thumbnail=true`
-          : ""
+        thumbnail:
+          isPic && !isGif
+            ? `${BASE_URL}/resource/file?file_path=${encodeURIComponent(file_path)}&thumbnail=true`
+            : ""
       };
     } else if (isPic) {
       res = { thumbnail: isGif ? "" : content };
@@ -287,10 +295,14 @@ export const normalizeArchiveData = (
   );
 };
 // https://github.com/gabe0x02/version_compare/blob/20d79649da39febc883350f441ee0bd6f1a6b1e6/version_compare.js
-export const compareVersion = (v1: string, v2: string, options?: { lexicographical: boolean, zeroExtend: boolean }) => {
+export const compareVersion = (
+  v1: string,
+  v2: string,
+  options?: { lexicographical: boolean; zeroExtend: boolean }
+) => {
   //remove anything after - 1.1.2-3-a4agbr-dirty
   function cropDash(s: string) {
-    let idx = s.indexOf('-');
+    let idx = s.indexOf("-");
     if (idx !== -1) {
       s = s.substring(0, idx);
     }
@@ -300,8 +312,8 @@ export const compareVersion = (v1: string, v2: string, options?: { lexicographic
   v2 = cropDash(v2);
   let lexicographical = options && options.lexicographical,
     zeroExtend = options && options.zeroExtend,
-    v1parts = v1.split('.'),
-    v2parts = v2.split('.');
+    v1parts = v1.split("."),
+    v2parts = v2.split(".");
   function isValidPart(x) {
     return (lexicographical ? /^\d+[A-Za-z]*$/ : /^\d+$/).test(x);
   }
@@ -322,11 +334,9 @@ export const compareVersion = (v1: string, v2: string, options?: { lexicographic
     }
     if (v1parts[i] == v2parts[i]) {
       continue;
-    }
-    else if (v1parts[i] > v2parts[i]) {
+    } else if (v1parts[i] > v2parts[i]) {
       return 1;
-    }
-    else {
+    } else {
       return -1;
     }
   }
@@ -345,33 +355,36 @@ export const compareVersion = (v1: string, v2: string, options?: { lexicographic
  */
 export const getContrastColor = (hexcolor: string) => {
   // If a leading # is provided, remove it
-  if (hexcolor.slice(0, 1) === '#') {
+  if (hexcolor.slice(0, 1) === "#") {
     hexcolor = hexcolor.slice(1);
   }
   // If a three-character hexcode, make six-character
   if (hexcolor.length === 3) {
-    hexcolor = hexcolor.split('').map(function (hex) {
-      return hex + hex;
-    }).join('');
+    hexcolor = hexcolor
+      .split("")
+      .map(function (hex) {
+        return hex + hex;
+      })
+      .join("");
   }
   // Convert to RGB value
   let r = parseInt(hexcolor.substr(0, 2), 16);
   let g = parseInt(hexcolor.substr(2, 2), 16);
   let b = parseInt(hexcolor.substr(4, 2), 16);
   // Get YIQ ratio
-  let yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+  let yiq = (r * 299 + g * 587 + b * 114) / 1000;
   // Check contrast
-  return (yiq >= 128) ? 'black' : 'white';
+  return yiq >= 128 ? "black" : "white";
 };
 export const isDarkMode = () => {
-  const isDarkMode = localStorage.theme === 'dark';
-  const isLightMode = localStorage.theme === 'light';
-  return isDarkMode || (!isLightMode && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  const isDarkMode = localStorage.theme === "dark";
+  const isLightMode = localStorage.theme === "light";
+  return isDarkMode || (!isLightMode && window.matchMedia("(prefers-color-scheme: dark)").matches);
 };
 
 export const fromNowTime = (ts?: number) => {
   if (!ts) return null;
-  const currTS = + new Date();
+  const currTS = +new Date();
   return dayjs(ts > currTS ? currTS : ts).fromNow();
 };
 export const playAgoraVideo = (uid: number, videoTrack?: ICameraVideoTrack | null) => {

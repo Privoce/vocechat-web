@@ -1,4 +1,4 @@
-import { useState, useEffect, FC } from "react";
+import { FC, useEffect, useState } from "react";
 
 interface Props {
   url: string;
@@ -17,7 +17,11 @@ const Code: FC<Props> = ({ url }) => {
   }, [url]);
   if (!content) return null;
 
-  return <div className="h-[218px] p-[15px] pb-0 bg-black text-white overflow-scroll whitespace-pre-wrap break-all leading-snug">{content}</div>;
+  return (
+    <div className="h-[218px] p-[15px] pb-0 bg-black text-white overflow-scroll whitespace-pre-wrap break-all leading-snug">
+      {content}
+    </div>
+  );
 };
 
 export default Code;

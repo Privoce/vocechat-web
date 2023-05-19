@@ -1,17 +1,18 @@
 import { FC, useEffect, useState } from "react";
-import ImageMessage from "./ImageMessage";
-import useRemoveLocalMessage from "@/hooks/useRemoveLocalMessage";
-import useUploadFile from "@/hooks/useUploadFile";
-import useSendMessage from "@/hooks/useSendMessage";
-import Progress from "./Progress";
-import { getFileIcon, formatBytes, isImage, getImageSize, fromNowTime } from "@/utils";
-import { useAppSelector } from "@/app/store";
-import IconDownload from "@/assets/icons/download.svg";
-import IconClose from "@/assets/icons/close.circle.svg";
-import VideoMessage from "./VideoMessage";
-import AudioMessage from "./AudioMessage";
 import clsx from "clsx";
+
+import { useAppSelector } from "@/app/store";
 import { ChatContext } from "@/types/common";
+import useRemoveLocalMessage from "@/hooks/useRemoveLocalMessage";
+import useSendMessage from "@/hooks/useSendMessage";
+import useUploadFile from "@/hooks/useUploadFile";
+import { formatBytes, fromNowTime, getFileIcon, getImageSize, isImage } from "@/utils";
+import IconClose from "@/assets/icons/close.circle.svg";
+import IconDownload from "@/assets/icons/download.svg";
+import AudioMessage from "./AudioMessage";
+import ImageMessage from "./ImageMessage";
+import Progress from "./Progress";
+import VideoMessage from "./VideoMessage";
 
 const isLocalFile = (content: string) => {
   return content.startsWith("blob:");
@@ -55,7 +56,14 @@ const FileMessage: FC<Props> = ({
     from: from_uid,
     to
   });
-  const { stopUploading, data, uploadFile, progress, isSuccess: uploadSuccess, isError } = useUploadFile();
+  const {
+    stopUploading,
+    data,
+    uploadFile,
+    progress,
+    isSuccess: uploadSuccess,
+    isError
+  } = useUploadFile();
   const fromUser = useAppSelector((store) => store.users.byId[from_uid]);
   const { size = 0, name, content_type } = properties ?? {};
   useEffect(() => {
@@ -145,30 +153,23 @@ const FileMessage: FC<Props> = ({
     );
   // video
   if (content_type.startsWith("video") && !sending)
-    return (
-      <VideoMessage
-        size={size}
-        url={content}
-        name={name}
-        download={download}
-      />
-    );
+    return <VideoMessage size={size} url={content} name={name} download={download} />;
   // audio
   if (content_type.startsWith("audio") && !sending)
-    return (
-      <AudioMessage
-        size={size}
-        url={content}
-        name={name}
-        download={download}
-      />
-    );
+    return <AudioMessage size={size} url={content} name={name} download={download} />;
   return (
-    <div className={clsx(`bg-slate-50 dark:bg-slate-900 border border-solid border-gray-300 dark:border-gray-500 box-border md:w-[370px] rounded-md`, sending && "opacity-90")}>
+    <div
+      className={clsx(
+        `bg-slate-50 dark:bg-slate-900 border border-solid border-gray-300 dark:border-gray-500 box-border md:w-[370px] rounded-md`,
+        sending && "opacity-90"
+      )}
+    >
       <div className="px-2 py-3 flex items-center justify-between gap-2">
         {icon}
         <div className="flex flex-col gap-1 w-full overflow-hidden">
-          <span className="font-semibold text-sm text-gray-800 dark:text-gray-100 truncate">{name}</span>
+          <span className="font-semibold text-sm text-gray-800 dark:text-gray-100 truncate">
+            {name}
+          </span>
           <span className="hidden md:flex whitespace-nowrap text-xs text-gray-500 dark:text-gray-300 gap-4">
             {sending ? (
               <Progress value={progress} width={"80%"} />
@@ -188,7 +189,11 @@ const FileMessage: FC<Props> = ({
         {sending ? (
           <IconClose className="cursor-pointer" onClick={handleCancel} />
         ) : (
-          <a className="hidden md:block whitespace-nowrap" download={name} href={`${content}&download=true`}>
+          <a
+            className="hidden md:block whitespace-nowrap"
+            download={name}
+            href={`${content}&download=true`}
+          >
             <IconDownload className="fill-gray-500 dark:fill-gray-400" />
           </a>
         )}

@@ -1,14 +1,15 @@
-import { useRef, useEffect, FC } from "react";
+import { FC, useEffect, useRef } from "react";
 import { Editor } from "@toast-ui/react-editor";
+
 import "prismjs/themes/prism.css";
 import "@toast-ui/editor/dist/toastui-editor.css";
-import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
+import "@toast-ui/editor/dist/theme/toastui-editor-dark.css";
 import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css";
 import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight-all.js";
 
 import useUploadFile from "@/hooks/useUploadFile";
-import Button from "../styled/Button";
 import { isDarkMode } from "@/utils";
+import Button from "../styled/Button";
 
 type Props = {
   updateDraft?: (draft: string) => void;
@@ -32,7 +33,6 @@ const MarkdownEditor: FC<Props> = ({
   useEffect(() => {
     const editor = editorRef?.current;
     if (editor) {
-
       const editorInstance = editor.getInstance();
       editorInstance.removeHook("addImageBlobHook");
       editorInstance.addHook("addImageBlobHook", async (blob, callback) => {

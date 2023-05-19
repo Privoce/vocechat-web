@@ -1,8 +1,8 @@
 import { FC } from "react";
-import Avatar from "./Avatar";
-import { useAppSelector } from "@/app/store";
 import clsx from "clsx";
 
+import { useAppSelector } from "@/app/store";
+import Avatar from "./Avatar";
 
 interface Props {
   interactive?: boolean;
@@ -24,9 +24,16 @@ const Channel: FC<Props> = ({ interactive = true, id, compact = false, avatarSiz
 
   return (
     <div
-      className={clsx(`flex items-center justify-start gap-2 p-2 rounded-lg select-none`, compact && "p-0", interactive && "md:hover:bg-gray-500/10")}
+      className={clsx(
+        `flex items-center justify-start gap-2 p-2 rounded-lg select-none`,
+        compact && "p-0",
+        interactive && "md:hover:bg-gray-500/10"
+      )}
     >
-      <div className={`cursor-pointer relative`} style={{ width: `${avatarSize}px`, height: `${avatarSize}px` }}>
+      <div
+        className={`cursor-pointer relative`}
+        style={{ width: `${avatarSize}px`, height: `${avatarSize}px` }}
+      >
         <Avatar
           width={avatarSize}
           height={avatarSize}
@@ -39,7 +46,8 @@ const Channel: FC<Props> = ({ interactive = true, id, compact = false, avatarSiz
       </div>
       {!compact && (
         <div className="flex text-sm text-gray-500 font-semibold">
-          <span className="max-w-[140px] truncate">{name}</span> ({is_public ? totalMemberCount : members.length})
+          <span className="max-w-[140px] truncate">{name}</span> (
+          {is_public ? totalMemberCount : members.length})
         </div>
       )}
     </div>

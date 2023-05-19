@@ -1,29 +1,31 @@
-import { useRef, useEffect, ClipboardEvent, FC } from "react";
-import { useKey } from "rooks";
-import { Editor, Transforms } from "slate";
+import { ClipboardEvent, FC, useEffect, useRef } from "react";
 import {
-  createPlateUI,
-  Plate,
   createExitBreakPlugin,
-  createTrailingBlockPlugin,
+  createMentionPlugin,
   createNodeIdPlugin,
   createParagraphPlugin,
-  createSoftBreakPlugin,
-  createMentionPlugin,
-  findMentionInput,
+  createPlateUI,
   createPlugins,
+  createSoftBreakPlugin,
+  createTrailingBlockPlugin,
   ELEMENT_PARAGRAPH,
+  findMentionInput,
   getPlateEditorRef,
-  MentionCombobox
+  MentionCombobox,
+  Plate
 } from "@udecode/plate";
 import { createComboboxPlugin } from "@udecode/plate-combobox";
+import { useKey } from "rooks";
+import { Editor, Transforms } from "slate";
 import { ReactEditor } from "slate-react";
-import useUploadFile from "@/hooks/useUploadFile";
-import { CONFIG } from "./config";
-import User from "../User";
+
 import { useAppSelector } from "@/app/store";
-import { isMobile } from "@/utils";
 import { ChatContext } from "@/types/common";
+import useUploadFile from "@/hooks/useUploadFile";
+import { isMobile } from "@/utils";
+import User from "../User";
+import { CONFIG } from "./config";
+
 export const TEXT_EDITOR_PREFIX = "_text_editor";
 
 let components = createPlateUI({
@@ -49,7 +51,6 @@ const Plugins: FC<Props> = ({
   updateMessages,
   members = []
 }) => {
-
   // const { getMenuProps, getItemProps } = useComboboxControls();
   const [context, to] = id.split("_") as [ChatContext, number];
   const { addStageFile } = useUploadFile({ context, id: to });
@@ -99,7 +100,7 @@ const Plugins: FC<Props> = ({
     },
     {
       when: !isMobile(),
-      target: editableRef,
+      target: editableRef
     }
   );
   const pluginArr = [
@@ -112,21 +113,21 @@ const Plugins: FC<Props> = ({
   const plugins = createPlugins(
     enableMentions
       ? pluginArr.concat([
-        createComboboxPlugin(),
-        createMentionPlugin({
-          options: {
-            createMentionNode: (item) => {
-              // console.log("mention", item);
-              const {
-                text,
-                data: { uid }
-              } = item;
-              return { value: `@${text}`, uid };
-            },
-            insertSpaceAfterMention: true
-          }
-        })
-      ])
+          createComboboxPlugin(),
+          createMentionPlugin({
+            options: {
+              createMentionNode: (item) => {
+                // console.log("mention", item);
+                const {
+                  text,
+                  data: { uid }
+                } = item;
+                return { value: `@${text}`, uid };
+              },
+              insertSpaceAfterMention: true
+            }
+          })
+        ])
       : pluginArr,
     {
       components
@@ -168,21 +169,23 @@ const Plugins: FC<Props> = ({
     const arr = tmps.map((tmp) => {
       return Array.isArray(tmp)
         ? {
-          type: "text",
-          content: tmp.map((t) => t.content).join("\n"),
-          properties: {
-            mentions: tmp.map((t) => t.properties?.mentions || []).flat()
+            type: "text",
+            content: tmp.map((t) => t.content).join("\n"),
+            properties: {
+              mentions: tmp.map((t) => t.properties?.mentions || []).flat()
+            }
           }
-        }
         : tmp;
     });
     const msgs = arr.filter(({ content }) => !!content.trim());
     updateMessages(msgs);
   };
 
-
   return (
-    <div className="input w-full pr-14 md:pr-0 max-h-[50vh] overflow-auto text-sm text-gray-600 dark:text-white" ref={editableRef}>
+    <div
+      className="input w-full pr-14 md:pr-0 max-h-[50vh] overflow-auto text-sm text-gray-600 dark:text-white"
+      ref={editableRef}
+    >
       <Plate
         id={`${TEXT_EDITOR_PREFIX}_${id}`}
         onChange={handleChange}

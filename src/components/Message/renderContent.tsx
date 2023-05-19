@@ -1,14 +1,15 @@
 // import React from "react";
-import dayjs from "dayjs";
 import i18n from "@/i18n";
+import dayjs from "dayjs";
+
 import { ContentTypes } from "@/app/config";
-import ForwardedMessage from "./ForwardedMessage";
-import MarkdownRender from "../MarkdownRender";
-import FileMessage from "../FileMessage";
-import { ContentType } from "@/types/message";
-import LinkifyText from '../LinkifyText';
-import VoiceMessage from "../VoiceMessage";
 import { ChatContext } from "@/types/common";
+import { ContentType } from "@/types/message";
+import FileMessage from "../FileMessage";
+import LinkifyText from "../LinkifyText";
+import MarkdownRender from "../MarkdownRender";
+import VoiceMessage from "../VoiceMessage";
+import ForwardedMessage from "./ForwardedMessage";
 
 type Props = {
   context: ChatContext;
@@ -41,7 +42,10 @@ const renderContent = ({
         <>
           <LinkifyText text={content} cid={to} />
           {edited && (
-            <span className="ml-1 text-gray-500 text-[10px]" title={dayjs(+edited).format("YYYY-MM-DD h:mm:ss A")}>
+            <span
+              className="ml-1 text-gray-500 text-[10px]"
+              title={dayjs(+edited).format("YYYY-MM-DD h:mm:ss A")}
+            >
               ({i18n.t("edited", { ns: "chat" })})
             </span>
           )}

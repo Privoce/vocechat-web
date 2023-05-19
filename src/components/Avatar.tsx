@@ -1,4 +1,5 @@
 import { FC, ImgHTMLAttributes, useState } from "react";
+
 import { getInitials } from "../utils";
 
 interface Props extends ImgHTMLAttributes<HTMLImageElement> {
@@ -53,7 +54,9 @@ const Avatar: FC<Props> = ({
         color: type === "channel" ? "#475467" : "#FFFFFF"
       }}
     >
-      <span className="whitespace-nowrap" style={{ transform: `scale(${scaleVal})` }}>{initials}</span>
+      <span className="whitespace-nowrap" style={{ transform: `scale(${scaleVal})` }}>
+        {initials}
+      </span>
     </div>
   );
 };

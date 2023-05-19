@@ -1,15 +1,17 @@
 import { FC, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Tippy from "@tippyjs/react";
-import FavList from "../FavList";
-import Tooltip from "@/components/Tooltip";
-import FavIcon from "@/assets/icons/bookmark.svg";
-import User from "@/components/User";
-import Layout from "../Layout";
+
 import { useAppSelector } from "@/app/store";
 import GoBackNav from "@/components/GoBackNav";
 import ServerVersionChecker from "@/components/ServerVersionChecker";
+import Tooltip from "@/components/Tooltip";
+import User from "@/components/User";
+import FavIcon from "@/assets/icons/bookmark.svg";
+import FavList from "../FavList";
+import Layout from "../Layout";
 import VoiceChat from "../VoiceChat";
+
 type Props = {
   uid: number;
   dropFiles?: File[];
@@ -18,7 +20,7 @@ const DMChat: FC<Props> = ({ uid = 0, dropFiles }) => {
   const navigate = useNavigate();
   const { currUser } = useAppSelector((store) => {
     return {
-      currUser: store.users.byId[uid],
+      currUser: store.users.byId[uid]
     };
   });
   useEffect(() => {

@@ -1,13 +1,14 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+
+import { ContentTypes } from "@/app/config";
+import { useAppSelector } from "@/app/store";
+import { ChatContext } from "@/types/common";
+import useCopy from "@/hooks/useCopy";
+import usePinMessage from "@/hooks/usePinMessage";
 import DeleteMessageConfirm from "../DeleteMessageConfirm";
 import ForwardModal from "../ForwardModal";
 import PinMessageModal from "./PinMessageModal";
-import { ContentTypes } from "@/app/config";
-import useCopy from "@/hooks/useCopy";
-import usePinMessage from "@/hooks/usePinMessage";
-import { useAppSelector } from "@/app/store";
-import { ChatContext } from "@/types/common";
 
 interface Params {
   mid: number;
@@ -74,7 +75,10 @@ export default function useMessageOperation({ mid, context, contextId }: Params)
     properties?.content_type.startsWith("image");
   const enableEdit =
     loginUser?.uid == from_uid && [ContentTypes.text, ContentTypes.markdown].includes(content_type);
-  const canDelete = loginUser?.uid == from_uid || loginUser?.is_admin || (channel && channel.owner == loginUser?.uid);
+  const canDelete =
+    loginUser?.uid == from_uid ||
+    loginUser?.is_admin ||
+    (channel && channel.owner == loginUser?.uid);
   const canCopy = [ContentTypes.text, ContentTypes.markdown].includes(content_type) || isImage;
   return {
     copyContent: isImage ? copyContent.bind(null, true) : copyContent.bind(null, false),

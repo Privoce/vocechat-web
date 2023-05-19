@@ -1,26 +1,25 @@
-import { useEffect, useState, FC } from "react";
-import clsx from "clsx";
+import { FC, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import useSendMessage from "@/hooks/useSendMessage";
-import useAddLocalFileMessage from "@/hooks/useAddLocalFileMessage";
-import { updateInputMode } from "@/app/slices/ui";
-import { ContentTypes, ChatPrefixes } from "@/app/config";
+import clsx from "clsx";
 
-// import StyledSend from "./styled";
-import UploadFileList from "./UploadFileList";
+import { ChatPrefixes, ContentTypes } from "@/app/config";
+import { updateInputMode } from "@/app/slices/ui";
+import { useAppDispatch, useAppSelector } from "@/app/store";
+import { ChatContext } from "@/types/common";
+import MarkdownEditor from "@/components/MarkdownEditor";
+import useAddLocalFileMessage from "@/hooks/useAddLocalFileMessage";
+import useDraft from "@/hooks/useDraft";
+import useSendMessage from "@/hooks/useSendMessage";
+import useUploadFile from "@/hooks/useUploadFile";
+import useUserOperation from "@/hooks/useUserOperation";
+import MixedInput, { useMixedEditor } from "../MixedInput";
+import StyledButton from "../styled/Button";
+import TextInput from "../TextInput";
+import EmojiPicker from "./EmojiPicker";
 import Replying from "./Replying";
 import Toolbar from "./Toolbar";
-import EmojiPicker from "./EmojiPicker";
-
-import MarkdownEditor from "../MarkdownEditor";
-import MixedInput, { useMixedEditor } from "../MixedInput";
-import useDraft from "@/hooks/useDraft";
-import useUploadFile from "@/hooks/useUploadFile";
-import { useAppDispatch, useAppSelector } from "@/app/store";
-import TextInput from "../TextInput";
-import useUserOperation from "@/hooks/useUserOperation";
-import StyledButton from "../styled/Button";
-import { ChatContext } from "@/types/common";
+// import StyledSend from "./styled";
+import UploadFileList from "./UploadFileList";
 
 const Modes = {
   text: "text",
@@ -36,7 +35,10 @@ const Send: FC<IProps> = ({
   id
 }) => {
   const { t } = useTranslation("chat");
-  const { unblockThisContact, blocked } = useUserOperation({ uid: context == "dm" ? id : undefined, cid: context == "channel" ? id : undefined });
+  const { unblockThisContact, blocked } = useUserOperation({
+    uid: context == "dm" ? id : undefined,
+    cid: context == "channel" ? id : undefined
+  });
   const { resetStageFiles } = useUploadFile({ context, id });
   const { getDraft, getUpdateDraft } = useDraft({ context, id });
   const editor = useMixedEditor(`${context}_${id}`);
@@ -88,7 +90,7 @@ const Send: FC<IProps> = ({
       // send text msgs
       for await (const msg of msgs) {
         const { type: content_type, content, properties = {} } = msg;
-        if ((content as string).trim() === '') continue; // 空消息不发送
+        if ((content as string).trim() === "") continue; // 空消息不发送
         properties.local_id = properties.local_id ?? +new Date();
         await sendMessage({
           id,
@@ -146,10 +148,14 @@ const Send: FC<IProps> = ({
     context == "channel" ? (channelsData[id]?.is_public ? uids : channelsData[id]?.members) : [];
   const isMarkdownMode = mode == Modes.markdown;
   if (context == "dm" && blocked) {
-    return <div className="p-5 bg-gray-200 rounded-lg w-full dark:bg-gray-600 text-red-300">
-      {t("contact_block_tip")}
-      <StyledButton className="mini ml-4" onClick={unblockThisContact}>{t("unblock")}</StyledButton>
-    </div>;
+    return (
+      <div className="p-5 bg-gray-200 rounded-lg w-full dark:bg-gray-600 text-red-300">
+        {t("contact_block_tip")}
+        <StyledButton className="mini ml-4" onClick={unblockThisContact}>
+          {t("unblock")}
+        </StyledButton>
+      </div>
+    );
   }
   return (
     <>
@@ -157,13 +163,22 @@ const Send: FC<IProps> = ({
       <TextInput sendMessage={handleSendMessage} placeholder={placeholder} />
       {/* PC input */}
       <div
-        className={clsx(`send hidden md:block relative bg-gray-200 rounded-lg w-full dark:bg-gray-600 ${mode} ${markdownFullscreen ? "fullscreen" : ""} ${replying_mid ? "reply" : ""
-          } ${context}`, isMarkdownMode && markdownFullscreen && '-mt-9')}
+        className={clsx(
+          `send hidden md:block relative bg-gray-200 rounded-lg w-full dark:bg-gray-600 ${mode} ${
+            markdownFullscreen ? "fullscreen" : ""
+          } ${replying_mid ? "reply" : ""} ${context}`,
+          isMarkdownMode && markdownFullscreen && "-mt-9"
+        )}
       >
         {replying_mid && <Replying context={context} mid={replying_mid} id={id} />}
         {mode == Modes.text && <UploadFileList context={context} id={id} />}
 
-        <div className={clsx(`flex justify-between items-center gap-4 px-4 py-3.5`, isMarkdownMode && `grid grid-cols-[1fr_1fr] grid-rows-[auto_auto] gap-0`)}>
+        <div
+          className={clsx(
+            `flex justify-between items-center gap-4 px-4 py-3.5`,
+            isMarkdownMode && `grid grid-cols-[1fr_1fr] grid-rows-[auto_auto] gap-0`
+          )}
+        >
           <EmojiPicker selectEmoji={insertEmoji} />
           {mode == Modes.text && (
             <MixedInput

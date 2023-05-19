@@ -1,6 +1,7 @@
-import { useState, FC } from "react";
-import TransferOwnerModal from "./TransferOwnerModal";
+import { FC, useState } from "react";
+
 import LeaveConfirmModal from "./LeaveConfirmModal";
+import TransferOwnerModal from "./TransferOwnerModal";
 
 interface Props {
   id: number;

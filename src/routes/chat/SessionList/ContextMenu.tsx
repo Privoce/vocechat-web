@@ -1,16 +1,22 @@
 import { FC, ReactElement } from "react";
-import Tippy from "@tippyjs/react";
+import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
-import { useNavigate, useLocation, useMatch } from "react-router-dom";
-import { usePinChatMutation, useUnpinChatMutation, useUpdateMuteSettingMutation } from "@/app/services/user";
+import { useLocation, useMatch, useNavigate } from "react-router-dom";
+import Tippy from "@tippyjs/react";
+
 import { useReadMessageMutation } from "@/app/services/message";
+import {
+  usePinChatMutation,
+  useUnpinChatMutation,
+  useUpdateMuteSettingMutation
+} from "@/app/services/user";
 import { removeUserSession } from "@/app/slices/message.user";
+import { useAppSelector } from "@/app/store";
+import { ChatContext } from "@/types/common";
 import ContextMenu, { Item } from "@/components/ContextMenu";
 import useUserOperation from "@/hooks/useUserOperation";
-import { useAppSelector } from "@/app/store";
-import { useTranslation } from "react-i18next";
-import { ChatContext } from "@/types/common";
 import { compareVersion } from "@/utils";
+
 type Props = {
   context: ChatContext;
   pinned: boolean;
@@ -93,57 +99,57 @@ const SessionContextMenu: FC<Props> = ({
   const items =
     context == "dm"
       ? [
-        pinVisible && {
-          title: pinTxt,
-          handler: handlePinChat
-        },
-        {
-          title: t("action.mark_read"),
-          handler: handleReadAll
-        },
-        {
-          title: t("setting"),
-          handler: handleDMSetting
-        },
-        canCopyEmail && {
-          title: t("action.copy_email"),
-          handler: copyEmail
-        },
-        {
-          title: t("action.hide_session"),
-          danger: true,
-          handler: handleRemoveSession
-        }
-      ]
+          pinVisible && {
+            title: pinTxt,
+            handler: handlePinChat
+          },
+          {
+            title: t("action.mark_read"),
+            handler: handleReadAll
+          },
+          {
+            title: t("setting"),
+            handler: handleDMSetting
+          },
+          canCopyEmail && {
+            title: t("action.copy_email"),
+            handler: copyEmail
+          },
+          {
+            title: t("action.hide_session"),
+            danger: true,
+            handler: handleRemoveSession
+          }
+        ]
       : [
-        pinVisible && {
-          title: pinTxt,
-          handler: handlePinChat
-        },
-        {
-          title: t("setting"),
-          underline: true,
-          handler: handleChannelSetting
-        },
-        {
-          title: t("action.mark_read"),
-          // underline: true
-          handler: handleReadAll
-        },
-        {
-          title: channelMuted ? t("action.unmute") : t("action.mute"),
-          handler: handleChannelMute
-        },
-        canInviteChannel && {
-          title: t("action.invite_people"),
-          handler: setInviteChannelId.bind(null, id)
-        },
-        canDeleteChannel && {
-          title: t("action.delete_channel"),
-          danger: true,
-          handler: deleteChannel.bind(null, id)
-        }
-      ];
+          pinVisible && {
+            title: pinTxt,
+            handler: handlePinChat
+          },
+          {
+            title: t("setting"),
+            underline: true,
+            handler: handleChannelSetting
+          },
+          {
+            title: t("action.mark_read"),
+            // underline: true
+            handler: handleReadAll
+          },
+          {
+            title: channelMuted ? t("action.unmute") : t("action.mute"),
+            handler: handleChannelMute
+          },
+          canInviteChannel && {
+            title: t("action.invite_people"),
+            handler: setInviteChannelId.bind(null, id)
+          },
+          canDeleteChannel && {
+            title: t("action.delete_channel"),
+            danger: true,
+            handler: deleteChannel.bind(null, id)
+          }
+        ];
   return (
     <Tippy
       interactive

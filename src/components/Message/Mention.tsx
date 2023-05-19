@@ -1,7 +1,8 @@
 // import { FC, ReactNode } from "react";
 import Tippy from "@tippyjs/react";
-import Profile from "../Profile";
+
 import { useAppSelector } from "@/app/store";
+import Profile from "../Profile";
 
 interface Props {
   uid: number;

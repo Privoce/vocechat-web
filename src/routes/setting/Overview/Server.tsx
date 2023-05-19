@@ -1,13 +1,14 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
+
 import { useUpdateLogoMutation, useUpdateServerMutation } from "@/app/services/server";
+import { useAppSelector } from "@/app/store";
 import LogoUploader from "@/components/AvatarUploader";
+import SaveTip from "@/components/SaveTip";
 import Input from "@/components/styled/Input";
 import Label from "@/components/styled/Label";
 import Textarea from "@/components/styled/Textarea";
-import SaveTip from "@/components/SaveTip";
-import { useAppSelector } from "@/app/store";
 
 const Index = () => {
   const { t } = useTranslation("setting");

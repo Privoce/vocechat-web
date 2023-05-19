@@ -1,17 +1,23 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import Tippy from "@tippyjs/react";
 import clsx from "clsx";
-import { useTranslation } from "react-i18next";
+
+import { useAppSelector } from "@/app/store";
 import Avatar from "@/components/Avatar";
+import ArrowDown from "@/assets/icons/arrow.down.svg";
+import FilterChannel from "./Channel";
 import FilterDate, { Dates } from "./Date";
 import FilterFrom from "./From";
-import FilterChannel from "./Channel";
 import FilterType, { FileTypes } from "./Type";
-import ArrowDown from "@/assets/icons/arrow.down.svg";
-import { useAppSelector } from "@/app/store";
 
 const getClass = (selected: boolean) => {
-  return clsx(`cursor-pointer flex items-center gap-1 md:gap-2 shadow rounded-lg p-1 md:py-2 md:px-3 text-xs text-gray-900 dark:text-gray-200`, selected ? 'text-white bg-primary-400' : 'border border-solid border-gray-300 dark:border-gray-400 ');
+  return clsx(
+    `cursor-pointer flex items-center gap-1 md:gap-2 shadow rounded-lg p-1 md:py-2 md:px-3 text-xs text-gray-900 dark:text-gray-200`,
+    selected
+      ? "text-white bg-primary-400"
+      : "border border-solid border-gray-300 dark:border-gray-400 "
+  );
 };
 export default function Filter({ filter, updateFilter }) {
   const { t } = useTranslation("file");
@@ -48,7 +54,6 @@ export default function Filter({ filter, updateFilter }) {
     from: fromVisible
   } = filtersVisible;
 
-
   return (
     <div className="flex items-center gap-2">
       <Tippy
@@ -58,10 +63,7 @@ export default function Filter({ filter, updateFilter }) {
         placement="bottom-start"
         content={<FilterFrom select={filter.from} updateFilter={handleUpdateFilter} />}
       >
-        <div
-          className={getClass(from)}
-          onClick={toggleFilterVisible.bind(null, { from: true })}
-        >
+        <div className={getClass(from)} onClick={toggleFilterVisible.bind(null, { from: true })}>
           {from && (
             <Avatar
               width={16}
@@ -99,10 +101,7 @@ export default function Filter({ filter, updateFilter }) {
         placement="bottom-start"
         content={<FilterType select={filter.type} updateFilter={handleUpdateFilter} />}
       >
-        <div
-          className={getClass(type)}
-          onClick={toggleFilterVisible.bind(null, { type: true })}
-        >
+        <div className={getClass(type)} onClick={toggleFilterVisible.bind(null, { type: true })}>
           <span className="txt">{type ? FileTypes[type].title : t("type")}</span>
           <ArrowDown className="dark:stroke-gray-100" />
         </div>
@@ -114,10 +113,7 @@ export default function Filter({ filter, updateFilter }) {
         placement="bottom-start"
         content={<FilterDate select={filter.date} updateFilter={handleUpdateFilter} />}
       >
-        <div
-          className={getClass(date)}
-          onClick={toggleFilterVisible.bind(null, { date: true })}
-        >
+        <div className={getClass(date)} onClick={toggleFilterVisible.bind(null, { date: true })}>
           <span className="txt">{date ? Dates[date].title : t("date")}</span>
           <ArrowDown className="dark:stroke-gray-100" />
         </div>

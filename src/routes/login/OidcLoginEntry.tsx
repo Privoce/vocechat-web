@@ -1,7 +1,8 @@
-import { useEffect, FC } from "react";
+import { FC, useEffect } from "react";
+
 import { useGetOpenidMutation } from "@/app/services/auth";
-import Button from "@/components/styled/Button";
 import { OIDCConfig } from "@/types/auth";
+import Button from "@/components/styled/Button";
 
 const OidcLoginEntry: FC<{ issuer: OIDCConfig }> = ({ issuer }) => {
   const [getOpenId, { data, isLoading, isSuccess }] = useGetOpenidMutation();
@@ -21,7 +22,11 @@ const OidcLoginEntry: FC<{ issuer: OIDCConfig }> = ({ issuer }) => {
   }, [data, isSuccess]);
 
   return (
-    <Button className="flex flex-center gap-3" disabled={isLoading || isSuccess} onClick={handleSolidLogin}>
+    <Button
+      className="flex flex-center gap-3"
+      disabled={isLoading || isSuccess}
+      onClick={handleSolidLogin}
+    >
       {!!issuer.favicon && <img src={issuer.favicon} className="w-6 h-6" alt="icon" />}
       {isLoading ? `Loading...` : `Login with ${issuer.domain}`}
     </Button>

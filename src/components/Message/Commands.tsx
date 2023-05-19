@@ -1,27 +1,29 @@
-import { useState, useRef, FC } from "react";
+import { FC, useRef, useState } from "react";
+import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import Tippy from "@tippyjs/react";
+import clsx from "clsx";
 import { hideAll } from "tippy.js";
-import toast from "react-hot-toast";
+
 import { updateSelectMessages } from "@/app/slices/ui";
-import ContextMenu, { Item } from "../ContextMenu";
-import Tooltip from "../Tooltip";
+import { ChatContext } from "@/types/common";
 import useFavMessage from "@/hooks/useFavMessage";
 import useSendMessage from "@/hooks/useSendMessage";
-import ReactionPicker from "./ReactionPicker";
-import replyIcon from "@/assets/icons/reply.svg?url";
-import reactIcon from "@/assets/icons/reaction.svg?url";
-import editIcon from "@/assets/icons/edit.svg?url";
 import IconBookmark from "@/assets/icons/bookmark.add.svg";
-import IconPin from "@/assets/icons/pin.svg";
-import IconForward from "@/assets/icons/forward.svg";
-import IconSelect from "@/assets/icons/select.svg";
 import IconDelete from "@/assets/icons/delete.svg";
+import editIcon from "@/assets/icons/edit.svg?url";
+import IconForward from "@/assets/icons/forward.svg";
 import moreIcon from "@/assets/icons/more.svg?url";
+import IconPin from "@/assets/icons/pin.svg";
+import reactIcon from "@/assets/icons/reaction.svg?url";
+import replyIcon from "@/assets/icons/reply.svg?url";
+import IconSelect from "@/assets/icons/select.svg";
+import ContextMenu, { Item } from "../ContextMenu";
+import Tooltip from "../Tooltip";
+import ReactionPicker from "./ReactionPicker";
 import useMessageOperation from "./useMessageOperation";
-import { useTranslation } from "react-i18next";
-import clsx from "clsx";
-import { ChatContext } from "@/types/common";
+
 type Props = {
   isSelf: boolean;
   context: ChatContext;
@@ -29,7 +31,13 @@ type Props = {
   mid: number;
   toggleEditMessage: () => void;
 };
-const Commands: FC<Props> = ({ isSelf, context = "dm", contextId = 0, mid = 0, toggleEditMessage }) => {
+const Commands: FC<Props> = ({
+  isSelf,
+  context = "dm",
+  contextId = 0,
+  mid = 0,
+  toggleEditMessage
+}) => {
   const { t } = useTranslation();
   const {
     canDelete,
@@ -89,10 +97,12 @@ const Commands: FC<Props> = ({ isSelf, context = "dm", contextId = 0, mid = 0, t
     <>
       <ul
         ref={cmdsRef}
-        className={clsx(`bg-white dark:bg-gray-900 rounded-md z-[999] absolute top-0 -translate-y-1/2 flex items-center border border-solid border-black/10 invisible group-hover:visible`,
-          tippyVisible && '!visible',
+        className={clsx(
+          `bg-white dark:bg-gray-900 rounded-md z-[999] absolute top-0 -translate-y-1/2 flex items-center border border-solid border-black/10 invisible group-hover:visible`,
+          tippyVisible && "!visible",
           isSelf ? "left-2.5" : "right-2.5"
-        )}>
+        )}
+      >
         <Tippy
           onShow={handleTippyVisible.bind(null, true)}
           onHide={handleTippyVisible.bind(null, false)}

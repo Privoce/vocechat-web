@@ -1,10 +1,11 @@
+import { useTranslation } from "react-i18next";
 import { NavLink, useLocation } from "react-router-dom";
 import Tippy from "@tippyjs/react";
-import IconAdd from "@/assets/icons/add.svg";
-import Tooltip from "./Tooltip";
-import AddEntriesMenu from "./AddEntriesMenu";
+
 import { useAppSelector } from "@/app/store";
-import { useTranslation } from "react-i18next";
+import IconAdd from "@/assets/icons/add.svg";
+import AddEntriesMenu from "./AddEntriesMenu";
+import Tooltip from "./Tooltip";
 
 type Props = {
   readonly?: boolean;
@@ -25,13 +26,19 @@ export default function Server({ readonly = false }: Props) {
       <NavLink to={"/"} className="relative flex items-center justify-between gap-2 px-4 py-2">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8">
-            <img alt={`${name} logo`} className="w-full h-full object-cover rounded-full" src={logo} />
+            <img
+              alt={`${name} logo`}
+              className="w-full h-full object-cover rounded-full"
+              src={logo}
+            />
           </div>
           <div className="flex flex-col gap-1">
             <h3 className="text-sm text-gray-600 dark:text-gray-100" title={description}>
               {name}
             </h3>
-            <span className="text-xs text-gray-500">{userCount} {t("members")}</span>
+            <span className="text-xs text-gray-500">
+              {userCount} {t("members")}
+            </span>
           </div>
         </div>
       </NavLink>
@@ -42,13 +49,19 @@ export default function Server({ readonly = false }: Props) {
       <NavLink to={`/setting/overview?f=${pathname}`}>
         <div className="flex items-center gap-2">
           <div className="w-8 h-8">
-            <img alt={`${name} logo`} className="w-full h-full object-cover rounded-full" src={logo} />
+            <img
+              alt={`${name} logo`}
+              className="w-full h-full object-cover rounded-full"
+              src={logo}
+            />
           </div>
           <div className="flex flex-col gap-1">
             <h3 className="text-sm text-gray-600 font-bold dark:text-gray-100" title={description}>
               {name}
             </h3>
-            <span className="text-xs text-gray-500">{userCount} {t("members")}</span>
+            <span className="text-xs text-gray-500">
+              {userCount} {t("members")}
+            </span>
           </div>
         </div>
       </NavLink>

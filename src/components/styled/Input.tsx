@@ -1,7 +1,9 @@
+import { DetailedHTMLProps, FC, InputHTMLAttributes, ReactElement, useState } from "react";
 import clsx from "clsx";
-import { useState, FC, DetailedHTMLProps, InputHTMLAttributes, ReactElement } from "react";
-import IconEyeOpen from "@/assets/icons/eye.open.svg";
+
 import IconEyeClose from "@/assets/icons/eye.close.svg";
+import IconEyeOpen from "@/assets/icons/eye.open.svg";
+
 interface Props
   extends DetailedHTMLProps<
     Pick<

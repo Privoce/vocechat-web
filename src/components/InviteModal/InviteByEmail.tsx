@@ -1,6 +1,7 @@
-import { useEffect, useState, ChangeEvent, FC, useRef } from "react";
+import { ChangeEvent, FC, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
+
 import { useSendLoginMagicLinkMutation } from "@/app/services/auth";
 import useInviteLink from "@/hooks/useInviteLink";
 import QRCode from "../QRCode";
@@ -12,7 +13,6 @@ interface Props {
 }
 
 const InviteByEmail: FC<Props> = ({ cid }) => {
-
   const { t } = useTranslation("chat");
   const { t: ct } = useTranslation();
   const [email, setEmail] = useState("");
@@ -27,7 +27,6 @@ const InviteByEmail: FC<Props> = ({ cid }) => {
   }, [linkCopied]);
   useEffect(() => {
     if (isSuccess) {
-
       toast.success("Email Sent!");
     }
   }, [isSuccess]);
@@ -49,7 +48,9 @@ const InviteByEmail: FC<Props> = ({ cid }) => {
   return (
     <div className="pt-4">
       <div className="flex flex-col gap-4 mb-6">
-        <label className="text-sm text-gray-400 dark:text-gray-100" htmlFor="">{t("invite_by_email")}</label>
+        <label className="text-sm text-gray-400 dark:text-gray-100" htmlFor="">
+          {t("invite_by_email")}
+        </label>
         <div className="relative flex items-center gap-2">
           <form ref={formRef} action="/" className="w-full">
             <Input
@@ -63,26 +64,37 @@ const InviteByEmail: FC<Props> = ({ cid }) => {
               placeholder={enableSMTP ? "Enter Email" : t("enable_smtp")}
             />
           </form>
-          <Button disabled={!enableSMTP || !email || isLoading} className="send" onClick={handleSendEmail}>
+          <Button
+            disabled={!enableSMTP || !email || isLoading}
+            className="send"
+            onClick={handleSendEmail}
+          >
             {ct("action.send")}
           </Button>
         </div>
       </div>
       <div className="flex flex-col gap-2 mb-3">
-        <label className="text-sm text-gray-400 dark:text-gray-100" htmlFor="">{t("send_invite_link")}</label>
+        <label className="text-sm text-gray-400 dark:text-gray-100" htmlFor="">
+          {t("send_invite_link")}
+        </label>
         <div className="relative flex items-center gap-2">
           <Input readOnly className="!pr-[50px]" placeholder="Generating" value={link} />
-          <button className="absolute right-1 top-1/2 -translate-y-1/2 pr-2 text-sm text-primary-400 hover:text-primary-600" onClick={copyLink}>
+          <button
+            className="absolute right-1 top-1/2 -translate-y-1/2 pr-2 text-sm text-primary-400 hover:text-primary-600"
+            onClick={copyLink}
+          >
             {ct("action.copy")}
           </button>
         </div>
       </div>
-      <div className="w-44 h-44 my-2">
-        {!generating && <QRCode size={1200} link={link} />}
-      </div>
+      <div className="w-44 h-44 my-2">{!generating && <QRCode size={1200} link={link} />}</div>
       <div className="text-xs text-gray-600 dark:text-gray-200">
         {t("invite_link_expire")}
-        <button disabled={generating} className="text-primary-400 ml-1" onClick={() => generateNewLink()}>
+        <button
+          disabled={generating}
+          className="text-primary-400 ml-1"
+          onClick={() => generateNewLink()}
+        >
           {t("generate_new_link")}
         </button>
       </div>

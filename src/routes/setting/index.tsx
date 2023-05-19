@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 import StyledSettingContainer from "@/components/StyledSettingContainer";
-import useNavs from "./navs";
 import LogoutConfirmModal from "./LogoutConfirmModal";
+import useNavs from "./navs";
 
 let pageFrom: string = "";
 
@@ -13,7 +13,7 @@ export default function Setting() {
   const [searchParams] = useSearchParams();
   const navs = useNavs();
   const flattenNaves = navs.map(({ items }) => items).flat();
-  const { nav: navKey } = useParams();;
+  const { nav: navKey } = useParams();
   const [logoutConfirm, setLogoutConfirm] = useState(false);
   const navigateTo = useNavigate();
   pageFrom = pageFrom ? pageFrom : searchParams.get("f") || "/";

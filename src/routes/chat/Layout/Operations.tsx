@@ -1,17 +1,18 @@
 import { FC, useState } from "react";
-import { useKey } from "rooks";
 import toast from "react-hot-toast";
-import useDeleteMessage from "@/hooks/useDeleteMessage";
-import useFavMessage from "@/hooks/useFavMessage";
+import { useKey } from "rooks";
+
 import { updateSelectMessages } from "@/app/slices/ui";
-import IconForward from "@/assets/icons/forward.svg";
-import IconBookmark from "@/assets/icons/bookmark.svg";
-import IconDelete from "@/assets/icons/delete.svg";
-import IconClose from "@/assets/icons/close.circle.svg";
-import ForwardModal from "@/components/ForwardModal";
-import DeleteMessageConfirmModal from "@/components/DeleteMessageConfirm";
 import { useAppDispatch, useAppSelector } from "@/app/store";
 import { ChatContext } from "@/types/common";
+import DeleteMessageConfirmModal from "@/components/DeleteMessageConfirm";
+import ForwardModal from "@/components/ForwardModal";
+import useDeleteMessage from "@/hooks/useDeleteMessage";
+import useFavMessage from "@/hooks/useFavMessage";
+import IconBookmark from "@/assets/icons/bookmark.svg";
+import IconClose from "@/assets/icons/close.circle.svg";
+import IconDelete from "@/assets/icons/delete.svg";
+import IconForward from "@/assets/icons/forward.svg";
 
 type Props = {
   context: ChatContext;
@@ -66,10 +67,17 @@ const Operations: FC<Props> = ({ context, id }) => {
         <button className={optClass} onClick={handleFav}>
           <IconBookmark />
         </button>
-        <button className={optClass} disabled={!canDel} onClick={toggleDeleteModal.bind(null, false)}>
+        <button
+          className={optClass}
+          disabled={!canDel}
+          onClick={toggleDeleteModal.bind(null, false)}
+        >
           <IconDelete />
         </button>
-        <IconClose className="cursor-pointer absolute right-5 top-1/2 -translate-y-1/2" onClick={handleClose} />
+        <IconClose
+          className="cursor-pointer absolute right-5 top-1/2 -translate-y-1/2"
+          onClick={handleClose}
+        />
       </div>
       {forwardModalVisible && <ForwardModal mids={mids} closeModal={toggleForwardModal} />}
       {deleteModalVisible && (

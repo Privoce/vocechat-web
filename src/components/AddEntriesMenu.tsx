@@ -1,16 +1,17 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { hideAll } from "tippy.js";
+
 import { useAppSelector } from "@/app/store";
 import IconInvite from "@/assets/icons/add.person.svg";
 import IconMention from "@/assets/icons/mention.svg";
 import IconSearch from "@/assets/icons/search.svg";
 import ChannelIcon from "./ChannelIcon";
 import ChannelModal from "./ChannelModal";
-import UsersModal from "./UsersModal";
 import InviteModal from "./InviteModal";
-import { useTranslation } from "react-i18next";
 import SearchUser from "./SearchUser";
 import ServerVersionChecker from "./ServerVersionChecker";
+import UsersModal from "./UsersModal";
 
 export default function AddEntriesMenu() {
   const { t } = useTranslation();
@@ -53,7 +54,8 @@ export default function AddEntriesMenu() {
     setChannelModalVisible(false);
   };
 
-  const itemClass = "rounded flex items-center gap-2 text-sm font-semibold cursor-pointer px-2 py-2.5 md:hover:bg-gray-800/20 md:dark:hover:bg-gray-200/20";
+  const itemClass =
+    "rounded flex items-center gap-2 text-sm font-semibold cursor-pointer px-2 py-2.5 md:hover:bg-gray-800/20 md:dark:hover:bg-gray-200/20";
   const iconClass = "w-5 h-5 dark:fill-gray-300";
   return (
     <>

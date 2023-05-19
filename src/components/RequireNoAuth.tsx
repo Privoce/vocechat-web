@@ -1,5 +1,6 @@
 import { FC, ReactElement } from "react";
 import { Navigate } from "react-router-dom";
+
 import { useGetInitializedQuery } from "@/app/services/auth";
 import { useAppSelector } from "@/app/store";
 

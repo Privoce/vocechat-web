@@ -1,18 +1,18 @@
 import { useEffect } from "react";
-import Tippy from "@tippyjs/react";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
+import Tippy from "@tippyjs/react";
 import { hideAll } from "tippy.js";
-import Input from "@/components/styled/Input";
-import Toggle from "@/components/styled/Toggle";
-import Button from "@/components/styled/Button";
+
 import {
   useGetThirdPartySecretQuery,
   useUpdateThirdPartySecretMutation
 } from "@/app/services/server";
-import useConfig from "@/hooks/useConfig";
 import { LoginConfig } from "@/types/server";
-import { useTranslation } from "react-i18next";
-
+import Button from "@/components/styled/Button";
+import Input from "@/components/styled/Input";
+import Toggle from "@/components/styled/Toggle";
+import useConfig from "@/hooks/useConfig";
 
 export default function APIConfig() {
   const { t } = useTranslation("setting");
@@ -40,7 +40,10 @@ export default function APIConfig() {
         checked={thirdParty}
       />
       <div className="w-full flex flex-col items-start gap-2">
-        <label htmlFor="secret" className="text-sm text-gray-500 dark:text-gray-100"> {t("third_app.key")}:</label>
+        <label htmlFor="secret" className="text-sm text-gray-500 dark:text-gray-100">
+          {" "}
+          {t("third_app.key")}:
+        </label>
         <Input disabled={!thirdParty} type="password" id="secret" value={updatedSecret || data} />
       </div>
       <Tippy
@@ -49,9 +52,7 @@ export default function APIConfig() {
         trigger="click"
         content={
           <div className="p-3 rounded-lg border border-orange-400 border-solid flex flex-col gap-3 w-[250px] bg-white">
-            <div className="text-orange-500 text-xs">
-              {t("third_app.update_tip")}
-            </div>
+            <div className="text-orange-500 text-xs">{t("third_app.update_tip")}</div>
             <div className="flex justify-end gap-3 w-full">
               <Button onClick={() => hideAll()} className="cancel mini">
                 {ct("action.cancel")}
@@ -67,8 +68,13 @@ export default function APIConfig() {
       </Tippy>
       <div className="text-xs text-orange-400">
         {t("third_app.key_tip")}
-        <a className="text-primary-500 font-bold" href="https://doc.voce.chat/login-with-other-account" target="_blank" rel="noopener noreferrer">
-          🔗  {t("third_app.how_to")}
+        <a
+          className="text-primary-500 font-bold"
+          href="https://doc.voce.chat/login-with-other-account"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          🔗 {t("third_app.how_to")}
         </a>
       </div>
     </div>

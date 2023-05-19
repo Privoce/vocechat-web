@@ -1,12 +1,12 @@
 import { FC, Suspense, useEffect, useState } from "react";
-import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
+import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
+
 import { KEY_LOCAL_MAGIC_TOKEN } from "@/app/config";
+import { useLoginMutation } from "@/app/services/auth";
 import IconGoogle from "@/assets/icons/google.svg";
 import Button from "./styled/Button";
-import { useLoginMutation } from "@/app/services/auth";
-import { useTranslation } from "react-i18next";
-
 
 interface Props {
   loadError?: boolean;
@@ -43,14 +43,17 @@ const GoogleLoginInner: FC<Props> = ({ type = "login", loaded, loadError }) => {
   }, [error]);
 
   return (
-    <Button className=" group relative w-full !bg-white dark:!bg-gray-700 !text-gray-600 dark:!text-gray-200 overflow-hidden border border-solid border-gray-300 dark:border-gray-500" disabled={!loaded || isLoading}>
+    <Button
+      className=" group relative w-full !bg-white dark:!bg-gray-700 !text-gray-600 dark:!text-gray-200 overflow-hidden border border-solid border-gray-300 dark:border-gray-500"
+      disabled={!loaded || isLoading}
+    >
       <div className="absolute left-0 top-0 w-full h-full flex-center gap-3 z-[998] bg-inherit">
         <IconGoogle className="w-6 h-6" />
         {loadError
           ? "Script Load Error!"
           : loaded
-            ? `${type === "login" ? t("login.google") : t("reg.google")}`
-            : `Initializing`}
+          ? `${type === "login" ? t("login.google") : t("reg.google")}`
+          : `Initializing`}
       </div>
       <div className="absolute left-0 top-0 w-full h-full group-hover:opacity-0 group-hover:z-[999]">
         <GoogleLogin

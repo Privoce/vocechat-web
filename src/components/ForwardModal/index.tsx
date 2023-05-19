@@ -1,19 +1,20 @@
-import { useState, MouseEvent, ChangeEvent, FC } from "react";
+import { ChangeEvent, FC, MouseEvent, useState } from "react";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
-import Modal from "../Modal";
-import Button from "../styled/Button";
-import Input from "../styled/Input";
-import Channel from "../Channel";
-import User from "../User";
-import Reply from "../Message/Reply";
-import useForwardMessage from "@/hooks/useForwardMessage";
-import useSendMessage from "@/hooks/useSendMessage";
 import useFilteredChannels from "@/hooks/useFilteredChannels";
 import useFilteredUsers from "@/hooks/useFilteredUsers";
+import useForwardMessage from "@/hooks/useForwardMessage";
+import useSendMessage from "@/hooks/useSendMessage";
 import CloseIcon from "@/assets/icons/close.circle.svg";
+import Channel from "../Channel";
+import Reply from "../Message/Reply";
+import Modal from "../Modal";
+import Button from "../styled/Button";
 import StyledCheckbox from "../styled/Checkbox";
-import { useTranslation } from "react-i18next";
+import Input from "../styled/Input";
+import User from "../User";
+
 interface IProps {
   mids: number[];
   closeModal: () => void;
@@ -140,7 +141,10 @@ const ForwardModal: FC<IProps> = ({ mids, closeModal }) => {
               return (
                 <li key={uid} className="relative">
                   <User key={uid} uid={uid} interactive={false} />
-                  <CloseIcon className="cursor-pointer absolute right-1 top-1/2 -translate-y-1/2" onClick={removeSelected.bind(null, uid, "user")} />
+                  <CloseIcon
+                    className="cursor-pointer absolute right-1 top-1/2 -translate-y-1/2"
+                    onClick={removeSelected.bind(null, uid, "user")}
+                  />
                 </li>
               );
             })}
@@ -158,7 +162,7 @@ const ForwardModal: FC<IProps> = ({ mids, closeModal }) => {
           ></Input>
           <div className="w-full flex items-center justify-end gap-4">
             <Button onClick={closeModal} className="normal cancel">
-              {t('action.cancel')}
+              {t("action.cancel")}
             </Button>
             <Button className="normal" disabled={sendButtonDisabled} onClick={handleForward}>
               Send To {selectedCount == 0 ? null : `(${selectedCount})`}

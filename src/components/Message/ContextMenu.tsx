@@ -1,19 +1,21 @@
 import { FC, ReactElement } from "react";
-import Tippy from "@tippyjs/react";
+import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
-import ContextMenu, { Item } from "../ContextMenu";
+import Tippy from "@tippyjs/react";
+
+import { updateSelectMessages } from "@/app/slices/ui";
+import { ChatContext } from "@/types/common";
+import useSendMessage from "@/hooks/useSendMessage";
+import IconCopy from "@/assets/icons/copy.svg";
 import IconDelete from "@/assets/icons/delete.svg";
 import IconEdit from "@/assets/icons/edit.svg";
-import IconReply from "@/assets/icons/reply.svg";
 import IconForward from "@/assets/icons/forward.svg";
 import IconPin from "@/assets/icons/pin.svg";
-import IconCopy from "@/assets/icons/copy.svg";
+import IconReply from "@/assets/icons/reply.svg";
 import IconSelect from "@/assets/icons/select.svg";
-import { updateSelectMessages } from "@/app/slices/ui";
-import useSendMessage from "@/hooks/useSendMessage";
+import ContextMenu, { Item } from "../ContextMenu";
 import useMessageOperation from "./useMessageOperation";
-import { useTranslation } from "react-i18next";
-import { ChatContext } from "@/types/common";
+
 type Props = {
   context: ChatContext;
   contextId: number;

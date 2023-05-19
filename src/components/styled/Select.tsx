@@ -1,9 +1,9 @@
 import { FC, useState } from "react";
-import Tippy from "@tippyjs/react";
-import IconSelect from "@/assets/icons/check.sign.svg";
-import IconArrow from "@/assets/icons/arrow.down.svg";
 import { useTranslation } from "react-i18next";
+import Tippy from "@tippyjs/react";
 
+import IconArrow from "@/assets/icons/arrow.down.svg";
+import IconSelect from "@/assets/icons/check.sign.svg";
 
 export interface Option {
   icon?: string;
@@ -58,8 +58,13 @@ const Select: FC<Props> = ({ options = [], updateSelect = null, current = null }
         </ul>
       }
     >
-      <div className="select-none border border-solid border-slate-200 p-2 flex items-center gap-2" onClick={toggleVisible}>
-        <span className="text-sm text-gray-500 dark:text-gray-200 min-w-[76px]">{(current !== null ? current : curr)?.title || t("action.select")}</span>
+      <div
+        className="select-none border border-solid border-slate-200 p-2 flex items-center gap-2"
+        onClick={toggleVisible}
+      >
+        <span className="text-sm text-gray-500 dark:text-gray-200 min-w-[76px]">
+          {(current !== null ? current : curr)?.title || t("action.select")}
+        </span>
         <IconArrow className="!w-5 !h-5" />
       </div>
     </Tippy>

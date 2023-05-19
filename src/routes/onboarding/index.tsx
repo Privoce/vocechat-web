@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";
-import { useWizard, Wizard } from 'react-use-wizard';
-
-import WelcomePage from "./steps/welcome-page";
-import ServerName from "./steps/server-name";
-import AdminAccount from "./steps/admin-account";
-import WhoCanSignUp from "./steps/who-can-sign-up";
-import InviteLink from "./steps/invite-link";
-import DonePage from "./steps/done-page";
-import steps from "./steps";
 import { useTranslation } from "react-i18next";
+import { useWizard, Wizard } from "react-use-wizard";
 import clsx from "clsx";
 
+import steps from "./steps";
+import AdminAccount from "./steps/admin-account";
+import DonePage from "./steps/done-page";
+import InviteLink from "./steps/invite-link";
+import ServerName from "./steps/server-name";
+import WelcomePage from "./steps/welcome-page";
+import WhoCanSignUp from "./steps/who-can-sign-up";
 
 const Navigator = () => {
   const { activeStep, goToStep } = useWizard();
@@ -22,7 +21,12 @@ const Navigator = () => {
     <div className="hidden md:flex absolute top-5 w-full justify-center gap-2 z-10">
       {steps.map((stepToRender, indexToRender) => {
         const clickable = canJumpTo.includes(stepToRender.name);
-        const itemClass = clsx(`text-sm text-gray-600`, clickable && "cursor-pointer md:hover:text-gray-500", indexToRender === activeStep && "font-bold text-black", indexToRender >= activeStep && "text-gray-400");
+        const itemClass = clsx(
+          `text-sm text-gray-600`,
+          clickable && "cursor-pointer md:hover:text-gray-500",
+          indexToRender === activeStep && "font-bold text-black",
+          indexToRender >= activeStep && "text-gray-400"
+        );
         const nodeCls = `${itemClass}`;
         return (
           <React.Fragment key={indexToRender}>

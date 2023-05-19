@@ -1,4 +1,4 @@
-import { FC, useEffect, useState, PropsWithChildren } from "react";
+import { FC, PropsWithChildren, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
 interface Props {

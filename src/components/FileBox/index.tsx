@@ -1,16 +1,17 @@
 import { FC, ReactElement } from "react";
 import clsx from "clsx";
+
+import { useAppSelector } from "@/app/store";
+import { formatBytes, fromNowTime, getFileIcon } from "@/utils";
+import IconDownload from "@/assets/icons/download.svg";
 import {
-  VideoPreview,
   AudioPreview,
+  CodePreview,
+  DocPreview,
   ImagePreview,
   PdfPreview,
-  CodePreview,
-  DocPreview
+  VideoPreview
 } from "./preview";
-import { getFileIcon, formatBytes, fromNowTime } from "@/utils";
-import IconDownload from "@/assets/icons/download.svg";
-import { useAppSelector } from "@/app/store";
 
 interface Data {
   file_type: string;
@@ -86,12 +87,19 @@ const FileBox: FC<Props> = ({
 
   return (
     <div
-      className={clsx(`rounded-md border border-solid border-gray-300 dark:border-gray-500 bg-gray-100 dark:bg-gray-900`, flex ? "w-full" : "w-72 md:w-[370px]", withPreview ? "relative overflow-hidden h-[281px]" : "h-[66px] ", file_type.startsWith("audio") && "h-[125px]")}
+      className={clsx(
+        `rounded-md border border-solid border-gray-300 dark:border-gray-500 bg-gray-100 dark:bg-gray-900`,
+        flex ? "w-full" : "w-72 md:w-[370px]",
+        withPreview ? "relative overflow-hidden h-[281px]" : "h-[66px] ",
+        file_type.startsWith("audio") && "h-[125px]"
+      )}
     >
       <div className="w-full p-2 flex items-center justify-between gap-2">
         {icon}
         <div className="flex flex-col gap-1 w-full overflow-hidden">
-          <span className="font-semibold text-sm text-gray-800 dark:text-gray-200 truncate">{name}</span>
+          <span className="font-semibold text-sm text-gray-800 dark:text-gray-200 truncate">
+            {name}
+          </span>
           <em className="text-xs text-gray-500 flex gap-4 not-italic">
             <span className="size">{formatBytes(size)}</span>
             <span className="hidden md:block time">{fromNowTime(created_at)}</span>
@@ -100,7 +108,11 @@ const FileBox: FC<Props> = ({
             </span>
           </em>
         </div>
-        <a className="hidden md:block whitespace-nowrap" download={name} href={`${content}&download=true`}>
+        <a
+          className="hidden md:block whitespace-nowrap"
+          download={name}
+          href={`${content}&download=true`}
+        >
           <IconDownload className="fill-gray-500 dark:fill-gray-300" />
         </a>
       </div>

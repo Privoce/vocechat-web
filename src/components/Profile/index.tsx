@@ -1,15 +1,15 @@
-import { useGetAgoraStatusQuery } from "@/app/services/server";
-import { useAppSelector } from "@/app/store";
-import IconCall from "@/assets/icons/call.svg";
-import IconMessage from "@/assets/icons/message.svg";
-import IconMore from "@/assets/icons/more.svg";
-import useUserOperation from "@/hooks/useUserOperation";
-import Tippy from "@tippyjs/react";
-import clsx from "clsx";
 import { FC, memo } from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
+import Tippy from "@tippyjs/react";
+import clsx from "clsx";
 
+import { useGetAgoraStatusQuery } from "@/app/services/server";
+import { useAppSelector } from "@/app/store";
+import useUserOperation from "@/hooks/useUserOperation";
+import IconCall from "@/assets/icons/call.svg";
+import IconMessage from "@/assets/icons/message.svg";
+import IconMore from "@/assets/icons/more.svg";
 import Avatar from "../Avatar";
 
 interface Props {

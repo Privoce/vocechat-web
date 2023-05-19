@@ -1,15 +1,15 @@
-import dayjs from "dayjs";
 import { FC } from "react";
+import dayjs from "dayjs";
 
-import renderContent from "./Message/renderContent";
-import Avatar from "./Avatar";
+import { MessagePayload } from "@/app/slices/message";
 import { useAppSelector } from "@/app/store";
 import { PinnedMessage } from "@/types/channel";
 import { normalizeFileMessage } from "../utils";
-import { MessagePayload } from "@/app/slices/message";
+import Avatar from "./Avatar";
+import renderContent from "./Message/renderContent";
 
 interface Props {
-  data: PinnedMessage
+  data: PinnedMessage;
 }
 
 const PinnedMessageView: FC<Props> = ({ data }) => {
@@ -32,8 +32,10 @@ const PinnedMessageView: FC<Props> = ({ data }) => {
       </div>
       <div className="w-full flex flex-col items-start gap-1  text-sm">
         <div className="flex items-center gap-2 font-semibold">
-          <span className="text-gray-500 dark:text-gray-400">{name}</span>
-          <time className="text-xs text-gray-400">{dayjs(created_at).format("YYYY-MM-DD h:mm:ss A")}</time>
+          <span className="text-gray-500">{name}</span>
+          <time className="text-xs text-gray-400">
+            {dayjs(created_at).format("YYYY-MM-DD h:mm:ss A")}
+          </time>
         </div>
         <div className={`select-text text-gray-600 break-all whitespace-pre-wrap dark:text-white`}>
           {renderContent({

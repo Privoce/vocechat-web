@@ -1,6 +1,7 @@
-import { FC, useState, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Trans, useTranslation } from "react-i18next";
+
 import { KEY_MOBILE_APP_TIP } from "@/app/config";
 import Button from "./styled/Button";
 
@@ -19,23 +20,25 @@ const Container = (props: ContainerProps) => {
     localStorage.removeItem(KEY_MOBILE_APP_TIP);
     toast.dismiss(id);
   };
-  return <div className="flex flex-col md:flex-row items-center gap-2 whitespace-nowrap">
-    <div>
-      <Trans i18nKey={"mobile_app"}>
-        <strong className="font-bold" />
-      </Trans>
+  return (
+    <div className="flex flex-col md:flex-row items-center gap-2 whitespace-nowrap">
+      <div>
+        <Trans i18nKey={"mobile_app"}>
+          <strong className="font-bold" />
+        </Trans>
+      </div>
+      <div className="flex gap-1">
+        <Button className="mini main" onClick={handleOpen}>
+          {t("action.open")}
+        </Button>
+        <Button className="mini cancel" onClick={handleClose}>
+          {t("action.dismiss")}
+        </Button>
+      </div>
     </div>
-    <div className="flex gap-1">
-      <Button className="mini main" onClick={handleOpen}>
-        {t("action.open")}
-      </Button>
-      <Button className="mini cancel" onClick={handleClose}>
-        {t("action.dismiss")}
-      </Button>
-    </div>
-  </div>;
+  );
 };
-interface Props { }
+interface Props {}
 const Index: FC<Props> = () => {
   const [visible, setVisible] = useState(false);
   useEffect(() => {

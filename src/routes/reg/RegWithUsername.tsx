@@ -1,14 +1,18 @@
-import { useState, useEffect, FC, FormEvent, ChangeEvent } from "react";
-import { useDispatch } from "react-redux";
-import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
+import { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+
+import {
+  useCheckMagicTokenValidMutation,
+  useLoginMutation,
+  useRegisterMutation
+} from "@/app/services/auth";
 import { setAuthData } from "@/app/slices/auth.data";
-import Input from "@/components/styled/Input";
 import Button from "@/components/styled/Button";
-import { useLoginMutation, useCheckMagicTokenValidMutation } from "@/app/services/auth";
+import Input from "@/components/styled/Input";
 import ExpiredTip from "./ExpiredTip";
-import { useRegisterMutation } from "@/app/services/auth";
 import { useMagicToken } from "./index";
 
 const RegWithUsername: FC = () => {
@@ -100,7 +104,9 @@ const RegWithUsername: FC = () => {
   return (
     <>
       <div className="flex-center flex-col pb-6 max-w-md">
-        <h2 className="font-semibold text-2xl text-gray-800 dark:text-gray-100 mb-2">{t("reg.input_name")}</h2>
+        <h2 className="font-semibold text-2xl text-gray-800 dark:text-gray-100 mb-2">
+          {t("reg.input_name")}
+        </h2>
         <span className="text-gray-400 text-center dark:text-gray-100">
           {t("reg.input_name_tip")}
         </span>

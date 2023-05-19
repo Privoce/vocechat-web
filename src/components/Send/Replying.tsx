@@ -1,13 +1,13 @@
 import { ContentTypes } from "@/app/config";
-import MarkdownRender from "../MarkdownRender";
+import { MessagePayload } from "@/app/slices/message";
+import { useAppSelector } from "@/app/store";
+import { ChatContext } from "@/types/common";
+import useSendMessage from "@/hooks/useSendMessage";
+import { getFileIcon, isImage } from "@/utils";
 import IconClose from "@/assets/icons/close.circle.svg";
 import pictureIcon from "@/assets/icons/picture.svg?url";
-import { getFileIcon, isImage } from "@/utils";
-import useSendMessage from "@/hooks/useSendMessage";
-import { useAppSelector } from "@/app/store";
-import { MessagePayload } from "@/app/slices/message";
 import LinkifyText from "../LinkifyText";
-import { ChatContext } from "@/types/common";
+import MarkdownRender from "../MarkdownRender";
 
 const renderContent = (data: MessagePayload) => {
   const { content_type, content, thumbnail = "", properties } = data;

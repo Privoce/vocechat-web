@@ -1,13 +1,14 @@
-import { useState, useEffect, FC, MouseEvent, ChangeEvent } from "react";
+import { ChangeEvent, FC, MouseEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+
+import { useAddMembersMutation } from "@/app/services/channel";
+import { useAppSelector } from "@/app/store";
+import useFilteredUsers from "@/hooks/useFilteredUsers";
+import CloseIcon from "@/assets/icons/close.svg";
 import Button from "../styled/Button";
+import StyledCheckbox from "../styled/Checkbox";
 import Input from "../styled/Input";
 import User from "../User";
-import StyledCheckbox from "../styled/Checkbox";
-import { useAddMembersMutation } from "@/app/services/channel";
-import CloseIcon from "@/assets/icons/close.svg";
-import useFilteredUsers from "@/hooks/useFilteredUsers";
-import { useAppSelector } from "@/app/store";
 
 interface Props {
   cid?: number;
@@ -60,9 +61,16 @@ const AddMembers: FC<Props> = ({ cid = 0, closeModal }) => {
         <ul className="flex items-center flex-wrap gap-1 w-full overflow-scroll">
           {selects.map((uid) => {
             return (
-              <li className="px-1.5 py-1 rounded text-sm bg-primary-300 text-white flex items-center justify-between gap-1" key={uid}>
+              <li
+                className="px-1.5 py-1 rounded text-sm bg-primary-300 text-white flex items-center justify-between gap-1"
+                key={uid}
+              >
                 {userData[uid]?.name}
-                <CloseIcon data-uid={uid} onClick={toggleCheckMember} className="cursor-pointer w-3 h-3 fill-white" />
+                <CloseIcon
+                  data-uid={uid}
+                  onClick={toggleCheckMember}
+                  className="cursor-pointer w-3 h-3 fill-white"
+                />
               </li>
             );
           })}
@@ -97,7 +105,11 @@ const AddMembers: FC<Props> = ({ cid = 0, closeModal }) => {
           );
         })}
       </ul>
-      <Button disabled={selects.length == 0 || isAdding} className="flex mt-4 justify-center items-center" onClick={handleAddMembers}>
+      <Button
+        disabled={selects.length == 0 || isAdding}
+        className="flex mt-4 justify-center items-center"
+        onClick={handleAddMembers}
+      >
         {isAdding ? `Adding` : "Add"} to #{channel.name}
       </Button>
     </div>

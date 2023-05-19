@@ -1,12 +1,12 @@
-import { ChangeEvent, FC, useEffect, useState, useRef } from "react";
+import { ChangeEvent, FC, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
-import Input from "@/components/styled/Input";
-import { useUpdateInfoMutation } from "@/app/services/user";
-import StyledModal from "@/components/styled/Modal";
-import Button from "@/components/styled/Button";
-import Modal from "@/components/Modal";
 import { useTranslation } from "react-i18next";
 
+import { useUpdateInfoMutation } from "@/app/services/user";
+import Modal from "@/components/Modal";
+import Button from "@/components/styled/Button";
+import Input from "@/components/styled/Input";
+import StyledModal from "@/components/styled/Modal";
 
 interface Props {
   label?: string;
@@ -40,7 +40,6 @@ const ProfileBasicEditModal: FC<Props> = ({
     if (!formEle.checkValidity()) {
       formEle.reportValidity();
       return;
-
     }
     update({ [valueKey]: input });
   };
@@ -66,7 +65,9 @@ const ProfileBasicEditModal: FC<Props> = ({
         }
       >
         <form ref={formRef} className="flex flex-col gap-2 w-full" action="/">
-          <label htmlFor={valueKey} className="text-sm text-left text-gray-500">{label}</label>
+          <label htmlFor={valueKey} className="text-sm text-left text-gray-500">
+            {label}
+          </label>
           <Input name={valueKey} value={input} onChange={handleChange} type={type} required></Input>
         </form>
       </StyledModal>

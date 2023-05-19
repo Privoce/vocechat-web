@@ -1,13 +1,15 @@
-import { useEffect, useState, FC } from "react";
+import { FC, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
-import Modal from "../Modal";
-import useLeaveChannel from "@/hooks/useLeaveChannel";
-import StyledModal from "../styled/Modal";
-import Button from "../styled/Button";
-import User from "../User";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import clsx from "clsx";
+
+import useLeaveChannel from "@/hooks/useLeaveChannel";
+import Modal from "../Modal";
+import Button from "../styled/Button";
+import StyledModal from "../styled/Modal";
+import User from "../User";
+
 interface Props {
   id: number;
   closeModal: () => void;
@@ -72,7 +74,10 @@ const TransferOwnerModal: FC<Props> = ({ id, closeModal, withLeave = true }) => 
             return (
               <li
                 key={id}
-                className={clsx(`cursor-pointer flex items-center px-2 md:hover:bg-gray-500/10`, uid == id ? "bg-gray-500/10" : "")}
+                className={clsx(
+                  `cursor-pointer flex items-center px-2 md:hover:bg-gray-500/10`,
+                  uid == id ? "bg-gray-500/10" : ""
+                )}
                 onClick={handleSelectUser.bind(null, id)}
               >
                 <User uid={id} interactive={false} />

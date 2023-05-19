@@ -1,14 +1,15 @@
 import { FC, memo } from "react";
 import { useNavigate } from "react-router-dom";
 import Tippy from "@tippyjs/react";
-import IconOwner from "@/assets/icons/owner.svg";
+import clsx from "clsx";
+
+import { useAppSelector } from "@/app/store";
+import useContextMenu from "@/hooks/useContextMenu";
 import IconBot from "@/assets/icons/bot.svg";
+import IconOwner from "@/assets/icons/owner.svg";
 import Avatar from "../Avatar";
 import Profile from "../Profile";
 import ContextMenu from "./ContextMenu";
-import useContextMenu from "@/hooks/useContextMenu";
-import { useAppSelector } from "@/app/store";
-import clsx from "clsx";
 
 interface Props {
   uid: number;
@@ -36,18 +37,30 @@ const User: FC<Props> = ({
   const navigate = useNavigate();
   const { visible: contextMenuVisible, handleContextMenuEvent, hideContextMenu } = useContextMenu();
   const { curr, loginUid, showStatus } = useAppSelector((store) => {
-    return { curr: store.users.byId[uid], loginUid: store.authData.user?.uid, showStatus: store.server.show_user_online_status };
+    return {
+      curr: store.users.byId[uid],
+      loginUid: store.authData.user?.uid,
+      showStatus: store.server.show_user_online_status
+    };
   });
   const handleDoubleClick = () => {
     navigate(`/chat/dm/${uid}`);
   };
   if (!curr) return null;
   const online = curr.online || curr.uid == loginUid;
-  const containerClass = clsx(`relative flex items-center justify-start gap-2 rounded-lg select-none`, interactive && "md:hover:bg-gray-500/10", compact ? "p-0" : "p-2");
-  const nameClass = clsx(`text-sm text-gray-500 max-w-[190px] truncate font-semibold dark:text-white`);
-  const statusClass = clsx(`absolute -bottom-[2.5px] -right-[2.5px] border-content rounded-full border-[1px] border-white dark:border-gray-300`,
+  const containerClass = clsx(
+    `relative flex items-center justify-start gap-2 rounded-lg select-none`,
+    interactive && "md:hover:bg-gray-500/10",
+    compact ? "p-0" : "p-2"
+  );
+  const nameClass = clsx(
+    `text-sm text-gray-500 max-w-[190px] truncate font-semibold dark:text-white`
+  );
+  const statusClass = clsx(
+    `absolute -bottom-[2.5px] -right-[2.5px] border-content rounded-full border-[1px] border-white dark:border-gray-300`,
     online ? "bg-green-500" : "bg-zinc-400",
-    compact ? "w-[15px] h-[15px]" : "w-3 h-3");
+    compact ? "w-[15px] h-[15px]" : "w-3 h-3"
+  );
   const statusElement = showStatus ? <div className={statusClass}></div> : null;
   if (!popover)
     return (
@@ -63,7 +76,10 @@ const User: FC<Props> = ({
           onDoubleClick={dm ? handleDoubleClick : undefined}
           onContextMenu={enableContextMenu ? handleContextMenuEvent : undefined}
         >
-          <div className="cursor-pointer relative" style={{ width: `${avatarSize}px`, height: `${avatarSize}px` }}>
+          <div
+            className="cursor-pointer relative"
+            style={{ width: `${avatarSize}px`, height: `${avatarSize}px` }}
+          >
             <Avatar
               className="w-full h-full rounded-full object-cover"
               width={avatarSize}
@@ -72,7 +88,13 @@ const User: FC<Props> = ({
               name={curr.name}
               alt="avatar"
             />
-            {curr.is_bot ? <IconBot className={clsx("absolute -bottom-[2.5px] -right-[2.5px]", "!w-[15px] !h-[15px]")} /> : statusElement}
+            {curr.is_bot ? (
+              <IconBot
+                className={clsx("absolute -bottom-[2.5px] -right-[2.5px]", "!w-[15px] !h-[15px]")}
+              />
+            ) : (
+              statusElement
+            )}
           </div>
           {!compact && (
             <span className={nameClass} title={curr?.name}>
@@ -103,7 +125,10 @@ const User: FC<Props> = ({
           onDoubleClick={dm ? handleDoubleClick : undefined}
           onContextMenu={enableContextMenu ? handleContextMenuEvent : undefined}
         >
-          <div className="cursor-pointer relative" style={{ width: `${avatarSize}px`, height: `${avatarSize}px` }}>
+          <div
+            className="cursor-pointer relative"
+            style={{ width: `${avatarSize}px`, height: `${avatarSize}px` }}
+          >
             <Avatar
               className="w-full h-full rounded-full object-cover"
               width={avatarSize}

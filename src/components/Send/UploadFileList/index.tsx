@@ -1,23 +1,18 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+
+import { ChatContext } from "@/types/common";
+import useUploadFile from "@/hooks/useUploadFile";
+import { formatBytes, getFileIcon } from "@/utils";
+import DeleteIcon from "@/assets/icons/delete.svg";
+import EditIcon from "@/assets/icons/edit.svg";
 import { useMixedEditor } from "../../MixedInput";
 import EditFileDetailsModal from "./EditFileDetails";
-import { getFileIcon, formatBytes } from "@/utils";
-import useUploadFile from "@/hooks/useUploadFile";
-import EditIcon from "@/assets/icons/edit.svg";
-import DeleteIcon from "@/assets/icons/delete.svg";
-import { ChatContext } from "@/types/common";
 
 type EditProps = {
   index: number;
   name: string;
 };
-export default function UploadFileList({
-  context,
-  id
-}: {
-  context: ChatContext;
-  id: number;
-}) {
+export default function UploadFileList({ context, id }: { context: ChatContext; id: number }) {
   const editor = useMixedEditor(`${context}_${id}`);
   const [editInfo, setEditInfo] = useState<EditProps | null>(null);
   const { stageFiles, updateStageFile, removeStageFile } = useUploadFile({
@@ -57,14 +52,26 @@ export default function UploadFileList({
       <ul className="w-full overflow-auto flex gap-2 justify-start p-4 pt-6 bg-gray-200 dark:bg-gray-800 rounded-t-lg">
         {stageFiles.map(({ name, url, size, type }, idx: number) => {
           return (
-            <li className="group relative flex flex-col bg-gray-100 dark:bg-gray-700 rounded p-2" key={url}>
+            <li
+              className="group relative flex flex-col bg-gray-100 dark:bg-gray-700 rounded p-2"
+              key={url}
+            >
               <div className="flex-center w-40 h-40">
-                {type.startsWith("image") ? <img className="w-full h-full object-cover" src={url} alt="image" /> : getFileIcon(type, name)}
+                {type.startsWith("image") ? (
+                  <img className="w-full h-full object-cover" src={url} alt="image" />
+                ) : (
+                  getFileIcon(type, name)
+                )}
               </div>
-              <h4 className="w-40 mt-4 mb-0.5 font-semibold text-sm text-gray-800 dark:text-gray-100 truncate">{name}</h4>
+              <h4 className="w-40 mt-4 mb-0.5 font-semibold text-sm text-gray-800 dark:text-gray-100 truncate">
+                {name}
+              </h4>
               <span className="text-xs text-gray-500">{formatBytes(size)}</span>
               <ul className="invisible group-hover:visible bg-inherit border border-solid border-black/10 box-border rounded-md flex items-center absolute -right-5 -top-2.5">
-                <li className="p-1 cursor-pointer edit" onClick={handleOpenEditModal.bind(null, idx)}>
+                <li
+                  className="p-1 cursor-pointer edit"
+                  onClick={handleOpenEditModal.bind(null, idx)}
+                >
                   <EditIcon />
                 </li>
                 <li

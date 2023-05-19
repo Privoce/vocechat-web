@@ -1,8 +1,10 @@
-import { useEffect, useState, FC } from "react";
-import Prompt from "./Prompt";
-import usePWAInstallPrompt from "@/hooks/usePWAInstallPrompt";
+import { FC, useEffect, useState } from "react";
+
 import { BeforeInstallPromptEvent } from "@/types/global";
-interface IProps { }
+import usePWAInstallPrompt from "@/hooks/usePWAInstallPrompt";
+import Prompt from "./Prompt";
+
+interface IProps {}
 const Manifest: FC<IProps> = () => {
   const { setCanceled, prompted, setDeferredPrompt, showPrompt } = usePWAInstallPrompt();
   const [popup, setPopup] = useState(false);

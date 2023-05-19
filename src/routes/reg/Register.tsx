@@ -1,38 +1,43 @@
-import { useState, useEffect, ChangeEvent, FormEvent } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
-import BASE_URL, { KEY_LOCAL_MAGIC_TOKEN } from "@/app/config";
-import Input from "@/components/styled/Input";
-import Button from "@/components/styled/Button";
-import { useLazyCheckEmailQuery, useRegisterMutation, useSendRegMagicLinkMutation } from "@/app/services/auth";
-import EmailNextTip from "./EmailNextStepTip";
-import SignInLink from "./SignInLink";
-import Divider from "@/components/Divider";
-
-import { useGetLoginConfigQuery } from "@/app/services/server";
-import SocialLoginButtons from "../login/SocialLoginButtons";
-import { setAuthData } from "@/app/slices/auth.data";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+import BASE_URL, { KEY_LOCAL_MAGIC_TOKEN } from "@/app/config";
+import {
+  useLazyCheckEmailQuery,
+  useRegisterMutation,
+  useSendRegMagicLinkMutation
+} from "@/app/services/auth";
+import { useGetLoginConfigQuery } from "@/app/services/server";
+import { setAuthData } from "@/app/slices/auth.data";
 import { useAppSelector } from "@/app/store";
+import Divider from "@/components/Divider";
+import Button from "@/components/styled/Button";
+import Input from "@/components/styled/Input";
+import SocialLoginButtons from "../login/SocialLoginButtons";
+import EmailNextTip from "./EmailNextStepTip";
 import { useMagicToken } from "./index";
+import SignInLink from "./SignInLink";
 
 interface AuthForm {
-  name?: string,
+  name?: string;
   email: string;
   password: string;
   confirmPassword: string;
 }
 
 export default function Register() {
-  const serverName = useAppSelector(store => store.server.name);
+  const serverName = useAppSelector((store) => store.server.name);
   const { t } = useTranslation("auth");
   const { t: ct } = useTranslation();
   const [sendRegMagicLink, { isLoading: signingUp, data, isSuccess }] =
     useSendRegMagicLinkMutation();
   const dispatch = useDispatch();
   const { token: magic_token } = useMagicToken();
-  const [register, { isLoading: registering, data: regData, isSuccess: regSuccess }] = useRegisterMutation();
+  const [register, { isLoading: registering, data: regData, isSuccess: regSuccess }] =
+    useRegisterMutation();
   const [checkEmail, { isLoading: checkingEmail }] = useLazyCheckEmailQuery();
   const { data: loginConfig, isSuccess: loginConfigSuccess } = useGetLoginConfigQuery();
 
@@ -113,13 +118,13 @@ export default function Register() {
     });
   };
   if (!loginConfigSuccess) return null;
-  const {
-    who_can_sign_up: whoCanSignUp
-  } = loginConfig;
+  const { who_can_sign_up: whoCanSignUp } = loginConfig;
   // magic token 没有并且没有开放注册
   if (whoCanSignUp !== "EveryOne" && !magic_token)
     // todo: i18n
-    return <span className="dark:text-white">Sign up method is updated to Invitation Link Only</span>;
+    return (
+      <span className="dark:text-white">Sign up method is updated to Invitation Link Only</span>
+    );
   const { name, email, password, confirmPassword } = input;
   if (data?.mail_is_sent) return <EmailNextTip />;
   const isLoading = registering || signingUp || checkingEmail;
@@ -127,23 +132,36 @@ export default function Register() {
   return (
     <>
       <div className="flex-center flex-col pb-6">
-        <img src={`${BASE_URL}/resource/organization/logo`} alt="logo" className="w-14 h-14 md:mb-7 rounded-full" />
-        <h2 className="font-semibold text-2xl text-gray-800 dark:text-white md:mb-2">{t("reg.title", { name: serverName })}</h2>
+        <img
+          src={`${BASE_URL}/resource/organization/logo`}
+          alt="logo"
+          className="w-14 h-14 md:mb-7 rounded-full"
+        />
+        <h2 className="font-semibold text-2xl text-gray-800 dark:text-white md:mb-2">
+          {t("reg.title", { name: serverName })}
+        </h2>
         <span className="hidden md:block text-gray-400 dark:text-gray-100">{t("reg.desc")}</span>
       </div>
 
-      <form className="flex flex-col gap-5 w-80 md:min-w-[360px]" onSubmit={handleReg} autoSave={"false"} autoComplete={"true"}>
+      <form
+        className="flex flex-col gap-5 w-80 md:min-w-[360px]"
+        onSubmit={handleReg}
+        autoSave={"false"}
+        autoComplete={"true"}
+      >
         {/* 不存在 magic token */}
-        {!magic_token && <Input
-          className="large"
-          name="name"
-          value={name}
-          required
-          type="name"
-          placeholder={t("placeholder_name")}
-          data-type="name"
-          onChange={handleInput}
-        />}
+        {!magic_token && (
+          <Input
+            className="large"
+            name="name"
+            value={name}
+            required
+            type="name"
+            placeholder={t("placeholder_name")}
+            data-type="name"
+            onChange={handleInput}
+          />
+        )}
         <Input
           className="large"
           name="email"
@@ -178,7 +196,7 @@ export default function Register() {
           placeholder={t("placeholder_confirm_pwd")}
         ></Input>
         <Button type="submit" disabled={isLoading}>
-          {isLoading ? t('signing_up') : t("sign_up")}
+          {isLoading ? t("signing_up") : t("sign_up")}
         </Button>
       </form>
       <Divider content="OR" />

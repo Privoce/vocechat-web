@@ -1,23 +1,23 @@
 /* eslint-disable no-undef */
-import { useState, useEffect, FormEvent, ChangeEvent } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import BASE_URL from "@/app/config";
+import { useTranslation } from "react-i18next";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 
-import Input from "@/components/styled/Input";
-import Button from "@/components/styled/Button";
-import MagicLinkLogin from "./MagicLinkLogin";
-import SignUpLink from "./SignUpLink";
+import BASE_URL from "@/app/config";
 import { useLoginMutation } from "@/app/services/auth";
 import { useGetLoginConfigQuery, useGetSMTPStatusQuery } from "@/app/services/server";
-import useGoogleAuthConfig from "@/hooks/useGoogleAuthConfig";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import { useTranslation } from "react-i18next";
-import SocialLoginButtons from "./SocialLoginButtons";
-import Divider from "@/components/Divider";
 import { useAppSelector } from "@/app/store";
+import Divider from "@/components/Divider";
+import Button from "@/components/styled/Button";
+import Input from "@/components/styled/Input";
+import useGoogleAuthConfig from "@/hooks/useGoogleAuthConfig";
+import MagicLinkLogin from "./MagicLinkLogin";
+import SignUpLink from "./SignUpLink";
+import SocialLoginButtons from "./SocialLoginButtons";
 
 export default function LoginPage() {
-  const serverName = useAppSelector(store => store.server.name);
+  const serverName = useAppSelector((store) => store.server.name);
   const { t } = useTranslation("auth");
   const { t: ct } = useTranslation();
   const { data: enableSMTP, isLoading: loadingSMTPStatus } = useGetSMTPStatusQuery();
@@ -129,8 +129,14 @@ export default function LoginPage() {
     <div className="flex-center h-screen dark:bg-gray-700">
       <div className="py-8 px-10 shadow-md rounded-xl">
         <div className="flex-center flex-col pb-6">
-          <img src={`${BASE_URL}/resource/organization/logo`} alt="logo" className="w-14 h-14 mb-3 md:mb-7 rounded-full" />
-          <h2 className="font-semibold text-2xl text-gray-800 dark:text-white md:mb-2">{t("login.title", { name: serverName })}</h2>
+          <img
+            src={`${BASE_URL}/resource/organization/logo`}
+            alt="logo"
+            className="w-14 h-14 mb-3 md:mb-7 rounded-full"
+          />
+          <h2 className="font-semibold text-2xl text-gray-800 dark:text-white md:mb-2">
+            {t("login.title", { name: serverName })}
+          </h2>
           <span className="text-gray-400 dark:text-gray-100">{t("login.desc")}</span>
         </div>
         <form className="flex flex-col gap-5 w-80 md:min-w-[360px] " onSubmit={handleLogin}>
@@ -160,7 +166,6 @@ export default function LoginPage() {
         </form>
         {hasDivider && <Divider content="OR" />}
         <div className="flex flex-col gap-4">
-
           {enableMagicLink && <MagicLinkLogin />}
 
           <SocialLoginButtons />

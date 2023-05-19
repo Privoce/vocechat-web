@@ -1,6 +1,7 @@
 import { FC, useEffect } from "react";
 import toast from "react-hot-toast";
 import { Trans, useTranslation } from "react-i18next";
+
 import { KEY_MOBILE_APP_TIP } from "@/app/config";
 import Button from "./styled/Button";
 

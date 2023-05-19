@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Outlet, useOutletContext, useSearchParams } from "react-router-dom";
+
 type ContextType = { token: string };
 export default function RegContainer() {
   const [token, setToken] = useState("");

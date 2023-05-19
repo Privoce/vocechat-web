@@ -1,10 +1,10 @@
 // import { useState, useEffect } from "react";
 // import { NavLink } from "react-router-dom";
 // import { useTranslation } from "react-i18next";
-import ChannelIcon from "@/components/ChannelIcon";
-import Layout from "../Layout";
 import { useAppSelector } from "@/app/store";
+import ChannelIcon from "@/components/ChannelIcon";
 import GoBackNav from "@/components/GoBackNav";
+import Layout from "../Layout";
 
 type Props = {
   cid?: number;
@@ -13,7 +13,7 @@ export default function GuestChannelChat({ cid = 0 }: Props) {
   // const { t } = useTranslation("chat");
   const { data } = useAppSelector((store) => {
     return {
-      data: store.channels.byId[cid],
+      data: store.channels.byId[cid]
     };
   });
   if (!data) return null;

@@ -1,8 +1,9 @@
 import { FC } from "react";
-import Modal from "../Modal";
-import IconClose from "@/assets/icons/close.svg";
-import Button from "../styled/Button";
 import { useTranslation } from "react-i18next";
+
+import IconClose from "@/assets/icons/close.svg";
+import Modal from "../Modal";
+import Button from "../styled/Button";
 
 interface Props {
   handleInstall?: () => void;

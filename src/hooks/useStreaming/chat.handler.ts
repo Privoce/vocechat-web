@@ -8,6 +8,7 @@ import { updateAfterMid } from "@/app/slices/footprint";
 import { ContentTypes } from "@/app/config";
 import { ChatEvent } from "@/types/sse";
 import { AppDispatch } from "@/app/store";
+
 type CurrentState = {
   afterMid: number,
   ready: boolean;

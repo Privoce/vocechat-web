@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 
 import { useUpdateAvatarByAdminMutation } from "@/app/services/user";
@@ -7,12 +7,11 @@ import { useAppSelector } from "@/app/store";
 import AvatarUploader from "@/components/AvatarUploader";
 import Button from "@/components/styled/Button";
 import IconDelete from "@/assets/icons/delete.svg";
+import BotAPIKeys from "./BotAPIKeys";
 import CreateModal from "./CreateModal";
+import DeleteModal from "./DeleteModal";
 import WebhookEdit from "./WebhookEdit";
 import WebhookModal from "./WebhookModal";
-import DeleteModal from "./DeleteModal";
-import BotAPIKeys from "./BotAPIKeys";
-import { toast } from "react-hot-toast";
 
 type TipProps = { title: string; desc: string };
 const Tip = ({ title, desc }: TipProps) => {

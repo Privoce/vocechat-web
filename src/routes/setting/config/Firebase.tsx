@@ -1,13 +1,13 @@
 import { ChangeEvent } from "react";
-import Input from "@/components/styled/Input";
-import Textarea from "@/components/styled/Textarea";
-import Label from "@/components/styled/Label";
-import SaveTip from "@/components/SaveTip";
-import useConfig from "@/hooks/useConfig";
-import StyledRadio from "@/components/styled/Radio";
+import { useTranslation } from "react-i18next";
 
 import { FirebaseConfig } from "@/types/server";
-import { useTranslation } from "react-i18next";
+import SaveTip from "@/components/SaveTip";
+import Input from "@/components/styled/Input";
+import Label from "@/components/styled/Label";
+import StyledRadio from "@/components/styled/Radio";
+import Textarea from "@/components/styled/Textarea";
+import useConfig from "@/hooks/useConfig";
 
 interface IOptions {
   disable: string;

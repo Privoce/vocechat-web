@@ -1,19 +1,19 @@
-import { useState, useEffect, MouseEvent } from "react";
-import dayjs from "dayjs";
+import { MouseEvent, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import clsx from "clsx";
+import dayjs from "dayjs";
 
+import { ContentTypes } from "@/app/config";
+import { Favorite } from "@/app/slices/favorites";
+import { useAppSelector } from "@/app/store";
 import FavoredMessage from "@/components/Message/FavoredMessage";
-import IconAudio from "@/assets/icons/file.audio.svg";
-import IconVideo from "@/assets/icons/file.video.svg";
-import IconUnknown from "@/assets/icons/file.unknown.svg";
-import IconImage from "@/assets/icons/file.image.svg";
+import useFavMessage from "@/hooks/useFavMessage";
 import IconChannel from "@/assets/icons/channel.svg";
 import IconRemove from "@/assets/icons/close.svg";
-import { ContentTypes } from "@/app/config";
-import { useAppSelector } from "@/app/store";
-import { Favorite } from "@/app/slices/favorites";
-import useFavMessage from "@/hooks/useFavMessage";
+import IconAudio from "@/assets/icons/file.audio.svg";
+import IconImage from "@/assets/icons/file.image.svg";
+import IconUnknown from "@/assets/icons/file.unknown.svg";
+import IconVideo from "@/assets/icons/file.video.svg";
 
 type filter = "audio" | "video" | "image" | "";
 
@@ -127,11 +127,16 @@ function FavsPage() {
             return (
               <li
                 key={f}
-                className={clsx(f == filter && 'bg-[rgba(116,_127,_141,_0.2)]', `cursor-pointer flex items-center gap-2 p-2 rounded-lg md:hover:bg-[rgba(116,_127,_141,_0.2)]`)}
+                className={clsx(
+                  f == filter && "bg-[rgba(116,_127,_141,_0.2)]",
+                  `cursor-pointer flex items-center gap-2 p-2 rounded-lg md:hover:bg-[rgba(116,_127,_141,_0.2)]`
+                )}
                 onClick={handleFilter.bind(null, f as filter)}
               >
                 {icon}
-                <span className="hidden md:block font-bold text-sm text-gray-600 dark:text-gray-100">{title}</span>
+                <span className="hidden md:block font-bold text-sm text-gray-600 dark:text-gray-100">
+                  {title}
+                </span>
               </li>
             );
           })}
@@ -145,11 +150,22 @@ function FavsPage() {
               source: { gid, uid }
             }
           ] = messages;
-          const tip = <span className={clsx("inline-flex items-center gap-1 mr-2")}>
-            {gid ? <><IconChannel className="w-3 h-3" /> {channelData[gid]?.name}</> : <>
-              From <strong className="font-bold text-gray-800 dark:text-gray-100">{userData[uid]?.name}</strong>
-            </>}
-          </span>;
+          const tip = (
+            <span className={clsx("inline-flex items-center gap-1 mr-2")}>
+              {gid ? (
+                <>
+                  <IconChannel className="w-3 h-3" /> {channelData[gid]?.name}
+                </>
+              ) : (
+                <>
+                  From{" "}
+                  <strong className="font-bold text-gray-800 dark:text-gray-100">
+                    {userData[uid]?.name}
+                  </strong>
+                </>
+              )}
+            </span>
+          );
           return (
             <div className="max-w-[600px] flex flex-col gap-1" key={id}>
               <h4 className="inline-flex items-center text-xs text-gray-400">
@@ -158,7 +174,11 @@ function FavsPage() {
               </h4>
               <div className="relative group">
                 <FavoredMessage key={id} id={id} />
-                <button className="absolute top-2 right-2 flex-center w-6 h-6 p-1 border border-solid border-slate-200 dark:border-slate-700 rounded invisible group-hover:visible" data-id={id} onClick={handleRemove} >
+                <button
+                  className="absolute top-2 right-2 flex-center w-6 h-6 p-1 border border-solid border-slate-200 dark:border-slate-700 rounded invisible group-hover:visible"
+                  data-id={id}
+                  onClick={handleRemove}
+                >
                   <IconRemove className="fill-slate-900 dark:fill-slate-100" />
                 </button>
               </div>

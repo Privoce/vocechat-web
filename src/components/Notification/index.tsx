@@ -1,8 +1,10 @@
-import { useEffect, memo } from "react";
+import { memo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import useDeviceToken from "./useDeviceToken";
+
 import { vapidKey } from "@/app/config";
 import { useUpdateDeviceTokenMutation } from "@/app/services/auth";
+import useDeviceToken from "./useDeviceToken";
+
 let updated = false;
 let updating = false;
 const Notification = () => {

@@ -3,11 +3,12 @@
 import { useTranslation } from "react-i18next";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+
+import IconQuestion from "@/assets/icons/question.svg";
 import { useAppSelector } from "../../app/store";
 import Button from "../../components/styled/Button";
 import Input from "../../components/styled/Input";
 import useCopy from "../../hooks/useCopy";
-import IconQuestion from "@/assets/icons/question.svg";
 
 const Row = ({
   paramKey,

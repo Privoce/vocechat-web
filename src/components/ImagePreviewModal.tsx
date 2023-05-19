@@ -1,9 +1,9 @@
-import { useRef, useState, useEffect, FC } from "react";
-import { useOutsideClick, useKey } from "rooks";
-import { Ring } from "@uiball/loaders";
-import Modal from "./Modal";
+import { FC, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Ring } from "@uiball/loaders";
+import { useKey, useOutsideClick } from "rooks";
 
+import Modal from "./Modal";
 
 export interface PreviewImageData {
   originUrl: string;

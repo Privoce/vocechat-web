@@ -1,12 +1,14 @@
 // @ts-nocheck
-import { useState, useEffect, useRef, memo } from "react";
-import Masonry from "masonry-layout";
-import View from "./View";
-import Search from "./Search";
-import Filter from "./Filter";
-import FileBox from "@/components/FileBox";
-import { useAppSelector } from "@/app/store";
+import { memo, useEffect, useRef, useState } from "react";
 import clsx from "clsx";
+import Masonry from "masonry-layout";
+
+import { useAppSelector } from "@/app/store";
+import FileBox from "@/components/FileBox";
+import Filter from "./Filter";
+import Search from "./Search";
+import View from "./View";
+
 const checkFilter = (data, filter, channelMessage) => {
   let selected = true;
   const { mid, file_type, created_at, from_uid, properties } = data;
@@ -89,10 +91,14 @@ function ResourceManagement({ fileMessages }) {
         <Filter filter={filter} updateFilter={updateFilter} />
         <View view={view} />
       </div>
-      <div className={clsx(`w-full h-full px-4 overflow-scroll flex`,
-        view == "item" && 'gap-2 flex-col',
-        view == "grid" && "flex-wrap"
-      )} ref={listContainerRef}>
+      <div
+        className={clsx(
+          `w-full h-full px-4 overflow-scroll flex`,
+          view == "item" && "gap-2 flex-col",
+          view == "grid" && "flex-wrap"
+        )}
+        ref={listContainerRef}
+      >
         {fileMessages.map((id) => {
           const data = message[id];
           if (!data) return null;

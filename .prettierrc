@@ -19,8 +19,8 @@
     "^@/assets/(.*)$",
     "^[./]"
   ],
+  "importOrderParserPlugins": ["typescript", "jsx", "decorators-legacy"],
   "importOrderCaseInsensitive": true,
   "importOrderMergeDuplicateImports": true,
-  "importOrderSeparation": true,
-  "importOrderGroupNamespaceSpecifiers": true
+  "importOrderSeparation": true
 }

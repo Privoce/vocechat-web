@@ -1,7 +1,8 @@
 import { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
+
+import AutoDeleteMessages from "../../components/AutoDeleteMessages";
 import Overview from "./Overview";
-import AutoDeleteMessages from '../../components/AutoDeleteMessages';
 
 export interface NavItem {
   name: string;
@@ -30,7 +31,7 @@ const useNavs = (uid: number): Nav[] => {
           name: "auto_delete_msg",
           title: t("nav.auto_delete_msg"),
           component: <AutoDeleteMessages id={uid} type="dm" />
-        },
+        }
       ]
     }
   ];

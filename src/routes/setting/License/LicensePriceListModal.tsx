@@ -1,18 +1,19 @@
 import { ChangeEvent, FC, useState } from "react";
 import toast from "react-hot-toast";
-import * as linkify from 'linkifyjs';
-import Modal from "@/components/Modal";
-import StyledModal from "@/components/styled/Modal";
-import Button from "@/components/styled/Button";
-import StyledRadio from "@/components/styled/Radio";
-import Input from "@/components/styled/Input";
-
-import { useGetLicensePaymentUrlMutation } from "@/app/services/server";
-import { getLicensePriceList } from "@/app/config";
 import { useTranslation } from "react-i18next";
-import dayjs from "dayjs";
-import { PriceSubscriptionDuration, PriceType } from "@/types/common";
 import Tippy from "@tippyjs/react";
+import dayjs from "dayjs";
+import * as linkify from "linkifyjs";
+
+import { getLicensePriceList } from "@/app/config";
+import { useGetLicensePaymentUrlMutation } from "@/app/services/server";
+import { PriceSubscriptionDuration, PriceType } from "@/types/common";
+import Modal from "@/components/Modal";
+import Button from "@/components/styled/Button";
+import Input from "@/components/styled/Input";
+import StyledModal from "@/components/styled/Modal";
+import StyledRadio from "@/components/styled/Radio";
+
 // import { LicenseMetadata, RenewLicense } from "@/types/server";
 
 interface Props {
@@ -36,7 +37,7 @@ const getExpireDay = (sub_dur: PriceSubscriptionDuration) => {
       break;
     default:
       break;
-  };
+  }
   return res.format("YYYY-MM-DD");
 };
 const LicensePriceList = getLicensePriceList();
@@ -47,14 +48,21 @@ const LicensePriceListModal: FC<Props> = ({ closeModal }) => {
   const [host, setHost] = useState(location.hostname);
   const [popUpVisible, setPopUpVisible] = useState(false);
   const [selectPrice, setSelectPrice] = useState(
-    `${LicensePriceList[0].pid}|${LicensePriceList[0].limit}|${LicensePriceList[0].type}|${LicensePriceList[0].sub_dur || ""}`
+    `${LicensePriceList[0].pid}|${LicensePriceList[0].limit}|${LicensePriceList[0].type}|${
+      LicensePriceList[0].sub_dur || ""
+    }`
   );
   const handleRenew = async () => {
     if (!linkify.test(host)) {
       toast.error("Invalid Host");
       return;
     }
-    const [priceId, user_limit, type, sub_dur = "month"] = selectPrice.split("|") as [string, string, PriceType, PriceSubscriptionDuration];
+    const [priceId, user_limit, type, sub_dur = "month"] = selectPrice.split("|") as [
+      string,
+      string,
+      PriceType,
+      PriceSubscriptionDuration
+    ];
     const metadata = {
       user_limit: Number(user_limit),
       expire: type == "subscription" ? getExpireDay(sub_dur) : getExpireDay("year"),
@@ -87,7 +95,7 @@ const LicensePriceListModal: FC<Props> = ({ closeModal }) => {
     setHost(evt.target.value);
   };
   const togglePopUpVisible = () => {
-    setPopUpVisible(prev => !prev);
+    setPopUpVisible((prev) => !prev);
   };
   const handleTalk = () => {
     window.open("https://calendly.com/hansu", "_blank");
@@ -105,46 +113,65 @@ const LicensePriceListModal: FC<Props> = ({ closeModal }) => {
             <Button onClick={closeModal} className="ghost">
               {ct("action.cancel")}
             </Button>
-            {isBooking ? <Button onClick={handleTalk}>
-              Booking a meeting!
-            </Button> : <Tippy
-              visible={popUpVisible}
-              interactive
-              placement="top-end"
-              offset={[0, -40]}
-              trigger="click"
-              content={
-                <div className="p-3 rounded-lg border border-solid border-gray-200 dark:border-gray-900 flex flex-col items-start gap-3 w-[380px] bg-white dark:bg-gray-800 shadow shadow-gray-200 dark:shadow-gray-900 drop-shadow-xl">
-                  <div className="text-gray-500 text-sm">
-                    {t("license.tip_domain")}
-                  </div>
-                  <Input value={host} onChange={handleUpdateHost} />
-                  <div className="flex justify-between items-center w-full mt-4">
-                    <span className="text-xs text-orange-500"> {t("license.tip_port")}</span>
-                    <div className="flex gap-3">
-                      <Button className="mini cancel" onClick={togglePopUpVisible}>
-                        {ct("action.cancel")}
-                      </Button>
-                      <Button className="mini" disabled={isLoading || isSuccess} onClick={handleRenew}>
-                        {isLoading ? "Initialize Payment URL" : isSuccess ? "Redirecting" : t("license.tip_confirm")}
-                      </Button>
+            {isBooking ? (
+              <Button onClick={handleTalk}>Booking a meeting!</Button>
+            ) : (
+              <Tippy
+                visible={popUpVisible}
+                interactive
+                placement="top-end"
+                offset={[0, -40]}
+                trigger="click"
+                content={
+                  <div className="p-3 rounded-lg border border-solid border-gray-200 dark:border-gray-900 flex flex-col items-start gap-3 w-[380px] bg-white dark:bg-gray-800 shadow shadow-gray-200 dark:shadow-gray-900 drop-shadow-xl">
+                    <div className="text-gray-500 text-sm">{t("license.tip_domain")}</div>
+                    <Input value={host} onChange={handleUpdateHost} />
+                    <div className="flex justify-between items-center w-full mt-4">
+                      <span className="text-xs text-orange-500"> {t("license.tip_port")}</span>
+                      <div className="flex gap-3">
+                        <Button className="mini cancel" onClick={togglePopUpVisible}>
+                          {ct("action.cancel")}
+                        </Button>
+                        <Button
+                          className="mini"
+                          disabled={isLoading || isSuccess}
+                          onClick={handleRenew}
+                        >
+                          {isLoading
+                            ? "Initialize Payment URL"
+                            : isSuccess
+                            ? "Redirecting"
+                            : t("license.tip_confirm")}
+                        </Button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              }
-            >
-              <button onClick={togglePopUpVisible} className="text-sm text-white bg-primary-400 break-keep shadow rounded-lg px-3.5 py-2.5 md:hover:bg-primary-500 active:bg-primary-500 disabled:bg-gray-300"> {t("license.renew")}</button>
-              {/* <Button >
+                }
+              >
+                <button
+                  onClick={togglePopUpVisible}
+                  className="text-sm text-white bg-primary-400 break-keep shadow rounded-lg px-3.5 py-2.5 md:hover:bg-primary-500 active:bg-primary-500 disabled:bg-gray-300"
+                >
+                  {" "}
+                  {t("license.renew")}
+                </button>
+                {/* <Button >
                 {t("license.renew")}
               </Button> */}
-            </Tippy>}
-
+              </Tippy>
+            )}
           </>
         }
       >
         <StyledRadio
-          options={LicensePriceList.map(({ title, desc, price }) => `${title} ${desc ? `[${desc}]` : ""}${price ? `[${price}]` : ""}`)}
-          values={LicensePriceList.map(({ pid, limit, type = "payment", sub_dur = "month" }) => `${pid}|${limit}|${type}|${sub_dur}`)}
+          options={LicensePriceList.map(
+            ({ title, desc, price }) =>
+              `${title} ${desc ? `[${desc}]` : ""}${price ? `[${price}]` : ""}`
+          )}
+          values={LicensePriceList.map(
+            ({ pid, limit, type = "payment", sub_dur = "month" }) =>
+              `${pid}|${limit}|${type}|${sub_dur}`
+          )}
           value={selectPrice}
           onChange={(v) => {
             handlePriceSelect(v);

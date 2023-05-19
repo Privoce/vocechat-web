@@ -1,18 +1,19 @@
-import { useEffect, useState, FC, useRef } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
-import StyledInput from "@/components/styled/Input";
-import StyledButton from "@/components/styled/Button";
+import { useWizard } from "react-use-wizard";
+
+import { useLoginMutation } from "@/app/services/auth";
 import {
   useCreateAdminMutation,
   useGetServerQuery,
   useUpdateServerMutation
 } from "@/app/services/server";
-import { useLoginMutation } from "@/app/services/auth";
 import { updateInitialized } from "@/app/slices/auth.data";
 import { useAppSelector } from "@/app/store";
-import { useTranslation } from "react-i18next";
-import { useWizard } from "react-use-wizard";
+import StyledButton from "@/components/styled/Button";
+import StyledInput from "@/components/styled/Input";
 
 type Props = {
   serverName: string;
@@ -23,8 +24,9 @@ const AdminAccount: FC<Props> = ({ serverName }) => {
   const formRef = useRef<HTMLFormElement | undefined>();
   const loggedIn = useAppSelector((store) => !!store.authData.token);
   const dispatch = useDispatch();
-  const [createAdmin, { isLoading: isSigningUp, isError: signUpError, isSuccess: signUpOk }] = useCreateAdminMutation();
-  const [login, { isLoading: isLoggingIn, isError: loginError, }] = useLoginMutation();
+  const [createAdmin, { isLoading: isSigningUp, isError: signUpError, isSuccess: signUpOk }] =
+    useCreateAdminMutation();
+  const [login, { isLoading: isLoggingIn, isError: loginError }] = useLoginMutation();
   const { data: serverData } = useGetServerQuery();
   const [updateServer, { isLoading: isUpdatingServer, isSuccess: isUpdatedServer }] =
     useUpdateServerMutation();

@@ -1,13 +1,14 @@
-import { useEffect, useState, MouseEvent } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
+
 import { useUpdateAvatarMutation } from "@/app/services/user";
+import { useAppSelector } from "@/app/store";
 import AvatarUploader from "@/components/AvatarUploader";
 import Button from "@/components/styled/Button";
 import ProfileBasicEditModal from "./ProfileBasicEditModal";
 import RemoveAccountConfirmModal from "./RemoveAccountConfirmModal";
 import UpdatePasswordModal from "./UpdatePasswordModal";
-import { useAppSelector } from "@/app/store";
-import { useTranslation } from "react-i18next";
 
 type EditField = "name" | "email" | "";
 export default function MyAccount() {
@@ -91,9 +92,7 @@ export default function MyAccount() {
               <span className="text-xs uppercase  font-semibold">{t("password")}</span>
               <span className="text-sm">*********</span>
             </div>
-            <Button onClick={togglePasswordModal}>
-              {ct("action.edit")}
-            </Button>
+            <Button onClick={togglePasswordModal}>{ct("action.edit")}</Button>
           </div>
         </div>
         {/* uid 1 是初始账户，不能删 */}

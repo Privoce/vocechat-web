@@ -1,11 +1,11 @@
 import { FC, useEffect } from "react";
-import IconGithub from "@/assets/icons/github.svg";
-import Button from "./styled/Button";
 import { useTranslation } from "react-i18next";
 
+import IconGithub from "@/assets/icons/github.svg";
+import Button from "./styled/Button";
 
 type Props = {
-  source?: "widget" | "webapp",
+  source?: "widget" | "webapp";
   client_id?: string;
   type?: "login" | "register";
 };
@@ -15,14 +15,14 @@ const GithubLoginButton: FC<Props> = ({ type = "login", source = "webapp", clien
   useEffect(() => {
     const handleGithubLoginStatusChange = (evt: StorageEvent) => {
       const { key, newValue } = evt;
-      if (key == 'widget' && !!newValue) {
+      if (key == "widget" && !!newValue) {
         console.log("github logged in");
         localStorage.removeItem("widget");
         if (window.location !== window.parent.location) {
           // in iframe
           const parentWindow = window.parent;
           if (parentWindow) {
-            parentWindow.postMessage("RELOAD_WITH_OPEN", '*');
+            parentWindow.postMessage("RELOAD_WITH_OPEN", "*");
           }
         } else {
           // 刷新页面

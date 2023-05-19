@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+
 import Button from "@/components/styled/Button";
 
 export default function MagicLinkLogin() {
@@ -7,5 +8,9 @@ export default function MagicLinkLogin() {
     navigate("/send_magic_link");
   };
 
-  return <Button className="w-full" onClick={handleLogin}>Sign in with Magic Link</Button>;
+  return (
+    <Button className="w-full" onClick={handleLogin}>
+      Sign in with Magic Link
+    </Button>
+  );
 }
