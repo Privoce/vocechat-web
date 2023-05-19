@@ -5,5 +5,22 @@
   "jsxBracketSameLine": false,
   "tabWidth": 2,
   "semi": true,
-  "trailingComma": "none"
+  "trailingComma": "none",
+  "importOrder": [
+    "^react",
+    "<THIRD_PARTY_MODULES>",
+    "",
+    "^@/app/(.*)$",
+    "^@/types/(.*)$",
+    "^@/libs/(.*)$",
+    "^@/components/(.*)$",
+    "^@/hooks/(.*)$",
+    "^@/utils(.*)$",
+    "^@/assets/(.*)$",
+    "^[./]"
+  ],
+  "importOrderCaseInsensitive": true,
+  "importOrderMergeDuplicateImports": true,
+  "importOrderSeparation": true,
+  "importOrderGroupNamespaceSpecifiers": true
 }

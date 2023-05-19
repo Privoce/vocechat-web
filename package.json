@@ -1,6 +1,6 @@
 {
   "name": "vocechat-web",
-  "version": "0.3.62",
+  "version": "0.3.63",
   "homepage": "https://voce.chat",
   "dependencies": {
     "@emoji-mart/react": "^1.1.1",
@@ -122,6 +122,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.21.8",
+    "@ianvs/prettier-plugin-sort-imports": "^4.0.0-alpha.7",
     "@types/emoji-mart": "^3.0.9",
     "@types/masonry-layout": "^4.2.5",
     "@types/react-helmet": "^6.1.6",
