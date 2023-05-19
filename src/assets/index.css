@@ -312,5 +312,5 @@ svg:focus {
 /* camera video object-fit */
 
 [id^="CAMERA_"] video {
-  object-fit: cover !important;
+  object-fit: contain !important;
 }
