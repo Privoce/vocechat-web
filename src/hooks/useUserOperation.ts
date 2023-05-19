@@ -3,18 +3,23 @@ import toast from "react-hot-toast";
 // import { ContentTypes } from "@/app/config";
 import { useNavigate, useMatch } from "react-router-dom";
 import { hideAll } from "tippy.js";
+import { useTranslation } from "react-i18next";
+
 import { useRemoveMembersMutation } from "@/app/services/channel";
 import { useLazyDeleteUserQuery, useUpdateContactStatusMutation } from "@/app/services/user";
-// import useConfig from "./useConfig";
 import useCopy from "./useCopy";
 import { useAppSelector } from "@/app/store";
-import { useTranslation } from "react-i18next";
-// import { AgoraConfig } from "@/types/server";
+import { useVoice } from "@/components/Voice";
+import { updateCallInfo } from "@/app/slices/voice";
+import { updateDMVisibleAside } from "@/app/slices/footprint";
+import { useDispatch } from "react-redux";
 interface IProps {
   uid?: number;
   cid?: number;
 }
 const useUserOperation = ({ uid, cid }: IProps) => {
+  const { joinVoice, joined, joining = false, joinedAtThisContext } = useVoice({ id: uid ?? 0, context: "dm" });
+  const dispatch = useDispatch();
   const { t: ct } = useTranslation();
   const [passedUid, setPassedUid] = useState<number | undefined>(undefined);
   const isUserDetailPath = useMatch(`/users/${uid}`);
@@ -68,7 +73,23 @@ const useUserOperation = ({ uid, cid }: IProps) => {
     copy(finalEmail || "");
     hideAll();
   };
-
+  const startCall = () => {
+    if (joining || joined) {
+      alert("You have joined another channel, please leave first!");
+      return;
+    }
+    joinVoice();
+    const data = {
+      id: uid ?? 0,
+      aside: "voice" as const
+    };
+    dispatch(updateDMVisibleAside(data));
+    // 实时显示calling box
+    if (!joinedAtThisContext) {
+      dispatch(updateCallInfo({ from: loginUser?.uid ?? 0, to: uid, calling: false }));
+    }
+    navigateTo(`/chat/dm/${uid}`);
+  };
   const startChat = () => {
     navigateTo(`/chat/dm/${uid}`);
   };
@@ -114,6 +135,7 @@ const useUserOperation = ({ uid, cid }: IProps) => {
     canRemoveFromChannel,
     canCopyEmail: !!user?.email,
     copyEmail,
+    startCall
   };
 };
 export default useUserOperation;

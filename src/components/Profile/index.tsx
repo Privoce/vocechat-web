@@ -1,13 +1,16 @@
-import { FC, memo } from "react";
-import { NavLink } from "react-router-dom";
-import Tippy from "@tippyjs/react";
+import { useGetAgoraStatusQuery } from "@/app/services/server";
+import { useAppSelector } from "@/app/store";
+import IconCall from "@/assets/icons/call.svg";
 import IconMessage from "@/assets/icons/message.svg";
 import IconMore from "@/assets/icons/more.svg";
-import Avatar from "../Avatar";
 import useUserOperation from "@/hooks/useUserOperation";
-import { useAppSelector } from "@/app/store";
-import { useTranslation } from "react-i18next";
+import Tippy from "@tippyjs/react";
 import clsx from "clsx";
+import { FC, memo } from "react";
+import { useTranslation } from "react-i18next";
+import { NavLink } from "react-router-dom";
+
+import Avatar from "../Avatar";
 
 interface Props {
   uid: number;
@@ -16,11 +19,13 @@ interface Props {
 }
 
 const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
+  const { data: agoraEnabled } = useGetAgoraStatusQuery();
   const { t } = useTranslation("member");
   const { t: ct } = useTranslation();
   const {
     canCopyEmail,
     copyEmail,
+    startCall,
     removeFromChannel,
     canRemoveFromChannel,
     canRemove,
@@ -32,7 +37,6 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
       data: store.users.byId[uid]
     };
   });
-
   if (!data) return null;
   // console.log("profile", data);
   const {
@@ -41,11 +45,14 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
     avatar
     // introduction = "This guy has nothing to introduce",
   } = data;
-  const isCard = type == 'card';
+  const isCard = type == "card";
   const canRemoveFromServer = !isCard && canRemove;
   const hasMore = email || canRemoveFromChannel || canRemoveFromServer;
-  const iconClass = `cursor-pointer flex flex-col items-center gap-1 rounded-lg w-32 text-primary-400 bg-gray-50 dark:bg-gray-800 text-sm pt-3.5 pb-3`;
-  const containerClass = clsx(`flex-center flex-col gap-1 z-[99] mt-20 select-none`, isCard ? "p-4 w-[280px] bg-white dark:bg-gray-800 drop-shadow rounded-md" : "md:w-[432px]");
+  const iconClass = `cursor-pointer flex flex-col items-center gap-1 rounded-lg w-32 text-primary-400 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 text-sm pt-3.5 pb-3`;
+  const containerClass = clsx(
+    `flex-center flex-col gap-1 z-[99] mt-20 select-none`,
+    isCard ? "p-4 w-[280px] bg-white dark:bg-gray-800 drop-shadow rounded-md" : "md:w-[432px]"
+  );
   return (
     <div className={containerClass}>
       <Avatar
@@ -65,15 +72,26 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
             <span>{t("send_msg")}</span>
           </li>
         </NavLink>
+        {agoraEnabled && type == "embed" && (
+          <li role="button" onClick={startCall} className={`${iconClass} icon chat`}>
+            <IconCall className="fill-primary-400" />
+            <span>{t("call")}</span>
+          </li>
+        )}
         <Tippy
           disabled={!hasMore}
           interactive
           popperOptions={{ strategy: "fixed" }}
-          placement="bottom-start"
+          placement="right"
           trigger="click"
           hideOnClick={true}
           content={
             <ul className="context-menu">
+              {agoraEnabled && type == "card" && (
+                <li className="item" onClick={startCall}>
+                  {t("call")}
+                </li>
+              )}
               {canCopyEmail && (
                 <li className="item" onClick={copyEmail.bind(undefined, email)}>
                   {t("copy_email")}
@@ -94,7 +112,7 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
         >
           <li className={`${iconClass} icon ${hasMore ? "" : "text-gray-500"}`}>
             <IconMore className={hasMore ? "fill-primary-500" : ""} />
-            <span >{ct("more")}</span>
+            <span>{ct("more")}</span>
           </li>
         </Tippy>
       </ul>
