@@ -1,4 +1,5 @@
 import { User } from "./user";
+
 export interface AuthToken {
   // common
   server_id: string;

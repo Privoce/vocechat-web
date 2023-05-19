@@ -1,4 +1,5 @@
-import { useRef, useEffect } from "react";
+import { useEffect, useRef } from "react";
+
 import { KEY_PWA_INSTALLED } from "@/app/config";
 import { BeforeInstallPromptEvent } from "@/types/global";
 

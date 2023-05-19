@@ -3,8 +3,8 @@ import { AuthToken } from "./auth";
 export type Gender = 0 | 1;
 
 export interface AutoDeleteMsgDTO {
-  users?: { uid: number, expires_in: number }[],
-  groups?: { gid: number, expires_in: number }[],
+  users?: { uid: number; expires_in: number }[];
+  groups?: { gid: number; expires_in: number }[];
 }
 export interface User {
   uid: number;
@@ -25,14 +25,14 @@ export type ContactInfo = {
   status: ContactStatus;
   created_at: number;
   updated_at: number;
-}
+};
 export interface ContactResponse {
   target_uid: number;
   target_info: User;
-  contact_info: ContactInfo
+  contact_info: ContactInfo;
 }
 export interface Contact extends User {
-  status: ContactStatus
+  status: ContactStatus;
 }
 export type UserStatus = "normal" | "frozen";
 export type UserDevice = {
@@ -41,11 +41,11 @@ export type UserDevice = {
   is_online: boolean;
 };
 export type BotAPIKey = {
-  id: number,
-  name: string,
-  key: string,
-  created_at: number,
-  last_used: number
+  id: number;
+  name: string;
+  key: string;
+  created_at: number;
+  last_used: number;
 };
 
 export interface UserForAdmin extends User {
@@ -58,16 +58,23 @@ export interface UserForAdmin extends User {
 export interface UserForAdminDTO extends Partial<UserForAdmin> {
   id?: number;
 }
-export interface UserDTO extends Partial<Pick<User, "name" | "gender" | "language" | "email" | "webhook_url">> {
-  password?: string
+export interface UserDTO
+  extends Partial<Pick<User, "name" | "gender" | "language" | "email" | "webhook_url">> {
+  password?: string;
 }
-export interface UserCreateDTO extends Pick<User, "name" | "gender" | "language" | "email" | "webhook_url" | "is_bot" | "is_admin"> {
+export interface UserCreateDTO
+  extends Pick<
+    User,
+    "name" | "gender" | "language" | "email" | "webhook_url" | "is_bot" | "is_admin"
+  > {
   password: string;
 }
-export interface UserRegDTO extends Partial<Pick<User, "name" | "gender" | "language" | "email">>, Partial<Pick<UserDevice, "device" | "device_token">> {
+export interface UserRegDTO
+  extends Partial<Pick<User, "name" | "gender" | "language" | "email">>,
+    Partial<Pick<UserDevice, "device" | "device_token">> {
   password?: string;
-  magic_token?: string
+  magic_token?: string;
 }
 export interface UserRegResponse extends AuthToken {
-  user: User
+  user: User;
 }

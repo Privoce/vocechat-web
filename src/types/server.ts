@@ -6,14 +6,13 @@ export interface Server extends SystemCommon {
   name: string;
   description: string;
 }
-export type ChatLayout = "SelfRight" | "Left"
+export type ChatLayout = "SelfRight" | "Left";
 export interface SystemCommon {
-  show_user_online_status?: boolean,
-  webclient_auto_update?: boolean,
-  contact_verification_enable?: boolean,
-  chat_layout_mode?: ChatLayout,
-  max_file_expiry_mode?: "Off" | "Day1" | "Day7" | "Day30" | "Day90" | "Day180"
-
+  show_user_online_status?: boolean;
+  webclient_auto_update?: boolean;
+  contact_verification_enable?: boolean;
+  chat_layout_mode?: ChatLayout;
+  max_file_expiry_mode?: "Off" | "Day1" | "Day7" | "Day30" | "Day90" | "Day180";
 }
 export interface GithubAuthConfig {
   client_id?: string;
@@ -37,26 +36,26 @@ export interface AgoraConfig {
   customer_secret: string;
 }
 export interface AgoraVoicingListResponse {
-  success: boolean,
+  success: boolean;
   data: {
-    channels: { channel_name: string, user_count: number }[],
-    total_size: number
-  }
+    channels: { channel_name: string; user_count: number }[];
+    total_size: number;
+  };
 }
 export interface AgoraChannelUsersResponse {
-  success: boolean,
+  success: boolean;
   data: {
-    channel_exist: boolean,
-    mode?: number,
-    total?: number,
-    users?: number[]
-  }
+    channel_exist: boolean;
+    mode?: number;
+    total?: number;
+    users?: number[];
+  };
 }
 export interface AgoraTokenResponse {
-  agora_token: string,
-  uid: number,
-  channel_name: string,
-  expired_in: number,
+  agora_token: string;
+  uid: number;
+  channel_name: string;
+  expired_in: number;
   app_id: string;
 }
 export interface SMTPConfig {
@@ -107,7 +106,7 @@ export interface LicenseMetadata {
   domain: string | string[];
 }
 export interface RenewLicense {
-  type: PriceType,
+  type: PriceType;
   priceId: string;
   metadata: LicenseMetadata;
   cancel_url: string;

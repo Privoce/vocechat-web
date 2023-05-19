@@ -1,15 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { isNull, omitBy } from "lodash";
-import BASE_URL from "../config";
-import { Contact, ContactStatus } from "@/types/user";
+
 import { UserLog, UserState } from "@/types/sse";
+import { Contact, ContactStatus } from "@/types/user";
+import BASE_URL from "../config";
 
 type DMAside = "voice" | null;
 export interface StoredUser extends Contact {
   online?: boolean;
   voice?: boolean;
   avatar?: string;
-  visibleAside?: DMAside
+  visibleAside?: DMAside;
 }
 
 export interface State {
@@ -99,7 +100,12 @@ const usersSlice = createSlice({
         }
       });
     },
-    updateContactStatus(state, action: PayloadAction<{ uid: number, status: ContactStatus } | { uid: number, status: ContactStatus }[]>) {
+    updateContactStatus(
+      state,
+      action: PayloadAction<
+        { uid: number; status: ContactStatus } | { uid: number; status: ContactStatus }[]
+      >
+    ) {
       const arr = Array.isArray(action.payload) ? action.payload : [action.payload];
       arr.forEach((data) => {
         if (state.byId[data.uid]) {
@@ -110,5 +116,6 @@ const usersSlice = createSlice({
   }
 });
 
-export const { updateContactStatus, resetUsers, fillUsers, updateUsersByLogs, updateUsersStatus } = usersSlice.actions;
+export const { updateContactStatus, resetUsers, fillUsers, updateUsersByLogs, updateUsersStatus } =
+  usersSlice.actions;
 export default usersSlice.reducer;

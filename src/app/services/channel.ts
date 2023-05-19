@@ -1,16 +1,17 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-// import toast from "react-hot-toast";
-import baseQuery from "./base.query";
+
+import { Channel, ChannelDTO, CreateChannelDTO } from "@/types/channel";
+import { ContentTypeKey } from "@/types/message";
 import BASE_URL, { ContentTypes } from "../config";
-import { updateChannel, removeChannel } from "../slices/channels";
-import { updateRememberedNavs } from "../slices/ui";
+import { removeChannel, updateChannel } from "../slices/channels";
 import { removeMessage } from "../slices/message";
 import { removeChannelSession } from "../slices/message.channel";
 import { removeReactionMessage } from "../slices/message.reaction";
-import { onMessageSendStarted } from "./handlers";
-import { Channel, ChannelDTO, CreateChannelDTO } from "@/types/channel";
+import { updateRememberedNavs } from "../slices/ui";
 import { RootState } from "../store";
-import { ContentTypeKey } from "@/types/message";
+// import toast from "react-hot-toast";
+import baseQuery from "./base.query";
+import { onMessageSendStarted } from "./handlers";
 
 export const channelApi = createApi({
   reducerPath: "channelApi",
@@ -34,14 +35,19 @@ export const channelApi = createApi({
         }
       }
     }),
-    createChannel: builder.mutation<{ gid: number, created_at: number } | number, CreateChannelDTO>({
-      query: (data) => ({
-        url: "group",
-        method: "POST",
-        body: data
-      })
-    }),
-    changeChannelType: builder.mutation<number, { is_public: boolean, id: number, members?: number[] }>({
+    createChannel: builder.mutation<{ gid: number; created_at: number } | number, CreateChannelDTO>(
+      {
+        query: (data) => ({
+          url: "group",
+          method: "POST",
+          body: data
+        })
+      }
+    ),
+    changeChannelType: builder.mutation<
+      number,
+      { is_public: boolean; id: number; members?: number[] }
+    >({
       query: ({ id, is_public, members }) => ({
         url: `/group/${id}/change_type`,
         method: "POST",
@@ -101,9 +107,7 @@ export const channelApi = createApi({
         method: "DELETE"
       }),
       async onQueryStarted(id, { dispatch, getState, queryFulfilled }) {
-        const {
-          channelMessage,
-        } = getState() as RootState;
+        const { channelMessage } = getState() as RootState;
         try {
           await queryFulfilled;
           // 删掉该channel下的所有消息&reaction

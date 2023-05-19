@@ -1,4 +1,5 @@
-import { useRef, useEffect } from "react";
+import { useEffect, useRef } from "react";
+
 // import { useDebounce } from "rooks";
 
 function useChatScroll<T extends HTMLElement>() {

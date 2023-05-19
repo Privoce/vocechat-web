@@ -1,18 +1,20 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 import { isEqual } from "lodash";
+
 import {
-  useUpdateLoginConfigMutation,
-  useUpdateSMTPConfigMutation,
+  useLazyGetAgoraConfigQuery,
+  useLazyGetFirebaseConfigQuery,
+  useLazyGetLoginConfigQuery,
+  useLazyGetSMTPConfigQuery,
   useUpdateAgoraConfigMutation,
   useUpdateFirebaseConfigMutation,
-  useLazyGetFirebaseConfigQuery,
-  useLazyGetAgoraConfigQuery,
-  useLazyGetSMTPConfigQuery,
-  useLazyGetLoginConfigQuery
+  useUpdateLoginConfigMutation,
+  useUpdateSMTPConfigMutation
 } from "@/app/services/server";
 import { AgoraConfig, FirebaseConfig, LoginConfig, SMTPConfig } from "@/types/server";
-import { useTranslation } from "react-i18next";
+
 // config: smtp agora login firebase
 type ConfigType = "smtp" | "agora" | "login" | "firebase";
 type ConfigMap = Record<ConfigType, AgoraConfig | FirebaseConfig | LoginConfig | SMTPConfig>;
@@ -23,10 +25,14 @@ export default function useConfig(config: keyof ConfigMap = "smtp") {
   const { t: ct } = useTranslation();
   const [changed, setChanged] = useState(false);
   const [values, setValues] = useState<valuesOf<ConfigMap> | undefined>(undefined);
-  const [updateLoginConfig, { isSuccess: LoginUpdated, isLoading: LoginUpdating }] = useUpdateLoginConfigMutation();
-  const [updateSMTPConfig, { isSuccess: SMTPUpdated, isLoading: SMTPUpdating }] = useUpdateSMTPConfigMutation();
-  const [updateAgoraConfig, { isSuccess: AgoraUpdated, isLoading: AgoraUpdating }] = useUpdateAgoraConfigMutation();
-  const [updateFirebaseConfig, { isSuccess: FirebaseUpdated, isLoading: FirebaseUpdating }] = useUpdateFirebaseConfigMutation();
+  const [updateLoginConfig, { isSuccess: LoginUpdated, isLoading: LoginUpdating }] =
+    useUpdateLoginConfigMutation();
+  const [updateSMTPConfig, { isSuccess: SMTPUpdated, isLoading: SMTPUpdating }] =
+    useUpdateSMTPConfigMutation();
+  const [updateAgoraConfig, { isSuccess: AgoraUpdated, isLoading: AgoraUpdating }] =
+    useUpdateAgoraConfigMutation();
+  const [updateFirebaseConfig, { isSuccess: FirebaseUpdated, isLoading: FirebaseUpdating }] =
+    useUpdateFirebaseConfigMutation();
   const [getAgoraConfig, { data: agoraConfig }] = useLazyGetAgoraConfigQuery();
   const [getLoginConfig, { data: loginConfig }] = useLazyGetLoginConfigQuery();
   const [getSMTPConfig, { data: smtpConfig }] = useLazyGetSMTPConfigQuery();

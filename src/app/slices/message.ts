@@ -1,7 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+import { ContentType } from "@/types/message";
 // import  { ContentTypes } from "../config";
 import { normalizeFileMessage } from "@/utils";
-import { ContentType } from "@/types/message";
+
 export interface MessagePayload {
   mid: number;
   from_uid?: number;
@@ -45,7 +47,7 @@ const messageSlice = createSlice({
     fillMessage(state, action) {
       return Object.assign({ ...initialState }, action.payload);
     },
-    updateMessage(state, action: PayloadAction<{ mid: number;[key: string | number]: any }>) {
+    updateMessage(state, action: PayloadAction<{ mid: number; [key: string | number]: any }>) {
       const { mid, ...rest } = action.payload;
       state[mid] = { ...state[mid], ...rest };
     },

@@ -4,6 +4,7 @@ import {
   createParagraphPlugin,
   createSelectOnBackspacePlugin
 } from "@udecode/plate";
+
 import { CONFIG } from "./config";
 
 const basicElements = [

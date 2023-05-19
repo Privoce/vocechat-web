@@ -1,23 +1,34 @@
 import { useEffect } from "react";
+
 import {
   useCheckLicenseMutation,
   useGetLicenseQuery,
   useUpsertLicenseMutation
 } from "@/app/services/server";
 import { useAppSelector } from "@/app/store";
+
 // type Props = {
 //   refetchOnMountOrArgChange?: boolean
 // } | undefined
 const useLicense = (refetchOnMountOrArgChange = false) => {
   const { userCount, isGuest, upgraded } = useAppSelector((store) => {
-    return { userCount: store.users.ids.length, isGuest: store.authData.guest, upgraded: store.server.upgraded };
+    return {
+      userCount: store.users.ids.length,
+      isGuest: store.authData.guest,
+      upgraded: store.server.upgraded
+    };
   });
-  const { data: license, refetch: refetchLicense, isLoading } = useGetLicenseQuery(undefined, {
+  const {
+    data: license,
+    refetch: refetchLicense,
+    isLoading
+  } = useGetLicenseQuery(undefined, {
     refetchOnMountOrArgChange,
     skip: isGuest
   });
   const [check, { isLoading: isChecking, isSuccess: checked }] = useCheckLicenseMutation();
-  const [upsert, { isSuccess: upserted, isLoading: upserting, reset: resetUpsert }] = useUpsertLicenseMutation();
+  const [upsert, { isSuccess: upserted, isLoading: upserting, reset: resetUpsert }] =
+    useUpsertLicenseMutation();
   const checkLicense = (l: string) => {
     check(l);
   };

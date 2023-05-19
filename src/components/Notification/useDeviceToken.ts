@@ -1,7 +1,9 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { initializeApp } from "firebase/app";
-import { getToken, getMessaging } from "firebase/messaging";
+import { getMessaging, getToken } from "firebase/messaging";
+
 import { firebaseConfig, KEY_DEVICE_TOKEN } from "@/app/config";
+
 let requesting = false;
 let error = false;
 const useDeviceToken = (vapidKey: string) => {

@@ -1,18 +1,20 @@
-import i18n from "i18next";
-import dayjs from "dayjs";
 import { initReactI18next } from "react-i18next";
-import Backend, { HttpBackendOptions } from "i18next-http-backend";
+import dayjs from "dayjs";
+import i18n from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
-import common from "../public/locales/en/common.json";
+import Backend, { HttpBackendOptions } from "i18next-http-backend";
+
+import pkg from "../package.json";
 import auth from "../public/locales/en/auth.json";
-import member from "../public/locales/en/member.json";
 import chat from "../public/locales/en/chat.json";
+import common from "../public/locales/en/common.json";
 import fav from "../public/locales/en/fav.json";
-import widget from "../public/locales/en/widget.json";
-import welcome from "../public/locales/en/welcome.json";
-import setting from "../public/locales/en/setting.json";
 import file from "../public/locales/en/file.json";
-import pkg from '../package.json';
+import member from "../public/locales/en/member.json";
+import setting from "../public/locales/en/setting.json";
+import welcome from "../public/locales/en/welcome.json";
+import widget from "../public/locales/en/widget.json";
+
 // don't want to use this?
 // have a look at the Quick start guide
 // for passing in lng and translations on init
@@ -64,7 +66,7 @@ i18n
     returnNull: false,
     // for backend middleware
     backend: {
-      queryStringParams: { v: pkg.version },
+      queryStringParams: { v: pkg.version }
     }
   });
 

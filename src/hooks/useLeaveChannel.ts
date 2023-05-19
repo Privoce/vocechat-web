@@ -1,4 +1,4 @@
-import { useUpdateChannelMutation, useLazyLeaveChannelQuery } from "@/app/services/channel";
+import { useLazyLeaveChannelQuery, useUpdateChannelMutation } from "@/app/services/channel";
 import { useAppSelector } from "@/app/store";
 
 export default function useLeaveChannel(cid: number) {

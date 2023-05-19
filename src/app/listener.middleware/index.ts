@@ -1,17 +1,18 @@
 import { createListenerMiddleware } from "@reduxjs/toolkit";
-import rtkqHandler from "./handler.rtkq";
-import channelsHandler from "./handler.channels";
-import usersHandler from "./handler.users";
-import channelMsgHandler from "./handler.channel.msg";
-import dmMsgHandler from "./handler.dm.msg";
-import serverHandler from "./handler.server";
-import messageHandler from "./handler.message";
-import fileMessageHandler from "./handler.file.msg";
-import archiveMessageHandler from "./handler.archive.msg";
-import reactionHandler from "./handler.reaction";
-import UIHandler from "./handler.ui";
-import footprintHandler from "./handler.footprint";
+
 import { RootState } from "../store";
+import archiveMessageHandler from "./handler.archive.msg";
+import channelMsgHandler from "./handler.channel.msg";
+import channelsHandler from "./handler.channels";
+import dmMsgHandler from "./handler.dm.msg";
+import fileMessageHandler from "./handler.file.msg";
+import footprintHandler from "./handler.footprint";
+import messageHandler from "./handler.message";
+import reactionHandler from "./handler.reaction";
+import rtkqHandler from "./handler.rtkq";
+import serverHandler from "./handler.server";
+import UIHandler from "./handler.ui";
+import usersHandler from "./handler.users";
 
 const operations = [
   "__rtkq",

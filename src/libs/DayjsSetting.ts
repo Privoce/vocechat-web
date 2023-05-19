@@ -1,10 +1,12 @@
 import dayjs from "dayjs";
+
 import "dayjs/locale/zh-cn";
 import "dayjs/locale/ja";
 import duration from "dayjs/plugin/duration";
-import relativeTime from "dayjs/plugin/relativeTime";
 import isToday from "dayjs/plugin/isToday";
 import isYesterday from "dayjs/plugin/isYesterday";
+import relativeTime from "dayjs/plugin/relativeTime";
+
 // import i18n from '../i18n';
 
 dayjs.extend(duration);

@@ -1,4 +1,5 @@
 import localforage from "localforage";
+
 import { ContactStatus, User } from "@/types/user";
 import clearTable from "./clear.handler";
 
@@ -20,7 +21,9 @@ export default async function handler({ operation, data, payload }) {
       break;
     case "updateContactStatus":
       {
-        const tmp = payload as { uid: number, status: ContactStatus } | { uid: number, status: ContactStatus }[];
+        const tmp = payload as
+          | { uid: number; status: ContactStatus }
+          | { uid: number; status: ContactStatus }[];
         const arr = Array.isArray(tmp) ? tmp : [tmp];
         const opts = arr.map(({ uid, status }) => {
           return { key: uid + "", value: { ...data.byId[uid], status } };

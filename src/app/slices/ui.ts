@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export type ListView = "item" | "grid"
+export type ListView = "item" | "grid";
 export interface State {
   online: boolean;
   ready: boolean;

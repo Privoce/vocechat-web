@@ -1,11 +1,12 @@
 import toast from "react-hot-toast";
-import { removeReplyingMessage, addReplyingMessage, MessagePayload } from "@/app/slices/message";
+
 import { useSendChannelMsgMutation } from "@/app/services/channel";
-import { useSendMsgMutation } from "@/app/services/user";
 import { useReplyMessageMutation } from "@/app/services/message";
+import { useSendMsgMutation } from "@/app/services/user";
+import { addReplyingMessage, MessagePayload, removeReplyingMessage } from "@/app/slices/message";
 import { useAppDispatch, useAppSelector } from "@/app/store";
-import { ContentTypeKey } from "@/types/message";
 import { ChatContext } from "@/types/common";
+import { ContentTypeKey } from "@/types/message";
 
 interface Props {
   context: ChatContext;
@@ -20,7 +21,9 @@ interface SendMessagesDTO {
   channels: number[];
 }
 
-type SendMessageDTO = { type: ContentTypeKey } & Partial<MessagePayload> & { ignoreLocal?: boolean }
+type SendMessageDTO = { type: ContentTypeKey } & Partial<MessagePayload> & {
+    ignoreLocal?: boolean;
+  };
 const useSendMessage = (props?: Props) => {
   const { context = "dm", from = 0, to = 0 } = props || {};
   const dispatch = useAppDispatch();

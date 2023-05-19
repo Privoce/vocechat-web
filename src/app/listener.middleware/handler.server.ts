@@ -1,4 +1,5 @@
 import localforage from "localforage";
+
 import clearTable from "./clear.handler";
 
 interface Params {

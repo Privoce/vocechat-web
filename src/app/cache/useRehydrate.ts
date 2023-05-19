@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { fillReactionMessage } from "../slices/message.reaction";
-import { fillServer } from "../slices/server";
+
+import { fillChannels } from "../slices/channels";
+import { fillFootprint } from "../slices/footprint";
 import { fillMessage } from "../slices/message";
 import { fillChannelMsg } from "../slices/message.channel";
-import { fillUserMsg } from "../slices/message.user";
-import { fillChannels } from "../slices/channels";
-import { fillUsers } from "../slices/users";
-import { fillFootprint } from "../slices/footprint";
 import { fillFileMessage } from "../slices/message.file";
+import { fillReactionMessage } from "../slices/message.reaction";
+import { fillUserMsg } from "../slices/message.user";
+import { fillServer } from "../slices/server";
 import { fillUI } from "../slices/ui";
+import { fillUsers } from "../slices/users";
 
 const useRehydrate = () => {
   const [iterated, setIterated] = useState(false);

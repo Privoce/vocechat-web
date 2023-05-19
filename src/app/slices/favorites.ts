@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
 // import BASE_URL from "../config";
 
 export interface Favorite {

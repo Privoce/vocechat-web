@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
 import { Server } from "@/types/server";
 
 export interface StoredServer extends Server {
-  version: string,
-  upgraded: boolean,
+  version: string;
+  upgraded: boolean;
   logo: string;
   inviteLink?: {
     link: string;
@@ -49,7 +50,18 @@ const serverSlice = createSlice({
         contact_verification_enable = false,
         chat_layout_mode = "Left"
       } = action.payload || {};
-      return { version, upgraded, name, logo, description, inviteLink, show_user_online_status, webclient_auto_update, contact_verification_enable, chat_layout_mode };
+      return {
+        version,
+        upgraded,
+        name,
+        logo,
+        description,
+        inviteLink,
+        show_user_online_status,
+        webclient_auto_update,
+        contact_verification_enable,
+        chat_layout_mode
+      };
     },
     updateInfo(state, action: PayloadAction<Partial<StoredServer>>) {
       const values = action.payload || {};

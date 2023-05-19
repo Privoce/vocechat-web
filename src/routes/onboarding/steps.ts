@@ -1,5 +1,6 @@
 // import { useState } from "react";
-import { t } from 'i18next';
+import { t } from "i18next";
+
 // `name` for in-code usage, `label` for display
 export interface Step {
   name: string;
@@ -35,6 +36,5 @@ const steps: Step[] = [
     canJumpTo: ["whoCanSignUp", "inviteLink"]
   }
 ];
-
 
 export default steps;

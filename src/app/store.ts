@@ -1,26 +1,27 @@
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
-import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+
 import listenerMiddleware from "./listener.middleware";
-import authDataReducer from "./slices/auth.data";
-import voiceReducer from "./slices/voice";
-import footprintReducer from "./slices/footprint";
-import serverReducer from "./slices/server";
-import uiReducer from "./slices/ui";
-import channelsReducer from "./slices/channels";
-import usersReducer from "./slices/users";
-import reactionMsgReducer from "./slices/message.reaction";
-import channelMsgReducer from "./slices/message.channel";
-import userMsgReducer from "./slices/message.user";
-import favoritesReducer from "./slices/favorites";
-import fileMsgReducer from "./slices/message.file";
-import archiveMsgReducer from "./slices/message.archive";
-import messageReducer from "./slices/message";
 import { authApi } from "./services/auth";
-import { userApi } from "./services/user";
 import { channelApi } from "./services/channel";
 import { messageApi } from "./services/message";
 import { serverApi } from "./services/server";
+import { userApi } from "./services/user";
+import authDataReducer from "./slices/auth.data";
+import channelsReducer from "./slices/channels";
+import favoritesReducer from "./slices/favorites";
+import footprintReducer from "./slices/footprint";
+import messageReducer from "./slices/message";
+import archiveMsgReducer from "./slices/message.archive";
+import channelMsgReducer from "./slices/message.channel";
+import fileMsgReducer from "./slices/message.file";
+import reactionMsgReducer from "./slices/message.reaction";
+import userMsgReducer from "./slices/message.user";
+import serverReducer from "./slices/server";
+import uiReducer from "./slices/ui";
+import usersReducer from "./slices/users";
+import voiceReducer from "./slices/voice";
 
 const reducer = combineReducers({
   authData: authDataReducer,

@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export default function useInView<T extends HTMLElement>() {
   const ref = useRef<T>(null);

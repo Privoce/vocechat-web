@@ -1,7 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { isNull, omitBy } from "lodash";
-import BASE_URL from "../config";
+
 import { Channel, UpdateChannelDTO, UpdatePinnedMessageDTO } from "@/types/channel";
+import BASE_URL from "../config";
+
 // import { updateVoicingInfo } from "./voice";
 
 interface StoredChannel extends Channel {
@@ -35,7 +37,7 @@ const channelsSlice = createSlice({
           icon:
             c.avatar_updated_at == 0
               ? ""
-              : `${BASE_URL}/resource/group_avatar?gid=${c.gid}&t=${c.avatar_updated_at}`,
+              : `${BASE_URL}/resource/group_avatar?gid=${c.gid}&t=${c.avatar_updated_at}`
         };
       });
     },
@@ -50,7 +52,7 @@ const channelsSlice = createSlice({
         icon:
           avatar_updated_at == 0
             ? ""
-            : `${BASE_URL}/resource/group_avatar?gid=${gid}&t=${avatar_updated_at}`,
+            : `${BASE_URL}/resource/group_avatar?gid=${gid}&t=${avatar_updated_at}`
       };
     },
     updateChannel(state, action: PayloadAction<UpdateChannelDTO>) {
@@ -109,8 +111,7 @@ const channelsSlice = createSlice({
         delete state.byId[gid];
       }
     }
-  },
-
+  }
 });
 
 export const {
@@ -119,7 +120,7 @@ export const {
   fillChannels,
   addChannel,
   updateChannel,
-  removeChannel,
+  removeChannel
 } = channelsSlice.actions;
 
 export default channelsSlice.reducer;

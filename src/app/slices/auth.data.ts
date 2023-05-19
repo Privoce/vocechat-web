@@ -1,15 +1,17 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+import { AuthData, RenewTokenResponse } from "@/types/auth";
 // import { isNull, omitBy } from "lodash";
 import {
   KEY_EXPIRE,
-  KEY_PWA_INSTALLED,
   KEY_LOGIN_USER,
+  KEY_PWA_INSTALLED,
   KEY_REFRESH_TOKEN,
   KEY_TOKEN,
   KEY_UID
 } from "../config";
-import { AuthData, RenewTokenResponse } from "@/types/auth";
 import { StoredUser } from "./users";
+
 // import { updateUsersByLogs } from './users';
 
 interface State {
@@ -71,7 +73,7 @@ const authDataSlice = createSlice({
       if (!state.user) return;
 
       const obj = { ...state.user, ...payload };
-      Object.keys(obj).forEach(key => {
+      Object.keys(obj).forEach((key) => {
         // @ts-ignore
         if (obj[key] === undefined) {
           // @ts-ignore
@@ -108,7 +110,7 @@ const authDataSlice = createSlice({
       localStorage.setItem(KEY_TOKEN, token);
       localStorage.setItem(KEY_REFRESH_TOKEN, refresh_token);
     }
-  },
+  }
   // extraReducers: (builder) => {
   //   builder.addCase(updateUsersByLogs, (state, action) => {
   //     const changeLogs = action.payload;
@@ -131,5 +133,12 @@ const authDataSlice = createSlice({
   // }
 });
 
-export const { updateInitialized, updateLoginUser, setAuthData, resetAuthData, updateToken, updateRoleChanged } = authDataSlice.actions;
+export const {
+  updateInitialized,
+  updateLoginUser,
+  setAuthData,
+  resetAuthData,
+  updateToken,
+  updateRoleChanged
+} = authDataSlice.actions;
 export default authDataSlice.reducer;

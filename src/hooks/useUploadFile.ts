@@ -1,12 +1,13 @@
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
 import toast from "react-hot-toast";
-import { updateUploadFiles } from "@/app/slices/ui";
+
 import BASE_URL, { FILE_SLICE_SIZE } from "@/app/config";
 import { usePrepareUploadFileMutation, useUploadFileMutation } from "@/app/services/message";
+import { updateUploadFiles } from "@/app/slices/ui";
 import { useAppDispatch, useAppSelector } from "@/app/store";
 import { Message } from "@/types/channel";
-import { UploadFileResponse } from "@/types/message";
 import { ChatContext } from "@/types/common";
+import { UploadFileResponse } from "@/types/message";
 
 interface IProps {
   context: ChatContext;
@@ -25,7 +26,8 @@ const useUploadFile = (props?: IProps) => {
   const canceledRef = useRef(false);
   const sliceUploadedCountRef = useRef(0);
   const totalSliceCountRef = useRef(1);
-  const [prepareUploadFile, { isLoading: isPreparing, isError: prepareFileError }] = usePrepareUploadFileMutation();
+  const [prepareUploadFile, { isLoading: isPreparing, isError: prepareFileError }] =
+    usePrepareUploadFileMutation();
   const [uploadFileFn, { isLoading: isUploading, isError: uploadFileError }] =
     useUploadFileMutation();
 

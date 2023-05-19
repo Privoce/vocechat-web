@@ -1,16 +1,17 @@
 import { batch } from "react-redux";
-import { addChannelMsg, removeChannelMsg } from "@/app/slices/message.channel";
-import { addMessage, removeMessage, updateMessage } from "@/app/slices/message";
-import { toggleReactionMessage } from "@/app/slices/message.reaction";
-import { addFileMessage, removeFileMessage } from "@/app/slices/message.file";
-import { addUserMsg, removeUserMsg } from "@/app/slices/message.user";
-import { updateAfterMid } from "@/app/slices/footprint";
+
 import { ContentTypes } from "@/app/config";
-import { ChatEvent } from "@/types/sse";
+import { updateAfterMid } from "@/app/slices/footprint";
+import { addMessage, removeMessage, updateMessage } from "@/app/slices/message";
+import { addChannelMsg, removeChannelMsg } from "@/app/slices/message.channel";
+import { addFileMessage, removeFileMessage } from "@/app/slices/message.file";
+import { toggleReactionMessage } from "@/app/slices/message.reaction";
+import { addUserMsg, removeUserMsg } from "@/app/slices/message.user";
 import { AppDispatch } from "@/app/store";
+import { ChatEvent } from "@/types/sse";
 
 type CurrentState = {
-  afterMid: number,
+  afterMid: number;
   ready: boolean;
   loginUid: number;
   readUsers: {
@@ -20,7 +21,12 @@ type CurrentState = {
     [key: number]: number;
   };
 };
-const handler = (data: ChatEvent, dispatch: AppDispatch, currState: CurrentState, fromHistory = false) => {
+const handler = (
+  data: ChatEvent,
+  dispatch: AppDispatch,
+  currState: CurrentState,
+  fromHistory = false
+) => {
   const {
     mid,
     from_uid,

@@ -7,11 +7,11 @@ export type AuthType = "register" | "login";
 export type PriceType = "subscription" | "payment" | "booking";
 export type PriceSubscriptionDuration = "month" | "quarter" | "year";
 export type Price = {
-  title?: string,
-  price?: string,
-  limit?: number,
-  pid?: string,
-  desc?: string,
-  type: PriceType,
-  sub_dur?: PriceSubscriptionDuration
-}
+  title?: string;
+  price?: string;
+  limit?: number;
+  pid?: string;
+  desc?: string;
+  type: PriceType;
+  sub_dur?: PriceSubscriptionDuration;
+};

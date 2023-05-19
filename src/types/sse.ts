@@ -1,6 +1,6 @@
-import { ContactInfo, User } from "./user";
 import { Channel } from "./channel";
 import { ContentType } from "./message";
+import { ContactInfo, User } from "./user";
 
 export interface ReadyEvent {
   type: "ready";
@@ -47,11 +47,13 @@ export interface MuteChannel {
   expired_at: number;
 }
 export type AutoDeleteMsgForUser = {
-  uid: number; expires_in: number | null
-}
+  uid: number;
+  expires_in: number | null;
+};
 export type AutoDeleteMsgForGroup = {
-  gid: number; expires_in: number | null
-}
+  gid: number;
+  expires_in: number | null;
+};
 export type UserSettingsEvent = {
   type: "user_settings";
   mute_users?: MuteUser[];
@@ -60,21 +62,21 @@ export type UserSettingsEvent = {
   read_index_groups?: { gid: number; mid: number }[];
   burn_after_reading_users?: AutoDeleteMsgForUser[];
   burn_after_reading_groups?: AutoDeleteMsgForGroup[];
-}
+};
 export type AutoDeleteSettingForUsers = {
-  burn_after_reading_users: AutoDeleteMsgForUser[]
-}
+  burn_after_reading_users: AutoDeleteMsgForUser[];
+};
 export type AutoDeleteSettingForChannels = {
-  burn_after_reading_groups: AutoDeleteMsgForGroup[]
-}
-export type AutoDeleteMessageSettingDTO = AutoDeleteSettingForUsers | AutoDeleteSettingForChannels
+  burn_after_reading_groups: AutoDeleteMsgForGroup[];
+};
+export type AutoDeleteMessageSettingDTO = AutoDeleteSettingForUsers | AutoDeleteSettingForChannels;
 export type UserSettingsChangedEvent = {
   type: "user_settings_changed";
   from_device?: string;
   add_mute_users?: MuteUser[];
   remove_mute_users?: number[];
   add_mute_groups?: MuteChannel[];
-  add_contacts?: { target_uid: number, info: ContactInfo }[];
+  add_contacts?: { target_uid: number; info: ContactInfo }[];
   remove_contacts?: number[];
   remove_mute_groups?: number[];
   add_pin_chats?: PinChat[];
@@ -83,7 +85,7 @@ export type UserSettingsChangedEvent = {
   read_index_groups?: { gid: number; mid: number }[];
   burn_after_reading_users?: AutoDeleteMsgForUser[];
   burn_after_reading_groups?: AutoDeleteMsgForGroup[];
-}
+};
 
 export interface RelatedGroupsEvent {
   type: "related_groups";
@@ -96,7 +98,7 @@ export type PinChatTargetChannel = {
   gid: number;
 };
 export type PinChatTarget = PinChatTargetUser | PinChatTargetChannel;
-export type PinChat = { target: PinChatTarget[], updated_at: number }
+export type PinChat = { target: PinChatTarget[]; updated_at: number };
 export interface PinnedChatsEvent {
   type: "pinned_chats";
   chats: PinChat[];
@@ -214,7 +216,7 @@ interface GroupClearEvent {
 interface UserCallEvent {
   type: "user_calling";
   target: number;
-  uid: number
+  uid: number;
 }
 
 export type ServerEvent =

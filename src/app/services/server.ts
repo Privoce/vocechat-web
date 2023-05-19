@@ -1,30 +1,31 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import BASE_URL, { ContentTypes, IS_OFFICIAL_DEMO, PAYMENT_URL_PREFIX } from "../config";
-import { updateInfo } from "../slices/server";
-import baseQuery from "./base.query";
-import { RootState } from "../store";
-import { User } from "@/types/user";
-import {
-  FirebaseConfig,
-  GoogleAuthConfig,
-  LoginConfig,
-  Server,
-  TestEmailDTO,
-  CreateAdminDTO,
-  SMTPConfig,
-  AgoraConfig,
-  GithubAuthConfig,
-  LicenseResponse,
-  RenewLicense,
-  RenewLicenseResponse,
-  AgoraTokenResponse,
-  AgoraVoicingListResponse,
-  SystemCommon,
-  AgoraChannelUsersResponse
-} from "@/types/server";
+
 import { Channel } from "@/types/channel";
 import { ContentTypeKey } from "@/types/message";
+import {
+  AgoraChannelUsersResponse,
+  AgoraConfig,
+  AgoraTokenResponse,
+  AgoraVoicingListResponse,
+  CreateAdminDTO,
+  FirebaseConfig,
+  GithubAuthConfig,
+  GoogleAuthConfig,
+  LicenseResponse,
+  LoginConfig,
+  RenewLicense,
+  RenewLicenseResponse,
+  Server,
+  SMTPConfig,
+  SystemCommon,
+  TestEmailDTO
+} from "@/types/server";
+import { User } from "@/types/user";
+import BASE_URL, { ContentTypes, IS_OFFICIAL_DEMO, PAYMENT_URL_PREFIX } from "../config";
+import { updateInfo } from "../slices/server";
 import { updateCallInfo, upsertVoiceList } from "../slices/voice";
+import { RootState } from "../store";
+import baseQuery from "./base.query";
 
 const defaultExpireDuration = 2 * 24 * 60 * 60;
 
@@ -69,9 +70,7 @@ export const serverApi = createApi({
       async onQueryStarted(data, { dispatch, queryFulfilled }) {
         try {
           const resp = await queryFulfilled;
-          dispatch(
-            updateInfo({ version: resp.data })
-          );
+          dispatch(updateInfo({ version: resp.data }));
         } catch {
           console.error("get server version error");
         }
@@ -117,18 +116,26 @@ export const serverApi = createApi({
     getAgoraConfig: builder.query<AgoraConfig, void>({
       query: () => ({ url: `/admin/agora/config` })
     }),
-    getAgoraChannels: builder.query<AgoraVoicingListResponse, { page_no: number, page_size: number }>({
-      query: (param = { page_no: 0, page_size: 100 }) => ({ url: `/admin/agora/channel/${param.page_no}/${param.page_size}` }),
+    getAgoraChannels: builder.query<
+      AgoraVoicingListResponse,
+      { page_no: number; page_size: number }
+    >({
+      query: (param = { page_no: 0, page_size: 100 }) => ({
+        url: `/admin/agora/channel/${param.page_no}/${param.page_size}`
+      }),
       async onQueryStarted(data, { dispatch, queryFulfilled, getState }) {
         try {
-          const { voice: { callingFrom }, authData } = getState() as RootState;
+          const {
+            voice: { callingFrom },
+            authData
+          } = getState() as RootState;
           const { data: resp } = await queryFulfilled;
           const { success } = resp;
           if (success) {
-            const arr = resp.data.channels.map(data => {
+            const arr = resp.data.channels.map((data) => {
               const [type, id] = data.channel_name.split(":").slice(-2);
               const count = data.user_count;
-              const context = type === "group" ? "channel" as const : "dm" as const;
+              const context = type === "group" ? ("channel" as const) : ("dm" as const);
               return {
                 id: +id,
                 context,
@@ -137,7 +144,9 @@ export const serverApi = createApi({
               };
             });
             dispatch(upsertVoiceList(arr));
-            const hasMyself = arr.some(data => data.context === "dm" && data.id == authData?.user?.uid);
+            const hasMyself = arr.some(
+              (data) => data.context === "dm" && data.id == authData?.user?.uid
+            );
             const sendByMe = callingFrom && callingFrom === authData?.user?.uid;
             // reset dm call setting
             if (callingFrom && !sendByMe && !hasMyself) {
@@ -187,9 +196,7 @@ export const serverApi = createApi({
       async onQueryStarted(data, { dispatch, queryFulfilled }) {
         try {
           const resp = await queryFulfilled;
-          dispatch(
-            updateInfo(resp.data)
-          );
+          dispatch(updateInfo(resp.data));
         } catch {
           console.error("get server common error");
         }
@@ -204,9 +211,7 @@ export const serverApi = createApi({
       async onQueryStarted(data, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-          dispatch(
-            updateInfo(data)
-          );
+          dispatch(updateInfo(data));
         } catch {
           console.error("update server common error");
         }
@@ -309,7 +314,7 @@ export const serverApi = createApi({
         url: `/admin/system/update_frontend_url`,
         method: "POST",
         headers: {
-          "content-type": 'text/plain',
+          "content-type": "text/plain"
         },
         body: url
       })
@@ -324,16 +329,16 @@ export const serverApi = createApi({
         const rootStore = getState() as RootState;
         const { upgraded: prevValue } = rootStore.server;
         try {
-          const { data: { user_limit } } = await queryFulfilled;
+          const {
+            data: { user_limit }
+          } = await queryFulfilled;
           const currValue = user_limit > 20;
           if (prevValue !== currValue) {
             dispatch(updateInfo({ upgraded: currValue }));
           }
         } catch {
           console.error("update license upgraded status failed ");
-
         }
-
       }
     }),
 
@@ -363,15 +368,25 @@ export const serverApi = createApi({
         body: { license }
       })
     }),
-    getBotRelatedChannels: builder.query<Channel[], { api_key: string, public_only?: boolean }>({
+    getBotRelatedChannels: builder.query<Channel[], { api_key: string; public_only?: boolean }>({
       query: ({ api_key, public_only = false }) => ({
         url: public_only ? `/bot?public_only=${public_only}` : `/bot`,
         headers: {
           "x-api-key": api_key
-        },
+        }
       })
     }),
-    sendMessageByBot: builder.mutation<number, { uid?: number, cid?: number, api_key: string, content: string, type?: ContentTypeKey, properties?: object }>({
+    sendMessageByBot: builder.mutation<
+      number,
+      {
+        uid?: number;
+        cid?: number;
+        api_key: string;
+        content: string;
+        type?: ContentTypeKey;
+        properties?: object;
+      }
+    >({
       query: ({ uid, cid, api_key, type = "text", properties, content }) => ({
         headers: {
           "x-api-key": api_key,
@@ -384,7 +399,7 @@ export const serverApi = createApi({
         method: "POST",
         body: content
       })
-    }),
+    })
   })
 });
 

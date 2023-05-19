@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import { copyImageToClipboard } from "copy-image-clipboard";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { copyImageToClipboard } from "copy-image-clipboard";
 
 const useCopy = (config: { enableToast: boolean } | void) => {
   const { enableToast = true } = config || {};

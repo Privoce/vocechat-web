@@ -1,4 +1,5 @@
 import clearTable from "./clear.handler";
+
 interface Params {
   payload: any;
   operation: string;

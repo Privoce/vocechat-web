@@ -56,9 +56,7 @@ export interface OG {
     secure_url?: string;
     width: number;
     height: number;
-  }[
-
-  ];
+  }[];
   favicon_url?: string;
   description?: string;
   locale?: string;

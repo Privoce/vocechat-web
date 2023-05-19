@@ -9,7 +9,7 @@
 
 import { clientsClaim } from "workbox-core";
 import { ExpirationPlugin } from "workbox-expiration";
-import { precacheAndRoute, createHandlerBoundToURL } from "workbox-precaching";
+import { createHandlerBoundToURL, precacheAndRoute } from "workbox-precaching";
 import { registerRoute } from "workbox-routing";
 import { StaleWhileRevalidate } from "workbox-strategies";
 
@@ -34,7 +34,11 @@ registerRoute(
     } // If this is a URL that starts with /_, skip.
     const urlPath = url.pathname;
     // 忽略api开头的path 本地语言文件 挂件地址
-    if (urlPath.startsWith("/api") || urlPath.startsWith("/locales/") || urlPath.startsWith("/widget")) {
+    if (
+      urlPath.startsWith("/api") ||
+      urlPath.startsWith("/locales/") ||
+      urlPath.startsWith("/widget")
+    ) {
       return false;
     }
     if (urlPath.startsWith("/_")) {

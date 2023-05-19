@@ -1,8 +1,8 @@
 import * as localforage from "localforage";
-import { extendPrototype } from 'localforage-setitems';
+import { extendPrototype } from "localforage-setitems";
 
+import { CACHE_VERSION, KEY_UID } from "../config";
 import useRehydrate from "./useRehydrate";
-import { KEY_UID, CACHE_VERSION } from "../config";
 
 extendPrototype(localforage);
 const tables = [

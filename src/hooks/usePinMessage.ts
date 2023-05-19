@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+
 import { usePinMessageMutation, useUnpinMessageMutation } from "@/app/services/message";
 import { useAppSelector } from "@/app/store";
 import { PinnedMessage } from "@/types/channel";

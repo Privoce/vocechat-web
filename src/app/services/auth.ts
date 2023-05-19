@@ -1,8 +1,6 @@
-import { createApi } from "@reduxjs/toolkit/query/react";
 import { nanoid } from "@reduxjs/toolkit";
-import baseQuery from "./base.query";
-import { setAuthData, updateToken, resetAuthData, updateInitialized } from "../slices/auth.data";
-import BASE_URL, { KEY_DEVICE_ID, KEY_DEVICE_TOKEN, KEY_LOCAL_MAGIC_TOKEN } from "../config";
+import { createApi } from "@reduxjs/toolkit/query/react";
+
 import {
   AuthData,
   CredentialResponse,
@@ -11,6 +9,9 @@ import {
   RenewTokenResponse
 } from "@/types/auth";
 import { UserRegDTO, UserRegResponse } from "@/types/user";
+import BASE_URL, { KEY_DEVICE_ID, KEY_DEVICE_TOKEN, KEY_LOCAL_MAGIC_TOKEN } from "../config";
+import { resetAuthData, setAuthData, updateInitialized, updateToken } from "../slices/auth.data";
+import baseQuery from "./base.query";
 
 const getDeviceId = () => {
   let d = localStorage.getItem(KEY_DEVICE_ID);

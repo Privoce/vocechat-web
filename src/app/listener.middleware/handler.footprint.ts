@@ -1,5 +1,7 @@
 import localforage from "localforage";
+
 import clearTable from "./clear.handler";
+
 interface Params {
   payload: any;
   data: any;
@@ -7,7 +9,7 @@ interface Params {
 }
 const ignores = ["voice_fullscreen", "voice"];
 export default async function handler({ operation, data = {}, payload }: Params) {
-  const table = window.CACHE["footprint"] as typeof localforage;;
+  const table = window.CACHE["footprint"] as typeof localforage;
   if (operation.startsWith("reset")) {
     clearTable("footprint");
     return;
@@ -34,7 +36,6 @@ export default async function handler({ operation, data = {}, payload }: Params)
             table?.setItem("afterMid", afterMid);
           }
         });
-
       }
       break;
     case "updateMute":
@@ -48,7 +49,6 @@ export default async function handler({ operation, data = {}, payload }: Params)
         const { type } = payload;
         if (type == "channel") {
           await table?.setItem("historyChannels", data.historyChannels);
-
         } else {
           await table?.setItem("historyUsers", data.historyUsers);
         }

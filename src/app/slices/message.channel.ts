@@ -27,7 +27,7 @@ const channelMsgSlice = createSlice({
         const localMsgExisted = state[id]!.findIndex((id) => id == local_id) > -1;
         if (midExisted || localMsgExisted) return;
         // 每次入库，都排序
-        const newArr = [...state[id] as number[], +mid].sort((a, b) => a - b);
+        const newArr = [...(state[id] as number[]), +mid].sort((a, b) => a - b);
         state[id] = newArr;
       } else {
         state[id] = [+mid];

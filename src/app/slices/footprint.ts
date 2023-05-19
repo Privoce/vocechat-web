@@ -1,14 +1,23 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+import { ChatContext } from "@/types/common";
 import { MuteDTO } from "@/types/message";
 import { OG } from "@/types/resource";
-import { AutoDeleteMessageSettingDTO, AutoDeleteMsgForGroup, AutoDeleteMsgForUser, AutoDeleteSettingForChannels, AutoDeleteSettingForUsers, PinChat, PinChatTarget } from "@/types/sse";
+import {
+  AutoDeleteMessageSettingDTO,
+  AutoDeleteMsgForGroup,
+  AutoDeleteMsgForUser,
+  AutoDeleteSettingForChannels,
+  AutoDeleteSettingForUsers,
+  PinChat,
+  PinChatTarget
+} from "@/types/sse";
 import { resetAuthData } from "./auth.data";
-import { ChatContext } from "@/types/common";
 
 type ChannelAside = "members" | "voice" | "voice_fullscreen" | null;
 type DMAside = "voice" | "voice_fullscreen" | null;
 export interface State {
-  og: { [url: string]: OG }
+  og: { [url: string]: OG };
   usersVersion: number;
   afterMid: number;
   historyUsers: { [uid: number]: string | "reached" };
@@ -23,7 +32,6 @@ export interface State {
   dmAsides: { [uid: number]: DMAside };
   pinChats: PinChat[];
 }
-
 
 const initialState: State = {
   og: {},
@@ -99,9 +107,9 @@ const footprintSlice = createSlice({
         switch (key) {
           case "burn_after_reading_users": {
             const updates = (payload as AutoDeleteSettingForUsers).burn_after_reading_users;
-            updates.map(item => {
+            updates.map((item) => {
               const { uid } = item;
-              const idx = state.autoDeleteMsgUsers.findIndex(tmp => tmp.uid == uid);
+              const idx = state.autoDeleteMsgUsers.findIndex((tmp) => tmp.uid == uid);
               if (idx !== -1) {
                 // update
                 state.autoDeleteMsgUsers[idx] = item;
@@ -114,9 +122,9 @@ const footprintSlice = createSlice({
           }
           case "burn_after_reading_groups": {
             const updates = (payload as AutoDeleteSettingForChannels).burn_after_reading_groups;
-            updates.map(item => {
+            updates.map((item) => {
               const { gid } = item;
-              const idx = state.autoDeleteMsgChannels.findIndex(tmp => tmp.gid == gid);
+              const idx = state.autoDeleteMsgChannels.findIndex((tmp) => tmp.gid == gid);
               if (idx !== -1) {
                 // update
                 state.autoDeleteMsgChannels[idx] = item;
@@ -169,7 +177,7 @@ const footprintSlice = createSlice({
         }
       });
     },
-    upsertPinChats(state, action: PayloadAction<{ pins: PinChat[], override?: boolean }>) {
+    upsertPinChats(state, action: PayloadAction<{ pins: PinChat[]; override?: boolean }>) {
       const { pins, override = false } = action.payload;
       if (override) {
         state.pinChats = pins;
@@ -179,17 +187,20 @@ const footprintSlice = createSlice({
     },
     removePinChats(state, action: PayloadAction<PinChatTarget[]>) {
       const pins = action.payload;
-      state.pinChats = state.pinChats.filter(pin => {
+      state.pinChats = state.pinChats.filter((pin) => {
         const key = "uid" in pin.target ? "uid" : "gid";
         // @ts-ignore
-        return !pins.some(p => p[key] == pin.target[key]);
+        return !pins.some((p) => p[key] == pin.target[key]);
       });
     },
-    upsertOG(state, action: PayloadAction<{ key: string, value: OG }>) {
+    upsertOG(state, action: PayloadAction<{ key: string; value: OG }>) {
       const { key, value } = action.payload;
       state.og[key] = value;
     },
-    updateHistoryMark(state, action: PayloadAction<{ type: ChatContext, id: number, mid: string, }>) {
+    updateHistoryMark(
+      state,
+      action: PayloadAction<{ type: ChatContext; id: number; mid: string }>
+    ) {
       const { type, id, mid } = action.payload;
       if (type == "channel") {
         state.historyChannels[id] = mid;
@@ -211,14 +222,14 @@ const footprintSlice = createSlice({
         state.readChannels[gid] = mid;
       });
     },
-    updateChannelVisibleAside(state, action: PayloadAction<{ id: number, aside: ChannelAside }>) {
+    updateChannelVisibleAside(state, action: PayloadAction<{ id: number; aside: ChannelAside }>) {
       const { id, aside } = action.payload;
       state.channelAsides[id] = aside;
     },
-    updateDMVisibleAside(state, action: PayloadAction<{ id: number, aside: DMAside }>) {
+    updateDMVisibleAside(state, action: PayloadAction<{ id: number; aside: DMAside }>) {
       const { id, aside } = action.payload;
       state.dmAsides[id] = aside;
-    },
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(resetAuthData, (state) => {

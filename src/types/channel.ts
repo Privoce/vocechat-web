@@ -1,8 +1,9 @@
 //call `group` in backend
 import { ContentType } from "./message";
-export interface ChannelMember { }
 
-export interface Message { }
+export interface ChannelMember {}
+
+export interface Message {}
 
 export interface PinnedMessage {
   mid: number;
@@ -13,7 +14,7 @@ export interface PinnedMessage {
   properties: {
     local_id?: number;
     content_type?: string;
-    size?: number
+    size?: number;
   };
 }
 

@@ -1,10 +1,11 @@
-import { fetchBaseQuery } from "@reduxjs/toolkit/query";
 import toast from "react-hot-toast";
+import { fetchBaseQuery } from "@reduxjs/toolkit/query";
 import dayjs from "dayjs";
-import { updateToken, resetAuthData } from "../slices/auth.data";
-import BASE_URL, { tokenHeader } from "../config";
-import { RootState } from "../store";
+
 import { getLocalAuthData } from "@/utils";
+import BASE_URL, { tokenHeader } from "../config";
+import { resetAuthData, updateToken } from "../slices/auth.data";
+import { RootState } from "../store";
 
 const whiteList = [
   "guestLogin",
@@ -102,12 +103,13 @@ const baseQueryWithTokenCheck = async (args: any, api: any, extraOptions: any) =
           }
         }
         break;
-      case 403: {
-        const whiteList403 = ["sendMsg"];
-        if (!whiteList403.includes(api.endpoint)) {
-          toast.error("Request Not Allowed");
+      case 403:
+        {
+          const whiteList403 = ["sendMsg"];
+          if (!whiteList403.includes(api.endpoint)) {
+            toast.error("Request Not Allowed");
+          }
         }
-      }
 
         break;
       case 404:

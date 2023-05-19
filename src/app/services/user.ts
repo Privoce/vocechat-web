@@ -1,13 +1,25 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-// import toast from "react-hot-toast";
-import baseQuery from "./base.query";
+
+import { ContentTypeKey, MuteDTO } from "@/types/message";
+import {
+  AutoDeleteMsgDTO,
+  BotAPIKey,
+  ContactAction,
+  ContactResponse,
+  ContactStatus,
+  User,
+  UserCreateDTO,
+  UserDTO,
+  UserForAdmin,
+  UserForAdminDTO
+} from "@/types/user";
+import BASE_URL, { ContentTypes } from "../config";
 import { updateAutoDeleteSetting, updateMute } from "../slices/footprint";
 import { fillUsers, updateContactStatus as updateStatus } from "../slices/users";
-import BASE_URL, { ContentTypes } from "../config";
-import { onMessageSendStarted } from "./handlers";
-import { AutoDeleteMsgDTO, BotAPIKey, ContactAction, ContactResponse, ContactStatus, User, UserCreateDTO, UserDTO, UserForAdmin, UserForAdminDTO } from "@/types/user";
-import { ContentTypeKey, MuteDTO } from "@/types/message";
 import { RootState } from "../store";
+// import toast from "react-hot-toast";
+import baseQuery from "./base.query";
+import { onMessageSendStarted } from "./handlers";
 
 export const userApi = createApi({
   reducerPath: "userApi",
@@ -29,14 +41,20 @@ export const userApi = createApi({
       async onQueryStarted(data, { dispatch, queryFulfilled, getState }) {
         try {
           const { data: users } = await queryFulfilled;
-          const { authData: { user: loginUser } } = getState() as RootState;
-          dispatch(fillUsers(users.map((u) => {
-            const status = loginUser?.uid == u.uid ? "added" : "";
-            return {
-              ...u,
-              status
-            };
-          })));
+          const {
+            authData: { user: loginUser }
+          } = getState() as RootState;
+          dispatch(
+            fillUsers(
+              users.map((u) => {
+                const status = loginUser?.uid == u.uid ? "added" : "";
+                return {
+                  ...u,
+                  status
+                };
+              })
+            )
+          );
         } catch {
           console.log("get user list error");
         }
@@ -71,7 +89,7 @@ export const userApi = createApi({
         method: "POST"
       })
     }),
-    searchUser: builder.mutation<User, { search_type: "id" | "email", keyword: string }>({
+    searchUser: builder.mutation<User, { search_type: "id" | "email"; keyword: string }>({
       query: (input) => ({
         url: `/user/search`,
         body: input,
@@ -123,7 +141,7 @@ export const userApi = createApi({
       }
     }),
 
-    updateContactStatus: builder.mutation<void, { action: ContactAction, target_uid: number }>({
+    updateContactStatus: builder.mutation<void, { action: ContactAction; target_uid: number }>({
       query: (payload) => ({
         url: `/user/update_contact_status`,
         method: "POST",
@@ -131,10 +149,10 @@ export const userApi = createApi({
       }),
       async onQueryStarted(data, { dispatch, queryFulfilled }) {
         const map = {
-          "add": "added",
-          "block": "blocked",
-          "remove": "",
-          "unblock": "",
+          add: "added",
+          block: "blocked",
+          remove: "",
+          unblock: ""
         };
         try {
           await queryFulfilled;
@@ -170,7 +188,7 @@ export const userApi = createApi({
         body: data
       })
     }),
-    updateAvatarByAdmin: builder.mutation<void, { uid: number, file: File }>({
+    updateAvatarByAdmin: builder.mutation<void, { uid: number; file: File }>({
       query: ({ uid, file }) => ({
         headers: {
           "content-type": "image/png"
@@ -184,18 +202,17 @@ export const userApi = createApi({
       query: (uid) => ({ url: `/admin/user/${uid}` })
     }),
     // bot operations
-    createBotAPIKey: builder.mutation<void, { uid: number, name: string }>({
+    createBotAPIKey: builder.mutation<void, { uid: number; name: string }>({
       query: ({ uid, name }) => ({
         url: `/admin/user/bot-api-key/${uid}`,
         method: "POST",
-        body: { name },
-      }),
-
+        body: { name }
+      })
     }),
     getBotAPIKeys: builder.query<BotAPIKey[], number>({
       query: (uid) => ({ url: `/admin/user/bot-api-key/${uid}` })
     }),
-    deleteBotAPIKey: builder.query<void, { uid: number, kid: number }>({
+    deleteBotAPIKey: builder.query<void, { uid: number; kid: number }>({
       query: ({ uid, kid }) => ({ url: `/admin/user/bot-api-key/${uid}/${kid}`, method: "DELETE" })
     }),
     // bot operations end
@@ -225,8 +242,7 @@ export const userApi = createApi({
         // @ts-ignore
         await onMessageSendStarted.call(this, param1, param2, "user");
       }
-    }),
-
+    })
   })
 });
 

@@ -1,16 +1,17 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { ContentTypes } from "../config";
-import { updateReadChannels, updateReadUsers, upsertOG } from "../slices/footprint";
-import { fillFavorites, populateFavorite, addFavorite, deleteFavorite } from "../slices/favorites";
-import { onMessageSendStarted } from "./handlers";
-import { normalizeArchiveData } from "@/utils";
-import baseQuery from "./base.query";
-import { Archive, FavoriteArchive, OG } from "@/types/resource";
-import { ChatMessage, ContentTypeKey, UploadFileResponse } from "@/types/message";
+
 import { ChatContext } from "@/types/common";
+import { ChatMessage, ContentTypeKey, UploadFileResponse } from "@/types/message";
+import { Archive, FavoriteArchive, OG } from "@/types/resource";
 import handleChatMessage from "@/hooks/useStreaming/chat.handler";
-import { RootState } from "../store";
+import { normalizeArchiveData } from "@/utils";
+import { ContentTypes } from "../config";
+import { addFavorite, deleteFavorite, fillFavorites, populateFavorite } from "../slices/favorites";
+import { updateReadChannels, updateReadUsers, upsertOG } from "../slices/footprint";
 import { upsertArchiveMessage } from "../slices/message.archive";
+import { RootState } from "../store";
+import baseQuery from "./base.query";
+import { onMessageSendStarted } from "./handlers";
 
 export const messageApi = createApi({
   reducerPath: "messageApi",
@@ -73,15 +74,18 @@ export const messageApi = createApi({
           dispatch(upsertOG({ key: url, value: data }));
         } catch (err) {
           console.log("get og error", err);
-          dispatch(upsertOG({
-            key: url, value: {
-              images: [],
-              audios: [],
-              videos: [],
-              title: "",
-              url,
-            }
-          }));
+          dispatch(
+            upsertOG({
+              key: url,
+              value: {
+                images: [],
+                audios: [],
+                videos: [],
+                title: "",
+                url
+              }
+            })
+          );
         }
       }
     }),
@@ -176,12 +180,15 @@ export const messageApi = createApi({
         }
       }
     }),
-    loadMoreMessages: builder.query<ChatMessage[], { context?: ChatContext, id: number; mid?: number; limit?: number }>({
+    loadMoreMessages: builder.query<
+      ChatMessage[],
+      { context?: ChatContext; id: number; mid?: number; limit?: number }
+    >({
       query: ({ context = "channel", id, mid = "", limit = 100 }) => {
-        const url = context == "channel" ?
-          `/group/${id}/history?limit=${limit}${mid ? `&before=${mid}` : ""}`
-          :
-          `/user/${id}/history?limit=${limit}${mid ? `&before=${mid}` : ""}`;
+        const url =
+          context == "channel"
+            ? `/group/${id}/history?limit=${limit}${mid ? `&before=${mid}` : ""}`
+            : `/user/${id}/history?limit=${limit}${mid ? `&before=${mid}` : ""}`;
         return {
           url
         };
@@ -198,7 +205,13 @@ export const messageApi = createApi({
     }),
     replyMessage: builder.mutation<
       number,
-      { from_uid: number, reply_mid: number; content: string; type: ContentTypeKey, properties?: {} }
+      {
+        from_uid: number;
+        reply_mid: number;
+        content: string;
+        type: ContentTypeKey;
+        properties?: {};
+      }
     >({
       query: ({ reply_mid, content, type = "text", properties }) => ({
         headers: {
@@ -245,7 +258,7 @@ export const messageApi = createApi({
         method: "HEAD",
         responseHandler: "text"
       })
-    }),
+    })
   })
 });
 
