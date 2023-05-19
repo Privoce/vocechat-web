@@ -152,12 +152,12 @@ const Session: FC<IProps> = ({
                 </i>
                 {!is_public && <IconLock className="dark:fill-gray-400" />}
               </span>
-              <span className={clsx("text-xs text-gray-500 dark:text-gray-400 max-w-[80px] truncate font-semibold")}>
+              <span className={clsx("text-xs text-gray-500 max-w-[80px] truncate font-semibold")}>
                 {fromNowTime(previewMsg.created_at)}
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className={clsx("text-xs text-gray-500 dark:text-gray-400  truncate", unreads > 0 ? `w-36` : ``)}>{renderPreviewMessage(previewMsg)}</span>
+              <span className={clsx("text-xs text-gray-500  truncate", unreads > 0 ? `w-36` : ``)}>{renderPreviewMessage(previewMsg)}</span>
               {(unreads > 0 && !isCurrentPath) ? <strong className={clsx(`text-white px-1.5 py-[3px] font-bold text-[10px] leading-[10px] rounded-[10px]`, muted ? "bg-black/10 dark:bg-gray-500" : "bg-primary-400")}>
                 {unreads > 99 ? "99+" : unreads}
               </strong> : (muted && <IconMute className="w-3 h-3 fill-black/10 dark:fill-gray-500" />)}

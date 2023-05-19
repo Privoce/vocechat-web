@@ -95,7 +95,7 @@ const DeviceList = ({ type, visible, setVisible, devices }: {
                 console.log("device selected", title, selected);
                 if (list.length == 0) return null;
                 return <div key={title} className="w-full flex flex-col items-start gap-2 pt-3">
-                    <p className="text-gray-500 dark:text-gray-400 text-xs">{title}</p>
+                    <p className="text-gray-500 text-xs">{title}</p>
                     <ul className="w-full flex flex-col gap-4">
                         {list.map(({ deviceId, kind, label }) => {
                             return (

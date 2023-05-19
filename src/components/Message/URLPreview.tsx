@@ -65,7 +65,7 @@ export default function URLPreview({ url = "" }) {
       )}
       <div className="flex flex-col">
         <h3 className="text-sm text-gray-900 dark:text-gray-100">{title}</h3>
-        <p className={`hidden md:block text-xs text-gray-500 dark:text-gray-400 w-[288px] truncate`}>{description}</p>
+        <p className={`hidden md:block text-xs text-gray-500 w-[288px] truncate`}>{description}</p>
         <span className={`text-[10px] text-gray-500 w-[288px] truncate`}>{url}</span>
       </div>
     </a>

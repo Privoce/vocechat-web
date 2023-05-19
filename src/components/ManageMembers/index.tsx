@@ -19,8 +19,8 @@ const ManageMembers: FC<Props> = ({ cid }) => {
     <section className="flex flex-col w-full">
       {loginUser?.is_admin && <InviteLink />}
       <div className="flex flex-col mb-10">
-        <h4 className="font-bold text-gray-600 dark:text-white">{t("manage_members")}</h4>
-        <p className="text-gray-500 dark:text-gray-100 text-xs">
+        <h4 className="font-bold text-gray-700 dark:text-white">{t("manage_members")}</h4>
+        <p className="text-gray-400 dark:text-gray-100 text-xs">
           {t("manage_tip")}
         </p>
       </div>

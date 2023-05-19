@@ -1,4 +1,5 @@
 import { ChangeEvent } from "react";
+import { useTranslation } from "react-i18next";
 
 import Input from "@/components/styled/Input";
 import Label from "@/components/styled/Label";
@@ -6,8 +7,10 @@ import Toggle from "@/components/styled/Toggle";
 import SaveTip from "@/components/SaveTip";
 import useConfig from "@/hooks/useConfig";
 import { AgoraConfig } from "@/types/server";
+import HowToTip from "./HowToTip";
 
 export default function ConfigAgora() {
+  const { t } = useTranslation("setting", { keyPrefix: "agora" });
   const { changed, reset, values, setValues, toggleEnable, updateConfig } = useConfig("agora");
   const handleUpdate = () => {
     // const { token_url, description } = values;
@@ -41,11 +44,14 @@ export default function ConfigAgora() {
     <div className="setting-container">
       <div className="inputs">
         <div className="input row">
-          <Label>Enable</Label>
+          <Label className="flex items-center gap-2">
+            Enable
+            <HowToTip link="https://doc.voce.chat/setting/setting-agora" text={t("how_to")} />
+          </Label>
           <Toggle onClick={toggleEnable} checked={enabled}></Toggle>
         </div>
         <div className="input">
-          <Label htmlFor="url">Agora Url</Label>
+          <Label htmlFor="url">Agora URL</Label>
           <Input
             disabled={!enabled}
             data-type="url"
@@ -116,6 +122,7 @@ export default function ConfigAgora() {
           />
         </div>
       </div>
+
       {changed && <SaveTip saveHandler={handleUpdate} resetHandler={reset} />}
       {/* <button onClick={handleUpdate} className="btn">update</button> */}
     </div>

@@ -126,7 +126,7 @@ const LicensePriceListModal: FC<Props> = ({ closeModal }) => {
                         {ct("action.cancel")}
                       </Button>
                       <Button className="mini" disabled={isLoading || isSuccess} onClick={handleRenew}>
-                        {isLoading ? "Initialize Payment Url" : isSuccess ? "Redirecting" : t("license.tip_confirm")}
+                        {isLoading ? "Initialize Payment URL" : isSuccess ? "Redirecting" : t("license.tip_confirm")}
                       </Button>
                     </div>
                   </div>

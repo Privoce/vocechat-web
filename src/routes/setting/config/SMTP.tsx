@@ -3,7 +3,6 @@ import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 
 import { useSendTestEmailMutation } from "@/app/services/server";
-import IconQuestion from "@/assets/icons/question.svg";
 import useConfig from "@/hooks/useConfig";
 import Input from "@/components/styled/Input";
 import Button from "@/components/styled/Button";
@@ -11,6 +10,7 @@ import Toggle from "@/components/styled/Toggle";
 import Label from "@/components/styled/Label";
 import SaveTip from "@/components/SaveTip";
 import { SMTPConfig } from "@/types/server";
+import HowToTip from "./HowToTip";
 
 export default function ConfigSMTP() {
   const { t } = useTranslation("setting", { keyPrefix: "smtp" });
@@ -56,11 +56,14 @@ export default function ConfigSMTP() {
     <div className="setting-container max-md:w-full">
       <div className="inputs">
         <div className="input row">
-          <Label className="dark:text-gray-200">{t("enable")}</Label>
+          <Label className="flex items-center gap-2">
+            {t("enable")}{" "}
+            <HowToTip link="https://doc.voce.chat/setting/smtp/smtp-gmail" text={t("how_to")} />
+          </Label>
           <Toggle onClick={toggleEnable} checked={enabled}></Toggle>
         </div>
         <div className="input">
-          <Label className="dark:text-gray-200" htmlFor="name">{t("host")}</Label>
+          <Label htmlFor="host">{t("host")}</Label>
           <Input
             disabled={!enabled}
             data-type="host"
@@ -71,7 +74,7 @@ export default function ConfigSMTP() {
           />
         </div>
         <div className="input">
-          <Label className="dark:text-gray-200" htmlFor="desc">{t("port")}</Label>
+          <Label htmlFor="port">{t("port")}</Label>
           <Input
             disabled={!enabled}
             type={"number"}
@@ -83,7 +86,7 @@ export default function ConfigSMTP() {
           />
         </div>
         <div className="input">
-          <Label className="dark:text-gray-200" htmlFor="desc">{t("from")}</Label>
+          <Label htmlFor="from">{t("from")}</Label>
           <Input
             disabled={!enabled}
             data-type="from"
@@ -94,7 +97,7 @@ export default function ConfigSMTP() {
           />
         </div>
         <div className="input">
-          <Label className="dark:text-gray-200" htmlFor="desc">{t("username")}</Label>
+          <Label htmlFor="username">{t("username")}</Label>
           <Input
             disabled={!enabled}
             data-type="username"
@@ -105,7 +108,7 @@ export default function ConfigSMTP() {
           />
         </div>
         <div className="input">
-          <Label className="dark:text-gray-200" htmlFor="desc">{t("password")}</Label>
+          <Label htmlFor="password">{t("password")}</Label>
           <Input
             type={"password"}
             disabled={!enabled}
@@ -117,17 +120,7 @@ export default function ConfigSMTP() {
           />
         </div>
       </div>
-      <div className="tip">
-        <IconQuestion className="dark:fill-gray-300" />
-        <a
-          href="https://doc.voce.chat/setting/smtp/smtp-gmail"
-          target="_blank"
-          className="link"
-          rel="noreferrer"
-        >
-          {t("how_to")}
-        </a>
-      </div>
+
       <div className="flex gap-4 whitespace-nowrap mt-6">
         <Input
           type={"email"}

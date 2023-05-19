@@ -14,33 +14,33 @@ const APIDocument = () => {
     };
     return (
         <section className="flex flex-col justify-start items-start gap-4">
-            <div className="text-gray-500 dark:text-gray-100">
+            <div className="font-semibold dark:text-white">
                 {t("api_doc.desc")}
             </div>
             <div className='flex flex-col gap-2 w-full'>
-                <h2 className='text-gray-700 dark:text-white text-xl font-bold'>
+                <h2 className='text-gray-700 dark:text-white text-lg font-semibold flex gap-1'>
                     {t("api_doc.access")}
+                    <a href={APIUrl} target="_blank" rel="noopener noreferrer" className='underline text-primary-600'>
+                        {APIUrl}
+                    </a>
                 </h2>
-                <a href={APIUrl} target="_blank" rel="noopener noreferrer" className='underline text-primary-600'>
-                    {APIUrl}
-                </a>
             </div>
             <div className='flex flex-col gap-2 w-full'>
-                <h2 className='text-gray-700 dark:text-white text-xl font-bold'>
+                <h2 className='text-gray-700 dark:text-white text-lg font-semibold'>
                     {t("api_doc.use_method")}
                 </h2>
                 <div className="flex flex-col gap-6">
                     <div className="flex flex-col gap-2">
-                        <h3 className='text-gray-700 dark:text-white text-lg'>
-                            👉 {t("api_doc.step_1")}
+                        <h3 className='text-gray-700 dark:text-white '>
+                            {t("api_doc.step_1")}
                         </h3>
                         {/* <div className="flex flex-col gap-1"> */}
-                        <img className='border border-solid rounded-md border-gray-300 shadow-lg md:w-[85%]' src="https://s.voce.chat/web_client/assets/img/api.doc.step1.png" alt="step 1" />
+                        <img className='border border-solid rounded-md border-gray-300 shadow-lg md:w-[50%]' src="https://s.voce.chat/web_client/assets/img/api.doc.step1.png" alt="step 1" />
                         {/* </div> */}
                     </div>
                     <div className="flex flex-col gap-2">
-                        <h3 className='text-gray-700 dark:text-white text-lg flex flex-col items-start gap-2'>
-                            👉 {t("api_doc.step_2")} <span className='text-gray-500 dark:text-white text-sm'>
+                        <h3 className='text-gray-700 dark:text-white flex flex-col items-start gap-2'>
+                            {t("api_doc.step_2")} <span className='text-gray-400 dark:text-white text-xs'>
                                 ({t("api_doc.step_2_desc")})
                             </span>
                         </h3>
@@ -53,8 +53,8 @@ const APIDocument = () => {
                         <img className='border border-solid rounded-md border-gray-300 shadow-lg md:w-[85%]' src="https://s.voce.chat/web_client/assets/img/api.doc.step2.jpg" alt="step 2" />
                     </div>
                     <div className="flex flex-col gap-2">
-                        <h3 className='text-gray-700 dark:text-white text-lg flex items-center gap-2'>
-                            👉  {t("api_doc.last")}
+                        <h3 className='text-gray-700 dark:text-white flex items-center gap-2'>
+                            {t("api_doc.last")}
                         </h3>
                         <img className='border border-solid rounded-md border-gray-300 shadow-lg md:w-[85%]' src="https://s.voce.chat/web_client/assets/img/api.doc.step3.png" alt="step 3" />
                     </div>

@@ -84,7 +84,7 @@
     },
     "contact_verify": {
       "title": "联系人验证",
-      "desc": "是否开启联系人验证",
+      "desc": "关闭：服务器内的所有成员能够互相看见；开启：通过搜索添加好友（管理员默认是所有人好友）",
       "enable": "开启",
       "disable": "关闭"
     }
@@ -179,6 +179,10 @@
     "password": "密码",
     "how_to": "如何设置SMTP？",
     "send_test_email": "发送测试邮件"
+  },
+  "agora": {
+    "enable": "开启",
+    "how_to": "如何配置Agora？"
   },
   "third_app": {
     "key": "API 安全密钥",
