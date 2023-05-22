@@ -6,7 +6,7 @@ const StyledTextarea = forwardRef(({ className, ...rest }: Props, ref) => {
     <textarea
       ref={ref}
       className={`rounded text-sm p-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 resize-none w-full shadow-sm 
-  border border-solid border-gray-200 dark:border-gray-400 
+  border border-solid border-gray-200 dark:border-gray-400 outline-none
   disabled:bg-gray-100 dark:disabled:bg-gray-800/50 dark:disabled:border-gray-600
   disabled:text-gray-400 dark:disabled:text-gray-500 
   disabled:pointer-events-none 

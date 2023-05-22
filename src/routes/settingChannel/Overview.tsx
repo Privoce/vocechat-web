@@ -106,7 +106,7 @@ export default function Overview({ id = 0 }) {
             id="name"
             placeholder={t("name")}
           />
-          <IconChannel className="absolute bottom-2.5 left-2" />
+          <IconChannel className="absolute bottom-2.5 left-2 dark:fill-gray-300" />
         </div>
         <div className={inputClass}>
           <Label htmlFor="desc">{t("topic")}</Label>
