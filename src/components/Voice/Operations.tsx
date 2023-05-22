@@ -14,6 +14,7 @@ import IconCallOff from "@/assets/icons/call.off.svg";
 import IconCameraOff from "@/assets/icons/camera.off.svg";
 import IconCamera from "@/assets/icons/camera.svg";
 import IconCheck from "@/assets/icons/check.sign.svg";
+import IconExitFullscreen from "@/assets/icons/fullscreen.exit.svg";
 import IconFullscreen from "@/assets/icons/fullscreen.svg";
 import IconMicOff from "@/assets/icons/mic.off.svg";
 import IconMic from "@/assets/icons/mic.on.svg";
@@ -161,7 +162,9 @@ type Props = {
 const Operations = ({ id, context, mode = "channel" }: Props) => {
   const [panelVisible, setPanelVisible] = useState<VisibleType>("");
   const {
+    exitFullscreen,
     enterFullscreen,
+    fullscreen,
     voicingInfo,
     leave,
     setMute,
@@ -260,13 +263,22 @@ const Operations = ({ id, context, mode = "channel" }: Props) => {
           />
         </button>
       </Tooltip>
-      {mode !== "fullscreen" && (
-        <Tooltip tip={"Fullscreen"} placement="top">
-          <button onClick={enterFullscreen.bind(null, undefined)} className={baseButtonClass}>
+      <Tooltip tip={"Fullscreen"} placement="top">
+        <button
+          onClick={
+            fullscreen
+              ? exitFullscreen.bind(null, undefined)
+              : enterFullscreen.bind(null, undefined)
+          }
+          className={baseButtonClass}
+        >
+          {fullscreen ? (
+            <IconExitFullscreen className={baseIconClass} />
+          ) : (
             <IconFullscreen className={baseIconClass} />
-          </button>
-        </Tooltip>
-      )}
+          )}
+        </button>
+      </Tooltip>
       {mode !== "dm" && (
         <Tooltip tip={t("leave_voice")} placement="top">
           <button

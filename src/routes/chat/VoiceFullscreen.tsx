@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import clsx from "clsx";
 
 import Operations from "@/components/Voice/Operations";
-import IconExitScreen from "@/assets/icons/fullscreen.exit.svg";
 import IconMicOff from "@/assets/icons/mic.off.svg";
 import IconMic from "@/assets/icons/mic.on.svg";
 import IconPin from "@/assets/icons/pin.svg";
@@ -11,7 +10,6 @@ import { updatePin } from "../../app/slices/voice";
 import { useAppSelector } from "../../app/store";
 import Avatar from "../../components/Avatar";
 import Tooltip from "../../components/Tooltip";
-import { useVoice } from "../../components/Voice";
 import { ChatContext } from "../../types/common";
 import { playAgoraVideo } from "../../utils";
 
@@ -23,7 +21,6 @@ type Props = {
 const VoiceFullscreen = ({ id, context }: Props) => {
   const dispatch = useDispatch();
   const [speakingUid, setSpeakingUid] = useState(0);
-  const { voicingInfo, exitFullscreen } = useVoice({ id, context });
   const { name, userData, voicingMembers } = useAppSelector((store) => {
     return {
       userData: store.users.byId,
@@ -59,7 +56,7 @@ const VoiceFullscreen = ({ id, context }: Props) => {
       dispatch(updatePin({ uid: +uid, action: "pin" }));
     }
   };
-  if (!voicingInfo) return null;
+  // if (!voicingInfo) return null;
   const pinUid = voicingMembers.pin;
   const _name = context == "channel" ? `# ${name}` : `@ ${name}`;
   const members = voicingMembers.ids;
@@ -70,9 +67,6 @@ const VoiceFullscreen = ({ id, context }: Props) => {
       {/* top */}
       <div className="px-7 py-6 flex justify-between">
         <span className="text-sm font-semibold">{_name}</span>
-        <div className="flex gap-4">
-          <IconExitScreen role="button" onClick={exitFullscreen} className="fill-gray-200" />
-        </div>
       </div>
       {/* middle */}
       <ul className="flex grow justify-center items-end relative gap-2">

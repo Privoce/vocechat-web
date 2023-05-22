@@ -30,9 +30,14 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
     videoInputDevices,
     audioInputDeviceId,
     audioOutputDeviceId,
-    videoInputDeviceId
+    videoInputDeviceId,
+    fullscreen
   } = useAppSelector((store) => {
     return {
+      fullscreen:
+        context == "channel"
+          ? store.footprint.channelAsides[id] == "voice_fullscreen"
+          : store.footprint.dmAsides[id] == "voice_fullscreen",
       loginUid: store.authData.user?.uid ?? 0,
       voicingInfo: store.voice.voicing,
       audioInputDevices: store.voice.devices.filter((d) => d.kind == "audioinput") ?? [],
@@ -309,6 +314,7 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
     stopShareScreen,
     enterFullscreen,
     exitFullscreen,
+    fullscreen,
     audioInputDevices,
     audioOutputDevices,
     videoInputDevices,
