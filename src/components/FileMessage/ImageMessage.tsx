@@ -39,7 +39,7 @@ const ImageMessage: FC<Props> = ({
 
   return (
     <div
-      className={`relative`}
+      className={`relative overflow-hidden`}
       style={{
         width: width ? `${width}px` : "",
         height: height ? `${height}px` : ""
