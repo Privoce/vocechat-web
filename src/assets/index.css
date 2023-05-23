@@ -314,3 +314,7 @@ svg:focus {
 [id^="CAMERA_"] video {
   object-fit: contain !important;
 }
+/* send placeholder */
+.send [data-slate-placeholder="true"] {
+  top: 4px;
+}

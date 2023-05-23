@@ -59,7 +59,7 @@ const EditMessage: FC<Props> = ({ mid, cancelEdit }) => {
 
   return (
     <div className="w-full">
-      <div className="bg-gray-200 rounded-lg p-4">
+      <div className="bg-gray-100 dark:bg-gray-900 rounded-lg p-4">
         <TextareaAutosize
           autoFocus
           onFocus={(e) =>
@@ -69,11 +69,12 @@ const EditMessage: FC<Props> = ({ mid, cancelEdit }) => {
             )
           }
           ref={inputRef}
-          className="content w-full resize-none bg-transparent text-gray-800 text-sm break-all"
+          className="content w-full resize-none bg-transparent text-gray-900 dark:text-gray-100 text-sm break-all outline-none rounded-sm focus:outline-1 focus:outline-primary-500"
           maxRows={8}
           minRows={1}
           onKeyDown={handleInputKeydown}
           onChange={handleMsgChange}
+          disabled={isEditing}
           value={currMsg}
           placeholder={`Edit Message`}
         />
