@@ -1,12 +1,17 @@
-import { Dispatch, MouseEvent, SetStateAction, useState } from "react";
+import { Dispatch, MouseEvent, SetStateAction, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import Tippy from "@tippyjs/react";
-import { ICameraVideoTrack, IMicrophoneAudioTrack } from "agora-rtc-sdk-ng";
+import AgoraRTC, { ICameraVideoTrack, IMicrophoneAudioTrack } from "agora-rtc-sdk-ng";
 import clsx from "clsx";
 
 // import { updateChannelVisibleAside, updateDMVisibleAside } from '@/app/slices/footprint';
-import { DeviceInfo, MediaDeviceKind, updateSelectDeviceId } from "@/app/slices/voice";
+import {
+  DeviceInfo,
+  MediaDeviceKind,
+  updateDevices,
+  updateSelectDeviceId
+} from "@/app/slices/voice";
 import { useAppSelector } from "@/app/store";
 import { ChatContext } from "@/types/common";
 import IconArrow from "@/assets/icons/arrow.down.mini.svg";
@@ -160,6 +165,7 @@ type Props = {
 };
 
 const Operations = ({ id, context, mode = "channel" }: Props) => {
+  const dispatch = useDispatch();
   const [panelVisible, setPanelVisible] = useState<VisibleType>("");
   const {
     exitFullscreen,
@@ -180,6 +186,24 @@ const Operations = ({ id, context, mode = "channel" }: Props) => {
     audioOutputDeviceId
   } = useVoice({ id, context });
   const { t } = useTranslation("chat");
+  useEffect(() => {
+    AgoraRTC.getDevices()
+      .then((devices) => {
+        console.log("devices", devices);
+        dispatch(
+          updateDevices(
+            devices.map((d) => {
+              const { deviceId, groupId, label, kind } = d;
+              return { deviceId, groupId, label, kind };
+            })
+          )
+        );
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+  }, []);
+
   if (!voicingInfo) return null;
   const { muted, video, shareScreen } = voicingInfo;
   const baseButtonClass = clsx(

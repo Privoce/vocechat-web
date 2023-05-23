@@ -12,7 +12,6 @@ import {
   removeVoiceMember,
   updateCallInfo,
   updateConnectionState,
-  updateDevices,
   updateVoicingMember,
   updateVoicingNetworkQuality
 } from "../../app/slices/voice";
@@ -165,21 +164,7 @@ const Voice = () => {
       AgoraRTC.onMicrophoneChanged = (info) => {
         console.log("onMicrophoneChanged", info);
       };
-      AgoraRTC.getDevices()
-        .then((devices) => {
-          console.log("devices", devices);
-          dispatch(
-            updateDevices(
-              devices.map((d) => {
-                const { deviceId, groupId, label, kind } = d;
-                return { deviceId, groupId, label, kind };
-              })
-            )
-          );
-        })
-        .catch((err) => {
-          console.log("err", err);
-        });
+
       window.VOICE_CLIENT = agoraEngine;
     };
     const handlePageUnload = (evt: BeforeUnloadEvent) => {

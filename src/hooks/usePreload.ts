@@ -96,7 +96,9 @@ export default function usePreload() {
   useEffect(() => {
     if (rehydrated && serverVersion) {
       getUsers().then(() => {
-        getContacts();
+        if (!isGuest) {
+          getContacts();
+        }
       });
       getServer();
       getFavorites();
