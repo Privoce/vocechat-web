@@ -212,7 +212,7 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
     const localVideoTrack = window.VIDEO_TRACK_MAP[loginUid] as ICameraVideoTrack;
     if (window.VOICE_CLIENT) {
       await window.VOICE_CLIENT.leave();
-      dispatch(updateVoicingInfo(null));
+
       if (localAudioTrack) {
         localAudioTrack.close();
         window.VOICE_TRACK_MAP[loginUid] = null;
@@ -221,14 +221,19 @@ const useVoice = ({ id, context = "channel" }: VoiceProps) => {
         localVideoTrack.close();
         window.VIDEO_TRACK_MAP[loginUid] = null;
       }
+      // reset tracks
+      window.VOICE_TRACK_MAP = {};
+      window.VIDEO_TRACK_MAP = {};
+      // 重置voicingInfo
+      dispatch(updateVoicingInfo(null));
       const updateAside = context == "channel" ? updateChannelVisibleAside : updateDMVisibleAside;
-      dispatch(updateAside({ id, aside: null }));
+      dispatch(updateAside({ id, aside: context == "dm" ? "voice" : null }));
       // 即时更新对应的活跃列表信息
       dispatch(
         upsertVoiceList({
           id,
           context,
-          memberCount: 0,
+          memberCount: context == "dm" ? 1 : 0,
           // will fix it
           channelName: `vocechat:${context}:${id}`
         })

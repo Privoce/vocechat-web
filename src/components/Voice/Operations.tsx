@@ -166,6 +166,8 @@ type Props = {
 
 const Operations = ({ id, context, mode = "channel" }: Props) => {
   const dispatch = useDispatch();
+  const loginUid = useAppSelector((store) => store.authData.user?.uid ?? 0);
+
   const [panelVisible, setPanelVisible] = useState<VisibleType>("");
   const {
     exitFullscreen,
@@ -291,8 +293,8 @@ const Operations = ({ id, context, mode = "channel" }: Props) => {
         <button
           onClick={
             fullscreen
-              ? exitFullscreen.bind(null, undefined)
-              : enterFullscreen.bind(null, undefined)
+              ? exitFullscreen
+              : enterFullscreen.bind(null, context == "dm" ? loginUid : undefined)
           }
           className={baseButtonClass}
         >

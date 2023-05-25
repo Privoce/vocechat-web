@@ -1,13 +1,7 @@
-// import React from 'react'
 import { useEffect } from "react";
-// import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import clsx from "clsx";
 
-// import IconMic from '@/assets/icons/mic.on.svg';
-// import IconCamera from '@/assets/icons/camera.svg';
-// import IconCameraOff from '@/assets/icons/camera.off.svg';
-// import IconScreen from '@/assets/icons/share.screen.svg';
 import { updateCallInfo } from "@/app/slices/voice";
 import { useAppSelector } from "@/app/store";
 import Avatar from "@/components/Avatar";
@@ -81,7 +75,10 @@ const VoicingBlocks = ({ onlyToSelf, sendByMe, connected, from, to }: BlockProps
             alt="avatar"
           />
         </div>
-        <div className="z-30 absolute left-0 top-0 w-full h-full" id={`CAMERA_${id}`}>
+        <div
+          className={clsx("z-30 absolute left-0 top-0 w-full h-full", !video && "hidden")}
+          id={`CAMERA_${id}`}
+        >
           {/* camera video */}
         </div>
         {video && (
@@ -146,7 +143,10 @@ const DMVoice = ({ uid }: Props) => {
     if (sendByMe || voicingMembers.ids.length == 2 || onlyToSelf) {
       leave();
     }
-    dispatch(updateCallInfo({ from: 0, to: 0 }));
+    if (sendByMe || voicingMembers.ids.length == 1) {
+      // 立马隐掉
+      dispatch(updateCallInfo({ from: 0, to: 0 }));
+    }
   };
   const handleAnswer = () => {
     joinVoice();
