@@ -48,25 +48,18 @@ const Send: FC<IProps> = ({
   const dispatch = useAppDispatch();
   const addLocalFileMessage = useAddLocalFileMessage({ context, to: id });
   // 谁发的
-  const {
-    from_uid,
-    replying_mid = null,
-    mode,
-    uploadFiles,
-    channelsData,
-    usersData,
-    uids
-  } = useAppSelector((store) => {
-    return {
-      channelsData: store.channels.byId,
-      uids: store.users.ids,
-      usersData: store.users.byId,
-      mode: store.ui.inputMode,
-      from_uid: store.authData.user?.uid,
-      replying_mid: store.message.replying[`${context}_${id}`],
-      uploadFiles: store.ui.uploadFiles[`${context}_${id}`] ?? []
-    };
-  });
+  const { from_uid, replying_mid, mode, uploadFiles, channelsData, usersData, uids } =
+    useAppSelector((store) => {
+      return {
+        channelsData: store.channels.byId,
+        uids: store.users.ids,
+        usersData: store.users.byId,
+        mode: store.ui.inputMode,
+        from_uid: store.authData.user?.uid,
+        replying_mid: store.message.replying[`${context}_${id}`],
+        uploadFiles: store.ui.uploadFiles[`${context}_${id}`] ?? []
+      };
+    });
   const { sendMessage } = useSendMessage({ context, from: from_uid, to: id });
 
   useEffect(() => {
@@ -83,12 +76,13 @@ const Send: FC<IProps> = ({
       editor.insertText(emoji);
     }
   };
-  const handleSendMessage = async () => {
+  const handleSendMessage = async (messages?: any[]) => {
     if (!id) return;
+    const sendingMsgs = messages ?? msgs;
     editor.resetInput();
-    if (msgs && msgs.length) {
+    if (sendingMsgs && sendingMsgs.length) {
       // send text msgs
-      for await (const msg of msgs) {
+      for await (const msg of sendingMsgs) {
         const { type: content_type, content, properties = {} } = msg;
         if ((content as string).trim() === "") continue; // 空消息不发送
         properties.local_id = properties.local_id ?? +new Date();

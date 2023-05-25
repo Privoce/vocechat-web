@@ -20,8 +20,8 @@ const TextInput = ({ sendMessage, placeholder }: Props) => {
   const handleSend = () => {
     if (!currMsg) return;
     // todo
-    const msg = [{ type: "text", content: currMsg }];
-    sendMessage(msg);
+    const msgs = [{ type: "text", content: currMsg }];
+    sendMessage(msgs);
     setCurrMsg("");
   };
 
