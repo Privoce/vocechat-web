@@ -205,6 +205,7 @@ const Message: FC<IProps> = ({
 
       {showExpire && (
         <ExpireTimer
+          enableRightLayout={isSelf}
           mid={message.mid}
           context={context}
           contextId={contextId}

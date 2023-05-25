@@ -1,5 +1,6 @@
 import { FC, useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import clsx from "clsx";
 import dayjs from "dayjs";
 
 import IconTimer from "@/assets/icons/timer.svg";
@@ -14,9 +15,17 @@ type Props = {
   mid: number;
   expiresIn: number;
   createAt: number;
+  enableRightLayout: boolean;
 };
 
-const ExpireTimer: FC<Props> = ({ mid, createAt, expiresIn, context, contextId }) => {
+const ExpireTimer: FC<Props> = ({
+  enableRightLayout,
+  mid,
+  createAt,
+  expiresIn,
+  context,
+  contextId
+}) => {
   const [countdown, setCountdown] = useState<number | undefined>();
   const dispatch = useDispatch();
   const clearMsgFromClient = useCallback(() => {
@@ -73,7 +82,12 @@ const ExpireTimer: FC<Props> = ({ mid, createAt, expiresIn, context, contextId }
     .toString()
     .padStart(2, "0")}`;
   return (
-    <div className="absolute bottom-1 right-2 text-xs text-gray-400 flex items-center gap-1 font-mono">
+    <div
+      className={clsx(
+        "absolute bottom-1 text-xs text-gray-400 flex items-center gap-1 font-mono",
+        enableRightLayout ? "left-2" : "right-2"
+      )}
+    >
       <IconTimer className="w-4 h-4 stroke-slate-400" />
       {formatted_countdown}
     </div>

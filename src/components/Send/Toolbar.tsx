@@ -99,8 +99,8 @@ const Toolbar: FC<Props> = ({
           {sendVisible && (
             <Tooltip placement="top" tip="Send">
               <SendIcon
-                className={"w-6 h-6 cursor-pointer animate-zoomIn dark:stroke-gray-300"}
-                onClick={sendMessages}
+                className={"w-6 h-6 cursor-pointer animate-zoomIn dark:fill-gray-300"}
+                onClick={sendMessages.bind(null, undefined)}
               />
             </Tooltip>
           )}

@@ -11,11 +11,11 @@ interface Props {
 
 const RequireNoAuth: FC<Props> = ({ children, redirectTo = "/" }) => {
   const { isLoading } = useGetInitializedQuery();
-  const { token, initialized } = useAppSelector((store) => store.authData);
+  const { token, initialized, guest } = useAppSelector((store) => store.authData);
   if (isLoading) return null;
   //  未初始化 则先走setup 流程
   if (!initialized) return <Navigate to={`/onboarding`} replace />;
-  return token ? <Navigate to={redirectTo} replace /> : children;
+  return token && !guest ? <Navigate to={redirectTo} replace /> : children;
 };
 
 export default RequireNoAuth;

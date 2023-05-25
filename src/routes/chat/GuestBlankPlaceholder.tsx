@@ -23,6 +23,7 @@ const GuestBlankPlaceholder = () => {
     clearLocalData();
     navigateTo("/login");
   };
+  const qrUrl = `http://voce.chat/url?s=${encodeURIComponent(BASE_ORIGIN)}`;
   return (
     <section className="flex flex-col items-center text-center">
       <h2 className="text-3xl text-gray-600 dark:text-gray-50 font-bold">
@@ -33,12 +34,9 @@ const GuestBlankPlaceholder = () => {
           {t("guest_login_tip")}
         </span>
         <div className="w-44 h-44 self-center mb-4">
-          <QRCode
-            level="Q"
-            size={1200}
-            link={`https://voce.chat/login?s=${encodeURIComponent(BASE_ORIGIN)}`}
-          />
+          <QRCode level="Q" size={1200} link={qrUrl} />
         </div>
+        {process.env.NODE_ENV == "development" && <span>{qrUrl}</span>}
         <Button onClick={handleSignIn} className="small">
           {t("sign_in")}
         </Button>
