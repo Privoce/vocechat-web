@@ -21,6 +21,7 @@ import {
   TestEmailDTO
 } from "@/types/server";
 import { User } from "@/types/user";
+import { transformInviteLink } from "@/utils";
 import BASE_URL, { ContentTypes, IS_OFFICIAL_DEMO, PAYMENT_URL_PREFIX } from "../config";
 import { updateInfo } from "../slices/server";
 import { updateCallInfo, upsertVoiceList } from "../slices/voice";
@@ -272,11 +273,7 @@ export const serverApi = createApi({
         responseHandler: "text"
       }),
       transformResponse: (link: string) => {
-        // 确保http开头
-        const _link = link.startsWith("http") ? link : `http://${link}`;
-        // 替换掉域名
-        const invite = new URL(_link);
-        return `${location.origin}${invite.pathname}${invite.search}${invite.hash}`;
+        return transformInviteLink(link);
       }
     }),
     updateServer: builder.mutation<void, Server>({

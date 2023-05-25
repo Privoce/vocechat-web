@@ -2,6 +2,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 
 import { Channel, ChannelDTO, CreateChannelDTO } from "@/types/channel";
 import { ContentTypeKey } from "@/types/message";
+import { transformInviteLink } from "@/utils";
 import BASE_URL, { ContentTypes } from "../config";
 import { removeChannel, updateChannel } from "../slices/channels";
 import { removeMessage } from "../slices/message";
@@ -93,12 +94,7 @@ export const channelApi = createApi({
         responseHandler: "text"
       }),
       transformResponse: (link: string) => {
-        // 确保http开头
-        const _link = link.startsWith("http") ? link : `http://${link}`;
-        // return _link;
-        // 替换掉域名
-        const invite = new URL(_link);
-        return `${location.origin}${invite.pathname}${invite.hash}${invite.search}`;
+        return transformInviteLink(link);
       }
     }),
     clearChannelMessage: builder.query<void, number>({
@@ -132,12 +128,7 @@ export const channelApi = createApi({
         responseHandler: "text"
       }),
       transformResponse: (link: string) => {
-        // 确保http开头
-        const _link = link.startsWith("http") ? link : `http://${link}`;
-        // return _link;
-        // 替换掉域名
-        const invite = new URL(_link);
-        return `${location.origin}${invite.pathname}${invite.hash}${invite.search}`;
+        return transformInviteLink(link);
       }
     }),
     removeChannel: builder.query<void, number>({

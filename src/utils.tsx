@@ -405,3 +405,15 @@ export const playAgoraVideo = (uid: number, videoTrack?: ICameraVideoTrack | nul
     }
   }
 };
+
+// 转换一下邀请连接
+export const transformInviteLink = (link: string) => {
+  // 确保http开头
+  const _link = link.startsWith("http") ? link : `http://${link}`;
+  // return _link;
+  // 替换掉域名
+  const invite = new URL(_link);
+  const tmpLink = `${location.origin}${invite.pathname}${invite.hash}${invite.search}`;
+
+  return `https://voce.chat/url?i=${encodeURIComponent(tmpLink)}`;
+};
