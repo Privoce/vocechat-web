@@ -316,5 +316,5 @@ svg:focus {
 }
 /* send placeholder */
 .send [data-slate-placeholder="true"] {
-  top: 4px;
+  top: 4px !important;
 }

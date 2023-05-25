@@ -16,7 +16,7 @@ const SentTip: FC<Props> = ({ email, reset }) => {
         {t("check_email")}
       </h2>
       <span className="text-center text-gray-500 mb-6">{t("check_email_desc", { email })}</span>
-      <Button onClick={reset} className="main flex">
+      <Button onClick={reset} className="main flex-center">
         {t("use_different")}
       </Button>
     </div>
