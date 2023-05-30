@@ -38,8 +38,8 @@ const LinkifyText = ({
             );
           },
           url: ({ content, attributes: { href: link } }) => {
-            // console.log("attr", link);
-            if (!url) return <>{content}</>;
+            // 只识别 http 开头的
+            if (!url || !content.startsWith("http")) return <>{content}</>;
             return (
               <>
                 <a className="text-primary-500" target="_blank" href={link} rel="noreferrer">
