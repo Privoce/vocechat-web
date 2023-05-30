@@ -1,17 +1,14 @@
 import { FC, useEffect, useState } from "react";
-import clsx from "clsx";
 
 import { useAppSelector } from "@/app/store";
 import { ChatContext } from "@/types/common";
 import useRemoveLocalMessage from "@/hooks/useRemoveLocalMessage";
 import useSendMessage from "@/hooks/useSendMessage";
 import useUploadFile from "@/hooks/useUploadFile";
-import { formatBytes, fromNowTime, getFileIcon, getImageSize, isImage } from "@/utils";
-import IconClose from "@/assets/icons/close.circle.svg";
-import IconDownload from "@/assets/icons/download.svg";
+import { getImageSize, isImage } from "@/utils";
 import AudioMessage from "./AudioMessage";
 import ImageMessage from "./ImageMessage";
-import Progress from "./Progress";
+import OtherFileMessage from "./OtherFileMessage";
 import VideoMessage from "./VideoMessage";
 
 const isLocalFile = (content: string) => {
@@ -133,7 +130,6 @@ const FileMessage: FC<Props> = ({
   }, [sendMessageSuccess, content]);
 
   if (!properties) return null;
-  const icon = getFileIcon(content_type, name, "w-9 h-auto");
 
   if (!content || !name) return null;
 
@@ -151,6 +147,7 @@ const FileMessage: FC<Props> = ({
         thumbnail={thumbnail}
       />
     );
+
   // video
   if (content_type.startsWith("video") && !sending)
     return <VideoMessage size={size} url={content} name={name} download={download} />;
@@ -158,47 +155,17 @@ const FileMessage: FC<Props> = ({
   if (content_type.startsWith("audio") && !sending)
     return <AudioMessage size={size} url={content} name={name} download={download} />;
   return (
-    <div
-      className={clsx(
-        `bg-slate-50 dark:bg-slate-900 border border-solid border-gray-300 dark:border-gray-500 box-border md:w-[370px] rounded-md`,
-        sending && "opacity-90"
-      )}
-    >
-      <div className="px-2 py-3 flex items-center justify-between gap-2">
-        {icon}
-        <div className="flex flex-col gap-1 w-full overflow-hidden">
-          <span className="font-semibold text-sm text-gray-800 dark:text-gray-100 truncate">
-            {name}
-          </span>
-          <span className="hidden md:flex whitespace-nowrap text-xs text-gray-500 dark:text-gray-300 gap-4">
-            {sending ? (
-              <Progress value={progress} width={"80%"} />
-            ) : (
-              <>
-                <strong>{formatBytes(size)}</strong>
-                <strong>{fromNowTime(created_at)}</strong>
-                {fromUser && (
-                  <strong>
-                    by <strong className="font-bold">{fromUser.name}</strong>
-                  </strong>
-                )}
-              </>
-            )}
-          </span>
-        </div>
-        {sending ? (
-          <IconClose className="cursor-pointer" onClick={handleCancel} />
-        ) : (
-          <a
-            className="hidden md:block whitespace-nowrap"
-            download={name}
-            href={`${content}&download=true`}
-          >
-            <IconDownload className="fill-gray-500 dark:fill-gray-400" />
-          </a>
-        )}
-      </div>
-    </div>
+    <OtherFileMessage
+      created_at={created_at}
+      from_user={fromUser}
+      name={name}
+      size={size}
+      progress={progress}
+      sending={sending}
+      content={content}
+      content_type={content_type}
+      handleCancel={handleCancel}
+    />
   );
 };
 
