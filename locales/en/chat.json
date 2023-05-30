@@ -61,5 +61,6 @@
   "block": "Block",
   "unblock": "Unblock",
   "contact_tip": "This user is not in your contact",
-  "contact_block_tip": "This user has been blocked by you"
+  "contact_block_tip": "This user has been blocked by you",
+  "file_expired": "File Expired"
 }

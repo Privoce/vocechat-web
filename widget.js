@@ -47,6 +47,8 @@ window.addEventListener(
           url.searchParams.append("open", new Date().getTime());
           console.log("new src", url.href);
           wrapper.src = url.href;
+          wrapper.setAttribute("width", openWidth);
+          wrapper.setAttribute("height", openHeight);
         }
         break;
       default:

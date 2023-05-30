@@ -61,5 +61,6 @@
   "block": "屏蔽",
   "unblock": "解除屏蔽",
   "contact_tip": "该用户不在您的联系人列表中",
-  "contact_block_tip": "该用户已被你屏蔽"
+  "contact_block_tip": "该用户已被你屏蔽",
+  "file_expired": "文件已过期"
 }
