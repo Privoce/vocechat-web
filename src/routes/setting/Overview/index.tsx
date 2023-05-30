@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { useAppSelector } from "@/app/store";
 import { LoginConfig, WhoCanSignUp } from "@/types/server";
+import SettingBlock from "@/components/SettingBlock";
 import StyledRadio from "@/components/styled/Radio";
 import useConfig from "@/hooks/useConfig";
 import ChatLayout from "./ChatLayout";
@@ -12,7 +13,6 @@ import FrontendURL from "./FrontendURL";
 import Language from "./Language";
 import OnlineStatus from "./OnlineStatus";
 import Server from "./Server";
-import SettingBlock from "./SettingBlock";
 
 export default function Overview() {
   const { t } = useTranslation("setting");

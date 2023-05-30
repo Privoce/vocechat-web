@@ -10,6 +10,7 @@ import ConfigAgora from "./config/Agora";
 import ConfigFirebase from "./config/Firebase";
 import Logins from "./config/Logins";
 import ConfigSMTP from "./config/SMTP";
+import DataManagement from "./DataManagement";
 import License from "./License";
 import MyAccount from "./MyAccount";
 import Overview from "./Overview";
@@ -30,6 +31,11 @@ const navs = [
       {
         name: "members",
         component: <ManageMembers />,
+        admin: true
+      },
+      {
+        name: "data_management",
+        component: <DataManagement />,
         admin: true
       }
     ]

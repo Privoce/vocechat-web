@@ -3,13 +3,13 @@ import { useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 
+import SettingBlock from "@/components/SettingBlock";
 import StyledRadio from "@/components/styled/Radio";
 import {
   useGetSystemCommonQuery,
   useUpdateSystemCommonMutation
 } from "../../../app/services/server";
 import { useAppSelector } from "../../../app/store";
-import SettingBlock from "./SettingBlock";
 
 // type Props = {}
 

@@ -3,10 +3,10 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 
+import SettingBlock from "@/components/SettingBlock";
 import StyledButton from "@/components/styled/Button";
 import StyledInput from "@/components/styled/Input";
 import { useGetFrontendUrlQuery, useUpdateFrontendUrlMutation } from "../../../app/services/server";
-import SettingBlock from "./SettingBlock";
 
 // type Props = {}
 

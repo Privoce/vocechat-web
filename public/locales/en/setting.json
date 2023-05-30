@@ -7,6 +7,7 @@
     "general": "General",
     "overview": "Overview",
     "members": "Members",
+    "data_management": "Data Management",
     "auto_delete_msg": "Auto-delete Messages",
     "user": "User",
     "my_account": "My Account",
@@ -93,6 +94,29 @@
       "desc": "By default all server members can see each other. If you want server members to add and manage their own contacts, please enable the contact feature (admin will be in the contacts list by default).",
       "enable": "Enable",
       "disable": "Disable"
+    }
+  },
+  "data": {
+    "clear_files": {
+      "title": "Files and Images Data",
+      "desc": "Click the button below to remove all files and images data of this server.",
+      "btn": "Clear Files Data"
+    },
+    "clear_msgs": {
+      "title": "All Messages Data",
+      "desc": "Click the button below to remove all the chat data including texts and files of this server.",
+      "btn": "Clear Chats Data"
+    },
+    "auto_delete_file": {
+      "title": "Auto-delete File Data",
+      "desc": "Set expire time for all file data of this server.",
+      "confirm_desc": "All files older than the set time will be deleted.",
+      "off": "Off",
+      "day1": "1 Day",
+      "day7": "7 Days",
+      "day30": "30 Days",
+      "day90": "90 Days",
+      "day180": "180 Days"
     }
   },
   "license": {

@@ -1,8 +1,8 @@
 // import React from 'react'
 import { useTranslation } from "react-i18next";
 
+import SettingBlock from "@/components/SettingBlock";
 import StyledRadio from "@/components/styled/Radio";
-import SettingBlock from "./SettingBlock";
 
 // type Props = {}
 

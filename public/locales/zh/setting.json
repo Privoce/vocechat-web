@@ -7,6 +7,7 @@
     "general": "通用",
     "overview": "概况",
     "members": "成员",
+    "data_management": "数据管理",
     "auto_delete_msg": "自动删除消息",
     "my_account": "我的账号",
     "config": "配置",
@@ -87,6 +88,29 @@
       "desc": "关闭：服务器内的所有成员能够互相看见；开启：通过搜索添加好友（管理员默认是所有人好友）",
       "enable": "开启",
       "disable": "关闭"
+    }
+  },
+  "data": {
+    "clear_files": {
+      "title": "文件数据",
+      "desc": "清除所有人的文件图片类型数据",
+      "btn": "一键删除"
+    },
+    "clear_msgs": {
+      "title": "聊天数据",
+      "desc": "清除所有人的聊天数据，即所有文字与文件数据。",
+      "btn": "一键删除"
+    },
+    "auto_delete_file": {
+      "title": "定时删除数据",
+      "desc": "请选择定时消息的时长",
+      "confirm_desc": "所有在此之前的文件数据都将删除",
+      "off": "关闭",
+      "day1": "1天",
+      "day7": "7天",
+      "day30": "30天",
+      "day90": "90天",
+      "day180": "180天"
     }
   },
   "license": {

@@ -365,6 +365,18 @@ export const serverApi = createApi({
         body: { license }
       })
     }),
+    clearAllMessages: builder.query<void, void>({
+      query: () => ({
+        url: "/admin/system/message/clear",
+        method: "DELETE"
+      })
+    }),
+    clearAllFiles: builder.query<void, void>({
+      query: () => ({
+        url: "/resource/file/delete",
+        method: "DELETE"
+      })
+    }),
     getBotRelatedChannels: builder.query<Channel[], { api_key: string; public_only?: boolean }>({
       query: ({ api_key, public_only = false }) => ({
         url: public_only ? `/bot?public_only=${public_only}` : `/bot`,
@@ -443,5 +455,7 @@ export const {
   useLazyGetSystemCommonQuery,
   useGetSystemCommonQuery,
   useGenerateAgoraTokenMutation,
-  useLazyGetAgoraUsersByChannelQuery
+  useLazyGetAgoraUsersByChannelQuery,
+  useLazyClearAllFilesQuery,
+  useLazyClearAllMessagesQuery
 } = serverApi;
