@@ -42,7 +42,7 @@ const OtherFileMessage = ({
   handleCancel
 }: Props) => {
   const [error, setError] = useState(false);
-  const icon = getFileIcon(content_type, name, "w-9 h-auto");
+  const icon = getFileIcon(content_type, name, "w-9 shrink-0 h-auto");
   useEffect(() => {
     if (content) {
       fetch(content)
@@ -62,12 +62,12 @@ const OtherFileMessage = ({
   return (
     <div
       className={clsx(
-        `bg-slate-50 dark:bg-slate-900 border border-solid box-border md:w-[370px] rounded-md`,
+        `bg-stone-100 dark:bg-stone-900 border box-border md:w-96 rounded-md`,
         sending && "opacity-90",
         error ? "border-red-100 dark:border-red-900/50" : "border-gray-300 dark:border-gray-500"
       )}
     >
-      <div className="px-2 py-3 flex items-center justify-between gap-2">
+      <div className="px-3 py-2 flex items-center justify-between gap-2">
         {icon}
         <div className="flex flex-col gap-1 w-full overflow-hidden">
           <span
