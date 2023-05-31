@@ -98,7 +98,7 @@
     "start": "REACT_APP_BUILD_TIME=$(date +%s) node scripts/start.js",
     "build": "rm -rf build && REACT_APP_BUILD_TIME=$(date +%s) GENERATE_SOURCEMAP=false node scripts/build.js",
     "build:release": "rm -rf build && REACT_APP_BUILD_TIME=$(date +%s) REACT_APP_RELEASE=true GENERATE_SOURCEMAP=false node scripts/build.js",
-    "deploy:demo": "yarn build && gh-pages -d build",
+    "deploy:demo": "REACT_APP_OFFICIAL_DEMO=true yarn build && gh-pages -d build",
     "lint": "lint-staged",
     "prepare": "husky install",
     "postinstall": "patch-package"

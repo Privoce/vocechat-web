@@ -12,12 +12,13 @@ let prices: Price[] = [
   }
 ];
 const official_dev = `https://dev.voce.chat`;
-// const local_dev = `http://localhost:3000`;
-const local_dev = official_dev;
+// const local_dev = `https://dev.voce.chat`;
+const local_dev = `http://localhost:3000`;
+const dev_origin = process.env.REACT_APP_OFFICIAL_DEMO ? official_dev : local_dev;
 
 // const local_dev = `http://07333.qicp.vip:3030`;
 // const local_dev = `https://im.ttt.td`;
-export const BASE_ORIGIN = process.env.REACT_APP_RELEASE ? `${location.origin}` : local_dev;
+export const BASE_ORIGIN = process.env.REACT_APP_RELEASE ? `${location.origin}` : dev_origin;
 export const IS_OFFICIAL_DEMO = BASE_ORIGIN === official_dev;
 
 const BASE_URL = `${BASE_ORIGIN}/api`;
