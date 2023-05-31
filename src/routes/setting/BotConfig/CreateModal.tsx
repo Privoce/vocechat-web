@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 
@@ -12,30 +12,26 @@ import StyledModal from "../../../components/styled/Modal";
 type Props = {
   closeModal: () => void;
 };
-type CreateDTO = {
-  name: string;
-  webhook_url?: string;
-};
 const CreateModal = ({ closeModal }: Props) => {
   const [createUser, { isSuccess, isLoading, error }] = useCreateUserMutation();
-  const formRef = useRef(null);
   const { t } = useTranslation("setting", { keyPrefix: "bot" });
+  const [inputs, setInputs] = useState({
+    name: "",
+    webhook_url: ""
+  });
   const { t: ct } = useTranslation();
   // const [input, setInput] = useState("");
+  const handleInputChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    const { value } = evt.target;
+    const { name = "" } = evt.target.dataset;
+
+    setInputs((prev) => ({ ...prev, [name]: value }));
+  };
   const handleCreateBot = () => {
-    if (!formRef || !formRef.current) return;
-    const formEle = formRef.current as HTMLFormElement;
-    if (!formEle.checkValidity()) {
-      formEle.reportValidity();
+    if (inputs.name.trim() === "") {
       return;
     }
-    const myFormData = new FormData(formEle);
-    const formDataObj: CreateDTO = { name: "" };
-    myFormData.forEach((value, key) => {
-      if (value) {
-        formDataObj[key] = value;
-      }
-    });
+    const { name, webhook_url } = inputs;
     const hostname = new URL(BASE_ORIGIN).hostname;
     createUser({
       is_bot: true,
@@ -43,7 +39,8 @@ const CreateModal = ({ closeModal }: Props) => {
       gender: 1,
       email: `bot_${new Date().getTime()}@${hostname}`,
       password: "",
-      ...formDataObj
+      name,
+      webhook_url: webhook_url.trim() === "" ? undefined : webhook_url
     });
   };
   useEffect(() => {
@@ -51,6 +48,10 @@ const CreateModal = ({ closeModal }: Props) => {
       switch (error.status) {
         case 406:
           toast.error("Invalid Webhook URL!");
+          break;
+        case 409:
+          toast.error("Name conflict with existed username, try the proposed name below.");
+          setInputs((prev) => ({ ...prev, name: `${prev.name}-bot` }));
           break;
 
         default:
@@ -64,7 +65,7 @@ const CreateModal = ({ closeModal }: Props) => {
       closeModal();
     }
   }, [isSuccess]);
-
+  const { name, webhook_url } = inputs;
   return (
     <Modal id="modal-modal">
       <StyledModal
@@ -75,24 +76,37 @@ const CreateModal = ({ closeModal }: Props) => {
             <Button className="cancel" onClick={closeModal}>
               {ct("action.cancel")}
             </Button>
-            <Button onClick={handleCreateBot}>{isLoading ? "Creating" : ct("action.done")}</Button>
+            <Button disabled={!inputs.name} onClick={handleCreateBot}>
+              {isLoading ? "Creating" : ct("action.done")}
+            </Button>
           </>
         }
       >
-        <form ref={formRef} className="w-full flex flex-col gap-2" action="/">
+        <div className="w-full flex flex-col gap-2">
           <div className="flex flex-col items-start gap-1 w-full">
             <label htmlFor={"name"} className="text-sm text-gray-500">
               Name
             </label>
-            <Input name={"name"} required placeholder="Please input bot name"></Input>
+            <Input
+              onChange={handleInputChange}
+              value={name}
+              data-name={"name"}
+              placeholder="Please input bot name"
+            ></Input>
           </div>
           <div className="flex flex-col items-start gap-1 w-full">
             <label htmlFor={"webhook_url"} className="text-sm text-gray-500">
               Webhook URL (Optional)
             </label>
-            <Input name={"webhook_url"} type="url" placeholder="Please input webhook url"></Input>
+            <Input
+              onChange={handleInputChange}
+              value={webhook_url}
+              data-name={"webhook_url"}
+              type="url"
+              placeholder="Please input webhook url"
+            ></Input>
           </div>
-        </form>
+        </div>
       </StyledModal>
     </Modal>
   );
