@@ -53,7 +53,7 @@ const ImageMessage: FC<Props> = ({
       )}
       {status == "error" ? (
         <p className="w-full h-full flex-center text-lg text-red-800 bg-red-100">
-          load image error
+          Image expired or removed
         </p>
       ) : status == "loading" ? (
         <p className="w-full h-full flex-center bg-primary-50/80 dark:bg-primary-900/70">
