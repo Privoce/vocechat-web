@@ -23,7 +23,7 @@ const GuestBlankPlaceholder = () => {
     clearLocalData();
     navigateTo("/login");
   };
-  const qrUrl = `http://voce.chat/url?s=${encodeURIComponent(BASE_ORIGIN)}`;
+  const qrUrl = BASE_ORIGIN;
   return (
     <section className="flex flex-col items-center text-center">
       <h2 className="text-3xl text-gray-600 dark:text-gray-50 font-bold">

@@ -14,6 +14,7 @@ import store, { useAppSelector } from "../app/store";
 import NotFoundPage from "./404";
 import InvitePrivate from "./invitePrivate";
 import LazyIt from "./lazy";
+import InviteInMobile from "./reg/InviteInMobile";
 
 // import Welcome from './Welcome'
 // const HomePage = lazy(() => import("./home"));
@@ -78,6 +79,16 @@ const PageRoutes = () => {
           }
         />
         <Route
+          path="/invite_mobile/:magic_token"
+          element={
+            <LazyIt>
+              <RequireNoAuth>
+                <InviteInMobile />
+              </RequireNoAuth>
+            </LazyIt>
+          }
+        />
+        <Route
           path="/cb/:type/:payload"
           element={
             <LazyIt>
@@ -113,6 +124,7 @@ const PageRoutes = () => {
             </LazyIt>
           }
         />
+
         <Route
           path="/register"
           element={

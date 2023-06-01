@@ -415,5 +415,5 @@ export const transformInviteLink = (link: string) => {
   const invite = new URL(_link);
   const tmpLink = `${location.origin}${invite.pathname}${invite.hash}${invite.search}`;
 
-  return `https://voce.chat/url?i=${encodeURIComponent(tmpLink)}`;
+  return tmpLink;
 };

@@ -2,7 +2,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 import BASE_URL, { KEY_LOCAL_MAGIC_TOKEN } from "@/app/config";
 import {
@@ -16,6 +16,7 @@ import { useAppSelector } from "@/app/store";
 import Divider from "@/components/Divider";
 import Button from "@/components/styled/Button";
 import Input from "@/components/styled/Input";
+import { isMobile } from "@/utils";
 import SocialLoginButtons from "../login/SocialLoginButtons";
 import EmailNextTip from "./EmailNextStepTip";
 import { useMagicToken } from "./index";
@@ -29,6 +30,8 @@ interface AuthForm {
 }
 
 export default function Register() {
+  let [searchParams] = useSearchParams(new URLSearchParams(location.search));
+  const ctx = searchParams.get("ctx");
   const serverName = useAppSelector((store) => store.server.name);
   const { t } = useTranslation("auth");
   const { t: ct } = useTranslation();
@@ -52,6 +55,13 @@ export default function Register() {
     //本地存一下 magic token 后续oauth流程用到
     localStorage.setItem(KEY_LOCAL_MAGIC_TOKEN, magic_token);
   }
+  // 如果是移动端访问，并且没标识，则跳转
+  useEffect(() => {
+    if (ctx !== "web" && isMobile() && magic_token) {
+      navigateTo(`/invite_mobile/${magic_token}`);
+    }
+  }, [ctx, magic_token]);
+
   // send reg link
   useEffect(() => {
     if (isSuccess && data) {
