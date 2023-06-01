@@ -28,7 +28,12 @@ import { setReady } from "@/app/slices/ui";
 import { updateContactStatus, updateUsersByLogs, updateUsersStatus } from "@/app/slices/users";
 import { updateCallInfo } from "@/app/slices/voice";
 import { useAppDispatch, useAppSelector } from "@/app/store";
-import { ServerEvent, UserSettingsChangedEvent, UsersStateEvent } from "@/types/sse";
+import {
+  ServerEvent,
+  UserSettingsChangedEvent,
+  UserSettingsEvent,
+  UsersStateEvent
+} from "@/types/sse";
 import { getLocalAuthData } from "@/utils";
 import chatMessageHandler from "./chat.handler";
 
@@ -157,11 +162,7 @@ export default function useStreaming() {
           dispatch(updateCallInfo({ from: uid, to: target, calling: true }));
           break;
         }
-        case "pinned_chats": {
-          const { chats } = data;
-          dispatch(upsertPinChats({ pins: chats, override: true }));
-          break;
-        }
+
         case "users_snapshot": {
           const { version } = data;
           dispatch(updateUsersVersion(version));
@@ -205,6 +206,11 @@ export default function useStreaming() {
               case "read_index_users":
                 dispatch(updateReadUsers(data[key]));
                 break;
+              case "pinned_chats": {
+                const chats = (data as UserSettingsEvent)[key] ?? [];
+                dispatch(upsertPinChats({ pins: chats, override: true }));
+                break;
+              }
               case "add_pin_chats":
                 {
                   const pins = (data as UserSettingsChangedEvent).add_pin_chats ?? [];

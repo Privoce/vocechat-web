@@ -62,6 +62,7 @@ export type UserSettingsEvent = {
   read_index_groups?: { gid: number; mid: number }[];
   burn_after_reading_users?: AutoDeleteMsgForUser[];
   burn_after_reading_groups?: AutoDeleteMsgForGroup[];
+  pinned_chats?: PinChat[];
 };
 export type AutoDeleteSettingForUsers = {
   burn_after_reading_users: AutoDeleteMsgForUser[];
@@ -99,10 +100,6 @@ export type PinChatTargetChannel = {
 };
 export type PinChatTarget = PinChatTargetUser | PinChatTargetChannel;
 export type PinChat = { target: PinChatTarget[]; updated_at: number };
-export interface PinnedChatsEvent {
-  type: "pinned_chats";
-  chats: PinChat[];
-}
 
 export interface NormalMessage {
   mid: number;
@@ -238,5 +235,4 @@ export type ServerEvent =
   | PinnedMessageUpdatedEvent
   | HeartbeatEvent
   | GroupClearEvent
-  | PinnedChatsEvent
   | UserCallEvent;
