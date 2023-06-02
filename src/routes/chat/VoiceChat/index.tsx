@@ -1,6 +1,7 @@
 // import React from 'react';
 // import Tippy from '@tippyjs/react';
 // import { useState } from 'react';
+import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 
@@ -11,6 +12,7 @@ import { useAppSelector } from "@/app/store";
 import { ChatContext } from "@/types/common";
 import Tooltip from "@/components/Tooltip";
 import { useVoice } from "@/components/Voice";
+import { isInIframe } from "@/utils";
 import IconHeadphone from "@/assets/icons/headphone.svg";
 
 type Props = {
@@ -41,6 +43,10 @@ const VoiceChat = ({ id, context = "channel" }: Props) => {
   const handleJoin = () => {
     if (joining || joined) {
       alert("You have joined another channel, please leave first!");
+      return;
+    }
+    if (isInIframe()) {
+      toast.error("Voice is not supported in iframe");
       return;
     }
     joinVoice();

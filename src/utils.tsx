@@ -417,3 +417,5 @@ export const transformInviteLink = (link: string) => {
 
   return tmpLink;
 };
+
+export const isInIframe = () => window.location !== window.parent.location;

@@ -16,13 +16,14 @@ import {
   updateVoicingNetworkQuality
 } from "../../app/slices/voice";
 import { useAppSelector } from "../../app/store";
-import { playAgoraVideo } from "../../utils";
+import { isInIframe, playAgoraVideo } from "../../utils";
 import DMCalling from "./DMCalling";
 import useVoice from "./useVoice";
 
 AgoraRTC.setLogLevel(process.env.NODE_ENV === "development" ? 0 : 4);
 window.VOICE_TRACK_MAP = window.VOICE_TRACK_MAP ?? {};
 window.VIDEO_TRACK_MAP = window.VIDEO_TRACK_MAP ?? {};
+const inIframe = isInIframe();
 // let tmpUids: number[] = [];
 const Voice = () => {
   const { from, to, voiceList, loginUid, voicingInfo } = useAppSelector((store) => {
@@ -174,9 +175,9 @@ const Voice = () => {
         return (evt.returnValue = "");
       }
     };
-    window.addEventListener("beforeunload", handlePageUnload, { capture: true });
-    if (!window.VOICE_CLIENT) {
+    if (!window.VOICE_CLIENT && !inIframe) {
       initializeAgoraClient();
+      window.addEventListener("beforeunload", handlePageUnload, { capture: true });
     }
 
     return () => {
@@ -185,6 +186,7 @@ const Voice = () => {
   }, [voicingInfo]);
 
   useEffect(() => {
+    if (inIframe) return;
     // 有人呼叫我
     const callMeList = voiceList.filter((item) => item.context == "dm" && item.id == loginUid);
     if (callMeList.length) {
@@ -200,10 +202,7 @@ const Voice = () => {
         });
       }
     }
-    // else {
-    //     dispatch(updateCallInfo({ from: 0, to: 0, calling: false }));
-    // }
-  }, [voiceList, loginUid]);
+  }, [voiceList, loginUid, inIframe]);
   // return <DMCalling uid={1} sendByMe={calling !== loginUid} />;
   if (from !== 0) return <DMCalling from={from} to={to} />;
   return null;

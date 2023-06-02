@@ -2,18 +2,18 @@ import { createContext, ReactNode, useContext } from "react";
 
 import { useGetLoginConfigQuery, useGetServerQuery } from "../app/services/server";
 import { useAppSelector } from "../app/store";
-import { getContrastColor } from "../utils";
+import { getContrastColor, isInIframe } from "../utils";
 
 const query = new URLSearchParams(location.search);
 const welcome = decodeURIComponent(query.get("welcome") || "");
 const color = decodeURIComponent(query.get("themeColor") || "#1fe1f9");
 const from = decodeURIComponent(query.get("from") || "widget.link");
 const fgColor = getContrastColor(color);
-// 判断是否是iframe上下文
-const embed = window.location !== window.parent.location;
+const embed = isInIframe();
 const WidgetContext = createContext({
   color,
   fgColor,
+  // 判断是否是iframe上下文
   embed,
   from,
   loading: true,
