@@ -13,7 +13,7 @@ const ExpireTip = () => {
   const { t } = useTranslation("chat");
   return (
     <span className="text-red-500 text-xs whitespace-nowrap flex items-center gap-1">
-      <IconInfo className="stroke-red-500 w-4 h-4" /> {t("file_expired")}
+      <IconInfo className="stroke-gray-600 w-6 h-6" />
     </span>
   );
 };
@@ -42,7 +42,7 @@ const OtherFileMessage = ({
   handleCancel
 }: Props) => {
   const [error, setError] = useState(false);
-  const icon = getFileIcon(content_type, name, "w-9 shrink-0 h-auto");
+  const icon = getFileIcon(content_type, name, `w-9 shrink-0 h-auto ${error ? "grayscale" : ""}`);
   useEffect(() => {
     if (content) {
       fetch(content)
@@ -62,9 +62,9 @@ const OtherFileMessage = ({
   return (
     <div
       className={clsx(
-        `bg-stone-100 dark:bg-stone-900 border box-border md:w-96 rounded-md`,
-        sending && "opacity-90",
-        error ? "border-red-100 dark:border-red-900/50" : "border-gray-300 dark:border-gray-500"
+        `bg-stone-100 dark:bg-stone-900 border box-border md:w-96 rounded-md border-gray-300 dark:border-gray-500`,
+        sending && "opacity-90"
+        // error ? "border-red-100 dark:border-red-900/50" : "border-gray-300 dark:border-gray-500"
       )}
     >
       <div className="px-3 py-2 flex items-center justify-between gap-2">
@@ -72,15 +72,17 @@ const OtherFileMessage = ({
         <div className="flex flex-col gap-1 w-full overflow-hidden">
           <span
             className={clsx(
-              "font-semibold text-sm truncate",
-              error ? "text-red-500" : "text-gray-800 dark:text-gray-100"
+              "font-semibold text-sm truncate text-gray-800 dark:text-gray-100"
+              // error ? "text-red-500" : "text-gray-800 dark:text-gray-100"
             )}
           >
-            {name}
+            {error ? "File not Found" : name}
           </span>
           <span className="hidden md:flex whitespace-nowrap text-xs text-gray-500 dark:text-gray-300 gap-4">
             {sending ? (
               <Progress value={progress} width={"80%"} />
+            ) : error ? (
+              <strong>File expired or deleted</strong>
             ) : (
               <>
                 <strong>{formatBytes(size)}</strong>

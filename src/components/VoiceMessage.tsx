@@ -121,7 +121,7 @@ const VoiceMessage = ({ file_path }: { file_path: string }) => {
           <IconPlay className="stroke-primary-500" />
         )}
       </button>
-      <div ref={containerRef} className={clsx("flex-1 h-8 min-w-[100px]")}>
+      <div ref={containerRef} className={clsx("flex-1 h-8 min-w-[100px] flex items-center")}>
         {status == "loading" && <span className="text-xs">Loading voice message...</span>}
         {status == "error" && (
           <span className="text-xs text-red-800">Load voice message error</span>

@@ -43,10 +43,8 @@ const VideoMessage = ({ url, name, size, download }: Props) => {
   return (
     <div
       className={clsx(
-        "w-60 md:w-96 relative rounded-md border overflow-hidden group",
-        error
-          ? "bg-stone-100 dark:bg-stone-900 border-red-100 dark:border-red-900/50"
-          : "border-gray-300 dark:border-gray-500 h-32 md:h-52"
+        "w-60 md:w-96 relative rounded-md border overflow-hidden group border-gray-300 dark:border-gray-500",
+        error ? "bg-stone-100 dark:bg-stone-900" : "h-32 md:h-52"
       )}
     >
       {!error && (
@@ -54,23 +52,23 @@ const VideoMessage = ({ url, name, size, download }: Props) => {
       )}
       <div
         className={clsx(
-          "w-full flex justify-between z-30 px-3 py-2 overflow-hidden group-hover:bg-black/20",
+          "w-full flex justify-between z-30 px-3 py-2 overflow-hidden",
           error ? "" : "absolute top-0 left-0 "
         )}
       >
         <div className="flex gap-2 ">
-          <IconVideo className="hidden md:block w-9 h-auto" />
-          <div className="flex flex-col gap-1 text-sm text-white">
+          <IconVideo className={clsx("hidden md:block w-9 h-auto", error && "grayscale")} />
+          <div className="flex flex-col gap-1 text-sm dark:text-white text-gray-900">
             <span
               title={name}
               className={clsx(
-                "font-bold truncate",
-                error ? "w-56 text-red-500" : "w-56 md:w-[240px]"
+                "font-bold truncate w-56 md:w-[240px]"
+                // error ? "w-56 text-red-500" : "w-56 md:w-[240px]"
               )}
             >
-              {name}
+              {error ? "File not Found" : name}
             </span>
-            <span>{_size}</span>
+            <span className="text-gray-400">{error ? "File expired or deleted" : _size}</span>
           </div>
         </div>
         {error ? (

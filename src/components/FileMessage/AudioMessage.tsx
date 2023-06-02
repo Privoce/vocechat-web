@@ -26,21 +26,18 @@ const AudioMessage = ({ url, name, size, download }: Props) => {
   return (
     <div
       className={clsx(
-        "md:w-96 flex flex-col gap-2 px-3 py-2 rounded-md border overflow-hidden bg-stone-100 dark:bg-stone-900",
-        error ? "border-red-100 dark:border-red-900/50" : "border-gray-300 dark:border-gray-500"
+        "md:w-96 flex flex-col gap-2 px-3 py-2 rounded-md border border-gray-300 dark:border-gray-500 overflow-hidden bg-stone-100 dark:bg-stone-900"
+        // error ? "border-red-100 dark:border-red-900/50" : "border-gray-300 dark:border-gray-500"
       )}
     >
       <div className="flex justify-between z-30 overflow-hidden">
         <div className="flex gap-2 ">
-          <IconAudio className="w-9 h-auto" />
-          <div className="flex flex-col gap-1 text-sm text-gray-700 dark:text-gray-300">
-            <span
-              title={name}
-              className={clsx("font-bold truncate", error ? "w-56 text-red-500" : " w-[240px]")}
-            >
-              {name}
+          <IconAudio className={clsx("w-9 h-auto", error && "grayscale")} />
+          <div className="flex flex-col gap-1 text-sm text-gray-900 dark:text-gray-100">
+            <span title={name} className={clsx("font-bold truncate w-[240px]")}>
+              {error ? "File not Found" : name}
             </span>
-            <span>{_size}</span>
+            <span className="text-gray-400">{error ? "File expired or deleted" : _size}</span>
           </div>
         </div>
         {error ? (
