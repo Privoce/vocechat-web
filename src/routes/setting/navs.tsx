@@ -99,7 +99,23 @@ const useNavs = () => {
   const { loginUser, upgraded } = useAppSelector((store) => {
     return { loginUser: store.authData.user, upgraded: store.server.upgraded };
   });
-  const transformedNavs = navs.map((n) => {
+  const filteredNavs = loginUser?.is_admin
+    ? navs
+    : navs
+        .filter((nav) => {
+          return !nav.admin;
+        })
+        .map((nav) => {
+          const { name, items, ...rest } = nav;
+          return {
+            name,
+            items: items.filter((item) => {
+              return !item.admin;
+            }),
+            ...rest
+          };
+        });
+  const transformedNavs = filteredNavs.map((n) => {
     const { name, items, ...rest } = n;
     return {
       name,
