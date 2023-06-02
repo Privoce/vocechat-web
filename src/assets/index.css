@@ -7,6 +7,10 @@
   }
 }
 @layer utilities {
+  /* word break */
+  .wb {
+    word-break: break-word;
+  }
   .checkbox {
     appearance: none;
     margin: 0;

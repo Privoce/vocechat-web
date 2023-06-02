@@ -29,7 +29,7 @@ root.render(
   <Suspense fallback="loading">
     <Toaster
       toastOptions={{
-        className: "dark:!bg-gray-800 dark:!text-gray-50"
+        className: "dark:!bg-gray-800 dark:!text-gray-50 wb"
       }}
     />
     <DndProvider backend={HTML5Backend}>
