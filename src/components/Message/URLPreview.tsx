@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useLazyGetOGInfoQuery } from "@/app/services/message";
 import { upsertOG } from "@/app/slices/footprint";
 import { useAppSelector } from "@/app/store";
+import defaultFav from "@/assets/icons/www.png";
 
 export default function URLPreview({ url = "" }) {
   const dispatch = useDispatch();
@@ -15,16 +16,10 @@ export default function URLPreview({ url = "" }) {
   );
   useEffect(() => {
     if (ogData) {
-      let defaultFavIcon = "";
-      try {
-        defaultFavIcon = `${new URL(url).origin}/favicon.ico`;
-      } catch {
-        defaultFavIcon = `${location.origin}/favicon.ico`;
-      }
       const title = ogData?.title || ogData?.site_name || "";
       const description = ogData?.description || "";
       const ogImage = ogData?.images.find((i) => !!i.url)?.url || "";
-      const favicon = ogData?.favicon_url || defaultFavIcon;
+      const favicon = ogData?.favicon_url || defaultFav;
       setFavicon(favicon);
       setData({ title, description, ogImage });
     } else if (url) {
@@ -32,9 +27,6 @@ export default function URLPreview({ url = "" }) {
       getInfo(url);
     }
   }, [url, ogData]);
-  // const handleFavError = () => {
-  //   setFavicon("");
-  // };
   const handleOGImageError = () => {
     dispatch(upsertOG({ key: url, value: { ...ogData, images: [] } }));
   };
