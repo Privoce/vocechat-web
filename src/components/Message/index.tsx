@@ -149,7 +149,12 @@ const Message: FC<IProps> = ({
           }`}
         >
           {pinInfo && (
-            <span className="absolute left-0 -top-1 -translate-y-full text-xs text-gray-400">
+            <span
+              className={clsx(
+                "absolute -top-1 -translate-y-full text-xs text-gray-400",
+                isSelf ? "right-0" : "left-0"
+              )}
+            >
               {`pinned by ${pinInfo.created_by ? usersData[pinInfo.created_by]?.name : ""}`}
             </span>
           )}
