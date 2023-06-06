@@ -31,19 +31,19 @@ registerRoute(
     // If this isn't a navigation, skip.
     if (request.mode !== "navigate") {
       return false;
-    } // If this is a URL that starts with /_, skip.
+    }
     const urlPath = url.pathname;
-    // 忽略api开头的path 本地语言文件 挂件地址
+    // 忽略api开头的path 本地语言文件 挂件地址 以及版本号  /_开头的path
     if (
+      urlPath.startsWith("/_") ||
+      urlPath.startsWith("/VERSION") ||
       urlPath.startsWith("/api") ||
       urlPath.startsWith("/locales/") ||
       urlPath.startsWith("/widget")
     ) {
       return false;
     }
-    if (urlPath.startsWith("/_")) {
-      return false;
-    } // If this looks like a URL for a resource, because it contains // a file extension, skip.
+    // If this looks like a URL for a resource, because it contains // a file extension, skip.
 
     if (urlPath.match(fileExtensionRegexp)) {
       return false;
