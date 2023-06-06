@@ -19,7 +19,7 @@ type Props = {
   context?: ChatContext;
   id: number;
 };
-
+const isIframe = isInIframe();
 const VoiceChat = ({ id, context = "channel" }: Props) => {
   const { joinVoice, joined, joining = false, joinedAtThisContext } = useVoice({ id, context });
   const dispatch = useDispatch();
@@ -45,10 +45,6 @@ const VoiceChat = ({ id, context = "channel" }: Props) => {
       alert("You have joined another channel, please leave first!");
       return;
     }
-    if (isInIframe()) {
-      toast.error("Voice is not supported in iframe");
-      return;
-    }
     joinVoice();
     const data = {
       id,
@@ -60,6 +56,10 @@ const VoiceChat = ({ id, context = "channel" }: Props) => {
       dispatch(updateCallInfo({ from: loginUser?.uid ?? 0, to: id, calling: false }));
     }
   };
+  const handleInIframe = () => {
+    // todo
+    toast.error("Voice is not supported in iframe");
+  };
   if (!loginUser || !enabled) return null;
   const visible = visibleAside == "voice";
   const memberCount = voiceList.find((v) => v.context == context && v.id == id)?.memberCount ?? 0;
@@ -70,7 +70,7 @@ const VoiceChat = ({ id, context = "channel" }: Props) => {
         <IconHeadphone
           className={visible ? "fill-gray-600" : "fill-gray-500"}
           role="button"
-          onClick={joinedAtThisContext ? toggleDashboard : handleJoin}
+          onClick={isIframe ? handleInIframe : joinedAtThisContext ? toggleDashboard : handleJoin}
         />
         {visible ? null : (
           <>
