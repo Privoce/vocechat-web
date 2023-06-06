@@ -68,7 +68,7 @@ const Operations: FC<Props> = ({ context, id }) => {
           <IconBookmark />
         </button>
         <button
-          className={optClass}
+          className={`${optClass} disabled:opacity-50 disabled:cursor-not-allowed`}
           disabled={!canDel}
           onClick={toggleDeleteModal.bind(null, false)}
         >
