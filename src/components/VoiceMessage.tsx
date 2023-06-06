@@ -5,8 +5,9 @@ import WaveSurfer from "wavesurfer.js";
 
 import IconPause from "@/assets/icons/pause.svg";
 import IconPlay from "@/assets/icons/play.circle.svg";
-import IconRefresh from "@/assets/icons/refresh.svg";
+// import IconRefresh from "@/assets/icons/refresh.svg";
 import BASE_URL from "../app/config";
+import ExpiredMessage from "./FileMessage/ExpiredMessage";
 
 export type VoiceMessageProps = {
   type: string;
@@ -103,15 +104,16 @@ const VoiceMessage = ({ file_path }: { file_path: string }) => {
       current.playPause();
     }
   };
-  const handleReload = () => {
-    initWave(file_path);
-  };
+  // const handleReload = () => {
+  //   initWave(file_path);
+  // };
   const notReady = status !== "ready";
+  if (status == "error") return <ExpiredMessage type="audio" />;
   return (
     <div
       className={clsx(
         "relative whitespace-nowrap select-none flex items-center gap-2 p-2 rounded-lg max-w-sm",
-        status === "error" ? "bg-red-200" : "bg-primary-100 dark:bg-primary-900"
+        "bg-primary-100 dark:bg-primary-900"
       )}
     >
       <button className="disabled:opacity-60" onClick={handleClick} disabled={notReady}>
@@ -121,22 +123,17 @@ const VoiceMessage = ({ file_path }: { file_path: string }) => {
           <IconPlay className="stroke-primary-500" />
         )}
       </button>
-      <div ref={containerRef} className={clsx("flex-1 h-8 min-w-[100px] flex items-center")}>
+      <div ref={containerRef} className={clsx("flex-1 h-8 min-w-[100px]")}>
         {status == "loading" && <span className="text-xs">Loading voice message...</span>}
-        {status == "error" && (
-          <span className="text-xs text-red-800">Load voice message error</span>
-        )}
       </div>
-      {status !== "error" && (
-        <time className="text-primary-500 text-xs whitespace-nowrap text-left">{duration}</time>
-      )}
-      {status === "error" && (
+      <time className="text-primary-500 text-xs whitespace-nowrap text-left">{duration}</time>
+      {/* {status === "error" && (
         <IconRefresh
           role="button"
           className="absolute -right-6 top-1/2 -translate-y-1/2 w-4 h-4 stroke-primary-600"
           onClick={handleReload}
         />
-      )}
+      )} */}
     </div>
   );
 };

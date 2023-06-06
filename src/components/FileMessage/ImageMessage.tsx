@@ -2,6 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { LineWobble, Ping } from "@uiball/loaders";
 
 import { getDefaultSize, isMobile } from "@/utils";
+import ExpiredMessage from "./ExpiredMessage";
 
 type Props = {
   uploading: boolean;
@@ -36,7 +37,7 @@ const ImageMessage: FC<Props> = ({
     };
     img.src = url;
   }, [url]);
-
+  if (status == "error") return <ExpiredMessage type="image" />;
   return (
     <div
       className={`relative overflow-hidden`}
@@ -51,11 +52,7 @@ const ImageMessage: FC<Props> = ({
           <span className="text-xs text-gray-500">{progress}%</span>
         </div>
       )}
-      {status == "error" ? (
-        <p className="w-full h-full flex-center text-lg text-red-800 bg-red-100">
-          Image expired or removed
-        </p>
-      ) : status == "loading" ? (
+      {status == "loading" ? (
         <p className="w-full h-full flex-center bg-primary-50/80 dark:bg-primary-900/70">
           <LineWobble />
         </p>

@@ -1,22 +1,12 @@
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import clsx from "clsx";
 
 import { User } from "@/types/user";
 import { formatBytes, fromNowTime, getFileIcon } from "@/utils";
 import IconClose from "@/assets/icons/close.circle.svg";
 import IconDownload from "@/assets/icons/download.svg";
-import IconInfo from "@/assets/icons/info.svg";
+import ExpiredMessage from "./ExpiredMessage";
 import Progress from "./Progress";
-
-const ExpireTip = () => {
-  const { t } = useTranslation("chat");
-  return (
-    <span className="text-red-500 text-xs whitespace-nowrap flex items-center gap-1">
-      <IconInfo className="stroke-gray-600 w-6 h-6" />
-    </span>
-  );
-};
 
 type Props = {
   content: string;
@@ -42,7 +32,7 @@ const OtherFileMessage = ({
   handleCancel
 }: Props) => {
   const [error, setError] = useState(false);
-  const icon = getFileIcon(content_type, name, `w-9 shrink-0 h-auto ${error ? "grayscale" : ""}`);
+  const icon = getFileIcon(content_type, name, `w-9 shrink-0 h-auto`);
   useEffect(() => {
     if (content) {
       fetch(content)
@@ -58,7 +48,7 @@ const OtherFileMessage = ({
         });
     }
   }, [content]);
-
+  if (error) return <ExpiredMessage />;
   return (
     <div
       className={clsx(
@@ -76,13 +66,11 @@ const OtherFileMessage = ({
               // error ? "text-red-500" : "text-gray-800 dark:text-gray-100"
             )}
           >
-            {error ? "File not Found" : name}
+            {name}
           </span>
           <span className="hidden md:flex whitespace-nowrap text-xs text-gray-500 dark:text-gray-300 gap-4">
             {sending ? (
               <Progress value={progress} width={"80%"} />
-            ) : error ? (
-              <strong>File expired or deleted</strong>
             ) : (
               <>
                 <strong>{formatBytes(size)}</strong>
@@ -98,8 +86,6 @@ const OtherFileMessage = ({
         </div>
         {sending ? (
           <IconClose className="cursor-pointer" onClick={handleCancel} />
-        ) : error ? (
-          <ExpireTip />
         ) : (
           <a
             className="hidden md:block whitespace-nowrap"
@@ -115,4 +101,3 @@ const OtherFileMessage = ({
 };
 
 export default OtherFileMessage;
-export { ExpireTip };
