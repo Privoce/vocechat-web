@@ -12,8 +12,9 @@ let prices: Price[] = [
   }
 ];
 const official_dev = `https://dev.voce.chat`;
-// const local_dev = `https://dev.voce.chat`;
-const local_dev = `http://localhost:3000`;
+const local_dev = `https://dev.voce.chat`;
+// const local_dev = `https://vocechat.yangerxiao.com`;
+// const local_dev = `http://localhost:3000`;
 const dev_origin = process.env.REACT_APP_OFFICIAL_DEMO ? official_dev : local_dev;
 
 // const local_dev = `http://07333.qicp.vip:3030`;
@@ -108,7 +109,7 @@ export const ChatPrefixes = {
 };
 export const vapidKey = `BOmzyZhw-DcIGYQ77mzQUVqLlcvn0bm_76P_kc7rpwRxzXNbui-JP8iPyEQYfyoxyJeq43Ud4IiIsJSMNHNujn0`;
 export const tokenHeader = "X-API-Key";
-export const FILE_SLICE_SIZE = 1000 * 200 * 8; //200kb
+export const FILE_SLICE_SIZE = 1000 * 1000; //
 export const FILE_IMAGE_SIZE = 1000 * 10000 * 8; //10mb
 export const KEY_MOBILE_APP_TIP = "MOBILE_APP_TIP";
 export const KEY_LOGIN_USER = "VOCECHAT_LOGIN_USER";

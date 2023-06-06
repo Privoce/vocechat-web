@@ -67,7 +67,7 @@ const useUploadFile = (props?: IProps) => {
     sliceUploadedCountRef.current = 0;
     // setUploadingFile(true);
     // 2MB
-    if (file_size <= 1000 * 1000 * 2) {
+    if (file_size <= FILE_SLICE_SIZE) {
       // 一次性上传文件
       uploadResult = await uploadChunk({ file_id, chunk: file, is_last: true });
       sliceUploadedCountRef.current = 1;
