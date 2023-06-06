@@ -322,3 +322,10 @@ svg:focus {
 .send [data-slate-placeholder="true"] {
   top: 4px !important;
 }
+/* reset number input spinner */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  opacity: 1;
+  appearance: none;
+  margin: 0;
+}
