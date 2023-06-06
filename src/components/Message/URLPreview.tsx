@@ -30,6 +30,9 @@ export default function URLPreview({ url = "" }) {
   const handleOGImageError = () => {
     dispatch(upsertOG({ key: url, value: { ...ogData, images: [] } }));
   };
+  const handleFavError = () => {
+    setFavicon(defaultFav);
+  };
   if (isLoading) return <div className="h-28"></div>;
   if (!url || !data || !data.title) return null;
   const { title, description, ogImage } = data;
@@ -60,7 +63,12 @@ export default function URLPreview({ url = "" }) {
     <a className={`${containerClass} gap-2  px-2 py-3`} href={url} target="_blank" rel="noreferrer">
       {favicon && (
         <div className="flex rounded">
-          <img className="object-contain w-12 h-12" src={favicon} alt="favicon" />
+          <img
+            className="object-contain w-12 h-12"
+            onError={handleFavError}
+            src={favicon}
+            alt="favicon"
+          />
         </div>
       )}
       <div className="flex flex-col">
