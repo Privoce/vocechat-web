@@ -4,23 +4,16 @@ import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import {
-  useCheckMagicTokenValidMutation,
-  useLoginMutation,
-  useRegisterMutation
-} from "@/app/services/auth";
+import { useLoginMutation, useRegisterMutation } from "@/app/services/auth";
 import { setAuthData } from "@/app/slices/auth.data";
 import Button from "@/components/styled/Button";
 import Input from "@/components/styled/Input";
-import ExpiredTip from "./ExpiredTip";
 import { useMagicToken } from "./index";
 
 const RegWithUsername: FC = () => {
   const { t: ct } = useTranslation();
   const { t } = useTranslation("auth");
   const { token } = useMagicToken();
-  const [checkTokenInvalid, { data: isTokenValid, isLoading: checkingToken }] =
-    useCheckMagicTokenValidMutation();
   const [
     login,
     { isLoading: loginLoading, error: loginError, isSuccess: loginSuccess, data: loginData }
@@ -33,12 +26,6 @@ const RegWithUsername: FC = () => {
   const { from = "reg" } = useParams();
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
-  // todo: check if query param exists
-  useEffect(() => {
-    if (token) {
-      checkTokenInvalid(token);
-    }
-  }, [token]);
 
   useEffect(() => {
     if (loginError && "status" in loginError) {
@@ -97,8 +84,6 @@ const RegWithUsername: FC = () => {
   };
 
   if (!token) return <span className="dark:text-white">No Token</span>;
-  if (checkingToken) return <div className="dark:text-gray-100">Checking Magic Link...</div>;
-  if (!isTokenValid) return <ExpiredTip />;
   const isLoading = loginLoading || regLoading;
   const isSuccess = loginSuccess || regSuccess;
   return (
