@@ -25,7 +25,15 @@ export default function RegContainer() {
   return (
     <div className="flex-center h-screen overflow-x-hidden overflow-y-auto dark:bg-gray-700">
       <div className="py-8 px-10 shadow-md rounded-xl max-h-[95vh] overflow-y-auto overflow-x-hidden">
-        {tokenIsValid ? <Outlet context={{ token }} /> : <ExpiredTip />}
+        {magic_token ? (
+          tokenIsValid ? (
+            <Outlet context={{ token }} />
+          ) : (
+            <ExpiredTip />
+          )
+        ) : (
+          <Outlet context={{ token }} />
+        )}
       </div>
     </div>
   );
