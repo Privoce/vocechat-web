@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import toast from "react-hot-toast";
+import heic2any from "heic2any";
 
 import BASE_URL, { FILE_SLICE_SIZE } from "@/app/config";
 import { usePrepareUploadFileMutation, useUploadFileMutation } from "@/app/services/message";
@@ -9,10 +10,27 @@ import { Message } from "@/types/channel";
 import { ChatContext } from "@/types/common";
 import { UploadFileResponse } from "@/types/message";
 
+export type UploadFileData = {
+  name: string;
+  type: string;
+  size: number;
+  url: string;
+};
 interface IProps {
   context: ChatContext;
   id: number;
 }
+const convertHeic2Jpg = async (file: { name: string; type: string; size: number; url: string }) => {
+  const res = await fetch(file.url);
+  const blob = await res.blob();
+  const jpgBlob = (await heic2any({
+    blob,
+    toType: "image/jpeg",
+    quality: 0.8
+  })) as Blob;
+  const newName = file.name.replace(/\.hei\w$/i, ".jpg");
+  return { ...file, name: newName, url: URL.createObjectURL(jpgBlob) };
+};
 const useUploadFile = (props?: IProps) => {
   const { context, id } = props ? props : { context: "channel", id: 0 };
   const dispatch = useAppDispatch();
@@ -50,6 +68,8 @@ const useUploadFile = (props?: IProps) => {
       type: file_type,
       size: file_size
     } = file;
+    console.log("file type", file_type);
+
     // 生成 file id
     const resp = await prepareUploadFile({
       content_type: file_type,
@@ -128,12 +148,25 @@ const useUploadFile = (props?: IProps) => {
     dispatch(updateUploadFiles({ context, id, operation: "remove", index: idx }));
   };
 
-  const addStageFile = (fileData = {}) => {
+  const addStageFile = (filesData: UploadFileData[]) => {
     if (replying) {
       toast.error("Only text is supported when replying a message");
       return;
     }
-    dispatch(updateUploadFiles({ context, id, data: fileData }));
+    const hasHeif = filesData.some((f) => f.type.startsWith("image/hei"));
+    console.log("heif test", filesData, hasHeif);
+    if (hasHeif) {
+      const hFiles = filesData.filter((f) => f.type.startsWith("image/hei"));
+      Promise.all(hFiles.map((f) => convertHeic2Jpg(f))).then((res) => {
+        console.log("heif2jpg", res);
+        const nonHeifFiles = filesData.filter((f) => !f.type.startsWith("image/hei"));
+        const newFilesData = [...nonHeifFiles, ...res];
+        dispatch(updateUploadFiles({ context, id, data: newFilesData }));
+      });
+    } else {
+      dispatch(updateUploadFiles({ context, id, data: filesData }));
+    }
+    // const data=
   };
 
   const resetStageFiles = () => {
