@@ -10,6 +10,7 @@ import IconDelete from "@/assets/icons/delete.svg";
 import BotAPIKeys from "./BotAPIKeys";
 import CreateModal from "./CreateModal";
 import DeleteModal from "./DeleteModal";
+import NameEdit from "./NameEdit";
 import WebhookEdit from "./WebhookEdit";
 import WebhookModal from "./WebhookModal";
 
@@ -116,7 +117,7 @@ export default function BotConfig() {
                       />
                     </td>
                     <td className={`${tdClass}`}>
-                      <div>{name}</div>
+                      <NameEdit uid={uid} />
                       <div className="text-xs text-gray-500">#{uid}</div>
                     </td>
                     <td className={`${tdClass} py-2`}>
