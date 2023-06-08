@@ -27,5 +27,7 @@
 
   "search_not_found": "用户不存在，或者不允许搜索",
   "search_by_id": "用户ID",
-  "search_by_email": "用户邮箱"
+  "search_by_id_ph": "请输入用户ID",
+  "search_by_email": "用户邮箱",
+  "search_by_email_ph": "请输入用户邮箱"
 }

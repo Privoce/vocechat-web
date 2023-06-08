@@ -25,7 +25,7 @@ const SearchUser: FC<Props> = ({ closeModal }) => {
   const { t } = useTranslation();
   const navigateTo = useNavigate();
   const inputRef = useRef(null);
-  const [type, setType] = useState<Type>("id");
+  const [type, setType] = useState<Type>("email");
   const [input, setInput] = useState({
     id: "",
     email: ""
@@ -78,16 +78,16 @@ const SearchUser: FC<Props> = ({ closeModal }) => {
       <div className=" relative flex flex-col gap-2 w-96 px-4 py-3 rounded-lg bg-gray-100 dark:bg-gray-900 text-slate-900 dark:text-slate-100">
         <div className="flex items-center gap-2 py-2">
           <StyledButton
-            className={clsx("mini", type == "email" && "ghost !border-none !shadow-none")}
-            onClick={handleChangeKeyword.bind(null, "id")}
-          >
-            {t("search_by_id", { ns: "member" })}
-          </StyledButton>
-          <StyledButton
             className={clsx("mini", type == "id" && "ghost !border-none !shadow-none")}
             onClick={handleChangeKeyword.bind(null, "email")}
           >
             {t("search_by_email", { ns: "member" })}
+          </StyledButton>
+          <StyledButton
+            className={clsx("mini", type == "email" && "ghost !border-none !shadow-none")}
+            onClick={handleChangeKeyword.bind(null, "id")}
+          >
+            {t("search_by_id", { ns: "member" })}
           </StyledButton>
         </div>
         <form className="w-full" ref={inputRef} action="/" onSubmit={handleSubmit}>
@@ -98,7 +98,11 @@ const SearchUser: FC<Props> = ({ closeModal }) => {
             disabled={isLoading}
             prefix={<IconSearch className="dark:fill-gray-400 w-6 h-6 shrink-0" />}
             value={input[type]}
-            placeholder={`${t("action.search")}...`}
+            placeholder={`${
+              type == "email"
+                ? t("search_by_email_ph", { ns: "member" })
+                : t("search_by_id_ph", { ns: "member" })
+            }...`}
             onChange={handleInput}
           />
         </form>
