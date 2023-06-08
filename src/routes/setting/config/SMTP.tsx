@@ -16,7 +16,8 @@ export default function ConfigSMTP() {
   const { t } = useTranslation("setting", { keyPrefix: "smtp" });
   const [testEmail, setTestEmail] = useState("");
   const [sendTestEmail, { isSuccess, isError }] = useSendTestEmailMutation();
-  const { reset, updateConfig, values, setValues, changed, toggleEnable } = useConfig("smtp");
+  const { reset, updateConfig, values, originalValues, setValues, changed, toggleEnable } =
+    useConfig("smtp");
 
   const handleUpdate = () => {
     // const { token_url, description } = values;
@@ -124,7 +125,7 @@ export default function ConfigSMTP() {
       <div className="flex gap-4 whitespace-nowrap mt-6">
         <Input
           type={"email"}
-          disabled={!enabled}
+          disabled={!(originalValues as SMTPConfig).enabled}
           onChange={handleTestEmailChange}
           value={testEmail}
           name="email"

@@ -108,6 +108,7 @@ export default function useConfig(config: keyof ConfigMap = "smtp") {
   }, [values]);
 
   return {
+    originalValues: originalValue,
     updating,
     updated,
     reset,
