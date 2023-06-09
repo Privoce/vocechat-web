@@ -29,7 +29,10 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
     removeFromChannel,
     canRemoveFromChannel,
     canRemove,
-    removeUser
+    removeUser,
+    isAdmin,
+    canUpdateRole,
+    updateRole
   } = useUserOperation({ uid, cid });
 
   const { data } = useAppSelector((store) => {
@@ -97,6 +100,11 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
               {canCopyEmail && (
                 <li className="item" onClick={copyEmail.bind(undefined, email)}>
                   {t("copy_email")}
+                </li>
+              )}
+              {canUpdateRole && (
+                <li className="item" onClick={updateRole}>
+                  {isAdmin ? t("set_normal") : t("set_admin")}
                 </li>
               )}
               {canRemoveFromChannel && (

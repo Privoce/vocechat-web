@@ -7,7 +7,11 @@ import { useMatch, useNavigate } from "react-router-dom";
 import { hideAll } from "tippy.js";
 
 import { useRemoveMembersMutation } from "@/app/services/channel";
-import { useLazyDeleteUserQuery, useUpdateContactStatusMutation } from "@/app/services/user";
+import {
+  useLazyDeleteUserQuery,
+  useUpdateContactStatusMutation,
+  useUpdateUserMutation
+} from "@/app/services/user";
 import { updateDMVisibleAside } from "@/app/slices/footprint";
 import { updateCallInfo } from "@/app/slices/voice";
 import { useAppSelector } from "@/app/store";
@@ -30,6 +34,7 @@ const useUserOperation = ({ uid, cid }: IProps) => {
   const [passedUid, setPassedUid] = useState<number | undefined>(undefined);
   const isUserDetailPath = useMatch(`/users/${uid}`);
   const [updateContactStatus] = useUpdateContactStatusMutation();
+  const [updateUser, { isSuccess: updateUserSuccess }] = useUpdateUserMutation();
   const [removeUser, { isSuccess: removeUserSuccess }] = useLazyDeleteUserQuery();
   const [removeInChannel, { isSuccess: removeSuccess }] = useRemoveMembersMutation();
   const navigateTo = useNavigate();
@@ -45,6 +50,12 @@ const useUserOperation = ({ uid, cid }: IProps) => {
   useEffect(() => {
     setPassedUid(uid ?? loginUser?.uid);
   }, [uid, loginUser]);
+
+  useEffect(() => {
+    if (updateUserSuccess) {
+      toast.success(ct("tip.update"));
+    }
+  }, [updateUserSuccess]);
 
   useEffect(() => {
     if (removeSuccess || removeUserSuccess) {
@@ -99,6 +110,11 @@ const useUserOperation = ({ uid, cid }: IProps) => {
   const startChat = () => {
     navigateTo(`/chat/dm/${uid}`);
   };
+  const updateRole = () => {
+    if (uid) {
+      updateUser({ id: uid, is_admin: !user?.is_admin });
+    }
+  };
   const removeFromContact = () => {
     if (uid) {
       updateContactStatus({ target_uid: uid, action: "remove" });
@@ -126,6 +142,9 @@ const useUserOperation = ({ uid, cid }: IProps) => {
   const canRemoveFromContact: boolean = loginUid != uid;
   const canInviteChannel = !!cid && (loginUser?.is_admin || channel?.owner == loginUser?.uid);
   return {
+    isAdmin: !!user?.is_admin,
+    updateRole,
+    canUpdateRole: isAdmin && loginUid != uid && uid != 1,
     removeFromContact,
     canBlock,
     canRemoveFromContact,

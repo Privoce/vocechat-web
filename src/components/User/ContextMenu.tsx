@@ -28,7 +28,10 @@ const UserContextMenu: FC<Props> = ({ enable = false, uid, cid, visible, hide, c
     canBlock,
     canRemoveFromChannel,
     removeFromChannel,
-    removeUser
+    removeUser,
+    isAdmin,
+    canUpdateRole,
+    updateRole
   } = useUserOperation({
     uid,
     cid
@@ -55,6 +58,10 @@ const UserContextMenu: FC<Props> = ({ enable = false, uid, cid, visible, hide, c
               canCopyEmail && {
                 title: t("copy_email"),
                 handler: copyEmail
+              },
+              canUpdateRole && {
+                title: isAdmin ? t("set_normal") : t("set_admin"),
+                handler: updateRole
               },
               canRemoveFromChannel && {
                 danger: true,
