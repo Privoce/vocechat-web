@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Waveform } from "@uiball/loaders";
 
 import { ChatContext } from "@/types/common";
 import useUploadFile from "@/hooks/useUploadFile";
@@ -50,7 +51,7 @@ export default function UploadFileList({ context, id }: { context: ChatContext; 
       )}
 
       <ul className="w-full overflow-auto flex gap-2 justify-start p-4 pt-6 bg-gray-200 dark:bg-gray-800 rounded-t-lg">
-        {stageFiles.map(({ name, url, size, type }, idx: number) => {
+        {stageFiles.map(({ name, url, size, type, converting }, idx: number) => {
           return (
             <li
               className="group relative flex flex-col bg-gray-100 dark:bg-gray-700 rounded p-2"
@@ -58,7 +59,11 @@ export default function UploadFileList({ context, id }: { context: ChatContext; 
             >
               <div className="flex-center w-40 h-40">
                 {type.startsWith("image") ? (
-                  <img className="w-full h-full object-cover" src={url} alt="image" />
+                  converting ? (
+                    <Waveform size={18} lineWeight={3} speed={1} color="#aaa" />
+                  ) : (
+                    <img className="w-full h-full object-cover" src={url} alt="image" />
+                  )
                 ) : (
                   getFileIcon(type, name)
                 )}

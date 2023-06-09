@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+import { UploadFileData } from "@/hooks/useUploadFile";
+
 export type ListView = "item" | "grid";
 export interface State {
   online: boolean;
@@ -9,14 +11,9 @@ export interface State {
   // todo
   fileListView: ListView;
   uploadFiles: {
-    [key: string]: {
-      name: string;
-      url: string;
-      size: number;
-      type: string;
-    }[];
+    [key: string]: UploadFileData[];
   };
-  selectMessages: { [key: string]: number[] };
+  selectMessages: { [key: string]: number[] | null };
   draftMarkdown: { [key: string]: any };
   draftMixedText: { [key: string]: any };
   rememberedNavs: {
@@ -104,6 +101,15 @@ const uiSlice = createSlice({
           }
 
           break;
+        case "replace":
+          {
+            const { data, idx } = rest;
+            if (files) {
+              state.uploadFiles[_key][idx] = data;
+            }
+          }
+
+          break;
 
         case "reset":
           {
@@ -147,7 +153,9 @@ const uiSlice = createSlice({
           break;
         }
         case "remove": {
-          currData = currData.filter((mid) => mid != data);
+          if (currData) {
+            currData = currData.filter((mid) => mid != data);
+          }
           break;
         }
         case "reset": {

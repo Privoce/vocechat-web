@@ -15,6 +15,7 @@ export type UploadFileData = {
   type: string;
   size: number;
   url: string;
+  converting?: boolean;
 };
 interface IProps {
   context: ChatContext;
@@ -29,7 +30,7 @@ const convertHeic2Jpg = async (file: { name: string; type: string; size: number;
     quality: 0.8
   })) as Blob;
   const newName = file.name.replace(/\.hei\w$/i, ".jpg");
-  return { ...file, name: newName, url: URL.createObjectURL(jpgBlob) };
+  return { ...file, name: newName, converting: false, url: URL.createObjectURL(jpgBlob) };
 };
 const useUploadFile = (props?: IProps) => {
   const { context, id } = props ? props : { context: "channel", id: 0 };
@@ -153,20 +154,23 @@ const useUploadFile = (props?: IProps) => {
       toast.error("Only text is supported when replying a message");
       return;
     }
-    const hasHeif = filesData.some((f) => f.type.startsWith("image/hei"));
-    console.log("heif test", filesData, hasHeif);
-    if (hasHeif) {
-      const hFiles = filesData.filter((f) => f.type.startsWith("image/hei"));
-      Promise.all(hFiles.map((f) => convertHeic2Jpg(f))).then((res) => {
-        console.log("heif2jpg", res);
-        const nonHeifFiles = filesData.filter((f) => !f.type.startsWith("image/hei"));
-        const newFilesData = [...nonHeifFiles, ...res];
-        dispatch(updateUploadFiles({ context, id, data: newFilesData }));
+
+    const heifs: number[] = [];
+    filesData.forEach((f, idx) => {
+      if (f.type.startsWith("image/hei")) {
+        f.converting = true;
+        heifs.push(idx);
+      }
+    });
+    dispatch(updateUploadFiles({ context, id, data: filesData }));
+    if (heifs.length) {
+      heifs.forEach((idx) => {
+        convertHeic2Jpg(filesData[idx]).then((res) => {
+          console.log("heif2jpg", res);
+          dispatch(updateUploadFiles({ context, id, data: res, operation: "replace", idx }));
+        });
       });
-    } else {
-      dispatch(updateUploadFiles({ context, id, data: filesData }));
     }
-    // const data=
   };
 
   const resetStageFiles = () => {
