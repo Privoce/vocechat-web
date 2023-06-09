@@ -1,10 +1,11 @@
 // @ts-nocheck
-import { memo, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import Masonry from "masonry-layout";
 
 import { useAppSelector } from "@/app/store";
 import FileBox from "@/components/FileBox";
+import useExpiredResMap from "@/hooks/useExpiredResMap";
 import Filter from "./Filter";
 import Search from "./Search";
 import View from "./View";
@@ -37,15 +38,16 @@ const checkFilter = (data, filter, channelMessage) => {
 };
 
 let msnry: Masonry | null;
-function ResourceManagement({ fileMessages }) {
+function ResourceManagement() {
+  const { isExpired } = useExpiredResMap();
   const listContainerRef = useRef<HTMLDivElement>();
   const [filter, setFilter] = useState({});
-  const { message, view, channelMessage, userData } = useAppSelector((store) => {
+  const { message, view, channelMessage, fileMsgs } = useAppSelector((store) => {
     return {
+      fileMsgs: store.fileMessage,
       message: store.message,
       channelMessage: store.channelMessage,
-      view: store.ui.fileListView,
-      userData: store.users.byId
+      view: store.ui.fileListView
     };
   });
 
@@ -83,6 +85,15 @@ function ResourceManagement({ fileMessages }) {
       }
     }
   }, [view, filter]);
+  // const fileMessages = fileMsgs.filter((id) => {
+  //   const data = message[id];
+  //   if (!data) return false;
+  //   const { content, thumbnail } = data;
+  //   let url = thumbnail || content;
+  //   console.log("ff fitler", url, isExpired(url));
+
+  //   return !isExpired(url);
+  // });
 
   return (
     <div className="h-screen md:overflow-y-scroll flex flex-col items-start my-2 mr-6 rounded-2xl bg-white dark:bg-gray-700">
@@ -99,15 +110,17 @@ function ResourceManagement({ fileMessages }) {
         )}
         ref={listContainerRef}
       >
-        {fileMessages.map((id) => {
+        {fileMsgs.map((id) => {
           const data = message[id];
           if (!data) return null;
           const isSelected = checkFilter(data, filter, channelMessage);
           // 过滤掉不存在的用户
           // const fromUser = userData[data.from_uid];
           if (!isSelected) return null;
-          const { mid, content, created_at, from_uid, properties } = data;
+          const { mid, thumbnail, content, created_at, from_uid, properties } = data;
           const { name, content_type, size } = properties ?? {};
+          const url = thumbnail || content;
+          if (isExpired(url)) return null;
           return (
             <div key={mid} className="grid-box mb-2">
               <FileBox
@@ -115,7 +128,7 @@ function ResourceManagement({ fileMessages }) {
                 flex={view == "item"}
                 key={mid}
                 file_type={content_type}
-                content={content}
+                content={thumbnail || content}
                 created_at={created_at}
                 from_uid={from_uid}
                 size={size}
@@ -129,8 +142,4 @@ function ResourceManagement({ fileMessages }) {
   );
 }
 
-const equals = (a, b) => a.length === b.length && a.every((v, i) => v == b[i]);
-
-export default memo(ResourceManagement, (prevs, nexts) => {
-  return equals(prevs.fileMessages, nexts.fileMessages);
-});
+export default ResourceManagement;

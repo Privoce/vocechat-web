@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import clsx from "clsx";
 
+import useExpiredResMap from "@/hooks/useExpiredResMap";
 import IconAudio from "@/assets/icons/file.audio.svg";
 import IconImage from "@/assets/icons/file.image.svg";
 import IconUnknown from "@/assets/icons/file.unknown.svg";
@@ -9,6 +10,7 @@ import IconInfo from "@/assets/icons/info.svg";
 
 type Props = {
   type?: "file" | "audio" | "image" | "video";
+  url?: string;
 };
 const InfoMap = {
   file: {
@@ -32,8 +34,15 @@ const InfoMap = {
     icon: <IconVideo className="w-9 shrink-0 h-auto grayscale" />
   }
 };
-const ExpiredMessage = ({ type = "file" }: Props) => {
+const ExpiredMessage = ({ type = "file", url = "" }: Props) => {
+  const { setExpired } = useExpiredResMap();
   const { title, desc, icon } = InfoMap[type];
+  useEffect(() => {
+    if (url) {
+      setExpired(url);
+    }
+  }, [url]);
+
   return (
     <div
       className={clsx(

@@ -38,7 +38,7 @@ const VideoMessage = ({ url, name, size, download }: Props) => {
     setError(true);
   };
   const tipClass = "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2";
-  if (error) return <ExpiredMessage type="video" />;
+  if (error) return <ExpiredMessage type="video" url={url} />;
   return (
     <div
       className={clsx(

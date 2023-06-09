@@ -40,10 +40,9 @@ const HomePage = lazy(() => import("./home"));
 let toastId: string;
 const PageRoutes = () => {
   const {
-    ui: { online },
-    fileMessages
+    ui: { online }
   } = useAppSelector((store) => {
-    return { ui: store.ui, fileMessages: store.fileMessage };
+    return { ui: store.ui };
   }, isEqual);
   // 提前获取device token
   useDeviceToken(vapidKey);
@@ -283,7 +282,7 @@ const PageRoutes = () => {
             path="files"
             element={
               <LazyIt>
-                <ResourceManagement fileMessages={fileMessages} />
+                <ResourceManagement />
               </LazyIt>
             }
           ></Route>

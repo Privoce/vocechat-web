@@ -37,7 +37,7 @@ const ImageMessage: FC<Props> = ({
     };
     img.src = url;
   }, [url]);
-  if (status == "error") return <ExpiredMessage type="image" />;
+  if (status == "error") return <ExpiredMessage type="image" url={url} />;
   return (
     <div
       className={`relative overflow-hidden`}

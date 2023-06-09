@@ -23,7 +23,7 @@ const AudioMessage = ({ url, name, size, download }: Props) => {
     setError(true);
   };
   const _size = formatBytes(size);
-  if (error) return <ExpiredMessage type="audio" />;
+  if (error) return <ExpiredMessage type="audio" url={url} />;
   return (
     <div
       className={clsx(

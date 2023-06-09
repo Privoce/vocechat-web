@@ -48,7 +48,7 @@ const OtherFileMessage = ({
         });
     }
   }, [content]);
-  if (error) return <ExpiredMessage />;
+  if (error) return <ExpiredMessage url={content} />;
   return (
     <div
       className={clsx(

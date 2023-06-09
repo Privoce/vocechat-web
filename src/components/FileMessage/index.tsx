@@ -2,11 +2,13 @@ import { FC, useEffect, useState } from "react";
 
 import { useAppSelector } from "@/app/store";
 import { ChatContext } from "@/types/common";
+import useExpiredResMap from "@/hooks/useExpiredResMap";
 import useRemoveLocalMessage from "@/hooks/useRemoveLocalMessage";
 import useSendMessage from "@/hooks/useSendMessage";
 import useUploadFile from "@/hooks/useUploadFile";
 import { getImageSize, isImage } from "@/utils";
 import AudioMessage from "./AudioMessage";
+import ExpiredMessage from "./ExpiredMessage";
 import ImageMessage from "./ImageMessage";
 import OtherFileMessage from "./OtherFileMessage";
 import VideoMessage from "./VideoMessage";
@@ -41,6 +43,7 @@ const FileMessage: FC<Props> = ({
   thumbnail = "",
   properties = { local_id: 0, name: "", size: 0, content_type: "" }
 }) => {
+  const { isExpired } = useExpiredResMap();
   const [imageSize, setImageSize] = useState(null);
   const [uploadingFile, setUploadingFile] = useState(false);
   const removeLocalMessage = useRemoveLocalMessage({ context, id: to });
@@ -136,7 +139,9 @@ const FileMessage: FC<Props> = ({
   const sending = uploadingFile || isSending;
   // image
   if (isImage(content_type, size))
-    return (
+    return isExpired(thumbnail || content) ? (
+      <ExpiredMessage type="image" />
+    ) : (
       <ImageMessage
         key={properties?.local_id}
         uploading={sending}
@@ -147,12 +152,15 @@ const FileMessage: FC<Props> = ({
         thumbnail={thumbnail}
       />
     );
-
+  const isVideo = content_type.startsWith("video");
+  const isAudio = content_type.startsWith("audio");
+  if (isExpired(content) && !sending)
+    return <ExpiredMessage type={isAudio ? "audio" : isVideo ? "video" : "file"} />;
   // video
-  if (content_type.startsWith("video") && !sending)
+  if (isVideo && !sending)
     return <VideoMessage size={size} url={content} name={name} download={download} />;
   // audio
-  if (content_type.startsWith("audio") && !sending)
+  if (isAudio && !sending)
     return <AudioMessage size={size} url={content} name={name} download={download} />;
   return (
     <OtherFileMessage
