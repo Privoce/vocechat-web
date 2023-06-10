@@ -26,7 +26,8 @@
   "send_invite_link": "Or Send invite link to your friends",
   "share_invite_link": "Share this link to invite people to this server.",
   "invite_link_faq": "Incorrect Invite Link?",
-  "invite_link_expire": "Invite link expires in 48 hours",
+  "invite_link_edit": "Edit invite link",
+  "invite_link_setting_tip": "Invite link expires in {{expire}}, max use times: {{times}}",
   "generate_new_link": "Generate New Link",
 
   "send_to": "Send To",

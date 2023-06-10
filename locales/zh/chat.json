@@ -26,8 +26,8 @@
   "send_invite_link": "或者，向朋友发送邀请链接",
   "share_invite_link": "分享此链接，邀请朋友加入",
   "invite_link_faq": "链接异常？",
-
-  "invite_link_expire": "邀请链接有效期：48小时",
+  "invite_link_edit": "编辑邀请链接",
+  "invite_link_setting_tip": "邀请链接有效期：{{expire}}，最多使用次数：{{times}}",
   "generate_new_link": "生成新邀请链接",
 
   "send_to": "发送至",
