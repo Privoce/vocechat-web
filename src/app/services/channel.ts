@@ -82,15 +82,13 @@ export const channelApi = createApi({
         }
       }
     }),
-    createInviteLink: builder.query<string, number | void>({
-      query: (gid) => ({
+    createInviteLink: builder.query<string, { expire: number; times: number }>({
+      query: (data) => ({
         headers: {
           "content-type": "text/plain",
           accept: "text/plain"
         },
-        url: gid
-          ? `/group/create_reg_magic_link?expired_in=3600&max_times=1&gid=${gid}`
-          : `/group/create_reg_magic_link?expired_in=3600&max_times=1`,
+        url: `/group/create_reg_magic_link?expired_in=${data.expire}&max_times=${data.times}`,
         responseHandler: "text"
       }),
       transformResponse: (link: string) => {
@@ -117,14 +115,17 @@ export const channelApi = createApi({
         }
       }
     }),
-    createPrivateInviteLink: builder.query<string, number | void>({
-      query: (gid) => ({
+    createPrivateInviteLink: builder.query<
+      string,
+      { cid: number; expire: number; times: number | null }
+    >({
+      query: (data) => ({
         headers: {
           "content-type": "text/plain",
           accept: "text/plain"
         },
         // 七天过期
-        url: `/group/create_invite_private_magic_link?expired_in=604800&max_times=1&gid=${gid}`,
+        url: `/group/create_invite_private_magic_link?expired_in=${data.expire}&max_times=${data.times}&gid=${data.cid}`,
         responseHandler: "text"
       }),
       transformResponse: (link: string) => {

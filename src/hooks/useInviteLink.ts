@@ -1,19 +1,24 @@
 import { useEffect, useState } from "react";
 
+import { getInviteLinkExpireList, getInviteLinkTimesList } from "@/app/config";
 import {
-  useLazyCreateInviteLinkQuery as useCreateChannelInviteLinkQuery,
+  useLazyCreateInviteLinkQuery,
   useLazyCreatePrivateInviteLinkQuery
 } from "@/app/services/channel";
 import { useGetSMTPStatusQuery } from "@/app/services/server";
 import { useAppSelector } from "@/app/store";
 import useCopy from "./useCopy";
 
+const defaultExpire = getInviteLinkExpireList()[4].value;
+const defaultTimes = getInviteLinkTimesList()[0].value;
+type ParamsProps = { expire: number; times: number };
+const defaultParams: ParamsProps = { expire: defaultExpire, times: defaultTimes };
 export default function useInviteLink(cid?: number) {
   const [finalLink, setFinalLink] = useState("");
   const channel = useAppSelector((store) => store.channels.byId[cid ?? 0]);
   const { data: SMTPEnabled, isSuccess: smtpStatusFetchSuccess } = useGetSMTPStatusQuery();
-  const [generateChannelInviteLink, { data: channelInviteLink, isLoading: generatingChannelLink }] =
-    useCreateChannelInviteLinkQuery();
+  const [generateInviteLink, { data: channelInviteLink, isLoading: generatingChannelLink }] =
+    useLazyCreateInviteLinkQuery();
   const [generatePrivateInviteLink, { data: privateInviteLink, isLoading: generatingPrivateLink }] =
     useLazyCreatePrivateInviteLinkQuery();
 
@@ -23,9 +28,9 @@ export default function useInviteLink(cid?: number) {
   };
   useEffect(() => {
     if (!cid || channel?.is_public) {
-      generateChannelInviteLink(cid);
+      generateInviteLink({ expire: defaultExpire, times: defaultTimes });
     } else {
-      generatePrivateInviteLink(cid);
+      generatePrivateInviteLink({ cid, expire: defaultExpire, times: defaultTimes });
     }
   }, [cid, channel]);
 
@@ -35,14 +40,19 @@ export default function useInviteLink(cid?: number) {
       setFinalLink(_link);
     }
   }, [channelInviteLink, privateInviteLink, smtpStatusFetchSuccess]);
-  const genServerLink = () => {
-    generateChannelInviteLink();
+  const generateNewLink = (params = defaultParams) => {
+    const { expire, times } = params;
+    if (!cid || channel?.is_public) {
+      generateInviteLink({ expire, times });
+    } else {
+      generatePrivateInviteLink({ cid, expire, times });
+    }
   };
   const generating = generatingPrivateLink || generatingChannelLink;
   return {
     enableSMTP: SMTPEnabled,
     generating,
-    generateNewLink: cid ? generateChannelInviteLink.bind(null, cid) : genServerLink,
+    generateNewLink,
     link: finalLink,
     linkCopied: copied,
     copyLink

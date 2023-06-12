@@ -25,7 +25,7 @@
   "send_invite_link": "もしくは、招待用URLをコピーする",
   "share_invite_link": "このリンクを使って、友達を招待する",
 
-  "invite_link_expire": "招待用URLの有効期限は48時間です",
+  "invite_link_setting_tip": "招待用URLの有効期限は48時間です",
   "generate_new_link": "新しいリンクを生成する",
 
   "send_to": "送信先"

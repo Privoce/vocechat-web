@@ -125,5 +125,65 @@ export const KEY_PWA_INSTALLED = "VOCECHAT_PWA_INSTALLED";
 export const KEY_LOCAL_MAGIC_TOKEN = "VOCECHAT_LOCAL_MAGIC_TOKEN";
 export const KEY_LOCAL_TRY_PATH = "VOCECHAT_TRY_PATH";
 export const Emojis = ["👍", "❤️", "😄", "👀", "👎", "🎉", "🙁", "🚀"];
+export const getInviteLinkExpireList = () => [
+  {
+    label: i18n.t("auth:invite_expire.min30"),
+    value: 30 * 60
+  },
+  {
+    label: i18n.t("auth:invite_expire.h1"),
+    value: 60 * 60
+  },
+  {
+    label: i18n.t("auth:invite_expire.h6"),
+    value: 6 * 60 * 60
+  },
+  {
+    label: i18n.t("auth:invite_expire.h12"),
+    value: 12 * 60 * 60
+  },
+  {
+    label: i18n.t("auth:invite_expire.d1"),
+    value: 24 * 60 * 60
+  },
+  {
+    label: i18n.t("auth:invite_expire.d7"),
+    value: 7 * 24 * 60 * 60
+  },
+  {
+    label: i18n.t("auth:invite_expire.d30"),
+    value: 30 * 24 * 60 * 60
+  }
+];
+export const getInviteLinkTimesList = () => [
+  {
+    label: i18n.t("auth:invite_times.no_limit"),
+    value: -1
+  },
+  {
+    label: i18n.t("auth:invite_times.time1"),
+    value: 1
+  },
+  {
+    label: i18n.t("auth:invite_times.times5"),
+    value: 5
+  },
+  {
+    label: i18n.t("auth:invite_times.times10"),
+    value: 10
+  },
+  {
+    label: i18n.t("auth:invite_times.times25"),
+    value: 25
+  },
+  {
+    label: i18n.t("auth:invite_times.times50"),
+    value: 50
+  },
+  {
+    label: i18n.t("auth:invite_times.times100"),
+    value: 100
+  }
+];
 
 export default BASE_URL;

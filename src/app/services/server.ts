@@ -21,14 +21,11 @@ import {
   TestEmailDTO
 } from "@/types/server";
 import { User } from "@/types/user";
-import { transformInviteLink } from "@/utils";
 import BASE_URL, { ContentTypes, IS_OFFICIAL_DEMO, PAYMENT_URL_PREFIX } from "../config";
 import { updateInfo } from "../slices/server";
 import { updateCallInfo, upsertVoiceList } from "../slices/voice";
 import { RootState } from "../store";
 import baseQuery from "./base.query";
-
-const defaultExpireDuration = 2 * 24 * 60 * 60;
 
 export const serverApi = createApi({
   reducerPath: "serverApi",
@@ -263,19 +260,6 @@ export const serverApi = createApi({
         }
       }
     }),
-    createInviteLink: builder.query<string, number>({
-      query: (expired_in = defaultExpireDuration) => ({
-        headers: {
-          "content-type": "text/plain",
-          accept: "text/plain"
-        },
-        url: `/admin/system/create_invite_link?expired_in=${expired_in}`,
-        responseHandler: "text"
-      }),
-      transformResponse: (link: string) => {
-        return transformInviteLink(link);
-      }
-    }),
     updateServer: builder.mutation<void, Server>({
       query: (data) => ({
         url: "admin/system/organization",
@@ -434,8 +418,6 @@ export const {
   useLazyGetServerQuery,
   useUpdateServerMutation,
   useUpdateLogoMutation,
-  useCreateInviteLinkQuery,
-  useLazyCreateInviteLinkQuery,
   useGetThirdPartySecretQuery,
   useUpdateThirdPartySecretMutation,
   useCreateAdminMutation,

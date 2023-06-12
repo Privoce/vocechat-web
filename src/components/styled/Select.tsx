@@ -36,6 +36,7 @@ const Select: FC<Props> = ({ options = [], updateSelect = null, current = null }
 
   return (
     <Tippy
+      onClickOutside={setOptionsVisible.bind(null, false)}
       visible={optionsVisible}
       appendTo={document.body}
       placement="bottom"
@@ -59,10 +60,10 @@ const Select: FC<Props> = ({ options = [], updateSelect = null, current = null }
       }
     >
       <div
-        className="select-none border border-solid border-slate-200 p-2 flex items-center gap-2"
+        className="cursor-pointer select-none border border-slate-200 dark:border-slate-800 p-2 flex items-center gap-2"
         onClick={toggleVisible}
       >
-        <span className="text-sm text-gray-500 dark:text-gray-200 min-w-[76px]">
+        <span className="text-sm text-gray-500 dark:text-gray-200 min-w-[120px]">
           {(current !== null ? current : curr)?.title || t("action.select")}
         </span>
         <IconArrow className="!w-5 !h-5" />

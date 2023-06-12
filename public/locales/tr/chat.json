@@ -26,7 +26,7 @@
   "send_invite_link": "Veya arkadaşlarınıza davet bağlantısı gönderin",
   "share_invite_link": "Diğerlerini bu bağlantıyı paylaşarak bu sunucuya davet edebilirsiniz.",
   "invite_link_faq": "Hatalı davet bağlantısı mı?",
-  "invite_link_expire": "Davet bağlantısı 48 saat geçerli olacaktır.",
+  "invite_link_setting_tip": "Davet bağlantısı 48 saat geçerli olacaktır.",
   "generate_new_link": "Yeni bağlantı yarat",
 
   "send_to": "Şuna gönder",
