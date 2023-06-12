@@ -24,8 +24,8 @@ export interface State {
   historyChannels: { [cid: number]: string | "reached" };
   readUsers: { [uid: number]: number };
   readChannels: { [cid: number]: number };
-  muteUsers: { [uid: number]: { expired_in?: number } | undefined };
-  muteChannels: { [cid: number]: { expired_in?: number } | undefined };
+  muteUsers: { [uid: number]: { expired_at?: number } | undefined };
+  muteChannels: { [cid: number]: { expired_at?: number } | undefined };
   autoDeleteMsgUsers: AutoDeleteMsgForUser[];
   autoDeleteMsgChannels: AutoDeleteMsgForGroup[];
   channelAsides: { [cid: number]: ChannelAside };
@@ -160,15 +160,15 @@ const footprintSlice = createSlice({
           }
           case "add_users": {
             const mutes = payload.add_users;
-            mutes?.forEach(({ uid, expired_in }) => {
-              state.muteUsers[uid] = { expired_in };
+            mutes?.forEach(({ uid, expired_at }) => {
+              state.muteUsers[uid] = { expired_at };
             });
             break;
           }
           case "add_groups": {
             const mutes = payload.add_groups;
-            mutes?.forEach(({ gid, expired_in }) => {
-              state.muteChannels[gid] = { expired_in };
+            mutes?.forEach(({ gid, expired_at }) => {
+              state.muteChannels[gid] = { expired_at };
             });
             break;
           }

@@ -11,11 +11,11 @@ export type ContentTypeKey = "text" | "markdown" | "file" | "audio" | "archive";
 export interface MuteDTO {
   add_users?: {
     uid: number;
-    expired_in?: number;
+    expired_at?: number;
   }[];
   add_groups?: {
     gid: number;
-    expired_in?: number;
+    expired_at?: number;
   }[];
   remove_users?: number[];
   remove_groups?: number[];

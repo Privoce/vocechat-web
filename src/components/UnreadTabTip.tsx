@@ -7,45 +7,57 @@ import getUnreadCount from "../routes/chat/utils";
 let total = 0;
 let title = "";
 const UnreadTabTip = () => {
-  const { userData, dmMids, channelMids, messageData, readChannels, readUsers, loginUid } =
-    useAppSelector((store) => {
-      return {
-        userData: store.users.byId,
-        dmMids: store.userMessage.byId,
-        channelMids: store.channelMessage,
-        messageData: store.message,
-        readChannels: store.footprint.readChannels,
-        readUsers: store.footprint.readUsers,
-        loginUid: store.authData.user?.uid ?? 0
-      };
-    });
+  const {
+    muteChannels,
+    muteUsers,
+    userData,
+    dmMids,
+    channelMids,
+    messageData,
+    readChannels,
+    readUsers,
+    loginUid
+  } = useAppSelector((store) => {
+    return {
+      userData: store.users.byId,
+      dmMids: store.userMessage.byId,
+      channelMids: store.channelMessage,
+      messageData: store.message,
+      readChannels: store.footprint.readChannels,
+      readUsers: store.footprint.readUsers,
+      muteChannels: store.footprint.muteChannels,
+      muteUsers: store.footprint.muteUsers,
+      loginUid: store.authData.user?.uid ?? 0
+    };
+  });
 
   useEffect(() => {
     total = 0;
     // dm
     Object.entries(dmMids).forEach(([id, mids]) => {
-      if (userData[+id]) {
-        const { unreads = 0 } = getUnreadCount({
-          mids,
-          readIndex: readUsers[+id],
-          messageData,
-          loginUid
-        });
-        if (unreads > 0) {
-          console.log("unreadsss", id, mids);
+      if (!muteUsers[id]) {
+        if (userData[+id]) {
+          const { unreads = 0 } = getUnreadCount({
+            mids,
+            readIndex: readUsers[+id],
+            messageData,
+            loginUid
+          });
+          total += unreads;
         }
-        total += unreads;
       }
     });
     // channel
     Object.entries(channelMids).map(([id, mids]) => {
-      const { unreads = 0 } = getUnreadCount({
-        mids,
-        readIndex: readChannels[+id],
-        messageData,
-        loginUid
-      });
-      total += unreads;
+      if (!muteChannels[id]) {
+        const { unreads = 0 } = getUnreadCount({
+          mids,
+          readIndex: readChannels[+id],
+          messageData,
+          loginUid
+        });
+        total += unreads;
+      }
     });
     const handler = () => {
       console.log("changed", document.hidden, total);
@@ -66,7 +78,17 @@ const UnreadTabTip = () => {
     return () => {
       document.removeEventListener("visibilitychange", handler);
     };
-  }, [userData, dmMids, channelMids, readChannels, messageData, loginUid, readUsers]);
+  }, [
+    userData,
+    dmMids,
+    channelMids,
+    readChannels,
+    messageData,
+    loginUid,
+    readUsers,
+    muteChannels,
+    muteUsers
+  ]);
 
   return null;
 };
