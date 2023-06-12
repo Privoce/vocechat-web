@@ -55,7 +55,7 @@ const TransferOwnerModal: FC<Props> = ({ id, closeModal, withLeave = true }) => 
   return (
     <Modal id="modal-modal">
       <StyledModal
-        className="compact"
+        compact
         title="Transfer Ownership"
         description={"This cannot be undone."}
         buttons={

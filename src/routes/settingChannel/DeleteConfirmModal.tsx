@@ -34,7 +34,7 @@ const DeleteConfirmModal: FC<Props> = ({ id, closeModal }) => {
   return (
     <Modal id="modal-modal">
       <StyledModal
-        className="compact"
+        compact
         title={t("channel.delete")}
         description={t("channel.delete_desc")}
         buttons={
