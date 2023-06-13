@@ -65,7 +65,7 @@ const ExpiredMessage = ({ type = "file", url = "" }: Props) => {
           </span>
         </div>
         <span className="text-red-500 text-xs whitespace-nowrap flex items-center gap-1">
-          <IconInfo className="stroke-gray-600 w-6 h-6" />
+          <IconInfo className="stroke-gray-600 dark:stroke-gray-400 w-6 h-6" />
         </span>
       </div>
     </div>
