@@ -32,6 +32,12 @@ const UnreadTabTip = () => {
   });
 
   useEffect(() => {
+    if (loginUid === 0) {
+      if (title) {
+        document.title = title;
+      }
+      return;
+    }
     total = 0;
     // dm
     Object.entries(dmMids).forEach(([id, mids]) => {
