@@ -60,8 +60,20 @@ const UserContextMenu: FC<Props> = ({ enable = false, uid, cid, visible, hide, c
                 handler: copyEmail
               },
               canUpdateRole && {
-                title: isAdmin ? t("set_normal") : t("set_admin"),
-                handler: updateRole
+                title: t("roles"),
+                handler: updateRole,
+                subs: [
+                  {
+                    title: t("set_normal"),
+                    checked: !isAdmin,
+                    handler: updateRole
+                  },
+                  {
+                    title: t("set_admin"),
+                    checked: isAdmin,
+                    handler: updateRole
+                  }
+                ]
               },
               canRemoveFromChannel && {
                 danger: true,
