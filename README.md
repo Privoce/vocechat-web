@@ -14,7 +14,7 @@
 - 🎉 Powered by React & Redux Toolkit
 - ✅ Typescript
 - 📦 PWA
-- 📢 Notification
+- 📢 Notification by firebase
 
 ## Host your server! Or use our test server
 
