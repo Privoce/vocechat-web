@@ -158,7 +158,7 @@ export const getInviteLinkExpireList = () => [
 export const getInviteLinkTimesList = () => [
   {
     label: i18n.t("auth:invite_times.no_limit"),
-    value: -1
+    value: 10000000
   },
   {
     label: i18n.t("auth:invite_times.time1"),
