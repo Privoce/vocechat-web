@@ -23,6 +23,7 @@ const ManageMembers: FC<Props> = ({ cid }) => {
         <h4 className="font-bold text-gray-700 dark:text-white">{t("manage_members")}</h4>
         <p className="text-gray-400 dark:text-gray-100 text-xs">{t("manage_tip")}</p>
       </div>
+
       <MemberList cid={cid} />
     </section>
   );

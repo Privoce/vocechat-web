@@ -12,7 +12,7 @@ import useDraft from "@/hooks/useDraft";
 import useSendMessage from "@/hooks/useSendMessage";
 import useUploadFile from "@/hooks/useUploadFile";
 import useUserOperation from "@/hooks/useUserOperation";
-import MixedInput, { useMixedEditor } from "../MixedInput";
+import ProseMirrorInput, { useProseMirrorInput } from "../ProseMirrorInput";
 import StyledButton from "../styled/Button";
 import TextInput from "../TextInput";
 import EmojiPicker from "./EmojiPicker";
@@ -41,7 +41,7 @@ const Send: FC<IProps> = ({
   });
   const { resetStageFiles } = useUploadFile({ context, id });
   const { getDraft, getUpdateDraft } = useDraft({ context, id });
-  const editor = useMixedEditor(`${context}_${id}`);
+  const editor = useProseMirrorInput();
   const [msgs, setMsgs] = useState([]);
   const [markdownEditor, setMarkdownEditor] = useState(null);
   const [markdownFullscreen, setMarkdownFullscreen] = useState(false);
@@ -175,15 +175,20 @@ const Send: FC<IProps> = ({
         >
           <EmojiPicker selectEmoji={insertEmoji} />
           {mode == Modes.text && (
-            <MixedInput
-              updateMessages={setMsgs}
-              updateDraft={getUpdateDraft()}
-              initialValue={getDraft()}
-              members={members}
+            <ProseMirrorInput
               id={`${context}_${id}`}
               placeholder={placeholder}
-              sendMessages={handleSendMessage}
+              sendMessage={handleSendMessage}
             />
+            // <MessageInput
+            //   updateMessages={setMsgs}
+            //   updateDraft={getUpdateDraft()}
+            //   initialValue={getDraft()}
+            //   members={members}
+            //   id={`${context}_${id}`}
+            //   placeholder={placeholder}
+            //   sendMessages={handleSendMessage}
+            // />
           )}
           <Toolbar
             sendMessages={handleSendMessage}

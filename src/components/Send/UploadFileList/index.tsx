@@ -6,7 +6,7 @@ import useUploadFile from "@/hooks/useUploadFile";
 import { formatBytes, getFileIcon } from "@/utils";
 import DeleteIcon from "@/assets/icons/delete.svg";
 import EditIcon from "@/assets/icons/edit.svg";
-import { useMixedEditor } from "../../MixedInput";
+import { useProseMirrorInput } from "../../ProseMirrorInput";
 import EditFileDetailsModal from "./EditFileDetails";
 
 type EditProps = {
@@ -14,7 +14,7 @@ type EditProps = {
   name: string;
 };
 export default function UploadFileList({ context, id }: { context: ChatContext; id: number }) {
-  const editor = useMixedEditor(`${context}_${id}`);
+  const editor = useProseMirrorInput();
   const [editInfo, setEditInfo] = useState<EditProps | null>(null);
   const { stageFiles, updateStageFile, removeStageFile } = useUploadFile({
     context,

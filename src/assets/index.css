@@ -318,10 +318,6 @@ svg:focus {
 [id^="CAMERA_"] video {
   object-fit: contain !important;
 }
-/* send placeholder */
-.send [data-slate-placeholder="true"] {
-  top: 4px !important;
-}
 /* reset number input spinner */
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
