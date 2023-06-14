@@ -24,6 +24,7 @@ import {
 } from "@/app/slices/footprint";
 import { clearChannelMessage, removeChannelSession } from "@/app/slices/message.channel";
 import { removeUserSession } from "@/app/slices/message.user";
+import { updateInfo } from "@/app/slices/server";
 import { setReady } from "@/app/slices/ui";
 import { updateContactStatus, updateUsersByLogs, updateUsersStatus } from "@/app/slices/users";
 import { updateCallInfo } from "@/app/slices/voice";
@@ -152,6 +153,11 @@ export default function useStreaming() {
           keepAlive();
           dispatch(setReady());
           break;
+        case "organization_config_changed": {
+          const { name, description } = data;
+          dispatch(updateInfo({ name, description }));
+          break;
+        }
         case "group_message_cleared": {
           const { gid } = data;
           dispatch(clearChannelMessage(gid));

@@ -178,6 +178,11 @@ interface KickFromGroupEvent {
   gid: number;
   reason: string;
 }
+interface OrgInfoChangedEvent {
+  type: "organization_config_changed";
+  name: string;
+  description: string;
+}
 
 interface GroupChangedEvent {
   type: "group_changed";
@@ -235,4 +240,5 @@ export type ServerEvent =
   | PinnedMessageUpdatedEvent
   | HeartbeatEvent
   | GroupClearEvent
-  | UserCallEvent;
+  | UserCallEvent
+  | OrgInfoChangedEvent;
