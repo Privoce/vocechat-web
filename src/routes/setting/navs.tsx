@@ -16,6 +16,11 @@ import MyAccount from "./MyAccount";
 import Overview from "./Overview";
 import Widget from "./Widget";
 
+const dataManagementNav = {
+  name: "data_management",
+  component: <DataManagement />,
+  admin: true
+};
 const navs = [
   {
     name: "general",
@@ -31,11 +36,6 @@ const navs = [
       {
         name: "members",
         component: <ManageMembers />,
-        admin: true
-      },
-      {
-        name: "data_management",
-        component: <DataManagement />,
         admin: true
       }
     ]
@@ -115,6 +115,13 @@ const useNavs = () => {
             ...rest
           };
         });
+  if (
+    loginUser?.uid == 1 &&
+    !filteredNavs[0].items.some((item) => item.name == "data_management")
+  ) {
+    // super admin
+    filteredNavs[0].items.push(dataManagementNav);
+  }
   const transformedNavs = filteredNavs.map((n) => {
     const { name, items, ...rest } = n;
     return {
