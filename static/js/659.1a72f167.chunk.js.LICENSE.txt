@@ -13,7 +13,7 @@
  */
 
 /*!
- * wavesurfer.js 6.6.3 (2023-04-04)
+ * wavesurfer.js 6.6.4 (2023-06-10)
  * https://wavesurfer-js.org
  * @license BSD-3-Clause
  */
