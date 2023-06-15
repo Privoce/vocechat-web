@@ -50,7 +50,7 @@ const WrapWithSubmenu = ({
             } = sub;
             return (
               <li
-                className={`item ${underline ? "bottom_line" : ""} ${danger ? "danger" : ""}`}
+                className={`item group ${underline ? "bottom_line" : ""} ${danger ? "danger" : ""}`}
                 key={title}
                 onClick={(evt) => {
                   evt.stopPropagation();

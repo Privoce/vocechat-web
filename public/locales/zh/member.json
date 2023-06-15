@@ -25,8 +25,8 @@
   "remove_account_desc": "确定永久注销该账号？",
   "remove_from_channel": "从频道移除",
   "roles": "设置角色",
-  "set_admin": "设置为管理员",
-  "set_normal": "设置为普通用户",
+  "set_admin": "管理员",
+  "set_normal": "普通用户",
 
   "search_not_found": "用户不存在，或者不允许搜索",
   "search_by_id": "用户ID",

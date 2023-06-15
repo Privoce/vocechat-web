@@ -26,8 +26,8 @@
   "remove_account_desc": "Are you sure remove this account?",
   "remove_from_channel": "Remove from channel",
   "roles": "Roles",
-  "set_admin": "Set as admin",
-  "set_normal": "Set as normal user",
+  "set_admin": "Admin",
+  "set_normal": "Normal User",
 
   "search_not_found": "Not found, or this user is not allowed to be searched.",
   "search_by_id": "Search by ID",

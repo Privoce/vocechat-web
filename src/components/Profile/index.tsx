@@ -11,6 +11,7 @@ import IconCall from "@/assets/icons/call.svg";
 import IconMessage from "@/assets/icons/message.svg";
 import IconMore from "@/assets/icons/more.svg";
 import Avatar from "../Avatar";
+import ContextMenu, { Item } from "../ContextMenu";
 
 interface Props {
   uid: number;
@@ -91,33 +92,47 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
           trigger="click"
           hideOnClick={true}
           content={
-            <ul className="context-menu">
-              {agoraEnabled && type == "card" && (
-                <li className="item" onClick={startCall}>
-                  {t("call")}
-                </li>
-              )}
-              {canCopyEmail && (
-                <li className="item" onClick={copyEmail.bind(undefined, email)}>
-                  {t("copy_email")}
-                </li>
-              )}
-              {canUpdateRole && (
-                <li className="item" onClick={updateRole}>
-                  {isAdmin ? t("set_normal") : t("set_admin")}
-                </li>
-              )}
-              {canRemoveFromChannel && (
-                <li className="item danger" onClick={removeFromChannel.bind(null, uid)}>
-                  {t("remove_from_channel")}
-                </li>
-              )}
-              {canRemoveFromServer && (
-                <li className="item danger" onClick={removeUser.bind(null, uid)}>
-                  {t("remove")}
-                </li>
-              )}
-            </ul>
+            <ContextMenu
+              items={
+                [
+                  agoraEnabled &&
+                    type == "card" && {
+                      title: t("call"),
+                      handler: startCall
+                    },
+                  canCopyEmail && {
+                    title: t("copy_email"),
+                    handler: copyEmail
+                  },
+                  canUpdateRole && {
+                    title: t("roles"),
+                    handler: updateRole,
+                    subs: [
+                      {
+                        title: t("set_normal"),
+                        checked: !isAdmin,
+                        handler: updateRole
+                      },
+                      {
+                        title: t("set_admin"),
+                        checked: isAdmin,
+                        handler: updateRole
+                      }
+                    ]
+                  },
+                  canRemoveFromChannel && {
+                    title: t("remove_from_channel"),
+                    danger: true,
+                    handler: removeFromChannel
+                  },
+                  canRemoveFromServer && {
+                    title: t("remove"),
+                    handler: removeUser,
+                    danger: true
+                  }
+                ].filter(Boolean) as Item[]
+              }
+            />
           }
         >
           <li className={`${iconClass} icon ${hasMore ? "" : "text-gray-500"}`}>
