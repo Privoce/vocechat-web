@@ -147,10 +147,9 @@ export default function Register() {
           alt="logo"
           className="w-14 h-14 md:mb-7 rounded-full"
         />
-        <h2 className="font-semibold text-2xl text-gray-800 dark:text-white md:mb-2">
+        <h2 className="font-semibold text-2xl text-gray-800 dark:text-white">
           {t("reg.title", { name: serverName })}
         </h2>
-        <span className="hidden md:block text-gray-400 dark:text-gray-100">{t("reg.desc")}</span>
       </div>
 
       <form

@@ -182,6 +182,8 @@ export const authApi = createApi({
         try {
           await queryFulfilled;
           dispatch(resetAuthData());
+          // 重定向到登录
+          location.href = "/#/login";
         } catch {
           console.log("logout error");
         }

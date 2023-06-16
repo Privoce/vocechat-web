@@ -134,10 +134,9 @@ export default function LoginPage() {
             alt="logo"
             className="w-14 h-14 mb-3 md:mb-7 rounded-full"
           />
-          <h2 className="font-semibold text-2xl text-gray-800 dark:text-white md:mb-2">
+          <h2 className="font-semibold text-2xl text-gray-800 dark:text-white">
             {t("login.title", { name: serverName })}
           </h2>
-          <span className="text-gray-400 dark:text-gray-100">{t("login.desc")}</span>
         </div>
         <form className="flex flex-col gap-5 w-80 md:min-w-[360px] " onSubmit={handleLogin}>
           <Input
@@ -165,9 +164,8 @@ export default function LoginPage() {
           </Button>
         </form>
         {hasDivider && <Divider content="OR" />}
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-3">
           {enableMagicLink && <MagicLinkLogin />}
-
           <SocialLoginButtons />
         </div>
         {whoCanSignUp === "EveryOne" && <SignUpLink />}
