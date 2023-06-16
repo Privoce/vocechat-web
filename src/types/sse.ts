@@ -1,5 +1,6 @@
 import { Channel } from "./channel";
 import { ContentType } from "./message";
+import { SystemCommon } from "./server";
 import { ContactInfo, User } from "./user";
 
 export interface ReadyEvent {
@@ -178,10 +179,11 @@ interface KickFromGroupEvent {
   gid: number;
   reason: string;
 }
-interface OrgInfoChangedEvent {
-  type: "organization_config_changed";
-  name: string;
-  description: string;
+interface ServerConfigChangedEvent extends SystemCommon {
+  type: "server_config_changed";
+  organization_name: string;
+  organization_description: string;
+  organization_logo: string;
 }
 
 interface GroupChangedEvent {
@@ -220,6 +222,10 @@ interface UserCallEvent {
   target: number;
   uid: number;
 }
+interface MessageClearedEvent {
+  type: "message_cleared";
+  mid: number;
+}
 
 export type ServerEvent =
   | ReadyEvent
@@ -241,4 +247,5 @@ export type ServerEvent =
   | HeartbeatEvent
   | GroupClearEvent
   | UserCallEvent
-  | OrgInfoChangedEvent;
+  | ServerConfigChangedEvent
+  | MessageClearedEvent;

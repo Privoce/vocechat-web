@@ -5,11 +5,7 @@ import { useDispatch } from "react-redux";
 import { useWizard } from "react-use-wizard";
 
 import { useLoginMutation } from "@/app/services/auth";
-import {
-  useCreateAdminMutation,
-  useGetServerQuery,
-  useUpdateServerMutation
-} from "@/app/services/server";
+import { useCreateAdminMutation, useUpdateServerMutation } from "@/app/services/server";
 import { updateInitialized } from "@/app/slices/auth.data";
 import { useAppSelector } from "@/app/store";
 import StyledButton from "@/components/styled/Button";
@@ -27,7 +23,6 @@ const AdminAccount: FC<Props> = ({ serverName }) => {
   const [createAdmin, { isLoading: isSigningUp, isError: signUpError, isSuccess: signUpOk }] =
     useCreateAdminMutation();
   const [login, { isLoading: isLoggingIn, isError: loginError }] = useLoginMutation();
-  const { data: serverData } = useGetServerQuery();
   const [updateServer, { isLoading: isUpdatingServer, isSuccess: isUpdatedServer }] =
     useUpdateServerMutation();
 
@@ -58,11 +53,10 @@ const AdminAccount: FC<Props> = ({ serverName }) => {
 
   // After logged in
   useEffect(() => {
-    if (loggedIn && serverData) {
+    if (loggedIn) {
       dispatch(updateInitialized(true));
       // Set server name
       updateServer({
-        ...serverData,
         name: serverName
       });
     }

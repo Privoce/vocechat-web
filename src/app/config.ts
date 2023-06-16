@@ -109,6 +109,7 @@ export const ChatPrefixes = {
 };
 export const vapidKey = `BOmzyZhw-DcIGYQ77mzQUVqLlcvn0bm_76P_kc7rpwRxzXNbui-JP8iPyEQYfyoxyJeq43Ud4IiIsJSMNHNujn0`;
 export const tokenHeader = "X-API-Key";
+export const KEY_SERVER_VERSION = "VC_SERVER_VERSION"; //
 export const FILE_SLICE_SIZE = 1000 * 1000; //
 export const FILE_IMAGE_SIZE = 1000 * 10000 * 8; //10mb
 export const KEY_MOBILE_APP_TIP = "MOBILE_APP_TIP";

@@ -14,11 +14,12 @@ export default function useLogout() {
   const dispatch = useDispatch();
   const [logout, { isLoading, isSuccess }] = useLazyLogoutQuery();
   const clearLocalData = () => {
+    dispatch(resetChannels());
+    dispatch(resetUsers());
+    // 和消息相关的数据
     dispatch(resetFootprint());
     dispatch(resetChannelMsg());
     dispatch(resetUserMsg());
-    dispatch(resetChannels());
-    dispatch(resetUsers());
     dispatch(resetMessage());
     dispatch(resetReactionMessage());
     dispatch(resetFileMessage());

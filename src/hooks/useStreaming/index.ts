@@ -15,6 +15,7 @@ import {
 } from "@/app/slices/channels";
 import {
   removePinChats,
+  resetFootprint,
   updateAutoDeleteSetting,
   updateMute,
   updateReadChannels,
@@ -22,8 +23,15 @@ import {
   updateUsersVersion,
   upsertPinChats
 } from "@/app/slices/footprint";
-import { clearChannelMessage, removeChannelSession } from "@/app/slices/message.channel";
-import { removeUserSession } from "@/app/slices/message.user";
+import { resetMessage } from "@/app/slices/message";
+import {
+  clearChannelMessage,
+  removeChannelSession,
+  resetChannelMsg
+} from "@/app/slices/message.channel";
+import { resetFileMessage } from "@/app/slices/message.file";
+import { resetReactionMessage } from "@/app/slices/message.reaction";
+import { removeUserSession, resetUserMsg } from "@/app/slices/message.user";
 import { updateInfo } from "@/app/slices/server";
 import { setReady } from "@/app/slices/ui";
 import { updateContactStatus, updateUsersByLogs, updateUsersStatus } from "@/app/slices/users";
@@ -106,10 +114,12 @@ export default function useStreaming() {
     }
     // 开始初始化
     const params: {
+      limit: string;
       "api-key": string;
       after_mid?: string;
       users_version?: string;
     } = {
+      limit: "500",
       "api-key": _token
     };
     // 如果afterMid是0，则不传该参数
@@ -147,15 +157,31 @@ export default function useStreaming() {
         case "heartbeat":
           keepAlive();
           break;
+        case "message_cleared": {
+          dispatch(resetFootprint());
+          dispatch(resetChannelMsg());
+          dispatch(resetUserMsg());
+          dispatch(resetMessage());
+          dispatch(resetReactionMessage());
+          dispatch(resetFileMessage());
+          break;
+        }
         case "ready":
           ready = true;
           // 有时候，heartbeat不会发？
           keepAlive();
           dispatch(setReady());
           break;
-        case "organization_config_changed": {
-          const { name, description } = data;
-          dispatch(updateInfo({ name, description }));
+        case "server_config_changed": {
+          const { type, ...rest } = data;
+          const { organization_name, organization_logo, organization_description, ...tmp } = rest;
+          const transformed = {
+            name: organization_name,
+            description: organization_description,
+            ...tmp
+          };
+          const purified = omitBy(transformed, isNull);
+          dispatch(updateInfo(purified));
           break;
         }
         case "group_message_cleared": {

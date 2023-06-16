@@ -21,7 +21,13 @@ import {
   TestEmailDTO
 } from "@/types/server";
 import { User } from "@/types/user";
-import BASE_URL, { ContentTypes, IS_OFFICIAL_DEMO, PAYMENT_URL_PREFIX } from "../config";
+import { compareVersion } from "@/utils";
+import BASE_URL, {
+  ContentTypes,
+  IS_OFFICIAL_DEMO,
+  KEY_SERVER_VERSION,
+  PAYMENT_URL_PREFIX
+} from "../config";
 import { updateInfo } from "../slices/server";
 import { updateCallInfo, upsertVoiceList } from "../slices/voice";
 import { RootState } from "../store";
@@ -68,6 +74,7 @@ export const serverApi = createApi({
       async onQueryStarted(data, { dispatch, queryFulfilled }) {
         try {
           const resp = await queryFulfilled;
+          localStorage.setItem(KEY_SERVER_VERSION, resp.data);
           dispatch(updateInfo({ version: resp.data }));
         } catch {
           console.error("get server version error");
@@ -260,10 +267,13 @@ export const serverApi = createApi({
         }
       }
     }),
-    updateServer: builder.mutation<void, Server>({
+    updateServer: builder.mutation<void, Partial<Server>>({
       query: (data) => ({
         url: "admin/system/organization",
-        method: "POST",
+        method:
+          compareVersion(localStorage.getItem(KEY_SERVER_VERSION) ?? "", "0.3.7") > 0
+            ? "PUT"
+            : "POST",
         body: data
       }),
       async onQueryStarted(data, { dispatch, queryFulfilled, getState }) {

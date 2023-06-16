@@ -1,4 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
+import { unescape } from "lodash";
 
 import { ChatContext } from "@/types/common";
 import { ChatMessage, ContentTypeKey, UploadFileResponse } from "@/types/message";
