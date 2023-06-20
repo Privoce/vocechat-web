@@ -89,7 +89,7 @@ export const userApi = createApi({
         method: "POST"
       })
     }),
-    searchUser: builder.mutation<User, { search_type: "id" | "email"; keyword: string }>({
+    searchUser: builder.mutation<User, { search_type: "id" | "email" | "name"; keyword: string }>({
       query: (input) => ({
         url: `/user/search`,
         body: input,

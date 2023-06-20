@@ -17,7 +17,7 @@ import Input from "./styled/Input";
 type Props = {
   closeModal: () => void;
 };
-type Type = "id" | "email";
+type Type = "id" | "email" | "name";
 
 const SearchUser: FC<Props> = ({ closeModal }) => {
   const [updateContactStatus, { isLoading: adding }] = useUpdateContactStatusMutation();
@@ -25,10 +25,11 @@ const SearchUser: FC<Props> = ({ closeModal }) => {
   const { t } = useTranslation();
   const navigateTo = useNavigate();
   const inputRef = useRef(null);
-  const [type, setType] = useState<Type>("email");
+  const [type, setType] = useState<Type>("name");
   const [input, setInput] = useState({
     id: "",
-    email: ""
+    email: "",
+    name: ""
   });
   const [searchUser, { data, isSuccess, isLoading, reset }] = useSearchUserMutation();
   const handleInput = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -72,19 +73,25 @@ const SearchUser: FC<Props> = ({ closeModal }) => {
   // const tmpData = { "avatar_updated_at": 0, "birthday": 0, "create_by": "password", "email": "tristan@alex.com", "gender": 0, "is_admin": true, "is_bot": false, "language": "en-US", "name": "Admin", "uid": 1 };
   // const showResult = isSuccess && data;
   const inContact = Boolean(data && usersData[data.uid] && usersData[data.uid].status == "added");
-  const inputType = type == "id" ? "number" : "email";
+  const inputType = type == "id" ? "number" : type == "email" ? "email" : "text";
   return (
     <Modal>
       <div className=" relative flex flex-col gap-2 w-96 px-4 py-3 rounded-lg bg-gray-100 dark:bg-gray-900 text-slate-900 dark:text-slate-100">
         <div className="flex items-center gap-2 py-2">
           <StyledButton
-            className={clsx("mini", type == "id" && "ghost !border-none !shadow-none")}
+            className={clsx("mini", type !== "name" && "ghost !border-none !shadow-none")}
+            onClick={handleChangeKeyword.bind(null, "name")}
+          >
+            {t("search_by_name", { ns: "member" })}
+          </StyledButton>
+          <StyledButton
+            className={clsx("mini", type !== "email" && "ghost !border-none !shadow-none")}
             onClick={handleChangeKeyword.bind(null, "email")}
           >
             {t("search_by_email", { ns: "member" })}
           </StyledButton>
           <StyledButton
-            className={clsx("mini", type == "email" && "ghost !border-none !shadow-none")}
+            className={clsx("mini", type !== "id" && "ghost !border-none !shadow-none")}
             onClick={handleChangeKeyword.bind(null, "id")}
           >
             {t("search_by_id", { ns: "member" })}
@@ -101,7 +108,9 @@ const SearchUser: FC<Props> = ({ closeModal }) => {
             placeholder={`${
               type == "email"
                 ? t("search_by_email_ph", { ns: "member" })
-                : t("search_by_id_ph", { ns: "member" })
+                : type == "id"
+                ? t("search_by_id_ph", { ns: "member" })
+                : t("search_by_name_ph", { ns: "member" })
             }...`}
             onChange={handleInput}
           />
