@@ -100,7 +100,7 @@
     "tip_renewed": "Lisans başarı ile yenilendi!",
     "tip_renew_error": "Invalided Stripe Session ID",
     "tip_domain": "Lisansınız Alan adı ve Porta bağlıdır, lütfen onaylayın veya ayarlarınız güncelleyin:",
-    "tip_port": "80 veya 443 portu görmezden gelinir",
+    "tip_port": "Fill out your domain name without port.",
     "tip_confirm": "Ödemeye başlayın"
   },
   "bot": {

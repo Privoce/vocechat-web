@@ -33,5 +33,7 @@
   "search_by_id": "Search by ID",
   "search_by_id_ph": "Input user ID",
   "search_by_email": "Search by email",
-  "search_by_email_ph": "Input user email"
+  "search_by_email_ph": "Input user email",
+  "search_by_name": "Search by name",
+  "search_by_name_ph": "Input user name"
 }
