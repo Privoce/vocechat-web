@@ -209,7 +209,7 @@ export default function Register() {
         </Button>
       </form>
       <Divider content="OR" />
-      <div className="flex flex-col gap-3 py-3">
+      <div className="socials flex flex-col gap-3 py-3 empty:hidden">
         <SocialLoginButtons type="register" />
       </div>
       <SignInLink token={magic_token} />

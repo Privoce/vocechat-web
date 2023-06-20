@@ -104,7 +104,7 @@ export default function SendMagicLinkPage() {
             <Button onClick={handlePwdPath} className="w-full">
               {t("login.password")}
             </Button>
-            <div className="flex flex-col gap-3 py-3">
+            <div className="flex flex-col gap-3 py-3 empty:hidden">
               <SocialLoginButtons />
             </div>
             <SignInLink />

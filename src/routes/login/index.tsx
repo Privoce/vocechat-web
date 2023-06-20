@@ -11,7 +11,6 @@ import { useAppSelector } from "@/app/store";
 import Divider from "@/components/Divider";
 import Button from "@/components/styled/Button";
 import Input from "@/components/styled/Input";
-import useGoogleAuthConfig from "@/hooks/useGoogleAuthConfig";
 import MagicLinkLogin from "./MagicLinkLogin";
 import SignUpLink from "./SignUpLink";
 import SocialLoginButtons from "./SocialLoginButtons";
@@ -22,7 +21,6 @@ export default function LoginPage() {
   const { t: ct } = useTranslation();
   const { data: enableSMTP, isLoading: loadingSMTPStatus } = useGetSMTPStatusQuery();
   const [login, { isSuccess, isLoading, error }] = useLoginMutation();
-  const { clientId } = useGoogleAuthConfig();
   const { data: loginConfig, isSuccess: loginConfigSuccess } = useGetLoginConfigQuery();
   const [input, setInput] = useState({
     email: "",
@@ -110,19 +108,9 @@ export default function LoginPage() {
   const { email, password } = input;
   if (!loginConfigSuccess) return null;
 
-  const {
-    magic_link,
-    github: enableGithubLogin,
-    google: enableGoogleLogin,
-    metamask: enableMetamaskLogin,
-    oidc = [],
-    who_can_sign_up: whoCanSignUp
-  } = loginConfig;
+  const { magic_link, who_can_sign_up: whoCanSignUp } = loginConfig;
 
   const enableMagicLink = enableSMTP && magic_link;
-  const googleLogin = enableGoogleLogin && clientId;
-  const hasDivider =
-    enableMagicLink || googleLogin || enableMetamaskLogin || oidc.length > 0 || enableGithubLogin;
 
   if (loadingSMTPStatus) return null;
   return (
@@ -163,8 +151,8 @@ export default function LoginPage() {
             {isLoading ? "Signing" : t("sign_in")}
           </Button>
         </form>
-        {hasDivider && <Divider content="OR" />}
-        <div className="flex flex-col gap-3">
+        <Divider content="OR" />
+        <div className="socials flex flex-col gap-3">
           {enableMagicLink && <MagicLinkLogin />}
           <SocialLoginButtons />
         </div>

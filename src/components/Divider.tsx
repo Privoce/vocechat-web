@@ -10,7 +10,7 @@ const Divider: FC<Props> = ({ content, className = "" }) => {
   return (
     <div
       className={clsx(
-        "relative border-none h-[1px] bg-slate-200 dark:bg-gray-500 my-6 overflow-visible",
+        "or relative border-none h-[1px] bg-slate-200 dark:bg-gray-500 my-6 overflow-visible",
         className
       )}
     >
