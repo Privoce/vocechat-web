@@ -16,7 +16,7 @@ const renderContent = (data: MessagePayload) => {
   switch (content_type) {
     case ContentTypes.text:
       res = (
-        <span className="max-w-lg md:truncate md:break-words md:break-all text-gray-800 dark:text-gray-100">
+        <span className="max-w-3xl md:break-words md:break-all text-gray-800 dark:text-gray-100 whitespace-break-spaces">
           <LinkifyText
             text={content as string}
             url={false}
