@@ -113,7 +113,7 @@ const SessionList: FC<Props> = ({ tempSession }) => {
   ]);
 
   return (
-    <>
+    <div className="h-full pb-14 md:pb-0 overflow-auto">
       {pinSessions.length ? (
         <ul className="flex flex-col gap-0.5 py-1 px-2 bg-primary-500/10">
           {pinSessions.map((p) => {
@@ -133,7 +133,7 @@ const SessionList: FC<Props> = ({ tempSession }) => {
           })}
         </ul>
       ) : null}
-      <ul ref={ref} className="flex flex-1 flex-col gap-0.5 p-2 overflow-auto">
+      <ul ref={ref} className="flex flex-1 flex-col gap-0.5 p-2">
         <ViewportList initialPrerender={10} viewportRef={ref} items={sessions}>
           {(s) => {
             const { type, id, mid = 0 } = s;
@@ -168,7 +168,7 @@ const SessionList: FC<Props> = ({ tempSession }) => {
           }}
         />
       )}
-    </>
+    </div>
   );
 };
 export default memo(SessionList);

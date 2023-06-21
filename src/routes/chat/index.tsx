@@ -89,7 +89,7 @@ function ChatPage() {
         )}
         <div
           className={clsx(
-            "left-container pb-14 md:pb-0 flex-col md:rounded-l-2xl w-full h-screen md:h-full md:max-w-[250px] md:min-w-[268px] shadow-[rgb(0_0_0_/_10%)_-1px_0px_0px_inset] bg-white dark:!bg-gray-800",
+            "left-container flex-col md:rounded-l-2xl w-full h-screen md:h-full md:max-w-[250px] md:min-w-[268px] shadow-[rgb(0_0_0_/_10%)_-1px_0px_0px_inset] bg-white dark:!bg-gray-800",
             isMainPath ? "flex" : "hidden md:flex"
           )}
         >
