@@ -27,7 +27,7 @@
   "remove_from_channel": "Remove from channel",
   "roles": "Roles",
   "set_admin": "Admin",
-  "set_normal": "Normal User",
+  "set_normal": "User",
 
   "search_not_found": "Not found, or this user is not allowed to be searched.",
   "search_by_id": "Search by ID",

@@ -23,13 +23,14 @@ const MemberList: FC<Props> = ({ cid }) => {
   const ref = useRef<HTMLUListElement | null>(null);
   const { t } = useTranslation("member");
   const { t: ct } = useTranslation();
-  const { channels, loginUser } = useAppSelector((store) => {
+  const { userMap, channels, loginUser } = useAppSelector((store) => {
     return {
+      userMap: store.users.byId,
       channels: store.channels,
       loginUser: store.authData.user
     };
   });
-  const { users, input, updateInput } = useFilteredUsers();
+  const { uids, input, updateInput } = useFilteredUsers();
   const { copyEmail, removeFromChannel, removeUser } = useUserOperation({ cid });
   const [updateUser, { isSuccess: updateSuccess }] = useUpdateUserMutation();
 
@@ -54,8 +55,7 @@ const MemberList: FC<Props> = ({ cid }) => {
   };
 
   const channel = cid ? channels.byId[cid] : null;
-  const ids = users.map((u) => u.uid);
-  const uids = channel ? (channel.is_public ? ids : channel.members) : ids;
+  const finalUids = channel ? (channel.is_public ? uids : channel.members) : uids;
   return (
     <>
       <Search input={input} updateInput={updateInput} type="members" />
@@ -63,9 +63,9 @@ const MemberList: FC<Props> = ({ cid }) => {
         className="flex flex-col gap-1 w-full md:w-[512px] mb-44 max-h-[800px] overflow-y-scroll"
         ref={ref}
       >
-        <ViewportList initialPrerender={15} viewportRef={ref} items={uids}>
+        <ViewportList initialPrerender={15} viewportRef={ref} items={finalUids}>
           {(uid) => {
-            const currUser = users.find((u) => u.uid == uid);
+            const currUser = userMap[uid];
             if (!currUser) return null;
             const { name, email, is_admin } = currUser;
             const owner = channel && channel.owner == uid;

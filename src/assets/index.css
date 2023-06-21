@@ -168,6 +168,9 @@
     background-color: #22ccee;
     color: #fff;
   }
+  .context-menu .item:hover svg {
+    fill: white;
+  }
   .context-menu .item.bottom_line {
     margin-bottom: 9px;
   }
