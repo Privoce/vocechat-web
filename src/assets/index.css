@@ -226,7 +226,6 @@ html.dark ::-webkit-scrollbar-thumb {
   background: rgb(17 24 39);
 }
 /* markdown overrides */
-
 #MARKDOWN_CONTAINER .toastui-editor-contents {
   display: flex;
   flex-direction: column;
@@ -252,7 +251,7 @@ html.dark ::-webkit-scrollbar-thumb {
   font-size: 14px;
   line-height: 22px;
   margin: 0 0 16px;
-  word-break: break-all;
+  word-break: break-word;
 }
 [class^="toastui-editor-"] a {
   background-color: transparent;
