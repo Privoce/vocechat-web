@@ -8,6 +8,7 @@ import Modal from "@/components/Modal";
 import StyledButton from "@/components/styled/Button";
 import Button from "@/components/styled/Button";
 import StyledModal from "@/components/styled/Modal";
+import IconIODC from "@/assets/icons/oidc/icon.svg";
 import OidcLoginEntry from "./OidcLoginEntry";
 
 interface IProps {
@@ -22,11 +23,12 @@ const OidcLoginButton: FC<IProps> = ({ issuers, type = "login" }) => {
   return (
     <>
       <Button
-        className="flex ghost flex-center gap-2"
+        className="flex ghost flex-center gap-2 relative"
         onClick={() => {
           setModal(true);
         }}
       >
+        <IconIODC className="w-6 h-6 absolute left-4" />
         {type == "login" ? t("login.oidc") : t("reg.oidc")}
       </Button>
       {modal && (

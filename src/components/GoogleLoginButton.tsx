@@ -48,7 +48,7 @@ const GoogleLoginInner: FC<Props> = ({ type = "login", loaded, loadError }) => {
       disabled={!loaded || isLoading}
     >
       <div className="absolute left-0 top-0 w-full h-full flex-center gap-3 z-[998] bg-inherit">
-        <IconGoogle className="w-6 h-6" />
+        <IconGoogle className="w-6 h-6 absolute left-4" />
         {loadError
           ? "Script Load Error!"
           : loaded

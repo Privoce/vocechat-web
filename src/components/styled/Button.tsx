@@ -16,7 +16,7 @@ const StyledButton = ({ children, className = "", ...rest }: Props) => {
         `text-sm text-white bg-primary-400 break-keep shadow-sm rounded-lg px-3.5 h-11 md:hover:bg-primary-500 active:bg-primary-500 disabled:bg-gray-300 disabled:hover:bg-gray-300 disabled:hover:cursor-not-allowed`,
         isFull && "w-full text-center justify-center",
         isGhost &&
-          " !text-gray-600 dark:!text-gray-100  !border !border-solid !border-gray-300 dark:!border-gray-500 !bg-transparent",
+          " !text-gray-700 dark:!text-gray-100  !border !border-solid !border-gray-300 dark:!border-gray-500 !bg-transparent",
         isCancel &&
           "!bg-transparent !text-black dark:!text-gray-50 !border !border-solid !border-gray-200",
         isSmall && "!h-auto !py-2",

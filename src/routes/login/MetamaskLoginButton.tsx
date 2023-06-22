@@ -96,11 +96,11 @@ export default function MetamaskLoginButton({
   };
   return (
     <Button
-      className="flex ghost flex-center gap-2"
+      className="flex ghost flex-center gap-2 relative"
       disabled={requesting}
       onClick={handleMetamaskLogin}
     >
-      <img className="w-6 h-6" src={metamaskSvg} alt="meta mask icon" />
+      <img className="w-6 h-6 absolute left-4" src={metamaskSvg} alt="meta mask icon" />
       {type == "login" ? t("login.metamask") : t("reg.metamask")}
     </Button>
   );
