@@ -58,7 +58,10 @@ const SearchUser: FC<Props> = ({ closeModal }) => {
       keyword: currInput
     });
   };
-
+  const handleSendMsg = () => {
+    if (!data) return;
+    navigateTo(`/chat/dm/${data.uid}`);
+  };
   const handleChangeKeyword = (type: Type) => {
     setType(type);
   };
@@ -132,9 +135,11 @@ const SearchUser: FC<Props> = ({ closeModal }) => {
                 />
                 <span className="my-2 dark:text-gray-100 text-gray-950">{data.name}</span>
                 <div className="flex gap-2 my-2">
-                  <StyledButton className="mini ghost" onClick={resetInput}>
-                    {t("action.cancel")}
-                  </StyledButton>
+                  {!inContact && (
+                    <StyledButton className="mini ghost" onClick={handleSendMsg}>
+                      {t("send_msg", { ns: "member" })}
+                    </StyledButton>
+                  )}
                   <StyledButton
                     disabled={adding}
                     onClick={handleChat.bind(null, inContact)}
