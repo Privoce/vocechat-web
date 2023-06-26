@@ -140,7 +140,7 @@
     "tip_renewing": "Renewing the License, do not close the window!",
     "tip_renewed": "Renew the License Successfully!",
     "tip_renew_error": "Invalided Stripe Session ID",
-    "tip_domain": "The license is bound to domain and port, please confirm or update your setting:",
+    "tip_domain": "The license is bound to domain (without port), please confirm or update your setting:",
     "tip_port": "Fill out your domain name without port.",
     "tip_confirm": "Start Payment"
   },
