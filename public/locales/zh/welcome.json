@@ -12,7 +12,7 @@
     "welcome": "欢迎来到你的VoceChat！",
     "welcome_desc": "在这里，你能掌控一切，开始构建你的空间吧！",
     "start": "开始",
-    "new_server": "创建一个新的服务器",
+    "new_server": "给你的服务器命名",
     "server_desc": "服务器是你和你的朋友能够沟通的载体",
     "placeholder_server": "输入服务器名称",
     "create_server": "创建服务器",
