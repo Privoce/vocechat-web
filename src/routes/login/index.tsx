@@ -11,6 +11,7 @@ import { useAppSelector } from "@/app/store";
 import Divider from "@/components/Divider";
 import Button from "@/components/styled/Button";
 import Input from "@/components/styled/Input";
+import StyledLabel from "@/components/styled/Label";
 import MagicLinkLogin from "./MagicLinkLogin";
 import SignUpLink from "./SignUpLink";
 import SocialLoginButtons from "./SocialLoginButtons";
@@ -22,6 +23,7 @@ export default function LoginPage() {
   const { data: enableSMTP, isLoading: loadingSMTPStatus } = useGetSMTPStatusQuery();
   const [login, { isSuccess, isLoading, error }] = useLoginMutation();
   const { data: loginConfig, isSuccess: loginConfigSuccess } = useGetLoginConfigQuery();
+  const [emailInputted, setEmailInputted] = useState(false);
   const [input, setInput] = useState({
     email: "",
     password: ""
@@ -90,6 +92,11 @@ export default function LoginPage() {
 
   const handleLogin = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
+    const enableMagicLink = enableSMTP && loginConfig?.magic_link;
+    if (enableMagicLink && !emailInputted) {
+      setEmailInputted(true);
+      return;
+    }
     login({
       ...input,
       type: "password"
@@ -111,7 +118,8 @@ export default function LoginPage() {
   const { magic_link, who_can_sign_up: whoCanSignUp } = loginConfig;
 
   const enableMagicLink = enableSMTP && magic_link;
-
+  const hideSocials = enableMagicLink && emailInputted;
+  const showSignIn = !enableMagicLink || emailInputted;
   if (loadingSMTPStatus) return null;
   return (
     <div className="flex-center h-screen dark:bg-gray-700">
@@ -127,36 +135,50 @@ export default function LoginPage() {
           </h2>
         </div>
         <form className="flex flex-col gap-5 w-80 md:min-w-[360px] " onSubmit={handleLogin}>
-          <Input
-            className="large"
-            name="email"
-            value={email}
-            type="email"
-            required
-            placeholder={t("placeholder_email")}
-            data-type="email"
-            onChange={handleInput}
-          />
-          <Input
-            className="large"
-            type="password"
-            value={password}
-            name="password"
-            required
-            data-type="password"
-            onChange={handleInput}
-            placeholder={t("placeholder_pwd")}
-          />
-          <Button type="submit" disabled={isLoading}>
-            {isLoading ? "Signing" : t("sign_in")}
-          </Button>
+          {!emailInputted && (
+            <div className="flex flex-col gap-1">
+              <StyledLabel>Email</StyledLabel>
+              <Input
+                className="large"
+                name="email"
+                value={email}
+                type="email"
+                required
+                placeholder={t("placeholder_email")}
+                data-type="email"
+                onChange={handleInput}
+              />
+            </div>
+          )}
+          {(!enableMagicLink || emailInputted) && (
+            <div className="">
+              <StyledLabel>Password</StyledLabel>
+              <Input
+                className="large"
+                type="password"
+                value={password}
+                name="password"
+                required
+                data-type="password"
+                onChange={handleInput}
+                placeholder={t("placeholder_pwd")}
+              />
+            </div>
+          )}
+          {showSignIn ? (
+            <Button type="submit" disabled={isLoading}>
+              {isLoading ? "Signing" : t("sign_in")}
+            </Button>
+          ) : (
+            <Button type="submit">{t("continue")}</Button>
+          )}
         </form>
         <Divider content="OR" />
         <div className="socials flex flex-col gap-3">
-          {enableMagicLink && <MagicLinkLogin />}
-          <SocialLoginButtons />
+          {emailInputted && <MagicLinkLogin email={input.email} />}
+          {!hideSocials && <SocialLoginButtons />}
         </div>
-        {whoCanSignUp === "EveryOne" && <SignUpLink />}
+        {whoCanSignUp === "EveryOne" && !hideSocials && <SignUpLink />}
       </div>
     </div>
   );

@@ -114,7 +114,7 @@ const PageRoutes = () => {
           }
         />
         <Route
-          path="/send_magic_link"
+          path="/send_magic_link/:email"
           element={
             <LazyIt>
               <RequireNoAuth>
