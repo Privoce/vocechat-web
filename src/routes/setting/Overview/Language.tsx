@@ -18,9 +18,10 @@ const Index = () => {
           t("overview.lang.en"),
           t("overview.lang.zh"),
           t("overview.lang.jp"),
-          t("overview.lang.tr")
+          t("overview.lang.tr"),
+          t("overview.lang.pt")
         ]}
-        values={["en", "zh", "jp", "tr"]}
+        values={["en", "zh", "jp", "tr", "pt"]}
         value={i18n.language.split("-")[0]}
         onChange={(v) => {
           console.log("wtff", v);
