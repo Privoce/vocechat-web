@@ -53,8 +53,13 @@ const LicensePriceListModal: FC<Props> = ({ closeModal }) => {
     }`
   );
   const handleRenew = async () => {
-    if (!linkify.test(host)) {
+    const hostPrefixed = `https://${host}`;
+    if (!linkify.test(hostPrefixed)) {
       toast.error("Invalid Host");
+      return;
+    }
+    if (new URL(hostPrefixed).port !== "" || host.endsWith(":443")) {
+      toast.error(t("license.tip_port"));
       return;
     }
     const [priceId, user_limit, type, sub_dur = "month"] = selectPrice.split("|") as [
@@ -120,15 +125,18 @@ const LicensePriceListModal: FC<Props> = ({ closeModal }) => {
                 visible={popUpVisible}
                 interactive
                 placement="top-end"
-                offset={[0, -40]}
+                offset={[-50, -40]}
                 trigger="click"
                 content={
-                  <div className="p-3 rounded-lg border border-solid border-gray-200 dark:border-gray-900 flex flex-col items-start gap-3 w-[380px] bg-white dark:bg-gray-800 shadow shadow-gray-200 dark:shadow-gray-900 drop-shadow-xl">
+                  <div className="p-3 rounded-lg border border-solid border-gray-200 dark:border-gray-900 flex flex-col items-start gap-3 w-[430px] bg-white dark:bg-gray-800 shadow shadow-gray-200 dark:shadow-gray-900 drop-shadow-xl">
                     <div className="text-gray-500 text-sm">{t("license.tip_domain")}</div>
                     <Input value={host} onChange={handleUpdateHost} />
                     <div className="flex justify-between items-center w-full mt-4">
-                      <span className="text-xs text-orange-500"> {t("license.tip_port")}</span>
-                      <div className="flex gap-3">
+                      <span className="text-xs text-orange-500 text-left">
+                        {" "}
+                        {t("license.tip_port")}
+                      </span>
+                      <div className="flex gap-3 whitespace-nowrap">
                         <Button className="mini cancel" onClick={togglePopUpVisible}>
                           {ct("action.cancel")}
                         </Button>
