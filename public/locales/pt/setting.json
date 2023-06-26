@@ -1,0 +1,273 @@
+{
+  "title": "Settings",
+  "save_change": "Save Changes",
+  "reset": "Reset",
+  "save_tip": "You have unsaved changes!",
+  "nav": {
+    "general": "General",
+    "overview": "Overview",
+    "members": "Members",
+    "data_management": "Data Management",
+    "auto_delete_msg": "Auto-delete Messages",
+    "user": "User",
+    "my_account": "My Account",
+    "config": "Configuration",
+    "bot": "Bot & Webhook",
+    "firebase": "Firebase",
+    "agora": "Agora",
+    "smtp": "SMTP",
+    "login_method": "Login Methods",
+    "third_app": "Third-party Login",
+    "widget": "Widget",
+    "license": "License",
+    "about": "About",
+    "api_doc": "API Documentation",
+    "version": "Version"
+  },
+  "channel": {
+    "leave": "Leave Channel",
+    "leave_desc": "Are you sure want to leave this channel?",
+    "transfer_desc": "You need to transfer your channel ownership to someone else before leaving the channel.",
+    "delete": "Delete Channel",
+    "delete_desc": "Are you sure want to delete this channel?",
+    "name": "Channel Name",
+    "topic": "Channel Topic",
+    "topic_placeholder": "Let everyone know how to use this channel.",
+    "visibility": "Channel Visibility",
+    "public": "Public",
+    "private": "Private"
+  },
+  "dm": {
+    "delete": "Delete User",
+    "delete_desc": "Are you sure want to delete this user?"
+  },
+  "overview": {
+    "title_feat": "Features",
+    "name": "Server Name",
+    "desc": "Server Description",
+    "upload_desc": "Minimum size is 128x128, We recommend at least 512x512 for the server. Max size limited to 5M.",
+    "sign_up": {
+      "title": "Default Sign Up",
+      "desc": "Who can sign up to this server.",
+      "everyone": "Everyone",
+      "invite": "Invitation Link Only"
+    },
+    "guest_mode": {
+      "title": "Guest Mode",
+      "desc": "If enabled, visitors will see public channels on this server.",
+      "enable": "Enable",
+      "disable": "Disabled"
+    },
+    "url": {
+      "title": "Update Frontend URL",
+      "desc": "Update the frontend url"
+    },
+    "lang": {
+      "title": "Languages",
+      "desc": "Set the system language",
+      "en": "English",
+      "tr": "Türkçe",
+      "zh": "中文",
+      "jp": "日本語",
+      "pt": "Portuguese"
+    },
+    "theme": {
+      "title": "Theme",
+      "desc": "Choose your theme",
+      "auto": "Auto",
+      "dark": "Dark",
+      "light": "Light"
+    },
+    "online_status": {
+      "title": "Online Status",
+      "desc": "If enabled, members will see the online/offline status of each other.",
+      "enable": "Enable",
+      "disable": "Disable"
+    },
+    "chat_layout": {
+      "title": "Chat Layout",
+      "desc": "Which side to show messages sent by yourself",
+      "left": "Left",
+      "self_right": "Right"
+    },
+    "contact_verify": {
+      "title": "Contact Verification",
+      "desc": "By default all server members can see each other. If you want server members to add and manage their own contacts, please enable the contact feature (admin will be in the contacts list by default).",
+      "enable": "Enable",
+      "disable": "Disable"
+    }
+  },
+  "data": {
+    "clear_files": {
+      "title": "Files and Images Data",
+      "desc": "Click the button below to remove all files and images data of this server.",
+      "btn": "Clear Files Data"
+    },
+    "clear_msgs": {
+      "title": "All Messages Data",
+      "desc": "Click the button below to remove all the chat data including texts and files of this server.",
+      "btn": "Clear Chats Data"
+    },
+    "auto_delete_file": {
+      "title": "Auto-delete File Data",
+      "desc": "Set expire time for all file data of this server.",
+      "confirm_desc": "All files older than the set time will be deleted.",
+      "off": "Off",
+      "day1": "1 Day",
+      "day7": "7 Days",
+      "day30": "30 Days",
+      "day90": "90 Days",
+      "day180": "180 Days"
+    }
+  },
+  "license": {
+    "signed": "Signed",
+    "domain": "Domains",
+    "user_limit": "User Limit",
+    "expire": "Expired At",
+    "create": "Created At",
+    "value": "License Value",
+    "renew": "Renew License",
+    "update": "Update Manually",
+    "update_placeholder": "Please input the new license value",
+    "renew_select": "Please select the price",
+    "tip": {
+      "title": "A chance to get a free license upgrade!",
+      "user_test": "Get a free license upgrade through a 25 min user testing",
+      "contact": "Book a time here: "
+    },
+    "payment_success": "Payment Success!",
+    "back_home": "Back Home",
+    "tip_renewing": "Renewing the License, do not close the window!",
+    "tip_renewed": "Renew the License Successfully!",
+    "tip_renew_error": "Invalided Stripe Session ID",
+    "tip_domain": "The license is bound to domain (without port), please confirm or update your setting:",
+    "tip_port": "Fill out your domain name without port.",
+    "tip_confirm": "Start Payment"
+  },
+  "bot": {
+    "add_api_key": "Add API Key",
+    "no_api_key": "No API Key Yet",
+    "bot_tip_title": "Bots can send messages to channels.",
+    "bot_tip_desc": "Please note that we do not display a Bot’s API key again after generation. You can always generate a new API key of a Bot by clicking “Add API Key” and this won’t nullify the previous API key(s).",
+    "webhook_tip_title": "Webhooks can receive messages in a channel and should a URL provided by you.",
+    "webhook_tip_desc": "Please provide a webhook URL that will return 200.",
+    "manage": "Manage",
+    "how_to_use": "How To Use",
+    "manage_desc": "You can delete a bot anytime, the bot user will be removed immediately and all APIs will be nullified.",
+    "create_title": "Create Bot",
+    "create_desc": "Give your bot a name. You can also add an endpoint webhook URL to receive data.",
+    "create_key_title": "Create Bot API Key",
+    "create_key_desc": "Create API Key to authenticate your communication",
+    "create_key_warning": "Make sure to copy the API Key now. You won’t be able to see it again!",
+    "key_copy_and_close": "Copy and Close",
+    "delete_title": "Delete Bot",
+    "delete_desc": "Are you sure to delete the Bot?",
+    "delete_key_title": "Delete Bot API Key",
+    "delete_key_desc": "Are you sure to delete this Bot API Key?",
+    "webhook_title": "Update Webhook URL",
+    "webhook_desc": "Please input a valid URL",
+    "col_avatar": "Avatar",
+    "col_name": "Bot Name",
+    "col_api_key": "API Key (Inbound Messages)",
+    "col_webhook": "Endpoint Webhook URL (Outbound)",
+    "col_opt": "Operations",
+    "col_key_name": "Name",
+    "col_key_value": "Key",
+    "col_key_create_time": "Created At",
+    "col_key_last_used": "Last Used"
+  },
+  "auto_delete_msg": {
+    "title": "Delete messages sent by myself after certain time period. ",
+    "desc": "This will remove the messages data stored on both the server and client side.",
+    "off": "Off",
+    "5_min": "5 minutes",
+    "10_min": "10 minutes",
+    "1_hour": "1 hour",
+    "1_day": "1 day",
+    "1_week": "1 week",
+    "clear": "Clear all channel messages",
+    "clear_title": "Clear all messages in this channel.",
+    "clear_desc": "This will remove all the messages data stored on both the server and client side."
+  },
+  "firebase": {
+    "disable": "Disable",
+    "use_official": "Use Official Configuration",
+    "custom": "Custom",
+    "enable": "Enable",
+    "token_url": "Token URL",
+    "project_id": "Project ID",
+    "private_key": "Private Key",
+    "client_email": "Client Email"
+  },
+  "smtp": {
+    "enable": "Enable",
+    "host": "Host",
+    "port": "Port",
+    "from": "From",
+    "username": "Username",
+    "password": "Password",
+    "how_to": "How to setup SMTP?",
+    "send_test_email": "Send Test Email"
+  },
+  "agora": {
+    "enable": "Enable",
+    "how_to": "How to setup Agora?"
+  },
+  "third_app": {
+    "key": "API Secure Key",
+    "update": "Update Secret",
+    "update_tip": "Are you sure to update API secret? Previous secret will be invalided",
+    "key_tip": "The security key agreed between the server and the third-party app is used to encrypt the communication data.",
+    "how_to": "How to use?"
+  },
+  "login": {
+    "password": "Password",
+    "password_desc": "Allows members login with password.",
+    "magic_link": "Magic Link",
+    "magic_link_desc": "Allows members login with Magic Link.",
+    "google": "Google",
+    "google_desc": "Allows members login with Google.",
+    "github": "GitHub",
+    "github_desc": "Allows members login with GitHub.",
+    "metamask": "Metamask",
+    "metamask_desc": "Allows members login with Metamask.",
+    "oidc": "OIDC",
+    "oidc_desc": "Allows members login with OIDC.",
+    "oidc_custom": "Custom",
+    "more_details": "Need more detail? See our <0>doc</0>."
+  },
+  "widget": {
+    "tip": "Extending VoceChat by embedding the vocechat widget SDK!",
+    "code": "Code Example",
+    "code_comment": "put this code snippet into your html file",
+    "config": "Configuration Description",
+    "param_key": "Parameter Key",
+    "default_value": "Default Value",
+    "remark": "Remarks",
+    "param_host": "Assign the user chatting with visitor(User ID)",
+    "param_theme_color": "The theme color of widget",
+    "param_close_width": "The width while widget closed",
+    "param_close_height": "The height while widget closed",
+    "param_open_width": "The width while widget opened",
+    "param_open_height": "The height while widget opened",
+    "param_welcome": "Custom welcome message",
+    "share_link": "Share the widget link so that people can chat with you directly",
+    "widget_faq": "Enable Let Everyone Join First"
+  },
+  "version": {
+    "client_version": "Client Version",
+    "server_version": "Server Version",
+    "build_time": "Build Timestamp",
+    "sync": "Sync to the latest version of web client"
+  },
+  "api_doc": {
+    "desc": "We have detailed API documentation that you can build your own chat tool based on.",
+    "access": "Access URL:",
+    "use_method": "User Method:",
+    "step_1": "Step One: Change to your own Server",
+    "step_2": "Step Two: Input the login token",
+    "step_2_desc": "You can get the token by access X-API-Key http header or just copy the text below:",
+    "last": "Every API has a 'Try it Out' button, and you can debug the API with it"
+  }
+}
