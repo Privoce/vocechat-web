@@ -12,7 +12,7 @@
     "welcome": "Welcome to your VoceChat!",
     "welcome_desc": "Everything in this space is owned by you. Let’s set up your space!",
     "start": "Start",
-    "new_server": "Create a new server",
+    "new_server": "Name your new server",
     "server_desc": "Servers are shared environments where teams can work on projects and chat.",
     "placeholder_server": "Enter server name",
     "create_server": "Create Server",
