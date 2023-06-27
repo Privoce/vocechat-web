@@ -135,18 +135,18 @@ const SearchUser: FC<Props> = ({ closeModal }) => {
                 />
                 <span className="my-2 dark:text-gray-100 text-gray-950">{data.name}</span>
                 <div className="flex gap-2 my-2">
+                  <StyledButton className="mini ghost" onClick={handleSendMsg}>
+                    {t("send_msg", { ns: "member" })}
+                  </StyledButton>
                   {!inContact && (
-                    <StyledButton className="mini ghost" onClick={handleSendMsg}>
-                      {t("send_msg", { ns: "member" })}
+                    <StyledButton
+                      disabled={adding}
+                      onClick={handleChat.bind(null, inContact)}
+                      className={clsx("mini", inContact && "ghost")}
+                    >
+                      Add to contact
                     </StyledButton>
                   )}
-                  <StyledButton
-                    disabled={adding}
-                    onClick={handleChat.bind(null, inContact)}
-                    className="mini"
-                  >
-                    {inContact ? t(`chat`) : `Add to Contact`}
-                  </StyledButton>
                 </div>
               </div>
             ) : (
