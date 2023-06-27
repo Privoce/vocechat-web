@@ -12,10 +12,15 @@ import Divider from "@/components/Divider";
 import Button from "@/components/styled/Button";
 import Input from "@/components/styled/Input";
 import StyledLabel from "@/components/styled/Label";
+import IconBack from "@/assets/icons/arrow.left.svg";
 import MagicLinkLogin from "./MagicLinkLogin";
 import SignUpLink from "./SignUpLink";
 import SocialLoginButtons from "./SocialLoginButtons";
 
+const defaultInput = {
+  email: "",
+  password: ""
+};
 export default function LoginPage() {
   const serverName = useAppSelector((store) => store.server.name);
   const { t } = useTranslation("auth");
@@ -24,10 +29,7 @@ export default function LoginPage() {
   const [login, { isSuccess, isLoading, error }] = useLoginMutation();
   const { data: loginConfig, isSuccess: loginConfigSuccess } = useGetLoginConfigQuery();
   const [emailInputted, setEmailInputted] = useState(false);
-  const [input, setInput] = useState({
-    email: "",
-    password: ""
-  });
+  const [input, setInput] = useState(defaultInput);
 
   useEffect(() => {
     const query = new URLSearchParams(location.search);
@@ -112,6 +114,10 @@ export default function LoginPage() {
       return { ...prev };
     });
   };
+  const handleBack = () => {
+    setInput(defaultInput);
+    setEmailInputted(false);
+  };
   const { email, password } = input;
   if (!loginConfigSuccess) return null;
 
@@ -123,7 +129,14 @@ export default function LoginPage() {
   if (loadingSMTPStatus) return null;
   return (
     <div className="flex-center h-screen dark:bg-gray-700">
-      <div className="py-8 px-10 shadow-md rounded-xl">
+      <div className="relative py-8 px-10 shadow-md rounded-xl">
+        {emailInputted && (
+          <IconBack
+            role="button"
+            className="absolute left-5 top-8 w-10 h-10 stroke-gray-500"
+            onClick={handleBack}
+          />
+        )}
         <div className="flex-center flex-col pb-6">
           <img
             src={`${BASE_URL}/resource/organization/logo`}
@@ -178,7 +191,7 @@ export default function LoginPage() {
           {emailInputted && <MagicLinkLogin email={input.email} />}
           {!hideSocials && <SocialLoginButtons />}
         </div>
-        {whoCanSignUp === "EveryOne" && !hideSocials && <SignUpLink />}
+        {whoCanSignUp === "EveryOne" && <SignUpLink />}
       </div>
     </div>
   );
