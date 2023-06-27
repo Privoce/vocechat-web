@@ -9,6 +9,7 @@ import toast, { Toaster } from "react-hot-toast";
 import "./assets/index.css";
 import "./libs/DayjsSetting";
 import "./libs/TippySetting";
+
 import MobileAppTip from "./components/MobileAppTip";
 import NewVersion from "./components/NewVersion";
 import ReduxRoutes from "./routes";
@@ -16,9 +17,14 @@ import { register } from "./serviceWorkerRegistration";
 // import i18n (needs to be bundled ;))
 import "./i18n";
 import "./libs/polyfills";
-import { isDarkMode } from "./utils";
+
+import { isDarkMode, isElectronContext } from "./utils";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
+// electron context
+if (isElectronContext()) {
+  document.body.classList.add("electron");
+}
 // dark mode
 if (isDarkMode()) {
   document.documentElement.classList.add("dark");

@@ -376,6 +376,9 @@ export const getContrastColor = (hexcolor: string) => {
   // Check contrast
   return yiq >= 128 ? "black" : "white";
 };
+export const isElectronContext = () => {
+  return navigator.userAgent.toLowerCase().indexOf("electron/") > -1;
+};
 export const isDarkMode = () => {
   const isDarkMode = localStorage.theme === "dark";
   const isLightMode = localStorage.theme === "light";
