@@ -12,14 +12,8 @@ import View from "./View";
 
 const checkFilter = (data, filter, channelMessage) => {
   let selected = true;
-  const { mid, file_type, created_at, from_uid, properties } = data;
-  const {
-    name: nameFilter,
-    type: typeFilter,
-    date: timeFilter,
-    from: fromFilter,
-    channel: channelFilter
-  } = filter;
+  const { mid, from_uid, properties } = data;
+  const { name: nameFilter, from: fromFilter, channel: channelFilter } = filter;
   const name = properties ? properties.name : "";
   if (fromFilter && fromFilter != from_uid) {
     selected = false;

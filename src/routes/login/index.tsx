@@ -115,7 +115,6 @@ export default function LoginPage() {
     });
   };
   const handleBack = () => {
-    setInput(defaultInput);
     setEmailInputted(false);
   };
   const { email, password } = input;
@@ -133,7 +132,7 @@ export default function LoginPage() {
         {emailInputted && (
           <IconBack
             role="button"
-            className="absolute left-5 top-8 w-10 h-10 stroke-gray-500"
+            className="absolute left-7 top-8 w-10 h-10 stroke-gray-300"
             onClick={handleBack}
           />
         )}
