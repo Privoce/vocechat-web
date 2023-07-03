@@ -85,10 +85,10 @@ const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 grid-rows-2 gap-2 md:gap-6 m-auto">
-          <div className={classes.box} onClick={toggleInviteModalVisible}>
+          <button className={classes.box} onClick={toggleInviteModalVisible}>
             <IconInvite className={classes.boxIcon} />
             <div className={classes.boxTip}>{t("invite")}</div>
-          </div>
+          </button>
           <button onClick={chatHandler} className={classes.box}>
             <IconChat className={classes.boxIcon} />
             <div className={classes.boxTip}>{chatTip}</div>

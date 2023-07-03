@@ -271,7 +271,7 @@ export const serverApi = createApi({
       query: (data) => ({
         url: "admin/system/organization",
         method:
-          compareVersion(localStorage.getItem(KEY_SERVER_VERSION) ?? "", "0.3.7") > 0
+          compareVersion(localStorage.getItem(KEY_SERVER_VERSION) ?? "", "0.3.8") > 0
             ? "PUT"
             : "POST",
         body: data
