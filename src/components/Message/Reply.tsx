@@ -41,7 +41,7 @@ const renderContent = (data: MessagePayload) => {
         const { content_type = "", name, size } = properties || {};
         const icon = getFileIcon(content_type, name, "w-4 h-5");
         if (isImage(content_type, size)) {
-          res = <img className="w-10 h-10 object-cover" src={thumbnail} />;
+          res = <img className="w-10 h-10 object-cover" src={thumbnail || (content as string)} />;
         } else {
           res = (
             <div className="flex gap-1">
