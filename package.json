@@ -3,6 +3,7 @@
   "version": "0.4.12",
   "homepage": "https://voce.chat",
   "dependencies": {
+    "@electron-toolkit/preload": "^2.0.0",
     "@emoji-mart/react": "^1.1.1",
     "@metamask/onboarding": "^1.0.1",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",

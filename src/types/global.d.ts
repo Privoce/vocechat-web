@@ -1,5 +1,5 @@
 import { IAgoraRTCClient, ICameraVideoTrack, ILocalAudioTrack, ILocalVideoTrack, IMicrophoneAudioTrack, IRemoteAudioTrack, IRemoteVideoTrack } from "agora-rtc-sdk-ng";
-
+import {ElectronAPI} from '@electron-toolkit/preload';
 interface BeforeInstallPromptEvent extends Event {
   /**
    * Returns an array of DOMString items containing the platforms on which the event was dispatched.
@@ -28,6 +28,7 @@ export declare global {
   import localforage from "localforage";
 
   interface Window {
+    electron: ElectronAPI;
     __WB_MANIFEST: Array<PrecacheEntry | string>;
     skipWaiting: () => void;
     CACHE: { [key: string]: typeof localforage | undefined };
