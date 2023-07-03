@@ -31,7 +31,7 @@ const whiteList = [
   "getAgoraVoicingList",
   "preCheckFileFromUrl"
 ];
-const whiteList401 = ["getAgoraVoicingList"];
+const whiteList401 = ["getAgoraVoicingList", "getAgoraChannels"];
 const errorWhiteList = ["preCheckFileFromUrl"];
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
