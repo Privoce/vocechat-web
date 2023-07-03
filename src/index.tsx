@@ -18,13 +18,9 @@ import { register } from "./serviceWorkerRegistration";
 import "./i18n";
 import "./libs/polyfills";
 
-import { isDarkMode, isElectronContext } from "./utils";
+import { isDarkMode } from "./utils";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
-// electron context
-if (isElectronContext()) {
-  document.body.classList.add("electron");
-}
 // dark mode
 if (isDarkMode()) {
   document.documentElement.classList.add("dark");
