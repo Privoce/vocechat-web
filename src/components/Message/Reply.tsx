@@ -5,13 +5,15 @@ import clsx from "clsx";
 import { ContentTypes } from "@/app/config";
 import { MessagePayload } from "@/app/slices/message";
 import { useAppSelector } from "@/app/store";
+import { ChatContext } from "@/types/common";
 import { getFileIcon, isImage } from "@/utils";
 import Avatar from "../Avatar";
 import LinkifyText from "../LinkifyText";
 import MarkdownRender from "../MarkdownRender";
+import ForwardedMessage from "./ForwardedMessage";
 
-const renderContent = (data: MessagePayload) => {
-  const { content_type, content, thumbnail, properties } = data;
+const renderContent = (data: MessagePayload, context: ChatContext, to: number) => {
+  const { content_type, content, thumbnail, properties, created_at, from_uid = 0 } = data;
   let res = null;
   switch (content_type) {
     case ContentTypes.text:
@@ -52,6 +54,22 @@ const renderContent = (data: MessagePayload) => {
         }
       }
       break;
+    case ContentTypes.archive:
+      {
+        // const { size, name, file_type } = properties;
+        res = (
+          <ForwardedMessage
+            properties={properties}
+            context={context}
+            to={to}
+            from_uid={from_uid}
+            created_at={created_at}
+            id={content as string}
+            thumbnail={thumbnail}
+          />
+        );
+      }
+      break;
 
     default:
       break;
@@ -62,9 +80,11 @@ const renderContent = (data: MessagePayload) => {
 interface ReplyProps {
   mid: number;
   interactive?: boolean;
+  context: ChatContext;
+  to?: number;
 }
 
-const Reply: FC<ReplyProps> = ({ mid, interactive = true }) => {
+const Reply: FC<ReplyProps> = ({ mid, interactive = true, context, to = 0 }) => {
   const { t } = useTranslation("chat");
   const { data, users } = useAppSelector((store) => {
     return { data: store.message[mid], users: store.users.byId };
@@ -112,7 +132,7 @@ const Reply: FC<ReplyProps> = ({ mid, interactive = true }) => {
       </div>
       <div className={clsx("text-sm flex flex-col", interactive && "relative")}>
         <span className="text-sm text-primary-500">{currUser.name}</span>
-        {renderContent(data)}
+        {renderContent(data, context, to)}
         {interactive && <div className="absolute top-0 left-0 w-full h-full"></div>}
       </div>
     </div>

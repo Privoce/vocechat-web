@@ -186,7 +186,9 @@ const Message: FC<IProps> = ({
               sending && "opacity-90"
             )}
           >
-            {reply_mid && <Reply key={reply_mid} mid={reply_mid} />}
+            {reply_mid && (
+              <Reply key={reply_mid} mid={reply_mid} context={context} to={contextId} />
+            )}
             {edit ? (
               <EditMessage mid={mid} cancelEdit={toggleEditMessage} />
             ) : (
