@@ -140,6 +140,7 @@
   }
   /* context menu */
   .context-menu {
+    -webkit-app-region: no-drag;
     display: flex;
     flex-direction: column;
     gap: 2px;

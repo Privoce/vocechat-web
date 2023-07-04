@@ -21,6 +21,7 @@ const Search: FC<Props> = ({ value = "", updateSearchValue = null, embed = false
   return (
     <div
       className={clsx(
+        "app-no-drag",
         `hidden md:block relative w-full py-1.5 px-4 shadow`,
         embed && "py-2 shadow-none"
       )}
@@ -29,7 +30,7 @@ const Search: FC<Props> = ({ value = "", updateSearchValue = null, embed = false
       <input
         value={value}
         onChange={handleChange}
-        className="bg-black/5 dark:bg-black/20 rounded-full text-sm text-gray-500 py-2.5 pl-9"
+        className="bg-black/5 dark:bg-black/20 rounded-full text-sm text-gray-500 py-2.5 pl-9 app-no-drag"
         placeholder={`${t("action.search")}...`}
       />
     </div>

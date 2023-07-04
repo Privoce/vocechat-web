@@ -90,14 +90,15 @@ function ResourceManagement() {
   // });
 
   return (
-    <div className="h-screen md:overflow-y-scroll flex flex-col items-start my-2 mr-6 rounded-2xl bg-white dark:bg-gray-700">
+    <div className="app-drag h-screen md:overflow-y-scroll flex flex-col items-start my-2 mr-6 rounded-2xl bg-white dark:bg-gray-700">
       <Search value={filter.name} updateSearchValue={handleUpdateSearch} />
-      <div className="flex justify-between w-full px-4 py-5">
+      <div className="app-no-drag flex justify-between w-full px-4 py-5">
         <Filter filter={filter} updateFilter={updateFilter} />
         <View view={view} />
       </div>
       <div
         className={clsx(
+          "app-drag",
           `w-full h-full px-4 overflow-scroll flex`,
           view == "item" && "gap-2 flex-col",
           view == "grid" && "flex-wrap"
@@ -116,7 +117,7 @@ function ResourceManagement() {
           const url = thumbnail || content;
           if (isExpired(url)) return null;
           return (
-            <div key={mid} className="grid-box mb-2">
+            <div key={mid} className="app-no-drag grid-box mb-2">
               <FileBox
                 preview={view == "grid"}
                 flex={view == "item"}

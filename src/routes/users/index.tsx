@@ -62,6 +62,7 @@ function UsersPage() {
       </div>
       <div
         className={clsx(
+          "app-drag",
           `md:rounded-r-2xl bg-white w-full flex justify-center items-start dark:bg-gray-700`,
           !user_id && "h-full items-center",
           !isUserDetail && "hidden md:flex"
