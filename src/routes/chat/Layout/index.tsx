@@ -94,10 +94,10 @@ const Layout: FC<Props> = ({
   return (
     <>
       <ImagePreview container={messagesContainer.current} />
-      <section ref={drop} className={`relative h-full w-full rounded-r-2xl flex`}>
-        <main className="flex flex-col flex-1">
+      <section ref={drop} className={`app-no-drag relative h-full w-full rounded-r-2xl flex`}>
+        <main className="app-drag flex flex-col flex-1">
           {header}
-          <div className="w-full h-full flex items-start justify-between relative">
+          <div className="app-no-drag w-full h-full flex items-start justify-between relative">
             <div
               className="rounded-br-2xl flex flex-col absolute bottom-0 w-full h-full"
               ref={messagesContainer}
@@ -125,7 +125,7 @@ const Layout: FC<Props> = ({
         {aside && (
           <div
             className={clsx(
-              "flex z-50 p-3 absolute right-0 top-14 md:right-0 md:top-0 md:translate-x-full flex-col"
+              "app-no-drag flex z-50 p-3 absolute right-0 top-14 md:right-0 md:top-0 md:translate-x-full flex-col"
             )}
           >
             {aside}

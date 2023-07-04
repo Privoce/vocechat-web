@@ -25,7 +25,7 @@ const GuestBlankPlaceholder = () => {
   };
   const qrUrl = BASE_ORIGIN;
   return (
-    <section className="flex flex-col items-center text-center">
+    <section className="flex flex-col items-center text-center app-no-drag">
       <h2 className="text-3xl text-gray-600 dark:text-gray-50 font-bold">
         {t("welcome", { name: serverName })}
       </h2>

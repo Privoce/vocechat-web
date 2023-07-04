@@ -14,7 +14,7 @@ const User: FC<Props> = ({ uid }) => {
   if (!user) return null;
 
   return (
-    <div className="px-3 py-2.5 invisible md:visible">
+    <div className="app-no-drag px-3 py-2.5 invisible md:visible">
       <NavLink to={`/setting/my_account?f=${pathname}`}>
         <div className="w-8 h-8">
           <Avatar
