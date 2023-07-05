@@ -17,7 +17,6 @@ const Modal: FC<PropsWithChildren<Props>> = ({ id = "root-modal", mask = true, c
     }
     const wrapper = document.createElement("div");
     wrapper.classList.add("wrapper");
-    wrapper.classList.add("app-no-drag");
     modalRoot.appendChild(wrapper);
     setWrapper(wrapper);
     return () => {

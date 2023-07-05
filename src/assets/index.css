@@ -7,13 +7,6 @@
   }
 }
 @layer utilities {
-  /* for electron */
-  .app-drag {
-    -webkit-app-region: drag;
-  }
-  .app-no-drag {
-    -webkit-app-region: no-drag;
-  }
   /* word break */
   .wb {
     word-break: break-word;

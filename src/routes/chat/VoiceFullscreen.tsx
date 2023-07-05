@@ -63,9 +63,9 @@ const VoiceFullscreen = ({ id, context }: Props) => {
   const membersData = voicingMembers.byId;
   const hasPin = typeof pinUid !== "undefined";
   return (
-    <div className="app-no-drag h-full bg-black text-gray-300 flex flex-col justify-between rounded-r-2xl">
+    <div className="h-full bg-black text-gray-300 flex flex-col justify-between rounded-r-2xl">
       {/* top */}
-      <div className="app-drag px-7 py-6 flex justify-between">
+      <div className="px-7 py-6 flex justify-between">
         <span className="text-sm font-semibold">{_name}</span>
       </div>
       {/* middle */}

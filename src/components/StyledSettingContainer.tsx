@@ -36,14 +36,13 @@ const StyledSettingContainer: FC<PropsWithChildren<Props>> = ({
       <div className="w-screen h-screen flex">
         <div
           className={clsx(
-            "app-drag",
             "h-full w-full overflow-y-scroll md:max-w-[212px] px-4 py-8 bg-neutral-100 dark:bg-gray-800",
             nav && "hidden md:block"
           )}
         >
           <h2
             onClick={closeModal}
-            className="app-no-drag hidden md:flex gap-2 items-center text-sm md:text-base cursor-pointer mb-8 font-bold text-gray-800 dark:text-white"
+            className="hidden md:flex gap-2 items-center text-sm md:text-base cursor-pointer mb-8 font-bold text-gray-800 dark:text-white"
           >
             <IconBack className="dark:fill-gray-400" /> {title}
           </h2>
@@ -52,7 +51,7 @@ const StyledSettingContainer: FC<PropsWithChildren<Props>> = ({
               <ul
                 key={title}
                 data-title={title}
-                className="app-no-drag flex flex-col gap-0.5 mb-5 md:mb-9 before:md:pl-3 before:content-[attr(data-title)] before:font-bold before:text-xs before:text-gray-400"
+                className="flex flex-col gap-0.5 mb-5 md:mb-9 before:md:pl-3 before:content-[attr(data-title)] before:font-bold before:text-xs before:text-gray-400"
               >
                 {items.map(({ name, link, title }) => {
                   if (link)
@@ -92,7 +91,7 @@ const StyledSettingContainer: FC<PropsWithChildren<Props>> = ({
             );
           })}
           {dangers.length ? (
-            <ul className="app-no-drag flex flex-col gap-2 mb-9 md:text-sm font-semibold text-red-500 dark:text-red-400">
+            <ul className="flex flex-col gap-2 mb-9 md:text-sm font-semibold text-red-500 dark:text-red-400">
               {dangers.map((d) => {
                 if (typeof d === "boolean" || !d) return null;
                 const { title, handler } = d;
@@ -111,7 +110,6 @@ const StyledSettingContainer: FC<PropsWithChildren<Props>> = ({
         </div>
         <div
           className={clsx(
-            "app-drag",
             "relative bg-white w-full max-h-full overflow-auto px-4 md:px-8 py-2 md:py-8 dark:bg-gray-700",
             !nav ? "hidden md:block" : "!pb-4"
           )}
@@ -123,7 +121,7 @@ const StyledSettingContainer: FC<PropsWithChildren<Props>> = ({
             </h4>
           )}
           {/* <ErrorCatcher> */}
-          <div className="app-no-drag">{children}</div>
+          {children}
           {/* </ErrorCatcher> */}
         </div>
       </div>

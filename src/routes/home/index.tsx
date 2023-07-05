@@ -75,10 +75,10 @@ function HomePage() {
       >
         {!guest && (
           <div
-            className={`app-drag hidden md:flex h-full flex-col items-center relative w-16 transition-all`}
+            className={`hidden md:flex h-full flex-col items-center relative w-16 transition-all`}
           >
             {loginUid && <User uid={loginUid} />}
-            <nav className="app-no-drag flex flex-col gap-1 px-3 my-6">
+            <nav className="flex flex-col gap-1 px-3 py-6">
               <NavLink
                 className={({ isActive }) =>
                   `${linkClass} ${
