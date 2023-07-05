@@ -120,15 +120,14 @@ function FavsPage() {
     removeFavorite(id);
   };
   return (
-    <div className="app-drag h-screen flex bg-white mt-2 mr-6 mb-2.5 overflow-auto dark:bg-gray-700 rounded-2xl">
-      <div className="md:min-w-[268px] p-2 shadow-inner-[-1px_0px_0px_rgba(0,_0,_0,_0.1)]">
+    <div className="h-screen flex bg-white mt-2 mr-6 mb-2.5 overflow-auto dark:bg-gray-700 rounded-2xl">
+      <div className=" md:min-w-[268px] p-2 shadow-inner-[-1px_0px_0px_rgba(0,_0,_0,_0.1)]">
         <ul className="flex flex-col gap-0.5">
           {Filters.map(({ icon, title, filter: f }) => {
             return (
               <li
                 key={f}
                 className={clsx(
-                  "app-no-drag",
                   f == filter && "bg-[rgba(116,_127,_141,_0.2)]",
                   `cursor-pointer flex items-center gap-2 p-2 rounded-lg md:hover:bg-[rgba(116,_127,_141,_0.2)]`
                 )}
@@ -168,7 +167,7 @@ function FavsPage() {
             </span>
           );
           return (
-            <div className="max-w-[600px] flex flex-col gap-1 app-no-drag" key={id}>
+            <div className="max-w-[600px] flex flex-col gap-1" key={id}>
               <h4 className="inline-flex items-center text-xs text-gray-400">
                 {tip}
                 {dayjs(created_at).format("YYYY-MM-DD")}

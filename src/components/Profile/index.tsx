@@ -54,7 +54,6 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
   const hasMore = email || canRemoveFromChannel || canRemoveFromServer;
   const iconClass = `cursor-pointer flex flex-col items-center gap-1 rounded-lg w-32 text-primary-400 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 text-sm pt-3.5 pb-3`;
   const containerClass = clsx(
-    "app-no-drag",
     `flex-center flex-col gap-1 z-[99] mt-20 select-none`,
     isCard ? "p-4 w-[280px] bg-white dark:bg-gray-800 drop-shadow rounded-md" : "md:w-[432px]"
   );
