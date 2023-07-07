@@ -104,7 +104,7 @@ const Reply: FC<ReplyProps> = ({ mid, interactive = true, context, to = 0 }) => 
       }, 3000);
     }
   };
-  const defaultClass = `w-fit flex items-start flex-col md:flex-row p-2 bg-gray-200 dark:bg-gray-900 rounded-lg gap-2 mb-1`;
+  const defaultClass = `w-fit flex items-start flex-col md:flex-row p-2 bg-gray-100 dark:bg-gray-900 rounded-lg gap-2 mb-1`;
   if (!data)
     return (
       <div key={mid} data-mid={mid} className={clsx(defaultClass, "italic")}>

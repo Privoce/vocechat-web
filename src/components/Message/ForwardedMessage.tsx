@@ -25,7 +25,7 @@ const ForwardedMessage: FC<Props> = ({ context, to, from_uid, id }) => {
       setForwards(
         <div
           data-forwarded-mids={forward_mids.join(",")}
-          className="flex flex-col text-left rounded-lg bg-gray-200 dark:bg-gray-900"
+          className="flex flex-col text-left rounded-lg bg-gray-200 dark:bg-gray-800"
         >
           <h4 className="p-2 pb-0 flex items-center gap-1 text-gray-500 text-xs">
             <IconForward className="w-4 h-4 fill-gray-500" />
