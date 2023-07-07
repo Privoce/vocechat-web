@@ -32,7 +32,7 @@ const whiteList = [
   "preCheckFileFromUrl"
 ];
 const whiteList401 = ["getAgoraVoicingList", "getAgoraChannels"];
-const errorWhiteList = ["preCheckFileFromUrl"];
+const errorWhiteList = ["preCheckFileFromUrl", "getFavoriteDetails"];
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
   prepareHeaders: (headers, { getState, endpoint }) => {
