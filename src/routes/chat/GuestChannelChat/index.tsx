@@ -28,7 +28,7 @@ export default function GuestChannelChat({ cid = 0 }: Props) {
           <GoBackNav />
           <div className="flex items-center gap-1">
             <ChannelIcon personal={!is_public} />
-            <span className="text-gray-800 dark:text-white">{name}</span>
+            <span className="text-gray-800 dark:text-white whitespace-nowrap">{name}</span>
             <span className="ml-2 text-gray-500 hidden md:block ">{description}</span>
           </div>
         </header>
