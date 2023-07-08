@@ -35,7 +35,13 @@ const ImagePreview = ({ container, context = "chat" }: Props) => {
         const originUrl = `${urlObj.origin}${urlObj.pathname}?file_path=${urlObj.searchParams.get(
           "file_path"
         )}`;
-        const data = { originUrl };
+        const thumbnail = `${urlObj.origin}${urlObj.pathname}?file_path=${urlObj.searchParams.get(
+          "file_path"
+        )}&thumbnail=true`;
+        const downloadLink = `${urlObj.origin}${
+          urlObj.pathname
+        }?file_path=${urlObj.searchParams.get("file_path")}&download=true`;
+        const data = { originUrl, downloadLink, thumbnail };
         setPreviewImage(data);
       }
     };
@@ -48,11 +54,7 @@ const ImagePreview = ({ container, context = "chat" }: Props) => {
     };
   }, [container, context]);
   return previewImage ? (
-    <ImagePreviewModal
-      download={context == "chat"}
-      data={previewImage}
-      closeModal={closePreviewModal}
-    />
+    <ImagePreviewModal download={true} data={previewImage} closeModal={closePreviewModal} />
   ) : null;
 };
 
