@@ -30,6 +30,7 @@
     "transfer_desc": "You need to transfer your channel ownership to someone else before leaving the channel.",
     "delete": "Delete Channel",
     "delete_desc": "Are you sure want to delete this channel?",
+    "id": "Channel ID",
     "name": "Channel Name",
     "topic": "Channel Topic",
     "topic_placeholder": "Let everyone know how to use this channel.",

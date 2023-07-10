@@ -21,6 +21,7 @@ interface Props {
   compact?: boolean;
   avatarSize?: number;
   enableContextMenu?: boolean;
+  enableNavToSetting?: boolean;
 }
 
 const User: FC<Props> = ({
@@ -32,7 +33,8 @@ const User: FC<Props> = ({
   popover = false,
   compact = false,
   avatarSize = 32,
-  enableContextMenu = false
+  enableContextMenu = false,
+  enableNavToSetting = false
 }) => {
   const navigate = useNavigate();
   const { visible: contextMenuVisible, handleContextMenuEvent, hideContextMenu } = useContextMenu();
@@ -46,12 +48,16 @@ const User: FC<Props> = ({
   const handleDoubleClick = () => {
     navigate(`/chat/dm/${uid}`);
   };
+  const handleNavToSetting = () => {
+    navigate(`/setting/dm/${uid}/overview?f=/chat/dm/${uid}`);
+  };
   if (!curr) return null;
   const online = curr.online || curr.uid == loginUid;
   const containerClass = clsx(
     `relative flex items-center justify-start gap-2 rounded-lg select-none`,
     interactive && "md:hover:bg-gray-500/10",
-    compact ? "p-0" : "p-2"
+    compact ? "p-0" : "p-2",
+    enableNavToSetting && "cursor-pointer"
   );
   const nameClass = clsx(
     `text-sm text-gray-500 max-w-[190px] truncate font-semibold dark:text-white`
@@ -73,6 +79,7 @@ const User: FC<Props> = ({
       >
         <div
           className={containerClass}
+          onClick={enableNavToSetting ? handleNavToSetting : undefined}
           onDoubleClick={dm ? handleDoubleClick : undefined}
           onContextMenu={enableContextMenu ? handleContextMenuEvent : undefined}
         >

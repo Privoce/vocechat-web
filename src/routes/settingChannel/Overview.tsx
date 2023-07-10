@@ -94,6 +94,10 @@ export default function Overview({ id = 0 }) {
     <div className="relative w-[512px] flex flex-col gap-6 h-full">
       <AvatarUploader type="channel" url={channel?.icon} name={name} uploadImage={updateIcon} />
       <div className="flex flex-col gap-6 items-start">
+        <div className={"flex items-center gap-1"}>
+          <Label htmlFor="name">{t("id")}</Label>
+          <span className="text-gray-500">#{id}</span>
+        </div>
         <div className={inputClass}>
           <Label htmlFor="name">{t("name")}</Label>
           <Input
