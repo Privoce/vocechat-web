@@ -30,7 +30,7 @@
     "transfer_desc": "在离开此频道前，需要转让所有权。",
     "delete": "删除频道",
     "delete_desc": "确定删除该频道？",
-
+    "id": "频道ID",
     "name": "频道名",
     "topic": "频道主题",
     "topic_placeholder": "让别人知道这个频道是用来做啥的",
