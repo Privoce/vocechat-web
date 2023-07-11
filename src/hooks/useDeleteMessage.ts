@@ -1,16 +1,19 @@
 import { useState } from "react";
 
-import { useLazyDeleteMessageQuery } from "@/app/services/message";
+import { useLazyDeleteMessageQuery, useLazyDeleteMessagesQuery } from "@/app/services/message";
 import { useAppSelector } from "@/app/store";
+import { compareVersion } from "@/utils";
 
 export default function useDeleteMessage() {
   const [deleting, setDeleting] = useState(false);
-  const { loginUser, messageData } = useAppSelector((store) => {
+  const { loginUser, messageData, serverVersion } = useAppSelector((store) => {
     return {
+      serverVersion: store.server.version,
       messageData: store.message,
       loginUser: store.authData.user
     };
   });
+  const [batchRemove] = useLazyDeleteMessagesQuery();
   const [
     remove
     // { isError, isLoading, isSuccess },
@@ -19,8 +22,13 @@ export default function useDeleteMessage() {
     if (!mids) return;
     const _arr = Array.isArray(mids) ? mids : [mids];
     setDeleting(true);
-    for await (const mid of _arr) {
-      await remove(mid);
+    if (compareVersion(serverVersion, "0.3.10") > -1) {
+      // batch delete
+      await batchRemove(_arr);
+    } else {
+      for await (const mid of _arr) {
+        await remove(mid);
+      }
     }
     setDeleting(false);
   };

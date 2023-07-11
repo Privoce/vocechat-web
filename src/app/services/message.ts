@@ -41,6 +41,12 @@ export const messageApi = createApi({
         method: "DELETE"
       })
     }),
+    deleteMessages: builder.query<number, number[]>({
+      query: (mids) => ({
+        url: `/message/${mids}`,
+        method: "DELETE"
+      })
+    }),
     prepareUploadFile: builder.mutation<string, { content_type: string; filename: string }>({
       query: (meta = { content_type: "", filename: "" }) => ({
         url: `/resource/file/prepare`,
@@ -279,6 +285,7 @@ export const {
   useReactMessageMutation,
   useReplyMessageMutation,
   useLazyDeleteMessageQuery,
+  useLazyDeleteMessagesQuery,
   useReadMessageMutation,
   useCreateArchiveMutation,
   useLazyLoadMoreMessagesQuery
