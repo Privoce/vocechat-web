@@ -7,9 +7,8 @@
     "strings": true
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "prettier.prettierPath": "./node_modules/prettier",
+  "prettier.prettierPath": "./node_modules/prettier/index.cjs",
   "editor.formatOnSave": true,
-  "eslint.alwaysShowStatus": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },

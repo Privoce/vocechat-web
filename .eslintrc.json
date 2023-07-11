@@ -1,5 +1,10 @@
 {
-  "extends": ["eslint:recommended", "plugin:react/recommended", "prettier"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended-type-checked",
+    "plugin:react/recommended",
+    "prettier"
+  ],
   "plugins": ["import", "react", "react-hooks", "@typescript-eslint"],
   "rules": {
     "@typescript-eslint/no-unused-vars": ["error", { "ignoreRestSiblings": true }],
@@ -18,7 +23,7 @@
   },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 2021,
+    "ecmaVersion": 2022,
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true
