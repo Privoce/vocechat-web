@@ -123,7 +123,7 @@ export default function LoginPage() {
   const { magic_link, who_can_sign_up: whoCanSignUp } = loginConfig;
 
   const enableMagicLink = enableSMTP && magic_link;
-  const hideSocials = enableMagicLink && emailInputted;
+  const hideSocials = (enableMagicLink && emailInputted) || whoCanSignUp == "InvitationOnly";
   const showSignIn = !enableMagicLink || emailInputted;
   if (loadingSMTPStatus) return null;
   return (
