@@ -13,11 +13,14 @@ import { resetUsers } from "@/app/slices/users";
 export default function useLogout() {
   const dispatch = useDispatch();
   const [logout, { isLoading, isSuccess }] = useLazyLogoutQuery();
-  const clearLocalData = () => {
+  const clearLocalData = (footprint?: boolean) => {
+    let fp = typeof footprint === "undefined" ? true : footprint;
     dispatch(resetChannels());
     dispatch(resetUsers());
     // 和消息相关的数据
-    dispatch(resetFootprint());
+    if (fp) {
+      dispatch(resetFootprint());
+    }
     dispatch(resetChannelMsg());
     dispatch(resetUserMsg());
     dispatch(resetMessage());
