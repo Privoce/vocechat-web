@@ -43,7 +43,7 @@ export const messageApi = createApi({
     }),
     deleteMessages: builder.query<number, number[]>({
       query: (mids) => ({
-        url: `/message/${mids}`,
+        url: `/message/bulk/${mids}`,
         method: "DELETE"
       })
     }),
