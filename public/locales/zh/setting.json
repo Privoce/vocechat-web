@@ -239,6 +239,7 @@
     "param_key": "参数",
     "default_value": "默认值",
     "remark": "备注",
+    "custom_style_tip": "如果你想更精确控制挂件的样式，可以借助widget元素的ID，自行写CSS样式，加到自己的html或者css文件中，如下所示：",
     "param_host": "指定和谁聊天(用户ID)",
     "param_theme_color": "挂件的主题色",
     "param_close_width": "挂件关闭态的宽度",
@@ -246,6 +247,7 @@
     "param_open_width": "挂件打开态的宽度",
     "param_open_height": "挂件打开态的高度",
     "param_welcome": "自定义欢迎语",
+    "param_position": "设置挂件位置，居左(left)或居右(right)",
     "share_link": "分享此链接，别人可以通过该地址直接与你对话",
     "widget_faq": "允许公开注册"
   },

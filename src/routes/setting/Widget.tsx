@@ -57,6 +57,15 @@ export default function Widget() {
           location.origin
         }/widget.js" \n  async \n></script>`}
       </SyntaxHighlighter>
+      <div className="text-sm dark:text-white">{t("custom_style_tip")}:</div>
+      <SyntaxHighlighter id="code" language="html" style={vscDarkPlus} className="rounded">
+        {`<style>
+  #VOCECHAT_WIDGET {
+    left:10px  /* left position */
+    bottom: 5px /* bottom position */
+  }
+</style>`}
+      </SyntaxHighlighter>
       <div className="font-semibold dark:text-white mt-5 mb-2">{t("config")}:</div>
       <div className="w-full md:w-[700px] border border-solid border-gray-300 dark:border-gray-400 rounded overflow-auto md:overflow-hidden">
         <table className="min-w-full table-auto">
@@ -104,6 +113,11 @@ export default function Widget() {
                 paramKey: "open-height",
                 paramDefault: `680(px)`,
                 remarks: t("param_open_height")
+              },
+              {
+                paramKey: "position",
+                paramDefault: `right`,
+                remarks: t("param_position")
               },
               {
                 paramKey: "welcome",
