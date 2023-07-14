@@ -246,6 +246,7 @@
     "param_key": "Parameter Key",
     "default_value": "Default Value",
     "remark": "Remarks",
+    "custom_style_tip": "if you want customize the widget position more precisely, use the widget element ID in your HTML or CSS file, like this",
     "param_host": "Assign the user chatting with visitor(User ID)",
     "param_theme_color": "The theme color of widget",
     "param_close_width": "The width while widget closed",
@@ -253,6 +254,7 @@
     "param_open_width": "The width while widget opened",
     "param_open_height": "The height while widget opened",
     "param_welcome": "Custom welcome message",
+    "param_position": "Widget position: left/right",
     "share_link": "Share the widget link so that people can chat with you directly",
     "widget_faq": "Enable Let Everyone Join First"
   },

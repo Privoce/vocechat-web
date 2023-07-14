@@ -1,4 +1,4 @@
-const {
+let {
   hostId = 1,
   closeWidth = 48,
   closeHeight = 48,
@@ -8,10 +8,10 @@ const {
   position = "right",
   welcome = ""
 } = document.currentScript.dataset;
-const _src = document.currentScript.src;
-const wrapper = document.createElement("iframe");
+let _src = document.currentScript.src;
+let wrapper = document.createElement("iframe");
 wrapper.id = "VOCECHAT_WIDGET";
-const styles = {
+let styles = {
   position: "fixed",
   borderRadius: "8px",
   right: "16px",
