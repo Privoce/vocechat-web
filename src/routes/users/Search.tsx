@@ -25,10 +25,10 @@ const Search: FC<Props> = ({ input, updateInput, openModal, type = "users" }) =>
   return (
     <div
       className={clsx(
-        "w-full hidden md:flex relative px-2 items-center justify-between gap-2",
+        "w-full hidden md:flex relative items-center justify-between gap-2",
         isMembers
-          ? "md:w-[512px] min-h-[40px] rounded-full bg-black/10 mb-4 focus-within:bg-transparent focus-within:ring-[1px] focus-within:ring-gray-300"
-          : "shadow-[rgb(0_0_0_/_10%)_0px_1px_0px] dark:border-b-gray-500 min-h-[56px]"
+          ? "md:w-[512px]  px-2 min-h-[40px] rounded-full bg-black/10 mb-4 focus-within:bg-transparent focus-within:ring-[1px] focus-within:ring-gray-300"
+          : "shadow-[rgb(0_0_0_/_10%)_0px_1px_0px] dark:border-b-gray-500 min-h-[58px] px-4"
       )}
     >
       <div className="flex items-center gap-1">
