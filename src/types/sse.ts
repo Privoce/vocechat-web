@@ -224,7 +224,7 @@ interface UserCallEvent {
 }
 interface MessageClearedEvent {
   type: "message_cleared";
-  mid: number;
+  latest_deleted_mid: number;
 }
 
 export type ServerEvent =

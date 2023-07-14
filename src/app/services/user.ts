@@ -225,7 +225,7 @@ export const userApi = createApi({
     }),
     sendMsg: builder.mutation<
       number,
-      { id: number; content: string; type: ContentTypeKey; properties?: object }
+      { id: number; content: string | { path: string }; type: ContentTypeKey; properties?: object }
     >({
       query: ({ id, content, type = "text", properties = "" }) => ({
         headers: {

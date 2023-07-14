@@ -165,7 +165,7 @@ export const channelApi = createApi({
       number,
       {
         id: number;
-        content: string | object;
+        content: string | { path: string };
         type: ContentTypeKey;
         properties?: object;
         from_uid?: number;

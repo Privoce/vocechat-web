@@ -215,7 +215,7 @@ export const messageApi = createApi({
       {
         from_uid: number;
         reply_mid: number;
-        content: string;
+        content: string | { path: string };
         type: ContentTypeKey;
         properties?: {};
       }

@@ -65,7 +65,7 @@ const MessageFeed = ({ hostId }: Props) => {
             key={mid}
             mid={mid}
             type="text"
-            content={content}
+            content={content as string}
             create_time={created_at}
           />
         );
