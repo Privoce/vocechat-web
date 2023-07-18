@@ -7,6 +7,7 @@ import SettingBlock from "@/components/SettingBlock";
 import StyledButton from "@/components/styled/Button";
 import AutoDeleteFiles from "./AutoDeleteFiles";
 import ClearConfirmModal from "./ClearConfirmModal";
+import ServerVersionChecker from "@/components/ServerVersionChecker";
 
 export type VisibleModalType = "chat" | "files";
 export default function DataManagement() {
@@ -22,11 +23,13 @@ export default function DataManagement() {
   return (
     <div className="relative w-full md:w-[512px] flex flex-col gap-6">
       {/* 清除服务器聊天消息 */}
-      <SettingBlock title={t("data.clear_msgs.title")} desc={t("data.clear_msgs.desc")}>
-        <StyledButton onClick={handleModalVisible.bind(null, "chat")} className="danger">
-          {t("data.clear_msgs.btn")}
-        </StyledButton>
-      </SettingBlock>
+      <ServerVersionChecker version="0.3.12">
+        <SettingBlock title={t("data.clear_msgs.title")} desc={t("data.clear_msgs.desc")}>
+          <StyledButton onClick={handleModalVisible.bind(null, "chat")} className="danger">
+            {t("data.clear_msgs.btn")}
+          </StyledButton>
+        </SettingBlock>
+      </ServerVersionChecker>
 
       {/* 清除服务器文件 */}
       <SettingBlock title={t("data.clear_files.title")} desc={t("data.clear_files.desc")}>

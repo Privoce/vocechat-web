@@ -384,6 +384,17 @@ export const isDarkMode = () => {
   const isLightMode = localStorage.theme === "light";
   return isDarkMode || (!isLightMode && window.matchMedia("(prefers-color-scheme: dark)").matches);
 };
+export const platform = () => {
+  const ua = navigator.userAgent.toLowerCase();
+  const isMac = ua.indexOf("darwin") != -1;
+  const isWindows = ua.indexOf("win32") != -1;
+  const isLinux = ua.indexOf("linux") != -1;
+  return {
+    isMac,
+    isWindows,
+    isLinux
+  };
+};
 
 export const fromNowTime = (ts?: number) => {
   if (!ts) return null;
