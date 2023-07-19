@@ -62,13 +62,13 @@ export const onMessageSendStarted = async (
   } catch (error) {
     if (error?.error?.status == 403) {
       // 403 means blocked
-      // toast.error(`Failed to send, blocked maybe.`,);
-      dispatch(updateMessage({ mid: ts, failed: true }));
+      toast.error(`Send failed, blocked maybe`);
+      // dispatch(updateMessage({ mid: ts, failed: true }));
     } else {
       toast.error(`Send Message Failed ${JSON.stringify(error)}`);
-      dispatch(removeContextMessage({ id, mid: ts }));
-      dispatch(removeMessage(ts));
     }
+    dispatch(removeContextMessage({ id, mid: ts }));
+    dispatch(removeMessage(ts));
     // patchResult.undo();
   }
 };
