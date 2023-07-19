@@ -190,13 +190,14 @@ export const authApi = createApi({
       }
     }),
     getInitialized: builder.query<boolean, void>({
-      query: () => ({ url: "/admin/system/initialized" }),
+      query: () => ({ url: "/admin/system/initialized", timeout: 5000 }),
       async onQueryStarted(params, { dispatch, queryFulfilled }) {
         try {
           const { data: isInitialized } = await queryFulfilled;
           dispatch(updateInitialized(isInitialized));
         } catch {
-          console.log("api initialized error");
+          console.error("api initialized error");
+          dispatch(updateInitialized(true));
         }
       }
     }),

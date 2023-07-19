@@ -19,12 +19,12 @@ const RequireAuth: FC<Props> = ({ children, redirectTo = "/login" }) => {
   const matches = matchRoutes(GuestAllows, location);
   const allowGuest = matches ? !!matches[0].pathname : false;
   const { data: loginConfig, isSuccess: loginConfigSuccess } = useGetLoginConfigQuery();
-  const { isSuccess: checkInitialSuccess } = useGetInitializedQuery();
+  const { isLoading: checkingInitialized } = useGetInitializedQuery();
   const { token, guest, initialized } = useAppSelector((store) => store.authData);
-  // console.log("auth route", { checkInitialSuccess, loginConfigSuccess, initialized, guest: loginConfig?.guest, token, allowGuest, guest });
+  // console.log("auth route", { checkingInitialized, loginConfigSuccess, initialized, guest: loginConfig?.guest, token, allowGuest, guest });
 
   // 初始化和login配置检查
-  if (!checkInitialSuccess || !loginConfigSuccess) return <Loading fullscreen={true} />;
+  if (checkingInitialized || !loginConfigSuccess) return <Loading fullscreen={true} />;
   //  未初始化 则先走setup 流程
   if (!initialized) return <Navigate to={`/onboarding`} replace />;
   // 开启guest 并且没token 而且是允许guest访问的路由  则先去过渡页登录
