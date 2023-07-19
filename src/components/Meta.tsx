@@ -1,21 +1,14 @@
 import { FC } from "react";
 import { Helmet } from "react-helmet";
-
-import BASE_URL from "@/app/config";
-import { useGetServerQuery } from "@/app/services/server";
+import { useAppSelector } from "@/app/store";
 
 type Props = {};
 const Meta: FC<Props> = () => {
-  const { data, isSuccess } = useGetServerQuery();
-  if (isSuccess) {
-    <Helmet>
-      <title>{data.name} Web App</title>
-      <link rel="icon" href={`${BASE_URL}/resource/organization/logo`} />
-    </Helmet>;
-  }
+  const { name, logo } = useAppSelector((store) => store.server);
   return (
     <Helmet>
-      <link rel="icon" href={`${BASE_URL}/resource/organization/logo`} />
+      {name && <title>{name} Web App</title>}
+      {logo && <link rel="icon" href={`${logo}?ts=${new Date().getTime()}`} />}
     </Helmet>
   );
 };
