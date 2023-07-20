@@ -3,11 +3,7 @@ import dayjs from "dayjs";
 
 import initCache, { useRehydrate } from "@/app/cache";
 import { useLazyGetFavoritesQuery, useLazyLoadMoreMessagesQuery } from "@/app/services/message";
-import {
-  useLazyGetServerQuery,
-  useLazyGetServerVersionQuery,
-  useLazyGetSystemCommonQuery
-} from "@/app/services/server";
+import { useLazyGetServerVersionQuery, useLazyGetSystemCommonQuery } from "@/app/services/server";
 import { useLazyGetContactsQuery, useLazyGetUsersQuery } from "@/app/services/user";
 import { useAppSelector } from "@/app/store";
 import useLicense from "./useLicense";
@@ -63,10 +59,7 @@ export default function usePreload() {
       data: contacts
     }
   ] = useLazyGetContactsQuery();
-  const [
-    getServer,
-    { isLoading: serverLoading, isSuccess: serverSuccess, isError: serverError, data: server }
-  ] = useLazyGetServerQuery();
+
   const [
     getServerVersion,
     { data: serverVersion, isSuccess: serverVersionSuccess, isLoading: loadingServerVersion }
@@ -100,7 +93,6 @@ export default function usePreload() {
           getContacts();
         }
       });
-      getServer();
       getFavorites();
       getSystemCommon();
     }
@@ -114,17 +106,11 @@ export default function usePreload() {
   }, [canStreaming]);
   return {
     loading:
-      usersLoading ||
-      serverLoading ||
-      favoritesLoading ||
-      !rehydrated ||
-      loadingLicense ||
-      loadingServerVersion,
-    error: usersError && serverError && favoritesError,
-    success: usersSuccess && serverSuccess && favoritesSuccess && serverVersionSuccess,
+      usersLoading || favoritesLoading || !rehydrated || loadingLicense || loadingServerVersion,
+    error: usersError && favoritesError,
+    success: usersSuccess && favoritesSuccess && serverVersionSuccess,
     data: {
       users: enableContacts ? contacts : users,
-      server,
       favorites
     }
   };

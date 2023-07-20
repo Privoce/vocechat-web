@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { AuthData, RenewTokenResponse } from "@/types/auth";
-// import { isNull, omitBy } from "lodash";
 import {
   KEY_EXPIRE,
   KEY_LOGIN_USER,
@@ -11,8 +10,6 @@ import {
   KEY_UID
 } from "../config";
 import { StoredUser } from "./users";
-
-// import { updateUsersByLogs } from './users';
 
 interface State {
   initialized: boolean;
@@ -71,7 +68,6 @@ const authDataSlice = createSlice({
     },
     updateLoginUser(state, { payload }: PayloadAction<Partial<StoredUser>>) {
       if (!state.user) return;
-
       const obj = { ...state.user, ...payload };
       Object.keys(obj).forEach((key) => {
         // @ts-ignore
@@ -80,7 +76,6 @@ const authDataSlice = createSlice({
           delete obj[key];
         }
       });
-      console.log("upppp", obj);
       state.user = obj;
       localStorage.setItem(KEY_LOGIN_USER, JSON.stringify(obj));
     },
@@ -94,7 +89,6 @@ const authDataSlice = createSlice({
       localStorage.removeItem(KEY_REFRESH_TOKEN);
       localStorage.removeItem(KEY_UID);
       localStorage.removeItem(KEY_PWA_INSTALLED);
-
       return emptyState;
     },
     updateInitialized(state, action: PayloadAction<boolean>) {
