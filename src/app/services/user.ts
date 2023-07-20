@@ -230,9 +230,7 @@ export const userApi = createApi({
       query: ({ id, content, type = "text", properties = "" }) => ({
         headers: {
           "content-type": ContentTypes[type],
-          "X-Properties": properties
-            ? btoa(unescape(encodeURIComponent(JSON.stringify(properties))))
-            : ""
+          "X-Properties": properties ? btoa(JSON.stringify(properties)) : ""
         },
         url: `/user/${id}/send`,
         method: "POST",

@@ -223,9 +223,7 @@ export const messageApi = createApi({
       query: ({ reply_mid, content, type = "text", properties }) => ({
         headers: {
           "content-type": ContentTypes[type],
-          "X-Properties": properties
-            ? btoa(unescape(encodeURIComponent(JSON.stringify(properties))))
-            : ""
+          "X-Properties": properties ? btoa(JSON.stringify(properties)) : ""
         },
         url: `/message/${reply_mid}/reply`,
         method: "POST",

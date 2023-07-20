@@ -175,9 +175,7 @@ export const channelApi = createApi({
       query: ({ id, content, type = "text", properties = {} }) => ({
         headers: {
           "content-type": ContentTypes[type],
-          "X-Properties": properties
-            ? btoa(unescape(encodeURIComponent(JSON.stringify(properties))))
-            : ""
+          "X-Properties": properties ? btoa(JSON.stringify(properties)) : ""
         },
         url: `/group/${id}/send`,
         method: "POST",
