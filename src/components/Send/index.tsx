@@ -169,8 +169,8 @@ const Send: FC<IProps> = ({
 
         <div
           className={clsx(
-            `flex justify-between items-center gap-4 px-4 py-3.5`,
-            isMarkdownMode && `grid grid-cols-[1fr_1fr] grid-rows-[auto_auto] gap-0`
+            `flex justify-between items-center px-4 py-3.5`,
+            isMarkdownMode ? `grid grid-cols-[1fr_1fr] grid-rows-[auto_auto] gap-0` : "gap-4"
           )}
         >
           <EmojiPicker selectEmoji={insertEmoji} />
@@ -212,7 +212,7 @@ const Send: FC<IProps> = ({
 };
 
 export default Send;
-// export default memo(Send, (prevs, nexts) => {
-//   console.log("send name", prevs.name, nexts.name);
-//   return prevs.name == nexts.name;
+// export default memo(Send, (prev, next) => {
+//   console.log("send name", prev.name, next.name);
+//   return prev.name == next.name;
 // });

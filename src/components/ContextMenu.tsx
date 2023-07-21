@@ -98,6 +98,7 @@ const ContextMenu: FC<Props> = ({ items = [], hideMenu = null }) => {
         if (subs.length > 0)
           return (
             <WrapWithSubmenu
+              key={title}
               items={subs}
               hideMenu={hideMenu}
               child={

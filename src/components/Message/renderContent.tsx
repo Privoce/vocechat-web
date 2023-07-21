@@ -27,12 +27,12 @@ const renderContent = ({
   context,
   to = 0,
   from_uid = 0,
-  created_at,
+  created_at = 0,
   properties,
   content_type,
   content,
-  download,
-  thumbnail,
+  download = "",
+  thumbnail = "",
   edited = false
 }: Props) => {
   let ctn = null;
@@ -74,7 +74,7 @@ const renderContent = ({
             download={download}
             thumbnail={thumbnail}
             from_uid={from_uid}
-            created_at={created_at}
+            created_at={created_at ?? 0}
             content={content}
           />
         );
@@ -83,17 +83,7 @@ const renderContent = ({
     case ContentTypes.archive:
       {
         // const { size, name, file_type } = properties;
-        ctn = (
-          <ForwardedMessage
-            properties={properties}
-            context={context}
-            to={to}
-            from_uid={from_uid}
-            created_at={created_at}
-            id={content}
-            thumbnail={thumbnail}
-          />
-        );
+        ctn = <ForwardedMessage context={context} to={to} from_uid={from_uid} id={content} />;
       }
       break;
 

@@ -25,7 +25,7 @@ interface Props {
   content: string;
   download: string;
   thumbnail: string;
-  properties: {
+  properties?: {
     local_id: number;
     name: string;
     size: number;
