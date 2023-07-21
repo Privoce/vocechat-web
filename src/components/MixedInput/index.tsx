@@ -79,9 +79,9 @@ const Plugins: FC<Props> = ({
     window.addEventListener("paste", handlePasteEvent);
     return () => {
       window.removeEventListener("paste", handlePasteEvent);
-      // if (plateEditor && updateDraft) {
-      //   updateDraft(plateEditor.children);
-      // }
+      if (plateEditor && updateDraft) {
+        updateDraft(plateEditor.children);
+      }
     };
   }, [id, updateDraft]);
 
