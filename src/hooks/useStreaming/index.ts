@@ -77,14 +77,11 @@ export default function useStreaming() {
     console.info("debug SSE: clear prev timeout", aliveInter);
     aliveInter = setTimeout(() => {
       console.info("debug SSE: start reconnect");
-      // 判断有网再试
-      if (navigator.onLine) {
-        console.info("debug SSE: start reconnect onLine");
-        // 重启连接
-        console.info("debug SSE: stopStreaming at timeout");
-        stopStreaming();
-        startStreaming();
-      }
+      // 重启连接
+      console.info("debug SSE: stopStreaming at timeout");
+      stopStreaming();
+      startStreaming();
+      // }
     }, countdown);
     console.info("debug SSE: start new timeout", aliveInter);
   };
@@ -419,6 +416,22 @@ export default function useStreaming() {
     }
     // connectionIsOpen = false;
   };
+  useEffect(() => {
+    const handleNetworkChange = () => {
+      console.info("debug SSE: network changed", navigator.onLine);
+      if (navigator.onLine) {
+        startStreaming();
+      } else {
+        stopStreaming();
+      }
+    };
+    window.addEventListener("online", handleNetworkChange);
+    window.addEventListener("offline", handleNetworkChange);
+    return () => {
+      window.removeEventListener("online", handleNetworkChange);
+      window.removeEventListener("offline", handleNetworkChange);
+    };
+  }, []);
 
   useEffect(() => {
     // 确保只执行一次
