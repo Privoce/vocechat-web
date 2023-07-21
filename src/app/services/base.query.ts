@@ -35,8 +35,9 @@ const whiteList401 = ["getAgoraVoicingList", "getAgoraChannels"];
 const errorWhiteList = ["preCheckFileFromUrl", "getFavoriteDetails"];
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
-  prepareHeaders: (headers, { getState, endpoint }) => {
-    const { token } = (getState() as RootState).authData;
+  prepareHeaders: (headers, { endpoint }) => {
+    const { token } = getLocalAuthData();
+    // const { token } = (getState() as RootState).authData;
     if (token && !whiteList.includes(endpoint)) {
       headers.set(tokenHeader, token);
     }
@@ -80,7 +81,7 @@ const baseQueryWithTokenCheck = async (args: any, api: any, extraOptions: any) =
     result = await baseQuery(args, api, extraOptions);
   }
   if (result?.error) {
-    console.error("api error", result.error, api.endpoint);
+    console.error("api error", result.error, args, api.endpoint);
     if (errorWhiteList.includes(api.endpoint)) return result;
     switch (result.error.originalStatus || result.error.status) {
       case "FETCH_ERROR":

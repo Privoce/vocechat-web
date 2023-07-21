@@ -22,7 +22,7 @@ const defaultInput = {
   password: ""
 };
 export default function LoginPage() {
-  const serverName = useAppSelector((store) => store.server.name);
+  const { name: serverName, logo } = useAppSelector((store) => store.server);
   const { t } = useTranslation("auth");
   const { t: ct } = useTranslation();
   const { data: enableSMTP, isLoading: loadingSMTPStatus } = useGetSMTPStatusQuery();
@@ -138,7 +138,7 @@ export default function LoginPage() {
         )}
         <div className="flex-center flex-col pb-6">
           <img
-            src={`${BASE_URL}/resource/organization/logo`}
+            src={logo || `${BASE_URL}/resource/organization/logo?t=${Date.now()}`}
             alt="logo"
             className="w-14 h-14 mb-3 md:mb-7 rounded-full"
           />

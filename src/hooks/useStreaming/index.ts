@@ -106,6 +106,8 @@ export default function useStreaming() {
     if (dayjs().isAfter(new Date(expireTime - 20 * 1000))) {
       const resp = await renewToken({ token, refresh_token: refreshToken });
       if ("error" in resp) {
+        // 停止循环
+        stopStreaming();
         return;
       } else {
         _token = resp.data.token;

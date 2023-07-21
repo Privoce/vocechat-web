@@ -54,7 +54,7 @@ const serverSlice = createSlice({
         version,
         upgraded,
         name,
-        logo,
+        logo: state.logo || logo,
         description,
         inviteLink,
         show_user_online_status,
