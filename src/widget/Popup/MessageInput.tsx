@@ -1,10 +1,14 @@
-import { memo, useRef, useState } from "react";
+import { ChangeEvent, memo, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import clsx from "clsx";
 
 import IconSend from "@/assets/icons/send.svg";
+import IconImage from "@/assets/icons/image.svg";
 import useSendMessage from "../../hooks/useSendMessage";
 import { useWidget } from "../WidgetContext";
+import useUploadFile from "@/hooks/useUploadFile";
+import { Wobble } from "@uiball/loaders";
+import { getImageSize } from "@/utils";
 
 type Props = {
   from: number;
@@ -12,6 +16,8 @@ type Props = {
 };
 let isComposing = false;
 const MessageInput = (props: Props) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const { uploadFile, isUploading, isSuccess: uploadSuccess } = useUploadFile();
   const { t } = useTranslation("widget");
   const { color } = useWidget();
   const { from, to } = props;
@@ -36,6 +42,36 @@ const MessageInput = (props: Props) => {
     });
     setContent("");
   };
+  const handleImageSelect = () => {
+    if (inputRef?.current) {
+      inputRef.current.click();
+    }
+  };
+  const handleFileChange = async (evt: ChangeEvent<HTMLInputElement>) => {
+    const files = evt.target.files;
+    if (!files || files?.length == 0) return;
+    const [file] = Array.from(files);
+    const result = await uploadFile(file);
+    if (result) {
+      // send message
+      const properties: any = await getImageSize(URL.createObjectURL(file));
+      console.log("uploaded", result, properties);
+      const { path } = result;
+      sendMessage({
+        ignoreLocal: true,
+        type: "file",
+        content: { path },
+        properties
+      });
+    }
+  };
+  // useEffect(() => {
+  //   if(uploadSuccess){
+  //     inputRef.current.value="";
+  //   }
+
+  // }, [uploadSuccess])
+
   return (
     <div className="relative border-t border-gray-300 dark:border-gray-600 w-full">
       <div className={"px-3 py-2 min-h-[48px] flex items-center gap-2"}>
@@ -69,13 +105,35 @@ const MessageInput = (props: Props) => {
             }
           }}
         />
-        <button
-          onClick={handleSend}
-          disabled={content.trim().length === 0}
-          className="px-2 py-1 disabled:opacity-60"
-        >
-          <IconSend className="dark:stroke-white w-4 h-4" />
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={handleImageSelect}
+            disabled={isUploading}
+            className="p-1 disabled:opacity-60"
+          >
+            {isUploading ? (
+              <Wobble size={16} />
+            ) : (
+              <IconImage className="dark:stroke-gray-100 w-4 h-4" />
+            )}
+            <input
+              onChange={handleFileChange}
+              accept="image/*"
+              ref={inputRef}
+              type="file"
+              name="image"
+              id="image"
+              hidden
+            />
+          </button>
+          <button
+            onClick={handleSend}
+            disabled={content.trim().length === 0}
+            className="p-1 disabled:opacity-60"
+          >
+            <IconSend className="dark:fill-gray-100 w-4 h-4" />
+          </button>
+        </div>
       </div>
     </div>
   );

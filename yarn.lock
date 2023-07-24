@@ -2880,10 +2880,15 @@
   resolved "https://mirrors.cloud.tencent.com/npm/@types/mime/-/mime-1.3.2.tgz#93e25bf9ee75fe0fd80b594bc4feb0e862111b5a"
   integrity sha512-YATxVxgRqNH6nHEIsvg6k2Boc1JHI9ZbH5iWFFv/MTkchz3b1ieGDa5T0a9RznNdI0KhVbdbWSN+KWWrQZRxTw==
 
-"@types/node@*", "@types/node@>=12.12.47", "@types/node@>=13.7.0", "@types/node@^20.4.2":
+"@types/node@*", "@types/node@>=12.12.47", "@types/node@>=13.7.0":
   version "20.4.2"
   resolved "https://mirrors.cloud.tencent.com/npm/@types/node/-/node-20.4.2.tgz#129cc9ae69f93824f92fac653eebfb4812ab4af9"
   integrity sha512-Dd0BYtWgnWJKwO1jkmTrzofjK2QXXcai0dmtzvIBhcA+RsG5h8R3xlyta0kGOZRNfL9GuRtb1knmPEhQrePCEw==
+
+"@types/node@^20.4.4":
+  version "20.4.4"
+  resolved "https://mirrors.cloud.tencent.com/npm/@types/node/-/node-20.4.4.tgz#c79c7cc22c9d0e97a7944954c9e663bcbd92b0cb"
+  integrity sha512-CukZhumInROvLq3+b5gLev+vgpsIqC2D0deQr/yS1WnxvmYLlJXZpaQrQiseMY+6xusl79E04UjWoqyr+t1/Ew==
 
 "@types/parse-json@^4.0.0":
   version "4.0.0"
@@ -10150,10 +10155,19 @@ postcss@^7.0.35:
     picocolors "^0.2.1"
     source-map "^0.6.1"
 
-postcss@^8.3.5, postcss@^8.4.21, postcss@^8.4.23, postcss@^8.4.24, postcss@^8.4.26, postcss@^8.4.4:
+postcss@^8.3.5, postcss@^8.4.21, postcss@^8.4.23, postcss@^8.4.24, postcss@^8.4.4:
   version "8.4.26"
   resolved "https://mirrors.cloud.tencent.com/npm/postcss/-/postcss-8.4.26.tgz#1bc62ab19f8e1e5463d98cf74af39702a00a9e94"
   integrity sha512-jrXHFF8iTloAenySjM/ob3gSj7pCu0Ji49hnjqzsgSRa50hkWCKD0HQ+gMNJkW38jBI68MpAAg7ZWwHwX8NMMw==
+  dependencies:
+    nanoid "^3.3.6"
+    picocolors "^1.0.0"
+    source-map-js "^1.0.2"
+
+postcss@^8.4.27:
+  version "8.4.27"
+  resolved "https://mirrors.cloud.tencent.com/npm/postcss/-/postcss-8.4.27.tgz#234d7e4b72e34ba5a92c29636734349e0d9c3057"
+  integrity sha512-gY/ACJtJPSmUFPDCHtX78+01fHa64FaU4zaaWfuh1MhGJISufJAH4cun6k/8fwsHYeK4UQmENQK+tRLCFJE8JQ==
   dependencies:
     nanoid "^3.3.6"
     picocolors "^1.0.0"
@@ -10739,10 +10753,10 @@ react-viewport-list@^7.1.1:
   resolved "https://mirrors.cloud.tencent.com/npm/react-viewport-list/-/react-viewport-list-7.1.1.tgz#2f36ad1db8124e8a960bc006b95228b696cc81d6"
   integrity sha512-O3gxykg3DgpcyYH+/X2kFwWFaZjckJ0FK3UBb4vFhZe+CsGLcX8OVJb0VSYI+IupEuQ9pl8dvJak8JRkIuvNjw==
 
-react-virtuoso@^4.4.1:
-  version "4.4.1"
-  resolved "https://mirrors.cloud.tencent.com/npm/react-virtuoso/-/react-virtuoso-4.4.1.tgz#43d7ac35346c4eba947b40858b375d5844b5ae9f"
-  integrity sha512-QrZ0JLnZFH8ltMw6q+S7U1+V2vUcSHzoIfLRzQKSv4nMJhEdjiZ+e9PqWCI7xJiy2AmSCAgo7g1V5osuurJo2Q==
+react-virtuoso@^4.4.2:
+  version "4.4.2"
+  resolved "https://mirrors.cloud.tencent.com/npm/react-virtuoso/-/react-virtuoso-4.4.2.tgz#752438e5031a9f72722371a52ae5ac7265f3e1c0"
+  integrity sha512-9uChSRSK5bTbKTxzuta4RqhfrlZSVHI/v8fHwmv3jmImS8FjdZ4Mzgqz9JKUp/yQo3dIHkR2QwidQeqxgYzPhQ==
 
 react@^18.2.0:
   version "18.2.0"
@@ -12500,10 +12514,10 @@ watchpack@^2.4.0:
     glob-to-regexp "^0.4.1"
     graceful-fs "^4.1.2"
 
-wavesurfer.js@^7.0.3:
-  version "7.0.3"
-  resolved "https://mirrors.cloud.tencent.com/npm/wavesurfer.js/-/wavesurfer.js-7.0.3.tgz#d3e0b07056c08d43db19d4950d2de68681f48606"
-  integrity sha512-gJ3P+Bd3Q4E8qETjjg0pneaVqm2J7jegG2Cc6vqEF5YDDKQ3m8sKsvVfgVhJkacKkO9jFAGDu58Hw4zLr7xD0A==
+wavesurfer.js@^7.0.6:
+  version "7.0.6"
+  resolved "https://mirrors.cloud.tencent.com/npm/wavesurfer.js/-/wavesurfer.js-7.0.6.tgz#e0a214df7497f0503e18fb67959e4bca356c388a"
+  integrity sha512-Pkg0iBnIsgl9k4F938S9/RBEqklt9jPeeo59mmKimbUoxcKr11l7rsu9qHkGJvkl1hhx33lcSz0cA9F/qwFngQ==
 
 wbuf@^1.1.0, wbuf@^1.7.3:
   version "1.7.3"

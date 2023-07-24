@@ -53,10 +53,17 @@ const MessageFeed = ({ hostId }: Props) => {
       {mids.map((mid) => {
         const currMsg = messageMap[mid];
         if (!currMsg) return null;
-        const lastMsg = messageMap[mids[mids.length - 1]];
-        console.log("lll", lastMsg);
+        // const lastMsg = messageMap[mids[mids.length - 1]];
 
-        const { content, created_at = 0, from_uid = 0, sending = false } = currMsg;
+        const {
+          content_type,
+          thumbnail = "",
+          content,
+          created_at = 0,
+          from_uid = 0,
+          sending = false
+        } = currMsg;
+        console.log("lll", content, content_type);
         return (
           <Message
             uid={from_uid}
@@ -64,8 +71,9 @@ const MessageFeed = ({ hostId }: Props) => {
             sending={sending}
             key={mid}
             mid={mid}
-            type="text"
+            type={content_type}
             content={content as string}
+            thumbnail={thumbnail}
             create_time={created_at}
           />
         );
