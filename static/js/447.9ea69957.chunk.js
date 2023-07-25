@@ -1,1 +1,0 @@
-"use strict";(globalThis.webpackChunkvocechat_web=globalThis.webpackChunkvocechat_web||[]).push([[447],{60447:(e,t,a)=>{a.r(t),a.d(t,{default:()=>l});var c=a(15924),s=a(15312),u=a(66160),h=a(80683);const l=()=>{(0,s.ER)();const{token:e,guest:t}=(0,u.CG)((e=>e.authData));return e&&t?(0,h.jsx)(c.Fg,{to:"/",replace:!0}):null}}}]);
