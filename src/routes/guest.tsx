@@ -1,16 +1,22 @@
 // import { useEffect } from "react";
 import { Navigate } from "react-router-dom";
 
-import { useGuestLoginQuery } from "../app/services/auth";
+import { useLazyGuestLoginQuery } from "../app/services/auth";
 import { useAppSelector } from "../app/store";
+import { useEffect } from "react";
 
 // type Props = {};
 
-const GuestLogining = () => {
-  useGuestLoginQuery();
+const GuestLogin = () => {
+  const [guestLogin] = useLazyGuestLoginQuery();
   const { token, guest } = useAppSelector((store) => store.authData);
+  useEffect(() => {
+    if (!guest) {
+      guestLogin();
+    }
+  }, [guest]);
   if (token && guest) return <Navigate to={"/"} replace />;
   return null;
 };
 
-export default GuestLogining;
+export default GuestLogin;
