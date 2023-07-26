@@ -134,17 +134,18 @@ export default function useStreaming() {
 
     SSE.onopen = () => {
       ready = false;
-      //todo
-      // opened = true;
-      // connectionIsOpen = true;
     };
     SSE.onerror = (err) => {
+      // 断网了
+      if (!navigator.onLine) {
+        stopStreaming();
+      }
       const { readyState } = err.target as EventSource;
-      console.error("sse error", readyState, err);
       // 连接还处于开启状态
       if (readyState === EventSource.OPEN || readyState === EventSource.CONNECTING) {
         return;
       }
+      console.info("sse error", readyState, err);
       // 重连
       keepAlive(2000);
     };
@@ -438,12 +439,6 @@ export default function useStreaming() {
     if (streamingReady) {
       startStreaming();
     }
-    return () => {
-      if (streamingReady) {
-        console.info("debug SSE: stopStreaming at effect");
-        stopStreaming();
-      }
-    };
   }, [streamingReady]);
 
   return {
