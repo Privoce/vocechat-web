@@ -433,3 +433,4 @@ export const transformInviteLink = (link: string) => {
 };
 
 export const isInIframe = () => window.location !== window.parent.location;
+export const encodeBase64 = (str = "") => btoa(unescape(encodeURIComponent(str)));

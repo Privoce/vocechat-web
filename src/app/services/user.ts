@@ -20,6 +20,7 @@ import { RootState } from "../store";
 // import toast from "react-hot-toast";
 import baseQuery from "./base.query";
 import { onMessageSendStarted } from "./handlers";
+import { encodeBase64 } from "@/utils";
 
 export const userApi = createApi({
   reducerPath: "userApi",
@@ -230,7 +231,7 @@ export const userApi = createApi({
       query: ({ id, content, type = "text", properties = "" }) => ({
         headers: {
           "content-type": ContentTypes[type],
-          "X-Properties": properties ? btoa(JSON.stringify(properties)) : ""
+          "X-Properties": properties ? encodeBase64(JSON.stringify(properties)) : ""
         },
         url: `/user/${id}/send`,
         method: "POST",

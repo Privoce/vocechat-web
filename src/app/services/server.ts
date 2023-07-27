@@ -21,7 +21,7 @@ import {
   TestEmailDTO
 } from "@/types/server";
 import { User } from "@/types/user";
-import { compareVersion } from "@/utils";
+import { compareVersion, encodeBase64 } from "@/utils";
 import BASE_URL, {
   ContentTypes,
   IS_OFFICIAL_DEMO,
@@ -32,6 +32,7 @@ import { updateInfo } from "../slices/server";
 import { updateCallInfo, upsertVoiceList } from "../slices/voice";
 import { RootState } from "../store";
 import baseQuery from "./base.query";
+import { File, GetFilesDTO } from "@/types/resource";
 
 export const serverApi = createApi({
   reducerPath: "serverApi",
@@ -238,6 +239,13 @@ export const serverApi = createApi({
     getLoginConfig: builder.query<LoginConfig, void>({
       query: () => ({ url: `/admin/login/config` })
     }),
+    getFiles: builder.query<File[], GetFilesDTO>({
+      query: (params) => ({
+        url: `/admin/system/files?${new URLSearchParams(
+          params as Record<string, string>
+        ).toString()}`
+      })
+    }),
     updateLoginConfig: builder.mutation<void, Partial<LoginConfig>>({
       query: (data) => ({
         url: `/admin/login/config`,
@@ -328,7 +336,7 @@ export const serverApi = createApi({
             dispatch(updateInfo({ upgraded: currValue }));
           }
         } catch {
-          console.error("update license upgraded status failed ");
+          console.error("get license failed ");
         }
       }
     }),
@@ -394,9 +402,7 @@ export const serverApi = createApi({
         headers: {
           "x-api-key": api_key,
           "content-type": ContentTypes[type],
-          "X-Properties": properties
-            ? btoa(unescape(encodeURIComponent(JSON.stringify(properties))))
-            : ""
+          "X-Properties": properties ? encodeBase64(JSON.stringify(properties)) : ""
         },
         url: cid ? `/bot/send_to_group/${cid}` : `/bot/send_to_user/${uid}`,
         method: "POST",
@@ -449,5 +455,6 @@ export const {
   useGenerateAgoraTokenMutation,
   useLazyGetAgoraUsersByChannelQuery,
   useLazyClearAllFilesQuery,
-  useLazyClearAllMessagesQuery
+  useLazyClearAllMessagesQuery,
+  useLazyGetFilesQuery
 } = serverApi;

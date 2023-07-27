@@ -5,7 +5,7 @@ import { ChatContext } from "@/types/common";
 import { ChatMessage, ContentTypeKey, UploadFileResponse } from "@/types/message";
 import { Archive, FavoriteArchive, OG } from "@/types/resource";
 import handleChatMessage from "@/hooks/useStreaming/chat.handler";
-import { normalizeArchiveData } from "@/utils";
+import { encodeBase64, normalizeArchiveData } from "@/utils";
 import { ContentTypes } from "../config";
 import { addFavorite, deleteFavorite, fillFavorites, populateFavorite } from "../slices/favorites";
 import { updateReadChannels, updateReadUsers, upsertOG } from "../slices/footprint";
@@ -223,7 +223,7 @@ export const messageApi = createApi({
       query: ({ reply_mid, content, type = "text", properties }) => ({
         headers: {
           "content-type": ContentTypes[type],
-          "X-Properties": properties ? btoa(JSON.stringify(properties)) : ""
+          "X-Properties": properties ? encodeBase64(JSON.stringify(properties)) : ""
         },
         url: `/message/${reply_mid}/reply`,
         method: "POST",

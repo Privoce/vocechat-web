@@ -2,7 +2,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 
 import { Channel, ChannelDTO, CreateChannelDTO } from "@/types/channel";
 import { ContentTypeKey } from "@/types/message";
-import { transformInviteLink } from "@/utils";
+import { encodeBase64, transformInviteLink } from "@/utils";
 import BASE_URL, { ContentTypes } from "../config";
 import { removeChannel, updateChannel } from "../slices/channels";
 import { removeMessage } from "../slices/message";
@@ -175,7 +175,7 @@ export const channelApi = createApi({
       query: ({ id, content, type = "text", properties = {} }) => ({
         headers: {
           "content-type": ContentTypes[type],
-          "X-Properties": properties ? btoa(JSON.stringify(properties)) : ""
+          "X-Properties": properties ? encodeBase64(JSON.stringify(properties)) : ""
         },
         url: `/group/${id}/send`,
         method: "POST",
