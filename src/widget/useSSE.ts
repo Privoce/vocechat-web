@@ -16,17 +16,16 @@ export default function useSSE() {
       expireTime: store.authData.expireTime
     };
   });
-  const { setStreamingReady } = useStreaming();
+  const { startStreaming } = useStreaming();
 
   const tokenAlmostExpire = dayjs().isAfter(new Date(expireTime - 20 * 1000));
   const canStreaming = !!loginUid && !!token && !tokenAlmostExpire;
   // console.log("ttt", loginUid, rehydrated, token);
 
   useEffect(() => {
-    setStreamingReady(canStreaming);
-    return () => {
-      setStreamingReady(false);
-    };
+    if (canStreaming) {
+      startStreaming();
+    }
   }, [canStreaming]);
 
   return null;

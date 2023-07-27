@@ -32,7 +32,6 @@ function HomePage() {
     loginUser: { uid: loginUid },
     guest,
     ui: {
-      ready,
       rememberedNavs: { chat: chatPath, user: userPath }
     }
   } = useAppSelector((store) => {
@@ -49,8 +48,9 @@ function HomePage() {
       dispatch(updateRememberedNavs({ key: "chat", path: "/chat" }));
     }
   }, [isChatHomePath]);
+  console.log("ttss", success);
 
-  if (!success || !ready) {
+  if (!success) {
     return <Loading reload={true} fullscreen={true} />;
   }
   const isSettingPage = pathname.startsWith("/setting");

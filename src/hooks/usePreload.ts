@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import dayjs from "dayjs";
-
 import initCache, { useRehydrate } from "@/app/cache";
 import { useLazyGetFavoritesQuery, useLazyLoadMoreMessagesQuery } from "@/app/services/message";
 import { useLazyGetServerVersionQuery, useLazyGetSystemCommonQuery } from "@/app/services/server";
@@ -9,15 +8,13 @@ import { useAppSelector } from "@/app/store";
 import useLicense from "./useLicense";
 import useStreaming from "./useStreaming";
 
-// type Props={
-//   guest?:boolean
-// }
 let preloadChannelMsgs = false;
 export default function usePreload() {
   const { isLoading: loadingLicense } = useLicense(false);
   const [preloadChannelMessages] = useLazyLoadMoreMessagesQuery();
   const { rehydrate, rehydrated } = useRehydrate();
   const {
+    ready,
     loginUid,
     token,
     isGuest,
@@ -27,6 +24,7 @@ export default function usePreload() {
     enableContacts
   } = useAppSelector((store) => {
     return {
+      ready: store.ui.ready,
       channelIds: store.channels.ids,
       channelMessageData: store.channelMessage,
       loginUid: store.authData.user?.uid,
@@ -36,7 +34,7 @@ export default function usePreload() {
       enableContacts: store.server.contact_verification_enable
     };
   });
-  const { setStreamingReady } = useStreaming();
+  const { startStreaming } = useStreaming();
   const [
     getFavorites,
     {
@@ -69,15 +67,14 @@ export default function usePreload() {
     initCache();
     rehydrate();
     getServerVersion();
-    return () => {
-      setStreamingReady(false);
-    };
+    // return ()=>{
+    //   stopStreaming()
+    // }
   }, []);
   // 在guest的时候 预取channel数据
   useEffect(() => {
     if (isGuest && channelIds.length > 0 && !preloadChannelMsgs) {
       const tmps = channelIds.filter((cid) => !channelMessageData[cid]);
-      // console.log("preload", channelIds, tmps);
       tmps.forEach((id) => {
         if (id) {
           preloadChannelMessages({ id, limit: 50 });
@@ -98,11 +95,13 @@ export default function usePreload() {
     }
   }, [rehydrated, serverVersion, isGuest]);
   const tokenAlmostExpire = dayjs().isAfter(new Date(expireTime - 20 * 1000));
-  const canStreaming = !!loginUid && rehydrated && !!token && !tokenAlmostExpire;
-  // console.log("ttt", loginUid, rehydrated, token);
+  const canStreaming = !!loginUid && rehydrated && !!token && !tokenAlmostExpire && !ready;
 
   useEffect(() => {
-    setStreamingReady(canStreaming);
+    console.log("tttt", canStreaming);
+    if (canStreaming) {
+      startStreaming();
+    }
   }, [canStreaming]);
   return {
     loading:
