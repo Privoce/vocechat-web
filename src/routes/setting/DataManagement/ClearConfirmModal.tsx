@@ -44,12 +44,6 @@ const ClearConfirmModal: FC<Props> = ({ context, title, desc, closeModal }) => {
       closeModal();
     }
   }, [clearSuccess]);
-  // 即时清除本地数据
-  useEffect(() => {
-    if (clearMsgSuccess) {
-      clearLocalData(false);
-    }
-  }, [clearMsgSuccess]);
 
   const clearing = msgClearing || filesClearing;
   return (
