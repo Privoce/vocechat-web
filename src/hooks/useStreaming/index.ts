@@ -59,9 +59,9 @@ const getQueryString = (params: { [key: string]: string }) => {
 let SSE: EventSource | undefined;
 let ready = false; //是否已完成初始推送
 let aliveInter: number | ReturnType<typeof setTimeout> = 0;
+
 export default function useStreaming() {
   const [renewToken] = useRenewMutation();
-  const [streamingReady, setStreamingReady] = useState(false);
   const {
     authData: { user, guest },
     footprint: { afterMid, usersVersion, readUsers, readChannels }
@@ -81,7 +81,6 @@ export default function useStreaming() {
       console.info("debug SSE: stopStreaming at timeout");
       stopStreaming();
       startStreaming();
-      // }
     }, countdown);
     console.info("debug SSE: start new timeout", aliveInter);
   };
@@ -141,13 +140,16 @@ export default function useStreaming() {
         stopStreaming();
       }
       const { readyState } = err.target as EventSource;
-      // 连接还处于开启状态
-      if (readyState === EventSource.OPEN || readyState === EventSource.CONNECTING) {
-        return;
-      }
       console.info("sse error", readyState, err);
+      // 连接还处于开启状态 先停掉
+      if (readyState === EventSource.OPEN || readyState === EventSource.CONNECTING) {
+        stopStreaming();
+        // return;
+      }
       // 重连
-      keepAlive(2000);
+      setTimeout(() => {
+        startStreaming();
+      }, 2000);
     };
     SSE.onmessage = (evt) => {
       // console.log("sse msg");
@@ -415,7 +417,7 @@ export default function useStreaming() {
       SSE.close();
       SSE = undefined;
     }
-    // connectionIsOpen = false;
+    ready = false;
   };
   useEffect(() => {
     const handleNetworkChange = () => {
@@ -434,15 +436,7 @@ export default function useStreaming() {
     };
   }, []);
 
-  useEffect(() => {
-    // 确保只执行一次
-    if (streamingReady) {
-      startStreaming();
-    }
-  }, [streamingReady]);
-
   return {
-    setStreamingReady,
     startStreaming,
     stopStreaming
   };

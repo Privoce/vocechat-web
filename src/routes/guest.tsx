@@ -11,10 +11,12 @@ const GuestLogin = () => {
   const [guestLogin] = useLazyGuestLoginQuery();
   const { token, guest } = useAppSelector((store) => store.authData);
   useEffect(() => {
-    if (!guest) {
+    if (!guest || !token) {
       guestLogin();
     }
-  }, [guest]);
+  }, [guest, token]);
+  console.log("guest", token, guest);
+
   if (token && guest) return <Navigate to={"/"} replace />;
   return null;
 };
