@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ConnectionState } from "agora-rtc-sdk-ng";
-
 import { ChatContext } from "@/types/common";
 import { KEY_UID } from "../config";
 import { resetAuthData } from "./auth.data";

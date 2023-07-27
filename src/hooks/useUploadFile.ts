@@ -70,7 +70,6 @@ const useUploadFile = (props?: IProps) => {
       size: file_size
     } = file;
     console.log("file type", file_type);
-
     // 生成 file id
     const resp = await prepareUploadFile({
       content_type: file_type,

@@ -61,7 +61,6 @@ export default function useFavMessage({
     setFavorites(filtereds);
   }, [cid, uid, favs]);
 
-  // console.log("filtered", cid, uid, favs);
   return {
     isFavorited,
     addFavorite,

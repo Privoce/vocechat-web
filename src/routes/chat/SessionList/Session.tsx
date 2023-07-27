@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState, memo } from "react";
 import { useDrop } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
 import { NavLink, useMatch, useNavigate } from "react-router-dom";
@@ -203,4 +203,6 @@ const Session: FC<IProps> = ({
     </li>
   );
 };
-export default Session;
+export default memo(Session, (prev, next) => {
+  return prev.mid == next.mid;
+});

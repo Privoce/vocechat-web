@@ -21,7 +21,6 @@ const RequireAuth: FC<Props> = ({ children, redirectTo = "/login" }) => {
   const { data: loginConfig, isSuccess: loginConfigSuccess } = useGetLoginConfigQuery();
   const { isLoading: checkingInitialized } = useGetInitializedQuery();
   const { token, guest, initialized } = useAppSelector((store) => store.authData);
-  // console.log("auth route", { checkingInitialized, loginConfigSuccess, initialized, guest: loginConfig?.guest, token, allowGuest, guest });
 
   // 初始化和login配置检查
   if (checkingInitialized || !loginConfigSuccess) return <Loading fullscreen={true} />;

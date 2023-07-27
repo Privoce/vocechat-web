@@ -162,7 +162,6 @@ const uiSlice = createSlice({
           currData = null;
           break;
         }
-
         default:
           break;
       }

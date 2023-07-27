@@ -23,7 +23,7 @@ export default function DataManagement() {
   return (
     <div className="relative w-full md:w-[512px] flex flex-col gap-6">
       {/* 清除服务器聊天消息 */}
-      <ServerVersionChecker version="0.3.12" empty={true}>
+      <ServerVersionChecker version="0.3.10" empty={true}>
         <SettingBlock title={t("data.clear_msgs.title")} desc={t("data.clear_msgs.desc")}>
           <StyledButton onClick={handleModalVisible.bind(null, "chat")} className="danger">
             {t("data.clear_msgs.btn")}

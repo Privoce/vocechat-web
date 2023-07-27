@@ -5,6 +5,7 @@ import clsx from "clsx";
 import { useAppSelector } from "../../../app/store";
 import { ChatContext } from "../../../types/common";
 import getUnreadCount from "../utils";
+import { memo } from "react";
 
 type Props = {
   context: ChatContext;
@@ -48,4 +49,4 @@ const NewMessageBottomTip = ({ context, id, scrollToBottom }: Props) => {
   );
 };
 
-export default NewMessageBottomTip;
+export default memo(NewMessageBottomTip);

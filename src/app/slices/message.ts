@@ -1,7 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
 import { ContentType } from "@/types/message";
-// import  { ContentTypes } from "../config";
 import { normalizeFileMessage } from "@/utils";
 
 export interface MessagePayload {

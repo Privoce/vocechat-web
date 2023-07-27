@@ -139,6 +139,6 @@ const Reply: FC<ReplyProps> = ({ mid, interactive = true, context, to = 0 }) => 
   );
 };
 
-export default React.memo(Reply, (prevs, nexts) => {
-  return prevs.mid == nexts.mid;
+export default React.memo(Reply, (prev, next) => {
+  return prev.mid == next.mid;
 });
