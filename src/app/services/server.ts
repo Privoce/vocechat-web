@@ -32,7 +32,7 @@ import { updateInfo } from "../slices/server";
 import { updateCallInfo, upsertVoiceList } from "../slices/voice";
 import { RootState } from "../store";
 import baseQuery from "./base.query";
-import { File, GetFilesDTO } from "@/types/resource";
+import { GetFilesDTO, VoceChatFile } from "@/types/resource";
 
 export const serverApi = createApi({
   reducerPath: "serverApi",
@@ -239,7 +239,7 @@ export const serverApi = createApi({
     getLoginConfig: builder.query<LoginConfig, void>({
       query: () => ({ url: `/admin/login/config` })
     }),
-    getFiles: builder.query<File[], GetFilesDTO>({
+    getFiles: builder.query<VoceChatFile[], GetFilesDTO>({
       query: (params) => ({
         url: `/admin/system/files?${new URLSearchParams(
           params as Record<string, string>

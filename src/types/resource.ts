@@ -63,3 +63,24 @@ export interface OG {
   locale_alternate?: [];
   site_name?: string;
 }
+export interface VoceChatFile {
+  mid: number;
+  from_uid: number;
+  gid: number;
+  ext: string;
+  content_type: string;
+  content: string;
+  properties: string;
+  created_at: number;
+  expired: boolean;
+}
+export type FileType = "Doc" | "PDF" | "Image" | "Audio" | "Video";
+export type FileCreateTime = "Day1" | "Day7" | "Day30" | "Day90" | "Day180";
+export interface GetFilesDTO {
+  uid?: number;
+  gid?: number;
+  file_type?: FileType;
+  creation_time_type?: FileCreateTime;
+  page?: number;
+  page_size?: number;
+}

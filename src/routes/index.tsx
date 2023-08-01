@@ -10,7 +10,7 @@ import useDeviceToken from "@/components/Notification/useDeviceToken";
 import RequireAuth from "@/components/RequireAuth";
 import RequireNoAuth from "@/components/RequireNoAuth";
 import RequireSingleTab from "@/components/RequireSingleTab";
-import { isElectronContext } from "@/utils";
+import { compareVersion, isElectronContext } from "@/utils";
 import { vapidKey } from "../app/config";
 import store, { useAppSelector } from "../app/store";
 import NotFoundPage from "./404";
@@ -18,9 +18,6 @@ import InvitePrivate from "./invitePrivate";
 import LazyIt from "./lazy";
 import InviteInMobile from "./reg/InviteInMobile";
 
-// import Welcome from './Welcome'
-// const HomePage = lazy(() => import("./home"));
-// const ChatPage = lazy(() => import("./chat"));
 const RegBasePage = lazy(() => import("./reg"));
 const RegWithUsernamePage = lazy(() => import("./reg/RegWithUsername"));
 const SendMagicLinkPage = lazy(() => import("./sendMagicLink"));
@@ -35,6 +32,7 @@ const SettingChannelPage = lazy(() => import("./settingChannel"));
 const SettingDMPage = lazy(() => import("./settingDM"));
 const SettingPage = lazy(() => import("./setting"));
 const ResourceManagement = lazy(() => import("./resources"));
+const FilesPage = lazy(() => import("./files"));
 const GuestLogin = lazy(() => import("./guest"));
 const ChatPage = lazy(() => import("./chat"));
 const HomePage = lazy(() => import("./home"));
@@ -42,9 +40,10 @@ const HomePage = lazy(() => import("./home"));
 let toastId: string;
 const PageRoutes = () => {
   const {
-    ui: { online }
+    ui: { online },
+    version
   } = useAppSelector((store) => {
-    return { ui: store.ui };
+    return { ui: store.ui, version: store.server.version };
   }, isEqual);
   // 提前获取device token
   useDeviceToken(vapidKey);
@@ -284,7 +283,7 @@ const PageRoutes = () => {
             path="files"
             element={
               <LazyIt>
-                <ResourceManagement />
+                {compareVersion(version, "0.3.11") > -1 ? <FilesPage /> : <ResourceManagement />}
               </LazyIt>
             }
           ></Route>

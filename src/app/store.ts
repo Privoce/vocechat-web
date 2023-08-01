@@ -13,6 +13,7 @@ import channelsReducer from "./slices/channels";
 import favoritesReducer from "./slices/favorites";
 import footprintReducer from "./slices/footprint";
 import messageReducer from "./slices/message";
+import filesReducer from "./slices/files";
 import archiveMsgReducer from "./slices/message.archive";
 import channelMsgReducer from "./slices/message.channel";
 import fileMsgReducer from "./slices/message.file";
@@ -38,6 +39,7 @@ const reducer = combineReducers({
   fileMessage: fileMsgReducer,
   archiveMessage: archiveMsgReducer,
   message: messageReducer,
+  files: filesReducer,
   [authApi.reducerPath]: authApi.reducer,
   [messageApi.reducerPath]: messageApi.reducer,
   [userApi.reducerPath]: userApi.reducer,
