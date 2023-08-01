@@ -2,16 +2,17 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 import { useLoginMutation } from "@/app/services/auth";
 import { setAuthData } from "@/app/slices/auth.data";
+import clsx from "clsx";
 
 export default function OAuthPage() {
   const { t: ct } = useTranslation();
-  const [login, { data, isSuccess, isError }] = useLoginMutation();
+  const [login, { data, isSuccess, isError, isLoading }] = useLoginMutation();
   const { token } = useParams();
-  const [loading, setLoading] = useState(true);
+  const [searchParams] = useSearchParams();
   const [error, setError] = useState<string | null>(null);
   const dispatch = useDispatch();
   const navigateTo = useNavigate();
@@ -23,30 +24,30 @@ export default function OAuthPage() {
       }
       login({ key: token, type: "thirdparty" });
     };
-    setTimeout(() => {
-      startOauth();
-    }, 1500);
+    startOauth();
   }, [token]);
   useEffect(() => {
     if (isError) {
-      setError("Something Error");
+      setError("Try Logging in Error");
     }
   }, [isError]);
 
   useEffect(() => {
     if (isSuccess && data) {
-      setLoading(false);
       // 更新本地认证信息
       toast.success(ct("tip.login"));
       dispatch(setAuthData(data));
-      navigateTo("/");
+      const navPath = searchParams.get("path") || "/";
+      navigateTo(navPath);
     }
   }, [isSuccess, data]);
 
   return (
-    <div className="flex-center h-screen">
-      {loading ? "loading" : ""}
-      {error}
+    <div className="flex-center h-screen dark:bg-gray-900">
+      <span className={clsx("text-gray-900 dark:text-gray-100 text-lg", error && "!text-red-500")}>
+        {isLoading ? "loading" : ""}
+        {error}
+      </span>
     </div>
   );
 }
