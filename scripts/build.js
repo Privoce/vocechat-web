@@ -17,7 +17,6 @@ const md5File = require("md5-file");
 const path = require("path");
 const chalk = require("react-dev-utils/chalk");
 const fs = require("fs-extra");
-const bfj = require("bfj");
 const webpack = require("webpack");
 const configFactory = require("../config/webpack.config");
 const paths = require("../config/paths");
@@ -181,13 +180,6 @@ function build(previousFileSizes) {
         previousFileSizes,
         warnings: messages.warnings
       };
-
-      if (writeStatsJson) {
-        return bfj
-          .write(paths.appBuild + "/bundle-stats.json", stats.toJson())
-          .then(() => resolve(resolveArgs))
-          .catch((error) => reject(new Error(error)));
-      }
 
       return resolve(resolveArgs);
     });

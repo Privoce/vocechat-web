@@ -3,7 +3,6 @@
 const fs = require("fs");
 const path = require("path");
 const webpack = require("webpack");
-// const resolve = require("resolve");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const InlineChunkHtmlPlugin = require("react-dev-utils/InlineChunkHtmlPlugin");
 const TerserPlugin = require("terser-webpack-plugin");
