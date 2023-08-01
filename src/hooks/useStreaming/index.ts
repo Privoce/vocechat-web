@@ -108,7 +108,6 @@ export default function useStreaming() {
       } else {
         _token = resp.data.token;
       }
-      // return;
     }
     // 开始初始化
     const params: {
@@ -138,6 +137,7 @@ export default function useStreaming() {
       // 断网了
       if (!navigator.onLine) {
         stopStreaming();
+        return;
       }
       const { readyState } = err.target as EventSource;
       console.info("sse error", readyState, err);

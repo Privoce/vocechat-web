@@ -1,5 +1,6 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { ErrorBoundary } from "react-error-boundary";
+import StyledButton from "./styled/Button";
 
 type FallbackProps = {
   error: Error;
@@ -10,7 +11,9 @@ function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
     <div role="alert" className="text-lg text-red-600">
       <p>Something went wrong:</p>
       <pre>{error.message}</pre>
-      <button onClick={resetErrorBoundary}>Try again</button>
+      <StyledButton className="mini" onClick={resetErrorBoundary}>
+        Try again
+      </StyledButton>
     </div>
   );
 }

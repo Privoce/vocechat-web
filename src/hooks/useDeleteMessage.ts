@@ -22,7 +22,7 @@ export default function useDeleteMessage() {
     if (!mids) return;
     const _arr = Array.isArray(mids) ? mids : [mids];
     setDeleting(true);
-    if (compareVersion(serverVersion, "0.3.11") > -1) {
+    if (compareVersion(serverVersion, "0.3.10") > -1) {
       // batch delete
       await batchRemove(_arr);
     } else {
