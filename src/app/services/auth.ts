@@ -93,13 +93,16 @@ export const authApi = createApi({
         method: "POST",
         body: data
       }),
+      // extraOptions:{
+      //   maxRetries: 3
+      // },
       async onQueryStarted(params, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
           dispatch(updateToken(data));
-        } catch {
+        } catch (error) {
           // dispatch(resetAuthData());
-          console.error("renew token error");
+          console.error("renew token error from rtk", error);
         }
       }
     }),

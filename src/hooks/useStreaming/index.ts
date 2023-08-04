@@ -102,8 +102,11 @@ export default function useStreaming() {
     if (dayjs().isAfter(new Date(expireTime - 20 * 1000))) {
       const resp = await renewToken({ token, refresh_token: refreshToken });
       if ("error" in resp) {
-        // 停止循环
-        stopStreaming();
+        // 还有网，而且在当前页，则停止循环
+        if (navigator.onLine || !document.hidden) {
+          stopStreaming();
+        }
+        // 返回，开始下次polling（如果有）
         return;
       } else {
         _token = resp.data.token;

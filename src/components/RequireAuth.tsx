@@ -26,6 +26,7 @@ const RequireAuth: FC<Props> = ({ children, redirectTo = "/login" }) => {
   if (checkingInitialized || !loginConfigSuccess) return <Loading fullscreen={true} />;
   //  未初始化 则先走setup 流程
   if (!initialized) return <Navigate to={`/onboarding`} replace />;
+  // 开启guest 并且没token 而且是允许guest访问的路由  则先去过渡页登录
   if (!token) {
     // 记录下当前的路径，登录后跳转回来
     const ignorePath = `/setting/my_account`;
@@ -33,10 +34,13 @@ const RequireAuth: FC<Props> = ({ children, redirectTo = "/login" }) => {
       KEY_LOCAL_TRY_PATH,
       ignorePath == location.pathname ? "/" : `${location.pathname}${location.search}`
     );
-    return <Navigate to={redirectTo} replace />;
+    const guestLogin = loginConfig?.guest && allowGuest;
+    return guestLogin ? (
+      <Navigate to={"/guest_login"} replace />
+    ) : (
+      <Navigate to={redirectTo} replace />
+    );
   }
-  // 开启guest 并且没token 而且是允许guest访问的路由  则先去过渡页登录
-  if (loginConfig?.guest && !token && allowGuest) return <Navigate to={"/guest_login"} replace />;
   // 登陆者是guest，并且不允许访问
   if (token && guest && !allowGuest) return <Navigate to={"/"} replace />;
   // console.log("authhhhh", allowGuest, token, guest);
