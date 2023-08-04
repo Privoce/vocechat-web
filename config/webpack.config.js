@@ -17,10 +17,6 @@ const modules = require("./modules");
 const getClientEnvironment = require("./env");
 const ModuleNotFoundPlugin = require("react-dev-utils/ModuleNotFoundPlugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
-// const ForkTsCheckerWebpackPlugin =
-//   process.env.TSC_COMPILE_ON_ERROR === "true"
-//     ? require("react-dev-utils/ForkTsCheckerWarningWebpackPlugin")
-//     : require("react-dev-utils/ForkTsCheckerWebpackPlugin");
 const createEnvironmentHash = require("./webpack/persistentCache/createEnvironmentHash");
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== "false";
@@ -46,7 +42,6 @@ const imageInlineSizeLimit = parseInt(process.env.IMAGE_INLINE_SIZE_LIMIT || "10
 
 // Check if TypeScript is setup
 const useTypeScript = fs.existsSync(paths.appTsConfig);
-// const useTypeScript = false;
 
 // Get the path to the uncompiled service worker (if it exists).
 const swSrc = paths.swSrc;
@@ -54,19 +49,6 @@ const swSrc = paths.swSrc;
 // style files regexes
 const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
-
-const hasJsxRuntime = (() => {
-  if (process.env.DISABLE_NEW_JSX_TRANSFORM === "true") {
-    return false;
-  }
-
-  try {
-    require.resolve("react/jsx-runtime");
-    return true;
-  } catch (e) {
-    return false;
-  }
-})();
 
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
@@ -332,7 +314,7 @@ module.exports = function (webpackEnv) {
                   [
                     require.resolve("babel-preset-react-app"),
                     {
-                      runtime: hasJsxRuntime ? "automatic" : "classic",
+                      runtime: "automatic",
                       development: process.env.NODE_ENV === "development",
                       importSource: "@welldone-software/why-did-you-render"
                     }
@@ -544,49 +526,6 @@ module.exports = function (webpackEnv) {
           // See https://github.com/cra-template/pwa/issues/13#issuecomment-722667270
           maximumFileSizeToCacheInBytes: 5 * 1024 * 1024
         })
-      // // TypeScript type checking
-      // useTypeScript &&
-      //   new ForkTsCheckerWebpackPlugin({
-      //     async: isEnvDevelopment,
-      //     typescript: {
-      //       typescriptPath: resolve.sync("typescript", {
-      //         basedir: paths.appNodeModules
-      //       }),
-      //       configOverwrite: {
-      //         compilerOptions: {
-      //           sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
-      //           skipLibCheck: true,
-      //           inlineSourceMap: false,
-      //           declarationMap: false,
-      //           noEmit: true,
-      //           incremental: true,
-      //           tsBuildInfoFile: paths.appTsBuildInfoFile
-      //         }
-      //       },
-      //       context: paths.appPath,
-      //       diagnosticOptions: {
-      //         syntactic: true
-      //       },
-      //       mode: "write-references"
-      //       // profile: true,
-      //     },
-      //     issue: {
-      //       // This one is specifically to match during CI tests,
-      //       // as micromatch doesn't match
-      //       // '../cra-template-typescript/template/src/App.tsx'
-      //       // otherwise.
-      //       include: [{ file: "../**/src/**/*.{ts,tsx}" }, { file: "**/src/**/*.{ts,tsx}" }],
-      //       exclude: [
-      //         { file: "**/src/**/__tests__/**" },
-      //         { file: "**/src/**/?(*.){spec|test}.*" },
-      //         { file: "**/src/setupProxy.*" },
-      //         { file: "**/src/setupTests.*" }
-      //       ]
-      //     },
-      //     logger: {
-      //       infrastructure: "silent"
-      //     }
-      //   })
     ].filter(Boolean),
     // Turn off performance processing because we utilize
     // our own hints via the FileSizeReporter

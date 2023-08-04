@@ -29,10 +29,6 @@ const openBrowser = require("react-dev-utils/openBrowser");
 const paths = require("../config/paths");
 const configFactory = require("../config/webpack.config");
 const createDevServerConfig = require("../config/webpackDevServer.config");
-const getClientEnvironment = require("../config/env");
-const react = require(require.resolve("react", { paths: [paths.appPath] }));
-
-const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
 const useYarn = fs.existsSync(paths.yarnLockFile);
 const isInteractive = process.stdout.isTTY;
 
