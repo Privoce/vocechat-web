@@ -34,7 +34,7 @@ const DeleteModal = ({ closeModal, uid, name }: Props) => {
         description={t("delete_desc")}
         buttons={
           <>
-            <Button className="cancel" onClick={closeModal.bind(null, undefined)}>
+            <Button className="cancel" onClick={closeModal.bind(null)}>
               {ct("action.cancel")}
             </Button>
             <Button className="danger" onClick={handleDeleteBot}>

@@ -58,7 +58,7 @@ const AvatarUploader: FC<Props> = ({
         />
         {!disabled && (
           <>
-            <div className="flex-center flex-col whitespace-break-spaces text-center hidden group-hover:flex p-1 absolute inset-0 bg-black/50 text-white font-bold text-xs">
+            <div className="flex-center flex-col whitespace-nowrap hidden group-hover:flex p-1 absolute inset-0 bg-black/50 text-white font-bold text-xs">
               {uploading ? t("status.uploading") : t("action.change_avatar")}
             </div>
             <input

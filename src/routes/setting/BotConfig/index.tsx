@@ -113,7 +113,6 @@ export default function BotConfig() {
                         url={avatar}
                         uploadImage={updateAvatar}
                         name={name}
-                        size={56}
                       />
                     </td>
                     <td className={`${tdClass}`}>
