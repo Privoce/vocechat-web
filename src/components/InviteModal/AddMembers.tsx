@@ -57,7 +57,7 @@ const AddMembers: FC<Props> = ({ cid = 0, closeModal }) => {
 
   return (
     <div className="pt-4">
-      <div className="flex items-center w-[376px] min-h-[40px] px-2 py-1.5 mb-3 border border-solid border-slate-100 shadow rounded">
+      <div className="flex items-center max-w-[520px] min-h-[40px] px-2 py-1.5 mb-3 border border-solid border-slate-100 shadow rounded">
         <ul className="flex items-center flex-wrap gap-1 w-full overflow-scroll">
           {selects.map((uid) => {
             return (
