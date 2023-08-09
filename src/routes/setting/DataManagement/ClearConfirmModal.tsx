@@ -7,8 +7,6 @@ import Modal from "@/components/Modal";
 import Button from "@/components/styled/Button";
 import StyledModal from "@/components/styled/Modal";
 import { VisibleModalType } from "./index";
-import useLogout from "@/hooks/useLogout";
-
 interface Props {
   context: VisibleModalType;
   title: string;
@@ -18,7 +16,6 @@ interface Props {
 
 const ClearConfirmModal: FC<Props> = ({ context, title, desc, closeModal }) => {
   // const { t } = useTranslation("auth");
-  const { clearLocalData } = useLogout();
   const { t: ct } = useTranslation();
   const [clearFiles, { isLoading: filesClearing, isSuccess: clearFilesSuccess }] =
     useLazyClearAllFilesQuery();

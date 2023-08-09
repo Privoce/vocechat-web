@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 
@@ -6,6 +6,7 @@ import { useLazyDeleteCurrentAccountQuery } from "@/app/services/auth";
 import Modal from "@/components/Modal";
 import Button from "@/components/styled/Button";
 import StyledModal from "@/components/styled/Modal";
+import useLogout from "@/hooks/useLogout";
 
 interface Props {
   closeModal: () => void;
@@ -13,7 +14,8 @@ interface Props {
 
 const RemoveConfirmModal: FC<Props> = ({ closeModal }) => {
   const { t } = useTranslation("member");
-  const [removeCurrentAccount, { isLoading }] = useLazyDeleteCurrentAccountQuery();
+  const [removeCurrentAccount, { isLoading, isSuccess }] = useLazyDeleteCurrentAccountQuery();
+  const { clearLocalData } = useLogout();
   const handleRemove = async () => {
     try {
       await removeCurrentAccount();
@@ -21,6 +23,12 @@ const RemoveConfirmModal: FC<Props> = ({ closeModal }) => {
       toast.error("Remove Account Failed!");
     }
   };
+  useEffect(() => {
+    if (isSuccess) {
+      clearLocalData(true);
+    }
+  }, [isSuccess]);
+
   return (
     <Modal id="modal-modal">
       <StyledModal

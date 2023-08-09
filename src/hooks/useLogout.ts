@@ -9,17 +9,19 @@ import { resetFileMessage } from "@/app/slices/message.file";
 import { resetReactionMessage } from "@/app/slices/message.reaction";
 import { resetUserMsg } from "@/app/slices/message.user";
 import { resetUsers } from "@/app/slices/users";
+import { resetAuthData } from "@/app/slices/auth.data";
 
 export default function useLogout() {
   const dispatch = useDispatch();
   const [logout, { isLoading, isSuccess }] = useLazyLogoutQuery();
-  const clearLocalData = (footprint?: boolean) => {
-    let fp = typeof footprint === "undefined" ? true : footprint;
+  const clearLocalData = (auth?: boolean) => {
+    let clearAuth = typeof auth === "undefined" ? false : auth;
     dispatch(resetChannels());
     dispatch(resetUsers());
-    // 和消息相关的数据
-    if (fp) {
-      dispatch(resetFootprint());
+    dispatch(resetFootprint());
+    // 同时也清除本地登录数据
+    if (clearAuth) {
+      dispatch(resetAuthData());
     }
     dispatch(resetChannelMsg());
     dispatch(resetUserMsg());
