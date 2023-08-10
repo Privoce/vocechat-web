@@ -7,7 +7,7 @@ type Props = {
 };
 
 const Lazy: FC<Props> = ({ children }) => {
-  return <Suspense fallback={<Loading fullscreen={true} />}>{children}</Suspense>;
+  return <Suspense fallback={<Loading fullscreen={true} context="lazy" />}>{children}</Suspense>;
 };
 
 export default Lazy;

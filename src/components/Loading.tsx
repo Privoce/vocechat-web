@@ -8,9 +8,10 @@ import Button from "./styled/Button";
 interface Props {
   reload?: boolean;
   fullscreen?: boolean;
+  context?: string;
 }
 
-const Loading: FC<Props> = ({ reload = false, fullscreen = false }) => {
+const Loading: FC<Props> = ({ reload = false, fullscreen = false, context = "" }) => {
   const [reloadVisible, setReloadVisible] = useState(false);
   const { clearLocalData } = useLogout();
   const handleReload = () => {
@@ -31,6 +32,7 @@ const Loading: FC<Props> = ({ reload = false, fullscreen = false }) => {
 
   return (
     <div
+      data-ctx={context}
       className={clsx(
         "w-full h-full flex-center flex-col gap-4 dark:bg-gray-800/80",
         fullscreen ? "w-screen h-screen" : ""

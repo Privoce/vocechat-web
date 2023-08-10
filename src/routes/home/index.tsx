@@ -42,16 +42,17 @@ function HomePage() {
       roleChanged: store.authData.roleChanged
     };
   });
+  // preload basic data
   const { success } = usePreload();
   useEffect(() => {
     if (isChatHomePath) {
       dispatch(updateRememberedNavs({ key: "chat", path: "/chat" }));
     }
   }, [isChatHomePath]);
-  console.log("ttss", success);
 
+  console.info("preload success", success);
   if (!success) {
-    return <Loading reload={true} fullscreen={true} />;
+    return <Loading reload={true} fullscreen={true} context="home-route" />;
   }
   const isSettingPage = pathname.startsWith("/setting");
   const isChattingPage = isHomePath || pathname.startsWith("/chat");
@@ -60,7 +61,6 @@ function HomePage() {
   }
   // 有点绕
   const chatNav = isChatHomePath ? "/chat" : chatPath || "/chat";
-  // console.log("navvvv", isChatHomePath, chatPath);
   const userNav = userPath || "/users";
   const linkClass = `flex items-center gap-2.5 px-3 py-2 font-semibold text-sm text-gray-600 rounded-lg md:hover:bg-gray-800/10`;
   return (
