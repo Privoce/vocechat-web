@@ -40,7 +40,8 @@ const Voice = () => {
   useGetAgoraChannelsQuery(
     { page_no: 0, page_size: 100 },
     {
-      skip: !enabled || !navigator.onLine
+      skip: !enabled || !navigator.onLine,
+      pollingInterval: 10000
     }
   );
   const dispatch = useDispatch();
