@@ -18,28 +18,16 @@ const RequireAuth: FC<Props> = ({ children, redirectTo = "/login" }) => {
   const location = useLocation();
   const matches = matchRoutes(GuestAllows, location);
   const allowGuest = matches ? !!matches[0].pathname : false;
-  const {
-    data: loginConfig,
-    isUninitialized: loginConfigUninitialized,
-    isLoading: loginConfigLoading
-  } = useGetLoginConfigQuery(undefined, {
+  const { data: loginConfig, isLoading: loginConfigLoading } = useGetLoginConfigQuery(undefined, {
     refetchOnMountOrArgChange: true
   });
-  const { isUninitialized: initializedUninitialized, isLoading: initLoading } =
-    useGetInitializedQuery(undefined, {
-      refetchOnMountOrArgChange: true
-    });
+  const { isLoading: initLoading } = useGetInitializedQuery(undefined, {
+    refetchOnMountOrArgChange: true
+  });
   const { token, guest, initialized } = useAppSelector((store) => store.authData);
-  console.info(
-    "uninitialized",
-    initializedUninitialized,
-    initializedUninitialized,
-    loginConfigLoading,
-    initLoading
-  );
+  console.info("uninitialized", loginConfigLoading, initLoading);
   // 初始化和login配置检查
-  if (initializedUninitialized || loginConfigUninitialized)
-    return <Loading fullscreen={true} context="auth-route" />;
+  if (loginConfigLoading || initLoading) return <Loading fullscreen={true} context="auth-route" />;
   //  未初始化 则先走setup 流程
   if (!initialized) return <Navigate to={`/onboarding`} replace />;
   // 开启guest 并且没token 而且是允许guest访问的路由  则先去过渡页登录
