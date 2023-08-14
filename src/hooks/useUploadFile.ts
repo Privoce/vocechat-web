@@ -75,6 +75,7 @@ const useUploadFile = (props?: IProps) => {
       content_type: file_type,
       filename: name
     });
+    console.log("prepareUploadFile", resp);
     if ("error" in resp) {
       // toast.error("Prepare Upload File Error");
       return;
@@ -119,7 +120,8 @@ const useUploadFile = (props?: IProps) => {
       }
     }
     // 出错 则返回
-    if (!uploadResult || "error" in uploadResult) {
+    if (!uploadResult || "error" in uploadResult || !uploadResult.data) {
+      console.error("upload file error uploadResult:", uploadResult);
       return;
     }
     const { path, size, hash } = uploadResult.data as UploadFileResponse;

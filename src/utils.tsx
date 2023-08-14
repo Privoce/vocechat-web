@@ -29,7 +29,9 @@ export const getLocalAuthData = () => {
   };
 };
 export const isImage = (file_type = "", size = 0) => {
-  return file_type.startsWith("image") && size <= FILE_IMAGE_SIZE;
+  return (
+    file_type.startsWith("image") && file_type !== "image/x-sony-arw" && size <= FILE_IMAGE_SIZE
+  );
 };
 
 export const isTreatAsImage = (file: File) => {
@@ -434,3 +436,6 @@ export const transformInviteLink = (link: string) => {
 
 export const isInIframe = () => window.location !== window.parent.location;
 export const encodeBase64 = (str = "") => btoa(unescape(encodeURIComponent(str)));
+export const shouldPreviewImage = (type: string) => {
+  return type.startsWith("image") && type !== "image/x-sony-arw";
+};

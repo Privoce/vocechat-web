@@ -3,7 +3,7 @@ import { Waveform } from "@uiball/loaders";
 
 import { ChatContext } from "@/types/common";
 import useUploadFile from "@/hooks/useUploadFile";
-import { formatBytes, getFileIcon } from "@/utils";
+import { formatBytes, getFileIcon, shouldPreviewImage } from "@/utils";
 import DeleteIcon from "@/assets/icons/delete.svg";
 import EditIcon from "@/assets/icons/edit.svg";
 import { useMixedEditor } from "../../MixedInput";
@@ -58,7 +58,7 @@ export default function UploadFileList({ context, id }: { context: ChatContext; 
               key={url}
             >
               <div className="flex-center w-40 h-40">
-                {type.startsWith("image") ? (
+                {shouldPreviewImage(type) ? (
                   converting ? (
                     <Waveform size={18} lineWeight={3} speed={1} color="#aaa" />
                   ) : (
