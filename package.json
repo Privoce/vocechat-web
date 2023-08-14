@@ -70,7 +70,7 @@
     "terser-webpack-plugin": "^5.3.9",
     "tippy.js": "^6.3.7",
     "typescript": "^5.1.6",
-    "wavesurfer.js": "^7.1.2",
+    "wavesurfer.js": "^7.1.4",
     "webpack": "^5.88.2",
     "webpack-dev-server": "^4.15.1",
     "webpack-manifest-plugin": "^5.0.0",

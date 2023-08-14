@@ -9533,10 +9533,10 @@ watchpack@^2.4.0:
     glob-to-regexp "^0.4.1"
     graceful-fs "^4.1.2"
 
-wavesurfer.js@^7.1.2:
-  version "7.1.2"
-  resolved "https://mirrors.cloud.tencent.com/npm/wavesurfer.js/-/wavesurfer.js-7.1.2.tgz#be7c824658dfb3de9d5c95dcaf6480096d127596"
-  integrity sha512-ghBw5SmiQAhqOIAUl9bUpyB6ZSGeTTBNYJRGKS1gCrr0VAx1Xrl3O3FnUkI53I8tKtuNufi/h0mk0Kf0SItz4w==
+wavesurfer.js@^7.1.4:
+  version "7.1.4"
+  resolved "https://mirrors.cloud.tencent.com/npm/wavesurfer.js/-/wavesurfer.js-7.1.4.tgz#9bf7dc59e4f09149dba05ba1b5448ea7a75eb071"
+  integrity sha512-El67n1Ljx8nvdHZqIFqIkIZp72iiv4jUPzYUg3J9BksFPLpEn/XPLfv2vyumAURq4gl7rPhcj16aqni4UZnHCg==
 
 wbuf@^1.1.0, wbuf@^1.7.3:
   version "1.7.3"
