@@ -20,6 +20,7 @@ import UserIcon from "@/assets/icons/user.svg";
 import Menu from "./Menu";
 import MobileNavs from "./MobileNavs";
 import User from "./User";
+import StreamStatus from "@/components/StreamStatus";
 
 function HomePage() {
   const { t } = useTranslation();
@@ -65,6 +66,7 @@ function HomePage() {
   const linkClass = `flex items-center gap-2.5 px-3 py-2 font-semibold text-sm text-gray-600 rounded-lg md:hover:bg-gray-800/10`;
   return (
     <>
+      <StreamStatus />
       {roleChanged && <ReLoginModal />}
       {!guest && <UnreadTabTip />}
       {!guest && <Voice />}

@@ -2,8 +2,6 @@ import { FC, ReactElement } from "react";
 import { matchRoutes, Navigate, useLocation } from "react-router-dom";
 
 import { GuestRoutes, KEY_LOCAL_TRY_PATH } from "@/app/config";
-import { useGetInitializedQuery } from "@/app/services/auth";
-import { useGetLoginConfigQuery } from "@/app/services/server";
 import { useAppSelector } from "@/app/store";
 import Loading from "./Loading";
 
@@ -18,16 +16,18 @@ const RequireAuth: FC<Props> = ({ children, redirectTo = "/login" }) => {
   const location = useLocation();
   const matches = matchRoutes(GuestAllows, location);
   const allowGuest = matches ? !!matches[0].pathname : false;
-  const { data: loginConfig, isLoading: loginConfigLoading } = useGetLoginConfigQuery(undefined, {
-    refetchOnMountOrArgChange: true
+  const {
+    authData: { token, guest, initialized },
+    loginConfig
+  } = useAppSelector((store) => {
+    return {
+      authData: store.authData,
+      loginConfig: store.server.loginConfig
+    };
   });
-  const { isLoading: initLoading } = useGetInitializedQuery(undefined, {
-    refetchOnMountOrArgChange: true
-  });
-  const { token, guest, initialized } = useAppSelector((store) => store.authData);
-  console.info("uninitialized", loginConfigLoading, initLoading);
-  // 初始化和login配置检查
-  if (loginConfigLoading || initLoading) return <Loading fullscreen={true} context="auth-route" />;
+  console.info("check basic info", loginConfig);
+  // 初始化login配置检查
+  if (!loginConfig) return <Loading fullscreen={true} context="auth-route" />;
   //  未初始化 则先走setup 流程
   if (!initialized) return <Navigate to={`/onboarding`} replace />;
   // 开启guest 并且没token 而且是允许guest访问的路由  则先去过渡页登录
@@ -38,7 +38,7 @@ const RequireAuth: FC<Props> = ({ children, redirectTo = "/login" }) => {
       KEY_LOCAL_TRY_PATH,
       ignorePath == location.pathname ? "/" : `${location.pathname}${location.search}`
     );
-    const guestLogin = loginConfig?.guest && allowGuest;
+    const guestLogin = loginConfig.guest && allowGuest;
     return guestLogin ? (
       <Navigate to={"/guest_login"} replace />
     ) : (

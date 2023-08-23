@@ -237,7 +237,17 @@ export const serverApi = createApi({
       })
     }),
     getLoginConfig: builder.query<LoginConfig, void>({
-      query: () => ({ url: `/admin/login/config` })
+      query: () => ({ url: `/admin/login/config` }),
+      async onQueryStarted(data, { dispatch, queryFulfilled }) {
+        try {
+          const resp = await queryFulfilled;
+          if (resp.data) {
+            dispatch(updateInfo({ loginConfig: resp.data }));
+          }
+        } catch {
+          console.error("get login config error");
+        }
+      }
     }),
     getFiles: builder.query<VoceChatFile[], GetFilesDTO>({
       query: (params) => ({

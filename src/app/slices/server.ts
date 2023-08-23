@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Server } from "@/types/server";
+import { LoginConfig, Server } from "@/types/server";
 
 export interface StoredServer extends Server {
   version: string;
@@ -9,6 +9,7 @@ export interface StoredServer extends Server {
     link: string;
     expire: number;
   };
+  loginConfig: LoginConfig | null;
 }
 const initialState: StoredServer = {
   version: "",
@@ -23,7 +24,8 @@ const initialState: StoredServer = {
   show_user_online_status: false,
   webclient_auto_update: true,
   contact_verification_enable: false,
-  chat_layout_mode: "Left"
+  chat_layout_mode: "Left",
+  loginConfig: null
 };
 
 const serverSlice = createSlice({
@@ -47,7 +49,8 @@ const serverSlice = createSlice({
         show_user_online_status = true,
         webclient_auto_update = true,
         contact_verification_enable = false,
-        chat_layout_mode = "Left"
+        chat_layout_mode = "Left",
+        loginConfig = state.loginConfig || null
       } = action.payload || {};
       return {
         version,
@@ -59,7 +62,8 @@ const serverSlice = createSlice({
         show_user_online_status,
         webclient_auto_update,
         contact_verification_enable,
-        chat_layout_mode
+        chat_layout_mode,
+        loginConfig
       };
     },
     updateInfo(state, action: PayloadAction<Partial<StoredServer>>) {

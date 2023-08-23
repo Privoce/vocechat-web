@@ -33,7 +33,7 @@ import { resetFileMessage } from "@/app/slices/message.file";
 import { resetReactionMessage } from "@/app/slices/message.reaction";
 import { removeUserSession, resetUserMsg } from "@/app/slices/message.user";
 import { updateInfo } from "@/app/slices/server";
-import { setReady } from "@/app/slices/ui";
+import { setReady, updateSSEStatus } from "@/app/slices/ui";
 import { updateContactStatus, updateUsersByLogs, updateUsersStatus } from "@/app/slices/users";
 import { updateCallInfo } from "@/app/slices/voice";
 import { useAppDispatch, useAppSelector } from "@/app/store";
@@ -55,7 +55,7 @@ const getQueryString = (params: { [key: string]: string }) => {
   });
   return sp.toString();
 };
-
+let hiddenTime: number = 0;
 let SSE: EventSource | undefined;
 let ready = false; //是否已完成初始推送
 let aliveInter: number | ReturnType<typeof setTimeout> = 0;
@@ -102,6 +102,7 @@ export default function useStreaming() {
     if (dayjs().isAfter(new Date(expireTime - 20 * 1000))) {
       const resp = await renewToken({ token, refresh_token: refreshToken });
       if ("error" in resp) {
+        console.error("renew error from sse", resp.error);
         // 还有网，而且在当前页，则停止循环
         if (navigator.onLine || !document.hidden) {
           stopStreaming();
@@ -131,14 +132,16 @@ export default function useStreaming() {
       params.users_version = `${usersVersion}`;
     }
     // 开始初始化推送
+    dispatch(updateSSEStatus("connecting"));
     SSE = new EventSource(`${BASE_URL}/user/events?${getQueryString(params)}`);
 
     SSE.onopen = () => {
+      dispatch(updateSSEStatus("connected"));
       ready = false;
     };
     SSE.onerror = (err) => {
-      // 断网了
-      if (!navigator.onLine) {
+      // 断网了 或者 页面隐藏了
+      if (!navigator.onLine || document.hidden) {
         stopStreaming();
         return;
       }
@@ -419,6 +422,7 @@ export default function useStreaming() {
     if (SSE) {
       SSE.close();
       SSE = undefined;
+      dispatch(updateSSEStatus("disconnected"));
     }
     ready = false;
   };
@@ -431,11 +435,35 @@ export default function useStreaming() {
         stopStreaming();
       }
     };
+    const handleWindowVisibilityChange = () => {
+      console.info("debug SSE: visibility changed", document.hidden);
+      if (document.hidden) {
+        // 记录隐藏时间
+        hiddenTime = new Date().getTime();
+      } else {
+        const elapsedTime = (new Date().getTime() - hiddenTime) / 1000;
+        const canReconnect = elapsedTime > 30 * 60 || !SSE;
+        // 超过半小时或者已断线，强制重连
+        if (canReconnect) {
+          if (SSE) {
+            // 先停掉
+            stopStreaming();
+            setTimeout(() => {
+              startStreaming();
+            }, 1500);
+          }
+          // 直接重连
+          startStreaming();
+        }
+      }
+    };
+    document.addEventListener("visibilitychange", handleWindowVisibilityChange);
     window.addEventListener("online", handleNetworkChange);
     window.addEventListener("offline", handleNetworkChange);
     return () => {
       window.removeEventListener("online", handleNetworkChange);
       window.removeEventListener("offline", handleNetworkChange);
+      document.removeEventListener("visibilitychange", handleWindowVisibilityChange);
     };
   }, []);
 

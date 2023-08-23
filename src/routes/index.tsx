@@ -17,6 +17,7 @@ import NotFoundPage from "./404";
 import InvitePrivate from "./invitePrivate";
 import LazyIt from "./lazy";
 import InviteInMobile from "./reg/InviteInMobile";
+import usePrefetchData from "@/hooks/usePrefetchData";
 
 const RegBasePage = lazy(() => import("./reg"));
 const RegWithUsernamePage = lazy(() => import("./reg/RegWithUsername"));
@@ -47,7 +48,8 @@ const PageRoutes = () => {
   }, isEqual);
   // 提前获取device token
   useDeviceToken(vapidKey);
-
+  // 初始化元信息
+  usePrefetchData();
   // 掉线检测
   useEffect(() => {
     if (!online) {

@@ -3,7 +3,9 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { UploadFileData } from "@/hooks/useUploadFile";
 
 export type ListView = "item" | "grid";
-export interface State {
+export type SSEStatus = "connecting" | "connected" | "disconnected";
+export interface UIState {
+  SSEStatus: SSEStatus;
   online: boolean;
   ready: boolean;
   inputMode: "text";
@@ -22,7 +24,8 @@ export interface State {
   };
 }
 
-const initialState: State = {
+const initialState: UIState = {
+  SSEStatus: "disconnected",
   online: true,
   ready: false,
   inputMode: "text",
@@ -48,6 +51,9 @@ const uiSlice = createSlice({
     },
     setReady(state) {
       state.ready = true;
+    },
+    updateSSEStatus(state, action: PayloadAction<SSEStatus>) {
+      state.SSEStatus = action.payload;
     },
     updateOnline(state, action: PayloadAction<boolean>) {
       state.online = action.payload;
@@ -171,6 +177,7 @@ const uiSlice = createSlice({
 });
 
 export const {
+  updateSSEStatus,
   fillUI,
   setReady,
   updateOnline,

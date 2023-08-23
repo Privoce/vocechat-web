@@ -217,6 +217,7 @@ export const {
   useLazyGuestLoginQuery,
   useGuestLoginQuery,
   useLazyCheckEmailQuery,
+  useLazyGetInitializedQuery,
   useGetInitializedQuery,
   useSendLoginMagicLinkMutation,
   useSendRegMagicLinkMutation,
