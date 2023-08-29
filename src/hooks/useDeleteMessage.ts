@@ -3,16 +3,13 @@ import { useState } from "react";
 import { useLazyDeleteMessageQuery, useLazyDeleteMessagesQuery } from "@/app/services/message";
 import { useAppSelector } from "@/app/store";
 import { compareVersion } from "@/utils";
+import { shallowEqual } from "react-redux";
 
 export default function useDeleteMessage() {
   const [deleting, setDeleting] = useState(false);
-  const { loginUser, messageData, serverVersion } = useAppSelector((store) => {
-    return {
-      serverVersion: store.server.version,
-      messageData: store.message,
-      loginUser: store.authData.user
-    };
-  });
+  const loginUser = useAppSelector((store) => store.authData.user, shallowEqual);
+  const serverVersion = useAppSelector((store) => store.server.version, shallowEqual);
+  const messageData = useAppSelector((store) => store.message, shallowEqual);
   const [batchRemove] = useLazyDeleteMessagesQuery();
   const [
     remove

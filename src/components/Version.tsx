@@ -6,10 +6,11 @@ import dayjs from "dayjs";
 import { useAppSelector } from "@/app/store";
 import { unregister } from "../serviceWorkerRegistration";
 import Button from "./styled/Button";
+import { shallowEqual } from "react-redux";
 
 type Props = {};
 const Version: FC<Props> = () => {
-  const serverVersion = useAppSelector((store) => store.server.version);
+  const serverVersion = useAppSelector((store) => store.server.version, shallowEqual);
   const [syncing, setSyncing] = useState(false);
   const { t } = useTranslation("setting", { keyPrefix: "version" });
   const ts = (process.env.REACT_APP_BUILD_TIME ?? 0) as number;

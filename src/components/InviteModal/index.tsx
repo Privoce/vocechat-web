@@ -6,6 +6,7 @@ import CloseIcon from "@/assets/icons/close.svg";
 import Modal from "../Modal";
 import AddMembers from "./AddMembers";
 import InviteByEmail from "./InviteByEmail";
+import { shallowEqual } from "react-redux";
 
 interface Props {
   type?: "server" | "channel";
@@ -16,13 +17,12 @@ interface Props {
 
 const InviteModal: FC<Props> = ({ type = "server", cid, title = "", closeModal }) => {
   const { t } = useTranslation("chat");
-  const { channel, server } = useAppSelector((store) => {
-    return {
-      channel: cid ? store.channels.byId[cid] : undefined,
-      server: store.server
-    };
-  });
-  const finalTitle = type == "server" ? server.name : `#${title || channel?.name}`;
+  const channel = useAppSelector(
+    (store) => (cid ? store.channels.byId[cid] : undefined),
+    shallowEqual
+  );
+  const serverName = useAppSelector((store) => store.server.name, shallowEqual);
+  const finalTitle = type == "server" ? serverName : `#${title || channel?.name}`;
   return (
     <Modal>
       <div className="flex flex-col bg-white dark:bg-gray-900 rounded-lg max-h-[85vh] overflow-y-scroll  md:min-w-[408px] relative">

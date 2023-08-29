@@ -42,9 +42,8 @@ export default function Filter({ filter, updateFilter }) {
     };
     toggleFilterVisible(tmp);
   };
-  const { userMap, channelMap } = useAppSelector((store) => {
-    return { userMap: store.users.byId, channelMap: store.channels.byId };
-  });
+  const userMap = useAppSelector((store) => store.users.byId, shallowEqual);
+  const channelMap = useAppSelector((store) => store.channels.byId, shallowEqual);
 
   const { from, channel, type, date } = filter;
   const {

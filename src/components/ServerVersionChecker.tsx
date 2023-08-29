@@ -3,6 +3,7 @@ import { Trans, useTranslation } from "react-i18next";
 
 import { useAppSelector } from "../app/store";
 import { compareVersion } from "../utils";
+import { shallowEqual } from "react-redux";
 
 type Props = {
   empty?: boolean;
@@ -12,7 +13,7 @@ type Props = {
 
 const ServerVersionChecker = ({ empty = false, version, children }: Props) => {
   const { t } = useTranslation();
-  const currentVersion = useAppSelector((store) => store.server.version);
+  const currentVersion = useAppSelector((store) => store.server.version, shallowEqual);
   if (!currentVersion) return null;
   const res = compareVersion(currentVersion, version);
   if (res < 0)

@@ -1,5 +1,5 @@
 // import React from "react";
-import { useDispatch } from "react-redux";
+import { shallowEqual, useDispatch } from "react-redux";
 import dayjs from "dayjs";
 
 import { ContentTypes } from "@/app/config";
@@ -97,7 +97,10 @@ export const renderPreviewMessage = (message = null) => {
 const MessageWrapper = ({ selectMode = false, context, id, mid, divider, children, ...rest }) => {
   const dispatch = useDispatch();
 
-  const selects = useAppSelector((store) => store.ui.selectMessages[`${context}_${id}`]);
+  const selects = useAppSelector(
+    (store) => store.ui.selectMessages[`${context}_${id}`],
+    shallowEqual
+  );
   const selected = !!(selects && selects.find((s) => s == mid));
   const toggleSelect = () => {
     const operation = selected ? "remove" : "add";

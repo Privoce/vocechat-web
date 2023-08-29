@@ -13,6 +13,7 @@ import Avatar from "./Avatar";
 import Modal from "./Modal";
 import StyledButton from "./styled/Button";
 import Input from "./styled/Input";
+import { shallowEqual } from "react-redux";
 
 type Props = {
   closeModal: () => void;
@@ -21,7 +22,7 @@ type Type = "id" | "email" | "name";
 
 const SearchUser: FC<Props> = ({ closeModal }) => {
   const [updateContactStatus, { isLoading: adding }] = useUpdateContactStatusMutation();
-  const usersData = useAppSelector((store) => store.users.byId);
+  const usersData = useAppSelector((store) => store.users.byId, shallowEqual);
   const { t } = useTranslation();
   const navigateTo = useNavigate();
   const inputRef = useRef(null);

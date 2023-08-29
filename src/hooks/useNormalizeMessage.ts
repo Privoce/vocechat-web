@@ -4,9 +4,10 @@ import { useLazyGetArchiveMessageQuery } from "@/app/services/message";
 import { useAppSelector } from "@/app/store";
 import { ArchiveMessage } from "@/types/resource";
 import { normalizeArchiveData } from "../utils";
+import { shallowEqual } from "react-redux";
 
 export default function useNormalizeMessage(filePath: string | null) {
-  const archiveData = useAppSelector((store) => store.archiveMessage[filePath ?? ""]);
+  const archiveData = useAppSelector((store) => store.archiveMessage[filePath ?? ""], shallowEqual);
   const [normalizedMessages, setNormalizedMessages] = useState<ArchiveMessage[] | null>(null);
   const [getArchiveMessage, { isError, isLoading, isSuccess }] = useLazyGetArchiveMessageQuery();
   useEffect(() => {

@@ -3,6 +3,7 @@ import Tippy from "@tippyjs/react";
 
 import { useAppSelector } from "@/app/store";
 import Profile from "../Profile";
+import { shallowEqual } from "react-redux";
 
 interface Props {
   uid: number;
@@ -12,7 +13,7 @@ interface Props {
 }
 
 const Mention = ({ uid, popover = true, cid, textOnly = false }: Props) => {
-  const usersData = useAppSelector((store) => store.users.byId);
+  const usersData = useAppSelector((store) => store.users.byId, shallowEqual);
   const user = usersData[uid];
   if (!user) return null;
   if (textOnly) return <>{`@${user.name}`}</>;

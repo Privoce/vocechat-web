@@ -6,6 +6,7 @@ import ChatIcon from "@/assets/icons/chat.svg";
 import SettingIcon from "@/assets/icons/setting.svg";
 import UserIcon from "@/assets/icons/user.svg";
 import { useAppSelector } from "../../app/store";
+import { shallowEqual } from "react-redux";
 
 // type Props = {}
 
@@ -16,17 +17,10 @@ const MobileNavs = () => {
   const isDMChat = useMatch(`/chat/dm/:user_id`);
   // const isSettingPage = useMatch(`/setting`);
   const isChannelChat = useMatch(`/chat/channel/:channel_id`);
-  const {
-    ui: {
-      rememberedNavs: { chat: chatPath, user: userPath }
-    }
-  } = useAppSelector((store) => {
-    return {
-      ui: store.ui,
-      loginUid: store.authData.user?.uid,
-      guest: store.authData.guest
-    };
-  });
+  const { chat: chatPath, user: userPath } = useAppSelector(
+    (store) => store.ui.rememberedNavs,
+    shallowEqual
+  );
 
   const linkClass = `flex`;
   const isChatPage = isHomePath || pathname.startsWith("/chat");

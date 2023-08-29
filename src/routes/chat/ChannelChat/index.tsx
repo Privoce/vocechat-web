@@ -1,6 +1,6 @@
 import { memo, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
+import { shallowEqual, useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Tippy from "@tippyjs/react";
 
@@ -29,15 +29,10 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const { userIds, data, loginUser, visibleAside } = useAppSelector((store) => {
-    return {
-      loginUser: store.authData.user,
-      userIds: store.users.ids,
-      data: store.channels.byId[cid],
-      visibleAside: store.footprint.channelAsides[cid]
-    };
-  });
+  const loginUser = useAppSelector((store) => store.authData.user, shallowEqual);
+  const visibleAside = useAppSelector((store) => store.footprint.channelAsides[cid], shallowEqual);
+  const userIds = useAppSelector((store) => store.users.ids, shallowEqual);
+  const data = useAppSelector((store) => store.channels.byId[cid], shallowEqual);
   useEffect(() => {
     if (!data) {
       // channel不存在了 回首页

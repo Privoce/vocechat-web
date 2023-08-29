@@ -10,6 +10,7 @@ import InviteOnlyTip from "./InviteOnlyTip";
 import MessageFeed from "./MessageFeed";
 import MessageInput from "./MessageInput";
 import Welcome from "./Welcome";
+import { shallowEqual } from "react-redux";
 
 type Props = {
   hostId: number;
@@ -20,7 +21,9 @@ const Index = ({ handleClose, hostId }: Props) => {
   const { embed, inviteOnly } = useWidget();
   // 建立SSE连接
   useSSE();
-  const { user: loginUser, token, guest: isGuest } = useAppSelector((store) => store.authData);
+  const loginUser = useAppSelector((store) => store.authData.user, shallowEqual);
+  const token = useAppSelector((store) => store.authData.token, shallowEqual);
+  const isGuest = useAppSelector((store) => store.authData.guest, shallowEqual);
 
   // no token or guest login
   const notLogin = !token || isGuest;

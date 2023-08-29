@@ -13,6 +13,7 @@ import IconBookmark from "@/assets/icons/bookmark.svg";
 import IconClose from "@/assets/icons/close.circle.svg";
 import IconDelete from "@/assets/icons/delete.svg";
 import IconForward from "@/assets/icons/forward.svg";
+import { shallowEqual } from "react-redux";
 
 type Props = {
   context: ChatContext;
@@ -22,7 +23,7 @@ const Operations: FC<Props> = ({ context, id }) => {
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const { canDelete } = useDeleteMessage();
   const { addFavorite } = useFavMessage({});
-  const mids = useAppSelector((store) => store.ui.selectMessages[`${context}_${id}`]);
+  const mids = useAppSelector((store) => store.ui.selectMessages[`${context}_${id}`], shallowEqual);
   const [forwardModalVisible, setForwardModalVisible] = useState(false);
   const dispatch = useAppDispatch();
 

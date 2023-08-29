@@ -5,17 +5,14 @@ import { useAppSelector } from "@/app/store";
 import ChannelIcon from "@/components/ChannelIcon";
 import GoBackNav from "@/components/GoBackNav";
 import Layout from "../Layout";
+import { shallowEqual } from "react-redux";
 
 type Props = {
   cid?: number;
 };
 export default function GuestChannelChat({ cid = 0 }: Props) {
   // const { t } = useTranslation("chat");
-  const { data } = useAppSelector((store) => {
-    return {
-      data: store.channels.byId[cid]
-    };
-  });
+  const data = useAppSelector((store) => store.channels.byId[cid], shallowEqual);
   if (!data) return null;
   const { name, description, is_public } = data;
   return (

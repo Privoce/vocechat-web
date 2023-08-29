@@ -3,6 +3,7 @@ import { createContext, ReactNode, useContext } from "react";
 import { useGetLoginConfigQuery, useGetServerQuery } from "../app/services/server";
 import { useAppSelector } from "../app/store";
 import { getContrastColor, isInIframe } from "../utils";
+import { shallowEqual } from "react-redux";
 
 const query = new URLSearchParams(location.search);
 const welcome = decodeURIComponent(query.get("welcome") || "");
@@ -26,7 +27,7 @@ const WidgetContext = createContext({
 function WidgetProvider({ children }: { children: ReactNode }) {
   const { isLoading: loadingServerData } = useGetServerQuery();
   const { isLoading: loadingConfig, data: loginConfig } = useGetLoginConfigQuery();
-  const serverData = useAppSelector((store) => store.server);
+  const serverData = useAppSelector((store) => store.server, shallowEqual);
 
   const loading = loadingConfig || loadingServerData;
   // if(loading) return

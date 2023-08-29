@@ -16,6 +16,7 @@ import GuestSessionList from "./GuestSessionList";
 import RTCWidget from "./RTCWidget";
 import SessionList from "./SessionList";
 import VoiceFullscreen from "./VoiceFullscreen";
+import { shallowEqual } from "react-redux";
 
 function ChatPage() {
   const isHomePath = useMatch(`/`);
@@ -24,21 +25,16 @@ function ChatPage() {
   const [channelModalVisible, setChannelModalVisible] = useState(false);
   const [usersModalVisible, setUsersModalVisible] = useState(false);
   const { channel_id = 0, user_id = 0 } = useParams();
-  const {
-    sessionUids,
-    isGuest,
-    aside = "",
-    callingTo
-  } = useAppSelector((store) => {
-    return {
-      callingTo: store.voice.callingTo,
-      isGuest: store.authData.guest,
-      sessionUids: store.userMessage.ids,
-      aside: channel_id
+  const callingTo = useAppSelector((store) => store.voice.callingTo, shallowEqual);
+  const aside = useAppSelector(
+    (store) =>
+      channel_id
         ? store.footprint.channelAsides[+channel_id]
-        : store.footprint.dmAsides[store.voice.callingTo]
-    };
-  });
+        : store.footprint.dmAsides[store.voice.callingTo],
+    shallowEqual
+  );
+  const isGuest = useAppSelector((store) => store.authData.guest, shallowEqual);
+  const sessionUids = useAppSelector((store) => store.userMessage.ids, shallowEqual);
   const toggleUsersModalVisible = () => {
     setUsersModalVisible((prev) => !prev);
   };

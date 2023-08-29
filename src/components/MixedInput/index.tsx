@@ -25,6 +25,7 @@ import useUploadFile from "@/hooks/useUploadFile";
 import { isMobile } from "@/utils";
 import User from "../User";
 import { CONFIG } from "./config";
+import { shallowEqual } from "react-redux";
 
 export const TEXT_EDITOR_PREFIX = "_text_editor";
 
@@ -55,7 +56,7 @@ const Plugins: FC<Props> = ({
   const [context, to] = id.split("_") as [ChatContext, number];
   const { addStageFile } = useUploadFile({ context, id: to });
   const enableMentions = members.length > 0;
-  const userData = useAppSelector((store) => store.users.byId);
+  const userData = useAppSelector((store) => store.users.byId, shallowEqual);
   const editableRef = useRef(null);
   const initialProps = {
     ...CONFIG.editableProps,

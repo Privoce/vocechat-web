@@ -1,11 +1,12 @@
 import { useAppSelector } from "@/app/store";
 import clsx from "clsx";
+import { shallowEqual } from "react-redux";
 // import React from "react";
 
 type Props = {};
 
 const StreamStatus = (props: Props) => {
-  const status = useAppSelector((store) => store.ui.SSEStatus);
+  const status = useAppSelector((store) => store.ui.SSEStatus, shallowEqual);
   return (
     <aside className="fixed right-2 bottom-2">
       <div

@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from "@/app/store";
 import { Message } from "@/types/channel";
 import { ChatContext } from "@/types/common";
 import { UploadFileResponse } from "@/types/message";
+import { shallowEqual } from "react-redux";
 
 export type UploadFileData = {
   name: string;
@@ -35,12 +36,14 @@ const convertHeic2Jpg = async (file: { name: string; type: string; size: number;
 const useUploadFile = (props?: IProps) => {
   const { context, id } = props ? props : { context: "channel", id: 0 };
   const dispatch = useAppDispatch();
-  const { stageFiles, replying } = useAppSelector((store) => {
-    return {
-      stageFiles: store.ui.uploadFiles[`${context}_${id}`] || [],
-      replying: store.message.replying[`${context}_${id}`]
-    };
-  });
+  const stageFiles = useAppSelector(
+    (store) => store.ui.uploadFiles[`${context}_${id}`] || [],
+    shallowEqual
+  );
+  const replying = useAppSelector(
+    (store) => store.message.replying[`${context}_${id}`],
+    shallowEqual
+  );
   const [data, setData] = useState<Message | null>(null);
   const canceledRef = useRef(false);
   const sliceUploadedCountRef = useRef(0);

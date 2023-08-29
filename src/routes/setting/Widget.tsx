@@ -9,6 +9,7 @@ import { useAppSelector } from "../../app/store";
 import Button from "../../components/styled/Button";
 import Input from "../../components/styled/Input";
 import useCopy from "../../hooks/useCopy";
+import { shallowEqual } from "react-redux";
 
 const Row = ({
   paramKey,
@@ -34,7 +35,7 @@ const Row = ({
   );
 };
 export default function Widget() {
-  const loginUid = useAppSelector((store) => store.authData.user?.uid);
+  const loginUid = useAppSelector((store) => store.authData.user?.uid, shallowEqual);
   const widgetLink = `${location.origin}/widget.html?host=${loginUid}`;
   const { t } = useTranslation("setting", { keyPrefix: "widget" });
   const { t: wt } = useTranslation("widget");

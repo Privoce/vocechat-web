@@ -6,18 +6,15 @@ import {
   useUpsertLicenseMutation
 } from "@/app/services/server";
 import { useAppSelector } from "@/app/store";
+import { shallowEqual } from "react-redux";
 
 // type Props = {
 //   refetchOnMountOrArgChange?: boolean
 // } | undefined
 const useLicense = (refetchOnMountOrArgChange = false) => {
-  const { userCount, isGuest, upgraded } = useAppSelector((store) => {
-    return {
-      userCount: store.users.ids.length,
-      isGuest: store.authData.guest,
-      upgraded: store.server.upgraded
-    };
-  });
+  const userCount = useAppSelector((store) => store.users.ids.length, shallowEqual);
+  const upgraded = useAppSelector((store) => store.server.upgraded, shallowEqual);
+  const isGuest = useAppSelector((store) => store.authData.guest, shallowEqual);
   const {
     data: license,
     refetch: refetchLicense,

@@ -1,6 +1,6 @@
 import { FC, ReactElement } from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
+import { shallowEqual, useDispatch } from "react-redux";
 import { useLocation, useMatch, useNavigate } from "react-router-dom";
 import Tippy from "@tippyjs/react";
 
@@ -51,11 +51,10 @@ const SessionContextMenu: FC<Props> = ({
   const dispatch = useDispatch();
   const navigateTo = useNavigate();
   const { pathname } = useLocation();
-  const { channelMuted } = useAppSelector((store) => {
-    return {
-      channelMuted: context == "channel" ? store.footprint.muteChannels[id] : false
-    };
-  });
+  const channelMuted = useAppSelector(
+    (store) => (context == "channel" ? store.footprint.muteChannels[id] : false),
+    shallowEqual
+  );
 
   const handleChannelSetting = () => {
     navigateTo(`/setting/channel/${id}/overview?f=${pathname}`);

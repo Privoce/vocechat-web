@@ -12,6 +12,7 @@ import ExpiredMessage from "./ExpiredMessage";
 import ImageMessage from "./ImageMessage";
 import OtherFileMessage from "./OtherFileMessage";
 import VideoMessage from "./VideoMessage";
+import { shallowEqual } from "react-redux";
 
 const isLocalFile = (content: string) => {
   return content.startsWith("blob:");
@@ -64,7 +65,7 @@ const FileMessage: FC<Props> = ({
     isSuccess: uploadSuccess,
     isError
   } = useUploadFile();
-  const fromUser = useAppSelector((store) => store.users.byId[from_uid]);
+  const fromUser = useAppSelector((store) => store.users.byId[from_uid], shallowEqual);
   const { size = 0, name, content_type } = properties ?? {};
   useEffect(() => {
     const handleUpSend = async ({

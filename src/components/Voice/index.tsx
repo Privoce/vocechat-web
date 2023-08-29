@@ -1,5 +1,5 @@
 import { memo, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { shallowEqual, useDispatch } from "react-redux";
 import AgoraRTC from "agora-rtc-sdk-ng";
 
 import {
@@ -26,15 +26,11 @@ window.VIDEO_TRACK_MAP = window.VIDEO_TRACK_MAP ?? {};
 const inIframe = isInIframe();
 // let tmpUids: number[] = [];
 const Voice = () => {
-  const { from, to, voiceList, loginUid, voicingInfo } = useAppSelector((store) => {
-    return {
-      voicingInfo: store.voice.voicing,
-      voiceList: store.voice.list,
-      from: store.voice.callingFrom,
-      to: store.voice.callingTo,
-      loginUid: store.authData.user?.uid
-    };
-  });
+  const loginUid = useAppSelector((store) => store.authData.user?.uid, shallowEqual);
+  const from = useAppSelector((store) => store.voice.callingFrom, shallowEqual);
+  const to = useAppSelector((store) => store.voice.callingTo, shallowEqual);
+  const voiceList = useAppSelector((store) => store.voice.list, shallowEqual);
+  const voicingInfo = useAppSelector((store) => store.voice.voicing, shallowEqual);
   const { data: enabled } = useGetAgoraStatusQuery();
   const [getUsersByChannel] = useLazyGetAgoraUsersByChannelQuery();
   useGetAgoraChannelsQuery(

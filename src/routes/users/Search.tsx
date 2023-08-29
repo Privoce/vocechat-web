@@ -8,6 +8,7 @@ import AddEntriesMenu from "@/components/AddEntriesMenu";
 import Tooltip from "@/components/Tooltip";
 import IconAdd from "@/assets/icons/add.svg";
 import IconSearch from "@/assets/icons/search.svg";
+import { shallowEqual } from "react-redux";
 
 type Props = {
   type?: "users" | "members";
@@ -16,7 +17,10 @@ type Props = {
   updateInput: (input: string) => void;
 };
 const Search: FC<Props> = ({ input, updateInput, openModal, type = "users" }) => {
-  const enableContact = useAppSelector((store) => store.server.contact_verification_enable);
+  const enableContact = useAppSelector(
+    (store) => store.server.contact_verification_enable,
+    shallowEqual
+  );
   const { t } = useTranslation();
   const handleInput = (evt: ChangeEvent<HTMLInputElement>) => {
     updateInput(evt.target.value);

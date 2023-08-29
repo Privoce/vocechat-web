@@ -7,6 +7,7 @@ import { useAppSelector } from "@/app/store";
 import Avatar from "@/components/Avatar";
 import { fromNowTime } from "@/utils";
 import { renderPreviewMessage } from "../../chat/utils";
+import { shallowEqual } from "react-redux";
 
 interface IProps {
   id: number;
@@ -19,13 +20,9 @@ const Session: FC<IProps> = ({ id, mid }) => {
     mid: number;
     is_public: boolean;
   }>();
-  const { messageData, userData, channelData } = useAppSelector((store) => {
-    return {
-      messageData: store.message,
-      userData: store.users.byId,
-      channelData: store.channels.byId
-    };
-  });
+  const messageData = useAppSelector((store) => store.message, shallowEqual);
+  const userData = useAppSelector((store) => store.users.byId, shallowEqual);
+  const channelData = useAppSelector((store) => store.channels.byId, shallowEqual);
 
   useEffect(() => {
     const tmp = channelData[id];

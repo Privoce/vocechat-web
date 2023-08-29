@@ -11,6 +11,7 @@ import Avatar from "../Avatar";
 import LinkifyText from "../LinkifyText";
 import MarkdownRender from "../MarkdownRender";
 import ForwardedMessage from "./ForwardedMessage";
+import { shallowEqual } from "react-redux";
 
 const renderContent = (data: MessagePayload, context: ChatContext, to: number) => {
   const { content_type, content, thumbnail, properties, created_at, from_uid = 0 } = data;
@@ -86,9 +87,8 @@ interface ReplyProps {
 
 const Reply: FC<ReplyProps> = ({ mid, interactive = true, context, to = 0 }) => {
   const { t } = useTranslation("chat");
-  const { data, users } = useAppSelector((store) => {
-    return { data: store.message[mid], users: store.users.byId };
-  });
+  const users = useAppSelector((store) => store.users.byId, shallowEqual);
+  const data = useAppSelector((store) => store.message[mid], shallowEqual);
   const handleClick = (evt: MouseEvent<HTMLDivElement>) => {
     const { mid } = evt.currentTarget.dataset;
     const msgEle = document.querySelector<HTMLDivElement>(`[data-msg-mid='${mid}']`);

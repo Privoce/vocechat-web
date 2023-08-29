@@ -11,13 +11,17 @@ import SettingBlock from "@/components/SettingBlock";
 import Button from "@/components/styled/Button";
 import StyledModal from "@/components/styled/Modal";
 import StyledRadio from "@/components/styled/Radio";
+import { shallowEqual } from "react-redux";
 
 // type Props = {
 //   updateConfirmModal: (context: VisibleModalType | null) => void;
 // };
 
 const AutoDeleteFiles = () => {
-  const currStatus = useAppSelector((store) => store.server.max_file_expiry_mode ?? "Off");
+  const currStatus = useAppSelector(
+    (store) => store.server.max_file_expiry_mode ?? "Off",
+    shallowEqual
+  );
   const { t } = useTranslation("setting", { keyPrefix: "data.auto_delete_file" });
   const { t: ct } = useTranslation();
   const { refetch } = useGetSystemCommonQuery();

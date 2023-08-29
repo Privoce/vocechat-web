@@ -3,19 +3,15 @@ import dayjs from "dayjs";
 
 import useStreaming from "@/hooks/useStreaming";
 import { useAppSelector } from "../app/store";
+import { shallowEqual } from "react-redux";
 
 export default function useSSE() {
-  const {
-    loginUid,
-    token,
-    expireTime = +new Date()
-  } = useAppSelector((store) => {
-    return {
-      loginUid: store.authData.user?.uid,
-      token: store.authData.token,
-      expireTime: store.authData.expireTime
-    };
-  });
+  const loginUid = useAppSelector((store) => store.authData.user?.uid, shallowEqual);
+  const token = useAppSelector((store) => store.authData.token, shallowEqual);
+  const expireTime = useAppSelector(
+    (store) => store.authData.expireTime ?? +new Date(),
+    shallowEqual
+  );
   const { startStreaming } = useStreaming();
 
   const tokenAlmostExpire = dayjs().isAfter(new Date(expireTime - 20 * 1000));

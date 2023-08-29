@@ -11,10 +11,11 @@ import ChannelModal from "./ChannelModal";
 import InviteModal from "./InviteModal";
 import SearchUser from "./SearchUser";
 import UsersModal from "./UsersModal";
+import { shallowEqual } from "react-redux";
 
 export default function AddEntriesMenu() {
   const { t } = useTranslation();
-  const currentUser = useAppSelector((store) => store.authData.user);
+  const isAdmin = useAppSelector((store) => store.authData.user?.is_admin, shallowEqual);
   const [isPrivate, setIsPrivate] = useState(false);
   const [inviteModalVisible, setInviteModalVisible] = useState(false);
   const [searchModalVisible, setSearchModalVisible] = useState(false);
@@ -60,7 +61,7 @@ export default function AddEntriesMenu() {
     <>
       <ul className="flex flex-col rounded-xl drop-shadow p-1 select-none text-gray-500 dark:text-gray-300 bg-white dark:bg-black">
         {/* temp remove public channel */}
-        {currentUser?.is_admin && (
+        {isAdmin && (
           <li className={itemClass} onClick={handleOpenChannelModal.bind(null, false)}>
             <ChannelIcon className={iconClass} />
             {t("action.new_channel")}

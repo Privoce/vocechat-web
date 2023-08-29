@@ -5,6 +5,7 @@ import IconBlock from "@/assets/icons/block.svg";
 import { useUpdateContactStatusMutation } from "../../../app/services/user";
 import { useAppSelector } from "../../../app/store";
 import { ContactAction } from "../../../types/user";
+import { shallowEqual } from "react-redux";
 
 type Props = {
   uid: number;
@@ -13,12 +14,11 @@ type Props = {
 const AddContactTip = (props: Props) => {
   const { t } = useTranslation("chat");
   const [updateContactStatus] = useUpdateContactStatusMutation();
-  const { targetUser, enableContact } = useAppSelector((store) => {
-    return {
-      targetUser: store.users.byId[props.uid],
-      enableContact: store.server.contact_verification_enable
-    };
-  });
+  const enableContact = useAppSelector(
+    (store) => store.server.contact_verification_enable,
+    shallowEqual
+  );
+  const targetUser = useAppSelector((store) => store.users.byId[props.uid], shallowEqual);
   const handleContactStatus = (action: ContactAction) => {
     updateContactStatus({ target_uid: props.uid, action });
   };

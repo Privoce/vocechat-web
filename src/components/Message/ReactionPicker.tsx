@@ -4,6 +4,7 @@ import { Emojis } from "@/app/config";
 import { useReactMessageMutation } from "@/app/services/message";
 import { useAppSelector } from "@/app/store";
 import Emoji from "../ReactionItem";
+import { shallowEqual } from "react-redux";
 
 type Props = {
   mid: number;
@@ -11,12 +12,8 @@ type Props = {
 };
 const ReactionPicker: FC<Props> = ({ mid, hidePicker }) => {
   const [reactMessage, { isLoading }] = useReactMessageMutation();
-  const { reactionData, currUid } = useAppSelector((store) => {
-    return {
-      reactionData: store.reactionMessage[mid] || {},
-      currUid: store.authData.user?.uid
-    };
-  });
+  const currUid = useAppSelector((store) => store.authData.user?.uid, shallowEqual);
+  const reactionData = useAppSelector((store) => store.reactionMessage[mid] || {}, shallowEqual);
   const handleReact = (emoji: string) => {
     reactMessage({ mid, action: emoji });
     hidePicker();

@@ -1,7 +1,7 @@
 import { FC, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
+import { shallowEqual, useDispatch } from "react-redux";
 import { useWizard } from "react-use-wizard";
 
 import { useLoginMutation } from "@/app/services/auth";
@@ -18,7 +18,7 @@ const AdminAccount: FC<Props> = ({ serverName }) => {
   const { t } = useTranslation("welcome", { keyPrefix: "onboarding" });
   const { nextStep } = useWizard();
   const formRef = useRef<HTMLFormElement | undefined>();
-  const loggedIn = useAppSelector((store) => !!store.authData.token);
+  const loggedIn = useAppSelector((store) => !!store.authData.token, shallowEqual);
   const dispatch = useDispatch();
   const [createAdmin, { isLoading: isSigningUp, isError: signUpError, isSuccess: signUpOk }] =
     useCreateAdminMutation();

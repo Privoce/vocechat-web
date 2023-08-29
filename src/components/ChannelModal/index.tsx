@@ -15,6 +15,7 @@ import Button from "../styled/Button";
 import StyledCheckbox from "../styled/Checkbox";
 import StyledToggle from "../styled/Toggle";
 import User from "../User";
+import { shallowEqual } from "react-redux";
 
 interface Props {
   personal?: boolean;
@@ -25,9 +26,8 @@ const ChannelModal: FC<Props> = ({ personal = false, closeModal }) => {
   const { t } = useTranslation("chat");
   const navigateTo = useNavigate();
   const [sendMessage] = useSendChannelMsgMutation();
-  const { loginUser, channelData } = useAppSelector((store) => {
-    return { loginUser: store.authData.user, channelData: store.channels.byId };
-  });
+  const channelData = useAppSelector((store) => store.channels.byId, shallowEqual);
+  const loginUser = useAppSelector((store) => store.authData.user, shallowEqual);
   const [data, setData] = useState<CreateChannelDTO>({
     name: "",
     description: "",

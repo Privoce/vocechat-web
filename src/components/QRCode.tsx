@@ -1,6 +1,7 @@
 import QR from "qrcode.react";
 
 import { useAppSelector } from "@/app/store";
+import { shallowEqual } from "react-redux";
 
 type Props = {
   link: string;
@@ -9,7 +10,7 @@ type Props = {
 };
 
 const QRCode = ({ link, size = 512, level = "L" }: Props) => {
-  const logo = useAppSelector((store) => store.server.logo);
+  const logo = useAppSelector((store) => store.server.logo, shallowEqual);
   return (
     <div className="p-2 bg-white dark:bg-slate-200 rounded">
       <QR

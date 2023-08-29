@@ -3,15 +3,12 @@ import { useEffect, useState } from "react";
 import { usePinMessageMutation, useUnpinMessageMutation } from "@/app/services/message";
 import { useAppSelector } from "@/app/store";
 import { PinnedMessage } from "@/types/channel";
+import { shallowEqual } from "react-redux";
 
 export default function usePinMessage(cid: number) {
   const [pins, setPins] = useState<PinnedMessage[]>([]);
-  const { channel, loginUser } = useAppSelector((store) => {
-    return {
-      channel: store.channels.byId[cid],
-      loginUser: store.authData.user
-    };
-  });
+  const loginUser = useAppSelector((store) => store.authData.user, shallowEqual);
+  const channel = useAppSelector((store) => store.channels.byId[cid], shallowEqual);
   const [pin, { isError, isLoading, isSuccess }] = usePinMessageMutation();
   const [unpin, { isError: isUnpinError, isLoading: isUnpinning, isSuccess: isUnpinSuccess }] =
     useUnpinMessageMutation();

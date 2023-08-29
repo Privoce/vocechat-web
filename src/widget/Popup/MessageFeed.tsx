@@ -3,6 +3,7 @@ import { memo, useEffect, useRef, useState } from "react";
 
 import { useAppSelector } from "../../app/store";
 import Message from "./Message";
+import { shallowEqual } from "react-redux";
 
 type Props = {
   hostId: number;
@@ -11,9 +12,8 @@ const triggerScrollHeight = 1200;
 const MessageFeed = ({ hostId }: Props) => {
   const firstRender = useRef(true);
   const [hasNewMsg, setHasNewMsg] = useState(false);
-  const { mids, messageMap } = useAppSelector((store) => {
-    return { mids: store.userMessage.byId[hostId], messageMap: store.message };
-  });
+  const mids = useAppSelector((store) => store.userMessage.byId[hostId], shallowEqual);
+  const messageMap = useAppSelector((store) => store.message, shallowEqual);
   console.log("mids", mids, hostId);
   useEffect(() => {
     const container = document.querySelector("#MESSAGE_LIST_CONTAINER");

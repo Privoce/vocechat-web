@@ -1,6 +1,6 @@
 // import React from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
+import { shallowEqual, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { BASE_ORIGIN } from "@/app/config";
@@ -17,7 +17,7 @@ const GuestBlankPlaceholder = () => {
   const dispatch = useDispatch();
   const { clearLocalData } = useLogout();
   const navigateTo = useNavigate();
-  const serverName = useAppSelector((store) => store.server.name);
+  const serverName = useAppSelector((store) => store.server.name, shallowEqual);
   const handleSignIn = () => {
     dispatch(resetAuthData());
     clearLocalData();

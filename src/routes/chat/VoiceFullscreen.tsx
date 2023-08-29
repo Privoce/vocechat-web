@@ -1,5 +1,5 @@
 import { MouseEvent, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { shallowEqual, useDispatch } from "react-redux";
 import clsx from "clsx";
 
 import Operations from "@/components/Voice/Operations";
@@ -21,13 +21,12 @@ type Props = {
 const VoiceFullscreen = ({ id, context }: Props) => {
   const dispatch = useDispatch();
   const [speakingUid, setSpeakingUid] = useState(0);
-  const { name, userData, voicingMembers } = useAppSelector((store) => {
-    return {
-      userData: store.users.byId,
-      voicingMembers: store.voice.voicingMembers,
-      name: context == "channel" ? store.channels.byId[id].name : store.users.byId[id].name
-    };
-  });
+  const name = useAppSelector(
+    (store) => (context == "channel" ? store.channels.byId[id].name : store.users.byId[id].name),
+    shallowEqual
+  );
+  const userData = useAppSelector((store) => store.users.byId, shallowEqual);
+  const voicingMembers = useAppSelector((store) => store.voice.voicingMembers, shallowEqual);
   useEffect(() => {
     const ids = voicingMembers.ids;
     ids.forEach((id) => {

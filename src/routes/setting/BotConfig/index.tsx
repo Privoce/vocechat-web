@@ -13,6 +13,7 @@ import DeleteModal from "./DeleteModal";
 import NameEdit from "./NameEdit";
 import WebhookEdit from "./WebhookEdit";
 import WebhookModal from "./WebhookModal";
+import { shallowEqual } from "react-redux";
 
 type TipProps = { title: string; desc: string };
 const Tip = ({ title, desc }: TipProps) => {
@@ -33,7 +34,10 @@ export default function BotConfig() {
   const [createModalVisible, setCreateModalVisible] = useState(false);
   const [currWebhookParams, setCurrWebhookParams] = useState<WebhookParams | undefined>(undefined);
   const [currDeleteParams, setCurrDeleteParams] = useState<DeleteParams | undefined>(undefined);
-  const bots = useAppSelector((store) => Object.values(store.users.byId).filter((u) => !!u.is_bot));
+  const bots = useAppSelector(
+    (store) => Object.values(store.users.byId).filter((u) => !!u.is_bot),
+    shallowEqual
+  );
   const { t } = useTranslation("setting", { keyPrefix: "bot" });
   const { t: ct } = useTranslation();
 

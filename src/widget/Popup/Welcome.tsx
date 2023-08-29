@@ -4,13 +4,14 @@ import { useTranslation } from "react-i18next";
 import { useAppSelector } from "../../app/store";
 import { useWidget } from "../WidgetContext";
 import Login from "./Login";
+import { shallowEqual } from "react-redux";
 
 type Props = {
   needLogin?: boolean;
 };
 const Index = ({ needLogin = false }: Props) => {
   const { welcome } = useWidget();
-  const { logo } = useAppSelector((store) => store.server);
+  const logo = useAppSelector((store) => store.server.logo, shallowEqual);
   const { t } = useTranslation("widget");
   // console.log("logooo", logo);
   return (

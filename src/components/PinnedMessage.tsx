@@ -7,15 +7,15 @@ import { PinnedMessage } from "@/types/channel";
 import { normalizeFileMessage } from "../utils";
 import Avatar from "./Avatar";
 import renderContent from "./Message/renderContent";
+import { shallowEqual } from "react-redux";
 
 interface Props {
   data: PinnedMessage;
 }
 
 const PinnedMessageView: FC<Props> = ({ data }) => {
-  const { msgData, usersData } = useAppSelector((store) => {
-    return { msgData: store.message, usersData: store.users.byId };
-  });
+  const msgData = useAppSelector((store) => store.message, shallowEqual);
+  const usersData = useAppSelector((store) => store.users.byId, shallowEqual);
   // console.log("piiii", data);
 
   const { mid = 0 } = data;

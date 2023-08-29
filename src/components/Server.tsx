@@ -6,6 +6,7 @@ import { useAppSelector } from "@/app/store";
 import IconAdd from "@/assets/icons/add.svg";
 import AddEntriesMenu from "./AddEntriesMenu";
 import Tooltip from "./Tooltip";
+import { shallowEqual } from "react-redux";
 
 type Props = {
   readonly?: boolean;
@@ -13,14 +14,9 @@ type Props = {
 export default function Server({ readonly = false }: Props) {
   const { t } = useTranslation();
   const { pathname } = useLocation();
-  const { server, userCount } = useAppSelector((store) => {
-    return {
-      userCount: store.users.ids.length,
-      server: store.server
-    };
-  });
+  const { name, description, logo } = useAppSelector((store) => store.server, shallowEqual);
+  const userCount = useAppSelector((store) => store.users.ids.length, shallowEqual);
   // console.log("server info", server);
-  const { name, description, logo } = server;
   if (readonly)
     return (
       <NavLink to={"/"} className="relative flex items-center justify-between gap-2 px-4 py-2">

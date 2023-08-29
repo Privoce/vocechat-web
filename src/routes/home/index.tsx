@@ -1,6 +1,6 @@
 import { memo, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
+import { shallowEqual, useDispatch } from "react-redux";
 import { NavLink, Outlet, useLocation, useMatch } from "react-router-dom";
 
 import { updateRememberedNavs } from "@/app/slices/ui";
@@ -28,21 +28,13 @@ function HomePage() {
   const isHomePath = useMatch(`/`);
   const isChatHomePath = useMatch(`/chat`);
   const { pathname } = useLocation();
-  const {
-    roleChanged,
-    loginUser: { uid: loginUid },
-    guest,
-    ui: {
-      rememberedNavs: { chat: chatPath, user: userPath }
-    }
-  } = useAppSelector((store) => {
-    return {
-      ui: store.ui,
-      loginUser: store.authData.user ?? { uid: 0, is_admin: false },
-      guest: store.authData.guest,
-      roleChanged: store.authData.roleChanged
-    };
-  });
+  const roleChanged = useAppSelector((store) => store.authData.roleChanged, shallowEqual);
+  const guest = useAppSelector((store) => store.authData.guest, shallowEqual);
+  const loginUid = useAppSelector((store) => store.authData.user?.uid ?? 0, shallowEqual);
+  const { chat: chatPath, user: userPath } = useAppSelector(
+    (store) => store.ui.rememberedNavs,
+    shallowEqual
+  );
   // preload basic data
   const { success } = usePreload();
   useEffect(() => {

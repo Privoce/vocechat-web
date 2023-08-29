@@ -3,6 +3,7 @@ import clsx from "clsx";
 
 import { useAppSelector } from "@/app/store";
 import Avatar from "./Avatar";
+import { shallowEqual } from "react-redux";
 
 interface Props {
   interactive?: boolean;
@@ -12,12 +13,8 @@ interface Props {
 }
 
 const Channel: FC<Props> = ({ interactive = true, id, compact = false, avatarSize = 32 }) => {
-  const { channel, totalMemberCount } = useAppSelector((store) => {
-    return {
-      channel: store.channels.byId[id],
-      totalMemberCount: store.users.ids.length
-    };
-  });
+  const channel = useAppSelector((store) => store.channels.byId[id], shallowEqual);
+  const totalMemberCount = useAppSelector((store) => store.users.ids.length, shallowEqual);
 
   if (!channel) return null;
   const { name, members = [], is_public, icon } = channel;

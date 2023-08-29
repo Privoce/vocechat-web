@@ -7,33 +7,27 @@ import { useLazyGetContactsQuery, useLazyGetUsersQuery } from "@/app/services/us
 import { useAppSelector } from "@/app/store";
 import useLicense from "./useLicense";
 import useStreaming from "./useStreaming";
+import { shallowEqual } from "react-redux";
 
 let preloadChannelMsgs = false;
 export default function usePreload() {
   const { isLoading: loadingLicense } = useLicense(false);
   const [preloadChannelMessages] = useLazyLoadMoreMessagesQuery();
   const { rehydrate, rehydrated } = useRehydrate();
-  const {
-    ready,
-    loginUid,
-    token,
-    isGuest,
-    expireTime = +new Date(),
-    channelMessageData,
-    channelIds,
-    enableContacts
-  } = useAppSelector((store) => {
-    return {
-      ready: store.ui.ready,
-      channelIds: store.channels.ids,
-      channelMessageData: store.channelMessage,
-      loginUid: store.authData.user?.uid,
-      isGuest: store.authData.guest,
-      token: store.authData.token,
-      expireTime: store.authData.expireTime,
-      enableContacts: store.server.contact_verification_enable
-    };
-  });
+  const ready = useAppSelector((store) => store.ui.ready, shallowEqual);
+  const loginUid = useAppSelector((store) => store.authData.user?.uid, shallowEqual);
+  const enableContacts = useAppSelector(
+    (store) => store.server.contact_verification_enable,
+    shallowEqual
+  );
+  const expireTime = useAppSelector(
+    (store) => store.authData.expireTime ?? +new Date(),
+    shallowEqual
+  );
+  const channelIds = useAppSelector((store) => store.channels.ids, shallowEqual);
+  const token = useAppSelector((store) => store.authData.token, shallowEqual);
+  const isGuest = useAppSelector((store) => store.authData.guest, shallowEqual);
+  const channelMessageData = useAppSelector((store) => store.channelMessage, shallowEqual);
   const { startStreaming } = useStreaming();
   const [
     getFavorites,

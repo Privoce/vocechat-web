@@ -13,12 +13,11 @@ import FrontendURL from "./FrontendURL";
 import Language from "./Language";
 import OnlineStatus from "./OnlineStatus";
 import Server from "./Server";
+import { shallowEqual } from "react-redux";
 
 export default function Overview() {
   const { t } = useTranslation("setting");
-  const { loginUser } = useAppSelector((store) => {
-    return { loginUser: store.authData.user };
-  });
+  const isAdmin = useAppSelector((store) => store.authData.user?.is_admin, shallowEqual);
   const { values: loginConfig, updateConfig: updateLoginConfig } = useConfig("login");
   const handleUpdateWhoCanSignUp = (value: WhoCanSignUp) => {
     updateLoginConfig({ ...loginConfig, who_can_sign_up: value });
@@ -30,7 +29,6 @@ export default function Overview() {
   };
   if (!loginConfig) return null;
   const { who_can_sign_up: whoCanSignUp, guest = false } = loginConfig as LoginConfig;
-  const isAdmin = loginUser?.is_admin;
 
   return (
     <div className="relative w-full md:w-[512px] flex flex-col gap-6">

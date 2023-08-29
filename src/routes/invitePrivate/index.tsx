@@ -5,10 +5,11 @@ import { useCheckMagicTokenValidMutation } from "../../app/services/auth";
 import { useJoinPrivateChannelMutation, useLazyGetChannelQuery } from "../../app/services/channel";
 import { useAppSelector } from "../../app/store";
 import StyledButton from "../../components/styled/Button";
+import { shallowEqual } from "react-redux";
 
 const InvitePrivate = () => {
   const { channel_id } = useParams();
-  const server = useAppSelector((store) => store.server);
+  const server = useAppSelector((store) => store.server, shallowEqual);
   const navigateTo = useNavigate();
   const [joinChannel, { isLoading, data, isSuccess }] = useJoinPrivateChannelMutation();
   const [fetchChannelInfo, { data: channel, isSuccess: fetchChannelSuccess }] =

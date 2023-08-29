@@ -19,6 +19,7 @@ import Reaction from "./Reaction";
 import renderContent from "./renderContent";
 import Reply from "./Reply";
 import useInView from "./useInView";
+import { shallowEqual } from "react-redux";
 
 interface IProps {
   readOnly?: boolean;
@@ -41,17 +42,14 @@ const Message: FC<IProps> = ({
   const [edit, setEdit] = useState(false);
   const avatarRef = useRef(null);
   const { getPinInfo } = usePinMessage(context == "channel" ? contextId : 0);
-  const { message, reactionMessageData, usersData, loginUid, enableRightLayout } = useAppSelector(
-    (store) => {
-      return {
-        enableRightLayout: store.server.chat_layout_mode == "SelfRight",
-        reactionMessageData: store.reactionMessage,
-        message: store.message[mid],
-        usersData: store.users.byId,
-        loginUid: store.authData.user?.uid
-      };
-    }
+  const message = useAppSelector((store) => store.message[mid], shallowEqual);
+  const enableRightLayout = useAppSelector(
+    (store) => store.server.chat_layout_mode == "SelfRight",
+    shallowEqual
   );
+  const loginUid = useAppSelector((store) => store.authData.user?.uid, shallowEqual);
+  const usersData = useAppSelector((store) => store.users.byId, shallowEqual);
+  const reactionMessageData = useAppSelector((store) => store.reactionMessage, shallowEqual);
 
   const toggleEditMessage = () => {
     setEdit((prev) => !prev);

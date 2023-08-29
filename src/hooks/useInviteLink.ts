@@ -8,6 +8,7 @@ import {
 import { useGetSMTPStatusQuery } from "@/app/services/server";
 import { useAppSelector } from "@/app/store";
 import useCopy from "./useCopy";
+import { shallowEqual } from "react-redux";
 
 const defaultExpire = getInviteLinkExpireList()[4].value;
 const defaultTimes = getInviteLinkTimesList()[0].value;
@@ -15,7 +16,7 @@ type ParamsProps = { expire: number; times: number };
 const defaultParams: ParamsProps = { expire: defaultExpire, times: defaultTimes };
 export default function useInviteLink(cid?: number) {
   const [finalLink, setFinalLink] = useState("");
-  const channel = useAppSelector((store) => store.channels.byId[cid ?? 0]);
+  const channel = useAppSelector((store) => store.channels.byId[cid ?? 0], shallowEqual);
   const { data: SMTPEnabled, isSuccess: smtpStatusFetchSuccess } = useGetSMTPStatusQuery();
   const [generateInviteLink, { data: channelInviteLink, isLoading: generatingChannelLink }] =
     useLazyCreateInviteLinkQuery();

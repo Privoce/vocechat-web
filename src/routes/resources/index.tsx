@@ -9,6 +9,7 @@ import useExpiredResMap from "@/hooks/useExpiredResMap";
 import Filter from "./Filter";
 import Search from "./Search";
 import View from "./View";
+import { shallowEqual } from "react-redux";
 
 const checkFilter = (data, filter, channelMessage) => {
   let selected = true;
@@ -36,14 +37,10 @@ function ResourceManagement() {
   const { isExpired } = useExpiredResMap();
   const listContainerRef = useRef<HTMLDivElement>();
   const [filter, setFilter] = useState({});
-  const { message, view, channelMessage, fileMsgs } = useAppSelector((store) => {
-    return {
-      fileMsgs: store.fileMessage,
-      message: store.message,
-      channelMessage: store.channelMessage,
-      view: store.ui.fileListView
-    };
-  });
+  const view = useAppSelector((store) => store.ui.fileListView.view, shallowEqual);
+  const message = useAppSelector((store) => store.message, shallowEqual);
+  const fileMsgs = useAppSelector((store) => store.fileMessage, shallowEqual);
+  const channelMessage = useAppSelector((store) => store.channelMessage, shallowEqual);
 
   const updateFilter = (data) => {
     setFilter((prev) => {

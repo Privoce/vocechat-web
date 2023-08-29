@@ -1,8 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { shallowEqual, useDispatch } from "react-redux";
 import { Virtuoso, VirtuosoHandle } from "react-virtuoso";
-// import clsx from 'clsx';
-// import { useTranslation } from 'react-i18next';
 import { useDebounce } from "rooks";
 
 import { useLazyLoadMoreMessagesQuery, useReadMessageMutation } from "@/app/services/message";
@@ -30,24 +28,26 @@ const VirtualMessageFeed = ({ context, id }: Props) => {
   const vList = useRef<VirtuosoHandle | null>(null);
   const [updateReadIndex] = useReadMessageMutation();
   const updateReadDebounced = useDebounce(updateReadIndex, 300);
-  const {
-    historyMid = "",
-    mids = [],
-    selects,
-    messageData,
-    loginUser,
-    footprint
-  } = useAppSelector((store) => {
-    return {
-      historyMid:
-        context == "dm" ? store.footprint.historyUsers[id] : store.footprint.historyChannels[id],
-      mids: context == "dm" ? store.userMessage.byId[id] : store.channelMessage[id],
-      selects: store.ui.selectMessages[`${context}_${id}`],
-      footprint: store.footprint,
-      loginUser: store.authData.user,
-      messageData: store.message || {}
-    };
-  });
+  const historyMid = useAppSelector(
+    (store) =>
+      context == "dm"
+        ? store.footprint.historyUsers[id] ?? ""
+        : store.footprint.historyChannels[id] ?? "",
+    shallowEqual
+  );
+  const mids = useAppSelector(
+    (store) =>
+      context == "dm" ? store.userMessage.byId[id] ?? [] : store.channelMessage[id] ?? [],
+    shallowEqual
+  );
+  const selects = useAppSelector(
+    (store) => store.ui.selectMessages[`${context}_${id}`],
+    shallowEqual
+  );
+  const messageData = useAppSelector((store) => store.message || {}, shallowEqual);
+  const loginUid = useAppSelector((store) => store.authData.user?.uid, shallowEqual);
+  const readChannels = useAppSelector((store) => store.footprint.readChannels, shallowEqual);
+  const readUsers = useAppSelector((store) => store.footprint.readUsers, shallowEqual);
 
   useEffect(() => {
     if (isSuccess && historyData) {
@@ -102,7 +102,7 @@ const VirtualMessageFeed = ({ context, id }: Props) => {
   const handleBottomStateChange = (bottom: boolean) => {
     setAtBottom(bottom);
   };
-  const readIndex = context == "channel" ? footprint.readChannels[id] : footprint.readUsers[id];
+  const readIndex = context == "channel" ? readChannels[id] : readUsers[id];
   return (
     <>
       <Virtuoso
@@ -132,7 +132,7 @@ const VirtualMessageFeed = ({ context, id }: Props) => {
           if (!curr) return <div className="w-full h-[1px] invisible"></div>;
           const isFirst = idx == 0;
           const prev = isFirst ? null : messageData[mids[idx - 1]];
-          const read = curr?.from_uid == loginUser?.uid || mid <= readIndex;
+          const read = curr?.from_uid == loginUid || mid <= readIndex;
           return renderMessageFragment({
             selectMode: !!selects,
             updateReadIndex: updateReadDebounced,

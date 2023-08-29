@@ -17,6 +17,7 @@ import IconMute from "@/assets/icons/mute.svg";
 import IconVoicing from "@/assets/icons/voicing.svg";
 import getUnreadCount, { renderPreviewMessage } from "../utils";
 import ContextMenu from "./ContextMenu";
+import { shallowEqual } from "react-redux";
 
 interface IProps {
   type?: ChatContext;
@@ -67,31 +68,25 @@ const Session: FC<IProps> = ({
     mid: number;
     is_public: boolean;
   }>();
-  const {
-    callingFrom,
-    callingTo,
-    messageData,
-    userData,
-    channelData,
-    readIndex,
-    loginUid,
-    mids,
-    muted,
-    voiceList
-  } = useAppSelector((store) => {
-    return {
-      callingFrom: store.voice.callingFrom,
-      callingTo: store.voice.callingTo,
-      voiceList: store.voice.list,
-      mids: type == "dm" ? store.userMessage.byId[id] : store.channelMessage[id],
-      loginUid: store.authData.user?.uid || 0,
-      readIndex: type == "dm" ? store.footprint.readUsers[id] : store.footprint.readChannels[id],
-      messageData: store.message,
-      userData: store.users.byId,
-      channelData: store.channels.byId,
-      muted: type == "dm" ? store.footprint.muteUsers[id] : store.footprint.muteChannels[id]
-    };
-  });
+  const loginUid = useAppSelector((store) => store.authData.user?.uid || 0, shallowEqual);
+  const callingFrom = useAppSelector((store) => store.voice.callingFrom, shallowEqual);
+  const callingTo = useAppSelector((store) => store.voice.callingTo, shallowEqual);
+  const voiceList = useAppSelector((store) => store.voice.list, shallowEqual);
+  const mids = useAppSelector(
+    (store) => (type == "dm" ? store.userMessage.byId[id] : store.channelMessage[id]),
+    shallowEqual
+  );
+  const muted = useAppSelector(
+    (store) => (type == "dm" ? store.footprint.muteUsers[id] : store.footprint.muteChannels[id]),
+    shallowEqual
+  );
+  const readIndex = useAppSelector(
+    (store) => (type == "dm" ? store.footprint.readUsers[id] : store.footprint.readChannels[id]),
+    shallowEqual
+  );
+  const messageData = useAppSelector((store) => store.message, shallowEqual);
+  const userData = useAppSelector((store) => store.users.byId, shallowEqual);
+  const channelData = useAppSelector((store) => store.channels.byId, shallowEqual);
 
   useEffect(() => {
     const tmp = type == "dm" ? userData[id] : channelData[id];

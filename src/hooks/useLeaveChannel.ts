@@ -1,10 +1,10 @@
 import { useLazyLeaveChannelQuery, useUpdateChannelMutation } from "@/app/services/channel";
 import { useAppSelector } from "@/app/store";
+import { shallowEqual } from "react-redux";
 
 export default function useLeaveChannel(cid: number) {
-  const { channel, loginUid } = useAppSelector((store) => {
-    return { channel: store.channels.byId[cid], loginUid: store.authData.user?.uid };
-  });
+  const loginUid = useAppSelector((store) => store.authData.user?.uid, shallowEqual);
+  const channel = useAppSelector((store) => store.channels.byId[cid], shallowEqual);
   const [update, { isLoading: transferring, isSuccess: transferSuccess }] =
     useUpdateChannelMutation();
   const [leave, { isLoading: leaving, isSuccess: leaveSuccess }] = useLazyLeaveChannelQuery();

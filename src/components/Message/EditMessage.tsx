@@ -5,6 +5,7 @@ import { useKey } from "rooks";
 import { ContentTypes } from "@/app/config";
 import { useEditMessageMutation } from "@/app/services/message";
 import { useAppSelector } from "@/app/store";
+import { shallowEqual } from "react-redux";
 
 type Props = {
   mid: number;
@@ -12,7 +13,7 @@ type Props = {
 };
 const EditMessage: FC<Props> = ({ mid, cancelEdit }) => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const msg = useAppSelector((store) => store.message[mid]);
+  const msg = useAppSelector((store) => store.message[mid], shallowEqual);
   const [shift, setShift] = useState(false);
   const [enter, setEnter] = useState(false);
   const [currMsg, setCurrMsg] = useState(msg?.content);

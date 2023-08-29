@@ -16,13 +16,14 @@ import IconBack from "@/assets/icons/arrow.left.svg";
 import MagicLinkLogin from "./MagicLinkLogin";
 import SignUpLink from "./SignUpLink";
 import SocialLoginButtons from "./SocialLoginButtons";
+import { shallowEqual } from "react-redux";
 
 const defaultInput = {
   email: "",
   password: ""
 };
 export default function LoginPage() {
-  const { name: serverName, logo } = useAppSelector((store) => store.server);
+  const { name: serverName, logo } = useAppSelector((store) => store.server, shallowEqual);
   const { t } = useTranslation("auth");
   const { t: ct } = useTranslation();
   const { data: enableSMTP, isLoading: loadingSMTPStatus } = useGetSMTPStatusQuery();

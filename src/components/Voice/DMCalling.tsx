@@ -1,6 +1,6 @@
 // import React from 'react';
 import { useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { shallowEqual, useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 // import { useTranslation } from 'react-i18next';
 import { Waveform } from "@uiball/loaders";
@@ -27,17 +27,12 @@ const DMCalling = ({ from, to = 0 }: Props) => {
   const dispatch = useDispatch();
   const { leave, joinVoice, joining } = useVoice({ id: to, context: "dm" });
   const containerRef = useRef(null);
-  const { calling, voicingMembers, fromUser, toUser, loginUser } = useAppSelector((store) => {
-    return {
-      calling: store.voice.calling,
-      // voicingInfo: store.voice.voicing ?? {},
-      voicingMembers: store.voice.voicingMembers,
-      fromUser: store.users.byId[from],
-      toUser: store.users.byId[to],
-      loginUser: store.authData.user
-    };
-  });
-  const sendByMe = loginUser?.uid !== toUser.uid;
+  const loginUid = useAppSelector((store) => store.authData.user?.uid, shallowEqual);
+  const calling = useAppSelector((store) => store.voice.calling, shallowEqual);
+  const voicingMembers = useAppSelector((store) => store.voice.voicingMembers, shallowEqual);
+  const fromUser = useAppSelector((store) => store.users.byId[from], shallowEqual);
+  const toUser = useAppSelector((store) => store.users.byId[to], shallowEqual);
+  const sendByMe = loginUid !== toUser.uid;
 
   useEffect(() => {
     const ids = voicingMembers.ids;

@@ -1,9 +1,10 @@
-import { FC, ReactElement } from "react";
+import { FC, ReactElement, memo } from "react";
 import { matchRoutes, Navigate, useLocation } from "react-router-dom";
 
 import { GuestRoutes, KEY_LOCAL_TRY_PATH } from "@/app/config";
 import { useAppSelector } from "@/app/store";
 import Loading from "./Loading";
+import { shallowEqual } from "react-redux";
 
 interface Props {
   children: ReactElement;
@@ -16,15 +17,10 @@ const RequireAuth: FC<Props> = ({ children, redirectTo = "/login" }) => {
   const location = useLocation();
   const matches = matchRoutes(GuestAllows, location);
   const allowGuest = matches ? !!matches[0].pathname : false;
-  const {
-    authData: { token, guest, initialized },
-    loginConfig
-  } = useAppSelector((store) => {
-    return {
-      authData: store.authData,
-      loginConfig: store.server.loginConfig
-    };
-  });
+  const token = useAppSelector((store) => store.authData.token, shallowEqual);
+  const guest = useAppSelector((store) => store.authData.guest, shallowEqual);
+  const initialized = useAppSelector((store) => store.authData.initialized, shallowEqual);
+  const loginConfig = useAppSelector((store) => store.server.loginConfig, shallowEqual);
   console.info("check basic info", loginConfig);
   // 初始化login配置检查
   if (!loginConfig) return <Loading fullscreen={true} context="auth-route" />;
@@ -55,4 +51,4 @@ const RequireAuth: FC<Props> = ({ children, redirectTo = "/login" }) => {
   return children;
 };
 
-export default RequireAuth;
+export default memo(RequireAuth);

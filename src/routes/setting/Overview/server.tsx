@@ -9,13 +9,13 @@ import SaveTip from "@/components/SaveTip";
 import Input from "@/components/styled/Input";
 import Label from "@/components/styled/Label";
 import Textarea from "@/components/styled/Textarea";
+import { shallowEqual } from "react-redux";
 
 const Index = () => {
   const { t } = useTranslation("setting");
   const { t: ct } = useTranslation();
-  const { loginUser, server } = useAppSelector((store) => {
-    return { loginUser: store.authData.user, server: store.server };
-  });
+  const isAdmin = useAppSelector((store) => store.authData.user?.is_admin, shallowEqual);
+  const server = useAppSelector((store) => store.server, shallowEqual);
 
   const [uploadLogo, { isSuccess: uploadSuccess }] = useUpdateLogoMutation();
   const [updateServer] = useUpdateServerMutation();
@@ -58,8 +58,7 @@ const Index = () => {
     }
   }, [server, serverValues]);
   const { name, description, logo } = serverValues;
-  const isAdmin = loginUser?.is_admin;
-  if (!loginUser || !serverValues) return null;
+  if (!serverValues) return null;
   return (
     <>
       <div className="flex gap-4">

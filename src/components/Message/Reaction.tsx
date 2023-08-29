@@ -8,6 +8,7 @@ import IconAddEmoji from "@/assets/icons/add.emoji.svg";
 import ReactionItem, { Emojis, ReactionMap } from "../ReactionItem";
 import Tooltip from "../Tooltip";
 import ReactionPicker from "./ReactionPicker";
+import { shallowEqual } from "react-redux";
 
 const ReactionDetails = ({
   uids = [],
@@ -18,7 +19,7 @@ const ReactionDetails = ({
   emoji: keyof Emojis;
   index: number;
 }) => {
-  const usersData = useAppSelector((store) => store.users.byId);
+  const usersData = useAppSelector((store) => store.users.byId, shallowEqual);
   const names = uids.map((id) => {
     return usersData[id]?.name ?? "Deleted User";
   });
@@ -52,11 +53,7 @@ type Props = {
 };
 const Reaction: FC<Props> = ({ mid, reactions = null, readOnly = false }) => {
   const [reactWithEmoji] = useReactMessageMutation();
-  const { currUid } = useAppSelector((store) => {
-    return {
-      currUid: store.authData.user?.uid
-    };
-  });
+  const currUid = useAppSelector((store) => store.authData.user?.uid, shallowEqual);
   const handleReact = (emoji: string) => {
     reactWithEmoji({ mid, action: emoji });
   };

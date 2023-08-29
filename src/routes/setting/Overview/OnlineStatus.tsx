@@ -10,11 +10,15 @@ import {
   useUpdateSystemCommonMutation
 } from "../../../app/services/server";
 import { useAppSelector } from "../../../app/store";
+import { shallowEqual } from "react-redux";
 
 // type Props = {}
 
 const Index = () => {
-  const currStatus = useAppSelector((store) => !!store.server.show_user_online_status);
+  const currStatus = useAppSelector(
+    (store) => !!store.server.show_user_online_status,
+    shallowEqual
+  );
   const { t } = useTranslation("setting", { keyPrefix: "overview.online_status" });
   const { t: ct } = useTranslation();
   const { refetch } = useGetSystemCommonQuery();

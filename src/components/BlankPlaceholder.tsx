@@ -12,6 +12,7 @@ import IconAsk from "@/assets/icons/placeholder.question.svg";
 import ChannelModal from "./ChannelModal";
 import InviteModal from "./InviteModal";
 import UsersModal from "./UsersModal";
+import { shallowEqual } from "react-redux";
 
 interface Props {
   type?: "chat" | "user";
@@ -23,13 +24,8 @@ const classes = {
 };
 const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
   const { t } = useTranslation("welcome");
-  const { server, isAdmin, upgraded } = useAppSelector((store) => {
-    return {
-      server: store.server,
-      isAdmin: store.authData.user?.is_admin,
-      upgraded: store.server.upgraded
-    };
-  });
+  const server = useAppSelector((store) => store.server, shallowEqual);
+  const isAdmin = useAppSelector((store) => store.authData.user?.is_admin, shallowEqual);
   const [inviteModalVisible, setInviteModalVisible] = useState(false);
   const [createChannelVisible, setCreateChannelVisible] = useState(false);
   const [userListVisible, setUserListVisible] = useState(false);
@@ -93,7 +89,7 @@ const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
             <IconChat className={classes.boxIcon} />
             <div className={classes.boxTip}>{chatTip}</div>
           </button>
-          {!upgraded && (
+          {!server.upgraded && (
             <>
               <a
                 href={"https://voce.chat#download"}

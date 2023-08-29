@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
+import { shallowEqual, useDispatch } from "react-redux";
 // import { ContentTypes } from "@/app/config";
 import { useMatch, useNavigate } from "react-router-dom";
 import { hideAll } from "tippy.js";
@@ -39,13 +39,15 @@ const useUserOperation = ({ uid, cid }: IProps) => {
   const [removeInChannel, { isSuccess: removeSuccess }] = useRemoveMembersMutation();
   const navigateTo = useNavigate();
   const { copy } = useCopy();
-  const { user, channel, loginUser } = useAppSelector((store) => {
-    return {
-      user: typeof uid !== "undefined" ? store.users.byId[uid] : uid,
-      channel: typeof cid !== "undefined" ? store.channels.byId[cid] : cid,
-      loginUser: store.authData.user
-    };
-  });
+  const user = useAppSelector(
+    (store) => (typeof uid !== "undefined" ? store.users.byId[uid] : undefined),
+    shallowEqual
+  );
+  const channel = useAppSelector(
+    (store) => (typeof cid !== "undefined" ? store.channels.byId[cid] : undefined),
+    shallowEqual
+  );
+  const loginUser = useAppSelector((store) => store.authData.user, shallowEqual);
 
   useEffect(() => {
     setPassedUid(uid ?? loginUser?.uid);

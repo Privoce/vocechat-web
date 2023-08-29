@@ -20,6 +20,7 @@ import Replying from "./Replying";
 import Toolbar from "./Toolbar";
 // import StyledSend from "./styled";
 import UploadFileList from "./UploadFileList";
+import { shallowEqual } from "react-redux";
 
 const Modes = {
   text: "text",
@@ -48,18 +49,19 @@ const Send: FC<IProps> = ({
   const dispatch = useAppDispatch();
   const addLocalFileMessage = useAddLocalFileMessage({ context, to: id });
   // 谁发的
-  const { from_uid, replying_mid, mode, uploadFiles, channelsData, usersData, uids } =
-    useAppSelector((store) => {
-      return {
-        channelsData: store.channels.byId,
-        uids: store.users.ids,
-        usersData: store.users.byId,
-        mode: store.ui.inputMode,
-        from_uid: store.authData.user?.uid,
-        replying_mid: store.message.replying[`${context}_${id}`],
-        uploadFiles: store.ui.uploadFiles[`${context}_${id}`] ?? []
-      };
-    });
+  const from_uid = useAppSelector((store) => store.authData.user?.uid, shallowEqual);
+  const replying_mid = useAppSelector(
+    (store) => store.message.replying[`${context}_${id}`],
+    shallowEqual
+  );
+  const mode = useAppSelector((store) => store.ui.inputMode, shallowEqual);
+  const uploadFiles = useAppSelector(
+    (store) => store.ui.uploadFiles[`${context}_${id}`] ?? [],
+    shallowEqual
+  );
+  const uids = useAppSelector((store) => store.users.ids, shallowEqual);
+  const channelsData = useAppSelector((store) => store.channels.byId, shallowEqual);
+  const usersData = useAppSelector((store) => store.users.byId, shallowEqual);
   const { sendMessage } = useSendMessage({ context, from: from_uid, to: id });
 
   useEffect(() => {

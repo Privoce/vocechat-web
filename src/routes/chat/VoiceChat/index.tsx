@@ -1,9 +1,6 @@
-// import React from 'react';
-// import Tippy from '@tippyjs/react';
-// import { useState } from 'react';
 import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
+import { shallowEqual, useDispatch } from "react-redux";
 
 import { useGetAgoraStatusQuery } from "@/app/services/server";
 import { updateChannelVisibleAside, updateDMVisibleAside } from "@/app/slices/footprint";
@@ -23,14 +20,12 @@ const isIframe = isInIframe();
 const VoiceChat = ({ id, context = "channel" }: Props) => {
   const { joinVoice, joined, joining = false, joinedAtThisContext } = useVoice({ id, context });
   const dispatch = useDispatch();
-  const { loginUser, voiceList, visibleAside } = useAppSelector((store) => {
-    return {
-      loginUser: store.authData.user,
-      contextData: context == "channel" ? store.channels.byId[id] : store.users.byId[id],
-      voiceList: store.voice.list,
-      visibleAside: context == "channel" ? store.footprint.channelAsides[id] : null
-    };
-  });
+  const loginUid = useAppSelector((store) => store.authData.user?.uid ?? 0, shallowEqual);
+  const visibleAside = useAppSelector(
+    (store) => (context == "channel" ? store.footprint.channelAsides[id] : null),
+    shallowEqual
+  );
+  const voiceList = useAppSelector((store) => store.voice.list, shallowEqual);
   const { data: enabled } = useGetAgoraStatusQuery();
   const { t } = useTranslation("chat");
   const toggleDashboard = () => {
@@ -53,14 +48,14 @@ const VoiceChat = ({ id, context = "channel" }: Props) => {
     dispatch(context == "channel" ? updateChannelVisibleAside(data) : updateDMVisibleAside(data));
     // 实时显示calling box
     if (!joinedAtThisContext && context == "dm") {
-      dispatch(updateCallInfo({ from: loginUser?.uid ?? 0, to: id, calling: false }));
+      dispatch(updateCallInfo({ from: loginUid, to: id, calling: false }));
     }
   };
   const handleInIframe = () => {
     // todo
     toast.error("Voice is not supported in iframe");
   };
-  if (!loginUser || !enabled) return null;
+  if (loginUid == 0 || !enabled) return null;
   const visible = visibleAside == "voice";
   const memberCount = voiceList.find((v) => v.context == context && v.id == id)?.memberCount ?? 0;
   const badgeClass = `absolute -top-2 -right-2 w-4 h-4 rounded-full bg-primary-400 text-white `;

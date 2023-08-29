@@ -3,6 +3,7 @@ import { FC, useEffect, useState } from "react";
 import { useAppSelector } from "@/app/store";
 import LoginTip from "../Layout/LoginTip";
 import Session from "./Session";
+import { shallowEqual } from "react-redux";
 
 export interface ChatSession {
   key: string;
@@ -12,17 +13,12 @@ export interface ChatSession {
 type Props = {};
 const SessionList: FC<Props> = () => {
   const [sessions, setSessions] = useState<ChatSession[]>([]);
-  const { channelIDs, readChannels, readUsers, channelMessage, userMessage, loginUid } =
-    useAppSelector((store) => {
-      return {
-        loginUid: store.authData.user?.uid,
-        channelIDs: store.channels.ids,
-        userMessage: store.userMessage.byId,
-        channelMessage: store.channelMessage,
-        readChannels: store.footprint.readChannels,
-        readUsers: store.footprint.readUsers
-      };
-    });
+  const readChannels = useAppSelector((store) => store.footprint.readChannels, shallowEqual);
+  const readUsers = useAppSelector((store) => store.footprint.readUsers, shallowEqual);
+  const loginUid = useAppSelector((store) => store.authData.user?.uid, shallowEqual);
+  const channelIDs = useAppSelector((store) => store.channels.ids, shallowEqual);
+  const channelMessage = useAppSelector((store) => store.channelMessage, shallowEqual);
+  const userMessage = useAppSelector((store) => store.userMessage.byId, shallowEqual);
 
   useEffect(() => {
     const cSessions = channelIDs.map((id) => {

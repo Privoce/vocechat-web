@@ -45,6 +45,7 @@ import {
 } from "@/types/sse";
 import { getLocalAuthData } from "@/utils";
 import chatMessageHandler from "./chat.handler";
+import { shallowEqual } from "react-redux";
 
 const getQueryString = (params: { [key: string]: string }) => {
   const sp = new URLSearchParams();
@@ -62,10 +63,12 @@ let aliveInter: number | ReturnType<typeof setTimeout> = 0;
 
 export default function useStreaming() {
   const [renewToken] = useRenewMutation();
-  const {
-    authData: { user, guest },
-    footprint: { afterMid, usersVersion, readUsers, readChannels }
-  } = useAppSelector((store) => store);
+  const user = useAppSelector((store) => store.authData.user, shallowEqual);
+  const guest = useAppSelector((store) => store.authData.guest, shallowEqual);
+  const afterMid = useAppSelector((store) => store.footprint.afterMid, shallowEqual);
+  const usersVersion = useAppSelector((store) => store.footprint.usersVersion, shallowEqual);
+  const readUsers = useAppSelector((store) => store.footprint.readUsers, shallowEqual);
+  const readChannels = useAppSelector((store) => store.footprint.readChannels, shallowEqual);
   const dispatch = useAppDispatch();
   const loginUid = user?.uid || 0;
 

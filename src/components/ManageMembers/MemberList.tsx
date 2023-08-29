@@ -15,6 +15,7 @@ import IconCheck from "@/assets/icons/check.sign.svg";
 import IconMore from "@/assets/icons/more.svg";
 import IconOwner from "@/assets/icons/owner.svg";
 import User from "../User";
+import { shallowEqual } from "react-redux";
 
 interface Props {
   cid?: number;
@@ -23,13 +24,9 @@ const MemberList: FC<Props> = ({ cid }) => {
   const ref = useRef<HTMLUListElement | null>(null);
   const { t } = useTranslation("member");
   const { t: ct } = useTranslation();
-  const { userMap, channels, loginUser } = useAppSelector((store) => {
-    return {
-      userMap: store.users.byId,
-      channels: store.channels,
-      loginUser: store.authData.user
-    };
-  });
+  const loginUser = useAppSelector((store) => store.authData.user, shallowEqual);
+  const userMap = useAppSelector((store) => store.users.byId, shallowEqual);
+  const channels = useAppSelector((store) => store.channels, shallowEqual);
   const { uids, input, updateInput } = useFilteredUsers();
   const { copyEmail, removeFromChannel, removeUser } = useUserOperation({ cid });
   const [updateUser, { isSuccess: updateSuccess }] = useUpdateUserMutation();

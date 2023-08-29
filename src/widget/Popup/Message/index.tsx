@@ -7,6 +7,7 @@ import { useAppSelector } from "../../../app/store";
 import Text from "./Text";
 import Image from "./Image";
 import { ContentType } from "@/types/message";
+import { shallowEqual } from "react-redux";
 
 dayjs.extend(localizedFormat);
 
@@ -32,7 +33,7 @@ const Time = ({ time }: { time: number }) => {
   );
 };
 const Index = (props: IWidgetMessage) => {
-  const { logo } = useAppSelector((store) => store.server);
+  const logo = useAppSelector((store) => store.server.logo, shallowEqual);
   const { host = false, type, content, thumbnail = "", uid, create_time, sending } = props;
   let contentContainer = null;
   console.log("render message", type, content);

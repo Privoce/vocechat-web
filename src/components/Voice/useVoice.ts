@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { shallowEqual, useDispatch } from "react-redux";
 import AgoraRTC, { ICameraVideoTrack, IMicrophoneAudioTrack } from "agora-rtc-sdk-ng";
 
 import AudioJoin from "@/assets/join.wav";
@@ -22,32 +22,39 @@ type VoiceProps = {
 const audioJoin = new Audio(AudioJoin);
 const useVoice = ({ id, context = "channel" }: VoiceProps) => {
   const dispatch = useDispatch();
-  const {
-    voicingInfo,
-    loginUid,
-    audioInputDevices,
-    audioOutputDevices,
-    videoInputDevices,
-    audioInputDeviceId,
-    audioOutputDeviceId,
-    videoInputDeviceId,
-    fullscreen
-  } = useAppSelector((store) => {
-    return {
-      fullscreen:
-        context == "channel"
-          ? store.footprint.channelAsides[id] == "voice_fullscreen"
-          : store.footprint.dmAsides[id] == "voice_fullscreen",
-      loginUid: store.authData.user?.uid ?? 0,
-      voicingInfo: store.voice.voicing,
-      audioInputDevices: store.voice.devices.filter((d) => d.kind == "audioinput") ?? [],
-      audioOutputDevices: store.voice.devices.filter((d) => d.kind == "audiooutput") ?? [],
-      videoInputDevices: store.voice.devices.filter((d) => d.kind == "videoinput") ?? [],
-      audioInputDeviceId: store.voice.audioInputDeviceId,
-      audioOutputDeviceId: store.voice.audioOutputDeviceId,
-      videoInputDeviceId: store.voice.videoInputDeviceId
-    };
-  });
+  const loginUid = useAppSelector((store) => store.authData.user?.uid ?? 0, shallowEqual);
+  const voicingInfo = useAppSelector((store) => store.voice.voicing, shallowEqual);
+  const fullscreen = useAppSelector(
+    (store) =>
+      context == "channel"
+        ? store.footprint.channelAsides[id] == "voice_fullscreen"
+        : store.footprint.dmAsides[id] == "voice_fullscreen",
+    shallowEqual
+  );
+  const audioInputDevices = useAppSelector(
+    (store) => store.voice.devices.filter((d) => d.kind == "audioinput") ?? [],
+    shallowEqual
+  );
+  const audioOutputDevices = useAppSelector(
+    (store) => store.voice.devices.filter((d) => d.kind == "audiooutput") ?? [],
+    shallowEqual
+  );
+  const videoInputDevices = useAppSelector(
+    (store) => store.voice.devices.filter((d) => d.kind == "videoinput") ?? [],
+    shallowEqual
+  );
+  const audioInputDeviceId = useAppSelector(
+    (store) => store.voice.audioInputDeviceId,
+    shallowEqual
+  );
+  const audioOutputDeviceId = useAppSelector(
+    (store) => store.voice.audioOutputDeviceId,
+    shallowEqual
+  );
+  const videoInputDeviceId = useAppSelector(
+    (store) => store.voice.videoInputDeviceId,
+    shallowEqual
+  );
   const [generateToken] = useGenerateAgoraTokenMutation();
   // const [joining, setJoining] = useState(false);
   const joinVoice = async () => {

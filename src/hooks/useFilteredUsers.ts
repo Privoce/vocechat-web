@@ -3,16 +3,16 @@ import { escapeRegExp } from "lodash";
 
 import { StoredUser } from "@/app/slices/users";
 import { useAppSelector } from "@/app/store";
+import { shallowEqual } from "react-redux";
 
 export default function useFilteredUsers() {
   const [input, setInput] = useState("");
-  const { originUsers, enableContact, isAdmin } = useAppSelector((store) => {
-    return {
-      isAdmin: store.authData.user?.is_admin,
-      enableContact: store.server.contact_verification_enable,
-      originUsers: Object.values(store.users.byId)
-    };
-  });
+  const isAdmin = useAppSelector((store) => store.authData.user?.is_admin, shallowEqual);
+  const originUsers = useAppSelector((store) => Object.values(store.users.byId), shallowEqual);
+  const enableContact = useAppSelector(
+    (store) => store.server.contact_verification_enable,
+    shallowEqual
+  );
   const [filteredUsers, setFilteredUsers] = useState<StoredUser[]>([]);
   const useContactList = enableContact && !isAdmin;
   const users = useContactList ? originUsers.filter((u) => u.status == "added") : originUsers;

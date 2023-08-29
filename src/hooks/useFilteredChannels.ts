@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 
 import { useAppSelector } from "@/app/store";
 import { Channel } from "@/types/channel";
+import { shallowEqual } from "react-redux";
 
 export default function useFilteredChannels() {
   const [input, setInput] = useState("");
-  const channels = useAppSelector((store) => Object.values(store.channels.byId));
+  const channels = useAppSelector((store) => Object.values(store.channels.byId), shallowEqual);
   const [filteredChannels, setFilteredChannels] = useState<Channel[]>([]);
 
   useEffect(() => {

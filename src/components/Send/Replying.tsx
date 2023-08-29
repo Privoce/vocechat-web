@@ -8,6 +8,7 @@ import IconClose from "@/assets/icons/close.circle.svg";
 import pictureIcon from "@/assets/icons/picture.svg?url";
 import LinkifyText from "../LinkifyText";
 import MarkdownRender from "../MarkdownRender";
+import { shallowEqual } from "react-redux";
 
 const renderContent = (data: MessagePayload) => {
   const { content_type, content, thumbnail = "", properties } = data;
@@ -69,9 +70,8 @@ export default function Replying({
   mid: number;
 }) {
   const { removeReplying } = useSendMessage({ to: id, context });
-  const { msg, usersData } = useAppSelector((store) => {
-    return { usersData: store.users.byId, msg: store.message[mid] };
-  });
+  const usersData = useAppSelector((store) => store.users.byId, shallowEqual);
+  const msg = useAppSelector((store) => store.message[mid], shallowEqual);
   const removeReply = () => {
     removeReplying();
   };

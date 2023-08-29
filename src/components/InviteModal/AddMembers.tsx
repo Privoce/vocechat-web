@@ -9,6 +9,7 @@ import Button from "../styled/Button";
 import StyledCheckbox from "../styled/Checkbox";
 import Input from "../styled/Input";
 import User from "../User";
+import { shallowEqual } from "react-redux";
 
 interface Props {
   cid?: number;
@@ -18,12 +19,8 @@ interface Props {
 const AddMembers: FC<Props> = ({ cid = 0, closeModal }) => {
   const [addMembers, { isLoading: isAdding, isSuccess }] = useAddMembersMutation();
   const [selects, setSelects] = useState<number[]>([]);
-  const { channel, userData } = useAppSelector((store) => {
-    return {
-      channel: store.channels.byId[cid],
-      userData: store.users.byId
-    };
-  });
+  const channel = useAppSelector((store) => store.channels.byId[cid], shallowEqual);
+  const userData = useAppSelector((store) => store.users.byId, shallowEqual);
   useEffect(() => {
     if (isSuccess) {
       toast.success("Add members successfully!");

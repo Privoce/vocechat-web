@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { shallowEqual, useDispatch } from "react-redux";
 
 import { useLazyGetOGInfoQuery } from "@/app/services/message";
 import { upsertOG } from "@/app/slices/footprint";
@@ -10,7 +10,7 @@ export default function URLPreview({ url = "" }) {
   const dispatch = useDispatch();
   const [favicon, setFavicon] = useState("");
   const [getInfo, { isLoading }] = useLazyGetOGInfoQuery();
-  const ogData = useAppSelector((store) => store.footprint.og[url]);
+  const ogData = useAppSelector((store) => store.footprint.og[url], shallowEqual);
   const [data, setData] = useState<{ title: string; description: string; ogImage: string } | null>(
     null
   );

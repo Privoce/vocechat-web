@@ -10,6 +10,7 @@ import FavIcon from "@/assets/icons/bookmark.svg";
 import FavList from "../FavList";
 import Layout from "../Layout";
 import VoiceChat from "../VoiceChat";
+import { shallowEqual } from "react-redux";
 
 type Props = {
   uid: number;
@@ -17,11 +18,7 @@ type Props = {
 };
 const DMChat: FC<Props> = ({ uid = 0, dropFiles }) => {
   const navigate = useNavigate();
-  const { currUser } = useAppSelector((store) => {
-    return {
-      currUser: store.users.byId[uid]
-    };
-  });
+  const currUser = useAppSelector((store) => store.users.byId[uid], shallowEqual);
   useEffect(() => {
     if (!currUser) {
       // user不存在了 回首页

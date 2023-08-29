@@ -17,16 +17,13 @@ import Label from "@/components/styled/Label";
 import Radio from "@/components/styled/Radio";
 import Textarea from "@/components/styled/Textarea";
 import IconChannel from "@/assets/icons/channel.svg";
+import { shallowEqual } from "react-redux";
 
 export default function Overview({ id = 0 }) {
   const { t } = useTranslation("setting", { keyPrefix: "channel" });
   const { t: ct } = useTranslation();
-  const { loginUser, channel } = useAppSelector((store) => {
-    return {
-      loginUser: store.authData.user,
-      channel: store.channels.byId[id]
-    };
-  });
+  const loginUser = useAppSelector((store) => store.authData.user, shallowEqual);
+  const channel = useAppSelector((store) => store.channels.byId[id], shallowEqual);
   const { data, refetch } = useGetChannelQuery(id);
   const [changed, setChanged] = useState(false);
   const [values, setValues] = useState<Channel>();

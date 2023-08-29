@@ -1,6 +1,6 @@
 import { Dispatch, MouseEvent, SetStateAction, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
+import { shallowEqual, useDispatch } from "react-redux";
 import Tippy from "@tippyjs/react";
 import AgoraRTC, { ICameraVideoTrack, IMicrophoneAudioTrack } from "agora-rtc-sdk-ng";
 import clsx from "clsx";
@@ -44,7 +44,7 @@ const DeviceList = ({
     selected: string;
   }[];
 }) => {
-  const loginUid = useAppSelector((store) => store.authData.user?.uid ?? 0);
+  const loginUid = useAppSelector((store) => store.authData.user?.uid ?? 0, shallowEqual);
   const dispatch = useDispatch();
   // const { t } = useTranslation("chat");
   const toggleVisible = (evt: MouseEvent<HTMLDivElement>) => {
@@ -166,7 +166,7 @@ type Props = {
 
 const Operations = ({ id, context, mode = "channel" }: Props) => {
   const dispatch = useDispatch();
-  const loginUid = useAppSelector((store) => store.authData.user?.uid ?? 0);
+  const loginUid = useAppSelector((store) => store.authData.user?.uid ?? 0, shallowEqual);
 
   const [panelVisible, setPanelVisible] = useState<VisibleType>("");
   const {

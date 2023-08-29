@@ -9,6 +9,7 @@ import { ChatContext } from "../types/common";
 import SaveTip from "./SaveTip";
 import StyledButton from "./styled/Button";
 import StyledRadio from "./styled/Radio";
+import { shallowEqual } from "react-redux";
 
 type Props = {
   id: number;
@@ -16,16 +17,18 @@ type Props = {
   // expires_in?: number
 };
 const AutoDeleteMessages = ({ id, type = "channel" }: Props) => {
-  const { setting, channel, loginUser } = useAppSelector((store) => {
-    return {
-      setting:
-        type == "channel"
-          ? store.footprint.autoDeleteMsgChannels.find((item) => item.gid == id)
-          : store.footprint.autoDeleteMsgUsers.find((item) => item.uid == id),
-      loginUser: store.authData.user,
-      channel: type == "channel" ? store.channels.byId[id] : null
-    };
-  });
+  const setting = useAppSelector(
+    (store) =>
+      type == "channel"
+        ? store.footprint.autoDeleteMsgChannels.find((item) => item.gid == id)
+        : store.footprint.autoDeleteMsgUsers.find((item) => item.uid == id),
+    shallowEqual
+  );
+  const loginUser = useAppSelector((store) => store.authData.user, shallowEqual);
+  const channel = useAppSelector(
+    (store) => (type == "channel" ? store.channels.byId[id] : null),
+    shallowEqual
+  );
   const [updateSetting, { isSuccess }] = useUpdateAutoDeleteMsgMutation();
   const [clearMessage, { isSuccess: clearSuccess }] = useLazyClearChannelMessageQuery();
 

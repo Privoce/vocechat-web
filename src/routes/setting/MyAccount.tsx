@@ -9,6 +9,7 @@ import Button from "@/components/styled/Button";
 import ProfileBasicEditModal from "./ProfileBasicEditModal";
 import RemoveAccountConfirmModal from "./RemoveAccountConfirmModal";
 import UpdatePasswordModal from "./UpdatePasswordModal";
+import { shallowEqual } from "react-redux";
 
 type EditField = "name" | "email" | "";
 export default function MyAccount() {
@@ -31,9 +32,10 @@ export default function MyAccount() {
     }
   };
 
-  const loginUser = useAppSelector((store) => {
-    return store.users.byId[store.authData.user?.uid || 0];
-  });
+  const loginUser = useAppSelector(
+    (store) => store.users.byId[store.authData.user?.uid || 0],
+    shallowEqual
+  );
 
   useEffect(() => {
     if (uploadSuccess) {

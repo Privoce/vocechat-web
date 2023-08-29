@@ -6,6 +6,7 @@ import { useAppSelector } from "@/app/store";
 import StyledSettingContainer from "@/components/StyledSettingContainer";
 import DeleteConfirmModal from "./DeleteConfirmModal";
 import useNavs from "./navs";
+import { shallowEqual } from "react-redux";
 
 let from: string = "";
 
@@ -13,12 +14,7 @@ export default function DMSetting() {
   // const { t } = useTranslation("setting");
   const { t: ct } = useTranslation();
   const { uid = 0, nav: navKey } = useParams();
-  const { loginUser } = useAppSelector((store) => {
-    return {
-      loginUser: store.authData.user,
-      user: uid ? store.users.byId[+uid] : undefined
-    };
-  });
+  const isAdmin = useAppSelector((store) => store.authData.user?.is_admin, shallowEqual);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const navs = useNavs(+uid);
@@ -38,7 +34,6 @@ export default function DMSetting() {
   };
   if (!uid) return null;
   const currNav = flattenNavs.find((n) => n.name == navKey);
-  const canDelete = loginUser?.is_admin;
 
   return (
     <>
@@ -49,7 +44,7 @@ export default function DMSetting() {
         title="DM Setting"
         navs={navs}
         dangers={
-          canDelete
+          isAdmin
             ? [
                 {
                   title: ct("action.remove_user"),

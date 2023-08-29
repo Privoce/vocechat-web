@@ -15,6 +15,7 @@ import License from "./License";
 import MyAccount from "./MyAccount";
 import Overview from "./Overview";
 import Widget from "./Widget";
+import { shallowEqual } from "react-redux";
 
 const dataManagementNav = {
   name: "data_management",
@@ -96,9 +97,8 @@ const navs = [
 
 const useNavs = () => {
   const { t } = useTranslation("setting");
-  const { loginUser, upgraded } = useAppSelector((store) => {
-    return { loginUser: store.authData.user, upgraded: store.server.upgraded };
-  });
+  const loginUser = useAppSelector((store) => store.authData.user, shallowEqual);
+  const upgraded = useAppSelector((store) => store.server.upgraded, shallowEqual);
   const filteredNavs = loginUser?.is_admin
     ? navs
     : navs

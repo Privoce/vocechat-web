@@ -14,6 +14,7 @@ import IconAudio from "@/assets/icons/file.audio.svg";
 import IconImage from "@/assets/icons/file.image.svg";
 import IconUnknown from "@/assets/icons/file.unknown.svg";
 import IconVideo from "@/assets/icons/file.video.svg";
+import { shallowEqual } from "react-redux";
 
 type filter = "audio" | "video" | "image" | "";
 
@@ -44,13 +45,9 @@ function FavsPage() {
       filter: "audio"
     }
   ];
-  const { favorites, channelData, userData } = useAppSelector((store) => {
-    return {
-      favorites: store.favorites,
-      userData: store.users.byId,
-      channelData: store.channels.byId
-    };
-  });
+  const favorites = useAppSelector((store) => store.favorites, shallowEqual);
+  const channelData = useAppSelector((store) => store.channels.byId, shallowEqual);
+  const userData = useAppSelector((store) => store.users.byId, shallowEqual);
   const handleFilter = (ftr: filter) => {
     setFilter(ftr);
   };

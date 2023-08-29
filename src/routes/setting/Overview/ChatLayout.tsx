@@ -11,11 +11,15 @@ import {
 } from "../../../app/services/server";
 import { useAppSelector } from "../../../app/store";
 import { ChatLayout } from "../../../types/server";
+import { shallowEqual } from "react-redux";
 
 // type Props = {}
 
 const Index = () => {
-  const currStatus = useAppSelector((store) => store.server.chat_layout_mode ?? "Left");
+  const currStatus = useAppSelector(
+    (store) => store.server.chat_layout_mode ?? "Left",
+    shallowEqual
+  );
   const { t } = useTranslation("setting", { keyPrefix: "overview.chat_layout" });
   const { t: ct } = useTranslation();
   const { refetch } = useGetSystemCommonQuery();

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useFavoriteMessageMutation, useLazyRemoveFavoriteQuery } from "@/app/services/message";
 import { Favorite } from "@/app/slices/favorites";
 import { useAppSelector } from "@/app/store";
+import { shallowEqual } from "react-redux";
 
 export default function useFavMessage({
   cid = null,
@@ -14,9 +15,7 @@ export default function useFavMessage({
   const [removeFav] = useLazyRemoveFavoriteQuery();
   const [addFav] = useFavoriteMessageMutation();
   const [favorites, setFavorites] = useState<Favorite[]>([]);
-  const { favs = [] } = useAppSelector((store) => {
-    return { favs: store.favorites };
-  });
+  const favs = useAppSelector((store) => store.favorites ?? [], shallowEqual);
 
   const addFavorite = async (mid: number | number[]) => {
     const mids = Array.isArray(mid) ? mid.map((i) => +i) : [+mid];

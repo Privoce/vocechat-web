@@ -7,6 +7,7 @@ import { PinChatTargetChannel, PinChatTargetUser } from "@/types/sse";
 import InviteModal from "@/components/InviteModal";
 import DeleteChannelConfirmModal from "../../settingChannel/DeleteConfirmModal";
 import Session from "./Session";
+import { shallowEqual } from "react-redux";
 
 export interface ChatSession {
   type: ChatContext;
@@ -23,19 +24,14 @@ const SessionList: FC<Props> = ({ tempSession }) => {
   const [inviteChannelId, setInviteChannelId] = useState<number>();
   const [sessions, setSessions] = useState<ChatSession[]>([]);
   const [pinSessions, setPinSessions] = useState<ChatSession[]>([]);
-  const { pins, channelIDs, DMs, readChannels, readUsers, channelMessage, userMessage, loginUid } =
-    useAppSelector((store) => {
-      return {
-        pins: store.footprint.pinChats,
-        loginUid: store.authData.user?.uid,
-        channelIDs: store.channels.ids,
-        DMs: store.userMessage.ids,
-        userMessage: store.userMessage.byId,
-        channelMessage: store.channelMessage,
-        readChannels: store.footprint.readChannels,
-        readUsers: store.footprint.readUsers
-      };
-    });
+  const readChannels = useAppSelector((store) => store.footprint.readChannels, shallowEqual);
+  const readUsers = useAppSelector((store) => store.footprint.readUsers, shallowEqual);
+  const loginUid = useAppSelector((store) => store.authData.user?.uid, shallowEqual);
+  const channelIDs = useAppSelector((store) => store.channels.ids, shallowEqual);
+  const DMs = useAppSelector((store) => store.userMessage.ids, shallowEqual);
+  const pins = useAppSelector((store) => store.footprint.pinChats, shallowEqual);
+  const userMessage = useAppSelector((store) => store.userMessage.byId, shallowEqual);
+  const channelMessage = useAppSelector((store) => store.channelMessage, shallowEqual);
 
   useEffect(() => {
     // const pinDMs=

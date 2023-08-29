@@ -4,6 +4,7 @@ import { Navigate } from "react-router-dom";
 import { useGetInitializedQuery, useLazyGuestLoginQuery } from "@/app/services/auth";
 import { useGetLoginConfigQuery } from "@/app/services/server";
 import { useAppSelector } from "@/app/store";
+import { shallowEqual } from "react-redux";
 
 interface Props {
   children: ReactElement;
@@ -12,7 +13,7 @@ const GuestOnly: FC<Props> = ({ children }) => {
   const { data: loginConfig, isLoading: fetchingConfig } = useGetLoginConfigQuery();
   const { isLoading: initChecking } = useGetInitializedQuery();
   const [guestLogin, { isLoading: guestSigning }] = useLazyGuestLoginQuery();
-  const { token, user, initialized } = useAppSelector((store) => store.authData);
+  const { token, user, initialized } = useAppSelector((store) => store.authData, shallowEqual);
 
   useEffect(() => {
     // 未登录

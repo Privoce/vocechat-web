@@ -7,6 +7,7 @@ import { addReplyingMessage, MessagePayload, removeReplyingMessage } from "@/app
 import { useAppDispatch, useAppSelector } from "@/app/store";
 import { ChatContext } from "@/types/common";
 import { ContentTypeKey } from "@/types/message";
+import { shallowEqual } from "react-redux";
 
 interface Props {
   context: ChatContext;
@@ -27,7 +28,10 @@ type SendMessageDTO = { type: ContentTypeKey } & Partial<MessagePayload> & {
 const useSendMessage = (props?: Props) => {
   const { context = "dm", from = 0, to = 0 } = props || {};
   const dispatch = useAppDispatch();
-  const stageFiles = useAppSelector((store) => store.ui.uploadFiles[`${context}_${to}`] || []);
+  const stageFiles = useAppSelector(
+    (store) => store.ui.uploadFiles[`${context}_${to}`] || [],
+    shallowEqual
+  );
   const [replyMessage, { isError: replyErr, isLoading: replying, isSuccess: replySuccess }] =
     useReplyMessageMutation();
   const [

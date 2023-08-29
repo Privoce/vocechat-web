@@ -10,11 +10,15 @@ import {
   useUpdateSystemCommonMutation
 } from "../../../app/services/server";
 import { useAppSelector } from "../../../app/store";
+import { shallowEqual } from "react-redux";
 
 // type Props = {}
 
 const Index = () => {
-  const currStatus = useAppSelector((store) => !!store.server.contact_verification_enable);
+  const currStatus = useAppSelector(
+    (store) => !!store.server.contact_verification_enable,
+    shallowEqual
+  );
   const { t } = useTranslation("setting", { keyPrefix: "overview.contact_verify" });
   const { t: ct } = useTranslation();
   const { refetch } = useGetSystemCommonQuery();

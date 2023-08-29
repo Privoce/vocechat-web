@@ -1,6 +1,6 @@
-import { lazy, useEffect } from "react";
+import { lazy, memo, useEffect } from "react";
 import toast from "react-hot-toast";
-import { Provider } from "react-redux";
+import { Provider, shallowEqual } from "react-redux";
 import { HashRouter, Route, Routes } from "react-router-dom";
 import { isEqual } from "lodash";
 
@@ -40,12 +40,8 @@ const HomePage = lazy(() => import("./home"));
 
 let toastId: string;
 const PageRoutes = () => {
-  const {
-    ui: { online },
-    version
-  } = useAppSelector((store) => {
-    return { ui: store.ui, version: store.server.version };
-  }, isEqual);
+  const version = useAppSelector((store) => store.server.version, shallowEqual);
+  const online = useAppSelector((store) => store.ui.online, shallowEqual);
   // 提前获取device token
   useDeviceToken(vapidKey);
   // 初始化元信息
@@ -296,7 +292,7 @@ const PageRoutes = () => {
   );
 };
 
-export default function ReduxRoutes() {
+function ReduxRoutes() {
   return (
     <Provider store={store}>
       {isElectronContext() && <Electron />}
@@ -305,3 +301,4 @@ export default function ReduxRoutes() {
     </Provider>
   );
 }
+export default memo(ReduxRoutes);

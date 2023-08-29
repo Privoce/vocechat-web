@@ -10,6 +10,7 @@ import IconOwner from "@/assets/icons/owner.svg";
 import Avatar from "../Avatar";
 import Profile from "../Profile";
 import ContextMenu from "./ContextMenu";
+import { shallowEqual } from "react-redux";
 
 interface Props {
   uid: number;
@@ -38,13 +39,9 @@ const User: FC<Props> = ({
 }) => {
   const navigate = useNavigate();
   const { visible: contextMenuVisible, handleContextMenuEvent, hideContextMenu } = useContextMenu();
-  const { curr, loginUid, showStatus } = useAppSelector((store) => {
-    return {
-      curr: store.users.byId[uid],
-      loginUid: store.authData.user?.uid,
-      showStatus: store.server.show_user_online_status
-    };
-  });
+  const curr = useAppSelector((store) => store.users.byId[uid], shallowEqual);
+  const loginUid = useAppSelector((store) => store.authData.user?.uid, shallowEqual);
+  const showStatus = useAppSelector((store) => store.server.show_user_online_status, shallowEqual);
   const handleDoubleClick = () => {
     navigate(`/chat/dm/${uid}`);
   };

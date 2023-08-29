@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { shallowEqual, useDispatch } from "react-redux";
 import clsx from "clsx";
 
 import { updateCallInfo } from "@/app/slices/voice";
@@ -114,17 +114,12 @@ type Props = {
 const DMVoice = ({ uid }: Props) => {
   const dispatch = useDispatch();
   // const { t } = useTranslation("chat");
-  const {
-    voice: { callingFrom, callingTo, voicingMembers },
-    userData,
-    loginUser
-  } = useAppSelector((store) => {
-    return {
-      voice: store.voice,
-      userData: store.users.byId,
-      loginUser: store.authData.user
-    };
-  });
+  const loginUid = useAppSelector((store) => store.authData.user?.uid, shallowEqual);
+  const userData = useAppSelector((store) => store.users.byId, shallowEqual);
+  const { callingFrom, callingTo, voicingMembers } = useAppSelector(
+    (store) => store.voice,
+    shallowEqual
+  );
   const { leave, joinVoice, joining } = useVoice({ id: callingTo, context: "dm" });
   useEffect(() => {
     const ids = voicingMembers.ids;
@@ -136,7 +131,7 @@ const DMVoice = ({ uid }: Props) => {
 
   const { name: fromUsername, avatar: fromAvatar } = userData[callingFrom];
   const { name: toUsername, avatar: toAvatar, uid: toUid } = userData[callingTo];
-  const sendByMe = loginUser?.uid !== toUid;
+  const sendByMe = loginUid !== toUid;
   const onlyToSelf = voicingMembers.ids.length == 1 && voicingMembers.ids[0] == callingTo;
   const handleCancel = () => {
     console.log("cancel");

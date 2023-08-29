@@ -19,6 +19,7 @@ import LoginTip from "./LoginTip";
 import Operations from "./Operations";
 import VirtualMessageFeed from "./VirtualMessageFeed";
 import { platform } from "@/utils";
+import { shallowEqual } from "react-redux";
 
 interface Props {
   readonly?: boolean;
@@ -45,15 +46,13 @@ const Layout: FC<Props> = ({
   const { reachLimit } = useLicense();
   const { addStageFile } = useUploadFile({ context, id: to });
   const messagesContainer = useRef<HTMLDivElement>(null);
-
-  const { selects, channelsData, usersData, inputMode } = useAppSelector((store) => {
-    return {
-      inputMode: store.ui.inputMode,
-      selects: store.ui.selectMessages[`${context}_${to}`],
-      channelsData: store.channels.byId,
-      usersData: store.users.byId
-    };
-  });
+  const inputMode = useAppSelector((store) => store.ui.inputMode, shallowEqual);
+  const selects = useAppSelector(
+    (store) => store.ui.selectMessages[`${context}_${to}`],
+    shallowEqual
+  );
+  const channelsData = useAppSelector((store) => store.channels.byId, shallowEqual);
+  const usersData = useAppSelector((store) => store.users.byId, shallowEqual);
   const [{ isActive }, drop] = useDrop(
     () => ({
       accept: [NativeTypes.FILE],

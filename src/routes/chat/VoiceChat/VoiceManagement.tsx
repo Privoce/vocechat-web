@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { shallowEqual, useDispatch } from "react-redux";
 import clsx from "clsx";
 
 import { updateChannelVisibleAside } from "@/app/slices/footprint";
@@ -21,12 +21,8 @@ type Props = {
 
 const VoiceManagement = ({ id, context, info }: Props) => {
   const dispatch = useDispatch();
-  const { userData, voicingMembers } = useAppSelector((store) => {
-    return {
-      userData: store.users.byId,
-      voicingMembers: store.voice.voicingMembers
-    };
-  });
+  const userMap = useAppSelector((store) => store.users.byId, shallowEqual);
+  const voicingMembers = useAppSelector((store) => store.voice.voicingMembers, shallowEqual);
   useEffect(() => {
     const ids = voicingMembers.ids;
     ids.forEach((id) => {
@@ -66,7 +62,7 @@ const VoiceManagement = ({ id, context, info }: Props) => {
     <div className="w-full h-full py-2 flex flex-col">
       <ul className="flex grow flex-col">
         {members.map((uid) => {
-          const curr = userData[uid];
+          const curr = userMap[uid];
           if (!curr) return null;
           const { muted, speakingVolume = 0 } = membersData[uid];
           const speaking = speakingVolume > 50;

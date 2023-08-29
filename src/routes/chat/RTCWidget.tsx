@@ -15,6 +15,7 @@ import Tooltip from "../../components/Tooltip";
 import User from "../../components/User";
 import { useVoice } from "../../components/Voice";
 import { ChatContext } from "../../types/common";
+import { shallowEqual } from "react-redux";
 
 type Props = {
   id: number;
@@ -34,15 +35,11 @@ const RTCWidget = ({ id, context = "channel" }: Props) => {
     startShareScreen,
     stopShareScreen
   } = useVoice({ context, id });
-  const { callFrom, callTo, loginUser, channelData, userData } = useAppSelector((store) => {
-    return {
-      callFrom: store.voice.callingFrom,
-      callTo: store.voice.callingTo,
-      userData: store.users.byId,
-      channelData: store.channels.byId,
-      loginUser: store.authData.user
-    };
-  });
+  const loginUser = useAppSelector((store) => store.authData.user, shallowEqual);
+  const callFrom = useAppSelector((store) => store.voice.callingFrom, shallowEqual);
+  const callTo = useAppSelector((store) => store.voice.callingTo, shallowEqual);
+  const channelData = useAppSelector((store) => store.channels.byId, shallowEqual);
+  const userData = useAppSelector((store) => store.channels.byId, shallowEqual);
   if (!loginUser || !voicingInfo || joining) return null;
   // const name = voicingInfo.context == "channel" ? channelData[voicingInfo.id]?.name : userData[voicingInfo.id]?.name;
   // if (!name) return null;

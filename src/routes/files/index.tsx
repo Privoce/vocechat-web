@@ -9,6 +9,7 @@ import Filter from "./Filter";
 import Search from "./Search";
 import View from "./View";
 import { useLazyGetFilesQuery } from "@/app/services/server";
+import { shallowEqual } from "react-redux";
 
 const checkFilter = (data, filter, channelMessage) => {
   let selected = true;
@@ -35,11 +36,7 @@ function Files() {
   const [getFiles, { data }] = useLazyGetFilesQuery();
   const listContainerRef = useRef<HTMLDivElement>();
   const [filter, setFilter] = useState({});
-  const { view } = useAppSelector((store) => {
-    return {
-      view: store.ui.fileListView
-    };
-  });
+  const view = useAppSelector((store) => store.ui.fileListView.view, shallowEqual);
 
   const updateFilter = (data) => {
     setFilter((prev) => {

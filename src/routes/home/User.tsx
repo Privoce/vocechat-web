@@ -3,6 +3,7 @@ import { NavLink, useLocation } from "react-router-dom";
 
 import { useAppSelector } from "@/app/store";
 import Avatar from "@/components/Avatar";
+import { shallowEqual } from "react-redux";
 
 interface Props {
   uid: number;
@@ -10,7 +11,7 @@ interface Props {
 
 const User: FC<Props> = ({ uid }) => {
   const { pathname } = useLocation();
-  const user = useAppSelector((store) => store.users.byId[uid]);
+  const user = useAppSelector((store) => store.users.byId[uid], shallowEqual);
   if (!user) return null;
 
   return (

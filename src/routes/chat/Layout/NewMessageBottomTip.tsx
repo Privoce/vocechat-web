@@ -6,6 +6,7 @@ import { useAppSelector } from "../../../app/store";
 import { ChatContext } from "../../../types/common";
 import getUnreadCount from "../utils";
 import { memo } from "react";
+import { shallowEqual } from "react-redux";
 
 type Props = {
   context: ChatContext;
@@ -15,17 +16,17 @@ type Props = {
 // linear-gradient(135deg,_#3C8CE7_0%,_#00EAFF_100%)
 const NewMessageBottomTip = ({ context, id, scrollToBottom }: Props) => {
   const { t } = useTranslation("chat");
-  const { readIndex, mids, messageData, loginUid } = useAppSelector((store) => {
-    return {
-      readIndex:
-        context == "channel" ? store.footprint.readChannels[id] : store.footprint.readUsers[id],
-      mids: context == "dm" ? store.userMessage.byId[id] : store.channelMessage[id],
-      selects: store.ui.selectMessages[`${context}_${id}`],
-      loginUid: store.authData.user?.uid ?? 0,
-      data: context == "channel" ? store.channels.byId[id] : undefined,
-      messageData: store.message || {}
-    };
-  });
+  const readIndex = useAppSelector(
+    (store) =>
+      context == "channel" ? store.footprint.readChannels[id] : store.footprint.readUsers[id],
+    shallowEqual
+  );
+  const mids = useAppSelector(
+    (store) => (context == "dm" ? store.userMessage.byId[id] : store.channelMessage[id]),
+    shallowEqual
+  );
+  const loginUid = useAppSelector((store) => store.authData.user?.uid ?? 0, shallowEqual);
+  const messageData = useAppSelector((store) => store.message ?? {}, shallowEqual);
   const { unreads = 0 } = getUnreadCount({
     mids,
     readIndex,

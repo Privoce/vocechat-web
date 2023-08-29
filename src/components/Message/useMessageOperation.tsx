@@ -9,6 +9,7 @@ import usePinMessage from "@/hooks/usePinMessage";
 import DeleteMessageConfirm from "../DeleteMessageConfirm";
 import ForwardModal from "../ForwardModal";
 import PinMessageModal from "./PinMessageModal";
+import { shallowEqual } from "react-redux";
 
 interface Params {
   mid: number;
@@ -18,13 +19,12 @@ interface Params {
 
 export default function useMessageOperation({ mid, context, contextId }: Params) {
   const { copy } = useCopy();
-  const { loginUser, message, channel } = useAppSelector((store) => {
-    return {
-      channel: context == "channel" ? store.channels.byId[contextId] : undefined,
-      message: store.message[mid],
-      loginUser: store.authData.user
-    };
-  });
+  const message = useAppSelector((store) => store.message[mid], shallowEqual);
+  const loginUser = useAppSelector((store) => store.authData.user, shallowEqual);
+  const channel = useAppSelector(
+    (store) => (context == "channel" ? store.channels.byId[contextId] : undefined),
+    shallowEqual
+  );
   const { canPin, pins, unpinMessage, isUnpinSuccess } = usePinMessage(
     context == "channel" ? contextId : 0
   );

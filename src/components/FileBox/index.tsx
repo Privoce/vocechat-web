@@ -13,6 +13,7 @@ import {
   PdfPreview,
   VideoPreview
 } from "./preview";
+import { shallowEqual } from "react-redux";
 
 interface Data {
   file_type: string;
@@ -82,7 +83,7 @@ const FileBox: FC<Props> = ({
 }) => {
   const [fetchError, setFetchError] = useState(false);
   const { isExpired, setExpired } = useExpiredResMap();
-  const fromUser = useAppSelector((store) => store.users.byId[from_uid]);
+  const fromUser = useAppSelector((store) => store.users.byId[from_uid], shallowEqual);
   const icon = getFileIcon(file_type, name, "icon w-9 h-12");
   const expired = isExpired(content);
   useEffect(() => {

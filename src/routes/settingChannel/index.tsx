@@ -7,18 +7,18 @@ import LeaveChannel from "@/components/LeaveChannel";
 import StyledSettingContainer from "@/components/StyledSettingContainer";
 import DeleteConfirmModal from "./DeleteConfirmModal";
 import useNavs from "./navs";
+import { shallowEqual } from "react-redux";
 
 let from: string = "";
 
 export default function ChannelSetting() {
   const { t } = useTranslation("setting");
   const { cid = 0, nav: navKey } = useParams();
-  const { loginUser, channel } = useAppSelector((store) => {
-    return {
-      loginUser: store.authData.user,
-      channel: cid ? store.channels.byId[+cid] : undefined
-    };
-  });
+  const loginUser = useAppSelector((store) => store.authData.user, shallowEqual);
+  const channel = useAppSelector(
+    (store) => (cid ? store.channels.byId[+cid] : undefined),
+    shallowEqual
+  );
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const navs = useNavs(+cid);

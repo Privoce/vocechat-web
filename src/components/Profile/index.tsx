@@ -12,6 +12,7 @@ import IconMessage from "@/assets/icons/message.svg";
 import IconMore from "@/assets/icons/more.svg";
 import Avatar from "../Avatar";
 import ContextMenu, { Item } from "../ContextMenu";
+import { shallowEqual } from "react-redux";
 
 interface Props {
   uid: number;
@@ -36,11 +37,7 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
     updateRole
   } = useUserOperation({ uid, cid });
 
-  const { data } = useAppSelector((store) => {
-    return {
-      data: store.users.byId[uid]
-    };
-  });
+  const data = useAppSelector((store) => store.users.byId[uid], shallowEqual);
   if (!data) return null;
   // console.log("profile", data);
   const {

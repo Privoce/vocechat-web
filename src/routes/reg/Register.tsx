@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
+import { shallowEqual, useDispatch } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import BASE_URL, { KEY_LOCAL_MAGIC_TOKEN } from "@/app/config";
@@ -32,7 +32,7 @@ interface AuthForm {
 export default function Register() {
   let [searchParams] = useSearchParams(new URLSearchParams(location.search));
   const ctx = searchParams.get("ctx");
-  const serverName = useAppSelector((store) => store.server.name);
+  const serverName = useAppSelector((store) => store.server.name, shallowEqual);
   const { t } = useTranslation("auth");
   const { t: ct } = useTranslation();
   const [sendRegMagicLink, { isLoading: signingUp, data, isSuccess }] =

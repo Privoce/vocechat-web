@@ -2,34 +2,21 @@ import { useEffect } from "react";
 
 import { useAppSelector } from "../app/store";
 import getUnreadCount from "../routes/chat/utils";
+import { shallowEqual } from "react-redux";
 
 // type Props = {}
 let total = 0;
 let title = "";
 const UnreadTabTip = () => {
-  const {
-    muteChannels,
-    muteUsers,
-    userData,
-    dmMids,
-    channelMids,
-    messageData,
-    readChannels,
-    readUsers,
-    loginUid
-  } = useAppSelector((store) => {
-    return {
-      userData: store.users.byId,
-      dmMids: store.userMessage.byId,
-      channelMids: store.channelMessage,
-      messageData: store.message,
-      readChannels: store.footprint.readChannels,
-      readUsers: store.footprint.readUsers,
-      muteChannels: store.footprint.muteChannels,
-      muteUsers: store.footprint.muteUsers,
-      loginUid: store.authData.user?.uid ?? 0
-    };
-  });
+  const loginUid = useAppSelector((store) => store.authData.user?.uid ?? 0, shallowEqual);
+  const muteChannels = useAppSelector((store) => store.footprint.muteChannels, shallowEqual);
+  const muteUsers = useAppSelector((store) => store.footprint.muteUsers, shallowEqual);
+  const readChannels = useAppSelector((store) => store.footprint.readChannels, shallowEqual);
+  const readUsers = useAppSelector((store) => store.footprint.readUsers, shallowEqual);
+  const userData = useAppSelector((store) => store.users.byId, shallowEqual);
+  const DMMap = useAppSelector((store) => store.userMessage.byId, shallowEqual);
+  const channelMids = useAppSelector((store) => store.channelMessage, shallowEqual);
+  const messageData = useAppSelector((store) => store.message, shallowEqual);
 
   useEffect(() => {
     if (loginUid === 0) {
@@ -40,8 +27,8 @@ const UnreadTabTip = () => {
     }
     total = 0;
     // dm
-    Object.entries(dmMids).forEach(([id, mids]) => {
-      if (!muteUsers[id]) {
+    Object.entries(DMMap).forEach(([id, mids]) => {
+      if (!muteUsers[+id]) {
         if (userData[+id]) {
           const { unreads = 0 } = getUnreadCount({
             mids,
@@ -55,7 +42,7 @@ const UnreadTabTip = () => {
     });
     // channel
     Object.entries(channelMids).map(([id, mids]) => {
-      if (!muteChannels[id]) {
+      if (!muteChannels[+id]) {
         const { unreads = 0 } = getUnreadCount({
           mids,
           readIndex: readChannels[+id],
@@ -86,7 +73,7 @@ const UnreadTabTip = () => {
     };
   }, [
     userData,
-    dmMids,
+    DMMap,
     channelMids,
     readChannels,
     messageData,
@@ -95,6 +82,7 @@ const UnreadTabTip = () => {
     muteChannels,
     muteUsers
   ]);
+  console.log("unread tip", total);
 
   return null;
 };

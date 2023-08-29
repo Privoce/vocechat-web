@@ -4,11 +4,12 @@ import { useTranslation } from "react-i18next";
 import IconCopy from "@/assets/icons/copy.svg";
 import { useAppSelector } from "../../app/store";
 import useCopy from "../../hooks/useCopy";
+import { shallowEqual } from "react-redux";
 
 // type Props = {}
 const APIUrl = `${location.origin}/api/swagger`;
 const APIDocument = () => {
-  const token = useAppSelector((store) => store.authData.token);
+  const token = useAppSelector((store) => store.authData.token, shallowEqual);
   const { copy } = useCopy();
   const { t } = useTranslation("setting");
   const handleCopy = () => {

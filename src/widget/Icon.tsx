@@ -1,4 +1,5 @@
 // import React from "react";
+import { shallowEqual } from "react-redux";
 import { useAppSelector } from "../app/store";
 
 type Props = {
@@ -6,7 +7,7 @@ type Props = {
 };
 
 const Icon = ({ handleClick }: Props) => {
-  const { logo } = useAppSelector((store) => store.server);
+  const logo = useAppSelector((store) => store.server.logo, shallowEqual);
   if (!logo) return null;
   return (
     <button className="rounded-full overflow-hidden" onClick={handleClick}>

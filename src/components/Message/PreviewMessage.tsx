@@ -4,6 +4,7 @@ import clsx from "clsx";
 import { useAppSelector } from "@/app/store";
 import Avatar from "../Avatar";
 import renderContent from "./renderContent";
+import { shallowEqual } from "react-redux";
 
 interface Props {
   mid?: number;
@@ -11,9 +12,8 @@ interface Props {
 }
 
 const PreviewMessage: FC<Props> = ({ mid = 0, context = "forward" }) => {
-  const { msg, usersData } = useAppSelector((store) => {
-    return { msg: store.message[mid], usersData: store.users.byId };
-  });
+  const usersData = useAppSelector((store) => store.users.byId, shallowEqual);
+  const msg = useAppSelector((store) => store.message[mid], shallowEqual);
   if (!msg) return null;
   const { from_uid = 0, content_type, content, thumbnail = "", properties } = msg;
   const { name, avatar } = usersData[from_uid] ?? {};
