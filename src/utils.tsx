@@ -434,6 +434,22 @@ export const transformInviteLink = (link: string) => {
   return tmpLink;
 };
 
+export const reloadCurrentPage = () => {
+  if (isElectronContext()) {
+    // 改变theme color 然后electron reload（约定）
+    const metaThemeColor = document.querySelector("meta[name=theme-color]");
+    if (metaThemeColor) {
+      metaThemeColor.setAttribute("content", "#123456");
+    } else {
+      const meta = document.createElement("meta");
+      meta.name = "theme-color";
+      meta.content = "#123456";
+      document.head.appendChild(meta);
+    }
+  } else {
+    window.location.reload();
+  }
+};
 export const isInIframe = () => window.location !== window.parent.location;
 export const encodeBase64 = (str = "") => btoa(unescape(encodeURIComponent(str)));
 export const shouldPreviewImage = (type: string) => {

@@ -10,6 +10,7 @@ import FilterChannel from "./Channel";
 import FilterDate, { Dates } from "./Date";
 import FilterFrom from "./From";
 import FilterType, { FileTypes } from "./Type";
+import { shallowEqual } from "react-redux";
 
 const getClass = (selected: boolean) => {
   return clsx(

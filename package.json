@@ -1,6 +1,6 @@
 {
   "name": "vocechat-web",
-  "version": "0.5.0",
+  "version": "0.5.2",
   "homepage": "https://voce.chat",
   "dependencies": {
     "@electron-toolkit/preload": "^2.0.0",

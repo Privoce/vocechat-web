@@ -7,6 +7,7 @@ import { useAppSelector } from "@/app/store";
 import { unregister } from "../serviceWorkerRegistration";
 import Button from "./styled/Button";
 import { shallowEqual } from "react-redux";
+import { reloadCurrentPage } from "@/utils";
 
 type Props = {};
 const Version: FC<Props> = () => {
@@ -18,7 +19,7 @@ const Version: FC<Props> = () => {
     setSyncing(true);
     unregister();
     setTimeout(() => {
-      location.reload();
+      reloadCurrentPage();
     }, 2000);
   };
   return (

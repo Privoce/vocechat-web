@@ -4,6 +4,7 @@ import clsx from "clsx";
 
 import useLogout from "@/hooks/useLogout";
 import Button from "./styled/Button";
+import { reloadCurrentPage } from "@/utils";
 
 interface Props {
   reload?: boolean;
@@ -16,7 +17,7 @@ const Loading: FC<Props> = ({ reload = false, fullscreen = false, context = "" }
   const { clearLocalData } = useLogout();
   const handleReload = () => {
     clearLocalData();
-    location.reload();
+    reloadCurrentPage();
   };
   useEffect(() => {
     let inter = 0;

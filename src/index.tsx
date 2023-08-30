@@ -18,7 +18,7 @@ import { register } from "./serviceWorkerRegistration";
 import "./i18n";
 import "./libs/polyfills";
 
-import { isDarkMode } from "./utils";
+import { isDarkMode, reloadCurrentPage } from "./utils";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 // dark mode
@@ -48,7 +48,7 @@ register({
   onUpdate: (reg) => {
     const handleUpdate = () => {
       reg.unregister().then(() => {
-        window.location.reload();
+        reloadCurrentPage();
       });
     };
     toast((t) => <NewVersion id={t.id} handleUpdate={handleUpdate} />, {

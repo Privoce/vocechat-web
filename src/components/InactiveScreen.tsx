@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import useStreaming from "@/hooks/useStreaming";
 // import clsx from "clsx";
 import Button from "./styled/Button";
+import { reloadCurrentPage } from "@/utils";
 
 interface Props {}
 
@@ -21,7 +22,7 @@ const InactiveScreen: FC<Props> = () => {
     };
   }, []);
   const handleReload = () => {
-    location.reload();
+    reloadCurrentPage();
   };
   return (
     <div className="w-screen h-screen dark:bg-gray-700 flex-center text-4xl font-bold">
