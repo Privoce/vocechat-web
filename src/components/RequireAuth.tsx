@@ -5,25 +5,26 @@ import { GuestRoutes, KEY_LOCAL_TRY_PATH } from "@/app/config";
 import { useAppSelector } from "@/app/store";
 import Loading from "./Loading";
 import { shallowEqual } from "react-redux";
+import { LoginConfig } from "@/types/server";
 
 interface Props {
+  loginConfig: LoginConfig | null;
   children: ReactElement;
   redirectTo?: string;
 }
 const GuestAllows = GuestRoutes.map((path) => {
   return { path };
 });
-const RequireAuth: FC<Props> = ({ children, redirectTo = "/login" }) => {
+const RequireAuth: FC<Props> = ({ children, redirectTo = "/login", loginConfig }) => {
   const location = useLocation();
   const matches = matchRoutes(GuestAllows, location);
   const allowGuest = matches ? !!matches[0].pathname : false;
   const token = useAppSelector((store) => store.authData.token, shallowEqual);
   const guest = useAppSelector((store) => store.authData.guest, shallowEqual);
   const initialized = useAppSelector((store) => store.authData.initialized, shallowEqual);
-  const loginConfig = useAppSelector((store) => store.server.loginConfig, shallowEqual);
   console.info("check basic info", loginConfig);
   // 初始化login配置检查
-  if (!loginConfig) return <Loading fullscreen={true} context="auth-route" />;
+  if (!loginConfig) return <Loading fullscreen={true} reload context="auth-route" />;
   //  未初始化 则先走setup 流程
   if (!initialized) return <Navigate to={`/onboarding`} replace />;
   // 开启guest 并且没token 而且是允许guest访问的路由  则先去过渡页登录

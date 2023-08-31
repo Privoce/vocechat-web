@@ -1,5 +1,12 @@
-import { IAgoraRTCClient, ICameraVideoTrack, ILocalAudioTrack, ILocalVideoTrack, IMicrophoneAudioTrack, IRemoteAudioTrack, IRemoteVideoTrack } from "agora-rtc-sdk-ng";
-import {ElectronAPI} from '@electron-toolkit/preload';
+import {
+  IAgoraRTCClient,
+  ICameraVideoTrack,
+  ILocalAudioTrack,
+  ILocalVideoTrack,
+  IMicrophoneAudioTrack,
+  IRemoteAudioTrack,
+  IRemoteVideoTrack
+} from "agora-rtc-sdk-ng";
 interface BeforeInstallPromptEvent extends Event {
   /**
    * Returns an array of DOMString items containing the platforms on which the event was dispatched.
@@ -28,17 +35,16 @@ export declare global {
   import localforage from "localforage";
 
   interface Window {
-    electron: ElectronAPI;
     __WB_MANIFEST: Array<PrecacheEntry | string>;
     skipWaiting: () => void;
     CACHE: { [key: string]: typeof localforage | undefined };
     VOICE_CLIENT?: IAgoraRTCClient;
     VOICE_TRACK_MAP: {
-      [key: number]: IRemoteAudioTrack | IMicrophoneAudioTrack | undefined | null
-    },
+      [key: number]: IRemoteAudioTrack | IMicrophoneAudioTrack | undefined | null;
+    };
     VIDEO_TRACK_MAP: {
-      [key: number]: IRemoteVideoTrack | ICameraVideoTrack | ShareScreenTrack | undefined | null
-    },
+      [key: number]: IRemoteVideoTrack | ICameraVideoTrack | ShareScreenTrack | undefined | null;
+    };
   }
   interface WindowEventMap {
     beforeinstallprompt: BeforeInstallPromptEvent;

@@ -1,9 +1,8 @@
 {
   "name": "vocechat-web",
-  "version": "0.5.2",
+  "version": "0.5.4",
   "homepage": "https://voce.chat",
   "dependencies": {
-    "@electron-toolkit/preload": "^2.0.0",
     "@emoji-mart/react": "^1.1.1",
     "@metamask/onboarding": "^1.0.1",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.11",

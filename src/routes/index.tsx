@@ -1,16 +1,14 @@
-import { lazy, memo, useEffect } from "react";
+import { lazy, useEffect, memo } from "react";
 import toast from "react-hot-toast";
 import { Provider, shallowEqual } from "react-redux";
 import { HashRouter, Route, Routes } from "react-router-dom";
-import { isEqual } from "lodash";
 
-import Electron from "@/components/Electron";
 import Meta from "@/components/Meta";
 import useDeviceToken from "@/components/Notification/useDeviceToken";
 import RequireAuth from "@/components/RequireAuth";
 import RequireNoAuth from "@/components/RequireNoAuth";
 import RequireSingleTab from "@/components/RequireSingleTab";
-import { compareVersion, isElectronContext } from "@/utils";
+import { compareVersion } from "@/utils";
 import { vapidKey } from "../app/config";
 import store, { useAppSelector } from "../app/store";
 import NotFoundPage from "./404";
@@ -40,6 +38,7 @@ const HomePage = lazy(() => import("./home"));
 
 let toastId: string;
 const PageRoutes = () => {
+  const loginConfig = useAppSelector((store) => store.server.loginConfig, shallowEqual);
   const version = useAppSelector((store) => store.server.version, shallowEqual);
   const online = useAppSelector((store) => store.ui.online, shallowEqual);
   // 提前获取device token
@@ -70,7 +69,7 @@ const PageRoutes = () => {
           path="/invite_private/:channel_id"
           element={
             <LazyIt>
-              <RequireAuth>
+              <RequireAuth loginConfig={loginConfig}>
                 <InvitePrivate />
               </RequireAuth>
             </LazyIt>
@@ -174,7 +173,7 @@ const PageRoutes = () => {
           path="/"
           element={
             <LazyIt>
-              <RequireAuth>
+              <RequireAuth loginConfig={loginConfig}>
                 {/* 只允许活跃一个tab标签 */}
                 <RequireSingleTab>
                   <HomePage />
@@ -295,7 +294,6 @@ const PageRoutes = () => {
 function ReduxRoutes() {
   return (
     <Provider store={store}>
-      {isElectronContext() && <Electron />}
       <Meta />
       <PageRoutes />
     </Provider>
