@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { UploadFileData } from "@/hooks/useUploadFile";
 
 export type ListView = "item" | "grid";
-export type SSEStatus = "connecting" | "connected" | "disconnected";
+export type SSEStatus = "connecting" | "connected" | "disconnected" | "reconnecting";
 export interface UIState {
   SSEStatus: SSEStatus;
   online: boolean;
@@ -46,8 +46,9 @@ const uiSlice = createSlice({
   name: "ui",
   initialState,
   reducers: {
-    fillUI(state, action) {
-      return { ...initialState, ...action.payload };
+    fillUI(state, action: PayloadAction<Partial<UIState>>) {
+      const { SSEStatus, ready, online, ...rest } = action.payload;
+      return { ...state, ...rest };
     },
     setReady(state) {
       state.ready = true;
