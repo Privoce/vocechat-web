@@ -21,6 +21,19 @@ const Loading: FC<Props> = ({ reload = false, fullscreen = false, context = "" }
   };
   useEffect(() => {
     let inter = 0;
+    if (window.AUTO_RELOAD) {
+      inter = window.setTimeout(() => {
+        location.reload();
+      }, 5000);
+    }
+    return () => {
+      window.AUTO_RELOAD = false;
+      clearTimeout(inter);
+    };
+  }, []);
+
+  useEffect(() => {
+    let inter = 0;
     if (reload) {
       inter = window.setTimeout(() => {
         setReloadVisible(true);

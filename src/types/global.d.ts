@@ -37,6 +37,7 @@ export declare global {
     webkitHidden: boolean;
   }
   interface Window {
+    AUTO_RELOAD: boolean;
     AFTER_MID: number;
     USERS_VERSION: number;
     __WB_MANIFEST: Array<PrecacheEntry | string>;

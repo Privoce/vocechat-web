@@ -23,8 +23,11 @@ const RequireAuth: FC<Props> = ({ children, redirectTo = "/login", guestMode }) 
   const initialized = useAppSelector((store) => store.authData.initialized, shallowEqual);
   console.info("check basic info", guestMode);
   // 初始化login配置检查
-  if (typeof guestMode == "undefined")
+  if (typeof guestMode == "undefined") {
+    // tricky mark
+    window.AUTO_RELOAD = true;
     return <Loading fullscreen={true} reload context="auth-route" />;
+  }
   //  未初始化 则先走setup 流程
   if (!initialized) return <Navigate to={`/onboarding`} replace />;
   // 开启guest 并且没token 而且是允许guest访问的路由  则先去过渡页登录
