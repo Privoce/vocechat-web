@@ -60,8 +60,8 @@ const footprintSlice = createSlice({
     fillFootprint(state, action) {
       const {
         og = {},
-        usersVersion = 0,
-        afterMid = 0,
+        usersVersion = state.usersVersion,
+        afterMid = state.afterMid,
         historyUsers = {},
         historyChannels = {},
         readUsers = {},
@@ -74,6 +74,9 @@ const footprintSlice = createSlice({
         dmAsides = {},
         pinChats = []
       } = action.payload;
+      // 初始化全局变量
+      window.USERS_VERSION = usersVersion;
+      window.AFTER_MID = afterMid;
       return {
         og,
         usersVersion,
@@ -93,12 +96,14 @@ const footprintSlice = createSlice({
     },
     updateUsersVersion(state, action: PayloadAction<number>) {
       state.usersVersion = action.payload;
+      window.USERS_VERSION = action.payload;
     },
     updateAfterMid(state, action: PayloadAction<number>) {
       const newMid = action.payload;
       // 如果新mid小于已有的afterMid,则不必更新
       if (state.afterMid < newMid) {
         state.afterMid = action.payload;
+        window.AFTER_MID = action.payload;
       }
     },
     updateAutoDeleteSetting(state, action: PayloadAction<AutoDeleteMessageSettingDTO>) {

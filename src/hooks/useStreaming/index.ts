@@ -43,7 +43,7 @@ import {
   UserSettingsEvent,
   UsersStateEvent
 } from "@/types/sse";
-import { getLocalAuthData } from "@/utils";
+import { getLocalAuthData, isElectronContext } from "@/utils";
 import chatMessageHandler from "./chat.handler";
 import { shallowEqual } from "react-redux";
 
@@ -60,13 +60,11 @@ let hiddenTime: number = 0;
 let SSE: EventSource | undefined;
 let ready = false; //是否已完成初始推送
 let aliveInter: number | ReturnType<typeof setTimeout> = 0;
-
+const isTabHidden = () => (isElectronContext() ? document.webkitHidden : document.hidden);
 export default function useStreaming() {
   const [renewToken] = useRenewMutation();
   const user = useAppSelector((store) => store.authData.user, shallowEqual);
   const guest = useAppSelector((store) => store.authData.guest, shallowEqual);
-  const afterMid = useAppSelector((store) => store.footprint.afterMid, shallowEqual);
-  const usersVersion = useAppSelector((store) => store.footprint.usersVersion, shallowEqual);
   const readUsers = useAppSelector((store) => store.footprint.readUsers, shallowEqual);
   const readChannels = useAppSelector((store) => store.footprint.readChannels, shallowEqual);
   const dispatch = useAppDispatch();
@@ -107,7 +105,8 @@ export default function useStreaming() {
       if ("error" in resp) {
         console.error("renew error from sse", resp.error);
         // 还有网，而且在当前页，则停止循环
-        if (navigator.onLine || !document.hidden) {
+        const tabHidden = isTabHidden();
+        if (navigator.onLine || !tabHidden) {
           stopStreaming();
         }
         // 返回，开始下次polling（如果有）
@@ -127,12 +126,12 @@ export default function useStreaming() {
       "api-key": _token
     };
     // 如果afterMid是0，则不传该参数
-    if (afterMid !== 0) {
-      params.after_mid = `${afterMid}`;
+    if (window.AFTER_MID) {
+      params.after_mid = `${window.AFTER_MID}`;
     }
     // 如果usersVersion是0，则不传该参数
-    if (usersVersion !== 0) {
-      params.users_version = `${usersVersion}`;
+    if (window.USERS_VERSION !== 0) {
+      params.users_version = `${window.USERS_VERSION}`;
     }
     // 开始初始化推送
     dispatch(updateSSEStatus("connecting"));
@@ -144,7 +143,7 @@ export default function useStreaming() {
     };
     SSE.onerror = (err) => {
       // 断网了 或者 页面隐藏了
-      if (!navigator.onLine || document.hidden) {
+      if (!navigator.onLine || isTabHidden()) {
         stopStreaming();
         return;
       }
@@ -182,6 +181,9 @@ export default function useStreaming() {
           // 有时候，heartbeat不会发？
           keepAlive();
           dispatch(setReady());
+          setTimeout(() => {
+            toast.dismiss();
+          }, 2000);
           break;
         case "server_config_changed": {
           const { type, ...rest } = data;
@@ -220,8 +222,6 @@ export default function useStreaming() {
             if (uid === loginUid && action === "update") {
               const purified = omitBy(rest, isNull);
               dispatch(updateLoginUser(purified));
-              console.log("upppp 3", purified, ready, user?.is_admin);
-
               if (
                 !guest &&
                 typeof purified.is_admin !== "undefined" &&
@@ -404,7 +404,7 @@ export default function useStreaming() {
           break;
         case "chat": {
           chatMessageHandler(data, dispatch, {
-            afterMid,
+            afterMid: window.AFTER_MID ?? 0,
             ready,
             loginUid,
             readUsers,
@@ -416,7 +416,7 @@ export default function useStreaming() {
           break;
       }
     };
-  }, [afterMid, usersVersion, user, guest]);
+  }, [user, guest]);
 
   const stopStreaming = () => {
     // 先清掉定时器
@@ -439,24 +439,40 @@ export default function useStreaming() {
       }
     };
     const handleWindowVisibilityChange = () => {
-      console.info("debug SSE: visibility changed", document.hidden);
-      if (document.hidden) {
+      // bug in electron webview: https://github.com/electron/electron/issues/28677
+      console.info("debug SSE: visibility changed", isTabHidden());
+      const tabHidden = isTabHidden();
+      if (tabHidden) {
         // 记录隐藏时间
         hiddenTime = new Date().getTime();
       } else {
         const elapsedTime = (new Date().getTime() - hiddenTime) / 1000;
-        const canReconnect = elapsedTime > 30 * 60 || !SSE;
-        // 超过半小时或者已断线，强制重连
+        // 大于1天
+        const timeSpan = 24 * 60 * 60;
+        // const timeSpan = 5;
+        const canReconnect = elapsedTime > timeSpan || !SSE;
+        console.info(
+          "debug SSE: visibility changed elapsedTime",
+          elapsedTime,
+          hiddenTime,
+          canReconnect,
+          !SSE
+        );
+        // 超过1天或者已断线，强制重连
         if (canReconnect) {
+          // 设置重连状态
+          toast.loading("Reconnecting...");
+          dispatch(updateSSEStatus("reconnecting"));
           if (SSE) {
             // 先停掉
             stopStreaming();
             setTimeout(() => {
               startStreaming();
             }, 1500);
+          } else {
+            // 直接重连
+            startStreaming();
           }
-          // 直接重连
-          startStreaming();
         }
       }
     };
