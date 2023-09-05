@@ -33,8 +33,12 @@ interface BeforeInstallPromptEvent extends Event {
 export declare global {
   import { PrecacheEntry } from "workbox-precaching/src/_types";
   import localforage from "localforage";
-
+  interface Document {
+    webkitHidden: boolean;
+  }
   interface Window {
+    AFTER_MID: number;
+    USERS_VERSION: number;
     __WB_MANIFEST: Array<PrecacheEntry | string>;
     skipWaiting: () => void;
     CACHE: { [key: string]: typeof localforage | undefined };

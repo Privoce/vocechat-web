@@ -38,7 +38,7 @@ const HomePage = lazy(() => import("./home"));
 
 let toastId: string;
 const PageRoutes = () => {
-  const loginConfig = useAppSelector((store) => store.server.loginConfig, shallowEqual);
+  const guestMode = useAppSelector((store) => store.server.loginConfig?.guest, shallowEqual);
   const version = useAppSelector((store) => store.server.version, shallowEqual);
   const online = useAppSelector((store) => store.ui.online, shallowEqual);
   // 提前获取device token
@@ -53,7 +53,6 @@ const PageRoutes = () => {
       toast.dismiss(toastId);
     }
   }, [online]);
-
   return (
     <HashRouter>
       <Routes>
@@ -69,7 +68,7 @@ const PageRoutes = () => {
           path="/invite_private/:channel_id"
           element={
             <LazyIt>
-              <RequireAuth loginConfig={loginConfig}>
+              <RequireAuth guestMode={guestMode}>
                 <InvitePrivate />
               </RequireAuth>
             </LazyIt>
@@ -173,7 +172,7 @@ const PageRoutes = () => {
           path="/"
           element={
             <LazyIt>
-              <RequireAuth loginConfig={loginConfig}>
+              <RequireAuth guestMode={guestMode}>
                 {/* 只允许活跃一个tab标签 */}
                 <RequireSingleTab>
                   <HomePage />
@@ -299,4 +298,4 @@ function ReduxRoutes() {
     </Provider>
   );
 }
-export default memo(ReduxRoutes);
+export default ReduxRoutes;

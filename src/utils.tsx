@@ -436,16 +436,21 @@ export const transformInviteLink = (link: string) => {
 
 export const reloadCurrentPage = () => {
   if (isElectronContext()) {
-    // 改变theme color 然后electron reload（约定）
-    const metaThemeColor = document.querySelector("meta[name=theme-color]");
-    if (metaThemeColor) {
-      metaThemeColor.setAttribute("content", "#123456");
-    } else {
-      const meta = document.createElement("meta");
-      meta.name = "theme-color";
-      meta.content = "#123456";
-      document.head.appendChild(meta);
-    }
+    // // 改变theme color 然后electron reload（约定）
+    // const metaThemeColor = document.querySelector("meta[name=theme-color]");
+    // if (metaThemeColor) {
+    //   metaThemeColor.setAttribute("content", "#123456");
+    // } else {
+    //   const meta = document.createElement("meta");
+    //   meta.name = "theme-color";
+    //   meta.content = "#123456";
+    //   document.head.appendChild(meta);
+    // }
+    // reload 两次 electron webview bug?
+    setTimeout(() => {
+      location.reload();
+    }, 100);
+    location.reload();
   } else {
     window.location.reload();
   }
