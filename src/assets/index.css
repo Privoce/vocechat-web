@@ -356,3 +356,23 @@ input[type="number"]::-webkit-outer-spin-button {
 .or:has(+ .socials:empty) {
   display: none;
 }
+
+/* 成员分组 */
+
+[data-group-title] {
+  margin-top: 42px;
+  position: relative;
+}
+[data-group-title]:before {
+  pointer-events: none;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: #667085;
+  content: attr(data-group-title);
+  position: absolute;
+  left: 8px;
+  top: -34px;
+}

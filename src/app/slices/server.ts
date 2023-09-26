@@ -37,15 +37,15 @@ const serverSlice = createSlice({
     },
     fillServer(state, action: PayloadAction<StoredServer>) {
       const {
-        version = "",
-        upgraded = false,
+        version,
+        upgraded,
         inviteLink = {
           link: "",
           expire: 0
         },
-        logo = "", // todo: check missed logo property
-        name = "",
-        description = "",
+        logo, // todo: check missed logo property
+        name,
+        description,
         show_user_online_status = true,
         webclient_auto_update = true,
         contact_verification_enable = false,
@@ -53,11 +53,11 @@ const serverSlice = createSlice({
         loginConfig = state.loginConfig || null
       } = action.payload || {};
       return {
-        version,
-        upgraded,
-        name,
+        version: state.version || version,
+        upgraded: state.upgraded || upgraded,
+        name: state.name || name,
         logo: state.logo || logo,
-        description,
+        description: state.description || description,
         inviteLink,
         show_user_online_status,
         webclient_auto_update,

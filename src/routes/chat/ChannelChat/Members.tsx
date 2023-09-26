@@ -1,10 +1,13 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ViewportList } from "react-viewport-list";
 
 import InviteModal from "@/components/InviteModal";
 import User from "@/components/User";
 import IconAdd from "@/assets/icons/add.svg";
+import { useAppSelector } from "@/app/store";
+import { shallowEqual } from "react-redux";
+import { StoredUser } from "@/app/slices/users";
 
 type Props = {
   membersVisible: boolean;
@@ -17,10 +20,27 @@ type Props = {
 const Members = ({ uids, addVisible, ownerId, cid, membersVisible }: Props) => {
   const { t } = useTranslation("chat");
   const ref = useRef<HTMLDivElement | null>(null);
+  const [sortedUsers, setSortedUsers] = useState<StoredUser[]>([]);
+  const users = useAppSelector((store) => Object.values(store.users.byId), shallowEqual);
   const [addMemberModalVisible, setAddMemberModalVisible] = useState(false);
   const toggleAddVisible = () => {
     setAddMemberModalVisible((prev) => !prev);
   };
+  console.log({ sortedUsers });
+  useEffect(() => {
+    setSortedUsers(
+      users
+        .filter((u) => uids.includes(u.uid))
+        .sort((a, b) => {
+          return Number(b.is_admin) - Number(a.is_admin) || Number(b.is_bot) - Number(a.is_bot);
+        })
+    );
+  }, [uids, users]);
+
+  const adminCount = sortedUsers.filter(({ is_admin }) => is_admin).length;
+  const botCount = sortedUsers.filter(({ is_bot }) => is_bot).length;
+  const memberCount = sortedUsers.length - adminCount - botCount;
+  const sortedUids = sortedUsers.map(({ uid }) => uid);
   return (
     <>
       {addMemberModalVisible && <InviteModal cid={cid} closeModal={toggleAddVisible} />}
@@ -41,15 +61,31 @@ const Members = ({ uids, addVisible, ownerId, cid, membersVisible }: Props) => {
             </div>
           </div>
         )}
-        <ViewportList initialPrerender={15} viewportRef={ref} items={uids}>
-          {(uid: number) => {
+        <ViewportList initialPrerender={15} viewportRef={ref} items={sortedUids}>
+          {(id: number, idx) => {
+            const curr = sortedUsers.find(({ uid }) => uid === id);
+            const prevUid = sortedUids[idx - 1];
+            const prev = sortedUsers.find(({ uid }) => uid === prevUid);
+            if (!curr) return null;
+            const { is_admin, is_bot } = curr;
+            const role = is_admin ? "admin" : is_bot ? "bot" : "member";
+            const groupTitle =
+              role === "admin"
+                ? `admin - ${adminCount}`
+                : role === "bot"
+                ? `bot - ${botCount}`
+                : `member - ${memberCount}`;
+            const prefixHeader =
+              idx === 0 ? true : prev?.is_admin !== is_admin || prev?.is_bot !== is_bot;
             return (
               <User
+                data-role={role}
+                data-group-title={prefixHeader ? groupTitle : undefined}
                 enableContextMenu={true}
                 cid={cid}
-                owner={ownerId == uid}
-                key={uid}
-                uid={uid}
+                owner={ownerId == id}
+                key={id}
+                uid={id}
                 dm
                 popover
               />

@@ -6,13 +6,13 @@ import clsx from "clsx";
 import { useAppSelector } from "@/app/store";
 import useContextMenu from "@/hooks/useContextMenu";
 import IconBot from "@/assets/icons/bot.svg";
-import IconOwner from "@/assets/icons/owner.svg";
+import IconAdmin from "@/assets/icons/owner.svg";
 import Avatar from "../Avatar";
 import Profile from "../Profile";
 import ContextMenu from "./ContextMenu";
 import { shallowEqual } from "react-redux";
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
   uid: number;
   cid?: number;
   owner?: boolean;
@@ -35,7 +35,8 @@ const User: FC<Props> = ({
   compact = false,
   avatarSize = 32,
   enableContextMenu = false,
-  enableNavToSetting = false
+  enableNavToSetting = false,
+  ...rest
 }) => {
   const navigate = useNavigate();
   const { visible: contextMenuVisible, handleContextMenuEvent, hideContextMenu } = useContextMenu();
@@ -79,6 +80,7 @@ const User: FC<Props> = ({
           onClick={enableNavToSetting ? handleNavToSetting : undefined}
           onDoubleClick={dm ? handleDoubleClick : undefined}
           onContextMenu={enableContextMenu ? handleContextMenuEvent : undefined}
+          {...rest}
         >
           <div
             className="cursor-pointer relative"
@@ -92,20 +94,15 @@ const User: FC<Props> = ({
               name={curr.name}
               alt="avatar"
             />
-            {curr.is_bot ? (
-              <IconBot
-                className={clsx("absolute -bottom-[2.5px] -right-[2.5px]", "!w-[15px] !h-[15px]")}
-              />
-            ) : (
-              statusElement
-            )}
+            {statusElement}
           </div>
           {!compact && (
             <span className={nameClass} title={curr?.name}>
               {curr?.name}
             </span>
           )}
-          {owner && <IconOwner />}
+          {!compact && curr.is_admin && <IconAdmin />}
+          {!compact && curr.is_bot && <IconBot />}
         </div>
       </ContextMenu>
     );
@@ -128,6 +125,7 @@ const User: FC<Props> = ({
           className={containerClass}
           onDoubleClick={dm ? handleDoubleClick : undefined}
           onContextMenu={enableContextMenu ? handleContextMenuEvent : undefined}
+          {...rest}
         >
           <div
             className="cursor-pointer relative"
@@ -148,8 +146,8 @@ const User: FC<Props> = ({
               {curr?.name}
             </span>
           )}
-          {owner && <IconOwner />}
-          {curr.is_bot && <IconBot className="!w-4 !h-4" />}
+          {!compact && curr.is_admin && <IconAdmin />}
+          {!compact && curr.is_bot && <IconBot className="!w-4 !h-4" />}
         </div>
       </Tippy>
     </ContextMenu>

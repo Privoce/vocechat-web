@@ -18,15 +18,23 @@ export default function useFilteredUsers() {
   const users = useContactList ? originUsers.filter((u) => u.status == "added") : originUsers;
   useEffect(() => {
     if (!input) {
-      setFilteredUsers(users);
+      setFilteredUsers(
+        users.sort((a, b) => {
+          return Number(b.is_admin) - Number(a.is_admin) || Number(b.is_bot) - Number(a.is_bot);
+        })
+      );
     } else {
       let str = ["", escapeRegExp(input.toLowerCase()), ""].join(".*");
       let reg = new RegExp(str);
       setFilteredUsers(
-        users.filter((c) => {
-          if (!c) return false;
-          return reg.test(c.name.toLowerCase());
-        })
+        users
+          .filter((c) => {
+            if (!c) return false;
+            return reg.test(c.name.toLowerCase());
+          })
+          .sort((a, b) => {
+            return Number(b.is_admin) - Number(a.is_admin) || Number(b.is_bot) - Number(a.is_bot);
+          })
       );
     }
   }, [input, users.length]);
