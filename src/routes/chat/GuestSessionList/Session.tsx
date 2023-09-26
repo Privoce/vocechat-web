@@ -61,7 +61,7 @@ const Session: FC<IProps> = ({ id, mid }) => {
             <span
               className={clsx(
                 `flex items-center gap-2 font-semibold text-sm text-gray-500 dark:text-white truncate`,
-                previewMsg.created_at && "max-w-[190px]"
+                previewMsg.created_at ? "max-w-[120px]" : "max-w-[190px]"
               )}
             >
               {name}

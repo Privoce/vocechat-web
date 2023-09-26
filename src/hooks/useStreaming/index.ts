@@ -461,6 +461,7 @@ export default function useStreaming() {
         // 超过1天或者已断线，强制重连
         if (canReconnect) {
           // 设置重连状态
+          toast.dismiss();
           toast.loading("Reconnecting...");
           dispatch(updateSSEStatus("reconnecting"));
           if (SSE) {

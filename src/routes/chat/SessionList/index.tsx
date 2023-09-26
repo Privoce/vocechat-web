@@ -55,7 +55,7 @@ const SessionList: FC<Props> = ({ tempSession }) => {
         }
         return null;
       })
-      .filter((p) => !!p);
+      .filter((p) => !!p) as ChatSession[];
     const channelPinIds = pins
       .map((p) => {
         if (p.target.gid) {
@@ -94,7 +94,16 @@ const SessionList: FC<Props> = ({ tempSession }) => {
     // console.log("before qqqq", temps);
     const newSessions = tempSession ? [tempSession, ...temps] : temps;
     // console.log("qqqq", newSessions);
-    setSessions(newSessions);
+    // 去重
+    setSessions(
+      newSessions.filter((s, idx) => {
+        const { id, type } = s;
+        const index = newSessions.findIndex((s) => {
+          return s.id == id && s.type == type;
+        });
+        return index === idx;
+      })
+    );
     setPinSessions(pinTmps);
   }, [
     channelIDs,
