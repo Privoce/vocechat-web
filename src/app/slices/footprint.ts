@@ -57,7 +57,7 @@ const footprintSlice = createSlice({
     resetFootprint() {
       return initialState;
     },
-    fillFootprint(state, action) {
+    fillFootprint(state, action: PayloadAction<State>) {
       const {
         og = {},
         usersVersion = state.usersVersion,

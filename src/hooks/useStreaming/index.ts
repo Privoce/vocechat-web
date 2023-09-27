@@ -129,8 +129,8 @@ export default function useStreaming() {
     if (window.AFTER_MID) {
       params.after_mid = `${window.AFTER_MID}`;
     }
-    // 如果usersVersion是0，则不传该参数
-    if (window.USERS_VERSION !== 0) {
+    // 如果usersVersion不存在或为0，则不传该参数
+    if (window.USERS_VERSION) {
       params.users_version = `${window.USERS_VERSION}`;
     }
     // 开始初始化推送
