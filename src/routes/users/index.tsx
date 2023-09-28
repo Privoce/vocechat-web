@@ -12,6 +12,7 @@ import SearchUser from "@/components/SearchUser";
 import User from "@/components/User";
 import useFilteredUsers from "@/hooks/useFilteredUsers";
 import Search from "./Search";
+import { getGroupData } from "@/utils";
 
 function UsersPage() {
   const ref = useRef<HTMLDivElement | null>(null);
@@ -31,7 +32,7 @@ function UsersPage() {
     setModalVisible((prev) => !prev);
   };
   if (!users) return null;
-  const adminCount = users.filter(({ is_admin }) => is_admin).length;
+  const adminCount = users.filter(({ is_admin, is_bot }) => is_admin && !is_bot).length;
   const botCount = users.filter(({ is_bot }) => is_bot).length;
   const memberCount = users.length - adminCount - botCount;
   const isUserDetail = !!user_id;
@@ -49,23 +50,21 @@ function UsersPage() {
           <ViewportList viewportRef={ref} items={uids}>
             {(id, idx) => {
               const curr = users.find(({ uid }) => uid === id);
+              if (!curr) return null;
               const prevUid = uids[idx - 1];
               const prev = users.find(({ uid }) => uid === prevUid);
-              if (!curr) return null;
-              const { is_admin, is_bot } = curr;
-              const role = is_admin ? "admin" : is_bot ? "bot" : "member";
-              const groupTitle =
-                role === "admin"
-                  ? `admin - ${adminCount}`
-                  : role === "bot"
-                  ? `bot - ${botCount}`
-                  : `member - ${memberCount}`;
-              const prefixHeader =
-                idx === 0 ? true : prev?.is_admin !== is_admin || prev?.is_bot !== is_bot;
+              const { role, title } = getGroupData({
+                current: curr,
+                prev,
+                adminCount,
+                botCount,
+                memberCount,
+                isFirst: idx === 0
+              });
               return (
                 <NavLink
                   data-role={role}
-                  data-group-title={prefixHeader ? groupTitle : undefined}
+                  data-group-title={title}
                   key={id}
                   className={({ isActive }) =>
                     `rounded-md md:hover:bg-gray-500/10 ${isActive ? "bg-gray-500/10" : ""}`

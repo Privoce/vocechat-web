@@ -17,6 +17,7 @@ import IconImage from "@/assets/icons/file.image.svg";
 import IconPdf from "@/assets/icons/file.pdf.svg";
 import IconUnknown from "@/assets/icons/file.unknown.svg";
 import IconVideo from "@/assets/icons/file.video.svg";
+import { StoredUser } from "./app/slices/users";
 
 export const isMobile = () =>
   /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -304,7 +305,7 @@ export const compareVersion = (
 ) => {
   //remove anything after - 1.1.2-3-a4agbr-dirty
   function cropDash(s: string) {
-    let idx = s.indexOf("-");
+    let idx = (s ?? "").indexOf("-");
     if (idx !== -1) {
       s = s.substring(0, idx);
     }
@@ -459,4 +460,39 @@ export const isInIframe = () => window.location !== window.parent.location;
 export const encodeBase64 = (str = "") => btoa(unescape(encodeURIComponent(str)));
 export const shouldPreviewImage = (type: string) => {
   return type.startsWith("image") && type !== "image/x-sony-arw";
+};
+export const getGroupData = ({
+  isFirst,
+  prev,
+  current,
+  adminCount,
+  botCount,
+  memberCount
+}: {
+  isFirst: boolean;
+  prev: StoredUser | undefined;
+  current: StoredUser;
+  adminCount: number;
+  botCount: number;
+  memberCount: number;
+}) => {
+  const { is_admin, is_bot } = current;
+  const true_admin = is_admin && !is_bot;
+  const prev_true_admin = prev?.is_admin && !prev?.is_bot;
+  const role = true_admin ? "admin" : is_bot ? "bot" : "member";
+  const groupTitle =
+    role === "admin"
+      ? `admin - ${adminCount}`
+      : role === "bot"
+      ? `bot - ${botCount}`
+      : `member - ${memberCount}`;
+  const prefixHeader = isFirst ? true : prev_true_admin !== true_admin || prev?.is_bot !== is_bot;
+  return { role, title: prefixHeader ? groupTitle : undefined };
+};
+export const sortUsersByRole = (users: StoredUser[]) => {
+  return users.sort((a, b) => {
+    const a_isAdmin = Number(a.is_admin && !a.is_bot);
+    const b_isAdmin = Number(b.is_admin && !b.is_bot);
+    return Number(b_isAdmin) - Number(a_isAdmin) || Number(b.is_bot) - Number(a.is_bot);
+  });
 };

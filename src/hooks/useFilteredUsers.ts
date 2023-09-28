@@ -4,6 +4,7 @@ import { escapeRegExp } from "lodash";
 import { StoredUser } from "@/app/slices/users";
 import { useAppSelector } from "@/app/store";
 import { shallowEqual } from "react-redux";
+import { sortUsersByRole } from "@/utils";
 
 export default function useFilteredUsers() {
   const [input, setInput] = useState("");
@@ -18,23 +19,17 @@ export default function useFilteredUsers() {
   const users = useContactList ? originUsers.filter((u) => u.status == "added") : originUsers;
   useEffect(() => {
     if (!input) {
-      setFilteredUsers(
-        users.sort((a, b) => {
-          return Number(b.is_admin) - Number(a.is_admin) || Number(b.is_bot) - Number(a.is_bot);
-        })
-      );
+      setFilteredUsers(sortUsersByRole(users));
     } else {
       let str = ["", escapeRegExp(input.toLowerCase()), ""].join(".*");
       let reg = new RegExp(str);
       setFilteredUsers(
-        users
-          .filter((c) => {
+        sortUsersByRole(
+          users.filter((c) => {
             if (!c) return false;
             return reg.test(c.name.toLowerCase());
           })
-          .sort((a, b) => {
-            return Number(b.is_admin) - Number(a.is_admin) || Number(b.is_bot) - Number(a.is_bot);
-          })
+        )
       );
     }
   }, [input, users.length]);

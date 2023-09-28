@@ -8,6 +8,7 @@ import IconAdd from "@/assets/icons/add.svg";
 import { useAppSelector } from "@/app/store";
 import { shallowEqual } from "react-redux";
 import { StoredUser } from "@/app/slices/users";
+import { getGroupData, sortUsersByRole } from "@/utils";
 
 type Props = {
   membersVisible: boolean;
@@ -28,16 +29,10 @@ const Members = ({ uids, addVisible, ownerId, cid, membersVisible }: Props) => {
   };
   console.log({ sortedUsers });
   useEffect(() => {
-    setSortedUsers(
-      users
-        .filter((u) => uids.includes(u.uid))
-        .sort((a, b) => {
-          return Number(b.is_admin) - Number(a.is_admin) || Number(b.is_bot) - Number(a.is_bot);
-        })
-    );
+    setSortedUsers(sortUsersByRole(users.filter((u) => uids.includes(u.uid))));
   }, [uids, users]);
 
-  const adminCount = sortedUsers.filter(({ is_admin }) => is_admin).length;
+  const adminCount = sortedUsers.filter(({ is_admin, is_bot }) => is_admin && !is_bot).length;
   const botCount = sortedUsers.filter(({ is_bot }) => is_bot).length;
   const memberCount = sortedUsers.length - adminCount - botCount;
   const sortedUids = sortedUsers.map(({ uid }) => uid);
@@ -64,23 +59,21 @@ const Members = ({ uids, addVisible, ownerId, cid, membersVisible }: Props) => {
         <ViewportList initialPrerender={15} viewportRef={ref} items={sortedUids}>
           {(id: number, idx) => {
             const curr = sortedUsers.find(({ uid }) => uid === id);
+            if (!curr) return null;
             const prevUid = sortedUids[idx - 1];
             const prev = sortedUsers.find(({ uid }) => uid === prevUid);
-            if (!curr) return null;
-            const { is_admin, is_bot } = curr;
-            const role = is_admin ? "admin" : is_bot ? "bot" : "member";
-            const groupTitle =
-              role === "admin"
-                ? `admin - ${adminCount}`
-                : role === "bot"
-                ? `bot - ${botCount}`
-                : `member - ${memberCount}`;
-            const prefixHeader =
-              idx === 0 ? true : prev?.is_admin !== is_admin || prev?.is_bot !== is_bot;
+            const { role, title } = getGroupData({
+              current: curr,
+              prev,
+              adminCount,
+              botCount,
+              memberCount,
+              isFirst: idx === 0
+            });
             return (
               <User
                 data-role={role}
-                data-group-title={prefixHeader ? groupTitle : undefined}
+                data-group-title={title}
                 enableContextMenu={true}
                 cid={cid}
                 owner={ownerId == id}

@@ -101,7 +101,7 @@ const User: FC<Props> = ({
               {curr?.name}
             </span>
           )}
-          {!compact && curr.is_admin && <IconAdmin />}
+          {!compact && curr.is_admin && !curr.is_bot && <IconAdmin />}
           {!compact && curr.is_bot && <IconBot />}
         </div>
       </ContextMenu>
@@ -146,7 +146,7 @@ const User: FC<Props> = ({
               {curr?.name}
             </span>
           )}
-          {!compact && curr.is_admin && <IconAdmin />}
+          {!compact && curr.is_admin && !curr.is_bot && <IconAdmin />}
           {!compact && curr.is_bot && <IconBot className="!w-4 !h-4" />}
         </div>
       </Tippy>
