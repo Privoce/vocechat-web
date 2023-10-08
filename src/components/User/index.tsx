@@ -60,12 +60,19 @@ const User: FC<Props> = ({
   const nameClass = clsx(
     `text-sm text-gray-500 max-w-[190px] truncate font-semibold dark:text-white`
   );
+  const statusContainerClass = `absolute -bottom-[2.5px] -right-[2.5px] border-content rounded-full border-[1px] border-white dark:border-gray-300`;
   const statusClass = clsx(
-    `absolute -bottom-[2.5px] -right-[2.5px] border-content rounded-full border-[1px] border-white dark:border-gray-300`,
+    statusContainerClass,
     online ? "bg-green-500" : "bg-zinc-400",
     compact ? "w-[15px] h-[15px]" : "w-3 h-3"
   );
-  const statusElement = showStatus ? <div className={statusClass}></div> : null;
+  const statusElement = curr.is_bot ? (
+    <div className={statusContainerClass}>
+      <IconBot className={compact ? "w-[15px] h-[15px]" : "w-3 h-3"} />
+    </div>
+  ) : showStatus ? (
+    <div className={statusClass}></div>
+  ) : null;
   if (!popover)
     return (
       <ContextMenu
@@ -102,7 +109,6 @@ const User: FC<Props> = ({
             </span>
           )}
           {!compact && curr.is_admin && !curr.is_bot && <IconAdmin />}
-          {!compact && curr.is_bot && <IconBot />}
         </div>
       </ContextMenu>
     );
@@ -147,7 +153,6 @@ const User: FC<Props> = ({
             </span>
           )}
           {!compact && curr.is_admin && !curr.is_bot && <IconAdmin />}
-          {!compact && curr.is_bot && <IconBot className="!w-4 !h-4" />}
         </div>
       </Tippy>
     </ContextMenu>

@@ -22,7 +22,7 @@ interface Data {
 }
 
 const renderPreview = (data: Data) => {
-  const { file_type, name, content } = data;
+  const { file_type, name = "", content } = data;
   let preview: null | ReactElement = null;
 
   const checks = {

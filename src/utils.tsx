@@ -109,6 +109,7 @@ export const getImageSize = (url: string) => {
   });
 };
 export const getInitials = (name: string, length: number = 4) => {
+  if (!name) return "";
   const arr = name
     .split(
       // eslint-disable-next-line no-misleading-character-class
@@ -181,7 +182,7 @@ export const getFileIcon = (type: string, name = "", className = "icon") => {
     doc: /^text/gi,
     pdf: /\/pdf$/gi
   };
-  const _arr = name.split(".");
+  const _arr = (name ?? "").split(".");
   const _type = type || _arr[_arr.length - 1];
   switch (true) {
     case checks.image.test(_type):
@@ -305,14 +306,14 @@ export const compareVersion = (
 ) => {
   //remove anything after - 1.1.2-3-a4agbr-dirty
   function cropDash(s: string) {
-    let idx = (s ?? "").indexOf("-");
+    let idx = s.indexOf("-");
     if (idx !== -1) {
       s = s.substring(0, idx);
     }
     return s;
   }
-  v1 = cropDash(v1);
-  v2 = cropDash(v2);
+  v1 = cropDash(v1 ?? "");
+  v2 = cropDash(v2 ?? "");
   let lexicographical = options && options.lexicographical,
     zeroExtend = options && options.zeroExtend,
     v1parts = v1.split("."),
@@ -357,6 +358,7 @@ export const compareVersion = (
  * @return {String} The contrasting color (black or white)
  */
 export const getContrastColor = (hexcolor: string) => {
+  if (!hexcolor) return "";
   // If a leading # is provided, remove it
   if (hexcolor.slice(0, 1) === "#") {
     hexcolor = hexcolor.slice(1);
