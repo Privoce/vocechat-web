@@ -5,7 +5,6 @@ import dayjs from "dayjs";
 import { getLocalAuthData } from "@/utils";
 import BASE_URL, { tokenHeader } from "../config";
 import { resetAuthData, updateToken } from "../slices/auth.data";
-import { RootState } from "../store";
 
 const whiteList = [
   "guestLogin",

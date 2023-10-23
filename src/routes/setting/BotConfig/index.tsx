@@ -113,6 +113,7 @@ export default function BotConfig() {
                   >
                     <td className="px-4 py-2">
                       <AvatarUploader
+                        size={60}
                         uid={uid}
                         url={avatar}
                         uploadImage={updateAvatar}
