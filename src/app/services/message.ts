@@ -13,6 +13,7 @@ import { upsertArchiveMessage } from "../slices/message.archive";
 import { RootState } from "../store";
 import baseQuery from "./base.query";
 import { onMessageSendStarted } from "./handlers";
+import { removeMessage } from "../slices/message";
 
 export const messageApi = createApi({
   reducerPath: "messageApi",
@@ -39,13 +40,33 @@ export const messageApi = createApi({
       query: (mid) => ({
         url: `/message/${mid}`,
         method: "DELETE"
-      })
+      }),
+      async onQueryStarted(mid, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (err) {
+          // 出错也得删
+          console.log("delete message error", err);
+          dispatch(removeMessage(mid));
+        }
+      }
     }),
     deleteMessages: builder.query<number, number[]>({
       query: (mids) => ({
         url: `/message/bulk/${mids}`,
         method: "DELETE"
-      })
+      }),
+      async onQueryStarted(mids, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (err) {
+          // 出错也得删
+          console.log("delete messages error", err);
+          mids.forEach((mid) => {
+            dispatch(removeMessage(mid));
+          });
+        }
+      }
     }),
     prepareUploadFile: builder.mutation<string, { content_type: string; filename: string }>({
       query: (meta = { content_type: "", filename: "" }) => ({
