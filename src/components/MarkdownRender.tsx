@@ -1,6 +1,7 @@
-import { FC, useRef } from "react";
+import { FC, useRef, useEffect } from "react";
 
 import "prismjs/themes/prism.css";
+// @ts-ignore
 import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight-all.js";
 import { Viewer } from "@toast-ui/react-editor";
 
@@ -19,6 +20,15 @@ interface IProps {
 }
 const MarkdownRender: FC<IProps> = ({ content }) => {
   const mdContainer = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    if (mdContainer.current) {
+      const links = mdContainer.current.querySelectorAll("a");
+      [...links].forEach((link) => {
+        link.setAttribute("target", "_blank");
+      });
+    }
+  }, [mdContainer]);
+
   return (
     <>
       <ImagePreview container={mdContainer.current} context="markdown" />

@@ -29,8 +29,8 @@ const ImagePreview = ({ container, context = "chat" }: Props) => {
       evt.stopPropagation();
       const target = evt.target as HTMLImageElement;
       if (!target) return;
-      // 图片
-      if (target.nodeName == "IMG") {
+      // 图片 并且没被 a 标签包裹
+      if (target.nodeName == "IMG"&&target.parentElement?.tagName!=="A") {
         const urlObj = new URL(target.src);
         const originUrl = `${urlObj.origin}${urlObj.pathname}?file_path=${urlObj.searchParams.get(
           "file_path"
