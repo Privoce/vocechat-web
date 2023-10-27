@@ -6,7 +6,6 @@ import useUploadFile from "@/hooks/useUploadFile";
 import { formatBytes, getFileIcon, shouldPreviewImage } from "@/utils";
 import DeleteIcon from "@/assets/icons/delete.svg";
 import EditIcon from "@/assets/icons/edit.svg";
-import { useMixedEditor } from "../../MixedInput";
 import EditFileDetailsModal from "./EditFileDetails";
 
 type EditProps = {
@@ -14,7 +13,6 @@ type EditProps = {
   name: string;
 };
 export default function UploadFileList({ context, id }: { context: ChatContext; id: number }) {
-  const editor = useMixedEditor(`${context}_${id}`);
   const [editInfo, setEditInfo] = useState<EditProps | null>(null);
   const { stageFiles, updateStageFile, removeStageFile } = useUploadFile({
     context,
@@ -34,9 +32,6 @@ export default function UploadFileList({ context, id }: { context: ChatContext; 
     const { index } = editInfo;
     updateStageFile(index, { name });
   };
-  useEffect(() => {
-    editor.focus();
-  }, [stageFiles.length]);
 
   if (!context || !id || !stageFiles || stageFiles.length == 0) return null;
 

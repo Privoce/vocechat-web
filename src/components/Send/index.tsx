@@ -12,7 +12,7 @@ import useDraft from "@/hooks/useDraft";
 import useSendMessage from "@/hooks/useSendMessage";
 import useUploadFile from "@/hooks/useUploadFile";
 import useUserOperation from "@/hooks/useUserOperation";
-import MixedInput, { useMixedEditor } from "../MixedInput";
+// import MixedInput, { useMixedEditor } from "../MixedInput";
 import StyledButton from "../styled/Button";
 import TextInput from "../TextInput";
 import EmojiPicker from "./EmojiPicker";
@@ -31,7 +31,7 @@ interface IProps {
   id: number;
 }
 const Send: FC<IProps> = ({
-  // 发给谁，或者是channel，或者是user
+  // 发给谁，或者是 channel，或者是 user
   context = "channel",
   id
 }) => {
@@ -42,7 +42,7 @@ const Send: FC<IProps> = ({
   });
   const { resetStageFiles } = useUploadFile({ context, id });
   const { getDraft, getUpdateDraft } = useDraft({ context, id });
-  const editor = useMixedEditor(`${context}_${id}`);
+  // const editor = useMixedEditor(`${context}_${id}`);
   const [msgs, setMsgs] = useState([]);
   const [markdownEditor, setMarkdownEditor] = useState(null);
   const [markdownFullscreen, setMarkdownFullscreen] = useState(false);
@@ -64,24 +64,15 @@ const Send: FC<IProps> = ({
   const usersData = useAppSelector((store) => store.users.byId, shallowEqual);
   const { sendMessage } = useSendMessage({ context, from: from_uid, to: id });
 
-  useEffect(() => {
-    if (replying_mid) {
-      editor.focus();
-    }
-  }, [replying_mid]);
-
   const insertEmoji = (emoji: string) => {
     if (mode == Modes.markdown && markdownEditor) {
       // markdown insert emoji
       markdownEditor.insertText(emoji);
-    } else {
-      editor.insertText(emoji);
     }
   };
   const handleSendMessage = async (messages?: any[]) => {
     if (!id) return;
     const sendingMsgs = messages ?? msgs;
-    editor.resetInput();
     if (sendingMsgs && sendingMsgs.length) {
       // send text msgs
       for await (const msg of sendingMsgs) {
@@ -175,18 +166,8 @@ const Send: FC<IProps> = ({
             isMarkdownMode ? `grid grid-cols-[1fr_1fr] grid-rows-[auto_auto] gap-0` : "gap-4"
           )}
         >
-          <EmojiPicker selectEmoji={insertEmoji} />
-          {mode == Modes.text && (
-            <MixedInput
-              updateMessages={setMsgs}
-              updateDraft={getUpdateDraft()}
-              initialValue={getDraft()}
-              members={members}
-              id={`${context}_${id}`}
-              placeholder={placeholder}
-              sendMessages={handleSendMessage}
-            />
-          )}
+          {mode == Modes.markdown && <EmojiPicker selectEmoji={insertEmoji} />}
+          {mode == Modes.text && null}
           <Toolbar
             sendMessages={handleSendMessage}
             sendVisible={msgs.length > 0 || uploadFiles.length > 0}
