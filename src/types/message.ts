@@ -1,5 +1,5 @@
 import { ChatEvent } from "./sse";
-
+import { TComboboxItem } from '@udecode/plate-combobox';
 export type ContentType =
   | "text/plain"
   | "text/markdown"
@@ -30,3 +30,11 @@ export interface UploadFileResponse {
   };
 }
 export interface ChatMessage extends Omit<ChatEvent, "type"> {}
+
+
+
+export type MentionData = TComboboxItem & { data: any };
+export type MessageWithMentions = {
+  text: string;
+  mentions: number[];
+};

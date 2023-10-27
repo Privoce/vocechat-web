@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC,  useRef,  useState } from "react";
 import { useTranslation } from "react-i18next";
 import clsx from "clsx";
 
@@ -12,15 +12,17 @@ import useDraft from "@/hooks/useDraft";
 import useSendMessage from "@/hooks/useSendMessage";
 import useUploadFile from "@/hooks/useUploadFile";
 import useUserOperation from "@/hooks/useUserOperation";
-// import MixedInput, { useMixedEditor } from "../MixedInput";
 import StyledButton from "../styled/Button";
 import TextInput from "../TextInput";
-import EmojiPicker from "./EmojiPicker";
 import Replying from "./Replying";
 import Toolbar from "./Toolbar";
-// import StyledSend from "./styled";
 import UploadFileList from "./UploadFileList";
 import { shallowEqual } from "react-redux";
+import MessageInput from "../MessageInput";
+import { Emoji } from "@udecode/plate-emoji";
+import { EmojiDropdownInput } from "../MessageInput/plate-ui/emoji-dropdown-input";
+import { MessageWithMentions } from "@/types/message";
+import { PlateEditor } from "@udecode/plate-common";
 
 const Modes = {
   text: "text",
@@ -35,6 +37,8 @@ const Send: FC<IProps> = ({
   context = "channel",
   id
 }) => {
+  const editorRef = useRef<PlateEditor | null>(null);
+
   const { t } = useTranslation("chat");
   const { unblockThisContact, blocked } = useUserOperation({
     uid: context == "dm" ? id : undefined,
@@ -42,8 +46,10 @@ const Send: FC<IProps> = ({
   });
   const { resetStageFiles } = useUploadFile({ context, id });
   const { getDraft, getUpdateDraft } = useDraft({ context, id });
-  // const editor = useMixedEditor(`${context}_${id}`);
-  const [msgs, setMsgs] = useState([]);
+  const [msg, setMsg] = useState<MessageWithMentions>({
+    text:"",
+    mentions:[]
+  })
   const [markdownEditor, setMarkdownEditor] = useState(null);
   const [markdownFullscreen, setMarkdownFullscreen] = useState(false);
   const dispatch = useAppDispatch();
@@ -64,31 +70,32 @@ const Send: FC<IProps> = ({
   const usersData = useAppSelector((store) => store.users.byId, shallowEqual);
   const { sendMessage } = useSendMessage({ context, from: from_uid, to: id });
 
-  const insertEmoji = (emoji: string) => {
+  const insertEmoji = (emoji: Emoji) => {
+    console.log({emoji});
+    
     if (mode == Modes.markdown && markdownEditor) {
       // markdown insert emoji
-      markdownEditor.insertText(emoji);
+      const {native}=emoji.skins[0]
+      markdownEditor.insertText(native);
     }
   };
-  const handleSendMessage = async (messages?: any[]) => {
-    if (!id) return;
-    const sendingMsgs = messages ?? msgs;
-    if (sendingMsgs && sendingMsgs.length) {
+  const handleSendMessage = async () => {
+    if (!id || !msg.text.trim()) return;
       // send text msgs
-      for await (const msg of sendingMsgs) {
-        const { type: content_type, content, properties = {} } = msg;
-        if ((content as string).trim() === "") continue; // 空消息不发送
-        properties.local_id = properties.local_id ?? +new Date();
-        await sendMessage({
-          id,
-          reply_mid: replying_mid,
-          type: content_type,
-          content,
-          from_uid,
-          properties
-        });
+      if(editorRef.current) {
+        editorRef.current.reset()
       }
-    }
+      const {text,mentions}=msg;
+      const properties={mentions};
+      properties.local_id =  +new Date();
+      await sendMessage({
+        id,
+        reply_mid: replying_mid,
+        type: "text",
+        content:text,
+        from_uid,
+        properties
+      });
     // send files
     if (uploadFiles.length !== 0) {
       uploadFiles.forEach((fileInfo) => {
@@ -166,11 +173,11 @@ const Send: FC<IProps> = ({
             isMarkdownMode ? `grid grid-cols-[1fr_1fr] grid-rows-[auto_auto] gap-0` : "gap-4"
           )}
         >
-          {mode == Modes.markdown && <EmojiPicker selectEmoji={insertEmoji} />}
-          {mode == Modes.text && null}
+          {mode == Modes.markdown && <EmojiDropdownInput options={{closeOnSelect:false}} onSelectEmoji={insertEmoji}  />}
+          {mode == Modes.text && <MessageInput editorRef={editorRef} members={members} id={`${context}_${id}`} updateMessage={setMsg} sendMessage={handleSendMessage} placeholder={placeholder} />}
           <Toolbar
             sendMessages={handleSendMessage}
-            sendVisible={msgs.length > 0 || uploadFiles.length > 0}
+            sendVisible={msg.text.trim().length > 0 || uploadFiles.length > 0}
             context={context}
             to={id}
             mode={mode}

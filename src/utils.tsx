@@ -18,7 +18,50 @@ import IconPdf from "@/assets/icons/file.pdf.svg";
 import IconUnknown from "@/assets/icons/file.unknown.svg";
 import IconVideo from "@/assets/icons/file.video.svg";
 import { StoredUser } from "./app/slices/users";
+import { clsx } from 'clsx';
+import type { ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+import { MessageWithMentions } from "./types/message";
 
+
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+type MentionInput = {
+  type: 'mention';
+  value: string;
+  uid: string;
+  id: string;
+};
+export type ParagraphInput = {
+  id: string;
+  type: 'p';
+  children: ({ text: string } | MentionInput)[];
+};
+export function getMessageFromPlateValues(
+  values: ParagraphInput[]
+): MessageWithMentions {
+  const mentions: number[] = [];
+  const text = values
+    .map((node) => {
+      return node.children
+        .map((child) => {
+          if ('text' in child) {
+            return child.text;
+          } else {
+            mentions.push(+child.uid);
+            return ` @${child.uid} `;
+          }
+        })
+        .join('');
+    })
+    .join('\n');
+  return {
+    text,
+    mentions,
+  };
+}
 export const isMobile = () =>
   /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
@@ -215,7 +258,7 @@ export const normalizeFileMessage = (data: MessagePayload) => {
   const { properties, content, sending = false, content_type } = data;
   const isFile = content_type == ContentTypes.file;
   const isPic = isImage(properties?.content_type, properties?.size);
-  // gif暂不支持缩略图
+  // gif 暂不支持缩略图
   const isGif = isPic && properties?.content_type == "image/gif";
   let res: null | { file_path?: string; content?: string; download?: string; thumbnail: string } =
     null;
@@ -260,7 +303,7 @@ export const normalizeArchiveData = (
       avatar?: number | string;
     }
   ) => {
-    // uid存在，则favorite，否则archive
+    // uid 存在，则 favorite，否则 archive
     const prefix = uid
       ? `${BASE_URL}/favorite/attachment/${uid}/${filePath}/`
       : `${BASE_URL}/resource/archive/attachment?file_path=${filePath}&attachment_id=`;
@@ -427,7 +470,7 @@ export const playAgoraVideo = (uid: number, videoTrack?: ICameraVideoTrack | nul
 
 // 转换一下邀请连接
 export const transformInviteLink = (link: string) => {
-  // 确保http开头
+  // 确保 http 开头
   const _link = link.startsWith("http") ? link : `http://${link}`;
   // return _link;
   // 替换掉域名
@@ -439,7 +482,7 @@ export const transformInviteLink = (link: string) => {
 
 export const reloadCurrentPage = () => {
   if (isElectronContext()) {
-    // // 改变theme color 然后electron reload（约定）
+    // // 改变 theme color 然后 electron reload（约定）
     // const metaThemeColor = document.querySelector("meta[name=theme-color]");
     // if (metaThemeColor) {
     //   metaThemeColor.setAttribute("content", "#123456");
