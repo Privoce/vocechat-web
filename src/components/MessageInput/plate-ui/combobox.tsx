@@ -27,6 +27,7 @@ export function ComboboxItem<TData extends Data = NoData>({
   item,
   onRenderItem
 }: ComboboxContentItemProps<TData>) {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { props } = useComboboxItem({ item, index, combobox, onRenderItem });
 
   return (
@@ -50,6 +51,7 @@ export function ComboboxContent<TData extends Data = NoData>(props: ComboboxCont
   const activeComboboxStore = useActiveComboboxStore()!;
 
   const state = useComboboxContentState({ items, combobox });
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { menuProps, targetRange } = useComboboxContent(state);
 
   return (
