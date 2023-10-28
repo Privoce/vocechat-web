@@ -12,8 +12,8 @@ import { createParagraphPlugin, ELEMENT_PARAGRAPH } from "@udecode/plate-paragra
 import { createTrailingBlockPlugin } from "@udecode/plate-trailing-block";
 
 import { EmojiCombobox } from "./plate-ui/emoji-input-picker/emoji-combobox";
-import { MentionElement } from "./plate-ui/mention-element";
-import { MentionInputElement } from "./plate-ui/mention-input-element";
+import { MentionElement } from "./plate-ui/mention/element";
+import { MentionInputElement } from "./plate-ui/mention/input-element";
 import { ParagraphElement } from "./plate-ui/paragraph-element";
 
 export const plugins = createPlugins(

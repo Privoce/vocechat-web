@@ -6,7 +6,7 @@ import { useLocalstorageState } from "rooks";
 import { plugins } from "./plugins";
 import { getMessageFromPlateValues, ParagraphInput } from "@/utils";
 import { Editor } from "./plate-ui/editor";
-import { MentionCombobox } from "./plate-ui/mention-combobox";
+import { MentionCombobox } from "./plate-ui/mention/combobox";
 
 import { EmojiInputPicker } from "./plate-ui/emoji-input-picker";
 import { MentionData, MessageWithMentions } from "@/types/message";
