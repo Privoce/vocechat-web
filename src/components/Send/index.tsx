@@ -1,4 +1,4 @@
-import { FC,  useRef,  useState } from "react";
+import { FC, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import clsx from "clsx";
 
@@ -20,7 +20,7 @@ import UploadFileList from "./UploadFileList";
 import { shallowEqual } from "react-redux";
 import MessageInput from "../MessageInput";
 import { Emoji } from "@udecode/plate-emoji";
-import { EmojiDropdownInput } from "../MessageInput/plate-ui/emoji-dropdown-input";
+import { EmojiInputPicker } from "../MessageInput/plate-ui/emoji-input-picker";
 import { MessageWithMentions } from "@/types/message";
 import { PlateEditor } from "@udecode/plate-common";
 
@@ -47,9 +47,9 @@ const Send: FC<IProps> = ({
   const { resetStageFiles } = useUploadFile({ context, id });
   const { getDraft, getUpdateDraft } = useDraft({ context, id });
   const [msg, setMsg] = useState<MessageWithMentions>({
-    text:"",
-    mentions:[]
-  })
+    text: "",
+    mentions: []
+  });
   const [markdownEditor, setMarkdownEditor] = useState(null);
   const [markdownFullscreen, setMarkdownFullscreen] = useState(false);
   const dispatch = useAppDispatch();
@@ -71,31 +71,31 @@ const Send: FC<IProps> = ({
   const { sendMessage } = useSendMessage({ context, from: from_uid, to: id });
 
   const insertEmoji = (emoji: Emoji) => {
-    console.log({emoji});
-    
+    console.log({ emoji });
+
     if (mode == Modes.markdown && markdownEditor) {
       // markdown insert emoji
-      const {native}=emoji.skins[0]
+      const { native } = emoji.skins[0];
       markdownEditor.insertText(native);
     }
   };
   const handleSendMessage = async () => {
     if (!id || !msg.text.trim()) return;
-      // send text msgs
-      if(editorRef.current) {
-        editorRef.current.reset()
-      }
-      const {text,mentions}=msg;
-      const properties={mentions};
-      properties.local_id =  +new Date();
-      await sendMessage({
-        id,
-        reply_mid: replying_mid,
-        type: "text",
-        content:text,
-        from_uid,
-        properties
-      });
+    // send text msgs
+    if (editorRef.current) {
+      editorRef.current.reset();
+    }
+    const { text, mentions } = msg;
+    const properties = { mentions };
+    properties.local_id = +new Date();
+    await sendMessage({
+      id,
+      reply_mid: replying_mid,
+      type: "text",
+      content: text,
+      from_uid,
+      properties
+    });
     // send files
     if (uploadFiles.length !== 0) {
       uploadFiles.forEach((fileInfo) => {
@@ -173,8 +173,19 @@ const Send: FC<IProps> = ({
             isMarkdownMode ? `grid grid-cols-[1fr_1fr] grid-rows-[auto_auto] gap-0` : "gap-4"
           )}
         >
-          {mode == Modes.markdown && <EmojiDropdownInput options={{closeOnSelect:false}} onSelectEmoji={insertEmoji}  />}
-          {mode == Modes.text && <MessageInput editorRef={editorRef} members={members} id={`${context}_${id}`} updateMessage={setMsg} sendMessage={handleSendMessage} placeholder={placeholder} />}
+          {mode == Modes.markdown && (
+            <EmojiInputPicker options={{ closeOnSelect: false }} onSelectEmoji={insertEmoji} />
+          )}
+          {mode == Modes.text && (
+            <MessageInput
+              editorRef={editorRef}
+              members={members}
+              id={`${context}_${id}`}
+              updateMessage={setMsg}
+              sendMessage={handleSendMessage}
+              placeholder={placeholder}
+            />
+          )}
           <Toolbar
             sendMessages={handleSendMessage}
             sendVisible={msg.text.trim().length > 0 || uploadFiles.length > 0}

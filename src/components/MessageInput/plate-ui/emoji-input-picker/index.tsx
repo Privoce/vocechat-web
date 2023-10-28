@@ -11,7 +11,7 @@ type EmojiDropdownMenuProps = {
   onSelectEmoji?: (emoji: Emoji) => void;
 };
 
-export function EmojiDropdownInput({ options, onSelectEmoji, ...props }: EmojiDropdownMenuProps) {
+export function EmojiInputPicker({ options, onSelectEmoji, ...props }: EmojiDropdownMenuProps) {
   const { isOpen, setIsOpen, emojiPickerState } = useEmojiDropdownMenuState(options);
   const handleClick = () => {
     setIsOpen(!isOpen);

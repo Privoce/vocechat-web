@@ -8,7 +8,7 @@ import { getMessageFromPlateValues, ParagraphInput } from "@/utils";
 import { Editor } from "./plate-ui/editor";
 import { MentionCombobox } from "./plate-ui/mention-combobox";
 
-import { EmojiDropdownInput } from "./plate-ui/emoji-dropdown-input";
+import { EmojiInputPicker } from "./plate-ui/emoji-input-picker";
 import { MentionData, MessageWithMentions } from "@/types/message";
 import { useAppSelector } from "@/app/store";
 import { shallowEqual } from "react-redux";
@@ -104,7 +104,7 @@ export default function MessageInput({
           />
           <MentionCombobox items={items} />
           <div className="absolute left-3 bottom-3">
-            <EmojiDropdownInput />
+            <EmojiInputPicker />
           </div>
         </Plate>
       </div>
