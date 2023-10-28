@@ -1,7 +1,5 @@
-'use client';
-
-import React, { useEffect } from 'react';
-import * as Popover from '@radix-ui/react-popover';
+import { useEffect, useRef } from "react";
+import * as Popover from "@radix-ui/react-popover";
 import {
   comboboxActions,
   ComboboxContentItemProps,
@@ -15,47 +13,40 @@ import {
   useComboboxContentState,
   useComboboxControls,
   useComboboxItem,
-  useComboboxSelectors,
-} from '@udecode/plate-combobox';
-import { useEditorState, useEventEditorSelectors } from '@udecode/plate-common';
-import { createVirtualRef } from '@udecode/plate-floating';
+  useComboboxSelectors
+} from "@udecode/plate-combobox";
+import { useEditorState, useEventEditorSelectors } from "@udecode/plate-common";
+import { createVirtualRef } from "@udecode/plate-floating";
 
-import { cn } from '@/utils';
+import { cn } from "@/utils";
+import { ViewportList } from "react-viewport-list";
 
 export function ComboboxItem<TData extends Data = NoData>({
   combobox,
   index,
   item,
-  onRenderItem,
+  onRenderItem
 }: ComboboxContentItemProps<TData>) {
   const { props } = useComboboxItem({ item, index, combobox, onRenderItem });
 
   return (
     <div
       className={cn(
-        'relative flex cursor-pointer select-none items-center rounded-sm text-sm outline-none ml-1 my-1 transition-colors',
-        'hover:bg-gray-300/50 dark:hover:bg-gray-500/50 hover:text-gray-500 data-[highlighted=true]:bg-gray-300/50 dark:data-[highlighted=true]:bg-gray-500/50 data-[highlighted=true]:text-gray-500'
+        "relative flex cursor-pointer select-none items-center rounded-sm text-sm outline-none ml-1 my-1 transition-colors",
+        "hover:bg-gray-300/50 dark:hover:bg-gray-500/50 hover:text-gray-500 data-[highlighted=true]:bg-gray-300/50 dark:data-[highlighted=true]:bg-gray-500/50 data-[highlighted=true]:text-gray-500"
       )}
       {...props}
     />
   );
 }
 
-export function ComboboxContent<TData extends Data = NoData>(
-  props: ComboboxContentProps<TData>
-) {
-  const {
-    component: Component,
-    items,
-    portalElement,
-    combobox,
-    onRenderItem,
-  } = props;
+export function ComboboxContent<TData extends Data = NoData>(props: ComboboxContentProps<TData>) {
+  const { component: Component, items, portalElement, combobox, onRenderItem } = props;
+  const wrapperRef = useRef(null);
 
   const editor = useEditorState();
 
-  const filteredItems =
-    useComboboxSelectors.filteredItems() as TComboboxItem<TData>[];
+  const filteredItems = useComboboxSelectors.filteredItems() as TComboboxItem<TData>[];
   const activeComboboxStore = useActiveComboboxStore()!;
 
   const state = useComboboxContentState({ items, combobox });
@@ -63,9 +54,7 @@ export function ComboboxContent<TData extends Data = NoData>(
 
   return (
     <Popover.Root open>
-      <Popover.PopoverAnchor
-        virtualRef={createVirtualRef(editor, targetRange ?? undefined)}
-      />
+      <Popover.PopoverAnchor virtualRef={createVirtualRef(editor, targetRange ?? undefined)} />
 
       <Popover.Portal container={portalElement}>
         <Popover.Content
@@ -74,21 +63,25 @@ export function ComboboxContent<TData extends Data = NoData>(
           side="bottom"
           align="start"
           className={cn(
-            'z-[500] m-0 max-h-[400px] w-[200px] overflow-x-hidden overflow-y-scroll rounded-md bg-slate-100 dark:bg-slate-900 py-2 shadow-md'
+            "z-[500] m-0 max-h-[400px] w-[200px] overflow-x-hidden overflow-y-scroll rounded-md bg-slate-100 dark:bg-slate-900 py-2 shadow-md"
           )}
           onOpenAutoFocus={(event) => event.preventDefault()}
+          ref={wrapperRef}
         >
           {Component ? Component({ store: activeComboboxStore }) : null}
-
-          {filteredItems.map((item, index) => (
-            <ComboboxItem
-              key={item.key}
-              item={item}
-              combobox={combobox}
-              index={index}
-              onRenderItem={onRenderItem}
-            />
-          ))}
+          <ViewportList initialPrerender={15} viewportRef={wrapperRef} items={filteredItems}>
+            {(item, idx) => {
+              return (
+                <ComboboxItem
+                  key={item.key}
+                  item={item}
+                  combobox={combobox}
+                  index={idx}
+                  onRenderItem={onRenderItem}
+                />
+              );
+            }}
+          </ViewportList>
         </Popover.Content>
       </Popover.Portal>
     </Popover.Root>
@@ -112,8 +105,7 @@ export function Combobox<TData extends Data = NoData>({
   ...props
 }: ComboboxProps<TData>) {
   const storeItems = useComboboxSelectors.items();
-  const disabled =
-    _disabled ?? (storeItems.length === 0 && !props.items?.length);
+  const disabled = _disabled ?? (storeItems.length === 0 && !props.items?.length);
 
   const focusedEditorId = useEventEditorSelectors.focus?.();
   const combobox = useComboboxControls();
@@ -129,18 +121,9 @@ export function Combobox<TData extends Data = NoData>({
       onSelectItem,
       maxSuggestions,
       filter,
-      sort,
+      sort
     });
-  }, [
-    id,
-    trigger,
-    searchPattern,
-    controlled,
-    onSelectItem,
-    maxSuggestions,
-    filter,
-    sort,
-  ]);
+  }, [id, trigger, searchPattern, controlled, onSelectItem, maxSuggestions, filter, sort]);
 
   if (
     !combobox ||

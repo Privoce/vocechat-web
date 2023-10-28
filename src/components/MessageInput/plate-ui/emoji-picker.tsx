@@ -1,13 +1,12 @@
-import React from 'react';
-import { EmojiSettings, UseEmojiPickerType } from '@udecode/plate-emoji';
+import { EmojiSettings, UseEmojiPickerType } from "@udecode/plate-emoji";
 
-import { cn } from '@/utils';
+import { cn } from "@/utils";
 
-import { EmojiPickerContent } from './emoji-picker-content';
-import { EmojiPickerNavigation } from './emoji-picker-navigation';
-import { EmojiPickerPreview } from './emoji-picker-preview';
-import { EmojiPickerSearchAndClear } from './emoji-picker-search-and-clear';
-import { EmojiPickerSearchBar } from './emoji-picker-search-bar';
+import { EmojiPickerContent } from "./emoji-picker-content";
+import { EmojiPickerNavigation } from "./emoji-picker-navigation";
+import { EmojiPickerPreview } from "./emoji-picker-preview";
+import { EmojiPickerSearchAndClear } from "./emoji-picker-search-and-clear";
+import { EmojiPickerSearchBar } from "./emoji-picker-search-bar";
 
 export function EmojiPicker({
   i18n,
@@ -26,13 +25,13 @@ export function EmojiPicker({
   focusedCategory,
   visibleCategories,
   refs,
-  settings = EmojiSettings,
+  settings = EmojiSettings
 }: UseEmojiPickerType) {
   return (
     <div
       className={cn(
-        'flex flex-col rounded dark:text-gray-300',
-        'h-[400px] w-[316px] shadow-[rgb(15_15_15_/_5%)_0_0_0_1px,_rgb(15_15_15_/_10%)_0_3px_6px,_rgb(15_15_15_/_20%)_0_9px_24px]'
+        "flex flex-col rounded dark:text-gray-300",
+        "h-[400px] w-[316px] shadow-[rgb(15_15_15_/_5%)_0_0_0_1px,_rgb(15_15_15_/_10%)_0_3px_6px,_rgb(15_15_15_/_20%)_0_9px_24px]"
       )}
     >
       <EmojiPickerNavigation
@@ -42,11 +41,7 @@ export function EmojiPicker({
         focusedCategory={focusedCategory}
         onClick={handleCategoryClick}
       />
-      <EmojiPickerSearchBar
-        i18n={i18n}
-        setSearch={setSearch}
-        searchValue={searchValue}
-      >
+      <EmojiPickerSearchBar i18n={i18n} setSearch={setSearch} searchValue={searchValue}>
         <EmojiPickerSearchAndClear
           i18n={i18n}
           clearSearch={clearSearch}
@@ -64,12 +59,7 @@ export function EmojiPicker({
         onMouseOver={onMouseOver}
         refs={refs}
       />
-      <EmojiPickerPreview
-        i18n={i18n}
-        emoji={emoji}
-        hasFound={hasFound}
-        isSearching={isSearching}
-      />
+      <EmojiPickerPreview i18n={i18n} emoji={emoji} hasFound={hasFound} isSearching={isSearching} />
     </div>
   );
 }

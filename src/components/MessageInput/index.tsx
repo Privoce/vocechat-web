@@ -1,29 +1,26 @@
-'use client';
+import { ClipboardEvent, MutableRefObject, useEffect, useRef } from "react";
+import { Plate, PlateEditor } from "@udecode/plate-common";
+import { ELEMENT_PARAGRAPH } from "@udecode/plate-paragraph";
+import { useLocalstorageState } from "rooks";
 
-// import React, { useRef } from 'react';
-import { ClipboardEvent, MutableRefObject, useEffect, useRef } from 'react';
-import { Plate, PlateEditor } from '@udecode/plate-common';
-import { ELEMENT_PARAGRAPH } from '@udecode/plate-paragraph';
-import { useLocalstorageState } from 'rooks';
+import { plugins } from "./plugins";
+import { getMessageFromPlateValues, ParagraphInput } from "@/utils";
+import { Editor } from "./plate-ui/editor";
+import { MentionCombobox } from "./plate-ui/mention-combobox";
 
-import { plugins } from './plugins';
-import { getMessageFromPlateValues, ParagraphInput } from '@/utils';
-import { Editor } from './plate-ui/editor';
-import { MentionCombobox } from './plate-ui/mention-combobox';
-
-import { EmojiDropdownInput } from './plate-ui/emoji-dropdown-input';
-import {  MentionData, MessageWithMentions } from '@/types/message';
-import { useAppSelector } from '@/app/store';
-import { shallowEqual } from 'react-redux';
-import { ChatContext } from '@/types/common';
-import useUploadFile from '@/hooks/useUploadFile';
+import { EmojiDropdownInput } from "./plate-ui/emoji-dropdown-input";
+import { MentionData, MessageWithMentions } from "@/types/message";
+import { useAppSelector } from "@/app/store";
+import { shallowEqual } from "react-redux";
+import { ChatContext } from "@/types/common";
+import useUploadFile from "@/hooks/useUploadFile";
 
 export const initialMessage = [
   {
-    id: '1',
+    id: "1",
     type: ELEMENT_PARAGRAPH,
-    children: [{ text: '' }],
-  },
+    children: [{ text: "" }]
+  }
 ];
 type Props = {
   editorRef: MutableRefObject<PlateEditor | null>;
@@ -32,7 +29,7 @@ type Props = {
   id: string;
   placeholder: string;
   sendMessage: () => void;
-  updateMessage: (msg:MessageWithMentions) => void;
+  updateMessage: (msg: MessageWithMentions) => void;
 };
 export default function MessageInput({
   editorRef,
@@ -45,17 +42,16 @@ export default function MessageInput({
 }: Props) {
   const [context, to] = id.split("_") as [ChatContext, number];
   const { addStageFile } = useUploadFile({ context, id: to });
-  const userData= useAppSelector(store=>store.users.byId,shallowEqual)
+  const userData = useAppSelector((store) => store.users.byId, shallowEqual);
   const editorContainerRef = useRef(null);
   const [input, setInput] = useLocalstorageState(id, initialMessage);
   const handleSendMessage = () => {
-   
     sendMessage();
   };
   useEffect(() => {
     const text = getMessageFromPlateValues(input as ParagraphInput[]);
-    updateMessage(text)
-  }, [input])
+    updateMessage(text);
+  }, [input]);
   // 监听文件粘贴事件
   useEffect(() => {
     const handlePasteEvent = (evt: ClipboardEvent<Window>) => {
@@ -71,24 +67,27 @@ export default function MessageInput({
       }
     };
     // @ts-ignore
-    window.addEventListener("paste", handlePasteEvent,true);
+    window.addEventListener("paste", handlePasteEvent, true);
     return () => {
-       // @ts-ignore
-      window.removeEventListener("paste", handlePasteEvent,true);
+      // @ts-ignore
+      window.removeEventListener("paste", handlePasteEvent, true);
     };
   }, [id]);
-  const items:MentionData[]=members.map(uid=>({
-    key:`${uid}`,
-    text:userData[uid].name,
-    data:{
-      uid,
+  const items: MentionData[] = members.map((uid) => ({
+    key: `${uid}`,
+    text: userData[uid].name,
+    data: {
+      uid
     }
-  }))
+  }));
   return (
     <>
-      <div ref={editorContainerRef} className="input w-full pr-14 md:pr-0 max-h-[50vh] overflow-auto text-sm text-gray-600 dark:text-white">
+      <div
+        ref={editorContainerRef}
+        className="input w-full pr-14 md:pr-0 max-h-[50vh] overflow-auto text-sm text-gray-600 dark:text-white"
+      >
         <Plate
-        // @ts-ignore
+          // @ts-ignore
           editorRef={editorRef}
           id={id}
           onChange={(values) => {
@@ -109,11 +108,7 @@ export default function MessageInput({
           </div>
         </Plate>
       </div>
-      {debug && (
-        <div className="whitespace-pre p-2 text-xs">
-          {JSON.stringify(input, null, 2)}
-        </div>
-      )}
+      {debug && <div className="whitespace-pre p-2 text-xs">{JSON.stringify(input, null, 2)}</div>}
     </>
   );
 }

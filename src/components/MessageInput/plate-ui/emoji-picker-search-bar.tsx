@@ -1,15 +1,15 @@
-import React, { ReactNode } from 'react';
-import { UseEmojiPickerType } from '@udecode/plate-emoji';
+import { ReactNode } from "react";
+import { UseEmojiPickerType } from "@udecode/plate-emoji";
 
 export type EmojiPickerSearchBarProps = {
   children: ReactNode;
-} & Pick<UseEmojiPickerType, 'i18n' | 'searchValue' | 'setSearch'>;
+} & Pick<UseEmojiPickerType, "i18n" | "searchValue" | "setSearch">;
 
 export function EmojiPickerSearchBar({
   i18n,
   searchValue,
   setSearch,
-  children,
+  children
 }: EmojiPickerSearchBarProps) {
   return (
     <div className="flex items-center px-2">

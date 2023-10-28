@@ -55,7 +55,7 @@ const VirtualMessageFeed = ({ context, id }: Props) => {
         // 到顶了
         dispatch(updateHistoryMark({ type: context, id, mid: "reached" }));
       } else {
-        // 记录最新的mid
+        // 记录最新的 mid
         const [{ mid }] = historyData;
         dispatch(updateHistoryMark({ type: context, id, mid: `${mid}` }));
       }
@@ -126,7 +126,7 @@ const VirtualMessageFeed = ({ context, id }: Props) => {
         atBottomThreshold={400}
         followOutput={handleFollowOutput}
         itemContent={(idx, mid) => {
-          // 计算出真正的index
+          // 计算出真正的 index
           // const idx = index - firstItemIndex;
           const curr = messageData[mid];
           if (!curr) return <div className="w-full h-[1px] invisible"></div>;

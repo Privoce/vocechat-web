@@ -1,14 +1,9 @@
-import React from 'react';
-import { ComboboxProps, Data, NoData } from '@udecode/plate-combobox';
-import { getPluginOptions, useEditorRef } from '@udecode/plate-common';
-import {
-  ELEMENT_MENTION,
-  getMentionOnSelectItem,
-  MentionPlugin,
-} from '@udecode/plate-mention';
+import { ComboboxProps, Data, NoData } from "@udecode/plate-combobox";
+import { getPluginOptions, useEditorRef } from "@udecode/plate-common";
+import { ELEMENT_MENTION, getMentionOnSelectItem, MentionPlugin } from "@udecode/plate-mention";
 
-import { Combobox } from './combobox';
-import User from '@/components/User';
+import { Combobox } from "./combobox";
+import User from "@/components/User";
 
 export interface MentionComboboxProps<TData extends Data = NoData>
   extends Partial<ComboboxProps<TData>> {
@@ -26,16 +21,18 @@ export function MentionCombobox<TData extends Data = NoData>({
 
   return (
     <Combobox
-      onRenderItem={({item})=>{
-// @ts-ignore
-        const {data:{uid}}=item;
-        return <User key={uid} uid={uid} interactive={false} />
+      onRenderItem={({ item }) => {
+        const {
+          // @ts-ignore
+          data: { uid }
+        } = item;
+        return <User key={uid} uid={uid} interactive={false} />;
       }}
       id={id}
       trigger={trigger!}
       controlled
       onSelectItem={getMentionOnSelectItem({
-        key: pluginKey,
+        key: pluginKey
       })}
       {...props}
     />
