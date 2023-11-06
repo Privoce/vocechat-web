@@ -1,4 +1,4 @@
-import { FC, memo, useEffect, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { ViewportList } from "react-viewport-list";
 
 import { useAppSelector } from "@/app/store";
@@ -84,13 +84,11 @@ const SessionList: FC<Props> = ({ tempSession }) => {
     }).map((id) => {
       return getSessionObj(id, "dm");
     });
-    const temps = [...(cSessions as ChatSession[]), ...(uSessions as ChatSession[])].sort(
-      (a, b) => {
-        const { mid: aMid = 0 } = a;
-        const { mid: bMid = 0 } = b;
-        return bMid - aMid;
-      }
-    );
+    const temps = [...cSessions, ...uSessions].sort((a, b) => {
+      const { mid: aMid = 0 } = a;
+      const { mid: bMid = 0 } = b;
+      return bMid - aMid;
+    });
     // console.log("before qqqq", temps);
     const newSessions = tempSession ? [tempSession, ...temps] : temps;
     // console.log("qqqq", newSessions);
@@ -176,4 +174,4 @@ const SessionList: FC<Props> = ({ tempSession }) => {
     </div>
   );
 };
-export default memo(SessionList);
+export default SessionList;
