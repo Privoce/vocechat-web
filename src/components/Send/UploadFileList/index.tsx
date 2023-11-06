@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Waveform } from "@uiball/loaders";
 
 import { ChatContext } from "@/types/common";
@@ -52,7 +52,7 @@ export default function UploadFileList({ context, id }: { context: ChatContext; 
               className="group relative flex flex-col bg-gray-100 dark:bg-gray-700 rounded p-2"
               key={url}
             >
-              <div className="flex-center w-40 h-40">
+              <div className="flex-center w-20 h-20 md:w-40 md:h-40">
                 {shouldPreviewImage(type) ? (
                   converting ? (
                     <Waveform size={18} lineWeight={3} speed={1} color="#aaa" />
@@ -63,7 +63,7 @@ export default function UploadFileList({ context, id }: { context: ChatContext; 
                   getFileIcon(type, name)
                 )}
               </div>
-              <h4 className="w-40 mt-4 mb-0.5 font-semibold text-sm text-gray-800 dark:text-gray-100 truncate">
+              <h4 className="w-20 md:w-40 mt-1 md:mt-4 mb-0.5 md:font-semibold text-xs md:text-sm text-gray-800 dark:text-gray-100 truncate">
                 {name}
               </h4>
               <span className="text-xs text-gray-500">{formatBytes(size)}</span>

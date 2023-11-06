@@ -13,7 +13,7 @@ import useSendMessage from "@/hooks/useSendMessage";
 import useUploadFile from "@/hooks/useUploadFile";
 import useUserOperation from "@/hooks/useUserOperation";
 import StyledButton from "../styled/Button";
-import TextInput from "../TextInput";
+// import TextInput from "../TextInput";
 import Replying from "./Replying";
 import Toolbar from "./Toolbar";
 import UploadFileList from "./UploadFileList";
@@ -80,22 +80,24 @@ const Send: FC<IProps> = ({
     }
   };
   const handleSendMessage = async () => {
-    if (!id || !msg.text.trim()) return;
-    // send text msgs
+    if (!id) return;
     if (editorRef.current) {
       editorRef.current.reset();
     }
-    const { text, mentions } = msg;
-    const properties = { mentions };
-    properties.local_id = +new Date();
-    await sendMessage({
-      id,
-      reply_mid: replying_mid,
-      type: "text",
-      content: text,
-      from_uid,
-      properties
-    });
+    if (msg.text.trim()) {
+      // send text msg
+      const { text, mentions } = msg;
+      const properties = { mentions };
+      properties.local_id = +new Date();
+      await sendMessage({
+        id,
+        reply_mid: replying_mid,
+        type: "text",
+        content: text,
+        from_uid,
+        properties
+      });
+    }
     // send files
     if (uploadFiles.length !== 0) {
       uploadFiles.forEach((fileInfo) => {
@@ -154,11 +156,11 @@ const Send: FC<IProps> = ({
   return (
     <>
       {/* mobile input */}
-      <TextInput sendMessage={handleSendMessage} placeholder={placeholder} />
+      {/* <TextInput sendMessage={handleSendMessage} placeholder={placeholder} /> */}
       {/* PC input */}
       <div
         className={clsx(
-          `send hidden md:block relative bg-gray-200 rounded-lg w-full dark:bg-gray-600 ${mode} ${
+          `send mb-2 md:mb-0 relative bg-gray-200 rounded-lg w-full dark:bg-gray-600 ${mode} ${
             markdownFullscreen ? "fullscreen" : ""
           } ${replying_mid ? "reply" : ""} ${context}`,
           isMarkdownMode && markdownFullscreen && "-mt-9"
