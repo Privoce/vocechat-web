@@ -1,10 +1,10 @@
-import React from 'react';
-import { PlateContent, useEditorRef } from '@udecode/plate-common';
-import { useKey } from 'rooks';
+import React from "react";
+import { PlateContent, useEditorRef } from "@udecode/plate-common";
+import { useKey } from "rooks";
 
-import { cn, isMobile } from '@/utils';
+import { cn, isMobile } from "@/utils";
 
-import type { PlateContentProps } from '@udecode/plate-common';
+import type { PlateContentProps } from "@udecode/plate-common";
 
 export type EditorProps = PlateContentProps & {
   sendMessage: () => void;
@@ -14,9 +14,9 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
   ({ id, sendMessage, className, disabled, readOnly, ...props }, ref) => {
     const editorRef = useEditorRef(id);
     useKey(
-      'Enter',
+      "Enter",
       (evt) => {
-        console.log('enter', editorRef, evt);
+        console.log("enter", editorRef, evt);
 
         if (!editorRef) return;
         if (evt.shiftKey || evt.ctrlKey || evt.altKey || evt.isComposing) {
@@ -29,20 +29,17 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
       {
         when: !isMobile(),
         // @ts-ignore
-        target: ref,
+        target: ref
       }
     );
     return (
-      <div
-        ref={ref}
-        className="relative h-fit w-full  pl-10"
-      >
+      <div ref={ref} className="relative h-fit w-full pl-10">
         <PlateContent
           className={cn(
-            'relative overflow-hidden whitespace-pre-wrap break-words',
-            'w-full rounded-md bg-background ring-offset-background placeholder:text-gray-500 focus-visible:outline-none',
-            '[&_[data-slate-placeholder]]:opacity-30',
-            '[&_[data-slate-placeholder]]:top-[auto_!important]',
+            "relative overflow-hidden whitespace-pre-wrap break-words",
+            "w-full rounded-md bg-background ring-offset-background placeholder:text-gray-500 focus-visible:outline-none",
+            "[&_[data-slate-placeholder]]:opacity-30",
+            "[&_[data-slate-placeholder]]:top-[4px_!important]",
             className
           )}
           spellCheck={false}
@@ -55,6 +52,6 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
     );
   }
 );
-Editor.displayName = 'Editor';
+Editor.displayName = "Editor";
 
 export { Editor };

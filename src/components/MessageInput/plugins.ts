@@ -16,53 +16,56 @@ import { MentionElement } from "./plate-ui/mention/element";
 import { MentionInputElement } from "./plate-ui/mention/input-element";
 import { ParagraphElement } from "./plate-ui/paragraph-element";
 
-export const plugins = createPlugins(
-  [
-    // Nodes
-    createParagraphPlugin(),
-    createMentionPlugin({
-      options: {
-        createMentionNode: (item) => {
-          const { key, text } = item;
-          return { value: text, uid: key };
-        }
-      }
-    }),
-
-    // Functionality
-    createComboboxPlugin(),
-    createEmojiPlugin({
-      renderAfterEditable: EmojiCombobox as RenderAfterEditable
-    }),
-    createExitBreakPlugin({
-      options: {
-        rules: [
-          {
-            hotkey: "mod+enter"
-          },
-          {
-            hotkey: "mod+shift+enter",
-            before: true
+export const plugins = ({ enableMention }: { enableMention: boolean }) =>
+  createPlugins(
+    [
+      // Nodes
+      createParagraphPlugin(),
+      createMentionPlugin({
+        // 私聊就不开启 mention 了
+        enabled: enableMention,
+        options: {
+          createMentionNode: (item) => {
+            const { key, text } = item;
+            return { value: text, uid: key };
           }
-        ]
-      }
-    }),
-    createNodeIdPlugin(),
+        }
+      }),
 
-    createSoftBreakPlugin({
-      options: {
-        rules: [{ hotkey: "shift+enter" }]
+      // Functionality
+      createComboboxPlugin(),
+      createEmojiPlugin({
+        renderAfterEditable: EmojiCombobox as RenderAfterEditable
+      }),
+      createExitBreakPlugin({
+        options: {
+          rules: [
+            {
+              hotkey: "mod+enter"
+            },
+            {
+              hotkey: "mod+shift+enter",
+              before: true
+            }
+          ]
+        }
+      }),
+      createNodeIdPlugin(),
+
+      createSoftBreakPlugin({
+        options: {
+          rules: [{ hotkey: "shift+enter" }]
+        }
+      }),
+      createTrailingBlockPlugin({
+        options: { type: ELEMENT_PARAGRAPH }
+      })
+    ],
+    {
+      components: {
+        [ELEMENT_MENTION]: MentionElement,
+        [ELEMENT_MENTION_INPUT]: MentionInputElement,
+        [ELEMENT_PARAGRAPH]: ParagraphElement
       }
-    }),
-    createTrailingBlockPlugin({
-      options: { type: ELEMENT_PARAGRAPH }
-    })
-  ],
-  {
-    components: {
-      [ELEMENT_MENTION]: MentionElement,
-      [ELEMENT_MENTION_INPUT]: MentionInputElement,
-      [ELEMENT_PARAGRAPH]: ParagraphElement
     }
-  }
-);
+  );

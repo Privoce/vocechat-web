@@ -321,15 +321,6 @@ html.dark ::-webkit-scrollbar-thumb {
 html.dark .send.markdown {
   background-color: #222 !important;
 }
-html.dark .slate-mention {
-  background: #333;
-}
-html.dark .slate-Combobox {
-  background: #333 !important;
-}
-html.dark .slate-Combobox li:hover {
-  background: #333 !important;
-}
 
 /* remove focus border */
 svg:focus {
@@ -341,10 +332,6 @@ svg:focus {
 [id^="CAMERA_"] video {
   object-fit: contain !important;
 }
-/* send placeholder */
-.send [data-slate-placeholder="true"] {
-  top: 4px !important;
-}
 /* reset number input spinner */
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
@@ -352,7 +339,7 @@ input[type="number"]::-webkit-outer-spin-button {
   appearance: none;
   margin: 0;
 }
-/* 登录注册页面的底部社会化登录，如果为空，则不显示or分割线 */
+/* 登录注册页面的底部社会化登录，如果为空，则不显示 or 分割线 */
 .or:has(+ .socials:empty) {
   display: none;
 }

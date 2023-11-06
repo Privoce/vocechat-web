@@ -89,11 +89,12 @@ export default function MessageInput({
         <Plate
           // @ts-ignore
           editorRef={editorRef}
+          key={id}
           id={id}
           onChange={(values) => {
             setInput(values);
           }}
-          plugins={plugins}
+          plugins={plugins({ enableMention: members.length > 0 })}
           value={input}
         >
           <Editor
