@@ -7,14 +7,16 @@ import { shallowEqual } from "react-redux";
 
 const query = new URLSearchParams(location.search);
 const welcome = decodeURIComponent(query.get("welcome") || "");
+const autoReg = decodeURIComponent(query.get("autoReg") || "false") == "true";
 const color = decodeURIComponent(query.get("themeColor") || "#1fe1f9");
 const from = decodeURIComponent(query.get("from") || "widget.link");
 const fgColor = getContrastColor(color);
 const embed = isInIframe();
 const WidgetContext = createContext({
+  autoReg,
   color,
   fgColor,
-  // 判断是否是iframe上下文
+  // 判断是否是 iframe 上下文
   embed,
   from,
   loading: true,
@@ -34,6 +36,7 @@ function WidgetProvider({ children }: { children: ReactNode }) {
   return (
     <WidgetContext.Provider
       value={{
+        autoReg,
         welcome,
         loading,
         color,

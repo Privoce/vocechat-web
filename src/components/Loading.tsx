@@ -10,9 +10,15 @@ interface Props {
   reload?: boolean;
   fullscreen?: boolean;
   context?: string;
+  transparent?: boolean;
 }
 
-const Loading: FC<Props> = ({ reload = false, fullscreen = false, context = "" }) => {
+const Loading: FC<Props> = ({
+  transparent = false,
+  reload = false,
+  fullscreen = false,
+  context = ""
+}) => {
   const [reloadVisible, setReloadVisible] = useState(false);
   const { clearLocalData } = useLogout();
   const handleReload = () => {
@@ -48,7 +54,8 @@ const Loading: FC<Props> = ({ reload = false, fullscreen = false, context = "" }
     <div
       data-ctx={context}
       className={clsx(
-        "w-full h-full flex-center flex-col gap-4 dark:bg-gray-800/80",
+        "w-full h-full flex-center flex-col gap-4 ",
+        transparent ? "bg-transparent" : "dark:bg-gray-800/80",
         fullscreen ? "w-screen h-screen" : ""
       )}
     >

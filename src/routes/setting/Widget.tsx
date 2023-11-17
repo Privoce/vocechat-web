@@ -91,6 +91,11 @@ export default function Widget() {
                 remarks: t("param_host")
               },
               {
+                paramKey: "auto-reg",
+                paramDefault: "false",
+                remarks: t("param_auto_reg")
+              },
+              {
                 paramKey: "theme-color",
                 paramDefault: "#1fe1f9",
                 remarks: t("param_theme_color")

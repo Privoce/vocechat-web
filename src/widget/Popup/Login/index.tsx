@@ -16,18 +16,29 @@ import Input from "../../../components/styled/Input";
 import useGithubAuthConfig from "../../../hooks/useGithubAuthConfig";
 import useGoogleAuthConfig from "../../../hooks/useGoogleAuthConfig";
 import { useWidget } from "../../WidgetContext";
+import Loading from "@/components/Loading";
 
 // type Props = {}
-
+const randomText = () => (Math.random() + 1).toString(36).substring(7);
 const Login = () => {
   const { t } = useTranslation("widget");
   const dispatch = useDispatch();
-  const { color, fgColor, from } = useWidget();
+  const { color, fgColor, from, autoReg } = useWidget();
   const { clientId } = useGoogleAuthConfig();
   const { config: githubAuthConfig } = useGithubAuthConfig();
   const [register, { isLoading, isSuccess, data, error }] = useRegisterMutation();
   //  const [login]= useLoginMutation();
   const { data: loginConfig, isSuccess: loginConfigSuccess } = useGetLoginConfigQuery();
+  const registerUser = (name: string, auto?: boolean) => {
+    const rand = randomText();
+    const nameFromEmail = auto ? name : `${name}-${rand}`;
+    const randomEmail = auto ? `${name}@${from}` : `${name}-${rand}-${from}`;
+    register({
+      name: nameFromEmail,
+      email: randomEmail,
+      password: nameFromEmail
+    });
+  };
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     const form = evt.currentTarget;
@@ -40,16 +51,15 @@ const Login = () => {
     const name = data.get("username") as string;
     // const email = data.get("email") as string;
     console.log("name", name);
-    const rand = (Math.random() + 1).toString(36).substring(7);
-    const nameFromEmail = `${name}-${rand}`;
-    const randomEmail = `${name}-${rand}-${from}`;
-    register({
-      name: nameFromEmail,
-      email: randomEmail,
-      password: nameFromEmail
-    });
+    registerUser(name, false);
     // const content = new FormData(form).get("prompt") as string;
   };
+  useEffect(() => {
+    if (autoReg) {
+      registerUser(`w-${randomText()}`, true);
+    }
+  }, [autoReg]);
+
   useEffect(() => {
     if (isSuccess && data) {
       dispatch(setAuthData(data));
@@ -74,6 +84,7 @@ const Login = () => {
     }
   }, [error]);
   if (!loginConfigSuccess) return null;
+  if (autoReg) return <Loading />;
   const { github: enableGithubLogin, google: enableGoogleLogin } = loginConfig;
   const googleLogin = enableGoogleLogin && clientId;
   const hasSocialLogins = enableGithubLogin || googleLogin;
