@@ -248,6 +248,7 @@
     "remark": "Remarks",
     "custom_style_tip": "if you want customize the widget position more precisely, use the widget element ID in your HTML or CSS file, like this",
     "param_host": "Assign the user chatting with visitor(User ID)",
+    "param_auto_reg": "true: Auto register a new user if not exist, false: need visitor to input email to register",
     "param_theme_color": "The theme color of widget",
     "param_close_width": "The width while widget closed",
     "param_close_height": "The height while widget closed",
