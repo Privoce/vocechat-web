@@ -10,6 +10,7 @@ import Button from "../../components/styled/Button";
 import Input from "../../components/styled/Input";
 import useCopy from "../../hooks/useCopy";
 import { shallowEqual } from "react-redux";
+import LinkifyText from "@/components/LinkifyText";
 
 const Row = ({
   paramKey,
@@ -30,7 +31,9 @@ const Row = ({
           paramDefault
         )}
       </td>
-      <td className="text-sm font-light px-6 py-4 whitespace-nowrap">{remarks}</td>
+      <td className="text-sm font-light px-6 py-4">
+        <LinkifyText linkPreview={false} text={remarks} mention={false} />
+      </td>
     </tr>
   );
 };
@@ -54,7 +57,7 @@ export default function Widget() {
       <SyntaxHighlighter id="code" language="html" style={vscDarkPlus} className="rounded">
         {`<!-- ${t(
           "code_comment"
-        )} -->\n<script \n  data-host-id="${loginUid}" \n data-auto-reg="false" \n data-login-token="xxxxxxxx" \n  data-theme-color="#1fe1f9" \n  data-close-width="48" \n  data-close-height="48" \n  data-open-width="380" \n  data-open-height="680" \n  data-welcome="Your custom welcome text" \n  src="${
+        )} -->\n<script \n  data-host-id="${loginUid}" \n  data-auto-reg="false" \n  data-login-token="xxxxxxxx" \n  data-theme-color="#1fe1f9" \n  data-close-width="48" \n  data-close-height="48" \n  data-open-width="380" \n  data-open-height="680" \n  data-welcome="Your custom welcome text" \n  src="${
           location.origin
         }/widget.js" \n  async \n></script>`}
       </SyntaxHighlighter>
@@ -97,7 +100,7 @@ export default function Widget() {
               },
               {
                 paramKey: "login-token",
-                paramDefault: "",
+                paramDefault: `-`,
                 remarks: t("param_login_token")
               },
               {

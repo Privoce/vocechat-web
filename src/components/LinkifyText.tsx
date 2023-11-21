@@ -8,6 +8,7 @@ import URLPreview from "./Message/URLPreview";
 
 type Props = {
   url?: boolean;
+  linkPreview?: boolean;
   mention?: boolean;
   mentionTextOnly?: boolean;
   mentionPopOver?: boolean;
@@ -20,6 +21,7 @@ const LinkifyText = ({
   mention = true,
   mentionTextOnly = false,
   mentionPopOver = true,
+  linkPreview = true,
   text,
   cid
 }: Props) => {
@@ -45,7 +47,7 @@ const LinkifyText = ({
                 <a className="text-primary-500" target="_blank" href={link} rel="noreferrer">
                   {content}
                 </a>
-                <URLPreview url={link} />
+                {linkPreview && <URLPreview url={link} />}
               </>
             );
           },
