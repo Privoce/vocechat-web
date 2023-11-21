@@ -3,6 +3,7 @@
   const {
     hostId = 1,
     autoReg = "false",
+    loginToken = "",
     closeWidth = 48,
     closeHeight = 48,
     openWidth = 380,
@@ -27,7 +28,7 @@
   Object.assign(wrapper.style, styles);
   wrapper.src = `${
     new URL(_src).origin
-  }/widget.html?host=${hostId}&autoReg=${autoReg}&themeColor=${encodeURIComponent(
+  }/widget.html?host=${hostId}&autoReg=${autoReg}&token=${loginToken}&themeColor=${encodeURIComponent(
     themeColor
   )}&from=${encodeURIComponent(location.hostname)}&welcome=${encodeURIComponent(welcome)}`;
   wrapper.width = closeWidth;

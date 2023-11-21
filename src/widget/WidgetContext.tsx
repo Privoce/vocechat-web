@@ -8,11 +8,13 @@ import { shallowEqual } from "react-redux";
 const query = new URLSearchParams(location.search);
 const welcome = decodeURIComponent(query.get("welcome") || "");
 const autoReg = decodeURIComponent(query.get("autoReg") || "false") == "true";
+const token = decodeURIComponent(query.get("token") || "");
 const color = decodeURIComponent(query.get("themeColor") || "#1fe1f9");
 const from = decodeURIComponent(query.get("from") || "widget.link");
 const fgColor = getContrastColor(color);
 const embed = isInIframe();
 const WidgetContext = createContext({
+  token,
   autoReg,
   color,
   fgColor,
@@ -36,6 +38,7 @@ function WidgetProvider({ children }: { children: ReactNode }) {
   return (
     <WidgetContext.Provider
       value={{
+        token,
         autoReg,
         welcome,
         loading,

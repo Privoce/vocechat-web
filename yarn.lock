@@ -7,30 +7,30 @@
   resolved "https://mirrors.cloud.tencent.com/npm/@aashutoshrathi/word-wrap/-/word-wrap-1.2.6.tgz#bd9154aec9983f77b3a034ecaa015c2e4201f6cf"
   integrity sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==
 
-"@agora-js/media@^4.19.2":
-  version "4.19.2"
-  resolved "https://mirrors.cloud.tencent.com/npm/@agora-js/media/-/media-4.19.2.tgz#d25cada6a7d1e00d5075b0061e3c30fb7c3b734b"
-  integrity sha512-A83uOxolbWod1ydOPFPi+xKoCN5IfcT7q4oR0H6VyGFoo1IA0OWpPztY/C1ueiU9ct5TSBqewEJUQrwvYKWuYQ==
+"@agora-js/media@^4.19.3":
+  version "4.19.3"
+  resolved "https://mirrors.cloud.tencent.com/npm/@agora-js/media/-/media-4.19.3.tgz#2fc4caf6adebdfc7d8511a99e983847fc05cb672"
+  integrity sha512-isdguA/wAYRILVN831Xuyaz7MWqhWBECuAoIQg+7aATbRNtNO8Y/OvWpb9dhHnUgyf8V/CIH1wz/6dWXQtIXTA==
   dependencies:
-    "@agora-js/report" "^4.19.2"
-    "@agora-js/shared" "^4.19.2"
+    "@agora-js/report" "^4.19.3"
+    "@agora-js/shared" "^4.19.3"
     agora-rte-extension "^1.2.3"
     axios "^0.27.2"
     pako "^2.1.0"
     webrtc-adapter "8.2.0"
 
-"@agora-js/report@^4.19.2":
-  version "4.19.2"
-  resolved "https://mirrors.cloud.tencent.com/npm/@agora-js/report/-/report-4.19.2.tgz#50c9540bb9cd84bebba3b181aa6ff07be6646aa9"
-  integrity sha512-fT3ShsADEQQQwCbVXFGCj3hmsBR9F69JkpeypdiMmDyUrG9MgKYZub/En+nijk4nZ30wuWYeJBntfx+/4Vfd0g==
+"@agora-js/report@^4.19.3":
+  version "4.19.3"
+  resolved "https://mirrors.cloud.tencent.com/npm/@agora-js/report/-/report-4.19.3.tgz#af95714a264109eea454714229b9c4ad3af1ab17"
+  integrity sha512-g64mpKEhuItmoKv8YJdjJAZyFxKwfCtOZ99RZ2d2HcN9yuKT7WoMJ1TbHdCl9nwigtxBloZTv49ukOp2qIUpcw==
   dependencies:
-    "@agora-js/shared" "^4.19.2"
+    "@agora-js/shared" "^4.19.3"
     axios "^0.27.2"
 
-"@agora-js/shared@^4.19.2":
-  version "4.19.2"
-  resolved "https://mirrors.cloud.tencent.com/npm/@agora-js/shared/-/shared-4.19.2.tgz#653b1580327f07ef9641b0f7ac3e192b8dd083be"
-  integrity sha512-foCSc2tZx99DlMZ3zO47en4eyWYeHtm3Q0dDEWKK7sTaTVqS73aa6O/7CIw9vm2MKfvBv9rFcpXUlYbFKA0/1g==
+"@agora-js/shared@^4.19.3":
+  version "4.19.3"
+  resolved "https://mirrors.cloud.tencent.com/npm/@agora-js/shared/-/shared-4.19.3.tgz#647a65c2412abb6f79f3fb2fd4be6de8d54eaf77"
+  integrity sha512-APC7HEA4240pSTk3Ri++lzzW+E4lr35YsgU8Va4WciLDQSlDrTybxiyY0gdZ5DqhrRE4Si0bOX32yc3p1HllWg==
   dependencies:
     axios "^0.27.2"
     ua-parser-js "^0.7.34"
@@ -1256,14 +1256,14 @@
   resolved "https://mirrors.cloud.tencent.com/npm/@babel/regjsgen/-/regjsgen-0.8.0.tgz#f0ba69b075e1f05fb2825b7fad991e7adbb18310"
   integrity sha512-x/rqGMdzj+fWZvCOYForTghzbtqPDZ5gPwaoNGHdgDfF2QA/XZbCBp4Moo5scrkAMPhB7z26XM/AaHuIJdgauA==
 
-"@babel/runtime@7.23.2", "@babel/runtime@^7.13.10", "@babel/runtime@^7.14.8":
+"@babel/runtime@7.23.2", "@babel/runtime@^7.13.10", "@babel/runtime@^7.14.8", "@babel/runtime@^7.23.1", "@babel/runtime@^7.23.2":
   version "7.23.2"
   resolved "https://mirrors.cloud.tencent.com/npm/@babel/runtime/-/runtime-7.23.2.tgz#062b0ac103261d68a966c4c7baf2ae3e62ec3885"
   integrity sha512-mM8eg4yl5D6i3lu2QKPuPH4FArvJ8KhTofbE7jwMUv9KX5mBvwPAqnV3MlyBNqdp9RyRKP6Yck8TrfYrPvX3bg==
   dependencies:
     regenerator-runtime "^0.14.0"
 
-"@babel/runtime@^7.11.2", "@babel/runtime@^7.12.1", "@babel/runtime@^7.12.5", "@babel/runtime@^7.16.3", "@babel/runtime@^7.19.4", "@babel/runtime@^7.20.13", "@babel/runtime@^7.22.5", "@babel/runtime@^7.3.1", "@babel/runtime@^7.8.4", "@babel/runtime@^7.9.2":
+"@babel/runtime@^7.11.2", "@babel/runtime@^7.12.1", "@babel/runtime@^7.12.5", "@babel/runtime@^7.16.3", "@babel/runtime@^7.20.13", "@babel/runtime@^7.22.5", "@babel/runtime@^7.3.1", "@babel/runtime@^7.8.4", "@babel/runtime@^7.9.2":
   version "7.22.6"
   resolved "https://mirrors.cloud.tencent.com/npm/@babel/runtime/-/runtime-7.22.6.tgz#57d64b9ae3cff1d67eb067ae117dac087f5bd438"
   integrity sha512-wDb5pWm4WDdF6LFUde3Jl8WzPA+3ZbxYqkC6xAXuD3irdEHN1k0NfTRrJD8ZD378SJ61miMLCqIOXYhd8x+AJQ==
@@ -1381,10 +1381,10 @@
   resolved "https://mirrors.cloud.tencent.com/npm/@eslint-community/regexpp/-/regexpp-4.6.2.tgz#1816b5f6948029c5eaacb0703b850ee0cb37d8f8"
   integrity sha512-pPTNuaAG3QMH+buKyBIGJs3g/S5y0caxw0ygM3YyE6yJFySwiGGSzA+mM3KJ8QQvzeLh3blwgSonkFjgQdxzMw==
 
-"@eslint/eslintrc@^2.1.2":
-  version "2.1.2"
-  resolved "https://mirrors.cloud.tencent.com/npm/@eslint/eslintrc/-/eslintrc-2.1.2.tgz#c6936b4b328c64496692f76944e755738be62396"
-  integrity sha512-+wvgpDsrB1YqAMdEUCcnTlpfVBH7Vqn6A/NT3D8WVXFIaKMlErPIZT3oCIAVCOtarRpMtelZLqJeU3t7WY6X6g==
+"@eslint/eslintrc@^2.1.3":
+  version "2.1.3"
+  resolved "https://mirrors.cloud.tencent.com/npm/@eslint/eslintrc/-/eslintrc-2.1.3.tgz#797470a75fe0fbd5a53350ee715e85e87baff22d"
+  integrity sha512-yZzuIG+jnVu6hNSzFEN07e8BxF3uAzYtQb6uDkaYZLo6oYZDCq454c5kB8zxnzfCYyP4MIuyBn10L0DqwujTmA==
   dependencies:
     ajv "^6.12.4"
     debug "^4.3.2"
@@ -1396,10 +1396,10 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
-"@eslint/js@8.52.0":
-  version "8.52.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/@eslint/js/-/js-8.52.0.tgz#78fe5f117840f69dc4a353adf9b9cd926353378c"
-  integrity sha512-mjZVbpaeMZludF2fsWLD0Z9gCref1Tk4i9+wddjRvpUNqqcndPkBD09N/Mapey0b3jaXbLm2kICwFv2E64QinA==
+"@eslint/js@8.54.0":
+  version "8.54.0"
+  resolved "https://registry.npmjs.org/@eslint/js/-/js-8.54.0.tgz#4fab9a2ff7860082c304f750e94acd644cf984cf"
+  integrity sha512-ut5V+D+fOoWPgGGNj83GGjnntO39xDy6DWxO0wb7Jp3DcMX0TfIqdzHF85VTQkerdyGmuuMD9AKAo5KiNlf/AQ==
 
 "@firebase/analytics-compat@0.2.6":
   version "0.2.6"
@@ -2337,10 +2337,10 @@
   resolved "https://mirrors.cloud.tencent.com/npm/@react-dnd/shallowequal/-/shallowequal-4.0.2.tgz#d1b4befa423f692fa4abf1c79209702e7d8ae4b4"
   integrity sha512-/RVXdLvJxLg4QKvMoM5WlwNR9ViO9z8B/qPcc+C0Sa/teJY7QG7kJ441DwzOjMYEY7GmU4dj5EcGHIkKZiQZCA==
 
-"@react-oauth/google@^0.11.1":
-  version "0.11.1"
-  resolved "https://mirrors.cloud.tencent.com/npm/@react-oauth/google/-/google-0.11.1.tgz#f937c8d02bd37e3a6be7713b8212e9b9b9b3f914"
-  integrity sha512-tywZisXbsdaRBVbEu0VX6dRbOSL2I6DgY97woq5NMOOOz+xtDsm418vqq+Vx10KMtra3kdHMRMf0hXLWrk2RMg==
+"@react-oauth/google@^0.12.1":
+  version "0.12.1"
+  resolved "https://registry.npmjs.org/@react-oauth/google/-/google-0.12.1.tgz#b76432c3a525e9afe076f787d2ded003fcc1bee9"
+  integrity sha512-qagsy22t+7UdkYAiT5ZhfM4StXi9PPNvw0zuwNmabrWyMKddczMtBIOARflbaIj+wHiQjnMAsZmzsUYuXeyoSg==
 
 "@reduxjs/toolkit@^1.9.7":
   version "1.9.7"
@@ -2352,10 +2352,10 @@
     redux-thunk "^2.4.2"
     reselect "^4.1.8"
 
-"@remix-run/router@1.10.0":
-  version "1.10.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/@remix-run/router/-/router-1.10.0.tgz#e2170dc2049b06e65bbe883adad0e8ddf8291278"
-  integrity sha512-Lm+fYpMfZoEucJ7cMxgt4dYt8jLfbpwRCzAjm9UgSLOkmlqo9gupxt6YX3DY0Fk155NT9l17d/ydi+964uS9Lw==
+"@remix-run/router@1.12.0":
+  version "1.12.0"
+  resolved "https://registry.npmjs.org/@remix-run/router/-/router-1.12.0.tgz#e89b64b6fa97a8a5b740a4c38c2904b80f1f229a"
+  integrity sha512-2hXv036Bux90e1GXTWSMfNzfDDK8LA8JYEWfyHxzvwdp6GyoWEovKc9cotb3KCKmkdwsIBuFGX7ScTWyiHv7Eg==
 
 "@rollup/plugin-babel@^5.2.0":
   version "5.3.1"
@@ -2714,10 +2714,10 @@
   resolved "https://mirrors.cloud.tencent.com/npm/@types/long/-/long-4.0.2.tgz#b74129719fc8d11c01868010082d483b7545591a"
   integrity sha512-MqTGEo5bj5t157U6fA/BiDynNkn0YknVdh48CMPkTSpFTVmvao5UQmm7uEF6xBEo7qIMAlY/JSleYaE6VOdpaA==
 
-"@types/masonry-layout@^4.2.6":
-  version "4.2.6"
-  resolved "https://mirrors.cloud.tencent.com/npm/@types/masonry-layout/-/masonry-layout-4.2.6.tgz#737d106d015b4f04e53255d6975c1fc8484a708c"
-  integrity sha512-HhWZvrfYbZIdpdlXzUvI5Al3jTjOnVTGydRs2GjKh7PW+mFVlxqgUoqW+UhEPwkEO2qIsJkV+mj30xCFCcm+/Q==
+"@types/masonry-layout@^4.2.7":
+  version "4.2.7"
+  resolved "https://registry.npmjs.org/@types/masonry-layout/-/masonry-layout-4.2.7.tgz#8884b9c8d954db113a70218118cb8ef72b189e71"
+  integrity sha512-lWWCH+6/gWAtXjyLH8dIe9WEcw8Zt/Ud8U6pwOZk5sZZssA/VvqVD55dxjpfWxcI/PRYp6XuQktqiv6r02Qa/g==
   dependencies:
     "@types/jquery" "*"
 
@@ -2736,10 +2736,10 @@
   resolved "https://mirrors.cloud.tencent.com/npm/@types/node/-/node-20.4.5.tgz#9dc0a5cb1ccce4f7a731660935ab70b9c00a5d69"
   integrity sha512-rt40Nk13II9JwQBdeYqmbn2Q6IVTA5uPhvSO+JVqdXw/6/4glI6oR9ezty/A9Hg5u7JH4OmYmuQ+XvjKm0Datg==
 
-"@types/node@^20.8.9":
-  version "20.8.9"
-  resolved "https://mirrors.cloud.tencent.com/npm/@types/node/-/node-20.8.9.tgz#646390b4fab269abce59c308fc286dcd818a2b08"
-  integrity sha512-UzykFsT3FhHb1h7yD4CA4YhBHq545JC0YnEz41xkipN88eKQtL6rSgocL5tbAP6Ola9Izm/Aw4Ora8He4x0BHg==
+"@types/node@^20.9.2":
+  version "20.9.2"
+  resolved "https://registry.npmjs.org/@types/node/-/node-20.9.2.tgz#002815c8e87fe0c9369121c78b52e800fadc0ac6"
+  integrity sha512-WHZXKFCEyIUJzAwh3NyyTHYSR35SevJ6mZ1nWwJafKtiQbqRTIKSRcw3Ma3acqgsent3RRDqeVwpHntMk+9irg==
   dependencies:
     undici-types "~5.26.4"
 
@@ -2763,24 +2763,24 @@
   resolved "https://mirrors.cloud.tencent.com/npm/@types/range-parser/-/range-parser-1.2.4.tgz#cd667bcfdd025213aafb7ca5915a932590acdcdc"
   integrity sha512-EEhsLsD6UsDM1yFhAvy0Cjr6VwmpMWqFBCb9w07wVugF7w9nfajxLuVmngTIpgS6svCnm6Vaw+MZhoDCKnOfsw==
 
-"@types/react-dom@^18.2.14":
-  version "18.2.14"
-  resolved "https://mirrors.cloud.tencent.com/npm/@types/react-dom/-/react-dom-18.2.14.tgz#c01ba40e5bb57fc1dc41569bb3ccdb19eab1c539"
-  integrity sha512-V835xgdSVmyQmI1KLV2BEIUgqEuinxp9O4G6g3FqO/SqLac049E53aysv0oEFD2kHfejeKU+ZqL2bcFWj9gLAQ==
+"@types/react-dom@^18.2.15":
+  version "18.2.15"
+  resolved "https://registry.npmjs.org/@types/react-dom/-/react-dom-18.2.15.tgz#921af67f9ee023ac37ea84b1bc0cc40b898ea522"
+  integrity sha512-HWMdW+7r7MR5+PZqJF6YFNSCtjz1T0dsvo/f1BV6HkV+6erD/nA7wd9NM00KVG83zf2nJ7uATPO9ttdIPvi3gg==
   dependencies:
     "@types/react" "*"
 
-"@types/react-helmet@^6.1.8":
-  version "6.1.8"
-  resolved "https://mirrors.cloud.tencent.com/npm/@types/react-helmet/-/react-helmet-6.1.8.tgz#92942afbf620435602de1f500cd9b47d3c09a218"
-  integrity sha512-UyJFvbGWO8xKvfCPFTt/DG/vsgkMqyXbUQAa1pSPco1Whw85Z3ypMEqoHtCDfoW4Qu8XgJp63jyXEhOa4te5Kw==
+"@types/react-helmet@^6.1.9":
+  version "6.1.9"
+  resolved "https://registry.npmjs.org/@types/react-helmet/-/react-helmet-6.1.9.tgz#e79e0def2ad4047cb67e83c5be7cfb3d2121615a"
+  integrity sha512-nuOeTefP4yPTWHvjGksCBKb/4hsgJxSX7aSTjTIDFXJIkZ6Wo2Y4/cmE1FO9OlYBrHjKOer/0zLwY7s4qiQBtw==
   dependencies:
     "@types/react" "*"
 
-"@types/react-syntax-highlighter@^15.5.9":
-  version "15.5.9"
-  resolved "https://mirrors.cloud.tencent.com/npm/@types/react-syntax-highlighter/-/react-syntax-highlighter-15.5.9.tgz#be5a1a0eae452fce6d1e4082b75a5fb636911de1"
-  integrity sha512-ven8zRSVMNkqt8ySJ2eEW5ugbfl/V/Z9S1c9UNhGqwkwVZNV5akk10rYDALxgwS25cLmN+/Q5UxlGj9CJmZ6Ew==
+"@types/react-syntax-highlighter@^15.5.10":
+  version "15.5.10"
+  resolved "https://registry.npmjs.org/@types/react-syntax-highlighter/-/react-syntax-highlighter-15.5.10.tgz#697dd4c640baefbfce655d3cd2b54629922ec05f"
+  integrity sha512-Vf8nNkGHnjwK37b2wDs92zJSAWS2Mb57NcYHgajCNssHeTNEixvjINnXJkKdY0V0/eLrYkPP1xDKvNmYIr4HIg==
   dependencies:
     "@types/react" "*"
 
@@ -2793,10 +2793,10 @@
     "@types/scheduler" "*"
     csstype "^3.0.2"
 
-"@types/react@18.2.33":
-  version "18.2.33"
-  resolved "https://mirrors.cloud.tencent.com/npm/@types/react/-/react-18.2.33.tgz#055356243dc4350a9ee6c6a2c07c5cae12e38877"
-  integrity sha512-v+I7S+hu3PIBoVkKGpSYYpiBT1ijqEzWpzQD62/jm4K74hPpSP7FF9BnKG6+fg2+62weJYkkBWDJlZt5JO/9hg==
+"@types/react@18.2.37":
+  version "18.2.37"
+  resolved "https://registry.npmjs.org/@types/react/-/react-18.2.37.tgz#0f03af69e463c0f19a356c2660dbca5d19c44cae"
+  integrity sha512-RGAYMi2bhRgEXT3f4B92WTohopH6bIXw05FuGlmJEnv/omEn190+QYEIYxIAuIBdKgboYYdVved2p1AxZVQnaw==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -2894,16 +2894,16 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@typescript-eslint/eslint-plugin@^6.9.0":
-  version "6.9.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/@typescript-eslint/eslint-plugin/-/eslint-plugin-6.9.0.tgz#fdb6f3821c0167e3356e9d89c80e8230b2e401f4"
-  integrity sha512-lgX7F0azQwRPB7t7WAyeHWVfW1YJ9NIgd9mvGhfQpRY56X6AVf8mwM8Wol+0z4liE7XX3QOt8MN1rUKCfSjRIA==
+"@typescript-eslint/eslint-plugin@^6.11.0":
+  version "6.11.0"
+  resolved "https://registry.npmjs.org/@typescript-eslint/eslint-plugin/-/eslint-plugin-6.11.0.tgz#52aae65174ff526576351f9ccd41cea01001463f"
+  integrity sha512-uXnpZDc4VRjY4iuypDBKzW1rz9T5YBBK0snMn8MaTSNd2kMlj50LnLBABELjJiOL5YHk7ZD8hbSpI9ubzqYI0w==
   dependencies:
     "@eslint-community/regexpp" "^4.5.1"
-    "@typescript-eslint/scope-manager" "6.9.0"
-    "@typescript-eslint/type-utils" "6.9.0"
-    "@typescript-eslint/utils" "6.9.0"
-    "@typescript-eslint/visitor-keys" "6.9.0"
+    "@typescript-eslint/scope-manager" "6.11.0"
+    "@typescript-eslint/type-utils" "6.11.0"
+    "@typescript-eslint/utils" "6.11.0"
+    "@typescript-eslint/visitor-keys" "6.11.0"
     debug "^4.3.4"
     graphemer "^1.4.0"
     ignore "^5.2.4"
@@ -2911,109 +2911,109 @@
     semver "^7.5.4"
     ts-api-utils "^1.0.1"
 
-"@typescript-eslint/parser@^6.9.0":
-  version "6.9.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/@typescript-eslint/parser/-/parser-6.9.0.tgz#2b402cadeadd3f211c25820e5433413347b27391"
-  integrity sha512-GZmjMh4AJ/5gaH4XF2eXA8tMnHWP+Pm1mjQR2QN4Iz+j/zO04b9TOvJYOX2sCNIQHtRStKTxRY1FX7LhpJT4Gw==
+"@typescript-eslint/parser@^6.11.0":
+  version "6.11.0"
+  resolved "https://registry.npmjs.org/@typescript-eslint/parser/-/parser-6.11.0.tgz#9640d9595d905f3be4f278bf515130e6129b202e"
+  integrity sha512-+whEdjk+d5do5nxfxx73oanLL9ghKO3EwM9kBCkUtWMRwWuPaFv9ScuqlYfQ6pAD6ZiJhky7TZ2ZYhrMsfMxVQ==
   dependencies:
-    "@typescript-eslint/scope-manager" "6.9.0"
-    "@typescript-eslint/types" "6.9.0"
-    "@typescript-eslint/typescript-estree" "6.9.0"
-    "@typescript-eslint/visitor-keys" "6.9.0"
+    "@typescript-eslint/scope-manager" "6.11.0"
+    "@typescript-eslint/types" "6.11.0"
+    "@typescript-eslint/typescript-estree" "6.11.0"
+    "@typescript-eslint/visitor-keys" "6.11.0"
     debug "^4.3.4"
 
-"@typescript-eslint/scope-manager@6.9.0":
-  version "6.9.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/@typescript-eslint/scope-manager/-/scope-manager-6.9.0.tgz#2626e9a7fe0e004c3e25f3b986c75f584431134e"
-  integrity sha512-1R8A9Mc39n4pCCz9o79qRO31HGNDvC7UhPhv26TovDsWPBDx+Sg3rOZdCELIA3ZmNoWAuxaMOT7aWtGRSYkQxw==
+"@typescript-eslint/scope-manager@6.11.0":
+  version "6.11.0"
+  resolved "https://registry.npmjs.org/@typescript-eslint/scope-manager/-/scope-manager-6.11.0.tgz#621f603537c89f4d105733d949aa4d55eee5cea8"
+  integrity sha512-0A8KoVvIURG4uhxAdjSaxy8RdRE//HztaZdG8KiHLP8WOXSk0vlF7Pvogv+vlJA5Rnjj/wDcFENvDaHb+gKd1A==
   dependencies:
-    "@typescript-eslint/types" "6.9.0"
-    "@typescript-eslint/visitor-keys" "6.9.0"
+    "@typescript-eslint/types" "6.11.0"
+    "@typescript-eslint/visitor-keys" "6.11.0"
 
-"@typescript-eslint/type-utils@6.9.0":
-  version "6.9.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/@typescript-eslint/type-utils/-/type-utils-6.9.0.tgz#23923c8c9677c2ad41457cf8e10a5f2946be1b04"
-  integrity sha512-XXeahmfbpuhVbhSOROIzJ+b13krFmgtc4GlEuu1WBT+RpyGPIA4Y/eGnXzjbDj5gZLzpAXO/sj+IF/x2GtTMjQ==
+"@typescript-eslint/type-utils@6.11.0":
+  version "6.11.0"
+  resolved "https://registry.npmjs.org/@typescript-eslint/type-utils/-/type-utils-6.11.0.tgz#d0b8b1ab6c26b974dbf91de1ebc5b11fea24e0d1"
+  integrity sha512-nA4IOXwZtqBjIoYrJcYxLRO+F9ri+leVGoJcMW1uqr4r1Hq7vW5cyWrA43lFbpRvQ9XgNrnfLpIkO3i1emDBIA==
   dependencies:
-    "@typescript-eslint/typescript-estree" "6.9.0"
-    "@typescript-eslint/utils" "6.9.0"
+    "@typescript-eslint/typescript-estree" "6.11.0"
+    "@typescript-eslint/utils" "6.11.0"
     debug "^4.3.4"
     ts-api-utils "^1.0.1"
 
-"@typescript-eslint/types@6.9.0":
-  version "6.9.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/@typescript-eslint/types/-/types-6.9.0.tgz#86a0cbe7ac46c0761429f928467ff3d92f841098"
-  integrity sha512-+KB0lbkpxBkBSiVCuQvduqMJy+I1FyDbdwSpM3IoBS7APl4Bu15lStPjgBIdykdRqQNYqYNMa8Kuidax6phaEw==
+"@typescript-eslint/types@6.11.0":
+  version "6.11.0"
+  resolved "https://registry.npmjs.org/@typescript-eslint/types/-/types-6.11.0.tgz#8ad3aa000cbf4bdc4dcceed96e9b577f15e0bf53"
+  integrity sha512-ZbEzuD4DwEJxwPqhv3QULlRj8KYTAnNsXxmfuUXFCxZmO6CF2gM/y+ugBSAQhrqaJL3M+oe4owdWunaHM6beqA==
 
-"@typescript-eslint/typescript-estree@6.9.0":
-  version "6.9.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/@typescript-eslint/typescript-estree/-/typescript-estree-6.9.0.tgz#d0601b245be873d8fe49f3737f93f8662c8693d4"
-  integrity sha512-NJM2BnJFZBEAbCfBP00zONKXvMqihZCrmwCaik0UhLr0vAgb6oguXxLX1k00oQyD+vZZ+CJn3kocvv2yxm4awQ==
+"@typescript-eslint/typescript-estree@6.11.0":
+  version "6.11.0"
+  resolved "https://registry.npmjs.org/@typescript-eslint/typescript-estree/-/typescript-estree-6.11.0.tgz#7b52c12a623bf7f8ec7f8a79901b9f98eb5c7990"
+  integrity sha512-Aezzv1o2tWJwvZhedzvD5Yv7+Lpu1by/U1LZ5gLc4tCx8jUmuSCMioPFRjliN/6SJIvY6HpTtJIWubKuYYYesQ==
   dependencies:
-    "@typescript-eslint/types" "6.9.0"
-    "@typescript-eslint/visitor-keys" "6.9.0"
+    "@typescript-eslint/types" "6.11.0"
+    "@typescript-eslint/visitor-keys" "6.11.0"
     debug "^4.3.4"
     globby "^11.1.0"
     is-glob "^4.0.3"
     semver "^7.5.4"
     ts-api-utils "^1.0.1"
 
-"@typescript-eslint/utils@6.9.0":
-  version "6.9.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/@typescript-eslint/utils/-/utils-6.9.0.tgz#5bdac8604fca4823f090e4268e681c84d3597c9f"
-  integrity sha512-5Wf+Jsqya7WcCO8me504FBigeQKVLAMPmUzYgDbWchINNh1KJbxCgVya3EQ2MjvJMVeXl3pofRmprqX6mfQkjQ==
+"@typescript-eslint/utils@6.11.0":
+  version "6.11.0"
+  resolved "https://registry.npmjs.org/@typescript-eslint/utils/-/utils-6.11.0.tgz#11374f59ef4cea50857b1303477c08aafa2ca604"
+  integrity sha512-p23ibf68fxoZy605dc0dQAEoUsoiNoP3MD9WQGiHLDuTSOuqoTsa4oAy+h3KDkTcxbbfOtUjb9h3Ta0gT4ug2g==
   dependencies:
     "@eslint-community/eslint-utils" "^4.4.0"
     "@types/json-schema" "^7.0.12"
     "@types/semver" "^7.5.0"
-    "@typescript-eslint/scope-manager" "6.9.0"
-    "@typescript-eslint/types" "6.9.0"
-    "@typescript-eslint/typescript-estree" "6.9.0"
+    "@typescript-eslint/scope-manager" "6.11.0"
+    "@typescript-eslint/types" "6.11.0"
+    "@typescript-eslint/typescript-estree" "6.11.0"
     semver "^7.5.4"
 
-"@typescript-eslint/visitor-keys@6.9.0":
-  version "6.9.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/@typescript-eslint/visitor-keys/-/visitor-keys-6.9.0.tgz#cc69421c10c4ac997ed34f453027245988164e80"
-  integrity sha512-dGtAfqjV6RFOtIP8I0B4ZTBRrlTT8NHHlZZSchQx3qReaoDeXhYM++M4So2AgFK9ZB0emRPA6JI1HkafzA2Ibg==
+"@typescript-eslint/visitor-keys@6.11.0":
+  version "6.11.0"
+  resolved "https://registry.npmjs.org/@typescript-eslint/visitor-keys/-/visitor-keys-6.11.0.tgz#d991538788923f92ec40d44389e7075b359f3458"
+  integrity sha512-+SUN/W7WjBr05uRxPggJPSzyB8zUpaYo2hByKasWbqr3PM8AXfZt8UHdNpBS1v9SA62qnSSMF3380SwDqqprgQ==
   dependencies:
-    "@typescript-eslint/types" "6.9.0"
+    "@typescript-eslint/types" "6.11.0"
     eslint-visitor-keys "^3.4.1"
 
-"@udecode/plate-break@^24.5.2":
-  version "24.5.2"
-  resolved "https://mirrors.cloud.tencent.com/npm/@udecode/plate-break/-/plate-break-24.5.2.tgz#98762beaa29d814d311acd62b0d51a2b60db1e23"
-  integrity sha512-9GcNOrd9LfGPzsaK7U8CeiOmPtQWoSwTxtxhthOEbK04t/3sR+JklwBqJtm7DsNRm1oqbQECRC5I+LKs7bJ2+w==
+"@udecode/plate-break@^25.0.1":
+  version "25.0.1"
+  resolved "https://registry.npmjs.org/@udecode/plate-break/-/plate-break-25.0.1.tgz#d10488777e02e285140a13b2a131ec02e49cae0f"
+  integrity sha512-lT3w/OyGWatxhg3eTYEMculI9FoE80uKIYyzgFDJ2Jt066taB1hTypBqWPKZ9aXjDYJxUX/+OB6t1g/OSz2uyQ==
   dependencies:
-    "@udecode/plate-common" "24.5.2"
+    "@udecode/plate-common" "25.0.1"
 
-"@udecode/plate-combobox@24.5.2", "@udecode/plate-combobox@^24.5.2":
-  version "24.5.2"
-  resolved "https://mirrors.cloud.tencent.com/npm/@udecode/plate-combobox/-/plate-combobox-24.5.2.tgz#f1e3002ccd95eb32c535bbc8cd268785869ba5c8"
-  integrity sha512-5cLz49kHQLno9yLsDi8xe8gNoh1JLtobBoLGjH5BpdlysNCCwBhowf8g+sWraR65LEJL1HofiTgHaZBq0iRKDw==
+"@udecode/plate-combobox@25.0.1", "@udecode/plate-combobox@^25.0.1":
+  version "25.0.1"
+  resolved "https://registry.npmjs.org/@udecode/plate-combobox/-/plate-combobox-25.0.1.tgz#767af2bde98b219336d7e0e246e3d24116e2f944"
+  integrity sha512-RAXmVQVQR9C5NA3G/UDYzl8kub3IZBNzo+U8Cg9juiHMiFhHnzmnH2m4Fjp7hOeeNRHogdJ1Pw8PeZOYJqNDQw==
   dependencies:
-    "@udecode/plate-common" "24.5.2"
+    "@udecode/plate-common" "25.0.1"
     downshift "^6.1.12"
 
-"@udecode/plate-common@24.5.2", "@udecode/plate-common@^24.5.2":
-  version "24.5.2"
-  resolved "https://mirrors.cloud.tencent.com/npm/@udecode/plate-common/-/plate-common-24.5.2.tgz#7c25d52a9b0e072b80a35ca203ff8ce06a11554a"
-  integrity sha512-UbaQGWc2BXyxrMVkQMBb8JK5QclDYRwjFYgbNp8KpjbsaxqU3g5siPHuzU34PbJfqSVB7sdudO/JO4g9GUfBSQ==
+"@udecode/plate-common@25.0.1", "@udecode/plate-common@^25.0.1":
+  version "25.0.1"
+  resolved "https://registry.npmjs.org/@udecode/plate-common/-/plate-common-25.0.1.tgz#1f38b1fe5645ab40727fd6420bdfb636fa87516c"
+  integrity sha512-eajam97XzZlNianSo+oNm9XeJmPkn9/8asVs3NYxB6jeRBbG1qZ+vT20PNvMQD8uGksMvpEKfSm/i3oZNMPZQA==
   dependencies:
-    "@udecode/plate-core" "24.4.0"
-    "@udecode/plate-utils" "24.5.2"
-    "@udecode/slate" "24.3.6"
-    "@udecode/slate-react" "24.4.0"
-    "@udecode/slate-utils" "24.3.6"
+    "@udecode/plate-core" "25.0.1"
+    "@udecode/plate-utils" "25.0.1"
+    "@udecode/slate" "25.0.0"
+    "@udecode/slate-react" "25.0.0"
+    "@udecode/slate-utils" "25.0.0"
     "@udecode/utils" "24.3.0"
 
-"@udecode/plate-core@24.4.0":
-  version "24.4.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/@udecode/plate-core/-/plate-core-24.4.0.tgz#a991a93365dbee2bedbccbcc9ccf8d59bfc67ff7"
-  integrity sha512-xg/ZzqpnNQmtXQBM02KMBLHczy2LpGQ2HLEjZVXWsHU1YLyiUCyVW/DCi/woPY1dSuSy60ZnVGPKnxs4Ao7zCQ==
+"@udecode/plate-core@25.0.1":
+  version "25.0.1"
+  resolved "https://registry.npmjs.org/@udecode/plate-core/-/plate-core-25.0.1.tgz#9cab8acf3eff9445a4f4323e35a8930b627ba195"
+  integrity sha512-0+1RJMJ7YeXdZ66EJB17KY4b9BjQ/w8arMY8ZTEzUnp9Qgph/BUha9vP0JnJ604+ZszwQqX0RdIpFbQ4B1c1lw==
   dependencies:
-    "@udecode/slate" "24.3.6"
-    "@udecode/slate-react" "24.4.0"
-    "@udecode/slate-utils" "24.3.6"
+    "@udecode/slate" "25.0.0"
+    "@udecode/slate-react" "25.0.0"
+    "@udecode/slate-utils" "25.0.0"
     "@udecode/utils" "24.3.0"
     "@udecode/zustood" "^1.1.3"
     clsx "^1.2.1"
@@ -3025,98 +3025,98 @@
     use-deep-compare "^1.1.0"
     zustand "^3.7.2"
 
-"@udecode/plate-emoji@^24.5.2":
-  version "24.5.2"
-  resolved "https://mirrors.cloud.tencent.com/npm/@udecode/plate-emoji/-/plate-emoji-24.5.2.tgz#15cd03c3dbba14500467069bfdf8583d1896f431"
-  integrity sha512-hGOixmInPqiOjXSDPG4iy5irEYUfIHirfQLasacyI94220x2Oef7qJdvot1zlMC/BOyz7e5srUBLNCramFdtuQ==
+"@udecode/plate-emoji@^25.0.1":
+  version "25.0.1"
+  resolved "https://registry.npmjs.org/@udecode/plate-emoji/-/plate-emoji-25.0.1.tgz#986d8bcfbb989b34e75bc16b3862765a3534767c"
+  integrity sha512-EXdVmhLrkPUL7jkXcfeaBUwpSYjXcRcfBSDFv5RWr6LXWR1NuBDemMwkaEyXYBr/oRMFtl4eIpH+Te+Z42GMJw==
   dependencies:
     "@emoji-mart/data" "^1.1.2"
-    "@udecode/plate-combobox" "24.5.2"
-    "@udecode/plate-common" "24.5.2"
+    "@udecode/plate-combobox" "25.0.1"
+    "@udecode/plate-common" "25.0.1"
 
-"@udecode/plate-floating@^24.5.2":
-  version "24.5.2"
-  resolved "https://mirrors.cloud.tencent.com/npm/@udecode/plate-floating/-/plate-floating-24.5.2.tgz#425fa87ca0caeb9786a2d12c625331583f167a01"
-  integrity sha512-m8wsD/fp+iBLPXd8uPuxFmRIQwwmK0F8i0L9fCu0oIVb1OyDYQzYl1T/jm3u1HRZwBmlvZ5VT6S0ZZJ2uaCZag==
+"@udecode/plate-floating@^25.0.1":
+  version "25.0.1"
+  resolved "https://registry.npmjs.org/@udecode/plate-floating/-/plate-floating-25.0.1.tgz#319d66d31fb191708d94425bf8171759d9ebb0ae"
+  integrity sha512-Fs+RS4jXUMmx2Kos9e5w8mrlv9XN2nmIQg5ANg85vrU9OcdgN4j15DJ7WWePVlMAN0yFS3RPWFCv2rYEdlDERg==
   dependencies:
     "@floating-ui/core" "^1.3.1"
     "@floating-ui/react" "^0.22.3"
     "@radix-ui/react-dropdown-menu" "^2.0.5"
-    "@udecode/plate-common" "24.5.2"
+    "@udecode/plate-common" "25.0.1"
 
-"@udecode/plate-font@^24.5.2":
-  version "24.5.2"
-  resolved "https://mirrors.cloud.tencent.com/npm/@udecode/plate-font/-/plate-font-24.5.2.tgz#dee671fe4b9d2b8093b7a8997c1f42cb87670c37"
-  integrity sha512-sdi6kW0sCVg6C/+RWlQg0ul0etS1v8svxcTQVGvdcGLBSyDaA4EjSm0mHXv4QeYvadAMmJFHrEatrGqMu90SYw==
+"@udecode/plate-font@^25.0.1":
+  version "25.0.1"
+  resolved "https://registry.npmjs.org/@udecode/plate-font/-/plate-font-25.0.1.tgz#9aa2a3efcb0aa17c6e3cb7849854cdb4bacdacb4"
+  integrity sha512-RKJeviM4mkpN9TTLbTg7CBN0grFXsJ0/NVbAg3iSNkALCCMMzA7eeCZtrC0VO8nMMBrmJuwmX6u0cd9Y7Ijakg==
   dependencies:
-    "@udecode/plate-common" "24.5.2"
+    "@udecode/plate-common" "25.0.1"
     lodash "^4.17.21"
 
-"@udecode/plate-mention@^24.5.2":
-  version "24.5.2"
-  resolved "https://mirrors.cloud.tencent.com/npm/@udecode/plate-mention/-/plate-mention-24.5.2.tgz#ad0058501ff9eae9687fb1661f42e55edb930602"
-  integrity sha512-HQ2XWC9lN/TqdfoUUY8sQolZWGO1SYGHaJQ14JwZunysWy1LCpofDQEpxzCgVxCWnVWzFLibIbZK4qyM8UqCFQ==
+"@udecode/plate-mention@^25.0.1":
+  version "25.0.1"
+  resolved "https://registry.npmjs.org/@udecode/plate-mention/-/plate-mention-25.0.1.tgz#11b8e83ccd97a0c509665f39c34bba1b40e2082d"
+  integrity sha512-0y5LWl5IKLty9J5Ye80xktWlksG87LLThlOkM3MDhOKI9yi2gavRsSGIl1kl1o/K+F7AJiUnrR7l2jUBwuoZDA==
   dependencies:
-    "@udecode/plate-combobox" "24.5.2"
-    "@udecode/plate-common" "24.5.2"
+    "@udecode/plate-combobox" "25.0.1"
+    "@udecode/plate-common" "25.0.1"
 
-"@udecode/plate-node-id@^24.5.2":
-  version "24.5.2"
-  resolved "https://mirrors.cloud.tencent.com/npm/@udecode/plate-node-id/-/plate-node-id-24.5.2.tgz#8abf68e303137db0331a44dac2e7f6f436a5c8e5"
-  integrity sha512-KoStOYH420FfCjNv5wmqK1/BR+GoHywiT/9iMClYI4EuS+oR660KP9/3fAOb1SuvVfndLPSGWhuO02JRaAqTQQ==
+"@udecode/plate-node-id@^25.0.1":
+  version "25.0.1"
+  resolved "https://registry.npmjs.org/@udecode/plate-node-id/-/plate-node-id-25.0.1.tgz#657dd61e637d7e863ac43e6a7c0eb50da30b70ba"
+  integrity sha512-XauQoF4o01K00/H1HfanbwhvtcrzTvCn/xRbVzkMPL3SJ/8ob/4NxIIS6yagfX9KsHMMyI64KbluNnQ/BjDtNw==
   dependencies:
-    "@udecode/plate-common" "24.5.2"
+    "@udecode/plate-common" "25.0.1"
     lodash "^4.17.21"
 
-"@udecode/plate-paragraph@^24.5.2":
-  version "24.5.2"
-  resolved "https://mirrors.cloud.tencent.com/npm/@udecode/plate-paragraph/-/plate-paragraph-24.5.2.tgz#c1f15fe1a9ee802cc93d5039189c54bb0064abd6"
-  integrity sha512-H62t+Fh5SLLRHL0MSAdPKXnc8tzIK/KJrhWBo7evRkI3zX09VRtbgksJPS53UMbiOW1/oT59sTsXg7wmBDWiBQ==
+"@udecode/plate-paragraph@^25.0.1":
+  version "25.0.1"
+  resolved "https://registry.npmjs.org/@udecode/plate-paragraph/-/plate-paragraph-25.0.1.tgz#002c11adb51d2414af9826e967e2634e9a492d92"
+  integrity sha512-ePiTBZobaTvN+bUpLyh4h0hYAoLk27u8EMCWXEsdqbx45ah3XBlYglxE3rOfNe4y5fOrXcYep/NB0lSL/fpSxg==
   dependencies:
-    "@udecode/plate-common" "24.5.2"
+    "@udecode/plate-common" "25.0.1"
 
-"@udecode/plate-trailing-block@^24.5.2":
-  version "24.5.2"
-  resolved "https://mirrors.cloud.tencent.com/npm/@udecode/plate-trailing-block/-/plate-trailing-block-24.5.2.tgz#d5477e7d2c351ba1ef0a1df2db9076027dc34bf6"
-  integrity sha512-21vKEi/AmFBjey8v6r6tjhW5oIBcSX76khhGkC0uyqGuGlKSyS7VVmgYm9c/Sxit5QGE3tm5bSkVBsE6Xm2zGQ==
+"@udecode/plate-trailing-block@^25.0.1":
+  version "25.0.1"
+  resolved "https://registry.npmjs.org/@udecode/plate-trailing-block/-/plate-trailing-block-25.0.1.tgz#d2cdb222de1d55abe8461050f46272bbb6a78612"
+  integrity sha512-0J3f2fQXPU+2pbkFHaNirxEPrD9scf7RlSdHtotiWdiKFRl+diZXgaIO2vIgGsQOxqxcvEEA3zmT574Op3P8UQ==
   dependencies:
-    "@udecode/plate-common" "24.5.2"
+    "@udecode/plate-common" "25.0.1"
 
-"@udecode/plate-utils@24.5.2":
-  version "24.5.2"
-  resolved "https://mirrors.cloud.tencent.com/npm/@udecode/plate-utils/-/plate-utils-24.5.2.tgz#e83a04960ee0efab325bb6199e6233d2c21a765c"
-  integrity sha512-cd00XYvVWOIRqwNWEMk7ZiAr3OEgHNX2xAd5IADW0KSfDWfaFRiFfgmrlwYjHpfkpW6XVJJpuUbyRSl0MyDNbw==
+"@udecode/plate-utils@25.0.1":
+  version "25.0.1"
+  resolved "https://registry.npmjs.org/@udecode/plate-utils/-/plate-utils-25.0.1.tgz#f456ec1a9d09c88bd8cb99190cf562f139053d92"
+  integrity sha512-kn0I5JmMxjczmU7/YkSoKTcTsOp1O/YLNh9iLTgtLTsI8wBXwshHYgqsvbG/qu9Mt9L9GkHp4LpXZoK/vLNiLA==
   dependencies:
     "@radix-ui/react-slot" "^1.0.2"
-    "@udecode/plate-core" "24.4.0"
-    "@udecode/slate" "24.3.6"
-    "@udecode/slate-react" "24.4.0"
-    "@udecode/slate-utils" "24.3.6"
+    "@udecode/plate-core" "25.0.1"
+    "@udecode/slate" "25.0.0"
+    "@udecode/slate-react" "25.0.0"
+    "@udecode/slate-utils" "25.0.0"
     "@udecode/utils" "24.3.0"
     clsx "^1.2.1"
     lodash "^4.17.21"
 
-"@udecode/slate-react@24.4.0":
-  version "24.4.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/@udecode/slate-react/-/slate-react-24.4.0.tgz#21fd6c19b299c71d5aab98abf22c4613a354c129"
-  integrity sha512-qQ+k6j5a5n0NIVGhgCpK8AbAFN+dxYtQLvbQEIoqr4vWtq9zR9PvJTuPurD8UWATt+ngJ7B1gC6bvSwMh8Uikg==
+"@udecode/slate-react@25.0.0":
+  version "25.0.0"
+  resolved "https://registry.npmjs.org/@udecode/slate-react/-/slate-react-25.0.0.tgz#afcef4a1d1fddf13c06a244ca872547745e14188"
+  integrity sha512-mgaRFxzyXvVqYWmg2NCfH0cgBqEv2NCLqMpYrlgromRgTAqPqhID5jq7jRTcGLHL49RjTlxRs6dwsQJ6iRLxBw==
   dependencies:
-    "@udecode/slate" "24.3.6"
+    "@udecode/slate" "25.0.0"
     "@udecode/utils" "24.3.0"
 
-"@udecode/slate-utils@24.3.6":
-  version "24.3.6"
-  resolved "https://mirrors.cloud.tencent.com/npm/@udecode/slate-utils/-/slate-utils-24.3.6.tgz#55ec616d46d4ab5fe79f1385ef5bb65cabb7562e"
-  integrity sha512-bYyj0UYn6pWF1jqraWNQFxhLnUsPcbgrv6MDDKu6I8RlUkrc/ykGaRSoQLwJdRaRmLc4xivUrOnJXLyMfadqLQ==
+"@udecode/slate-utils@25.0.0":
+  version "25.0.0"
+  resolved "https://registry.npmjs.org/@udecode/slate-utils/-/slate-utils-25.0.0.tgz#6ae957f666da65bfae85d4ede2416bd5521d8f1c"
+  integrity sha512-H8dECl5Tu44Nt946rkSXCJ1yzsc2R9GXSoA9oNIBmcyNo3jTHZOyG/Ocn3RGgfzAK996A43GBD/keNabJEPtQg==
   dependencies:
-    "@udecode/slate" "24.3.6"
+    "@udecode/slate" "25.0.0"
     "@udecode/utils" "24.3.0"
     lodash "^4.17.21"
 
-"@udecode/slate@24.3.6":
-  version "24.3.6"
-  resolved "https://mirrors.cloud.tencent.com/npm/@udecode/slate/-/slate-24.3.6.tgz#3d5267bb6432108d1ffac4b6e622968e92277db6"
-  integrity sha512-NfIR4Qkndoba/Ncw+nZ4fNPcd/F+mAHtoOqunRtZR5HdOJN1uBGnSK39duvZST/iB78nPueAVG5hrZ3awGcb4w==
+"@udecode/slate@25.0.0":
+  version "25.0.0"
+  resolved "https://registry.npmjs.org/@udecode/slate/-/slate-25.0.0.tgz#11d339ff73ebba55eeb1d87ab4befda28130f9a2"
+  integrity sha512-mGb9nMDwIygLqERwJ8kTOfo3wIxMQ0xLJEPKn09jrshEIxUCyO3mYj8y/5vOMcrzj6yexOsgQ6VNX8ylS3lnIQ==
   dependencies:
     "@udecode/utils" "24.3.0"
 
@@ -3329,14 +3329,14 @@ address@^1.0.1, address@^1.1.2:
   resolved "https://mirrors.cloud.tencent.com/npm/address/-/address-1.2.2.tgz#2b5248dac5485a6390532c6a517fda2e3faac89e"
   integrity sha512-4B/qKCfeE/ODUaAUpSwfzazo5x29WD4r3vXiWsB7I2mSDAihwEqKO+g8GELZUQSSAo5e1XTYh3ZVfLyxBc12nA==
 
-agora-rtc-sdk-ng@^4.19.2:
-  version "4.19.2"
-  resolved "https://mirrors.cloud.tencent.com/npm/agora-rtc-sdk-ng/-/agora-rtc-sdk-ng-4.19.2.tgz#764c948e6aaac5e72c999f222f96cc67b89e856d"
-  integrity sha512-5ctCSxhdo2UnTAd/+00ZAuHRQzLUt4yNkopkd7tXAQNAmaTFu0dyOkAK5/ind5cZuqQLTuggX4ctXCHpIzpHTw==
+agora-rtc-sdk-ng@^4.19.3:
+  version "4.19.3"
+  resolved "https://mirrors.cloud.tencent.com/npm/agora-rtc-sdk-ng/-/agora-rtc-sdk-ng-4.19.3.tgz#993abf7758ce26339b6e27e55708fa1395b0f2f6"
+  integrity sha512-vzIZ2wHoVRM/38YTCKIP6nQ3ehiBUfvpExsJw4Ala9QhCK6J8qMxmZxqBoNmz6jigMfMWi7c8UVZThbaNQM6Pg==
   dependencies:
-    "@agora-js/media" "^4.19.2"
-    "@agora-js/report" "^4.19.2"
-    "@agora-js/shared" "^4.19.2"
+    "@agora-js/media" "^4.19.3"
+    "@agora-js/report" "^4.19.3"
+    "@agora-js/shared" "^4.19.3"
     agora-rte-extension "^1.2.3"
     axios "^0.27.2"
     formdata-polyfill "^4.0.7"
@@ -3797,13 +3797,13 @@ braces@^3.0.2, braces@~3.0.2:
   dependencies:
     fill-range "^7.0.1"
 
-broadcast-channel@^5.5.1:
-  version "5.5.1"
-  resolved "https://mirrors.cloud.tencent.com/npm/broadcast-channel/-/broadcast-channel-5.5.1.tgz#cffb81bfa5fb14015023eedde83ee9a8aa03322d"
-  integrity sha512-C7LtMmJCIIU07xtJngYE2OxaGTGBsG+wOa0mBSPRpbTF36kqtsXQhpxtCVDTkpe8gpZMn9C6PhH+mZ/js4IabA==
+broadcast-channel@^6.0.0:
+  version "6.0.0"
+  resolved "https://mirrors.cloud.tencent.com/npm/broadcast-channel/-/broadcast-channel-6.0.0.tgz#68d6659d279abd9c574334d7645454c7323d9c63"
+  integrity sha512-h8ki6RYXq502Eb+zAt4Kni2ahL/lulh0ip+mpnvsMSRC2biBo6AkSBfO6JFTelT+FX88VL0SDd3RKpqlPNw4ng==
   dependencies:
     "@babel/runtime" "7.23.2"
-    oblivious-set "1.1.1"
+    oblivious-set "1.4.0"
     p-queue "6.6.2"
     unload "2.4.1"
 
@@ -4378,6 +4378,11 @@ dayjs@^1.11.10:
   version "1.11.10"
   resolved "https://mirrors.cloud.tencent.com/npm/dayjs/-/dayjs-1.11.10.tgz#68acea85317a6e164457d6d6947564029a6a16a0"
   integrity sha512-vjAczensTgRcqDERK0SR2XMwsF/tSvnvlv6VcF2GIhg6Sx4yOIt/irsr1RDJsKiIyBzJDpCoXiWWq28MqH2cnQ==
+
+debounce@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.npmjs.org/debounce/-/debounce-1.2.1.tgz#38881d8f4166a5c5848020c11827b834bcb3e0a5"
+  integrity sha512-XRRe6Glud4rd/ZGQfiV1ruXSfbvfJedlV9Y6zOlP+2K04vBYiJEte6stfFkCP03aMnY5tsipamumUjL14fofug==
 
 debug@2.6.9, debug@^2.6.0:
   version "2.6.9"
@@ -4997,15 +5002,15 @@ eslint-visitor-keys@^3.4.3:
   resolved "https://mirrors.cloud.tencent.com/npm/eslint-visitor-keys/-/eslint-visitor-keys-3.4.3.tgz#0cd72fe8550e3c2eae156a96a4dddcd1c8ac5800"
   integrity sha512-wpc+LXeiyiisxPlEkUzU6svyS1frIO3Mgxj1fdy7Pm8Ygzguax2N3Fa/D/ag1WqbOprdI+uY6wMUl8/a2G+iag==
 
-eslint@^8.52.0:
-  version "8.52.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/eslint/-/eslint-8.52.0.tgz#d0cd4a1fac06427a61ef9242b9353f36ea7062fc"
-  integrity sha512-zh/JHnaixqHZsolRB/w9/02akBk9EPrOs9JwcTP2ek7yL5bVvXuRariiaAjjoJ5DvuwQ1WAE/HsMz+w17YgBCg==
+eslint@^8.54.0:
+  version "8.54.0"
+  resolved "https://registry.npmjs.org/eslint/-/eslint-8.54.0.tgz#588e0dd4388af91a2e8fa37ea64924074c783537"
+  integrity sha512-NY0DfAkM8BIZDVl6PgSa1ttZbx3xHgJzSNJKYcQglem6CppHyMhRIQkBVSSMaSRnLhig3jsDbEzOjwCVt4AmmA==
   dependencies:
     "@eslint-community/eslint-utils" "^4.2.0"
     "@eslint-community/regexpp" "^4.6.1"
-    "@eslint/eslintrc" "^2.1.2"
-    "@eslint/js" "8.52.0"
+    "@eslint/eslintrc" "^2.1.3"
+    "@eslint/js" "8.54.0"
     "@humanwhocodes/config-array" "^0.11.13"
     "@humanwhocodes/module-importer" "^1.0.1"
     "@nodelib/fs.walk" "^1.2.8"
@@ -5458,10 +5463,10 @@ fraction.js@^4.3.6:
   resolved "https://mirrors.cloud.tencent.com/npm/fraction.js/-/fraction.js-4.3.6.tgz#e9e3acec6c9a28cf7bc36cbe35eea4ceb2c5c92d"
   integrity sha512-n2aZ9tNfYDwaHhvFTkhFErqOMIb8uyzSQ+vGJBjZyanAKZVbGUQ1sngfk9FdkBw7G26O7AgNjLcecLffD1c7eg==
 
-framer-motion@^10.16.4:
-  version "10.16.4"
-  resolved "https://mirrors.cloud.tencent.com/npm/framer-motion/-/framer-motion-10.16.4.tgz#30279ef5499b8d85db3a298ee25c83429933e9f8"
-  integrity sha512-p9V9nGomS3m6/CALXqv6nFGMuFOxbWsmaOrdmhyQimMIlLl3LC7h7l86wge/Js/8cRu5ktutS/zlzgR7eBOtFA==
+framer-motion@^10.16.5:
+  version "10.16.5"
+  resolved "https://registry.npmjs.org/framer-motion/-/framer-motion-10.16.5.tgz#f1ad625adf213a8906f1ea52a31a4ef222f056d5"
+  integrity sha512-GEzVjOYP2MIpV9bT/GbhcsBNoImG3/2X3O/xVNWmktkv9MdJ7P/44zELm/7Fjb+O3v39SmKFnoDQB32giThzpg==
   dependencies:
     tslib "^2.4.0"
   optionalDependencies:
@@ -5599,10 +5604,10 @@ get-symbol-description@^1.0.0:
     call-bind "^1.0.2"
     get-intrinsic "^1.1.1"
 
-gh-pages@^6.0.0:
-  version "6.0.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/gh-pages/-/gh-pages-6.0.0.tgz#3bb46ea13dc7cee306662db0d3f02bf05635cdc1"
-  integrity sha512-FXZWJRsvP/fK2HJGY+Di6FRNHvqFF6gOIELaopDjXXgjeOYSNURcuYwEO/6bwuq6koP5Lnkvnr5GViXzuOB89g==
+gh-pages@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.npmjs.org/gh-pages/-/gh-pages-6.1.0.tgz#e842426edf8bc19f1209ac6ba7af10cda35383ea"
+  integrity sha512-MdXigvqN3I66Y+tAZsQJMzpBWQOI1snD6BYuECmP+GEdryYMMOQvzn4AConk/+qNg/XIuQhB1xNGrl3Rmj1iow==
   dependencies:
     async "^3.2.4"
     commander "^11.0.0"
@@ -5853,6 +5858,11 @@ html-entities@^2.1.0, html-entities@^2.3.2:
   resolved "https://mirrors.cloud.tencent.com/npm/html-entities/-/html-entities-2.4.0.tgz#edd0cee70402584c8c76cc2c0556db09d1f45061"
   integrity sha512-igBTJcNNNhvZFRtm8uA6xMY6xYleeDwn3PeBCkDz7tHttv4F2hsDI2aPgNERWzvRcNYHNT3ymRaQzllmXj4YsQ==
 
+html-escaper@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.npmjs.org/html-escaper/-/html-escaper-2.0.2.tgz#dfd60027da36a36dfcbe236262c00a5822681453"
+  integrity sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==
+
 html-minifier-terser@^6.0.2:
   version "6.1.0"
   resolved "https://mirrors.cloud.tencent.com/npm/html-minifier-terser/-/html-minifier-terser-6.1.0.tgz#bfc818934cc07918f6b3669f5774ecdfd48f32ab"
@@ -5955,26 +5965,26 @@ human-signals@^4.3.0:
   resolved "https://mirrors.cloud.tencent.com/npm/human-signals/-/human-signals-4.3.1.tgz#ab7f811e851fca97ffbd2c1fe9a958964de321b2"
   integrity sha512-nZXjEF2nbo7lIw3mgYjItAfgQXog3OjJogSbKa2CQIIvSGWcKgeJnQlNXip6NglNzYH45nSRiEVimMvYL8DDqQ==
 
-i18next-browser-languagedetector@^7.1.0:
-  version "7.1.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/i18next-browser-languagedetector/-/i18next-browser-languagedetector-7.1.0.tgz#01876fac51f86b78975e79b48ccb62e2313a2d7d"
-  integrity sha512-cr2k7u1XJJ4HTOjM9GyOMtbOA47RtUoWRAtt52z43r3AoMs2StYKyjS3URPhzHaf+mn10hY9dZWamga5WPQjhA==
+i18next-browser-languagedetector@^7.2.0:
+  version "7.2.0"
+  resolved "https://registry.npmjs.org/i18next-browser-languagedetector/-/i18next-browser-languagedetector-7.2.0.tgz#de0321cba6881be37d82e20e4d6f05aa75f6e37f"
+  integrity sha512-U00DbDtFIYD3wkWsr2aVGfXGAj2TgnELzOX9qv8bT0aJtvPV9CRO77h+vgmHFBMe7LAxdwvT/7VkCWGya6L3tA==
   dependencies:
-    "@babel/runtime" "^7.19.4"
+    "@babel/runtime" "^7.23.2"
 
-i18next-http-backend@^2.3.0:
-  version "2.3.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/i18next-http-backend/-/i18next-http-backend-2.3.0.tgz#7bf4e539e7e98a185d923a11a231f345fd2f7f8a"
-  integrity sha512-9m34IcWdS3r43cgq/7O5IsDxTvSQ7pePwk2eQIH5q6Em6OjDCsSjboRWg2jqVdeIoCtHwzTN/byDHPStMsKsPQ==
+i18next-http-backend@^2.4.1:
+  version "2.4.1"
+  resolved "https://registry.npmjs.org/i18next-http-backend/-/i18next-http-backend-2.4.1.tgz#b0cd4926ea71a689da22d2b55ea2bc37fde8909a"
+  integrity sha512-CZHzFGDvF8zN7ya1W2lHbgLj2ejPUvPD836+vA3eNXc9eKGUM3MSF6SA2TKBXKBZ2cNG3nxzycCXeM6n/46KWQ==
   dependencies:
     cross-fetch "4.0.0"
 
-i18next@^23.6.0:
-  version "23.6.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/i18next/-/i18next-23.6.0.tgz#c6e996cfd3fef0bf60be3b7c581c35338dba5a71"
-  integrity sha512-z0Cxr0MGkt+kli306WS4nNNM++9cgt2b2VCMprY92j+AIab/oclgPxdwtTZVLP1zn5t5uo8M6uLsZmYrcjr3HA==
+i18next@^23.7.6:
+  version "23.7.6"
+  resolved "https://registry.npmjs.org/i18next/-/i18next-23.7.6.tgz#7328e76c899052d5d33d930164612dd21e575f74"
+  integrity sha512-O66BhXBw0fH4bEJMA0/klQKPEbcwAp5wjXEL803pdAynNbg2f4qhLIYlNHJyE7icrL6XmSZKPYaaXwy11kJ6YQ==
   dependencies:
-    "@babel/runtime" "^7.22.5"
+    "@babel/runtime" "^7.23.2"
 
 iconv-lite@0.4.24:
   version "0.4.24"
@@ -6615,20 +6625,20 @@ lines-and-columns@^1.1.6:
   resolved "https://mirrors.cloud.tencent.com/npm/lines-and-columns/-/lines-and-columns-1.2.4.tgz#eca284f75d2965079309dc0ad9255abb2ebc1632"
   integrity sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==
 
-linkify-plugin-mention@^4.1.1:
-  version "4.1.1"
-  resolved "https://mirrors.cloud.tencent.com/npm/linkify-plugin-mention/-/linkify-plugin-mention-4.1.1.tgz#3ff4a45edc43d56e14582bf66dcadd152a45aeaa"
-  integrity sha512-7qIOT3FhU4+WlbdRC5sZYZJckOSgBI4Hg6pDXtIOtyaJOYKK3vos4L86yb1veVbyAO2hf4CKoEAGrEvIqKviIA==
+linkify-plugin-mention@^4.1.2:
+  version "4.1.2"
+  resolved "https://registry.npmjs.org/linkify-plugin-mention/-/linkify-plugin-mention-4.1.2.tgz#6a35672a40dd47dafb50a465686ce52177895955"
+  integrity sha512-E0LTqOIBHPHzRbnUIxBJ4qZ4bNj0Zqkdo7WRq2jQ8Q3ozJOIwKJhL77nlRfuyN2pUVX9xCg216q+JrjTMNE2pA==
 
-linkify-react@^4.1.1:
-  version "4.1.1"
-  resolved "https://mirrors.cloud.tencent.com/npm/linkify-react/-/linkify-react-4.1.1.tgz#79cc29c6e5c0fd660be74a6a51d25c1b36977cf7"
-  integrity sha512-2K9Y1cUdvq40dFWqCJ//X+WP19nlzIVITFGI93RjLnA0M7KbnxQ/ffC3AZIZaEIrLangF9Hjt3i0GQ9/anEG5A==
+linkify-react@^4.1.2:
+  version "4.1.2"
+  resolved "https://registry.npmjs.org/linkify-react/-/linkify-react-4.1.2.tgz#5c52de5d53f54ec27f76b3fb8270f8ee269cb4eb"
+  integrity sha512-bgzlg562ZAUKQtOw9qr/3IemqpsDG/UmzOANy1cFavcWo/eD9eF4s1ZnT3cWok0GeOG4GujrOP/Jp7cqiXNODg==
 
-linkifyjs@^4.1.1:
-  version "4.1.1"
-  resolved "https://mirrors.cloud.tencent.com/npm/linkifyjs/-/linkifyjs-4.1.1.tgz#73d427e3bbaaf4ca8e71c589ad4ffda11a9a5fde"
-  integrity sha512-zFN/CTVmbcVef+WaDXT63dNzzkfRBKT1j464NJQkV7iSgJU0sLBus9W0HBwnXK13/hf168pbrx/V/bjEHOXNHA==
+linkifyjs@^4.1.2:
+  version "4.1.2"
+  resolved "https://registry.npmjs.org/linkifyjs/-/linkifyjs-4.1.2.tgz#48fadb05ddf5a5f7065510a385a500ca1ac4e65e"
+  integrity sha512-1elJrH8MwUgr77Rgmx4JgB/nBgISYVoGossH6pAfCeHG+07TblTn6RWKx0MKozEMJU6NCFYHRih9M8ZtV3YZ+Q==
 
 loader-runner@^4.2.0:
   version "4.3.0"
@@ -6702,21 +6712,6 @@ lodash.debounce@^4.0.8:
   resolved "https://mirrors.cloud.tencent.com/npm/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
   integrity sha1-gteb/zCmfEAF/9XiUVMArZyk168=
 
-lodash.escape@^4.0.1:
-  version "4.0.1"
-  resolved "https://mirrors.cloud.tencent.com/npm/lodash.escape/-/lodash.escape-4.0.1.tgz#c9044690c21e04294beaa517712fded1fa88de98"
-  integrity sha1-yQRGkMIeBClL6qUXcS/e0fqI3pg=
-
-lodash.flatten@^4.4.0:
-  version "4.4.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/lodash.flatten/-/lodash.flatten-4.4.0.tgz#f31c22225a9632d2bbf8e4addbef240aa765a61f"
-  integrity sha1-8xwiIlqWMtK7+OSt2+8kCqdlph8=
-
-lodash.invokemap@^4.6.0:
-  version "4.6.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/lodash.invokemap/-/lodash.invokemap-4.6.0.tgz#1748cda5d8b0ef8369c4eb3ec54c21feba1f2d62"
-  integrity sha1-F0jNpdiw74NpxOs+xUwh/rofLWI=
-
 lodash.memoize@^4.1.2:
   version "4.1.2"
   resolved "https://mirrors.cloud.tencent.com/npm/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
@@ -6727,11 +6722,6 @@ lodash.merge@^4.6.2:
   resolved "https://mirrors.cloud.tencent.com/npm/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
   integrity sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
 
-lodash.pullall@^4.2.0:
-  version "4.2.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/lodash.pullall/-/lodash.pullall-4.2.0.tgz#9d98b8518b7c965b0fae4099bd9fb7df8bbf38ba"
-  integrity sha1-nZi4UYt8llsPrkCZvZ+334u/OLo=
-
 lodash.sortby@^4.7.0:
   version "4.7.0"
   resolved "https://mirrors.cloud.tencent.com/npm/lodash.sortby/-/lodash.sortby-4.7.0.tgz#edd14c824e2cc9c1e0b0a1b42bb5210516a42438"
@@ -6741,11 +6731,6 @@ lodash.uniq@^4.5.0:
   version "4.5.0"
   resolved "https://mirrors.cloud.tencent.com/npm/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
-
-lodash.uniqby@^4.7.0:
-  version "4.7.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/lodash.uniqby/-/lodash.uniqby-4.7.0.tgz#d99c07a669e9e6d24e1362dfe266c67616af1302"
-  integrity sha1-2ZwHpmnp5tJOE2Lf4mbGdhavEwI=
 
 lodash@^4, lodash@^4.17.20, lodash@^4.17.21:
   version "4.17.21"
@@ -7156,10 +7141,10 @@ object.values@^1.1.7:
     define-properties "^1.2.0"
     es-abstract "^1.22.1"
 
-oblivious-set@1.1.1:
-  version "1.1.1"
-  resolved "https://mirrors.cloud.tencent.com/npm/oblivious-set/-/oblivious-set-1.1.1.tgz#d9d38e9491d51f27a5c3ec1681d2ba40aa81e98b"
-  integrity sha512-Oh+8fK09mgGmAshFdH6hSVco6KZmd1tTwNFWj35OvzdmJTMZtAkbn05zar2iG3v6sDs1JLEtOiBGNb6BHwkb2w==
+oblivious-set@1.4.0:
+  version "1.4.0"
+  resolved "https://mirrors.cloud.tencent.com/npm/oblivious-set/-/oblivious-set-1.4.0.tgz#1ee7c90f0605bb2a182fbcc8fffbe324d9994b43"
+  integrity sha512-szyd0ou0T8nsAqHtprRcP3WidfsN1TnAR5yWXf2mFCEr5ek3LEOkT6EZ/92Xfs74HIdyhG5WkGxIssMU0jBaeg==
 
 obuf@^1.0.0, obuf@^1.1.2:
   version "1.1.2"
@@ -7835,10 +7820,10 @@ prettier-linter-helpers@^1.0.0:
   dependencies:
     fast-diff "^1.1.2"
 
-prettier@^3.0.3:
-  version "3.0.3"
-  resolved "https://mirrors.cloud.tencent.com/npm/prettier/-/prettier-3.0.3.tgz#432a51f7ba422d1469096c0fdc28e235db8f9643"
-  integrity sha512-L/4pUDMxcNa8R/EthV08Zt42WBO4h1rarVtK0K+QJG0X187OLo7l699jWw0GKuwzkPQ//jMFA/8Xm6Fh3J/DAg==
+prettier@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.npmjs.org/prettier/-/prettier-3.1.0.tgz#c6d16474a5f764ea1a4a373c593b779697744d5e"
+  integrity sha512-TQLvXjq5IAibjh8EpBIkNKxO749UEWABoiIZehEPiY4GNpVdhaFKqSTu+QrlU6D2dPAfubRmtJTi4K4YkQ5eXw==
 
 pretty-bytes@^5.3.0, pretty-bytes@^5.4.1:
   version "5.6.0"
@@ -8136,10 +8121,10 @@ react-hotkeys-hook@^4.4.1:
   resolved "https://mirrors.cloud.tencent.com/npm/react-hotkeys-hook/-/react-hotkeys-hook-4.4.1.tgz#1f7a7a1c9c21d4fa3280bf340fcca8fd77d81994"
   integrity sha512-sClBMBioFEgFGYLTWWRKvhxcCx1DRznd+wkFHwQZspnRBkHTgruKIHptlK/U/2DPX8BhHoRGzpMVWUXMmdZlmw==
 
-react-i18next@^13.3.1:
-  version "13.3.1"
-  resolved "https://mirrors.cloud.tencent.com/npm/react-i18next/-/react-i18next-13.3.1.tgz#9b072bf4dd4cafb028e92315a8a1415f8034bdca"
-  integrity sha512-JAtYREK879JXaN9GdzfBI4yJeo/XyLeXWUsRABvYXiFUakhZJ40l+kaTo+i+A/3cKIED41kS/HAbZ5BzFtq/Og==
+react-i18next@^13.5.0:
+  version "13.5.0"
+  resolved "https://registry.npmjs.org/react-i18next/-/react-i18next-13.5.0.tgz#44198f747628267a115c565f0c736a50a76b1ab0"
+  integrity sha512-CFJ5NDGJ2MUyBohEHxljOq/39NQ972rh1ajnadG9BjTk+UXbHLq4z5DKEbEQBDoIhUmmbuS/fIMJKo6VOax1HA==
   dependencies:
     "@babel/runtime" "^7.22.5"
     html-parse-stringify "^3.0.1"
@@ -8195,20 +8180,20 @@ react-remove-scroll@2.5.5:
     use-callback-ref "^1.3.0"
     use-sidecar "^1.1.2"
 
-react-router-dom@^6.17.0:
-  version "6.17.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/react-router-dom/-/react-router-dom-6.17.0.tgz#ea73f89186546c1cf72b10fcb7356d874321b2ad"
-  integrity sha512-qWHkkbXQX+6li0COUUPKAUkxjNNqPJuiBd27dVwQGDNsuFBdMbrS6UZ0CLYc4CsbdLYTckn4oB4tGDuPZpPhaQ==
+react-router-dom@^6.19.0:
+  version "6.19.0"
+  resolved "https://registry.npmjs.org/react-router-dom/-/react-router-dom-6.19.0.tgz#ee807e36ae7dd954db7a3f770e38b7cc026c66a8"
+  integrity sha512-N6dWlcgL2w0U5HZUUqU2wlmOrSb3ighJmtQ438SWbhB1yuLTXQ8yyTBMK3BSvVjp7gBtKurT554nCtMOgxCZmQ==
   dependencies:
-    "@remix-run/router" "1.10.0"
-    react-router "6.17.0"
+    "@remix-run/router" "1.12.0"
+    react-router "6.19.0"
 
-react-router@6.17.0:
-  version "6.17.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/react-router/-/react-router-6.17.0.tgz#7b680c4cefbc425b57537eb9c73bedecbdc67c1e"
-  integrity sha512-YJR3OTJzi3zhqeJYADHANCGPUu9J+6fT5GLv82UWRGSxu6oJYCKVmxUcaBQuGm9udpWmPsvpme/CdHumqgsoaA==
+react-router@6.19.0:
+  version "6.19.0"
+  resolved "https://registry.npmjs.org/react-router/-/react-router-6.19.0.tgz#6d5062fa33495859daca98d86292ab03b037a9ca"
+  integrity sha512-0W63PKCZ7+OuQd7Tm+RbkI8kCLmn4GPjDbX61tWljPxWgqTKlEpeQUwPkT1DRjYhF8KSihK0hQpmhU4uxVMcdw==
   dependencies:
-    "@remix-run/router" "1.10.0"
+    "@remix-run/router" "1.12.0"
 
 react-side-effect@^2.1.0:
   version "2.1.2"
@@ -8823,10 +8808,10 @@ slate-hyperscript@^0.100.0:
   dependencies:
     is-plain-object "^5.0.0"
 
-slate-react@0.100.0:
-  version "0.100.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/slate-react/-/slate-react-0.100.0.tgz#f53b11a8dde151d15cebbdb15ca40ee7f04ab4d6"
-  integrity sha512-cWq3tiOvYDJE96ISjnZrX/5IrGcqT4tVVW+PeGquUbrEK/Vq9/850juucjXMLl4zQAtXehy+fxWaJQWPeclUDQ==
+slate-react@0.101.0:
+  version "0.101.0"
+  resolved "https://registry.npmjs.org/slate-react/-/slate-react-0.101.0.tgz#7bcf39792a644ea5d7a887425d1acbd4c17c9ad3"
+  integrity sha512-GAwAi9cT8pWLt65p6Fab33UXH2MKE1NRzHhqAnV+32u20vy4dre/dIGyyqrFyOp3lgBBitgjyo6N2g26y63gOA==
   dependencies:
     "@juggle/resize-observer" "^3.4.0"
     "@types/is-hotkey" "^0.1.8"
@@ -9177,10 +9162,12 @@ tabbable@^6.0.1:
   resolved "https://mirrors.cloud.tencent.com/npm/tabbable/-/tabbable-6.2.0.tgz#732fb62bc0175cfcec257330be187dcfba1f3b97"
   integrity sha512-Cat63mxsVJlzYvN51JmVXIgNoUokrIaT2zLclCXjRd8boZ0004U4KCs/sToJ75C6sdlByWxpYnb5Boif1VSFew==
 
-tailwind-merge@1.14.0:
-  version "1.14.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/tailwind-merge/-/tailwind-merge-1.14.0.tgz#e677f55d864edc6794562c63f5001f45093cdb8b"
-  integrity sha512-3mFKyCo/MBcgyOTlrY8T7odzZFx+w+qKSMAmdFzRvqBfLlSigU6TZnlFHK0lkMwj9Bj8OYU+9yW9lmGuS0QEnQ==
+tailwind-merge@2.0.0:
+  version "2.0.0"
+  resolved "https://mirrors.cloud.tencent.com/npm/tailwind-merge/-/tailwind-merge-2.0.0.tgz#a0f3a8c874ebae5feec5595614d08245a5f88a39"
+  integrity sha512-WO8qghn9yhsldLSg80au+3/gY9E4hFxIvQ3qOmlpXnqpDKoMruKfi/56BbbMg6fHTQJ9QD3cc79PoWqlaQE4rw==
+  dependencies:
+    "@babel/runtime" "^7.23.1"
 
 tailwindcss@^3.3.5:
   version "3.3.5"
@@ -9639,10 +9626,10 @@ watchpack@^2.4.0:
     glob-to-regexp "^0.4.1"
     graceful-fs "^4.1.2"
 
-wavesurfer.js@^7.4.2:
-  version "7.4.2"
-  resolved "https://mirrors.cloud.tencent.com/npm/wavesurfer.js/-/wavesurfer.js-7.4.2.tgz#59f5c87193d4eeeb199858688ddac1ad7ba86b3a"
-  integrity sha512-4pNQ1porOCUBYBmd2F1TqVuBnB2wBPipaw2qI920zYLuPnada0Rd1CURgh8HRuPGKxijj2iyZDFN2UZwsaEuhA==
+wavesurfer.js@^7.4.5:
+  version "7.4.5"
+  resolved "https://registry.npmjs.org/wavesurfer.js/-/wavesurfer.js-7.4.5.tgz#a66db31fb062ec87c77e2aa01b4f00a6f4ae73fd"
+  integrity sha512-Vwvui02yNlpe8NYCEcPH6KMlLm+0SELyAUsTbqLOdECLamS8iJI3LU8dyAhL7q1XhYHVhmK1i3jD4QtnnpajPQ==
 
 wbuf@^1.1.0, wbuf@^1.7.3:
   version "1.7.3"
@@ -9666,24 +9653,20 @@ webidl-conversions@^4.0.2:
   resolved "https://mirrors.cloud.tencent.com/npm/webidl-conversions/-/webidl-conversions-4.0.2.tgz#a855980b1f0b6b359ba1d5d9fb39ae941faa63ad"
   integrity sha512-YQ+BmxuTgd6UXZW3+ICGfyqRyHXVlD5GtQr5+qjiNW7bF0cqrzX500HVXPBOvgXb5YnzDd+h0zqyv61KUD7+Sg==
 
-webpack-bundle-analyzer@^4.9.1:
-  version "4.9.1"
-  resolved "https://mirrors.cloud.tencent.com/npm/webpack-bundle-analyzer/-/webpack-bundle-analyzer-4.9.1.tgz#d00bbf3f17500c10985084f22f1a2bf45cb2f09d"
-  integrity sha512-jnd6EoYrf9yMxCyYDPj8eutJvtjQNp8PHmni/e/ulydHBWhT5J3menXt3HEkScsu9YqMAcG4CfFjs3rj5pVU1w==
+webpack-bundle-analyzer@^4.10.1:
+  version "4.10.1"
+  resolved "https://registry.npmjs.org/webpack-bundle-analyzer/-/webpack-bundle-analyzer-4.10.1.tgz#84b7473b630a7b8c21c741f81d8fe4593208b454"
+  integrity sha512-s3P7pgexgT/HTUSYgxJyn28A+99mmLq4HsJepMPzu0R8ImJc52QNqaFYW1Z2z2uIb1/J3eYgaAWVpaC+v/1aAQ==
   dependencies:
     "@discoveryjs/json-ext" "0.5.7"
     acorn "^8.0.4"
     acorn-walk "^8.0.0"
     commander "^7.2.0"
+    debounce "^1.2.1"
     escape-string-regexp "^4.0.0"
     gzip-size "^6.0.0"
+    html-escaper "^2.0.2"
     is-plain-object "^5.0.0"
-    lodash.debounce "^4.0.8"
-    lodash.escape "^4.0.1"
-    lodash.flatten "^4.4.0"
-    lodash.invokemap "^4.6.0"
-    lodash.pullall "^4.2.0"
-    lodash.uniqby "^4.7.0"
     opener "^1.5.2"
     picocolors "^1.0.0"
     sirv "^2.0.3"

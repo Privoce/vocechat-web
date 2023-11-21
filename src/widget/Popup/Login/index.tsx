@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import clsx from "clsx";
 
-import { useRegisterMutation } from "../../../app/services/auth";
+import { useLoginMutation, useRegisterMutation } from "../../../app/services/auth";
 import { useGetLoginConfigQuery } from "../../../app/services/server";
 import { setAuthData } from "../../../app/slices/auth.data";
 import Divider from "../../../components/Divider";
@@ -23,10 +23,11 @@ const randomText = () => (Math.random() + 1).toString(36).substring(7);
 const Login = () => {
   const { t } = useTranslation("widget");
   const dispatch = useDispatch();
-  const { color, fgColor, from, autoReg } = useWidget();
+  const { color, fgColor, from, autoReg, token } = useWidget();
   const { clientId } = useGoogleAuthConfig();
   const { config: githubAuthConfig } = useGithubAuthConfig();
   const [register, { isLoading, isSuccess, data, error }] = useRegisterMutation();
+  const [loginByToken, { isLoading: isLogging }] = useLoginMutation();
   //  const [login]= useLoginMutation();
   const { data: loginConfig, isSuccess: loginConfigSuccess } = useGetLoginConfigQuery();
   const registerUser = (name: string, auto?: boolean) => {
@@ -55,10 +56,12 @@ const Login = () => {
     // const content = new FormData(form).get("prompt") as string;
   };
   useEffect(() => {
-    if (autoReg) {
+    if (autoReg && !token) {
       registerUser(`w-${randomText()}`, true);
+    } else if (token) {
+      loginByToken({ key: token, type: "thirdparty" });
     }
-  }, [autoReg]);
+  }, [autoReg, token]);
 
   useEffect(() => {
     if (isSuccess && data) {
@@ -84,7 +87,7 @@ const Login = () => {
     }
   }, [error]);
   if (!loginConfigSuccess) return null;
-  if (autoReg) return <Loading />;
+  if (autoReg || isLogging) return <Loading />;
   const { github: enableGithubLogin, google: enableGoogleLogin } = loginConfig;
   const googleLogin = enableGoogleLogin && clientId;
   const hasSocialLogins = enableGithubLogin || googleLogin;

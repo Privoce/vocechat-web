@@ -15,7 +15,7 @@ import baseQuery from "./base.query";
 
 const getDeviceId = () => {
   let d = localStorage.getItem(KEY_DEVICE_ID);
-  let dt = localStorage.getItem(KEY_DEVICE_TOKEN) || "";
+  const dt = localStorage.getItem(KEY_DEVICE_TOKEN) || "";
   if (!d) {
     d = `web:${nanoid()}`;
     localStorage.setItem(KEY_DEVICE_ID, d);
@@ -53,7 +53,7 @@ export const authApi = createApi({
           if (data) {
             dispatch(setAuthData(data));
           }
-          // 从localstorage 去掉 magic token
+          // 从 localstorage 去掉 magic token
           localStorage.removeItem(KEY_LOCAL_MAGIC_TOKEN);
         } catch {
           console.log("login error");
@@ -67,7 +67,7 @@ export const authApi = createApi({
           const { data } = await queryFulfilled;
           if (data) {
             dispatch(setAuthData(data));
-            // 从localstorage 去掉 magic token
+            // 从 localstorage 去掉 magic token
             localStorage.removeItem(KEY_LOCAL_MAGIC_TOKEN);
           }
         } catch {
@@ -86,7 +86,7 @@ export const authApi = createApi({
         }
       })
     }),
-    // 更新token
+    // 更新 token
     renew: builder.mutation<RenewTokenResponse, RenewTokenDTO>({
       query: (data) => ({
         url: "/token/renew",
@@ -116,7 +116,7 @@ export const authApi = createApi({
         }
       })
     }),
-    //   获取openid
+    //   获取 openid
     getOpenid: builder.mutation<{ url: string }, { issuer: string; redirect_uri: string }>({
       query: (data) => ({
         url: "/token/openid/authorize",

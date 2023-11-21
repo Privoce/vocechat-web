@@ -242,6 +242,7 @@
     "custom_style_tip": "如果你想更精确控制挂件的样式，可以借助 widget 元素的 ID，自行写 CSS 样式，加到自己的 html 或者 css 文件中，如下所示：",
     "param_host": "指定和谁聊天 (用户 ID)",
     "param_auto_reg": "true:访客无需输入邮箱，直接注册;false:访客需要输入邮箱注册",
+    "param_login_token": "自有账号生成的登录 token，详见:https://doc.voce.chat/zh-cn/login-with-other-account",
     "param_theme_color": "挂件的主题色",
     "param_close_width": "挂件关闭态的宽度",
     "param_close_height": "挂件关闭态的高度",
