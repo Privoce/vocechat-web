@@ -1,5 +1,4 @@
 import { memo } from "react";
-import clsx from "clsx";
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 
@@ -8,6 +7,8 @@ import Text from "./Text";
 import Image from "./Image";
 import { ContentType } from "@/types/message";
 import { shallowEqual } from "react-redux";
+import Markdown from "./Markdown";
+import { cn } from "@/utils";
 
 dayjs.extend(localizedFormat);
 
@@ -41,6 +42,9 @@ const Index = (props: IWidgetMessage) => {
     case "text/plain":
       contentContainer = <Text sending={sending} content={content} host={host} uid={uid} />;
       break;
+    case "text/markdown":
+      contentContainer = <Markdown content={content} />;
+      break;
     case "vocechat/file":
       {
         console.log("image file", content);
@@ -54,7 +58,7 @@ const Index = (props: IWidgetMessage) => {
   }
   return (
     <div
-      className={clsx(
+      className={cn(
         "group flex mb-3",
         host ? "relative justify-start items-start" : "items-center justify-end px-3"
       )}

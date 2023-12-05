@@ -403,6 +403,8 @@ module.exports = function (webpackEnv) {
     },
     plugins: [
       isEnvProduction &&
+        !process.env.REACT_APP_RELEASE &&
+        !process.env.REACT_APP_OFFICIAL_DEMO &&
         new BundleAnalyzerPlugin({
           openAnalyzer: false
         }),

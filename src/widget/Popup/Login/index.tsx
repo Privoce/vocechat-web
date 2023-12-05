@@ -98,9 +98,10 @@ const Login = () => {
           {/* input email as username */}
           <Input required placeholder="Email" type="email" name="username" />
           <StyledButton
+            style={{ backgroundColor: color, color: fgColor }}
             disabled={isLoading}
             type="submit"
-            className={clsx("small", `bg-[${color}] text-[${fgColor}]`)}
+            className={clsx("small")}
           >
             {t("start_chat")}
           </StyledButton>
