@@ -10,7 +10,7 @@
   "prettier.prettierPath": "./node_modules/prettier/index.cjs",
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+    "source.fixAll.eslint": "explicit"
   },
   "eslint.validate": ["javascript"],
   "[json]": {
