@@ -57,7 +57,7 @@ export default function Widget() {
       <SyntaxHighlighter id="code" language="html" style={vscDarkPlus} className="rounded">
         {`<!-- ${t(
           "code_comment"
-        )} -->\n<script \n  data-host-id="${loginUid}" \n  data-auto-reg="false" \n  data-login-token="xxxxxxxx" \n  data-theme-color="#1fe1f9" \n  data-close-width="48" \n  data-close-height="48" \n  data-open-width="380" \n  data-open-height="680" \n  data-welcome="Your custom welcome text" \n  src="${
+        )} -->\n<script \n  data-host-id="${loginUid}" \n  data-auto-reg="true" \n  data-login-token="" \n  data-theme-color="#1fe1f9" \n  data-close-width="48" \n  data-close-height="48" \n  data-open-width="380" \n  data-open-height="680" \n  data-welcome="Your custom welcome text" \n  src="${
           location.origin
         }/widget.js" \n  async \n></script>`}
       </SyntaxHighlighter>
