@@ -2,7 +2,7 @@
 ((w, d) => {
   const {
     hostId = 1,
-    autoReg = "false",
+    autoReg = "true",
     loginToken = "",
     closeWidth = 48,
     closeHeight = 48,
