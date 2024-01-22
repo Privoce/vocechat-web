@@ -27,7 +27,7 @@ const Login = () => {
   const { clientId } = useGoogleAuthConfig();
   const { config: githubAuthConfig } = useGithubAuthConfig();
   const [register, { isLoading, isSuccess, data, error }] = useRegisterMutation();
-  const [loginByToken, { isLoading: isLogging }] = useLoginMutation();
+  const [loginByToken, { isLoading: isLogging, isError: tokenLoginError }] = useLoginMutation();
   //  const [login]= useLoginMutation();
   const { data: loginConfig, isSuccess: loginConfigSuccess } = useGetLoginConfigQuery();
   const registerUser = (name: string, auto?: boolean) => {
@@ -63,6 +63,11 @@ const Login = () => {
     }
   }, [autoReg, token]);
 
+  useEffect(() => {
+    if (tokenLoginError) {
+      toast.error("Token login error!");
+    }
+  }, [tokenLoginError]);
   useEffect(() => {
     if (isSuccess && data) {
       dispatch(setAuthData(data));

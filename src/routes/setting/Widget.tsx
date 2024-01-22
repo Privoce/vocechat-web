@@ -95,7 +95,7 @@ export default function Widget() {
               },
               {
                 paramKey: "auto-reg",
-                paramDefault: "false",
+                paramDefault: "true",
                 remarks: t("param_auto_reg")
               },
               {

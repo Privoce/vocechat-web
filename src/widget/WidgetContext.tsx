@@ -7,7 +7,7 @@ import { shallowEqual } from "react-redux";
 
 const query = new URLSearchParams(location.search);
 const welcome = decodeURIComponent(query.get("welcome") || "");
-const autoReg = decodeURIComponent(query.get("autoReg") || "false") == "true";
+const autoReg = decodeURIComponent(query.get("autoReg") || "true") == "true";
 const token = decodeURIComponent(query.get("token") || "");
 const color = decodeURIComponent(query.get("themeColor") || "#1fe1f9");
 const from = decodeURIComponent(query.get("from") || "widget.link");
