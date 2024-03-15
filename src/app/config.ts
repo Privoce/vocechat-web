@@ -1,7 +1,7 @@
 import i18n from "../i18n";
 import { Price } from "../types/common";
 
-let prices: Price[] = [
+const prices: Price[] = [
   {
     type: "payment",
     limit: 999999,
@@ -13,7 +13,7 @@ let prices: Price[] = [
 ];
 const official_dev = `https://dev.voce.chat`;
 const local_dev = `https://dev.voce.chat`;
-// const local_dev = `http://localhost:3000`;
+// const local_dev = `https://cqvoce.com`;
 const dev_origin = process.env.REACT_APP_OFFICIAL_DEMO ? official_dev : local_dev;
 
 // const local_dev = `https://im.ttt.td`;

@@ -10,7 +10,7 @@ export interface ChatSession {
   id: number;
   mid?: number;
 }
-type Props = {};
+type Props = Record<string, never>;
 const SessionList: FC<Props> = () => {
   const [sessions, setSessions] = useState<ChatSession[]>([]);
   const readChannels = useAppSelector((store) => store.footprint.readChannels, shallowEqual);
@@ -26,7 +26,7 @@ const SessionList: FC<Props> = () => {
       if (!mids || mids.length == 0) {
         return { key: `channel_${id}`, unreads: 0, id, type: "channel" };
       }
-      const mid = [...mids].sort().pop();
+      const mid = [...mids].sort((a, b) => +a - +b).pop();
       return { key: `channel_${id}`, id, mid, type: "channel" };
     });
     const tmps = [...(cSessions as ChatSession[])].sort((a, b) => {

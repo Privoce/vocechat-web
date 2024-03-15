@@ -17,6 +17,7 @@ import MagicLinkLogin from "./MagicLinkLogin";
 import SignUpLink from "./SignUpLink";
 import SocialLoginButtons from "./SocialLoginButtons";
 import { shallowEqual } from "react-redux";
+import useStreaming from "@/hooks/useStreaming";
 
 const defaultInput = {
   email: "",
@@ -26,6 +27,7 @@ export default function LoginPage() {
   const { name: serverName, logo } = useAppSelector((store) => store.server, shallowEqual);
   const { t } = useTranslation("auth");
   const { t: ct } = useTranslation();
+  const { stopStreaming } = useStreaming();
   const { data: enableSMTP, isLoading: loadingSMTPStatus } = useGetSMTPStatusQuery();
   const [login, { isSuccess, isLoading, error }] = useLoginMutation();
   const { data: loginConfig, isSuccess: loginConfigSuccess } = useGetLoginConfigQuery();
@@ -76,7 +78,7 @@ export default function LoginPage() {
             "No associated account found, please contact user admin for an invitation link to join."
           );
           break;
-        // 451有解析错误，暂时先客户端处理
+        // 451 有解析错误，暂时先客户端处理
         case "PARSING_ERROR":
           break;
         default:
@@ -88,6 +90,9 @@ export default function LoginPage() {
   }, [error]);
   useEffect(() => {
     if (isSuccess) {
+      // 登录页不需要连 SSE（在这里处理可能不是最好的方式，但是能解决当前问题，暂时没找到更好的处理方式）
+      // 断开已有的 SSE
+      stopStreaming();
       toast.success(ct("tip.login"));
       // navigateTo("/");
     }

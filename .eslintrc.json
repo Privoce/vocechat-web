@@ -8,6 +8,7 @@
   "plugins": ["import", "react", "react-hooks", "@typescript-eslint"],
   "rules": {
     "@typescript-eslint/no-unused-vars": ["error", { "ignoreRestSiblings": true }],
+    "@typescript-eslint/no-floating-promises": "off",
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off",
     "semi": 2,
