@@ -15,19 +15,19 @@ export default function useLogout() {
   const dispatch = useDispatch();
   const [logout, { isLoading, isSuccess }] = useLazyLogoutQuery();
   const clearLocalData = (auth?: boolean) => {
-    let clearAuth = typeof auth === "undefined" ? false : auth;
+    const clearAuth = typeof auth === "undefined" ? false : auth;
     dispatch(resetChannels());
     dispatch(resetUsers());
     dispatch(resetFootprint());
-    // 同时也清除本地登录数据
-    if (clearAuth) {
-      dispatch(resetAuthData());
-    }
     dispatch(resetChannelMsg());
     dispatch(resetUserMsg());
     dispatch(resetMessage());
     dispatch(resetReactionMessage());
     dispatch(resetFileMessage());
+    // 同时也清除本地登录数据
+    if (clearAuth) {
+      dispatch(resetAuthData());
+    }
   };
 
   return { clearLocalData, logout, exited: isSuccess, exiting: isLoading };

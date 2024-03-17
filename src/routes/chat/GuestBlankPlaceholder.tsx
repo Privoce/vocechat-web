@@ -1,26 +1,26 @@
 // import React from "react";
 import { useTranslation } from "react-i18next";
-import { shallowEqual, useDispatch } from "react-redux";
+import { shallowEqual } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { BASE_ORIGIN } from "@/app/config";
-import { resetAuthData } from "@/app/slices/auth.data";
+// import { resetAuthData } from "@/app/slices/auth.data";
 import { useAppSelector } from "@/app/store";
 import QRCode from "@/components/QRCode";
 import Button from "@/components/styled/Button";
-import useLogout from "@/hooks/useLogout";
+// import useLogout from "@/hooks/useLogout";
 
 // type Props = {};
 
 const GuestBlankPlaceholder = () => {
   const { t } = useTranslation("auth");
-  const dispatch = useDispatch();
-  const { clearLocalData } = useLogout();
+  // const dispatch = useDispatch();
+  // const { clearLocalData } = useLogout();
   const navigateTo = useNavigate();
   const serverName = useAppSelector((store) => store.server.name, shallowEqual);
   const handleSignIn = () => {
-    dispatch(resetAuthData());
-    clearLocalData();
+    // dispatch(resetAuthData());
+    // clearLocalData();
     navigateTo("/login");
   };
   const qrUrl = BASE_ORIGIN;

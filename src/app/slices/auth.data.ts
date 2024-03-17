@@ -56,7 +56,7 @@ const authDataSlice = createSlice({
       state.guest = create_by == "guest";
       state.token = token;
       state.refreshToken = refresh_token;
-      // 当前时间往后推expire时长
+      // 当前时间往后推 expire 时长
       const expireTime = +new Date() + Number(expired_in) * 1000;
       state.expireTime = expireTime;
       // set local data
@@ -89,6 +89,9 @@ const authDataSlice = createSlice({
       localStorage.removeItem(KEY_REFRESH_TOKEN);
       localStorage.removeItem(KEY_UID);
       localStorage.removeItem(KEY_PWA_INSTALLED);
+      // 全局变量
+      window.USERS_VERSION = 0;
+      window.AFTER_MID = 0;
       return emptyState;
     },
     updateInitialized(state, action: PayloadAction<boolean>) {

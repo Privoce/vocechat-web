@@ -130,9 +130,9 @@ export default function useStreaming() {
       params.after_mid = `${window.AFTER_MID}`;
     }
     // 如果 usersVersion 不存在或为 0，则不传该参数
-    // if (window.USERS_VERSION) {
-    params.users_version = window.USERS_VERSION ? `${window.USERS_VERSION}` : "1";
-    // }
+    if (window.USERS_VERSION) {
+      params.users_version = `${window.USERS_VERSION}`;
+    }
     // 开始初始化推送
     dispatch(updateSSEStatus("connecting"));
     SSE = new EventSource(`${BASE_URL}/user/events?${getQueryString(params)}`);
