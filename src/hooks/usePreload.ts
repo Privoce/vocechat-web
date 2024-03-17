@@ -42,15 +42,7 @@ export default function usePreload() {
     getUsers,
     { isLoading: usersLoading, isSuccess: usersSuccess, isError: usersError, data: users }
   ] = useLazyGetUsersQuery();
-  const [
-    getContacts,
-    {
-      isLoading: contactsLoading,
-      isSuccess: contactsSuccess,
-      isError: contactsError,
-      data: contacts
-    }
-  ] = useLazyGetContactsQuery();
+  const [getContacts, { data: contacts }] = useLazyGetContactsQuery();
 
   const [
     getServerVersion,
@@ -65,7 +57,7 @@ export default function usePreload() {
     //   stopStreaming()
     // }
   }, []);
-  // 在guest的时候 预取channel数据
+  // 在 guest 的时候 预取 channel 数据
   useEffect(() => {
     if (isGuest && channelIds.length > 0 && !preloadChannelMsgs) {
       const tmps = channelIds.filter((cid) => !channelMessageData[cid]);
@@ -91,8 +83,8 @@ export default function usePreload() {
   const tokenAlmostExpire = dayjs().isAfter(new Date(expireTime - 20 * 1000));
   const canStreaming = !!loginUid && rehydrated && !!token && !tokenAlmostExpire && !ready;
 
+  console.log("tttt", canStreaming);
   useEffect(() => {
-    console.log("tttt", canStreaming);
     if (canStreaming) {
       startStreaming();
     }

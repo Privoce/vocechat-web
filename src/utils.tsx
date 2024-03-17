@@ -18,48 +18,44 @@ import IconPdf from "@/assets/icons/file.pdf.svg";
 import IconUnknown from "@/assets/icons/file.unknown.svg";
 import IconVideo from "@/assets/icons/file.video.svg";
 import { StoredUser } from "./app/slices/users";
-import { clsx } from 'clsx';
-import type { ClassValue } from 'clsx';
-import { twMerge } from 'tailwind-merge';
+import { clsx } from "clsx";
+import type { ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 import { MessageWithMentions } from "./types/message";
-
-
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 type MentionInput = {
-  type: 'mention';
+  type: "mention";
   value: string;
   uid: string;
   id: string;
 };
 export type ParagraphInput = {
   id: string;
-  type: 'p';
+  type: "p";
   children: ({ text: string } | MentionInput)[];
 };
-export function getMessageFromPlateValues(
-  values: ParagraphInput[]
-): MessageWithMentions {
+export function getMessageFromPlateValues(values: ParagraphInput[]): MessageWithMentions {
   const mentions: number[] = [];
   const text = values
     .map((node) => {
       return node.children
         .map((child) => {
-          if ('text' in child) {
+          if ("text" in child) {
             return child.text;
           } else {
             mentions.push(+child.uid);
             return ` @${child.uid} `;
           }
         })
-        .join('');
+        .join("");
     })
-    .join('\n');
+    .join("\n");
   return {
     text,
-    mentions,
+    mentions
   };
 }
 export const isMobile = () =>
@@ -207,9 +203,9 @@ export const getInitialsAvatar = ({
 export function sliceFile(file: File | null, chunksAmount: number) {
   if (!file) return null;
   let byteIndex = 0;
-  let chunks = [];
+  const chunks = [];
   for (let i = 0; i < chunksAmount; i += 1) {
-    let byteEnd = Math.ceil((file.size / chunksAmount) * (i + 1));
+    const byteEnd = Math.ceil((file.size / chunksAmount) * (i + 1));
     chunks.push(file.slice(byteIndex, byteEnd));
     byteIndex += byteEnd - byteIndex;
   }
@@ -319,7 +315,7 @@ export const normalizeArchiveData = (
   };
   return messages.map(
     ({ source, mid, content, file_id, thumbnail_id, content_type, properties, from_user }) => {
-      let user = users[from_user] ?? {};
+      const user = users[from_user] ?? {};
       const { transformedContent, thumbnail, download, avatarUrl } = getUrls(uid, {
         content,
         content_type,
@@ -349,7 +345,7 @@ export const compareVersion = (
 ) => {
   //remove anything after - 1.1.2-3-a4agbr-dirty
   function cropDash(s: string) {
-    let idx = s.indexOf("-");
+    const idx = s.indexOf("-");
     if (idx !== -1) {
       s = s.substring(0, idx);
     }
@@ -375,7 +371,7 @@ export const compareVersion = (
     v1parts = v1parts.map(Number);
     v2parts = v2parts.map(Number);
   }
-  for (var i = 0; i < v1parts.length; ++i) {
+  for (let i = 0; i < v1parts.length; ++i) {
     if (v2parts.length == i) {
       return 1;
     }
@@ -416,11 +412,11 @@ export const getContrastColor = (hexcolor: string) => {
       .join("");
   }
   // Convert to RGB value
-  let r = parseInt(hexcolor.substr(0, 2), 16);
-  let g = parseInt(hexcolor.substr(2, 2), 16);
-  let b = parseInt(hexcolor.substr(4, 2), 16);
+  const r = parseInt(hexcolor.substr(0, 2), 16);
+  const g = parseInt(hexcolor.substr(2, 2), 16);
+  const b = parseInt(hexcolor.substr(4, 2), 16);
   // Get YIQ ratio
-  let yiq = (r * 299 + g * 587 + b * 114) / 1000;
+  const yiq = (r * 299 + g * 587 + b * 114) / 1000;
   // Check contrast
   return yiq >= 128 ? "black" : "white";
 };
@@ -529,8 +525,8 @@ export const getGroupData = ({
     role === "admin"
       ? `admin - ${adminCount}`
       : role === "bot"
-      ? `bot - ${botCount}`
-      : `member - ${memberCount}`;
+        ? `bot - ${botCount}`
+        : `member - ${memberCount}`;
   const prefixHeader = isFirst ? true : prev_true_admin !== true_admin || prev?.is_bot !== is_bot;
   return { role, title: prefixHeader ? groupTitle : undefined };
 };

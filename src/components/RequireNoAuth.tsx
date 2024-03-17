@@ -1,9 +1,10 @@
-import { FC, ReactElement } from "react";
+import { FC, ReactElement, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 
 import { useGetInitializedQuery } from "@/app/services/auth";
 import { useAppSelector } from "@/app/store";
 import { shallowEqual } from "react-redux";
+import useStreaming from "@/hooks/useStreaming";
 
 interface Props {
   children: ReactElement;
@@ -11,10 +12,19 @@ interface Props {
 }
 
 const RequireNoAuth: FC<Props> = ({ children, redirectTo = "/" }) => {
+  // const {pathname} =useLocation()
+  const { stopStreaming } = useStreaming();
   const { isLoading } = useGetInitializedQuery();
   const { token, initialized, guest } = useAppSelector((store) => store.authData, shallowEqual);
+  // 停掉 sse
+  useEffect(() => {
+    console.log("start stop from require no auth");
+    // if()
+    stopStreaming();
+  }, []);
+
   if (isLoading) return null;
-  //  未初始化 则先走setup 流程
+  //  未初始化 则先走 setup 流程
   if (!initialized) return <Navigate to={`/onboarding`} replace />;
   return token && !guest ? <Navigate to={redirectTo} replace /> : children;
 };

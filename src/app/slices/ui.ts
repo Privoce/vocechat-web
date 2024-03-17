@@ -50,8 +50,8 @@ const uiSlice = createSlice({
       const { SSEStatus, ready, online, ...rest } = action.payload;
       return { ...state, ...rest };
     },
-    setReady(state) {
-      state.ready = true;
+    setReady(state, action: PayloadAction<boolean>) {
+      state.ready = action.payload;
     },
     updateSSEStatus(state, action: PayloadAction<SSEStatus>) {
       state.SSEStatus = action.payload;
@@ -87,7 +87,7 @@ const uiSlice = createSlice({
       const { context = "channel", id = null, operation = "add", ...rest } = action.payload;
       if (!id || !context) return;
       const _key = `${context}_${id}`;
-      let files = state.uploadFiles[_key];
+      const files = state.uploadFiles[_key];
       switch (operation) {
         case "add":
           {

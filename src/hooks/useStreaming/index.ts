@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import toast from "react-hot-toast";
 import dayjs from "dayjs";
 import { isNull, omitBy } from "lodash";
@@ -73,7 +73,7 @@ export default function useStreaming() {
   const keepAlive = (timeout?: number) => {
     console.info("debug SSE: start new keepalive");
     clearTimeout(aliveInter);
-    //  比15秒多5秒
+    //  比 15 秒多 5 秒
     const countdown = timeout ?? 20000;
     console.info("debug SSE: clear prev timeout", aliveInter);
     aliveInter = setTimeout(() => {
@@ -99,7 +99,7 @@ export default function useStreaming() {
       return;
     }
     let _token = token;
-    // 如果token快要过期，先renew
+    // 如果 token 快要过期，先 renew
     if (dayjs().isAfter(new Date(expireTime - 20 * 1000))) {
       const resp = await renewToken({ token, refresh_token: refreshToken });
       if ("error" in resp) {
@@ -109,7 +109,7 @@ export default function useStreaming() {
         if (navigator.onLine || !tabHidden) {
           stopStreaming();
         }
-        // 返回，开始下次polling（如果有）
+        // 返回，开始下次 polling（如果有）
         return;
       } else {
         _token = resp.data.token;
@@ -125,14 +125,14 @@ export default function useStreaming() {
       limit: "500",
       "api-key": _token
     };
-    // 如果afterMid是0，则不传该参数
+    // 如果 afterMid 是 0，则不传该参数
     if (window.AFTER_MID) {
       params.after_mid = `${window.AFTER_MID}`;
     }
-    // 如果usersVersion不存在或为0，则不传该参数
-    if (window.USERS_VERSION) {
-      params.users_version = `${window.USERS_VERSION}`;
-    }
+    // 如果 usersVersion 不存在或为 0，则不传该参数
+    // if (window.USERS_VERSION) {
+    params.users_version = window.USERS_VERSION ? `${window.USERS_VERSION}` : "1";
+    // }
     // 开始初始化推送
     dispatch(updateSSEStatus("connecting"));
     SSE = new EventSource(`${BASE_URL}/user/events?${getQueryString(params)}`);
@@ -178,9 +178,9 @@ export default function useStreaming() {
         }
         case "ready":
           ready = true;
-          // 有时候，heartbeat不会发？
+          // 有时候，heartbeat 不会发？
           keepAlive();
-          dispatch(setReady());
+          dispatch(setReady(true));
           setTimeout(() => {
             toast.dismiss();
           }, 2000);
@@ -343,7 +343,7 @@ export default function useStreaming() {
         case "users_state":
         case "users_state_changed":
           {
-            let { type, ...rest } = data;
+            const { type, ...rest } = data;
             const onlines =
               type == "users_state_changed" ? [rest] : (rest as UsersStateEvent).users;
             dispatch(updateUsersStatus(onlines));
@@ -395,7 +395,7 @@ export default function useStreaming() {
         case "kick_from_group":
           {
             dispatch(removeChannel(data.gid));
-            // 同时清掉channel聊天记录
+            // 同时清掉 channel 聊天记录
             dispatch(removeChannelSession(data.gid));
           }
           break;
@@ -426,6 +426,7 @@ export default function useStreaming() {
       SSE.close();
       SSE = undefined;
       dispatch(updateSSEStatus("disconnected"));
+      dispatch(setReady(false));
     }
     ready = false;
   };
@@ -447,7 +448,7 @@ export default function useStreaming() {
         hiddenTime = new Date().getTime();
       } else {
         const elapsedTime = (new Date().getTime() - hiddenTime) / 1000;
-        // 大于1天
+        // 大于 1 天
         const timeSpan = 24 * 60 * 60;
         // const timeSpan = 5;
         const canReconnect = elapsedTime > timeSpan || !SSE;
@@ -458,7 +459,7 @@ export default function useStreaming() {
           canReconnect,
           !SSE
         );
-        // 超过1天或者已断线，强制重连
+        // 超过 1 天或者已断线，强制重连
         if (canReconnect) {
           // 设置重连状态
           toast.dismiss();

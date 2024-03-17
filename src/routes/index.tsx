@@ -1,4 +1,4 @@
-import { lazy, useEffect, memo } from "react";
+import { lazy, useEffect } from "react";
 import toast from "react-hot-toast";
 import { Provider, shallowEqual } from "react-redux";
 import { HashRouter, Route, Routes } from "react-router-dom";
@@ -41,7 +41,7 @@ const PageRoutes = () => {
   const guestMode = useAppSelector((store) => store.server.loginConfig?.guest, shallowEqual);
   const version = useAppSelector((store) => store.server.version, shallowEqual);
   const online = useAppSelector((store) => store.ui.online, shallowEqual);
-  // 提前获取device token
+  // 提前获取 device token
   useDeviceToken(vapidKey);
   // 初始化元信息
   usePrefetchData();
@@ -173,7 +173,7 @@ const PageRoutes = () => {
           element={
             <LazyIt>
               <RequireAuth guestMode={guestMode}>
-                {/* 只允许活跃一个tab标签 */}
+                {/* 只允许活跃一个 tab 标签 */}
                 <RequireSingleTab>
                   <HomePage />
                 </RequireSingleTab>
