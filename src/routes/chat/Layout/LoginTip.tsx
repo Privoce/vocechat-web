@@ -1,12 +1,12 @@
 // import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import clsx from "clsx";
 
-import { resetAuthData } from "@/app/slices/auth.data";
+// import { resetAuthData } from "@/app/slices/auth.data";
 import Button from "@/components/styled/Button";
-import useLogout from "@/hooks/useLogout";
+// import useLogout from "@/hooks/useLogout";
 
 type Props = {
   placement?: "session" | "chat";
@@ -15,12 +15,12 @@ type Props = {
 const LoginTip = ({ placement = "chat" }: Props) => {
   const { t } = useTranslation("welcome");
   const { t: ct } = useTranslation();
-  const dispatch = useDispatch();
-  const { clearLocalData } = useLogout();
+  // const dispatch = useDispatch();
+  // const { clearLocalData } = useLogout();
   const navigateTo = useNavigate();
   const handleSignIn = () => {
-    dispatch(resetAuthData());
-    clearLocalData();
+    // dispatch(resetAuthData());
+    // clearLocalData();
     navigateTo("/login");
   };
 
