@@ -1,24 +1,19 @@
-import React, { memo, useCallback } from 'react';
-import {
-  Emoji,
-  EmojiSettings,
-  GridRow,
-  UseEmojiPickerType,
-} from '@udecode/plate-emoji';
+import { memo, useCallback } from "react";
+import { Emoji, EmojiSettings, GridRow, UseEmojiPickerType } from "@udecode/plate-emoji";
 
-import { cn } from '@/utils';
+import { cn } from "@/utils";
 
 export type EmojiPickerContentProps = Pick<
   UseEmojiPickerType,
-  | 'i18n'
-  | 'onMouseOver'
-  | 'onSelectEmoji'
-  | 'emojiLibrary'
-  | 'isSearching'
-  | 'searchResult'
-  | 'visibleCategories'
-  | 'refs'
-  | 'settings'
+  | "i18n"
+  | "onMouseOver"
+  | "onSelectEmoji"
+  | "emojiLibrary"
+  | "isSearching"
+  | "searchResult"
+  | "visibleCategories"
+  | "refs"
+  | "settings"
 >;
 
 export type EmojiButtonProps = {
@@ -30,36 +25,34 @@ export type EmojiButtonProps = {
 
 export type RowOfButtonsProps = Pick<
   UseEmojiPickerType,
-  'onMouseOver' | 'onSelectEmoji' | 'emojiLibrary'
+  "onMouseOver" | "onSelectEmoji" | "emojiLibrary"
 > & {
   row: GridRow;
 };
 
-const Button = memo(
-  ({ index, emoji, onSelect, onMouseOver }: EmojiButtonProps) => {
-    return (
-      <button
-        type="button"
-        aria-label={emoji.skins[0].native}
-        tabIndex={-1}
-        data-index={index}
-        onClick={() => onSelect(emoji)}
-        onMouseEnter={() => onMouseOver(emoji)}
-        onMouseLeave={() => onMouseOver()}
-        className="group relative flex h-[36px] w-[36px] cursor-pointer items-center justify-center border-none bg-transparent text-2xl leading-none"
-      >
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 rounded-full bg-[rgba(0,0,0,0.05)] opacity-0 group-hover:opacity-100"
-        />
-        <span data-emoji-set="native" style={{ position: 'relative' }}>
-          {emoji.skins[0].native}
-        </span>
-      </button>
-    );
-  }
-);
-Button.displayName = 'Button';
+const Button = memo(({ index, emoji, onSelect, onMouseOver }: EmojiButtonProps) => {
+  return (
+    <button
+      type="button"
+      aria-label={emoji.skins[0].native}
+      tabIndex={-1}
+      data-index={index}
+      onClick={() => onSelect(emoji)}
+      onMouseEnter={() => onMouseOver(emoji)}
+      onMouseLeave={() => onMouseOver()}
+      className="group relative flex h-[36px] w-[36px] cursor-pointer items-center justify-center border-none bg-transparent text-2xl leading-none"
+    >
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 rounded-full bg-[rgba(0,0,0,0.05)] opacity-0 group-hover:opacity-100"
+      />
+      <span data-emoji-set="native" style={{ position: "relative" }}>
+        {emoji.skins[0].native}
+      </span>
+    </button>
+  );
+});
+Button.displayName = "Button";
 
 const RowOfButtons = memo(
   ({ row, emojiLibrary, onSelectEmoji, onMouseOver }: RowOfButtonsProps) => (
@@ -76,7 +69,7 @@ const RowOfButtons = memo(
     </div>
   )
 );
-RowOfButtons.displayName = 'RowOfButtons';
+RowOfButtons.displayName = "RowOfButtons";
 
 export function EmojiPickerContent({
   i18n,
@@ -87,15 +80,13 @@ export function EmojiPickerContent({
   searchResult,
   visibleCategories,
   refs,
-  settings = EmojiSettings,
+  settings = EmojiSettings
 }: EmojiPickerContentProps) {
   const getRowWidth = settings.perLine.value * settings.buttonSize.value;
 
   const isCategoryVisible = useCallback(
     (categoryId: any) => {
-      return visibleCategories.has(categoryId)
-        ? visibleCategories.get(categoryId)
-        : false;
+      return visibleCategories.has(categoryId) ? visibleCategories.get(categoryId) : false;
     },
     [visibleCategories]
   );
@@ -145,7 +136,7 @@ export function EmojiPickerContent({
     isCategoryVisible,
     onSelectEmoji,
     onMouseOver,
-    settings,
+    settings
   ]);
 
   const SearchList = useCallback(() => {
@@ -167,24 +158,17 @@ export function EmojiPickerContent({
         </div>
       </div>
     );
-  }, [
-    emojiLibrary,
-    getRowWidth,
-    i18n.searchResult,
-    searchResult,
-    onSelectEmoji,
-    onMouseOver,
-  ]);
+  }, [emojiLibrary, getRowWidth, i18n.searchResult, searchResult, onSelectEmoji, onMouseOver]);
 
   return (
     <div
       className={cn(
-        'h-full min-h-[50%] overflow-y-auto overflow-x-hidden px-3',
-        '[&::-webkit-scrollbar]:w-4',
-        '[&::-webkit-scrollbar-button]:hidden [&::-webkit-scrollbar-button]:h-0 [&::-webkit-scrollbar-button]:w-0',
-        ':hover:[&::-webkit-scrollbar-thumb]:bg-[#f3f4f6]',
-        '[&::-webkit-scrollbar-thumb]:min-h-[65px] [&::-webkit-scrollbar-thumb]:rounded-2xl [&::-webkit-scrollbar-thumb]:border-4 [&::-webkit-scrollbar-thumb]:border-white',
-        '[&::-webkit-scrollbar-track]:border-0'
+        "h-full min-h-[50%] overflow-y-auto overflow-x-hidden px-3",
+        "[&::-webkit-scrollbar]:w-4",
+        "[&::-webkit-scrollbar-button]:hidden [&::-webkit-scrollbar-button]:h-0 [&::-webkit-scrollbar-button]:w-0",
+        ":hover:[&::-webkit-scrollbar-thumb]:bg-[#f3f4f6]",
+        "[&::-webkit-scrollbar-thumb]:min-h-[65px] [&::-webkit-scrollbar-thumb]:rounded-2xl [&::-webkit-scrollbar-thumb]:border-4 [&::-webkit-scrollbar-thumb]:border-white",
+        "[&::-webkit-scrollbar-track]:border-0"
       )}
       data-id="scroll"
       ref={refs.current.contentRoot}

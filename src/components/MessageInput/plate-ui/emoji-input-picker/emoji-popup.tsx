@@ -1,5 +1,5 @@
-import React, { ReactNode } from 'react';
-import * as Popover from '@radix-ui/react-popover';
+import { ReactNode } from "react";
+import * as Popover from "@radix-ui/react-popover";
 
 type EmojiPopupProps = {
   control: ReactNode;
@@ -8,16 +8,10 @@ type EmojiPopupProps = {
   children: ReactNode;
 };
 
-export function EmojiPopup({
-  control,
-  isOpen,
-  setIsOpen,
-  children,
-}: EmojiPopupProps) {
+export function EmojiPopup({ control, isOpen, setIsOpen, children }: EmojiPopupProps) {
   return (
     <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
       <Popover.Trigger asChild>{control}</Popover.Trigger>
-
       <Popover.Portal>
         <Popover.Content
           align="start"

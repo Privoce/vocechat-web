@@ -176,7 +176,11 @@ const Send: FC<IProps> = ({
           )}
         >
           {mode == Modes.markdown && (
-            <EmojiInputPicker options={{ closeOnSelect: false }} onSelectEmoji={insertEmoji} />
+            <EmojiInputPicker
+              context="markdown"
+              options={{ closeOnSelect: false }}
+              onSelectEmoji={insertEmoji}
+            />
           )}
           {mode == Modes.text && (
             <MessageInput
