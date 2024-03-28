@@ -449,6 +449,7 @@ export default function useStreaming() {
       } else {
         const elapsedTime = (new Date().getTime() - hiddenTime) / 1000;
         // 大于 1 天
+        // const timeSpan = 60;
         const timeSpan = 24 * 60 * 60;
         // const timeSpan = 5;
         const canReconnect = elapsedTime > timeSpan || !SSE;

@@ -252,6 +252,9 @@ html.dark ::-webkit-scrollbar-thumb {
   flex-direction: column;
   align-items: flex-start;
 }
+#MARKDOWN_CONTAINER .toastui-editor-contents p {
+  white-space: break-spaces;
+}
 #MARKDOWN_CONTAINER .toastui-editor-contents iframe {
   width: 640px;
 }

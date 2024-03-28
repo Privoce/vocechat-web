@@ -9,7 +9,6 @@ import useGithubAuthConfig from "@/hooks/useGithubAuthConfig";
 import useGoogleAuthConfig from "@/hooks/useGoogleAuthConfig";
 import { useLoginMutation } from "../../app/services/auth";
 import { AuthType } from "../../types/common";
-import { LoginConfig } from "../../types/server";
 import MetamaskLoginButton from "./MetamaskLoginButton";
 import OidcLoginButton from "./OidcLoginButton";
 
@@ -36,7 +35,7 @@ const SocialLoginButtons = ({ type = "login" }: Props) => {
     google: enableGoogleLogin,
     metamask: enableMetamaskLogin,
     oidc = []
-  } = loginConfig as LoginConfig;
+  } = loginConfig;
   const googleLogin = enableGoogleLogin && !!clientId;
   return (
     <>

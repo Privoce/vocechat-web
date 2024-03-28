@@ -27,7 +27,7 @@ export default function LoginPage() {
   const { t } = useTranslation("auth");
   const { t: ct } = useTranslation();
   const { data: enableSMTP, isLoading: loadingSMTPStatus } = useGetSMTPStatusQuery();
-  const [login, { isSuccess, isLoading, error }] = useLoginMutation();
+  const [login, { isSuccess, isLoading }] = useLoginMutation();
   const { data: loginConfig, isSuccess: loginConfigSuccess } = useGetLoginConfigQuery();
   const [emailInputted, setEmailInputted] = useState(false);
   const [input, setInput] = useState(defaultInput);
