@@ -46,6 +46,7 @@ import {
 import { getLocalAuthData, isElectronContext } from "@/utils";
 import chatMessageHandler from "./chat.handler";
 import { shallowEqual } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 const getQueryString = (params: { [key: string]: string }) => {
   const sp = new URLSearchParams();
@@ -68,6 +69,7 @@ export default function useStreaming() {
   const readUsers = useAppSelector((store) => store.footprint.readUsers, shallowEqual);
   const readChannels = useAppSelector((store) => store.footprint.readChannels, shallowEqual);
   const dispatch = useAppDispatch();
+  const { pathname } = useLocation();
   const loginUid = user?.uid || 0;
 
   const keepAlive = (timeout?: number) => {
@@ -452,13 +454,16 @@ export default function useStreaming() {
         // const timeSpan = 60;
         const timeSpan = 24 * 60 * 60;
         // const timeSpan = 5;
-        const canReconnect = elapsedTime > timeSpan || !SSE;
+        const canReconnect = !guest && (elapsedTime > timeSpan || !SSE) && pathname !== "/login";
+        // const canReconnect = (elapsedTime > timeSpan || !SSE) && pathname !== "/login";
         console.info(
           "debug SSE: visibility changed elapsedTime",
           elapsedTime,
+          pathname,
           hiddenTime,
           canReconnect,
-          !SSE
+          !SSE,
+          guest
         );
         // 超过 1 天或者已断线，强制重连
         if (canReconnect) {
@@ -474,6 +479,7 @@ export default function useStreaming() {
             }, 1500);
           } else {
             // 直接重连
+            console.info("debug SSE: stop directly and reconnect");
             startStreaming();
           }
         }
