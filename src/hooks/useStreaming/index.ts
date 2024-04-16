@@ -88,12 +88,12 @@ export default function useStreaming() {
     console.info("debug SSE: start new timeout", aliveInter);
   };
   const startStreaming = useCallback(async () => {
-    console.info("debug SSE: clear timeout at startStreaming", aliveInter);
-    clearTimeout(aliveInter);
-    if (SSE && (SSE.readyState === EventSource.OPEN || SSE.readyState === EventSource.CONNECTING)) {
-      console.info("debug SSE: SSE not disconnect");
-      return;
-    }
+    // stop first
+    stopStreaming();
+    // if (SSE && (SSE.readyState === EventSource.OPEN || SSE.readyState === EventSource.CONNECTING)) {
+    //   console.info("debug SSE: SSE not disconnect");
+    //   return;
+    // }
     const { token, refreshToken, expireTime } = getLocalAuthData();
     //  token 非空
     if (!token) {
@@ -107,10 +107,10 @@ export default function useStreaming() {
       if ("error" in resp) {
         console.error("renew error from sse", resp.error);
         // 还有网，而且在当前页，则停止循环
-        const tabHidden = isTabHidden();
-        if (navigator.onLine || !tabHidden) {
-          stopStreaming();
-        }
+        // const tabHidden = isTabHidden();
+        // if (navigator.onLine || !tabHidden) {
+        //   stopStreaming();
+        // }
         // 返回，开始下次 polling（如果有）
         return;
       } else {

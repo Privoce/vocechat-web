@@ -19,7 +19,7 @@ type Props = {
 
 const Index = ({ handleClose, hostId }: Props) => {
   const { embed, inviteOnly } = useWidget();
-  // 建立SSE连接
+  // 建立 SSE 连接
   useSSE();
   const loginUser = useAppSelector((store) => store.authData.user, shallowEqual);
   const token = useAppSelector((store) => store.authData.token, shallowEqual);

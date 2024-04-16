@@ -53,7 +53,7 @@ const tables = [
 ];
 const initCache = () => {
   const uid = localStorage.getItem(KEY_UID) || "";
-  // 没有uid，就没有本地缓存
+  // 没有 uid，就没有本地缓存
   if (!uid) return;
   const name = `local_db_${uid}_v_${CACHE_VERSION.split(".").join("_")}`;
   window.CACHE = {};

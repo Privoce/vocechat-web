@@ -15,7 +15,7 @@ function Widget({ hostId }: Props) {
   const [visible, setVisible] = useState(!!new URLSearchParams(location.search).get("open"));
 
   const toggleVisible = () => {
-    // 有无iframe内嵌
+    // 有无 iframe 内嵌
     const parentWindow = window.parent;
     if (parentWindow) {
       parentWindow.postMessage(visible ? "CLOSE" : "OPEN", "*");
