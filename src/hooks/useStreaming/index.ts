@@ -183,7 +183,7 @@ export default function useStreaming() {
           dispatch(setReady(true));
           setTimeout(() => {
             toast.dismiss();
-          }, 2000);
+          }, 1000);
           break;
         case "server_config_changed": {
           const { type, ...rest } = data;
