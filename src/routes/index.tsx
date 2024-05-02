@@ -67,7 +67,7 @@ const PageRoutes = () => {
         <Route
           path="/invite_private/:channel_id"
           element={
-            <LazyIt>
+            <LazyIt key="invite_private">
               <RequireAuth guestMode={guestMode}>
                 <InvitePrivate />
               </RequireAuth>
@@ -77,7 +77,7 @@ const PageRoutes = () => {
         <Route
           path="/invite_mobile/:magic_token"
           element={
-            <LazyIt>
+            <LazyIt key="invite_mobile">
               <RequireNoAuth>
                 <InviteInMobile />
               </RequireNoAuth>
@@ -87,7 +87,7 @@ const PageRoutes = () => {
         <Route
           path="/cb/:type/:payload"
           element={
-            <LazyIt>
+            <LazyIt key="cb">
               <CallbackPage />
             </LazyIt>
           }
@@ -95,7 +95,7 @@ const PageRoutes = () => {
         <Route
           path="/oauth/:token"
           element={
-            <LazyIt>
+            <LazyIt key="oauth">
               <OAuthPage />
             </LazyIt>
           }
@@ -113,7 +113,7 @@ const PageRoutes = () => {
         <Route
           path="/send_magic_link/:email"
           element={
-            <LazyIt>
+            <LazyIt key="send_magic_link">
               <RequireNoAuth>
                 <SendMagicLinkPage />
               </RequireNoAuth>
@@ -124,7 +124,7 @@ const PageRoutes = () => {
         <Route
           path="/register"
           element={
-            <LazyIt>
+            <LazyIt key="reg">
               <RequireNoAuth>
                 <RegBasePage />
               </RequireNoAuth>
@@ -142,7 +142,7 @@ const PageRoutes = () => {
           <Route
             path="set_name/:from?"
             element={
-              <LazyIt>
+              <LazyIt key="set_name">
                 <RegWithUsernamePage />
               </LazyIt>
             }
@@ -151,7 +151,7 @@ const PageRoutes = () => {
         <Route
           path="/email_login"
           element={
-            <LazyIt>
+            <LazyIt key="email_login">
               <RequireNoAuth>
                 <SendMagicLinkPage />
               </RequireNoAuth>
@@ -161,7 +161,7 @@ const PageRoutes = () => {
         <Route
           path="/onboarding"
           element={
-            <LazyIt>
+            <LazyIt key="onboarding">
               <OnboardingPage />
             </LazyIt>
           }
@@ -185,7 +185,7 @@ const PageRoutes = () => {
             <Route
               index
               element={
-                <LazyIt>
+                <LazyIt key="setting">
                   <SettingPage />
                 </LazyIt>
               }
@@ -201,7 +201,7 @@ const PageRoutes = () => {
             <Route
               path="channel/:cid/:nav?"
               element={
-                <LazyIt>
+                <LazyIt key="channel/:cid/:nav?">
                   <SettingChannelPage />
                 </LazyIt>
               }
@@ -253,7 +253,7 @@ const PageRoutes = () => {
             <Route
               index
               element={
-                <LazyIt>
+                <LazyIt key="users">
                   <UsersPage />
                 </LazyIt>
               }
@@ -261,7 +261,7 @@ const PageRoutes = () => {
             <Route
               path=":user_id"
               element={
-                <LazyIt>
+                <LazyIt key=":user_id">
                   <UsersPage />
                 </LazyIt>
               }
@@ -270,7 +270,7 @@ const PageRoutes = () => {
           <Route
             path="favs"
             element={
-              <LazyIt>
+              <LazyIt key="favs">
                 <FavoritesPage />
               </LazyIt>
             }
@@ -278,7 +278,7 @@ const PageRoutes = () => {
           <Route
             path="files"
             element={
-              <LazyIt>
+              <LazyIt key="files">
                 {compareVersion(version, "0.3.11") > -1 ? <FilesPage /> : <ResourceManagement />}
               </LazyIt>
             }

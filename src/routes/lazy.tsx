@@ -3,11 +3,16 @@ import { FC, ReactNode, Suspense } from "react";
 import Loading from "@/components/Loading";
 
 type Props = {
+  key?: string;
   children?: ReactNode;
 };
 
-const Lazy: FC<Props> = ({ children }) => {
-  return <Suspense fallback={<Loading fullscreen={true} context="lazy" />}>{children}</Suspense>;
+const Lazy: FC<Props> = ({ key, children }) => {
+  return (
+    <Suspense key={key} fallback={<Loading fullscreen={true} context="lazy" />}>
+      {children}
+    </Suspense>
+  );
 };
 
 export default Lazy;

@@ -16,7 +16,7 @@ const InvitePrivate = () => {
     useLazyGetChannelQuery();
   const [checkTokenInvalid, { data: isTokenValid, isLoading: checkingToken }] =
     useCheckMagicTokenValidMutation();
-  let [searchParams] = useSearchParams(new URLSearchParams(location.search));
+  const [searchParams] = useSearchParams(new URLSearchParams(location.search));
   const magic_token = searchParams.get("magic_token") ?? "";
   useEffect(() => {
     if (channel_id) {
@@ -36,9 +36,20 @@ const InvitePrivate = () => {
   }, [isSuccess, data]);
   const handleJoin = async () => {
     const resp = await joinChannel({ magic_token });
+    console.log({ resp });
+
     if ("error" in resp) {
-      if (resp.error.originalStatus === 409) {
-        // alert("The invite link is invalid or expired");
+      const key = (resp.error.status || resp.error.originalStatus) as number;
+      switch (key) {
+        case 409:
+          alert("The invite link is invalid or expired");
+          break;
+        case 412:
+          alert("You are already in this channel");
+          break;
+
+        default:
+          break;
       }
     }
   };
