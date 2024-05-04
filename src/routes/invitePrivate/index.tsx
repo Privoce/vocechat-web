@@ -32,6 +32,7 @@ const InvitePrivate = () => {
     if (data && isSuccess) {
       //  joinChannel(data)
       navigateTo(`/chat/channel/${data.gid}`);
+      location.reload();
     }
   }, [isSuccess, data]);
   const handleJoin = async () => {

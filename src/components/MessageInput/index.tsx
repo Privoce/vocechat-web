@@ -75,7 +75,7 @@ export default function MessageInput({
   }, [id]);
   const items: MentionData[] = members.map((uid) => ({
     key: `${uid}`,
-    text: userData[uid].name,
+    text: userData[uid]?.name || "",
     data: {
       uid
     }

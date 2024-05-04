@@ -52,7 +52,7 @@ const ChannelModal: FC<Props> = ({ personal = false, closeModal }) => {
       return;
     }
     if (data.is_public) {
-      // 公共频道 不必有members
+      // 公共频道 不必有 members
       delete data.members;
     }
     createChannel(data);
@@ -90,7 +90,9 @@ const ChannelModal: FC<Props> = ({ personal = false, closeModal }) => {
     const members = data.members ?? [];
     const { uid } = currentTarget.dataset;
     const uidNum = Number(uid);
-    let tmp = members.includes(uidNum) ? members.filter((m) => m != uidNum) : [...members, uidNum];
+    const tmp = members.includes(uidNum)
+      ? members.filter((m) => m != uidNum)
+      : [...members, uidNum];
     setData((prev) => ({ ...prev, members: tmp }));
   };
 
