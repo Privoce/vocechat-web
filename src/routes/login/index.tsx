@@ -90,6 +90,7 @@ export default function LoginPage() {
     console.log("login success", isSuccess);
     if (isSuccess) {
       toast.success(ct("tip.login"));
+      // setInput(defaultInput);
       // navigateTo("/");
     }
   }, [isSuccess]);
@@ -111,10 +112,8 @@ export default function LoginPage() {
     const { type } = evt.target.dataset as { type?: "email" | "password" };
     const { value } = evt.target;
     if (!type) return;
-    setInput((prev) => {
-      prev[type] = value;
-      return { ...prev };
-    });
+    const newInput = { ...input, [type]: value };
+    setInput(newInput);
   };
   const handleBack = () => {
     setEmailInputted(false);
@@ -128,6 +127,7 @@ export default function LoginPage() {
   const hideSocials = (enableMagicLink && emailInputted) || whoCanSignUp == "InvitationOnly";
   const showSignIn = !enableMagicLink || emailInputted;
   if (loadingSMTPStatus) return null;
+
   return (
     <div className="flex-center h-screen dark:bg-gray-700">
       <div className="relative py-8 px-10 shadow-md rounded-xl">
@@ -148,11 +148,16 @@ export default function LoginPage() {
             {t("login.title", { name: serverName })}
           </h2>
         </div>
-        <form className="flex flex-col gap-5 w-80 md:min-w-[360px] " onSubmit={handleLogin}>
+        <form
+          className="flex flex-col gap-5 w-80 md:min-w-[360px]"
+          autoComplete="false"
+          onSubmit={handleLogin}
+        >
           {!emailInputted && (
             <div className="flex flex-col gap-1">
               <StyledLabel>Email</StyledLabel>
               <Input
+                autoFocus
                 className="large"
                 name="email"
                 value={email}
