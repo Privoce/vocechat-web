@@ -150,10 +150,11 @@ export default function useStreaming() {
       const { readyState } = err.target as EventSource;
       console.info("sse error", readyState, err);
       // 连接还处于开启状态 先停掉
-      if (readyState === EventSource.OPEN || readyState === EventSource.CONNECTING) {
-        stopStreaming();
-        // return;
-      }
+      // 无论什么原因，均可安全停掉
+      // if (readyState === EventSource.OPEN || readyState === EventSource.CONNECTING) {
+      stopStreaming();
+      // return;
+      // }
       // 重连
       setTimeout(() => {
         startStreaming();

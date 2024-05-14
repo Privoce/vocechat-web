@@ -4,11 +4,12 @@ import { UploadFileData } from "@/hooks/useUploadFile";
 
 export type ListView = "item" | "grid";
 export type SSEStatus = "connecting" | "connected" | "disconnected" | "reconnecting";
+export type InputMode = "text" | "markdown";
 export interface UIState {
   SSEStatus: SSEStatus;
   online: boolean;
   ready: boolean;
-  inputMode: "text";
+  inputMode: InputMode;
   menuExpand: boolean;
   // todo
   fileListView: ListView;
@@ -62,10 +63,10 @@ const uiSlice = createSlice({
     toggleMenuExpand(state) {
       state.menuExpand = !state.menuExpand;
     },
-    updateInputMode(state, action) {
+    updateInputMode(state, action: PayloadAction<InputMode>) {
       state.inputMode = action.payload;
     },
-    updateFileListView(state, action) {
+    updateFileListView(state, action: PayloadAction<ListView>) {
       state.fileListView = action.payload;
     },
     updateRememberedNavs(

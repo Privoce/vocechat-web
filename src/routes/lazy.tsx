@@ -9,7 +9,10 @@ type Props = {
 
 const Lazy: FC<Props> = ({ key, children }) => {
   return (
-    <Suspense key={key} fallback={<Loading fullscreen={true} context="lazy" />}>
+    <Suspense
+      key={key ?? new Date().getTime()}
+      fallback={<Loading fullscreen={true} context="lazy" />}
+    >
       {children}
     </Suspense>
   );

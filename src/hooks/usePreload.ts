@@ -28,7 +28,7 @@ export default function usePreload() {
   const token = useAppSelector((store) => store.authData.token, shallowEqual);
   const isGuest = useAppSelector((store) => store.authData.guest, shallowEqual);
   const channelMessageData = useAppSelector((store) => store.channelMessage, shallowEqual);
-  const { startStreaming } = useStreaming();
+  const { startStreaming, stopStreaming } = useStreaming();
   const [
     getFavorites,
     {
@@ -83,10 +83,14 @@ export default function usePreload() {
   const tokenAlmostExpire = dayjs().isAfter(new Date(expireTime - 20 * 1000));
   const canStreaming = !!loginUid && rehydrated && !!token && !tokenAlmostExpire && !ready;
 
-  console.log("tttt", canStreaming);
+  console.log("tttt", canStreaming, { loginUid, rehydrated, token, tokenAlmostExpire, ready });
   useEffect(() => {
     if (canStreaming) {
-      startStreaming();
+      // 先停掉，再连接
+      stopStreaming();
+      setTimeout(() => {
+        startStreaming();
+      }, 100);
     }
   }, [canStreaming]);
   return {

@@ -30,7 +30,7 @@ interface AuthForm {
 }
 
 export default function Register() {
-  let [searchParams] = useSearchParams(new URLSearchParams(location.search));
+  const [searchParams] = useSearchParams(new URLSearchParams(location.search));
   const ctx = searchParams.get("ctx");
   const serverName = useAppSelector((store) => store.server.name, shallowEqual);
   const { t } = useTranslation("auth");
@@ -52,7 +52,7 @@ export default function Register() {
     confirmPassword: ""
   });
   if (magic_token) {
-    //本地存一下 magic token 后续oauth流程用到
+    //本地存一下 magic token 后续 oauth 流程用到
     localStorage.setItem(KEY_LOCAL_MAGIC_TOKEN, magic_token);
   }
   // 如果是移动端访问，并且没标识，则跳转
@@ -67,7 +67,7 @@ export default function Register() {
     if (isSuccess && data) {
       const { new_magic_token, mail_is_sent } = data;
       if (!mail_is_sent && new_magic_token) {
-        // 直接进入set_name流程
+        // 直接进入 set_name 流程
         navigateTo(`/register/set_name?magic_token=${new_magic_token}`);
       }
     }
@@ -79,7 +79,8 @@ export default function Register() {
       toast.success(ct("tip.reg"));
       dispatch(setAuthData(regData));
       // tricky
-      location.href = `/#/`;
+      location.reload();
+      // location.href = `/#/`;
     }
   }, [regSuccess, regData]);
 

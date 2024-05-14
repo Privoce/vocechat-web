@@ -31,7 +31,12 @@ const whiteList = [
   "preCheckFileFromUrl"
 ];
 const whiteList401 = ["getAgoraVoicingList", "getAgoraChannels"];
-const errorWhiteList = ["preCheckFileFromUrl", "getFavoriteDetails"];
+const errorWhiteList = [
+  "preCheckFileFromUrl",
+  "getFavoriteDetails",
+  "getOGInfo",
+  "getArchiveMessage"
+];
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
   prepareHeaders: (headers, { endpoint }) => {
@@ -49,7 +54,7 @@ const baseQueryWithTokenCheck = async (args: any, api: any, extraOptions: any) =
   if (waitingForRenew) {
     await waitingForRenew;
   }
-  // 先检查token是否过期，过期则renew [从localstorage取]
+  // 先检查 token 是否过期，过期则 renew [从 localstorage 取]
   const { token, refreshToken, expireTime } = getLocalAuthData();
 
   let result = null;

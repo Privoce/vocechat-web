@@ -12,6 +12,7 @@ import { UserRegDTO, UserRegResponse } from "@/types/user";
 import BASE_URL, { KEY_DEVICE_ID, KEY_DEVICE_TOKEN, KEY_LOCAL_MAGIC_TOKEN } from "../config";
 import { resetAuthData, setAuthData, updateInitialized, updateToken } from "../slices/auth.data";
 import baseQuery from "./base.query";
+import { setReady, updateSSEStatus } from "../slices/ui";
 
 const getDeviceId = () => {
   let d = localStorage.getItem(KEY_DEVICE_ID);
@@ -52,6 +53,8 @@ export const authApi = createApi({
           const { data } = await queryFulfilled;
           if (data) {
             dispatch(setAuthData(data));
+            dispatch(setReady(false));
+            dispatch(updateSSEStatus("disconnected"));
           }
           // 从 localstorage 去掉 magic token
           localStorage.removeItem(KEY_LOCAL_MAGIC_TOKEN);
