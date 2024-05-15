@@ -334,7 +334,7 @@ export const serverApi = createApi({
         url: `/license`
       }),
       async onQueryStarted(data, { dispatch, queryFulfilled, getState }) {
-        // vocechat官方demo 则忽略
+        // vocechat 官方 demo 则忽略
         if (IS_OFFICIAL_DEMO) return;
         const rootStore = getState() as RootState;
         const { upgraded: prevValue } = rootStore.server;
@@ -432,6 +432,7 @@ export const {
   useGetSMTPStatusQuery,
   useSendTestEmailMutation,
   useUpdateFirebaseConfigMutation,
+  useGetFirebaseConfigQuery,
   useLazyGetFirebaseConfigQuery,
   useLazyGetAgoraConfigQuery,
   useLazyGetSMTPConfigQuery,

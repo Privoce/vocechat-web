@@ -4,10 +4,10 @@ import { useTranslation } from "react-i18next";
 import { isEqual } from "lodash";
 
 import {
-  useLazyGetAgoraConfigQuery,
-  useLazyGetFirebaseConfigQuery,
-  useLazyGetLoginConfigQuery,
-  useLazyGetSMTPConfigQuery,
+  useGetAgoraConfigQuery,
+  useGetFirebaseConfigQuery,
+  useGetLoginConfigQuery,
+  useGetSMTPConfigQuery,
   useUpdateAgoraConfigMutation,
   useUpdateFirebaseConfigMutation,
   useUpdateLoginConfigMutation,
@@ -33,10 +33,21 @@ export default function useConfig(config: keyof ConfigMap = "smtp") {
     useUpdateAgoraConfigMutation();
   const [updateFirebaseConfig, { isSuccess: FirebaseUpdated, isLoading: FirebaseUpdating }] =
     useUpdateFirebaseConfigMutation();
-  const [getAgoraConfig, { data: agoraConfig }] = useLazyGetAgoraConfigQuery();
-  const [getLoginConfig, { data: loginConfig }] = useLazyGetLoginConfigQuery();
-  const [getSMTPConfig, { data: smtpConfig }] = useLazyGetSMTPConfigQuery();
-  const [getFirebaseConfig, { data: firebaseConfig }] = useLazyGetFirebaseConfigQuery();
+  const { refetch: getAgoraConfig, data: agoraConfig } = useGetAgoraConfigQuery(undefined, {
+    skip: config !== "agora"
+  });
+  const { refetch: getLoginConfig, data: loginConfig } = useGetLoginConfigQuery(undefined, {
+    skip: config !== "login"
+  });
+  const { refetch: getSMTPConfig, data: smtpConfig } = useGetSMTPConfigQuery(undefined, {
+    skip: config !== "smtp"
+  });
+  const { refetch: getFirebaseConfig, data: firebaseConfig } = useGetFirebaseConfigQuery(
+    undefined,
+    {
+      skip: config !== "firebase"
+    }
+  );
 
   const updateFns = {
     login: updateLoginConfig,
@@ -78,10 +89,6 @@ export default function useConfig(config: keyof ConfigMap = "smtp") {
       return prev;
     });
   };
-
-  useEffect(() => {
-    refetch();
-  }, []);
 
   useEffect(() => {
     if (updated) {
