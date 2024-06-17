@@ -2,7 +2,7 @@ import toast from "react-hot-toast";
 import { batch } from "react-redux";
 
 import { ContentTypes } from "../config";
-import { addMessage, removeMessage, updateMessage } from "../slices/message";
+import { addMessage, removeMessage } from "../slices/message";
 import { addChannelMsg, removeChannelMsg } from "../slices/message.channel";
 import { addUserMsg, removeUserMsg } from "../slices/message.user";
 
@@ -19,12 +19,12 @@ export const onMessageSendStarted = async (
   { dispatch, queryFulfilled },
   from = "channel"
 ) => {
-  // 忽略archive类型的消息
+  // 忽略 archive 类型的消息
   if (type == "archive") return;
   // id: who send to ,from_uid: who sent
   // console.log("handlers data", content, type, properties, ignoreLocal, id);
   const isMedia = properties.content_type
-    ? ["image", "video", "audio"].includes(properties.content_type.split("/")[0])
+    ? ["image", "video", "audio"].includes(properties.content_type.toLowerCase().split("/")[0])
     : false;
   // const isImage = properties.content_type?.startsWith("image");
   const ts = properties.local_id || +new Date();

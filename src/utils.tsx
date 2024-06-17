@@ -69,8 +69,9 @@ export const getLocalAuthData = () => {
   };
 };
 export const isImage = (file_type = "", size = 0) => {
+  const _fileType = file_type.toLowerCase();
   return (
-    file_type.startsWith("image") && file_type !== "image/x-sony-arw" && size <= FILE_IMAGE_SIZE
+    _fileType.startsWith("image") && _fileType !== "image/x-sony-arw" && size <= FILE_IMAGE_SIZE
   );
 };
 
