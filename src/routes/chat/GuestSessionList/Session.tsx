@@ -46,7 +46,7 @@ const Session: FC<IProps> = ({ id, mid }) => {
         }
         to={`/chat/channel/${id}`}
       >
-        <div className="flex shrink-0">
+        <div className="flex shrink-0 aspect-square">
           <Avatar
             width={40}
             height={40}

@@ -143,7 +143,7 @@ const Session: FC<IProps> = ({
           to={navPath}
           onContextMenu={handleContextMenuEvent}
         >
-          <div className="flex shrink-0 relative w-10 h-10">
+          <div className="flex shrink-0 relative size-10">
             {type == "dm" ? (
               <User avatarSize={40} compact interactive={false} uid={id} />
             ) : (
