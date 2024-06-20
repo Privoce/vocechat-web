@@ -30,14 +30,14 @@ const Login = () => {
   const [loginByToken, { isLoading: isLogging, isError: tokenLoginError }] = useLoginMutation();
   //  const [login]= useLoginMutation();
   const { data: loginConfig, isSuccess: loginConfigSuccess } = useGetLoginConfigQuery();
-  const registerUser = (name: string, auto?: boolean) => {
+  const registerUser = ({ name, email, auto }: { name: string; email: string; auto?: boolean }) => {
     const rand = randomText();
-    const nameFromEmail = auto ? name : `${name}-${rand}`;
-    const randomEmail = auto ? `${name}@${from}` : `${name}-${rand}-${from}`;
+    const _name = auto ? name : `${name}-${rand}`;
+    const _email = auto ? `${name}@${from}` : email;
     register({
-      name: nameFromEmail,
-      email: randomEmail,
-      password: nameFromEmail
+      name: _name,
+      email: _email,
+      password: `${_name}${_email}${rand}`
     });
   };
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
@@ -50,14 +50,15 @@ const Login = () => {
     }
     const data = new FormData(form);
     const name = data.get("username") as string;
+    const email = data.get("email") as string;
     // const email = data.get("email") as string;
     console.log("name", name);
-    registerUser(name, false);
+    registerUser({ name, email, auto: false });
     // const content = new FormData(form).get("prompt") as string;
   };
   useEffect(() => {
     if (autoReg && !token) {
-      registerUser(`w-${randomText()}`, true);
+      registerUser({ name: `w-${randomText()}`, email: "", auto: true });
     } else if (token) {
       loginByToken({ key: token, type: "thirdparty" });
     }
@@ -101,7 +102,8 @@ const Login = () => {
       <div className="bg-white dark:bg-gray-700 border dark:border-gray-500 rounded-lg">
         <form className="px-4 py-3 flex flex-col gap-2" onSubmit={handleSubmit}>
           {/* input email as username */}
-          <Input required placeholder="Email" type="email" name="username" />
+          <Input required placeholder="Name" type="text" name="username" />
+          <Input required placeholder="Email" type="email" name="email" />
           <StyledButton
             style={{ backgroundColor: color, color: fgColor }}
             disabled={isLoading}
