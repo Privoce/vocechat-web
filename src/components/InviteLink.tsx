@@ -28,8 +28,19 @@ const InviteLink: FC<Props> = ({ context = "members", cid }) => {
   const [editVisible, setEditVisible] = useState(false);
   const { t } = useTranslation("chat");
   const { generating, link, linkCopied, copyLink, generateNewLink } = useInviteLink(cid);
-  const handleNewLink = () => {
-    const { expire, times } = current;
+  const handleNewLink = (data?: {
+    expire: {
+      label: string;
+      value: number;
+    };
+    times: {
+      label: string;
+      value: number;
+    };
+  }) => {
+    const { expire, times } = data ?? current;
+    console.log({ expire });
+
     generateNewLink({ expire: expire.value, times: times.value });
   };
   const toggleEditVisible = () => {
@@ -41,11 +52,11 @@ const InviteLink: FC<Props> = ({ context = "members", cid }) => {
       times: selectTimes
     });
     toggleEditVisible();
-    handleNewLink();
+    handleNewLink({
+      expire: selectExpire,
+      times: selectTimes
+    });
   };
-  // useEffect(() => {
-  //   handleNewLink();
-  // }, [current]);
 
   return (
     <>
@@ -84,7 +95,11 @@ const InviteLink: FC<Props> = ({ context = "members", cid }) => {
         <div className="w-44 h-44 my-2">
           <QRCode size={1200} link={link} />
         </div>
-        <Button className="ghost" disabled={generating} onClick={handleNewLink}>
+        <Button
+          className="ghost"
+          disabled={generating}
+          onClick={handleNewLink.bind(null, undefined)}
+        >
           {generating ? `Generating` : t("generate_new_link")}
         </Button>
       </div>
