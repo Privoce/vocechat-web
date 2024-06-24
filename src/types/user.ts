@@ -71,7 +71,7 @@ export interface UserCreateDTO
   password: string;
 }
 export interface UserRegDTO
-  extends Partial<Pick<User, "name" | "gender" | "language" | "email">>,
+  extends Partial<Pick<User, "name" | "gender" | "language" | "email" | "widget_id">>,
     Partial<Pick<UserDevice, "device" | "device_token">> {
   password?: string;
   magic_token?: string;

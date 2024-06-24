@@ -35,6 +35,7 @@ const Login = () => {
     const _name = auto ? name : `${name}-${rand}`;
     const _email = auto ? `${name}@${from}` : email;
     register({
+      widget_id: id,
       name: _name,
       email: _email,
       password: `${_name}${_email}${rand}`
