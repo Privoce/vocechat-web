@@ -1,6 +1,7 @@
 // IIFC
 ((w, d) => {
   const {
+    id = "",
     hostId = 1,
     autoReg = "true",
     loginToken = "",
@@ -28,7 +29,7 @@
   Object.assign(wrapper.style, styles);
   wrapper.src = `${
     new URL(_src).origin
-  }/widget.html?host=${hostId}&autoReg=${autoReg}&token=${loginToken}&themeColor=${encodeURIComponent(
+  }/widget.html?id=${id}&host=${hostId}&autoReg=${autoReg}&token=${loginToken}&themeColor=${encodeURIComponent(
     themeColor
   )}&from=${encodeURIComponent(location.hostname)}&welcome=${encodeURIComponent(welcome)}`;
   wrapper.width = closeWidth;

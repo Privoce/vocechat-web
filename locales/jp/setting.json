@@ -17,7 +17,7 @@
     "widget": "ウィジェット",
     "license": "ライセンス",
     "about": "このアプリについて",
-    "api_doc": "APIドキュメント",
+    "api_doc": "API ドキュメント",
     "version": "Version"
   },
   "channel": {
@@ -37,7 +37,7 @@
   "overview": {
     "name": "サーバー名",
     "desc": "サーバーの説明",
-    "upload_desc": "画像サイズとして、128x128は必須、512x512はおすすめ。大きさは5Mを超えないでください。",
+    "upload_desc": "画像サイズとして、128x128 は必須、512x512 はおすすめ。大きさは 5M を超えないでください。",
 
     "sign_up": {
       "title": "登録方法",
@@ -76,8 +76,8 @@
   },
   "firebase": {
     "enable": "有効にする",
-    "token_url": "トークンURL",
-    "project_id": "プロジェクトID",
+    "token_url": "トークン URL",
+    "project_id": "プロジェクト ID",
     "private_key": "秘密鍵",
     "client_email": "クライアントメール"
   },
@@ -88,40 +88,41 @@
     "from": "from",
     "username": "ユーザー名",
     "password": "パスワード",
-    "how_to": "SMTPの設定方法？",
+    "how_to": "SMTP の設定方法？",
     "send_test_email": "テストメールを送信する"
   },
   "third_app": {
     "key": "API key",
-    "update": "API keyを更新する",
-    "update_tip": "API keyを更新すると、以前発行するkeyは無効になります。",
-    "key_tip": "API keyはサーバとサードパーティーとの安全な通信に使用されますので、大切に保管してください。"
+    "update": "API key を更新する",
+    "update_tip": "API key を更新すると、以前発行する key は無効になります。",
+    "key_tip": "API key はサーバとサードパーティーとの安全な通信に使用されますので、大切に保管してください。"
   },
   "login": {
     "password": "パスワードでログイン可能",
     "password_desc": "パスワードでログイン可能にする",
     "magic_link": "招待リンクでログイン可能",
     "magic_link_desc": "招待リンクでログイン可能にする",
-    "google": "Googleでログイン可能",
-    "google_desc": "Googleでログイン可能にする",
-    "github": "GitHubでログイン可能",
-    "github_desc": "GitHubでログイン可能にする",
-    "metamask": "MetaMaskでログイン可能",
-    "metamask_desc": "MetaMaskでログイン可能にする",
-    "oidc": "OIDCでログイン可能",
-    "oidc_desc": "OIDCでログイン可能にする",
+    "google": "Google でログイン可能",
+    "google_desc": "Google でログイン可能にする",
+    "github": "GitHub でログイン可能",
+    "github_desc": "GitHub でログイン可能にする",
+    "metamask": "MetaMask でログイン可能",
+    "metamask_desc": "MetaMask でログイン可能にする",
+    "oidc": "OIDC でログイン可能",
+    "oidc_desc": "OIDC でログイン可能にする",
     "oidc_custom": "カスタマイズ",
-    "more_details": "<0>ドキュメント</0> を参照してください."
+    "more_details": "<0>ドキュメント</0> を参照してください。"
   },
   "widget": {
-    "tip": "ストラップSDKをwebページに埋め込み、VoceChat拡張を実現できます！",
+    "tip": "ストラップ SDK を web ページに埋め込み、VoceChat 拡張を実現できます！",
     "code": "コード",
-    "code_comment": "コードをコピーして、webページに貼り付けてください。",
+    "code_comment": "コードをコピーして、web ページに貼り付けてください。",
     "config": "説明",
     "param_key": "パラメータ",
     "default_value": "デフォルト値",
     "remark": "メモ",
-    "param_host": "ユーザーIDでチットの相手を指定する",
+    "param_id": "Widget ID (server version>=v0.3.12)",
+    "param_host": "ユーザーID でチットの相手を指定する",
     "param_close_width": "ウィジェット閉じたままの幅",
     "param_close_height": "ウィジェット閉じたままの高さ",
     "param_open_width": "ウィジェット開きままの幅",
@@ -133,12 +134,12 @@
     "build_time": "ビルド時間"
   },
   "api_doc": {
-    "desc": "VoceChat APIドキュメントを参照しで、VoceChatをカスタマイズできます。",
-    "access": "アクセス:",
-    "use_method": "使用方法:",
+    "desc": "VoceChat API ドキュメントを参照しで、VoceChat をカスタマイズできます。",
+    "access": "アクセス：",
+    "use_method": "使用方法：",
     "step_1": "1. 自分のサーバーに切り替えください",
     "step_2": "2. 登録済みのトークンを入力してください",
-    "step_2_desc": "トークンを取得するには、http headerのX-API-Keyにアクセスしてください、もしくは以下のテキストを直接コピーで使用してください👇",
-    "last": "3. 最後に各APIにはTry it Outオプションが付いてる、あれを使ってAPIを試すことができます"
+    "step_2_desc": "トークンを取得するには、http header の X-API-Key にアクセスしてください、もしくは以下のテキストを直接コピーで使用してください👇",
+    "last": "3. 最後に各 API には Try it Out オプションが付いてる、あれを使って API を試すことができます"
   }
 }
