@@ -89,6 +89,11 @@ export default function Widget() {
           <tbody>
             {[
               {
+                paramKey: "id",
+                paramDefault: "-",
+                remarks: t("param_id")
+              },
+              {
                 paramKey: "host-id",
                 paramDefault: 1,
                 remarks: t("param_host")

@@ -23,7 +23,7 @@ const randomText = () => (Math.random() + 1).toString(36).substring(7);
 const Login = () => {
   const { t } = useTranslation("widget");
   const dispatch = useDispatch();
-  const { color, fgColor, from, autoReg, token } = useWidget();
+  const { color, fgColor, from, autoReg, token, id } = useWidget();
   const { clientId } = useGoogleAuthConfig();
   const { config: githubAuthConfig } = useGithubAuthConfig();
   const [register, { isLoading, isSuccess, data, error }] = useRegisterMutation();

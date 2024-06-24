@@ -6,6 +6,7 @@ import { getContrastColor, isInIframe } from "../utils";
 import { shallowEqual } from "react-redux";
 
 const query = new URLSearchParams(location.search);
+const id = decodeURIComponent(query.get("id") || "");
 const welcome = decodeURIComponent(query.get("welcome") || "");
 const autoReg = decodeURIComponent(query.get("autoReg") || "true") == "true";
 const token = decodeURIComponent(query.get("token") || "");
@@ -14,6 +15,7 @@ const from = decodeURIComponent(query.get("from") || "widget.link");
 const fgColor = getContrastColor(color);
 const embed = isInIframe();
 const WidgetContext = createContext({
+  id,
   token,
   autoReg,
   color,
@@ -38,6 +40,7 @@ function WidgetProvider({ children }: { children: ReactNode }) {
   return (
     <WidgetContext.Provider
       value={{
+        id,
         token,
         autoReg,
         welcome,

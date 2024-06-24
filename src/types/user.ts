@@ -18,6 +18,7 @@ export interface User {
   webhook_url?: string;
   is_bot?: boolean;
   log_id?: number;
+  widget_id?: string;
 }
 export type ContactAction = "add" | "remove" | "block" | "unblock";
 export type ContactStatus = "added" | "blocked" | "";
