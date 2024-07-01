@@ -11,6 +11,7 @@ import Avatar from "../Avatar";
 import Profile from "../Profile";
 import ContextMenu from "./ContextMenu";
 import { shallowEqual } from "react-redux";
+import { cn } from "@/utils";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   uid: number;
@@ -28,7 +29,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 const User: FC<Props> = ({
   cid,
   uid,
-  owner = false,
+  // owner = false,
   dm = false,
   interactive = true,
   popover = false,
@@ -60,6 +61,7 @@ const User: FC<Props> = ({
   const nameClass = clsx(
     `text-sm text-gray-500 max-w-[190px] truncate font-semibold dark:text-white`
   );
+  const isFromWidget = !!curr.widget_id;
   const statusContainerClass = `absolute -bottom-[2.5px] -right-[2.5px] border-content rounded-full border-[1px] border-white dark:border-gray-300`;
   const statusClass = clsx(
     statusContainerClass,
@@ -94,7 +96,11 @@ const User: FC<Props> = ({
             style={{ width: `${avatarSize}px`, height: `${avatarSize}px` }}
           >
             <Avatar
-              className="w-full h-full rounded-full object-cover"
+              className={cn(
+                "size-full rounded-full object-cover",
+                isFromWidget && "ring-2 ring-orange-500"
+              )}
+              title={curr.widget_id}
               width={avatarSize}
               height={avatarSize}
               src={curr.avatar}
