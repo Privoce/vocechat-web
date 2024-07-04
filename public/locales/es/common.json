@@ -1,0 +1,91 @@
+{
+  "chat": "Chat",
+  "members": "Miembros",
+  "favs": "Elementos Guardados",
+  "files": "Archivos",
+  "setting": "Configuración",
+  "more": "Más",
+  "action": {
+    "login": "Iniciar sesión",
+    "re_login": "Cerrar sesión",
+    "logout": "Cerrar sesión",
+    "change_avatar": "Cambiar",
+    "cancel": "Cancelar",
+    "dismiss": "Descartar",
+    "search": "Buscar",
+    "search_user": "Buscar por nombre",
+    "new_channel": "Nuevo Canal",
+    "new_private_channel": "Nuevo Canal Privado",
+    "new_msg": "Nuevo Mensaje",
+    "invite_people": "Invitar Personas",
+    "search_people": "Buscar Personas",
+    "create": "Crear",
+    "open": "Abrir",
+    "update": "Actualizar",
+    "upload": "Subir",
+    "done": "Hecho",
+    "add": "Agregar",
+    "yes": "Sí",
+    "delete_channel": "Eliminar Canal",
+    "remove": "Eliminar",
+    "remove_user": "Eliminar Usuario",
+    "edit": "Editar",
+    "edit_msg": "Editar Mensaje",
+    "add_reaction": "Agregar Reacción",
+    "add_to_fav": "Agregar a Favoritos",
+    "select": "Seleccionar",
+    "forward": "Reenviar",
+    "reply": "Responder",
+    "pin": "Fijar",
+    "unpin": "Desfijar",
+    "send": "Enviar",
+    "send_msg": "Mensaje",
+    "copy": "Copiar",
+    "copy_email": "Copiar Correo Electrónico",
+    "mute": "Silenciar",
+    "unmute": "Quitar Silencio",
+    "mark_read": "Marcar como Leído",
+    "hide_session": "Ocultar Sesión",
+    "reload": "Recargar",
+    "install": "Instalar",
+    "download_origin": "Descargar original",
+    "close": "Cerrar"
+  },
+  "status": {
+    "uploading": "Subiendo"
+  },
+  "tip": {
+    "update": "¡Actualización exitosa!",
+    "delete": "¡Eliminación exitosa!",
+    "reg": "¡Registro exitoso!",
+    "login": "¡Inicio de sesión exitoso!",
+    "logout": "¡Cierre de sesión exitoso!",
+    "pin": "¡Mensaje fijado correctamente!",
+    "pwa_install_title": "¿Instalar la aplicación web en el escritorio?",
+    "pwa_install_desc": "Agrega al escritorio para acceder rápidamente a esta aplicación."
+  },
+  "new_version": "<0>Nueva Versión</0> Disponible",
+  "mobile_app": "Echa un vistazo a nuestra <0>Aplicación Móvil</0>",
+  "price": {
+    "pro": {
+      "title": "VoceChat Pro",
+      "desc": "",
+      "price": "$49"
+    },
+    "supreme": {
+      "title": "Personalización e Integración de VoceChat SDK",
+      "desc": "",
+      "price": ""
+    }
+  },
+  "server_update": {
+    "version_needed": "Esta función requiere la versión del servidor:<0>{{version}}</0> como mínimo 🚨",
+    "current_version": "Tu versión actual:<0>{{version}}</0>",
+    "update_tip": "¡Por favor, actualiza el Servidor!",
+    "howto": "Cómo Actualizar el Servidor de VoceChat"
+  },
+  "inactive": {
+    "title": "Solo se permite una pestaña activa para VoceChat",
+    "desc": "Por favor, recarga esta página para continuar usando esta pestaña o ciérrala"
+  }
+}

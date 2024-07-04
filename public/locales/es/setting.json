@@ -1,0 +1,280 @@
+{
+  "title": "Configuración",
+  "save_change": "Guardar Cambios",
+  "reset": "Restablecer",
+  "save_tip": "¡Tienes cambios no guardados!",
+  "nav": {
+    "general": "General",
+    "overview": "Visión General",
+    "members": "Miembros",
+    "data_management": "Gestión de Datos",
+    "auto_delete_msg": "Eliminar Mensajes Automáticamente",
+    "user": "Usuario",
+    "my_account": "Mi Cuenta",
+    "config": "Configuración",
+    "bot": "Bot & Webhook",
+    "firebase": "Firebase",
+    "agora": "Agora",
+    "smtp": "SMTP",
+    "login_method": "Métodos de Inicio de Sesión",
+    "third_app": "Inicio de Sesión de Terceros",
+    "widget": "Widget",
+    "license": "Licencia",
+    "about": "Acerca de",
+    "api_doc": "Documentación de API",
+    "version": "Versión"
+  },
+  "channel": {
+    "leave": "Abandonar Canal",
+    "leave_desc": "¿Estás seguro de que deseas abandonar este canal?",
+    "transfer_desc": "Debes transferir la propiedad de tu canal a otra persona antes de abandonarlo.",
+    "delete": "Eliminar Canal",
+    "delete_desc": "¿Estás seguro de que deseas eliminar este canal?",
+    "id": "ID del Canal",
+    "name": "Nombre del Canal",
+    "topic": "Tema del Canal",
+    "topic_placeholder": "Informa a todos cómo usar este canal.",
+    "visibility": "Visibilidad del Canal",
+    "public": "Público",
+    "private": "Privado"
+  },
+  "dm": {
+    "delete": "Eliminar Usuario",
+    "delete_desc": "¿Estás seguro de que deseas eliminar a este usuario?"
+  },
+  "overview": {
+    "title_feat": "Funciones",
+    "name": "Nombre del Servidor",
+    "desc": "Descripción del Servidor",
+    "upload_desc": "El tamaño mínimo es 128x128. Recomendamos al menos 512x512 para el servidor. Tamaño máximo limitado a 5M.",
+    "sign_up": {
+      "title": "Registro Predeterminado",
+      "desc": "Quién puede registrarse en este servidor.",
+      "everyone": "Todos",
+      "invite": "Solo Enlace de Invitación"
+    },
+    "guest_mode": {
+      "title": "Modo Invitado",
+      "desc": "Si está habilitado, los visitantes verán los canales públicos de este servidor.",
+      "enable": "Habilitar",
+      "disable": "Desactivado"
+    },
+    "url": {
+      "title": "Actualizar URL Frontend",
+      "desc": "Actualizar la URL del frontend"
+    },
+    "lang": {
+      "title": "Idiomas",
+      "desc": "Establecer el idioma del sistema",
+      "en": "Inglés",
+      "es": "Español",
+      "tr": "Turco",
+      "zh": "Chino",
+      "jp": "Japonés",
+      "pt": "Portugués"
+    },
+    "theme": {
+      "title": "Tema",
+      "desc": "Elige tu tema",
+      "auto": "Automático",
+      "dark": "Oscuro",
+      "light": "Claro"
+    },
+    "online_status": {
+      "title": "Estado en Línea",
+      "desc": "Si está habilitado, los miembros verán el estado en línea/fuera de línea de los demás.",
+      "enable": "Habilitar",
+      "disable": "Deshabilitar"
+    },
+    "chat_layout": {
+      "title": "Diseño del Chat",
+      "desc": "Dónde mostrar los mensajes enviados por ti mismo",
+      "left": "Izquierda",
+      "self_right": "Derecha"
+    },
+    "contact_verify": {
+      "title": "Verificación de Contactos",
+      "desc": "Por defecto, todos los miembros del servidor pueden ver a los demás. Si quieres que los miembros del servidor añadan y gestionen sus propios contactos, habilita la función de contactos (el administrador estará en la lista de contactos por defecto).",
+      "enable": "Habilitar",
+      "disable": "Deshabilitar"
+    }
+  },
+  "data": {
+    "clear_files": {
+      "title": "Datos de Archivos e Imágenes",
+      "desc": "Haz clic en el botón de abajo para eliminar todos los datos de archivos e imágenes de este servidor.",
+      "btn": "Limpiar Datos de Archivos"
+    },
+    "clear_msgs": {
+      "title": "Todos los Datos de Mensajes",
+      "desc": "Haz clic en el botón de abajo para eliminar todos los datos de chat, incluidos textos y archivos, de este servidor.",
+      "btn": "Limpiar Datos de Chats"
+    },
+    "auto_delete_file": {
+      "title": "Autoeliminar Datos de Archivos",
+      "desc": "Establece el tiempo de caducidad para todos los datos de archivos de este servidor.",
+      "confirm_desc": "Todos los archivos más antiguos que el tiempo establecido serán eliminados.",
+      "off": "Desactivado",
+      "day1": "1 Día",
+      "day7": "7 Días",
+      "day30": "30 Días",
+      "day90": "90 Días",
+      "day180": "180 Días"
+    }
+  },
+  "license": {
+    "signed": "Firmado",
+    "domain": "Dominios",
+    "user_limit": "Límite de Usuarios",
+    "expire": "Caduca en",
+    "create": "Creado en",
+    "value": "Valor de la Licencia",
+    "renew": "Renovar Licencia",
+    "update": "Actualizar Manualmente",
+    "update_placeholder": "Por favor, introduce el nuevo valor de la licencia",
+    "renew_select": "Por favor, selecciona el precio",
+    "tip": {
+      "title": "¡Oportunidad de obtener una actualización gratuita de la licencia!",
+      "user_test": "Obtén una actualización gratuita de la licencia a través de una prueba de usuario de 25 minutos",
+      "contact": "Reserva un horario aquí: "
+    },
+    "payment_success": "¡Pago Exitoso!",
+    "back_home": "Volver a Inicio",
+    "tip_renewing": "¡Renovando la Licencia, no cierres la ventana!",
+    "tip_renewed": "¡Licencia Renovada Exitosamente!",
+    "tip_renew_error": "ID de Sesión de Stripe Inválido",
+    "tip_domain": "La licencia está vinculada al dominio (sin puerto), por favor confirma o actualiza tu configuración:",
+    "tip_port": "Ingresa tu nombre de dominio sin puerto.",
+    "tip_confirm": "Iniciar Pago"
+  },
+  "bot": {
+    "add_api_key": "Agregar Clave API",
+    "no_api_key": "Aún no hay Clave API",
+    "bot_tip_title": "Los Bots pueden enviar mensajes a canales.",
+    "bot_tip_desc": "Ten en cuenta que no mostramos nuevamente la clave API de un Bot después de su generación. Siempre puedes generar una nueva clave API de un Bot haciendo clic en 'Agregar Clave API' y esto no anulará las claves API anteriores.",
+    "webhook_tip_title": "Los Webhooks pueden recibir mensajes en un canal y deben proporcionar una URL proporcionada por ti.",
+    "webhook_tip_desc": "Proporciona una URL de webhook que devolverá un código de respuesta 200.",
+    "manage": "Gestionar",
+    "how_to_use": "Cómo Utilizar",
+    "manage_desc": "Puedes eliminar un bot en cualquier momento, el usuario del bot se eliminará inmediatamente y todas las APIs se anularán.",
+    "create_title": "Crear Bot",
+    "create_desc": "Dale un nombre a tu bot. También puedes agregar una URL de punto final de webhook para recibir datos.",
+    "create_key_title": "Crear Clave API de Bot",
+    "create_key_desc": "Crea una Clave API para autenticar tu comunicación",
+    "create_key_warning": "Asegúrate de copiar la Clave API ahora. ¡No podrás verla nuevamente!",
+    "key_copy_and_close": "Copiar y Cerrar",
+    "delete_title": "Eliminar Bot",
+    "delete_desc": "¿Estás seguro de eliminar el Bot?",
+    "delete_key_title": "Eliminar Clave API de Bot",
+    "delete_key_desc": "¿Estás seguro de eliminar esta Clave API de Bot?",
+    "webhook_title": "Actualizar URL de Webhook",
+    "webhook_desc": "Por favor ingresa una URL válida",
+    "col_avatar": "Avatar",
+    "col_name": "Nombre del Bot",
+    "col_api_key": "Clave API (Mensajes de Entrada)",
+    "col_webhook": "URL del Webhook de Extremo (Salida)",
+    "col_opt": "Operaciones",
+    "col_key_name": "Nombre",
+    "col_key_value": "Clave",
+    "col_key_create_time": "Creado en",
+    "col_key_last_used": "Último Uso"
+  },
+  "auto_delete_msg": {
+    "title": "Eliminar mensajes enviados por mí después de cierto período de tiempo.",
+    "desc": "Esto eliminará los datos de mensajes almacenados tanto en el servidor como en el lado del cliente.",
+    "off": "Desactivado",
+    "5_min": "5 minutos",
+    "10_min": "10 minutos",
+    "1_hour": "1 hora",
+    "1_day": "1 día",
+    "1_week": "1 semana",
+    "clear": "Eliminar todos los mensajes del canal",
+    "clear_title": "Eliminar todos los mensajes en este canal.",
+    "clear_desc": "Esto eliminará todos los datos de mensajes almacenados tanto en el servidor como en el lado del cliente."
+  },
+  "firebase": {
+    "disable": "Desactivar",
+    "use_official": "Usar Configuración Oficial",
+    "custom": "Personalizado",
+    "enable": "Habilitar",
+    "token_url": "URL del Token",
+    "project_id": "ID del Proyecto",
+    "private_key": "Clave Privada",
+    "client_email": "Correo Electrónico del Cliente"
+  },
+  "smtp": {
+    "enable": "Habilitar",
+    "host": "Host",
+    "port": "Puerto",
+    "from": "Desde",
+    "username": "Nombre de Usuario",
+    "password": "Contraseña",
+    "how_to": "¿Cómo configurar SMTP?",
+    "send_test_email": "Enviar Correo Electrónico de Prueba"
+  },
+  "agora": {
+    "enable": "Habilitar",
+    "how_to": "¿Cómo configurar Agora?"
+  },
+  "third_app": {
+    "key": "Clave de Seguridad API",
+    "update": "Actualizar Secreto",
+    "update_tip": "¿Estás seguro de actualizar el secreto API? El secreto anterior será invalidado",
+    "key_tip": "La clave de seguridad acordada entre el servidor y la aplicación de terceros se utiliza para cifrar los datos de comunicación.",
+    "how_to": "¿Cómo utilizar?"
+  },
+  "login": {
+    "password": "Contraseña",
+    "password_desc": "Permite a los miembros iniciar sesión con contraseña.",
+    "magic_link": "Enlace Mágico",
+    "magic_link_desc": "Permite a los miembros iniciar sesión con Enlace Mágico.",
+    "google": "Google",
+    "google_desc": "Permite a los miembros iniciar sesión con Google.",
+    "github": "GitHub",
+    "github_desc": "Permite a los miembros iniciar sesión con GitHub.",
+    "metamask": "Metamask",
+    "metamask_desc": "Permite a los miembros iniciar sesión con Metamask.",
+    "oidc": "OIDC",
+    "oidc_desc": "Permite a los miembros iniciar sesión con OIDC.",
+    "oidc_custom": "Personalizado",
+    "more_details": "¿Necesitas más detalles? Consulta nuestra <0>documentación</0>."
+  },
+  "widget": {
+    "tip": "¡Extiende VoceChat integrando el SDK del widget de VoceChat!",
+    "code": "Ejemplo de Código",
+    "code_comment": "inserta este fragmento de código en tu archivo HTML",
+    "config": "Descripción de Configuración",
+    "param_key": "Clave del Parámetro",
+    "default_value": "Valor Predeterminado",
+    "remark": "Notas",
+    "custom_style_tip": "si deseas personalizar la posición del widget de manera más precisa, usa el ID del elemento del widget en tu archivo HTML o CSS, como este",
+    "param_id": "ID del Widget (versión del servidor >= v0.3.12)",
+    "param_host": "Asigna el usuario que está chateando con el visitante (ID de Usuario)",
+    "param_auto_reg": "true: Registro automático de un nuevo usuario si no existe, false: el visitante debe ingresar correo electrónico y nombre para registrarse",
+    "param_login_token": "Si estás utilizando la información de usuario existente de tu propia plataforma para generar una nueva cuenta de VoceChat, este es el token de inicio de sesión generado por tu plataforma. Para más detalles, consulta: https://doc.voce.chat/zh-cn/login-with-other-account. ¡No lo llenes para escenarios predeterminados (sin sistema de usuario de terceros)!",
+    "param_theme_color": "El color del tema del widget",
+    "param_close_width": "El ancho cuando el widget está cerrado",
+    "param_close_height": "La altura cuando el widget está cerrado",
+    "param_open_width": "El ancho cuando el widget está abierto",
+    "param_open_height": "La altura cuando el widget está abierto",
+    "param_welcome": "Mensaje de Bienvenida Personalizado",
+    "param_position": "Posición del Widget: izquierda/derecha",
+    "share_link": "Comparte el enlace del widget para que las personas puedan chatear contigo directamente",
+    "widget_faq": "Habilitar Dejar que Todos se Unan Primero"
+  },
+  "version": {
+    "client_version": "Versión del Cliente",
+    "server_version": "Versión del Servidor",
+    "build_time": "Marca de Tiempo de Compilación",
+    "sync": "Sincronizar con la última versión del cliente web"
+  },
+  "api_doc": {
+    "desc": "Tenemos una documentación detallada de la API que puedes utilizar para construir tu propia herramienta de chat.",
+    "access": "Acceso URL:",
+    "use_method": "Método de Uso:",
+    "step_1": "Paso Uno: Cambia a tu propio Servidor",
+    "step_2": "Paso Dos: Ingresa el token de inicio de sesión",
+    "step_2_desc": "Puedes obtener el token accediendo al encabezado X-API-Key http o simplemente copiando el texto a continuación:",
+    "last": "Cada API tiene un botón 'Probar' para que puedas depurar la API con él"
+  }
+}
