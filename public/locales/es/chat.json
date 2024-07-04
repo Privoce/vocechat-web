@@ -1,0 +1,69 @@
+{
+"pin": "Fijar",
+"pin_desc": "¿Quieres fijar este mensaje en",
+"pinned_msg": "Mensaje Fijado",
+"pin_empty_tip": "Este canal aún no tiene ningún mensaje fijado.",
+"fav": "Favorito",
+"fav_msg": "Mensaje Guardado",
+"fav_empty_tip": "Este canal aún no tiene ningún mensaje guardado.",
+"channel_members": "Miembros del Canal",
+"add_channel_members": "Agregar miembros",
+"welcome_channel": "Bienvenido a {{name}}",
+"welcome_desc": "Este es el inicio del canal #{{name}}.",
+"edit_channel": "Editar Canal"
+
+  "channel_name": "Nombre del Canal",
+  "private_channel": "Canal Privado",
+  "create_channel": "Crear Nuevo Canal",
+  "create_channel_desc": "Este es un canal público, todos en este equipo pueden verlo.",
+  "create_private_channel_desc": "Este es un canal privado, solo miembros seleccionados podrán unirse.",
+  "search_user_placeholder": "Escribe el nombre de usuario para buscar",
+  "welcome_msg": "Bienvenido al canal {{name}}"
+
+
+  "invite_title": "Agregar amigos a {{name}}",
+  "invite_by_email": "Invitar por Correo Electrónico",
+  "enable_smtp": "Habilitar SMTP Primero",
+  "send_invite_link": "O enviar el enlace de invitación a tus amigos",
+  "share_invite_link": "Comparte este enlace para invitar personas a este servidor.",
+  "invite_link_faq": "¿Enlace de invitación incorrecto?",
+  "invite_link_edit": "Editar enlace de invitación",
+  "invite_link_setting_tip": "El enlace de invitación expira en {{expire}}, máximo de usos: {{times}}",
+  "generate_new_link": "Generar Nuevo Enlace"
+ 
+  "send_to": "Enviar a",
+  "edited": "editado",
+  "license_tip": "¡Tu licencia ha alcanzado el límite! ¡Actualiza la licencia o contacta al administrador!",
+
+  "delete_msg_title": "Eliminar Mensaje",
+  "delete_msg_desc": "¿Estás seguro de que quieres eliminar {{msg}}?",
+  "delete_msg_this": "este mensaje",
+  "delete_msg_these": "estos mensajes",
+
+  "new_msg": "{{num}} nuevos mensajes",
+  "mark_read": "Marcar como Leído",
+  "pin_chat": "Fijar Chat",
+  "unpin_chat": "Desfijar",
+
+  "reply_msg_del": "Este mensaje ha sido eliminado.",
+
+  "file": "archivo",
+  "image": "imagen",
+  "forward": "reenviar",
+  "voice_message": "mensaje de voz",
+  "voice": "Chat de Voz",
+  "deafen": "Ensordecer",
+  "undeafen": "Quitar ensordecedor",
+  "mute": "Silenciar",
+  "unmute": "Quitar silencio",
+  "camera_on": "Encender cámara",
+  "camera_off": "Apagar cámara",
+  "leave_voice": "Salir del Chat de Voz",
+  "add_contact": "Agregar a contactos",
+  "block": "Bloquear",
+  "unblock": "Desbloquear",
+  "contact_tip": "Este usuario no está en tus contactos",
+  "contact_block_tip": "Este usuario ha sido bloqueado por ti",
+  "file_expired": "Archivo Expirado"
+
+}
