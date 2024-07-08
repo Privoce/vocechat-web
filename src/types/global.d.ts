@@ -37,6 +37,7 @@ export declare global {
     webkitHidden: boolean;
   }
   interface Window {
+    MSG_SOUND: boolean;
     AUTO_RELOAD: boolean;
     AFTER_MID: number;
     USERS_VERSION: number;

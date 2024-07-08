@@ -1,6 +1,6 @@
 import { ICameraVideoTrack, ILocalAudioTrack, ILocalVideoTrack } from "agora-rtc-sdk-ng";
 import dayjs from "dayjs";
-
+import AudioMsgSound from "@/assets/msg.sound.wav";
 import BASE_URL, {
   ContentTypes,
   FILE_IMAGE_SIZE,
@@ -496,6 +496,15 @@ export const reloadCurrentPage = () => {
     location.reload();
   } else {
     window.location.reload();
+  }
+};
+export const playMessageSound = async () => {
+  const soundMsg = new Audio(AudioMsgSound);
+  // play the join audio
+  try {
+    await soundMsg.play();
+  } catch (error) {
+    console.warn("play join sound failed!", error);
   }
 };
 export const isInIframe = () => window.location !== window.parent.location;

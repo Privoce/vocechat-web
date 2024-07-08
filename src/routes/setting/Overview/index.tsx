@@ -12,6 +12,7 @@ import DarkMode from "./DarkMode";
 import FrontendURL from "./FrontendURL";
 import Language from "./Language";
 import OnlineStatus from "./OnlineStatus";
+import MessageSound from "./MessageSound";
 import Server from "./Server";
 import { shallowEqual } from "react-redux";
 
@@ -35,11 +36,13 @@ export default function Overview() {
       <Server />
       {isAdmin && (
         <>
-          {/* 设置前端url */}
+          {/* 设置前端 url */}
           <FrontendURL />
           <div className="flex flex-col">
             <h4 className="font-bold text-gray-700 dark:text-white">{t("overview.title_feat")}</h4>
           </div>
+          {/* 新消息声音 */}
+          <MessageSound />
           {/* 注册开放与否 */}
           <SettingBlock title={t("overview.sign_up.title")} desc={t("overview.sign_up.desc")}>
             <StyledRadio

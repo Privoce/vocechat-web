@@ -9,6 +9,7 @@ import { toggleReactionMessage } from "@/app/slices/message.reaction";
 import { addUserMsg, removeUserMsg } from "@/app/slices/message.user";
 import { AppDispatch } from "@/app/store";
 import { ChatEvent } from "@/types/sse";
+import { playMessageSound } from "@/utils";
 
 type CurrentState = {
   afterMid: number;
@@ -50,8 +51,9 @@ const handler = (
     properties,
     expires_in
   };
+  const { loginUid, readUsers = {}, readChannels = {}, ready } = currState;
   if (!fromHistory) {
-    // 如果来自历史消息的拉取，则忽略更新after mid
+    // 如果来自历史消息的拉取，则忽略更新 after mid
     switch (type) {
       case "normal":
       case "reply":
@@ -63,8 +65,11 @@ const handler = (
         }
         break;
     }
+    if (loginUid != common.from_uid && ready && window.MSG_SOUND) {
+      // 已ready，来自SSE的非自己的消息推送
+      playMessageSound();
+    }
   }
-  const { loginUid, readUsers = {}, readChannels = {} } = currState;
   const to = "gid" in target ? "channel" : "user";
   const appendMessage = to == "user" ? addUserMsg : addChannelMsg;
   const self = from_uid == loginUid;
@@ -86,7 +91,7 @@ const handler = (
             local_id: properties ? properties.local_id : null
           })
         );
-        // 加到file message 列表
+        // 加到 file message 列表
         if (content_type == ContentTypes.file) {
           dispatch(addFileMessage(mid));
         }
@@ -144,7 +149,7 @@ const handler = (
                 dispatch(removeContextMessage({ id, mid: detailMid }));
                 dispatch(removeMessage(detailMid));
               });
-              // 从file message 列表移除
+              // 从 file message 列表移除
               // if (content_type == ContentTypes.file) {
               dispatch(removeFileMessage(detailMid));
               // }

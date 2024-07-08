@@ -9,6 +9,7 @@ export interface UIState {
   SSEStatus: SSEStatus;
   online: boolean;
   ready: boolean;
+  msgSound: boolean;
   inputMode: InputMode;
   menuExpand: boolean;
   // todo
@@ -28,6 +29,7 @@ export interface UIState {
 const initialState: UIState = {
   SSEStatus: "disconnected",
   online: true,
+  msgSound: true,
   ready: false,
   inputMode: "text",
   menuExpand: false,
@@ -48,14 +50,19 @@ const uiSlice = createSlice({
   initialState,
   reducers: {
     fillUI(state, action: PayloadAction<Partial<UIState>>) {
-      const { SSEStatus, ready, online, ...rest } = action.payload;
-      return { ...state, ...rest };
+      const { SSEStatus, ready, online, msgSound = true, ...rest } = action.payload;
+      window.MSG_SOUND = msgSound;
+      return { ...state, msgSound, ...rest };
     },
     setReady(state, action: PayloadAction<boolean>) {
       state.ready = action.payload;
     },
     updateSSEStatus(state, action: PayloadAction<SSEStatus>) {
       state.SSEStatus = action.payload;
+    },
+    updateMsgSoundSetting(state, action: PayloadAction<boolean>) {
+      window.MSG_SOUND = action.payload;
+      state.msgSound = action.payload;
     },
     updateOnline(state, action: PayloadAction<boolean>) {
       state.online = action.payload;
@@ -190,7 +197,8 @@ export const {
   updateSelectMessages,
   updateDraftMarkdown,
   updateDraftMixedText,
-  updateRememberedNavs
+  updateRememberedNavs,
+  updateMsgSoundSetting
 } = uiSlice.actions;
 
 export default uiSlice.reducer;

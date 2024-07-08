@@ -11,6 +11,12 @@ export default async function handler({ operation, data = {} }: Params) {
     return;
   }
   switch (operation) {
+    case "updateMsgSoundSetting":
+      {
+        // console.log("cache the toggleMenuExpand");
+        await table?.setItem("msgSound", data.msgSound);
+      }
+      break;
     case "toggleMenuExpand":
       {
         // console.log("cache the toggleMenuExpand");
