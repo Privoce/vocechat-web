@@ -80,6 +80,12 @@
       "dark": "Dark",
       "light": "Light"
     },
+    "message_sound": {
+      "title": "Message Sound",
+      "desc": "Play sound while receiving new message.",
+      "enable": "Enable",
+      "disable": "Disable"
+    },
     "online_status": {
       "title": "Online Status",
       "desc": "If enabled, members will see the online/offline status of each other.",

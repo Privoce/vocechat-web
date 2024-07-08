@@ -71,6 +71,12 @@
       "dark": "黑夜模式",
       "light": "白天模式"
     },
+    "message_sound": {
+      "title": "消息声音",
+      "desc": "新消息播放声音",
+      "enable": "开启",
+      "disable": "关闭"
+    },
     "online_status": {
       "title": "在线状态",
       "desc": "开启或关闭用户在线状态",
