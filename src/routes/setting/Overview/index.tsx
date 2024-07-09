@@ -41,8 +41,7 @@ export default function Overview() {
           <div className="flex flex-col">
             <h4 className="font-bold text-gray-700 dark:text-white">{t("overview.title_feat")}</h4>
           </div>
-          {/* 新消息声音 */}
-          <MessageSound />
+
           {/* 注册开放与否 */}
           <SettingBlock title={t("overview.sign_up.title")} desc={t("overview.sign_up.desc")}>
             <StyledRadio
@@ -76,6 +75,8 @@ export default function Overview() {
 
       <Language />
       <DarkMode />
+      {/* 新消息声音 */}
+      <MessageSound />
     </div>
   );
 }
