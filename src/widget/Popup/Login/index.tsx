@@ -17,8 +17,10 @@ import useGithubAuthConfig from "../../../hooks/useGithubAuthConfig";
 import useGoogleAuthConfig from "../../../hooks/useGoogleAuthConfig";
 import { useWidget } from "../../WidgetContext";
 import Loading from "@/components/Loading";
+import { WIDGET_USER_PWD } from "@/app/config";
 
 // type Props = {}
+let currInput = { email: "", name: "" };
 const randomText = () => (Math.random() + 1).toString(36).substring(7);
 const Login = () => {
   const { t } = useTranslation("widget");
@@ -38,7 +40,7 @@ const Login = () => {
       widget_id: id,
       name: _name,
       email: _email,
-      password: `${_name}${_email}${rand}`
+      password: WIDGET_USER_PWD
     });
   };
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
@@ -52,10 +54,9 @@ const Login = () => {
     const data = new FormData(form);
     const name = data.get("username") as string;
     const email = data.get("email") as string;
-    // const email = data.get("email") as string;
-    console.log("name", name);
+    // for use later
+    currInput = { email, name };
     registerUser({ name, email, auto: false });
-    // const content = new FormData(form).get("prompt") as string;
   };
   useEffect(() => {
     if (autoReg && !token) {
@@ -67,7 +68,7 @@ const Login = () => {
 
   useEffect(() => {
     if (tokenLoginError) {
-      toast.error("Token login error!");
+      toast.error("Login error!");
     }
   }, [tokenLoginError]);
   useEffect(() => {
@@ -80,12 +81,16 @@ const Login = () => {
     if (error) {
       switch (error.status) {
         case 409:
-          toast.error("Email existed already!");
-          // login({
-          //   name: data?.name,
-          //   email: data?.email,
-          //   password
-          // })
+          {
+            // toast.error("Email existed already!");
+            // try to login
+            loginByToken({
+              email: currInput.email,
+              password: WIDGET_USER_PWD,
+              type: "password"
+            });
+          }
+
           break;
         default:
           toast.error("Something error!");

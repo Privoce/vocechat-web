@@ -4,9 +4,9 @@ import clsx from "clsx";
 import { User } from "@/types/user";
 import { formatBytes, fromNowTime, getFileIcon } from "@/utils";
 import IconClose from "@/assets/icons/close.circle.svg";
-import IconDownload from "@/assets/icons/download.svg";
 import ExpiredMessage from "./ExpiredMessage";
 import Progress from "./Progress";
+import DownloadArea from "./DownloadArea";
 
 type Props = {
   content: string;
@@ -87,13 +87,7 @@ const OtherFileMessage = ({
         {sending ? (
           <IconClose className="cursor-pointer" onClick={handleCancel} />
         ) : (
-          <a
-            className="hidden md:block whitespace-nowrap"
-            download={name}
-            href={`${content}&download=true`}
-          >
-            <IconDownload className="fill-gray-500 dark:fill-gray-400" />
-          </a>
+          <DownloadArea copyLink={content} downloadLink={`${content}&download=true`} />
         )}
       </div>
     </div>

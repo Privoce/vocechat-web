@@ -5,6 +5,7 @@ import IconDownload from "@/assets/icons/download.svg";
 import IconAudio from "@/assets/icons/file.audio.svg";
 import { formatBytes } from "../../utils";
 import ExpiredMessage from "./ExpiredMessage";
+import DownloadArea from "./DownloadArea";
 
 type Props = {
   url: string;
@@ -40,9 +41,7 @@ const AudioMessage = ({ url, name, size, download }: Props) => {
             <span className="text-gray-400">{_size}</span>
           </div>
         </div>
-        <a href={download} className="mt-2 hidden md:block">
-          <IconDownload className="fill-gray-500 dark:fill-gray-400" />
-        </a>
+        <DownloadArea copyLink={download} downloadLink={download} />
       </div>
       <audio
         onError={handleError}

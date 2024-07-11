@@ -17,7 +17,7 @@ type Props = {
 const AdminAccount: FC<Props> = ({ serverName }) => {
   const { t } = useTranslation("welcome", { keyPrefix: "onboarding" });
   const { nextStep } = useWizard();
-  const formRef = useRef<HTMLFormElement | undefined>();
+  const formRef = useRef<HTMLFormElement>(null);
   const loggedIn = useAppSelector((store) => !!store.authData.token, shallowEqual);
   const dispatch = useDispatch();
   const [createAdmin, { isLoading: isSigningUp, isError: signUpError, isSuccess: signUpOk }] =
@@ -65,6 +65,8 @@ const AdminAccount: FC<Props> = ({ serverName }) => {
   // After updated server
   useEffect(() => {
     if (isUpdatedServer) {
+      console.log({ isUpdatedServer });
+
       nextStep();
     }
   }, [isUpdatedServer]);

@@ -12,19 +12,15 @@ export default function SignUpSetting() {
   const { t } = useTranslation("welcome");
   const { t: st } = useTranslation("setting");
   const { nextStep } = useWizard();
-  const { data: loginConfig, refetch } = useGetLoginConfigQuery();
+  const { data: loginConfig } = useGetLoginConfigQuery();
   const [updateLoginConfig, { isSuccess, error }] = useUpdateLoginConfigMutation();
 
   const [value, setValue] = useState<WhoCanSignUp>();
-  useEffect(() => {
-    refetch();
-  }, []);
 
   // Sync to `value` when `loginConfig` is fetched
   useEffect(() => {
     if (loginConfig) {
       console.log("login config", loginConfig.who_can_sign_up);
-
       setValue(loginConfig.who_can_sign_up);
     }
   }, [loginConfig]);
@@ -39,7 +35,7 @@ export default function SignUpSetting() {
   useEffect(() => {
     if (isSuccess) nextStep();
   }, [isSuccess]);
-
+  if (!loginConfig) return null;
   return (
     <div className="h-full px-2 flex-center flex-col text-center w-full md:w-[512px] m-auto dark:text-gray-100">
       <span className="font-bold text-2xl mb-2">{t("onboarding.invite_title")}</span>

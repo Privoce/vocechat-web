@@ -6,6 +6,7 @@ import IconDownload from "@/assets/icons/download.svg";
 import IconVideo from "@/assets/icons/file.video.svg";
 import { formatBytes } from "../../utils";
 import ExpiredMessage from "./ExpiredMessage";
+import DownloadArea from "./DownloadArea";
 
 type Props = {
   url: string;
@@ -66,9 +67,7 @@ const VideoMessage = ({ url, name, size, download }: Props) => {
             <span className="text-gray-400">{_size}</span>
           </div>
         </div>
-        <a href={download} className="hidden md:block mt-2">
-          <IconDownload className="fill-white" />
-        </a>
+        <DownloadArea copyLink={download} downloadLink={download} />
       </div>
       {!canPlay && !error ? (
         <div className={tipClass}>

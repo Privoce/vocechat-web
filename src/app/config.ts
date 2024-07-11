@@ -13,7 +13,7 @@ const prices: Price[] = [
 ];
 const official_dev = `https://dev.voce.chat`;
 const local_dev = `https://dev.voce.chat`;
-// const local_dev = `https://cqvoce.com`;
+// const local_dev = `http://localhost:3881`;
 const dev_origin = process.env.REACT_APP_OFFICIAL_DEMO ? official_dev : local_dev;
 
 // const local_dev = `https://im.ttt.td`;
@@ -75,6 +75,7 @@ export const PAYMENT_URL_PREFIX =
     ? `https://vera.nicegoodthings.com`
     : `http://localhost:4000`;
 export const CACHE_VERSION = `0.3.37`;
+export const WIDGET_USER_PWD = `123123`;
 export const GuestRoutes = ["/", "/chat", "/chat/channel/:channel_id"];
 export const ContentTypes = {
   text: "text/plain",
