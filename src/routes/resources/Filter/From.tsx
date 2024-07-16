@@ -30,11 +30,13 @@ const From: FC<Props> = ({ select = "", updateFilter }) => {
         </li>
         {users.map(({ uid }) => {
           return (
-            <li key={uid} className="relative cursor-pointer" onClick={handleClick.bind(null, uid)}>
+            <li
+              key={uid}
+              className="relative flex items-center gap-2 justify-between cursor-pointer"
+              onClick={handleClick.bind(null, uid)}
+            >
               <User uid={uid} interactive={true} />
-              {select == uid && (
-                <CheckSign className="absolute right-1.5 top-1/2 -translate-y-1/2" />
-              )}
+              {select == uid && <CheckSign className="" />}
             </li>
           );
         })}

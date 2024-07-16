@@ -36,7 +36,7 @@ function Files() {
   const [getFiles, { data }] = useLazyGetFilesQuery();
   const listContainerRef = useRef<HTMLDivElement>();
   const [filter, setFilter] = useState({});
-  const view = useAppSelector((store) => store.ui.fileListView.view, shallowEqual);
+  const view = useAppSelector((store) => store.ui.fileListView, shallowEqual);
 
   const updateFilter = (data) => {
     setFilter((prev) => {
@@ -55,7 +55,7 @@ function Files() {
   if (!data) return null;
   // return null;
   const nonExpiredFiles = data.filter((item) => !item.expired);
-  console.log("nonExpiredFiles", nonExpiredFiles);
+  console.log({ view });
   return (
     <div className="h-screen md:overflow-y-scroll flex flex-col items-start my-2 mr-6 rounded-2xl bg-white dark:bg-gray-700">
       <Search value={filter.name} updateSearchValue={handleUpdateSearch} />

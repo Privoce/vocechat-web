@@ -35,12 +35,14 @@ const Channel: FC<Props> = ({ select = 0, updateFilter }) => {
           return (
             <li
               key={gid}
-              className="relative cursor-pointer flex items-center gap-2"
+              className="cursor-pointer flex items-center gap-2 justify-between"
               onClick={handleClick.bind(null, gid)}
             >
               <ChannelIcon personal={!is_public} />
-              <span className="text-gray-500 dark:text-gray-100 font-semibold text-sm">{name}</span>
-              {select == gid && <CheckSign className="absolute right-0 top-1/2 -translate-y-1/2" />}
+              <span className="text-gray-500 dark:text-gray-100 font-semibold text-sm flex-1">
+                {name}
+              </span>
+              {select == gid && <CheckSign className="" />}
             </li>
           );
         })}

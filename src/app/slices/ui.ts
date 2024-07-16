@@ -50,7 +50,14 @@ const uiSlice = createSlice({
   initialState,
   reducers: {
     fillUI(state, action: PayloadAction<Partial<UIState>>) {
-      const { SSEStatus, ready, online, msgSound = false, ...rest } = action.payload;
+      const {
+        SSEStatus,
+        ready,
+        online,
+        msgSound = false,
+        fileListView = "item",
+        ...rest
+      } = action.payload;
       window.MSG_SOUND = msgSound;
       return { ...state, msgSound, ...rest };
     },

@@ -79,7 +79,10 @@ export default function useMessageOperation({ mid, context, contextId }: Params)
     loginUser?.uid == from_uid ||
     loginUser?.is_admin ||
     (channel && channel.owner == loginUser?.uid);
-  const canCopy = [ContentTypes.text, ContentTypes.markdown].includes(content_type) || isImage;
+  const canCopy =
+    [ContentTypes.text, ContentTypes.markdown, ContentTypes.audio, ContentTypes.file].includes(
+      content_type
+    ) || isImage;
   return {
     copyContent: isImage ? copyContent.bind(null, true) : copyContent.bind(null, false),
     canCopy,

@@ -14,6 +14,7 @@ import {
   VideoPreview
 } from "./preview";
 import { shallowEqual } from "react-redux";
+import DownloadArea from "../FileMessage/DownloadArea";
 
 interface Data {
   file_type: string;
@@ -135,13 +136,7 @@ const FileBox: FC<Props> = ({
             </span>
           </em>
         </div>
-        <a
-          className="hidden md:block whitespace-nowrap"
-          download={name}
-          href={`${content}&download=true`}
-        >
-          <IconDownload className="fill-gray-500 dark:fill-gray-300" />
-        </a>
+        <DownloadArea copyLink={content} downloadLink={`${content}&download=true`} />
       </div>
       {withPreview && <div className="h-[calc(100%_-_64px)] overflow-hidden">{previewContent}</div>}
     </div>
