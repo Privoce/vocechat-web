@@ -4,18 +4,20 @@ import ImagePreviewModal, { PreviewImageData } from "./ImagePreviewModal";
 
 type Props = {
   context?: "chat" | "markdown";
-  container: HTMLElement | null;
 };
 
-const ImagePreview = ({ container, context = "chat" }: Props) => {
+const ImagePreview = ({ context = "chat" }: Props) => {
   const [previewImage, setPreviewImage] = useState<PreviewImageData | null>(null);
   const closePreviewModal = () => {
     setPreviewImage(null);
   };
   useEffect(() => {
+    const container = document.querySelector("#CHAT_WRAPPER") as HTMLDivElement;
     if (!container) return;
     const chatHandler = (evt: MouseEvent) => {
       const target = evt.target as HTMLImageElement;
+      console.log({ target });
+
       if (!target) return;
       if (target.nodeName == "IMG" && target.classList.contains("preview")) {
         const thumbnail = target.src;
@@ -30,7 +32,7 @@ const ImagePreview = ({ container, context = "chat" }: Props) => {
       const target = evt.target as HTMLImageElement;
       if (!target) return;
       // 图片 并且没被 a 标签包裹
-      if (target.nodeName == "IMG"&&target.parentElement?.tagName!=="A") {
+      if (target.nodeName == "IMG" && target.parentElement?.tagName !== "A") {
         const urlObj = new URL(target.src);
         const originUrl = `${urlObj.origin}${urlObj.pathname}?file_path=${urlObj.searchParams.get(
           "file_path"
@@ -52,7 +54,7 @@ const ImagePreview = ({ container, context = "chat" }: Props) => {
     return () => {
       container.removeEventListener("click", handler, true);
     };
-  }, [container, context]);
+  }, [context]);
   return previewImage ? (
     <ImagePreviewModal download={true} data={previewImage} closeModal={closePreviewModal} />
   ) : null;

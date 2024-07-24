@@ -45,7 +45,6 @@ const Layout: FC<Props> = ({
   // const { t } = useTranslation('chat');
   const { reachLimit } = useLicense();
   const { addStageFile } = useUploadFile({ context, id: to });
-  const messagesContainer = useRef<HTMLDivElement>(null);
   const inputMode = useAppSelector((store) => store.ui.inputMode, shallowEqual);
   const selects = useAppSelector(
     (store) => store.ui.selectMessages[`${context}_${to}`],
@@ -93,15 +92,12 @@ const Layout: FC<Props> = ({
   const name = context == "channel" ? channelsData[to]?.name : usersData[to]?.name;
   return (
     <>
-      <ImagePreview container={messagesContainer.current} />
-      <section ref={drop} className={`relative h-full w-full rounded-r-2xl flex`}>
+      <ImagePreview />
+      <section id="CHAT_WRAPPER" ref={drop} className={`relative h-full w-full rounded-r-2xl flex`}>
         <main className="flex flex-col flex-1">
           {header}
           <div className="w-full h-full flex items-start justify-between relative">
-            <div
-              className="rounded-br-2xl flex flex-col absolute bottom-0 w-full h-full"
-              ref={messagesContainer}
-            >
+            <div className="rounded-br-2xl flex flex-col absolute bottom-0 w-full h-full">
               {context == "dm" && <DMVoice uid={to} />}
               {context == "dm" && <AddContactTip uid={to} />}
               {/* 消息流 */}
