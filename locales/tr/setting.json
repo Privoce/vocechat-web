@@ -197,6 +197,8 @@
     "default_value": "Varsayılan Değer",
     "remark": "Notlar",
     "param_host": "Ziyaretçiyle sohbet eden kullanıcıyı atayın (Kullanıcı Kimliği)",
+    "param_title": "chat popup title",
+    "param_logo": "chat popup logo icon URL",
     "param_theme_color": "Widget'ın tema rengi",
     "param_close_width": "Widget kapalıyken genişlik",
     "param_close_height": "Widget kapalıyken yükseklik",
