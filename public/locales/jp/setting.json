@@ -123,6 +123,8 @@
     "remark": "メモ",
     "param_id": "Widget ID (server version>=v0.3.12)",
     "param_host": "ユーザーID でチットの相手を指定する",
+    "param_title": "chat popup title",
+    "param_logo": "chat popup logo icon URL",
     "param_close_width": "ウィジェット閉じたままの幅",
     "param_close_height": "ウィジェット閉じたままの高さ",
     "param_open_width": "ウィジェット開きままの幅",

@@ -250,6 +250,8 @@
     "custom_style_tip": "si deseas personalizar la posición del widget de manera más precisa, usa el ID del elemento del widget en tu archivo HTML o CSS, como este",
     "param_id": "ID del Widget (versión del servidor >= v0.3.12)",
     "param_host": "Asigna el usuario que está chateando con el visitante (ID de Usuario)",
+    "param_title": "chat popup title",
+    "param_logo": "chat popup logo icon URL",
     "param_auto_reg": "true: Registro automático de un nuevo usuario si no existe, false: el visitante debe ingresar correo electrónico y nombre para registrarse",
     "param_login_token": "Si estás utilizando la información de usuario existente de tu propia plataforma para generar una nueva cuenta de VoceChat, este es el token de inicio de sesión generado por tu plataforma. Para más detalles, consulta: https://doc.voce.chat/zh-cn/login-with-other-account. ¡No lo llenes para escenarios predeterminados (sin sistema de usuario de terceros)!",
     "param_theme_color": "El color del tema del widget",

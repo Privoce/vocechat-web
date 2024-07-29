@@ -8,6 +8,8 @@ import { shallowEqual } from "react-redux";
 const query = new URLSearchParams(location.search);
 const id = decodeURIComponent(query.get("id") || "");
 const welcome = decodeURIComponent(query.get("welcome") || "");
+const title = decodeURIComponent(query.get("title") || "");
+const logo = decodeURIComponent(query.get("logo") || "");
 const autoReg = decodeURIComponent(query.get("autoReg") || "true") == "true";
 const token = decodeURIComponent(query.get("token") || "");
 const color = decodeURIComponent(query.get("themeColor") || "#1fe1f9");
@@ -25,8 +27,8 @@ const WidgetContext = createContext({
   from,
   loading: true,
   inviteOnly: false,
-  name: "",
-  logo: "",
+  title,
+  logo,
   welcome
 });
 
@@ -50,8 +52,8 @@ function WidgetProvider({ children }: { children: ReactNode }) {
         embed,
         from,
         inviteOnly: loginConfig?.who_can_sign_up == "InvitationOnly",
-        name: serverData?.name,
-        logo: serverData.logo
+        title: title ? title : serverData?.name,
+        logo: logo ? logo : serverData.logo
       }}
     >
       {children}

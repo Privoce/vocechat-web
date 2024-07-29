@@ -10,6 +10,8 @@
     openWidth = 380,
     openHeight = 680,
     themeColor = "#1fe1f9",
+    title = "",
+    logo = "",
     position = "right",
     welcome = ""
   } = d.currentScript.dataset;
@@ -31,7 +33,7 @@
     new URL(_src).origin
   }/widget.html?id=${id}&host=${hostId}&autoReg=${autoReg}&token=${loginToken}&themeColor=${encodeURIComponent(
     themeColor
-  )}&from=${encodeURIComponent(location.hostname)}&welcome=${encodeURIComponent(welcome)}`;
+  )}&from=${encodeURIComponent(location.hostname)}&welcome=${encodeURIComponent(welcome)}&title=${encodeURIComponent(title)}&logo=${encodeURIComponent(logo)}`;
   wrapper.width = closeWidth;
   wrapper.height = closeHeight;
   wrapper.frameborder = 0;
