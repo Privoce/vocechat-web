@@ -97,6 +97,8 @@ const handler = (
         }
         // }
       });
+      // 推给 PC 端
+      console.info("{{NEW_MSG}}")
       break;
     }
     case "reply":
