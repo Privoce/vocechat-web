@@ -53,6 +53,12 @@
       "everyone": "Everyone",
       "invite": "Invitation Link Only"
     },
+    "admin_create_group": {
+      "title": "Only Admins create group",
+      "desc": "If enabled, only admins can create group.",
+      "enable": "Enable",
+      "disable": "Disabled"
+    },
     "guest_mode": {
       "title": "Guest Mode",
       "desc": "If enabled, visitors will see public channels on this server.",

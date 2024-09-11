@@ -24,8 +24,10 @@ const initialState: StoredServer = {
   show_user_online_status: false,
   webclient_auto_update: true,
   contact_verification_enable: false,
+  only_admin_can_create_group: false,
   chat_layout_mode: "Left",
-  loginConfig: null
+  loginConfig: null,
+  ext_setting: null
 };
 
 const serverSlice = createSlice({
@@ -50,7 +52,9 @@ const serverSlice = createSlice({
         webclient_auto_update = true,
         contact_verification_enable = false,
         chat_layout_mode = "Left",
-        loginConfig = state.loginConfig || null
+        only_admin_can_create_group = false,
+        loginConfig = state.loginConfig || null,
+        ext_setting = null
       } = action.payload || {};
       return {
         version: state.version || version,
@@ -62,8 +66,10 @@ const serverSlice = createSlice({
         show_user_online_status,
         webclient_auto_update,
         contact_verification_enable,
+        only_admin_can_create_group,
         chat_layout_mode,
-        loginConfig
+        loginConfig,
+        ext_setting
       };
     },
     updateInfo(state, action: PayloadAction<Partial<StoredServer>>) {

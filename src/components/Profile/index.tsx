@@ -25,6 +25,7 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
   const { t } = useTranslation("member");
   const { t: ct } = useTranslation();
   const {
+    canDM,
     canCopyEmail,
     copyEmail,
     startCall,
@@ -36,7 +37,6 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
     canUpdateRole,
     updateRole
   } = useUserOperation({ uid, cid });
-
   const data = useAppSelector((store) => store.users.byId[uid], shallowEqual);
   if (!data) return null;
   // console.log("profile", data);
@@ -54,6 +54,7 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
     `flex-center flex-col gap-1 z-[99] mt-20 select-none`,
     isCard ? "p-4 w-[280px] bg-white dark:bg-gray-800 drop-shadow rounded-md" : "md:w-[432px]"
   );
+
   return (
     <div className={containerClass}>
       <Avatar
@@ -64,80 +65,86 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
         name={name}
       />
       <h2 className="text-lg select-text font-bold text-gray-900 dark:text-white">
-        {name} <span className="font-normal text-gray-500">#{uid}</span>
+        {name} {canDM && <span className="font-normal text-gray-500">#{uid}</span>}
       </h2>
-      <span className="text-sm text-gray-400 dark:text-gray-200 select-text">{email}</span>
+      {canCopyEmail && (
+        <span className="text-sm text-gray-400 dark:text-gray-200 select-text">{email}</span>
+      )}
       {/* <p className="intro">{introduction}</p> */}
-      <ul className={clsx("mt-6 flex flex-col md:flex-row items-center gap-2", isCard && "pb-0.5")}>
-        <NavLink to={`/chat/dm/${uid}`}>
-          <li className={`${iconClass} icon chat`}>
-            <IconMessage />
-            <span>{t("send_msg")}</span>
-          </li>
-        </NavLink>
-        {agoraEnabled && type == "embed" && (
-          <li role="button" onClick={startCall} className={`${iconClass} icon chat`}>
-            <IconCall className="fill-primary-400" />
-            <span>{t("call")}</span>
-          </li>
-        )}
-        <Tippy
-          disabled={!hasMore}
-          interactive
-          popperOptions={{ strategy: "fixed" }}
-          placement="right"
-          trigger="click"
-          hideOnClick={true}
-          content={
-            <ContextMenu
-              items={
-                [
-                  agoraEnabled &&
-                    type == "card" && {
-                      title: t("call"),
-                      handler: startCall
-                    },
-                  canCopyEmail && {
-                    title: t("copy_email"),
-                    handler: copyEmail
-                  },
-                  canUpdateRole && {
-                    title: t("roles"),
-                    handler: updateRole,
-                    subs: [
-                      {
-                        title: t("set_normal"),
-                        checked: !isAdmin,
-                        handler: updateRole
-                      },
-                      {
-                        title: t("set_admin"),
-                        checked: isAdmin,
-                        handler: updateRole
-                      }
-                    ]
-                  },
-                  canRemoveFromChannel && {
-                    title: t("remove_from_channel"),
-                    danger: true,
-                    handler: removeFromChannel
-                  },
-                  canRemoveFromServer && {
-                    title: t("remove"),
-                    handler: removeUser,
-                    danger: true
-                  }
-                ].filter(Boolean) as Item[]
-              }
-            />
-          }
+      {canDM && (
+        <ul
+          className={clsx("mt-6 flex flex-col md:flex-row items-center gap-2", isCard && "pb-0.5")}
         >
-          <li className={`${iconClass} icon ${hasMore ? "" : "text-gray-500"}`}>
-            <IconMore className={hasMore ? "fill-primary-500" : ""} />
-            <span>{ct("more")}</span>
-          </li>
-        </Tippy>
-      </ul>
+          <NavLink to={`/chat/dm/${uid}`}>
+            <li className={`${iconClass} icon chat`}>
+              <IconMessage />
+              <span>{t("send_msg")}</span>
+            </li>
+          </NavLink>
+          {agoraEnabled && type == "embed" && (
+            <li role="button" onClick={startCall} className={`${iconClass} icon chat`}>
+              <IconCall className="fill-primary-400" />
+              <span>{t("call")}</span>
+            </li>
+          )}
+          <Tippy
+            disabled={!hasMore}
+            interactive
+            popperOptions={{ strategy: "fixed" }}
+            placement="right"
+            trigger="click"
+            hideOnClick={true}
+            content={
+              <ContextMenu
+                items={
+                  [
+                    agoraEnabled &&
+                      type == "card" && {
+                        title: t("call"),
+                        handler: startCall
+                      },
+                    canCopyEmail && {
+                      title: t("copy_email"),
+                      handler: copyEmail
+                    },
+                    canUpdateRole && {
+                      title: t("roles"),
+                      handler: updateRole,
+                      subs: [
+                        {
+                          title: t("set_normal"),
+                          checked: !isAdmin,
+                          handler: updateRole
+                        },
+                        {
+                          title: t("set_admin"),
+                          checked: isAdmin,
+                          handler: updateRole
+                        }
+                      ]
+                    },
+                    canRemoveFromChannel && {
+                      title: t("remove_from_channel"),
+                      danger: true,
+                      handler: removeFromChannel
+                    },
+                    canRemoveFromServer && {
+                      title: t("remove"),
+                      handler: removeUser,
+                      danger: true
+                    }
+                  ].filter(Boolean) as Item[]
+                }
+              />
+            }
+          >
+            <li className={`${iconClass} icon ${hasMore ? "" : "text-gray-500"}`}>
+              <IconMore className={hasMore ? "fill-primary-500" : ""} />
+              <span>{ct("more")}</span>
+            </li>
+          </Tippy>
+        </ul>
+      )}
     </div>
   );
 };

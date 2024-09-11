@@ -15,6 +15,7 @@ import OnlineStatus from "./OnlineStatus";
 import MessageSound from "./MessageSound";
 import Server from "./Server";
 import { shallowEqual } from "react-redux";
+import OnlyAdminCreateGroup from "./OnlyAdminCreateGroup";
 
 export default function Overview() {
   const { t } = useTranslation("setting");
@@ -53,6 +54,9 @@ export default function Overview() {
               }}
             />
           </SettingBlock>
+          {/* 只有 admin 能创建群组 */}
+
+          <OnlyAdminCreateGroup />
           {/* 访客模式 */}
           <SettingBlock title={t("overview.guest_mode.title")} desc={t("overview.guest_mode.desc")}>
             <StyledRadio
@@ -64,6 +68,7 @@ export default function Overview() {
               }}
             />
           </SettingBlock>
+
           {/* 是否显示在线提示 */}
           <OnlineStatus />
           {/* 会话布局 */}

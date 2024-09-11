@@ -48,7 +48,7 @@ const useUserOperation = ({ uid, cid }: IProps) => {
     shallowEqual
   );
   const loginUser = useAppSelector((store) => store.authData.user, shallowEqual);
-
+  const { show_email = true, dm_to_member = true } = channel ?? {};
   useEffect(() => {
     setPassedUid(uid ?? loginUser?.uid);
   }, [uid, loginUser]);
@@ -103,7 +103,7 @@ const useUserOperation = ({ uid, cid }: IProps) => {
       aside: "voice" as const
     };
     dispatch(updateDMVisibleAside(data));
-    // 实时显示calling box
+    // 实时显示 calling box
     if (!joinedAtThisContext) {
       dispatch(updateCallInfo({ from: loginUser?.uid ?? 0, to: uid, calling: false }));
     }
@@ -160,8 +160,9 @@ const useUserOperation = ({ uid, cid }: IProps) => {
     startChat,
     removeFromChannel: handleRemoveFromChannel,
     canRemoveFromChannel,
-    canCopyEmail: !!user?.email,
+    canCopyEmail: !!user?.email && show_email,
     copyEmail,
+    canDM: dm_to_member,
     startCall
   };
 };

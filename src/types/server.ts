@@ -14,6 +14,8 @@ export interface SystemCommon {
   contact_verification_enable?: boolean;
   chat_layout_mode?: ChatLayout;
   max_file_expiry_mode?: MessageExpireMode;
+  only_admin_can_create_group: boolean;
+  ext_setting: null | string;
 }
 export interface GithubAuthConfig {
   client_id?: string;

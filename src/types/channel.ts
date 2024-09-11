@@ -28,6 +28,12 @@ export interface Channel {
   is_public: boolean;
   avatar_updated_at: number;
   pinned_messages: PinnedMessage[];
+  // ext switches
+  show_email: boolean;
+  dm_to_member: boolean;
+  add_friend: boolean;
+  only_owner_can_send_msg: boolean;
+  ext_setting: null | string;
 }
 
 export interface CreateChannelDTO {
@@ -37,7 +43,20 @@ export interface CreateChannelDTO {
   is_public: boolean;
 }
 
-export interface ChannelDTO extends Partial<Pick<Channel, "owner" | "description" | "name">> {
+export interface ChannelDTO
+  extends Partial<
+    Pick<
+      Channel,
+      | "owner"
+      | "description"
+      | "name"
+      | "show_email"
+      | "add_friend"
+      | "only_owner_can_send_msg"
+      | "dm_to_member"
+      | "ext_setting"
+    >
+  > {
   id: number;
 }
 
