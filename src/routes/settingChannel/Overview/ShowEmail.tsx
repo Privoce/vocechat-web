@@ -17,7 +17,7 @@ type Props = {
 };
 
 const ShowEmail = ({ id, show_email }: Props) => {
-  const { t } = useTranslation("setting");
+  const { t } = useTranslation("setting", { keyPrefix: "channel" });
   const { t: ct } = useTranslation();
   const [refetch] = useLazyGetChannelQuery();
   // const onlyAdminCreateGroup = useAppSelector(
@@ -35,9 +35,9 @@ const ShowEmail = ({ id, show_email }: Props) => {
     updateSetting({ id, show_email: newVal });
   };
   return (
-    <SettingBlock title={"Show Email"} desc={""}>
+    <SettingBlock title={t("show_email")} desc={""}>
       <StyledRadio
-        options={["Enable", "Disable"]}
+        options={[t("enable"), t("disable")]}
         values={["true", "false"]}
         value={`${show_email}`}
         onChange={(v) => {

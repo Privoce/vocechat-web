@@ -17,7 +17,7 @@ type Props = {
 };
 
 const OnlyOwnerCanSendMsg = ({ id, only_owner_can_send_msg }: Props) => {
-  const { t } = useTranslation("setting");
+  const { t } = useTranslation("setting", { keyPrefix: "channel" });
   const { t: ct } = useTranslation();
   const [refetch] = useLazyGetChannelQuery();
   // const onlyAdminCreateGroup = useAppSelector(
@@ -35,9 +35,9 @@ const OnlyOwnerCanSendMsg = ({ id, only_owner_can_send_msg }: Props) => {
     updateSetting({ id, only_owner_can_send_msg: newVal });
   };
   return (
-    <SettingBlock title={"Only Owner Send Message"} desc={""}>
+    <SettingBlock title={t("only_owner")} desc={""}>
       <StyledRadio
-        options={["Enable", "Disable"]}
+        options={[t("enable"), t("disable")]}
         values={["true", "false"]}
         value={`${only_owner_can_send_msg}`}
         onChange={(v) => {

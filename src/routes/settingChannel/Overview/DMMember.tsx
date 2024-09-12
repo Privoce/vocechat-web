@@ -17,7 +17,7 @@ type Props = {
 };
 
 const DMMember = ({ id, dm_to_member }: Props) => {
-  const { t } = useTranslation("setting");
+  const { t } = useTranslation("setting", { keyPrefix: "channel" });
   const { t: ct } = useTranslation();
   const [refetch] = useLazyGetChannelQuery();
   // const onlyAdminCreateGroup = useAppSelector(
@@ -35,9 +35,9 @@ const DMMember = ({ id, dm_to_member }: Props) => {
     updateSetting({ id, dm_to_member: newVal });
   };
   return (
-    <SettingBlock title={"DM to member"} desc={""}>
+    <SettingBlock title={t("dm_to_member")} desc={""}>
       <StyledRadio
-        options={["Allow", "Disallow"]}
+        options={[t("allow"), t("disallow")]}
         values={["true", "false"]}
         value={`${dm_to_member}`}
         onChange={(v) => {

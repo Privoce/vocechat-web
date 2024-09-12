@@ -16,6 +16,10 @@ import { shallowEqual } from "react-redux";
 export default function AddEntriesMenu() {
   const { t } = useTranslation();
   const isAdmin = useAppSelector((store) => store.authData.user?.is_admin, shallowEqual);
+  const onlyAdminCreateGroup = useAppSelector(
+    (store) => store.server.only_admin_can_create_group,
+    shallowEqual
+  );
   const [isPrivate, setIsPrivate] = useState(false);
   const [inviteModalVisible, setInviteModalVisible] = useState(false);
   const [searchModalVisible, setSearchModalVisible] = useState(false);
@@ -57,6 +61,7 @@ export default function AddEntriesMenu() {
   const itemClass =
     "rounded flex items-center gap-2 text-sm font-semibold cursor-pointer px-2 py-2.5 md:hover:bg-gray-800/20 md:dark:hover:bg-gray-200/20";
   const iconClass = "w-5 h-5 dark:fill-gray-300";
+  const canPrivateGroup = onlyAdminCreateGroup ? isAdmin : true;
   return (
     <>
       <ul className="flex flex-col rounded-xl drop-shadow p-1 select-none text-gray-500 dark:text-gray-300 bg-white dark:bg-black">
@@ -67,10 +72,12 @@ export default function AddEntriesMenu() {
             {t("action.new_channel")}
           </li>
         )}
-        <li className={itemClass} onClick={handleOpenChannelModal.bind(null, true)}>
-          <ChannelIcon personal={true} className={iconClass} />
-          {t("action.new_private_channel")}
-        </li>
+        {canPrivateGroup && (
+          <li className={itemClass} onClick={handleOpenChannelModal.bind(null, true)}>
+            <ChannelIcon personal={true} className={iconClass} />
+            {t("action.new_private_channel")}
+          </li>
+        )}
         <li className={itemClass} onClick={toggleUsersModalVisible}>
           <IconMention className={iconClass} />
           {t("action.new_msg")}
