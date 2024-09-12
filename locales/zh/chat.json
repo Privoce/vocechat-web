@@ -9,7 +9,7 @@
   "channel_members": "频道成员",
   "add_channel_members": "新增成员",
   "welcome_channel": "欢迎来到 {{name}} 频道",
-  "welcome_desc": "这是频道 #{{name}} 的开始.",
+  "welcome_desc": "这是频道 #{{name}} 的开始。",
   "edit_channel": "编辑频道",
 
   "channel_name": "频道名称",
@@ -22,7 +22,7 @@
 
   "invite_title": "邀请朋友加入{{name}}",
   "invite_by_email": "邮件邀请",
-  "enable_smtp": "首先开启SMTP",
+  "enable_smtp": "首先开启 SMTP",
   "send_invite_link": "或者，向朋友发送邀请链接",
   "share_invite_link": "分享此链接，邀请朋友加入",
   "invite_link_faq": "链接异常？",
@@ -62,5 +62,6 @@
   "unblock": "解除屏蔽",
   "contact_tip": "该用户不在您的联系人列表中",
   "contact_block_tip": "该用户已被你屏蔽",
-  "file_expired": "文件已过期"
+  "file_expired": "文件已过期",
+  "only_owner_can_send": "只有频道创建者才能发消息！"
 }

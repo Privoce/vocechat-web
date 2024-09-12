@@ -63,5 +63,6 @@
   "unblock": "Unblock",
   "contact_tip": "This user is not in your contact",
   "contact_block_tip": "This user has been blocked by you",
-  "file_expired": "File Expired"
+  "file_expired": "File Expired",
+  "only_owner_can_send": "only Channel owner can send message!"
 }
