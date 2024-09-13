@@ -56,7 +56,7 @@
       "title": "Guest Mode",
       "desc": "If enabled, visitors will see public channels on this server.",
       "enable": "Enable",
-      "disable": "Disabled"
+      "disable": "Disable"
     },
     "url": {
       "title": "Update Frontend URL",
