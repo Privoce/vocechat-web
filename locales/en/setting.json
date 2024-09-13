@@ -44,7 +44,7 @@
     "add_friend": "Add friend",
     "dm_to_member": "DM to Member",
     "show_email": "Show Email",
-    "only_owner": "Only Owner Can Send Message"
+    "only_owner": "Only Owner and Admin Can Send Message"
   },
   "dm": {
     "delete": "Delete User",

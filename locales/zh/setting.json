@@ -44,7 +44,7 @@
     "add_friend": "允许加好友",
     "dm_to_member": "允许私聊",
     "show_email": "显示邮箱",
-    "only_owner": "仅创建者可发消息"
+    "only_owner": "仅创建者和管理员可发消息"
   },
   "overview": {
     "title_feat": "特性开关",
