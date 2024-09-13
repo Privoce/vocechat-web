@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { isNull, omitBy } from "lodash";
+import { omitBy } from "lodash";
 
 import { Channel, UpdateChannelDTO, UpdatePinnedMessageDTO } from "@/types/channel";
 import BASE_URL from "../config";
+import { isUndefinedOrNull } from "@udecode/plate-common";
 
 // import { updateVoicingInfo } from "./voice";
 
@@ -74,8 +75,13 @@ const channelsSlice = createSlice({
           break;
         }
         default:
-          // old code: state.byId[gid] = { ...state.byId[gid]!, ...getNonNullValues(rest) };
-          state.byId[gid] = { ...state.byId[gid]!, ...omitBy(rest, isNull) };
+          {
+            const wtf = omitBy(rest, isUndefinedOrNull);
+            console.log("rrrr", wtf);
+
+            // old code: state.byId[gid] = { ...state.byId[gid]!, ...getNonNullValues(rest) };
+            state.byId[gid] = { ...state.byId[gid]!, ...wtf };
+          }
           break;
       }
     },

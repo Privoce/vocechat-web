@@ -146,13 +146,9 @@ const Send: FC<IProps> = ({
   const onlyOwnerCanSend = !!(context == "channel"
     ? channelsData[id]?.only_owner_can_send_msg
     : false);
-  const canSendMessageInChannel = !isChannelOwner && onlyOwnerCanSend;
-  if (canSendMessageInChannel) {
-    return (
-      <div className="p-5 uppercase bg-gray-200 rounded-lg w-fit dark:bg-gray-600 text-red-300">
-        only Channel owner can send message!
-      </div>
-    );
+  const canNotSendMessageInChannel = !isChannelOwner && onlyOwnerCanSend;
+  if (canNotSendMessageInChannel) {
+    return null;
   }
   if (context == "dm" && blocked) {
     return (

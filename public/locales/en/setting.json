@@ -44,7 +44,7 @@
     "add_friend": "Add friend",
     "dm_to_member": "DM to Member",
     "show_email": "Show Email",
-    "only_owner": "Only Owner Send Message"
+    "only_owner": "Only Owner Can Send Message"
   },
   "dm": {
     "delete": "Delete User",
@@ -62,16 +62,16 @@
       "invite": "Invitation Link Only"
     },
     "admin_create_group": {
-      "title": "Only Admins create group",
+      "title": "Only Admins Can Create Group",
       "desc": "If enabled, only admins can create group.",
       "enable": "Enable",
-      "disable": "Disabled"
+      "disable": "Disable"
     },
     "guest_mode": {
       "title": "Guest Mode",
       "desc": "If enabled, visitors will see public channels on this server.",
       "enable": "Enable",
-      "disable": "Disabled"
+      "disable": "Disable"
     },
     "url": {
       "title": "Update Frontend URL",
