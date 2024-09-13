@@ -144,7 +144,7 @@ const useUserOperation = ({ uid, cid }: IProps) => {
   const canRemoveFromContact: boolean = loginUid != uid;
   const canInviteChannel = !!cid && (loginUser?.is_admin || channel?.owner == loginUser?.uid);
   return {
-    isChannelOwner: loginUser?.uid == channel?.owner,
+    isChannelOwner: loginUser?.uid == channel?.owner || (channel?.is_public && isAdmin),
     isAdmin,
     updateRole,
     canUpdateRole: isAdmin && loginUid != uid && uid != 1,
