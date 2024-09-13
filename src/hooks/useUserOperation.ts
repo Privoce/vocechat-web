@@ -131,23 +131,23 @@ const useUserOperation = ({ uid, cid }: IProps) => {
     updateContactStatus({ target_uid: uid, action: "unblock" });
   };
 
-  const isAdmin = !!loginUser?.is_admin;
+  const loginUserIsAdmin = !!loginUser?.is_admin;
   const loginUid = loginUser?.uid;
-  const canDeleteChannel = !!cid && !channel?.is_public && isAdmin;
+  const canDeleteChannel = !!cid && !channel?.is_public && loginUserIsAdmin;
   const canRemoveFromChannel =
     !!cid &&
     !channel?.is_public &&
-    (isAdmin || channel?.owner == loginUid) &&
+    (loginUserIsAdmin || channel?.owner == loginUid) &&
     uid != channel?.owner;
-  const canRemove: boolean = isAdmin && loginUid != uid && !cid && uid !== 1;
+  const canRemove: boolean = loginUserIsAdmin && loginUid != uid && !cid && uid !== 1;
   const canBlock: boolean = loginUid != uid;
   const canRemoveFromContact: boolean = loginUid != uid;
   const canInviteChannel = !!cid && (loginUser?.is_admin || channel?.owner == loginUser?.uid);
   return {
-    isChannelOwner: loginUser?.uid == channel?.owner || (channel?.is_public && isAdmin),
-    isAdmin,
+    isChannelOwner: loginUser?.uid == channel?.owner || (channel?.is_public && loginUserIsAdmin),
+    isAdmin: !!user?.is_admin,
     updateRole,
-    canUpdateRole: isAdmin && loginUid != uid && uid != 1,
+    canUpdateRole: loginUserIsAdmin && loginUid != uid && uid != 1,
     removeFromContact,
     canBlock,
     canRemoveFromContact,

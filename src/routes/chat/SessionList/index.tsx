@@ -47,10 +47,10 @@ const SessionList: FC<Props> = ({ tempSession }) => {
     const pinTmps = pins
       .map((p) => {
         const { target } = p;
-        if ("uid" in target) {
+        if ("uid" in target && DMs.includes(target.uid as number)) {
           return getSessionObj((target as PinChatTargetUser).uid, "dm");
         }
-        if ("gid" in target) {
+        if ("gid" in target && channelIDs.includes(target.gid as number)) {
           return getSessionObj((target as PinChatTargetChannel).gid, "channel");
         }
         return null;
@@ -114,7 +114,7 @@ const SessionList: FC<Props> = ({ tempSession }) => {
     tempSession,
     pins
   ]);
-  console.log("sessionsss", sessions);
+  console.log("sessionsss", sessions, pinSessions, pins);
 
   return (
     <div className="h-full pb-14 md:pb-0 overflow-auto">
