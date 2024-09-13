@@ -28,7 +28,10 @@ const MemberList: FC<Props> = ({ cid }) => {
   const userMap = useAppSelector((store) => store.users.byId, shallowEqual);
   const channels = useAppSelector((store) => store.channels, shallowEqual);
   const { uids, input, updateInput } = useFilteredUsers();
-  const { copyEmail, removeFromChannel, removeUser } = useUserOperation({ cid });
+  const { copyEmail, canCopyEmail, removeFromChannel, removeUser, showEmailInChannel } =
+    useUserOperation({
+      cid
+    });
   const [updateUser, { isSuccess: updateSuccess }] = useUpdateUserMutation();
 
   useEffect(() => {
@@ -67,10 +70,12 @@ const MemberList: FC<Props> = ({ cid }) => {
             const { name, email, is_admin } = currUser;
             const owner = channel && channel.owner == uid;
             const switchRoleVisible = loginUser?.is_admin && loginUser.uid !== uid && uid !== 1;
-            const dotsVisible = email || loginUser?.is_admin;
+            let dotsVisible = loginUser?.is_admin;
             const canRemove = loginUser?.is_admin && loginUser?.uid != uid && uid !== 1;
             const canRemoveFromChannel =
               channel && channel.owner == loginUser?.uid && loginUser?.uid != uid;
+
+            dotsVisible = [canCopyEmail, canRemove, canRemoveFromChannel].some((i) => i);
             return (
               <li
                 key={uid}
@@ -82,9 +87,11 @@ const MemberList: FC<Props> = ({ cid }) => {
                     <span className="font-bold text-sm text-gray-600 dark:text-white flex items-center gap-1">
                       {name} {owner && <IconOwner />}
                     </span>
-                    <span className="hidden md:block text-xs text-gray-500 dark:text-slate-50">
-                      {email}
-                    </span>
+                    {showEmailInChannel && (
+                      <span className="hidden md:block text-xs text-gray-500 dark:text-slate-50">
+                        {email}
+                      </span>
+                    )}
                   </div>
                 </div>
                 <div className="flex items-center gap-7">
@@ -138,7 +145,7 @@ const MemberList: FC<Props> = ({ cid }) => {
                       trigger="click"
                       content={
                         <ul className="min-w-30 context-menu">
-                          {email && (
+                          {canCopyEmail && (
                             <li className="item" onClick={copyEmail.bind(null, email)}>
                               {ct("action.copy_email")}
                             </li>
