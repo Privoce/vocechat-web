@@ -28,7 +28,7 @@ const OnlyAdminCanSeeChannelMembers = ({}: Props) => {
     }
   }, [isSuccess]);
   const handleChange = (newVal: boolean) => {
-    const json = upsertJSON(serverExtSetting, { only_admin_can_see_channel_members: newVal });
+    const json = upsertJSON(serverExtSetting, { [KEY_ADMIN_SEE_CHANNEL_MEMBERS]: newVal });
     updateSetting({ ext_setting: json });
   };
   const onlyAdminSeeChannelMembers =

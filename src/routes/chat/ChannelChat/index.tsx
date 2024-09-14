@@ -69,7 +69,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
   const toolClass = `relative cursor-pointer hidden md:block`;
   const onlyAdminCanSeeMembers =
     getJSONField(serverExtSetting, KEY_ADMIN_SEE_CHANNEL_MEMBERS) ?? false;
-  const canViewMembers = loginUser?.is_admin ? true : onlyAdminCanSeeMembers;
+  const canViewMembers = loginUser?.is_admin ? true : !onlyAdminCanSeeMembers;
   return (
     <Layout
       to={cid}
