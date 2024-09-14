@@ -16,6 +16,7 @@ import MessageSound from "./MessageSound";
 import Server from "./Server";
 import { shallowEqual } from "react-redux";
 import OnlyAdminCreateGroup from "./OnlyAdminCreateGroup";
+import OnlyAdminCanSeeChannelMembers from "./OnlyAdminSeeChannelMembers";
 
 export default function Overview() {
   const { t } = useTranslation("setting");
@@ -57,6 +58,7 @@ export default function Overview() {
           {/* 只有 admin 能创建群组 */}
 
           <OnlyAdminCreateGroup />
+          <OnlyAdminCanSeeChannelMembers />
           {/* 访客模式 */}
           <SettingBlock title={t("overview.guest_mode.title")} desc={t("overview.guest_mode.desc")}>
             <StyledRadio

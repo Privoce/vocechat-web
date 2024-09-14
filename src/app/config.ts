@@ -185,5 +185,5 @@ export const getInviteLinkTimesList = () => [
     value: 100
   }
 ];
-
+export const KEY_ADMIN_SEE_CHANNEL_MEMBERS = `only_admin_can_see_channel_members`;
 export default BASE_URL;

@@ -67,6 +67,12 @@
       "enable": "Enable",
       "disable": "Disable"
     },
+    "admin_see_group_members": {
+      "title": "Only Admins Can See Group Members",
+      "desc": "If enabled, only admins can see group members.",
+      "enable": "Enable",
+      "disable": "Disable"
+    },
     "guest_mode": {
       "title": "Guest Mode",
       "desc": "If enabled, visitors will see public channels on this server.",

@@ -1,4 +1,4 @@
-import QR from "qrcode.react";
+import { QRCodeSVG } from "qrcode.react";
 
 import { useAppSelector } from "@/app/store";
 import { shallowEqual } from "react-redux";
@@ -13,14 +13,14 @@ const QRCode = ({ link, size = 512, level = "L" }: Props) => {
   const logo = useAppSelector((store) => store.server.logo, shallowEqual);
   return (
     <div className="p-2 bg-white dark:bg-slate-200 rounded">
-      <QR
-        renderAs="svg"
+      <QRCodeSVG
         value={link}
         className="rounded border border-solid border-gray-200 dark:border-none !w-full !h-full"
         size={size}
         bgColor={"#fff"}
         fgColor={"#000"}
         level={level}
+        marginSize={2}
         // includeMargin={true}
         imageSettings={{
           src: logo,

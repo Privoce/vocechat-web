@@ -19,6 +19,8 @@ import VoiceChat from "../VoiceChat";
 import Dashboard from "../VoiceChat/Dashboard";
 import Members from "./Members";
 import PinList from "./PinList";
+import { getJSONField } from "@/utils";
+import { KEY_ADMIN_SEE_CHANNEL_MEMBERS } from "@/app/config";
 
 type Props = {
   cid?: number;
@@ -29,13 +31,17 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const serverExtSetting = useAppSelector(
+    (store) => store.server.ext_setting ?? "{}",
+    shallowEqual
+  );
   const loginUser = useAppSelector((store) => store.authData.user, shallowEqual);
   const visibleAside = useAppSelector((store) => store.footprint.channelAsides[cid], shallowEqual);
   const userIds = useAppSelector((store) => store.users.ids, shallowEqual);
   const data = useAppSelector((store) => store.channels.byId[cid], shallowEqual);
   useEffect(() => {
     if (!data) {
-      // channel不存在了 回首页
+      // channel 不存在了 回首页
       navigate("/chat");
     }
   }, [data]);
@@ -61,6 +67,9 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
   const addVisible = loginUser?.is_admin || owner == loginUser?.uid;
   const pinCount = data?.pinned_messages?.length || 0;
   const toolClass = `relative cursor-pointer hidden md:block`;
+  const onlyAdminCanSeeMembers =
+    getJSONField(serverExtSetting, KEY_ADMIN_SEE_CHANNEL_MEMBERS) ?? false;
+  const canViewMembers = loginUser?.is_admin ? true : onlyAdminCanSeeMembers;
   return (
     <Layout
       to={cid}
@@ -102,11 +111,13 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
               </li>
             </Tippy>
           </Tooltip>
-          <li className={`${toolClass}`} onClick={toggleMembersVisible}>
-            <Tooltip tip={t("channel_members")} placement="left">
-              <IconPeople className={visibleAside == "members" ? "fill-gray-600" : ""} />
-            </Tooltip>
-          </li>
+          {canViewMembers && (
+            <li className={`${toolClass}`} onClick={toggleMembersVisible}>
+              <Tooltip tip={t("channel_members")} placement="left">
+                <IconPeople className={visibleAside == "members" ? "fill-gray-600" : ""} />
+              </Tooltip>
+            </li>
+          )}
         </ul>
       }
       header={
@@ -125,13 +136,15 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
         </header>
       }
       users={
-        <Members
-          uids={memberIds}
-          addVisible={addVisible}
-          cid={cid}
-          ownerId={owner}
-          membersVisible={visibleAside == "members"}
-        />
+        canViewMembers ? (
+          <Members
+            uids={memberIds}
+            addVisible={addVisible}
+            cid={cid}
+            ownerId={owner}
+            membersVisible={visibleAside == "members"}
+          />
+        ) : null
       }
       voice={<Dashboard visible={visibleAside == "voice"} id={cid} context="channel" />}
     />

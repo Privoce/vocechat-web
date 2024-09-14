@@ -507,6 +507,23 @@ export const playMessageSound = async () => {
     console.warn("play join sound failed!", error);
   }
 };
+export const getJSONField = (json: string | null, field: string) => {
+  try {
+    const obj = json ? JSON.parse(json) : {};
+    return obj[field];
+  } catch (error) {
+    return undefined;
+  }
+};
+export const upsertJSON = (json: string | null, obj: object) => {
+  try {
+    const jsonObj = json ? JSON.parse(json) : {};
+    const result = Object.assign({}, jsonObj, obj);
+    return JSON.stringify(result);
+  } catch (error) {
+    return JSON.stringify(obj);
+  }
+};
 export const isInIframe = () => window.location !== window.parent.location;
 export const encodeBase64 = (str = "") => btoa(unescape(encodeURIComponent(str)));
 export const shouldPreviewImage = (type: string) => {
