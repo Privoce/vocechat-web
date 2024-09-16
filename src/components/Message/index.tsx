@@ -180,7 +180,7 @@ const Message: FC<IProps> = ({
           </div>
           <div
             className={clsx(
-              `select-text text-gray-800 text-sm wb whitespace-pre-wrap dark:!text-white pr-6 md:pr-0`,
+              `vc-msg select-text text-gray-800 text-sm wb whitespace-pre-wrap dark:!text-white pr-6 md:pr-0`,
               sending && "opacity-90"
             )}
           >

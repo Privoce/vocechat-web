@@ -16,7 +16,8 @@ const ImagePreview = ({ context = "chat" }: Props) => {
     if (!container) return;
     const chatHandler = (evt: MouseEvent) => {
       const target = evt.target as HTMLImageElement;
-      if (target && target.nodeName == "IMG" && target.classList.contains("preview")) {
+      const isMsg = !!target.closest(".vc-msg");
+      if (isMsg && target && target.nodeName == "IMG" && target.classList.contains("preview")) {
         // console.log("click chat", target);
         evt.stopPropagation();
         const thumbnail = target.src;
@@ -28,14 +29,9 @@ const ImagePreview = ({ context = "chat" }: Props) => {
     };
     const markdownHandler = (evt: MouseEvent) => {
       const target = evt.target as HTMLImageElement;
-      const isMarkdown = !!target.closest("#MARKDOWN_CONTAINER");
+      const isMsg = !!target.closest(".vc-msg");
       // 图片 并且没被 a 标签包裹
-      if (
-        isMarkdown &&
-        target &&
-        target.nodeName == "IMG" &&
-        target.parentElement?.tagName !== "A"
-      ) {
+      if (isMsg && target && target.nodeName == "IMG" && target.parentElement?.tagName !== "A") {
         // console.log("click markdown", target);
         evt.stopPropagation();
         const urlObj = new URL(target.src);
