@@ -64,11 +64,7 @@
     },
     "lang": {
       "title": "Dil",
-      "desc": "Dil Ayarları",
-      "en": "English",
-      "tr": "Türkçe",
-      "zh": "中文",
-      "jp": "日本語"
+      "desc": "Dil Ayarları"
     },
     "theme": {
       "title": "Tema",
