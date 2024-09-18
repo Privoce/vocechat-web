@@ -1,0 +1,282 @@
+{
+  "title": "Paramètres",
+  "save_change": "Sauvegarder les Modifications",
+  "reset": "Réinitialiser",
+  "save_tip": "Vous avez des modifications non enregistrées !",
+  "nav": {
+    "general": "Général",
+    "overview": "Aperçu",
+    "members": "Membres",
+    "data_management": "Gestion des Données",
+    "auto_delete_msg": "Auto-suppression des Messages",
+    "user": "Utilisateur",
+    "my_account": "Mon Compte",
+    "config": "Configuration",
+    "bot": "Bot & Webhook",
+    "firebase": "Firebase",
+    "agora": "Agora",
+    "smtp": "SMTP",
+    "login_method": "Méthodes de Connexion",
+    "third_app": "Connexion Tiers",
+    "widget": "Widget",
+    "license": "Licence",
+    "about": "À Propos",
+    "api_doc": "Documentation API",
+    "version": "Version"
+  },
+  "channel": {
+    "leave": "Quitter le Canal",
+    "leave_desc": "Êtes-vous sûr de vouloir quitter ce canal ?",
+    "transfer_desc": "Vous devez transférer la propriété de votre canal à quelqu'un d'autre avant de quitter le canal.",
+    "delete": "Supprimer le Canal",
+    "delete_desc": "Êtes-vous sûr de vouloir supprimer ce canal ?",
+    "id": "ID du Canal",
+    "name": "Nom du Canal",
+    "topic": "Sujet du Canal",
+    "topic_placeholder": "Faites savoir à tout le monde comment utiliser ce canal.",
+    "visibility": "Visibilité du Canal",
+    "public": "Public",
+    "private": "Privé"
+  },
+  "dm": {
+    "delete": "Supprimer l'Utilisateur",
+    "delete_desc": "Êtes-vous sûr de vouloir supprimer cet utilisateur ?"
+  },
+  "overview": {
+    "title_feat": "Fonctionnalités",
+    "name": "Nom du Serveur",
+    "desc": "Description du Serveur",
+    "upload_desc": "La taille minimale est de 128x128, nous recommandons au moins 512x512 pour le serveur. Taille maximale limitée à 5 Mo.",
+    "sign_up": {
+      "title": "Inscription par Défaut",
+      "desc": "Qui peut s'inscrire sur ce serveur.",
+      "everyone": "Tout le monde",
+      "invite": "Lien d'Invitation Seulement"
+    },
+    "guest_mode": {
+      "title": "Mode Invité",
+      "desc": "S'il est activé, les visiteurs verront les canaux publics sur ce serveur.",
+      "enable": "Activer",
+      "disable": "Désactivé"
+    },
+    "url": {
+      "title": "Mettre à Jour l'URL de Frontend",
+      "desc": "Mettre à jour l'URL de frontend"
+    },
+    "lang": {
+      "title": "Langues",
+      "desc": "Définir la langue du système"
+    },
+    "theme": {
+      "title": "Thème",
+      "desc": "Choisissez votre thème",
+      "auto": "Automatique",
+      "dark": "Sombre",
+      "light": "Clair"
+    },
+    "message_sound": {
+      "title": "Son des Messages",
+      "desc": "Jouez un son lors de la réception d'un nouveau message.",
+      "enable": "Activer",
+      "disable": "Désactiver"
+    },
+    "online_status": {
+      "title": "Statut En Ligne",
+      "desc": "S'il est activé, les membres verront le statut en ligne/hors ligne des autres.",
+      "enable": "Activer",
+      "disable": "Désactiver"
+    },
+    "chat_layout": {
+      "title": "Mise en Page du Chat",
+      "desc": "Quel côté pour afficher les messages envoyés par vous-même",
+      "left": "Gauche",
+      "self_right": "Droite"
+    },
+    "contact_verify": {
+      "title": "Vérification des Contacts",
+      "desc": "Par défaut, tous les membres du serveur peuvent se voir. Si vous souhaitez que les membres du serveur ajoutent et gèrent leurs propres contacts, veuillez activer la fonctionnalité de contact (l'administrateur sera dans la liste des contacts par défaut).",
+      "enable": "Activer",
+      "disable": "Désactiver"
+    }
+  },
+  "data": {
+    "clear_files": {
+      "title": "Fichiers et Données d'Images",
+      "desc": "Cliquez sur le bouton ci-dessous pour supprimer toutes les données de fichiers et d'images de ce serveur.",
+      "btn": "Effacer les Données de Fichiers"
+    },
+    "clear_msgs": {
+      "title": "Toutes les Données de Messages",
+      "desc": "Cliquez sur le bouton ci-dessous pour supprimer toutes les données de chat, y compris les textes et les fichiers de ce serveur.",
+      "btn": "Effacer les Données de Chats"
+    },
+    "auto_delete_file": {
+      "title": "Auto-suppression des Données de Fichiers",
+      "desc": "Définir le temps d'expiration pour toutes les données de fichiers de ce serveur.",
+      "confirm_desc": "Tous les fichiers plus anciens que le temps défini seront supprimés.",
+      "off": "Désactivé",
+      "day1": "1 Jour",
+      "day7": "7 Jours",
+      "day30": "30 Jours",
+      "day90": "90 Jours",
+      "day180": "180 Jours"
+    }
+  },
+  "license": {
+    "signed": "Signé",
+    "domain": "Domaines",
+    "user_limit": "Limite d'Utilisateur",
+    "expire": "Expiré À",
+    "create": "Créé À",
+    "value": "Valeur de la Licence",
+    "renew": "Renouveler la Licence",
+    "update": "Mettre à Jour Manuellement",
+    "update_placeholder": "Veuillez saisir la nouvelle valeur de la licence",
+    "renew_select": "Veuillez sélectionner le prix",
+    "tip": {
+      "title": "Une chance d'obtenir une mise à niveau de licence gratuite !",
+      "user_test": "Obtenez une mise à niveau de licence gratuite grâce à un test utilisateur de 25 minutes",
+      "contact": "Réservez un créneau ici : "
+    },
+    "payment_success": "Paiement Réussi !",
+    "back_home": "Retour à l'Accueil",
+    "tip_renewing": "Renouvellement de la Licence, ne fermez pas la fenêtre !",
+    "tip_renewed": "Licence Renouvelée avec Succès !",
+    "tip_renew_error": "ID de Session Stripe Invalidé",
+    "tip_domain": "La licence est liée au domaine (sans port), veuillez confirmer ou mettre à jour vos paramètres :",
+    "tip_port": "Remplissez votre nom de domaine sans port.",
+    "tip_confirm": "Commencer le Paiement"
+  },
+  "bot": {
+    "add_api_key": "Ajouter une Clé API",
+    "no_api_key": "Aucune Clé API pour l'instant",
+    "bot_tip_title": "Les bots peuvent envoyer des messages aux canaux.",
+    "bot_tip_desc": "Veuillez noter que nous ne montrons pas la clé API d'un Bot à nouveau après sa génération. Vous pouvez toujours générer une nouvelle clé API pour un Bot en cliquant sur \"Ajouter une Clé API\" et cela n'annulera pas les clés API précédentes.",
+    "webhook_tip_title": "Les Webhooks peuvent recevoir des messages dans un canal et devraient avoir une URL fournie par vous.",
+    "webhook_tip_desc": "Veuillez fournir une URL de webhook qui retournera un code 200.",
+    "manage": "Gérer",
+    "how_to_use": "Comment Utiliser",
+    "manage_desc": "Vous pouvez supprimer un bot à tout moment, l'utilisateur bot sera immédiatement supprimé et toutes les API seront annulées.",
+    "create_title": "Créer un Bot",
+    "create_desc": "Donnez un nom à votre bot. Vous pouvez également ajouter une URL de webhook d’endpoint pour recevoir des données.",
+    "create_key_title": "Créer une Clé API pour le Bot",
+    "create_key_desc": "Créer une Clé API pour authentifier votre communication",
+    "create_key_warning": "Assurez-vous de copier la Clé API maintenant. Vous ne pourrez pas la voir à nouveau !",
+    "key_copy_and_close": "Copier et Fermer",
+    "delete_title": "Supprimer le Bot",
+    "delete_desc": "Êtes-vous sûr de vouloir supprimer le Bot ?",
+    "delete_key_title": "Supprimer la Clé API du Bot",
+    "delete_key_desc": "Êtes-vous sûr de vouloir supprimer cette Clé API de Bot ?",
+    "webhook_title": "Mettre à Jour l'URL du Webhook",
+    "webhook_desc": "Veuillez saisir une URL valide",
+    "col_avatar": "Avatar",
+    "col_name": "Nom du Bot",
+    "col_api_key": "Clé API (Messages Entrants)",
+    "col_webhook": "URL du Webhook d'Endpoint (Sortant)",
+    "col_opt": "Opérations",
+    "col_key_name": "Nom",
+    "col_key_value": "Clé",
+    "col_key_create_time": "Créé À",
+    "col_key_last_used": "Dernière Utilisation"
+  },
+  "auto_delete_msg": {
+    "title": "Supprimer les messages envoyés par moi-même après une certaine période.",
+    "desc": "Cela supprimera les données de messages stockées à la fois sur le serveur et du côté client.",
+    "off": "Désactivé",
+    "5_min": "5 minutes",
+    "10_min": "10 minutes",
+    "1_hour": "1 heure",
+    "1_day": "1 jour",
+    "1_week": "1 semaine",
+    "clear": "Effacer tous les messages du canal",
+    "clear_title": "Effacer tous les messages dans ce canal.",
+    "clear_desc": "Cela supprimera toutes les données de messages stockées à la fois sur le serveur et du côté client."
+  },
+  "firebase": {
+    "disable": "Désactiver",
+    "use_official": "Utiliser la Configuration Officielle",
+    "custom": "Personnalisé",
+    "enable": "Activer",
+    "token_url": "URL du Token",
+    "project_id": "ID du Projet",
+    "private_key": "Clé Privée",
+    "client_email": "Email du Client"
+  },
+  "smtp": {
+    "enable": "Activer",
+    "host": "Hôte",
+    "port": "Port",
+    "from": "De",
+    "username": "Nom d'utilisateur",
+    "password": "Mot de Passe",
+    "how_to": "Comment configurer SMTP ?",
+    "send_test_email": "Envoyer un Email de Test"
+  },
+  "agora": {
+    "enable": "Activer",
+    "how_to": "Comment configurer Agora ?"
+  },
+  "third_app": {
+    "key": "Clé Sécurisée API",
+    "update": "Mettre à Jour le Secret",
+    "update_tip": "Êtes-vous sûr de vouloir mettre à jour le secret API ? Le secret précédent sera invalidé",
+    "key_tip": "La clé de sécurité convenue entre le serveur et l'application tierce est utilisée pour chiffrer les données de communication.",
+    "how_to": "Comment utiliser ?"
+  },
+  "login": {
+    "password": "Mot de Passe",
+    "password_desc": "Permet aux membres de se connecter avec un mot de passe.",
+    "magic_link": "Lien Magique",
+    "magic_link_desc": "Permet aux membres de se connecter avec un Lien Magique.",
+    "google": "Google",
+    "google_desc": "Permet aux membres de se connecter avec Google.",
+    "github": "GitHub",
+    "github_desc": "Permet aux membres de se connecter avec GitHub.",
+    "metamask": "Metamask",
+    "metamask_desc": "Permet aux membres de se connecter avec Metamask.",
+    "oidc": "OIDC",
+    "oidc_desc": "Permet aux membres de se connecter avec OIDC.",
+    "oidc_custom": "Personnalisé",
+    "more_details": "Besoin de plus de détails ? Consultez notre <0>documentation</0>."
+  },
+  "widget": {
+    "tip": "Étendre VoceChat en intégrant le widget SDK VoceChat !",
+    "code": "Exemple de Code",
+    "code_comment": "mettez ce fragment de code dans votre fichier html",
+    "config": "Description de la Configuration",
+    "param_key": "Clé de Paramètre",
+    "default_value": "Valeur par Défaut",
+    "remark": "Remarques",
+    "custom_style_tip": "si vous souhaitez personnaliser plus précisément la position du widget, utilisez l'ID de l'élément du widget dans votre fichier HTML ou CSS, comme ceci",
+    "param_id": "ID du Widget (version serveur >= v0.3.12)",
+    "param_host": "Affecter l'utilisateur discutant avec le visiteur (ID Utilisateur)",
+    "param_title": "titre de la fenêtre de chat popup",
+    "param_logo": "URL de l'icône du logo de la fenêtre de chat popup",
+    "param_auto_reg": "true : Enregistrer automatiquement un nouvel utilisateur s'il n'existe pas, false : l'utilisateur doit saisir son email et son nom pour s'inscrire",
+    "param_login_token": "Si vous utilisez les informations existantes d'utilisateur de votre propre plateforme pour générer un nouveau compte VoceChat, ceci est le token de connexion généré par votre plateforme, pour plus de détails, veuillez vous référer à : https://doc.voce.chat/zh-cn/login-with-other-account. Ne remplissez pas ceci pour des scénarios par défaut (aucun système d'utilisateurs tiers) !",
+    "param_theme_color": "La couleur de thème du widget",
+    "param_close_width": "La largeur lorsque le widget est fermé",
+    "param_close_height": "La hauteur lorsque le widget est fermé",
+    "param_open_width": "La largeur lorsque le widget est ouvert",
+    "param_open_height": "La hauteur lorsque le widget est ouvert",
+    "param_welcome": "Message de bienvenue personnalisé",
+    "param_position": "Position du widget : gauche/droite",
+    "share_link": "Partagez le lien du widget afin que les gens puissent discuter avec vous directement",
+    "widget_faq": "Activer Laisser Tout le Monde Rejoindre en Premier"
+  },
+  "version": {
+    "client_version": "Version Client",
+    "server_version": "Version Serveur",
+    "build_time": "Horodatage de Construction",
+    "sync": "Synchroniser avec la dernière version du client web"
+  },
+  "api_doc": {
+    "desc": "Nous avons une documentation API détaillée sur laquelle vous pouvez baser votre propre outil de chat.",
+    "access": "URL d'accès :",
+    "use_method": "Méthode d'Utilisation :",
+    "step_1": "Étape Une : Changez pour votre propre Serveur",
+    "step_2": "Étape Deux : Entrez le token de connexion",
+    "step_2_desc": "Vous pouvez obtenir le token en accédant à l'en-tête http X-API-Key ou en copiant simplement le texte ci-dessous :",
+    "last": "Chaque API a un bouton 'Essayez-le', et vous pouvez déboguer l'API avec cela"
+  }
+}
