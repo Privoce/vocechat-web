@@ -65,13 +65,7 @@
     },
     "lang": {
       "title": "Idiomas",
-      "desc": "Establecer el idioma del sistema",
-      "en": "Inglés",
-      "es": "Español",
-      "tr": "Turco",
-      "zh": "Chino",
-      "jp": "Japonés",
-      "pt": "Portugués"
+      "desc": "Establecer el idioma del sistema"
     },
     "theme": {
       "title": "Tema",

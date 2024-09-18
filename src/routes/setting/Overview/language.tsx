@@ -5,8 +5,16 @@ import SettingBlock from "@/components/SettingBlock";
 import StyledRadio from "@/components/styled/Radio";
 
 // type Props = {}
-type LanguageType = "en" | "zh" | "jp" | "tr" | "pt" | "es";
-const Langs: LanguageType[] = ["en", "zh", "jp", "tr", "pt", "es"];
+type LanguageType = "en" | "zh" | "jp" | "tr" | "pt" | "es" | "fr";
+const LangMap: Record<LanguageType, string> = {
+  en: "English",
+  zh: "中文",
+  tr: "Türkçe",
+  jp: "日本語",
+  pt: "Portuguese",
+  fr: "Français",
+  es: "Español"
+};
 const Index = () => {
   const { t, i18n } = useTranslation("setting");
   const handleGuestToggle = (v: LanguageType) => {
@@ -15,15 +23,8 @@ const Index = () => {
   return (
     <SettingBlock title={t("overview.lang.title")} desc={t("overview.lang.desc")}>
       <StyledRadio
-        options={[
-          t("overview.lang.en"),
-          t("overview.lang.zh"),
-          t("overview.lang.jp"),
-          t("overview.lang.tr"),
-          t("overview.lang.pt"),
-          t("overview.lang.es")
-        ]}
-        values={Langs}
+        options={Object.values(LangMap)}
+        values={Object.keys(LangMap)}
         value={i18n.language.split("-")[0]}
         onChange={(v) => {
           const _v = v as LanguageType;

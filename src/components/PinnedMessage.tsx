@@ -23,7 +23,7 @@ const PinnedMessageView: FC<Props> = ({ data }) => {
 
   const { content_type, content, properties, thumbnail = "" } = { ...data, ...normalized };
   const uid = msgData[mid]?.from_uid || 0;
-  const created_at = msgData[mid]?.created_at || 0;
+  const created_at = data.created_at ? data.created_at : msgData[mid]?.created_at;
   const { name, avatar } = usersData[uid] ?? {};
   return (
     <div className="w-full relative flex items-start gap-3 p-2 my-2 rounded-lg">
@@ -33,9 +33,11 @@ const PinnedMessageView: FC<Props> = ({ data }) => {
       <div className="w-full flex flex-col items-start gap-1  text-sm">
         <div className="flex items-center gap-2 font-semibold">
           <span className="text-gray-500">{name}</span>
-          <time className="text-xs text-gray-400">
-            {dayjs(created_at).format("YYYY-MM-DD h:mm:ss A")}
-          </time>
+          {created_at && (
+            <time className="text-xs text-gray-400">
+              {dayjs(created_at).format("YYYY-MM-DD h:mm:ss A")}
+            </time>
+          )}
         </div>
         <div className={`select-text text-gray-600 break-all whitespace-pre-wrap dark:text-white`}>
           {renderContent({
