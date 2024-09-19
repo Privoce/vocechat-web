@@ -85,14 +85,7 @@
     },
     "lang": {
       "title": "Languages",
-      "desc": "Set the system language",
-      "en": "English",
-      "tr": "Türkçe",
-      "zh": "中文",
-      "jp": "日本語",
-      "pt": "Portuguese",
-      "fr": "Français",
-      "es": "Español"
+      "desc": "Set the system language"
     },
     "theme": {
       "title": "Theme",
