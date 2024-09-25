@@ -15,7 +15,7 @@
     "new_channel": "新建频道",
     "new_private_channel": "新建私有频道",
     "new_msg": "发消息",
-    "invite_people": "邀请TA人",
+    "invite_people": "邀请 TA 人",
     "search_people": "搜索用户",
     "search": "搜索",
     "create": "创建",
@@ -49,23 +49,24 @@
     "reload": "刷新页面",
     "install": "安装",
     "download_origin": "下载原图",
-    "close": "关闭"
+    "close": "关闭",
+    "view_pwd": "查看密码"
   },
   "status": {
     "uploading": "上传中"
   },
   "tip": {
-    "update": "更新成功!",
-    "delete": "删除成功!",
-    "reg": "注册成功!",
-    "login": "登录成功!",
-    "logout": "退出成功!",
-    "pin": "消息置顶成功!",
+    "update": "更新成功！",
+    "delete": "删除成功！",
+    "reg": "注册成功！",
+    "login": "登录成功！",
+    "logout": "退出成功！",
+    "pin": "消息置顶成功！",
     "pwa_install_title": "安装到桌面？",
     "pwa_install_desc": "使用桌面访问，更便捷！"
   },
   "new_version": "有<0>新版本</0>",
-  "mobile_app": "欢迎下载使用<0>手机APP</0>",
+  "mobile_app": "欢迎下载使用<0>手机 APP</0>",
   "price": {
     "pro": {
       "title": "VoceChat 专业版",
@@ -79,13 +80,13 @@
     }
   },
   "server_update": {
-    "version_needed": "支持该特性的最低Server版本:<0>{{version}}</0>",
-    "current_version": "当前的Server版本:<0>{{version}}</0>",
+    "version_needed": "支持该特性的最低 Server 版本:<0>{{version}}</0>",
+    "current_version": "当前的 Server 版本:<0>{{version}}</0>",
     "update_tip": "请升级后端服务！",
     "howto": "如何升级后端服务"
   },
   "inactive": {
-    "title": "VoceChat只允许活跃一个标签页",
+    "title": "VoceChat 只允许活跃一个标签页",
     "desc": "刷新页面继续或者关闭该页面"
   }
 }

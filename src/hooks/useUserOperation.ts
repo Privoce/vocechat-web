@@ -48,6 +48,7 @@ const useUserOperation = ({ uid, cid }: IProps) => {
     shallowEqual
   );
   const loginUser = useAppSelector((store) => store.authData.user, shallowEqual);
+  const isPro = useAppSelector((store) => store.server.upgraded, shallowEqual);
   const { show_email = true, dm_to_member = true } = channel ?? {};
   useEffect(() => {
     setPassedUid(uid ?? loginUser?.uid);
@@ -143,6 +144,7 @@ const useUserOperation = ({ uid, cid }: IProps) => {
   const canBlock: boolean = loginUid != uid;
   const canRemoveFromContact: boolean = loginUid != uid;
   const canInviteChannel = !!cid && (loginUser?.is_admin || channel?.owner == loginUser?.uid);
+  const canViewPassword: boolean = !!loginUser?.is_admin && isPro;
   return {
     showEmailInChannel: show_email,
     isChannelOwner: loginUser?.uid == channel?.owner || (channel?.is_public && loginUserIsAdmin),
@@ -165,7 +167,8 @@ const useUserOperation = ({ uid, cid }: IProps) => {
     canCopyEmail: !!user?.email && show_email,
     copyEmail,
     canDM: dm_to_member,
-    startCall
+    startCall,
+    canViewPassword
   };
 };
 export default useUserOperation;

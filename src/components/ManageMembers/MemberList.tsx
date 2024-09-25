@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { ViewportList } from "react-viewport-list";
@@ -16,6 +16,7 @@ import IconMore from "@/assets/icons/more.svg";
 import IconOwner from "@/assets/icons/owner.svg";
 import User from "../User";
 import { shallowEqual } from "react-redux";
+import ViewPassword from "./ViewPassword";
 
 interface Props {
   cid?: number;
@@ -24,14 +25,21 @@ const MemberList: FC<Props> = ({ cid }) => {
   const ref = useRef<HTMLUListElement | null>(null);
   const { t } = useTranslation("member");
   const { t: ct } = useTranslation();
+  const [currentUid, setCurrentUid] = useState<number | undefined>(undefined);
   const loginUser = useAppSelector((store) => store.authData.user, shallowEqual);
   const userMap = useAppSelector((store) => store.users.byId, shallowEqual);
   const channels = useAppSelector((store) => store.channels, shallowEqual);
   const { uids, input, updateInput } = useFilteredUsers();
-  const { copyEmail, canCopyEmail, removeFromChannel, removeUser, showEmailInChannel } =
-    useUserOperation({
-      cid
-    });
+  const {
+    // canViewPassword,
+    copyEmail,
+    canCopyEmail,
+    removeFromChannel,
+    removeUser,
+    showEmailInChannel
+  } = useUserOperation({
+    cid
+  });
   const [updateUser, { isSuccess: updateSuccess }] = useUpdateUserMutation();
 
   useEffect(() => {
@@ -155,6 +163,11 @@ const MemberList: FC<Props> = ({ cid }) => {
                               {t("remove_from_channel")}
                             </li>
                           )}
+                          {/* {canViewPassword && (
+                            <li className="item danger" onClick={setCurrentUid.bind(null, uid)}>
+                              {ct("action.view_pwd")}
+                            </li>
+                          )} */}
                           {canRemove && (
                             <li className="item danger" onClick={removeUser.bind(null, uid)}>
                               {ct("action.remove")}
@@ -174,6 +187,7 @@ const MemberList: FC<Props> = ({ cid }) => {
           }}
         </ViewportList>
       </ul>
+      <ViewPassword uid={currentUid} onClose={setCurrentUid.bind(null, undefined)} />
     </>
   );
 };
