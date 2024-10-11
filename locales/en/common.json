@@ -49,7 +49,8 @@
     "reload": "reload",
     "install": "Install",
     "download_origin": "Download original",
-    "close": "Close"
+    "close": "Close",
+    "view_pwd": "View Password"
   },
   "status": {
     "uploading": "Uploading"
