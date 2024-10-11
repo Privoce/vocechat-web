@@ -30,7 +30,7 @@ const WrapWithSubmenu = ({
   return (
     <Tippy
       interactive
-      placement="right-start"
+      placement="auto-start"
       trigger="mouseenter focus"
       content={
         <ul className="context-menu">
