@@ -17,6 +17,7 @@ import Server from "./Server";
 import { shallowEqual } from "react-redux";
 import OnlyAdminCreateGroup from "./OnlyAdminCreateGroup";
 import OnlyAdminCanSeeChannelMembers from "./OnlyAdminSeeChannelMembers";
+import EnableURLPreviewInMsg from "./URLPreview";
 
 export default function Overview() {
   const { t } = useTranslation("setting");
@@ -57,6 +58,7 @@ export default function Overview() {
           </SettingBlock>
           {/* 只有 admin 能创建群组 */}
 
+          <EnableURLPreviewInMsg />
           <OnlyAdminCreateGroup />
           <OnlyAdminCanSeeChannelMembers />
           {/* 访客模式 */}

@@ -21,20 +21,18 @@ import Members from "./Members";
 import PinList from "./PinList";
 import { getJSONField } from "@/utils";
 import { KEY_ADMIN_SEE_CHANNEL_MEMBERS } from "@/app/config";
+import useServerExtSetting from "@/hooks/useServerExtSetting";
 
 type Props = {
   cid?: number;
   dropFiles?: File[];
 };
 function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
+  const { getExtSetting } = useServerExtSetting();
   const { t } = useTranslation("chat");
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const serverExtSetting = useAppSelector(
-    (store) => store.server.ext_setting ?? "{}",
-    shallowEqual
-  );
   const loginUser = useAppSelector((store) => store.authData.user, shallowEqual);
   const visibleAside = useAppSelector((store) => store.footprint.channelAsides[cid], shallowEqual);
   const userIds = useAppSelector((store) => store.users.ids, shallowEqual);
@@ -67,8 +65,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
   const addVisible = loginUser?.is_admin || owner == loginUser?.uid;
   const pinCount = data?.pinned_messages?.length || 0;
   const toolClass = `relative cursor-pointer hidden md:block`;
-  const onlyAdminCanSeeMembers =
-    getJSONField(serverExtSetting, KEY_ADMIN_SEE_CHANNEL_MEMBERS) ?? false;
+  const onlyAdminCanSeeMembers = getExtSetting(KEY_ADMIN_SEE_CHANNEL_MEMBERS);
   const canViewMembers = loginUser?.is_admin ? true : !onlyAdminCanSeeMembers;
   return (
     <Layout

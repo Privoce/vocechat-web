@@ -5,6 +5,8 @@ import Linkify from "linkify-react";
 import "linkify-plugin-mention";
 import Mention from "./Message/Mention";
 import URLPreview from "./Message/URLPreview";
+import useServerExtSetting from "@/hooks/useServerExtSetting";
+import { KEY_MSG_URL_PREVIEW } from "@/app/config";
 
 type Props = {
   url?: boolean;
@@ -25,8 +27,8 @@ const LinkifyText = ({
   text,
   cid
 }: Props) => {
-  // const { t } = useTranslation();
-  // const
+  const { getExtSetting } = useServerExtSetting({ successTip: false, key: KEY_MSG_URL_PREVIEW });
+  const enablePreview = getExtSetting() && linkPreview;
   return (
     <Linkify
       options={{
@@ -47,7 +49,7 @@ const LinkifyText = ({
                 <a className="text-primary-500" target="_blank" href={link} rel="noreferrer">
                   {content}
                 </a>
-                {linkPreview && <URLPreview url={link} />}
+                {enablePreview && <URLPreview url={link} />}
               </>
             );
           },

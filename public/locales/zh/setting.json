@@ -64,6 +64,18 @@
       "enable": "开启",
       "disable": "关闭"
     },
+    "admin_see_group_members": {
+      "title": "只有管理员能看到群成员",
+      "desc": "如果开启，只有管理员能看到群成员，更好地保护隐私",
+      "enable": "开启",
+      "disable": "关闭"
+    },
+    "enable_msg_url_preview": {
+      "title": "开启消息网址预览",
+      "desc": "如果开启，消息中的网址会显示预览内容",
+      "enable": "开启",
+      "disable": "关闭"
+    },
     "guest_mode": {
       "title": "访客模式",
       "desc": "开启后，访客可以看到公共频道信息流",
