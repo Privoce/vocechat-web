@@ -73,6 +73,12 @@
       "enable": "Enable",
       "disable": "Disable"
     },
+    "enable_msg_url_preview": {
+      "title": "Enable URL Preview in Message",
+      "desc": "If enabled, url in message will show preview content.",
+      "enable": "Enable",
+      "disable": "Disable"
+    },
     "guest_mode": {
       "title": "Guest Mode",
       "desc": "If enabled, visitors will see public channels on this server.",
