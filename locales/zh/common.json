@@ -50,7 +50,8 @@
     "install": "安装",
     "download_origin": "下载原图",
     "close": "关闭",
-    "view_pwd": "查看密码"
+    "view_pwd": "查看密码",
+    "change_pwd": "修改密码"
   },
   "status": {
     "uploading": "上传中"
