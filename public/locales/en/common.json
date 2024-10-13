@@ -50,7 +50,8 @@
     "install": "Install",
     "download_origin": "Download original",
     "close": "Close",
-    "view_pwd": "View Password"
+    "view_pwd": "View Password",
+    "change_pwd": "Update Password"
   },
   "status": {
     "uploading": "Uploading"

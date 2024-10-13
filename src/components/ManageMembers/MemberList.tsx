@@ -16,7 +16,8 @@ import IconMore from "@/assets/icons/more.svg";
 import IconOwner from "@/assets/icons/owner.svg";
 import User from "../User";
 import { shallowEqual } from "react-redux";
-import ViewPassword from "./ViewPassword";
+// import ViewPassword from "./ViewPassword";
+import UpdatePassword from "./UpdatePassword";
 
 interface Props {
   cid?: number;
@@ -32,6 +33,7 @@ const MemberList: FC<Props> = ({ cid }) => {
   const { uids, input, updateInput } = useFilteredUsers();
   const {
     // canViewPassword,
+    canUpdatePassword,
     copyEmail,
     canCopyEmail,
     removeFromChannel,
@@ -168,6 +170,11 @@ const MemberList: FC<Props> = ({ cid }) => {
                               {ct("action.view_pwd")}
                             </li>
                           )} */}
+                          {canUpdatePassword && (
+                            <li className="item danger" onClick={setCurrentUid.bind(null, uid)}>
+                              {ct("action.change_pwd")}
+                            </li>
+                          )}
                           {canRemove && (
                             <li className="item danger" onClick={removeUser.bind(null, uid)}>
                               {ct("action.remove")}
@@ -187,7 +194,8 @@ const MemberList: FC<Props> = ({ cid }) => {
           }}
         </ViewportList>
       </ul>
-      <ViewPassword uid={currentUid} onClose={setCurrentUid.bind(null, undefined)} />
+      {/* <ViewPassword uid={currentUid} onClose={setCurrentUid.bind(null, undefined)} /> */}
+      <UpdatePassword uid={currentUid} onClose={setCurrentUid.bind(null, undefined)} />
     </>
   );
 };

@@ -59,7 +59,6 @@ export default function Overview() {
           {/* 只有 admin 能创建群组 */}
 
           <EnableURLPreviewInMsg />
-          <OnlyAdminCreateGroup />
           <OnlyAdminCanSeeChannelMembers />
           {/* 访客模式 */}
           <SettingBlock title={t("overview.guest_mode.title")} desc={t("overview.guest_mode.desc")}>
@@ -86,6 +85,7 @@ export default function Overview() {
       <DarkMode />
       {/* 新消息声音 */}
       <MessageSound />
+      <OnlyAdminCreateGroup />
     </div>
   );
 }

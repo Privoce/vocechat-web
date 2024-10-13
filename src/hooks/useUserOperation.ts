@@ -118,6 +118,11 @@ const useUserOperation = ({ uid, cid }: IProps) => {
       updateUser({ id: uid, is_admin: !user?.is_admin });
     }
   };
+  const updatePassword = (password: string) => {
+    if (uid) {
+      updateUser({ id: uid, password });
+    }
+  };
   const removeFromContact = () => {
     if (uid) {
       updateContactStatus({ target_uid: uid, action: "remove" });
@@ -145,11 +150,13 @@ const useUserOperation = ({ uid, cid }: IProps) => {
   const canRemoveFromContact: boolean = loginUid != uid;
   const canInviteChannel = !!cid && (loginUser?.is_admin || channel?.owner == loginUser?.uid);
   const canViewPassword: boolean = !!loginUser?.is_admin && isPro;
+  const canUpdatePassword: boolean = !!loginUser?.is_admin && loginUid != uid && uid !== 1;
   return {
     showEmailInChannel: show_email,
     isChannelOwner: loginUser?.uid == channel?.owner || (channel?.is_public && loginUserIsAdmin),
     isAdmin: !!user?.is_admin,
     updateRole,
+    updatePassword,
     canUpdateRole: loginUserIsAdmin && loginUid != uid && uid != 1,
     removeFromContact,
     canBlock,
@@ -168,7 +175,8 @@ const useUserOperation = ({ uid, cid }: IProps) => {
     copyEmail,
     canDM: dm_to_member,
     startCall,
-    canViewPassword
+    canViewPassword,
+    canUpdatePassword
   };
 };
 export default useUserOperation;
