@@ -2,7 +2,7 @@ import React, { FC, useEffect, useRef, useState } from "react";
 import Tippy from "@tippyjs/react";
 import clsx from "clsx";
 import dayjs from "dayjs";
-
+import IconAdmin from "@/assets/icons/owner.svg";
 import { useAppSelector } from "@/app/store";
 import { ChatContext } from "@/types/common";
 import useContextMenu from "@/hooks/useContextMenu";
@@ -160,6 +160,7 @@ const Message: FC<IProps> = ({
             className={clsx(`flex items-center gap-2 font-semibold`, isSelf && "flex-row-reverse")}
           >
             <span className="text-primary-500 text-sm">{currUser?.name || "Deleted User"}</span>
+            {currUser?.is_admin && <IconAdmin />}
             <Tooltip
               delay={200}
               disabled={!timePrefix || readOnly}
