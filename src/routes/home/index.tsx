@@ -31,6 +31,7 @@ function HomePage() {
   const roleChanged = useAppSelector((store) => store.authData.roleChanged, shallowEqual);
   const guest = useAppSelector((store) => store.authData.guest, shallowEqual);
   const loginUid = useAppSelector((store) => store.authData.user?.uid ?? 0, shallowEqual);
+  const isAdmin = useAppSelector((store) => store.authData.user?.is_admin ?? false, shallowEqual);
   const { chat: chatPath, user: userPath } = useAppSelector(
     (store) => store.ui.rememberedNavs,
     shallowEqual
@@ -117,20 +118,22 @@ function HomePage() {
                   );
                 }}
               </NavLink>
-              <NavLink
-                className={({ isActive }) =>
-                  `${linkClass} ${isActive ? "bg-primary-400 md:hover:bg-primary-400" : ""}`
-                }
-                to={"/files"}
-              >
-                {({ isActive }) => {
-                  return (
-                    <Tooltip tip={t("files")}>
-                      <FolderIcon className={isActive ? "fill-white" : ""} />
-                    </Tooltip>
-                  );
-                }}
-              </NavLink>
+              {isAdmin && (
+                <NavLink
+                  className={({ isActive }) =>
+                    `${linkClass} ${isActive ? "bg-primary-400 md:hover:bg-primary-400" : ""}`
+                  }
+                  to={"/files"}
+                >
+                  {({ isActive }) => {
+                    return (
+                      <Tooltip tip={t("files")}>
+                        <FolderIcon className={isActive ? "fill-white" : ""} />
+                      </Tooltip>
+                    );
+                  }}
+                </NavLink>
+              )}
             </nav>
             <Menu />
           </div>
