@@ -61,7 +61,9 @@ export interface UserForAdminDTO extends Partial<UserForAdmin> {
   id?: number;
 }
 export interface UserDTO
-  extends Partial<Pick<User, "name" | "gender" | "language" | "email" | "webhook_url">> {
+  extends Partial<
+    Pick<User, "name" | "gender" | "language" | "email" | "webhook_url" | "msg_smtp_notify_enable">
+  > {
   password?: string;
 }
 export interface UserCreateDTO

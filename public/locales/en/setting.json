@@ -61,11 +61,13 @@
       "everyone": "Everyone",
       "invite": "Invitation Link Only"
     },
-    "server_msg_notify": {
+    "user_msg_notify": {
       "title": "New Message Notification Through Email",
+      "desc": "you can control new message if send through email."
+    },
+    "server_msg_notify": {
+      "title": "New Message Notification Through Email (Server)",
       "desc": "users can control new message if send through email, SMTP enabled first.",
-      "enable": "On",
-      "disable": "Off",
       "delay_5_min": "Every 5 mins",
       "delay_15_min": "Every 15 mins",
       "delay_1_hour": "Every 1 hour",

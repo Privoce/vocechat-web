@@ -21,6 +21,7 @@ import { RootState } from "../store";
 import baseQuery from "./base.query";
 import { onMessageSendStarted } from "./handlers";
 import { encodeBase64 } from "@/utils";
+import { updateLoginUser } from "../slices/auth.data";
 
 export const userApi = createApi({
   reducerPath: "userApi",
@@ -222,7 +223,15 @@ export const userApi = createApi({
         url: `/user`,
         method: "PUT",
         body: data
-      })
+      }),
+      async onQueryStarted(params, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(updateLoginUser(data));
+        } catch (error) {
+          console.log("update login user failed", error);
+        }
+      }
     }),
     sendMsg: builder.mutation<
       number,

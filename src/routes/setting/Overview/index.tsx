@@ -14,9 +14,10 @@ import { shallowEqual } from "react-redux";
 import OnlyAdminCreateGroup from "./OnlyAdminCreateGroup";
 import OnlyAdminCanSeeChannelMembers from "./OnlyAdminSeeChannelMembers";
 import EnableURLPreviewInMsg from "./URLPreview";
-import MsgNotify from "./MsgEmailNotify";
+import ServerMsgNotify from "./ServerMsgEmailNotify";
 import GuestMode from "./GuestMode";
 import WhoCanSignUpSetting from "./WhoCanSignUpSetting";
+import UserMsgEmailNotify from "./UserMsgEmailNotify";
 
 export default function Overview() {
   const { t } = useTranslation("setting");
@@ -25,10 +26,11 @@ export default function Overview() {
   return (
     <div className="relative w-full md:w-[512px] flex flex-col gap-6">
       <Server />
+      {/* 全局性的邮件消息通知 */}
+      {isAdmin && <ServerMsgNotify />}
+      <UserMsgEmailNotify />
       {isAdmin && (
         <>
-          {/* 全局性的邮件消息通知 */}
-          <MsgNotify />
           {/* 设置前端 url */}
           <FrontendURL />
           <div className="flex flex-col">
