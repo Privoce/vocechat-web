@@ -58,8 +58,12 @@
       "everyone": "每个人",
       "invite": "邀请链接"
     },
-    "server_msg_notify": {
+    "user_msg_notify": {
       "title": "邮件通知新消息",
+      "desc": "是否允许当前账号通过邮件接收新消息"
+    },
+    "server_msg_notify": {
+      "title": "邮件通知新消息 (服务器)",
       "desc": "用户可以自定义是否通过邮件通知新消息，前提：SMTP 已配置并开启",
       "enable": "开启",
       "disable": "关闭",
