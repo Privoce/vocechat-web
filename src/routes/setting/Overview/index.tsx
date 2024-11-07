@@ -2,10 +2,6 @@
 import { useTranslation } from "react-i18next";
 
 import { useAppSelector } from "@/app/store";
-import { LoginConfig, WhoCanSignUp } from "@/types/server";
-import SettingBlock from "@/components/SettingBlock";
-import StyledRadio from "@/components/styled/Radio";
-import useConfig from "@/hooks/useConfig";
 import ChatLayout from "./ChatLayout";
 import ContactVerification from "./ContactVerification";
 import DarkMode from "./DarkMode";
@@ -18,27 +14,21 @@ import { shallowEqual } from "react-redux";
 import OnlyAdminCreateGroup from "./OnlyAdminCreateGroup";
 import OnlyAdminCanSeeChannelMembers from "./OnlyAdminSeeChannelMembers";
 import EnableURLPreviewInMsg from "./URLPreview";
+import MsgNotify from "./MsgEmailNotify";
+import GuestMode from "./GuestMode";
+import WhoCanSignUpSetting from "./WhoCanSignUpSetting";
 
 export default function Overview() {
   const { t } = useTranslation("setting");
   const isAdmin = useAppSelector((store) => store.authData.user?.is_admin, shallowEqual);
-  const { values: loginConfig, updateConfig: updateLoginConfig } = useConfig("login");
-  const handleUpdateWhoCanSignUp = (value: WhoCanSignUp) => {
-    updateLoginConfig({ ...loginConfig, who_can_sign_up: value });
-  };
-
-  const handleGuestToggle = (v: "true" | "false") => {
-    const guest = v === "true";
-    updateLoginConfig({ ...loginConfig, guest });
-  };
-  if (!loginConfig) return null;
-  const { who_can_sign_up: whoCanSignUp, guest = false } = loginConfig as LoginConfig;
 
   return (
     <div className="relative w-full md:w-[512px] flex flex-col gap-6">
       <Server />
       {isAdmin && (
         <>
+          {/* 全局性的邮件消息通知 */}
+          <MsgNotify />
           {/* 设置前端 url */}
           <FrontendURL />
           <div className="flex flex-col">
@@ -46,31 +36,13 @@ export default function Overview() {
           </div>
 
           {/* 注册开放与否 */}
-          <SettingBlock title={t("overview.sign_up.title")} desc={t("overview.sign_up.desc")}>
-            <StyledRadio
-              options={[t("overview.sign_up.everyone"), t("overview.sign_up.invite")]}
-              values={["EveryOne", "InvitationOnly"]}
-              value={whoCanSignUp}
-              onChange={(v: WhoCanSignUp) => {
-                handleUpdateWhoCanSignUp(v);
-              }}
-            />
-          </SettingBlock>
+          <WhoCanSignUpSetting />
           {/* 只有 admin 能创建群组 */}
 
           <EnableURLPreviewInMsg />
           <OnlyAdminCanSeeChannelMembers />
           {/* 访客模式 */}
-          <SettingBlock title={t("overview.guest_mode.title")} desc={t("overview.guest_mode.desc")}>
-            <StyledRadio
-              options={[t("overview.guest_mode.enable"), t("overview.guest_mode.disable")]}
-              values={["true", "false"]}
-              value={`${guest}`}
-              onChange={(v) => {
-                handleGuestToggle(v);
-              }}
-            />
-          </SettingBlock>
+          <GuestMode />
 
           {/* 是否显示在线提示 */}
           <OnlineStatus />
@@ -85,7 +57,7 @@ export default function Overview() {
       <DarkMode />
       {/* 新消息声音 */}
       <MessageSound />
-      <OnlyAdminCreateGroup />
+      {isAdmin && <OnlyAdminCreateGroup />}
     </div>
   );
 }

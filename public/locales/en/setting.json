@@ -61,6 +61,17 @@
       "everyone": "Everyone",
       "invite": "Invitation Link Only"
     },
+    "server_msg_notify": {
+      "title": "New Message Notification Through Email",
+      "desc": "users can control new message if send through email, SMTP enabled first.",
+      "enable": "On",
+      "disable": "Off",
+      "delay_5_min": "Every 5 mins",
+      "delay_15_min": "Every 15 mins",
+      "delay_1_hour": "Every 1 hour",
+      "delay_3_hour": "Every 3 hours",
+      "delay_12_hour": "Every 12 hours"
+    },
     "admin_create_group": {
       "title": "Only Admins Can Create Group",
       "desc": "If enabled, only admins can create group.",

@@ -3,14 +3,20 @@ import React from "react";
 type Props = {
   title: string;
   desc: string;
-  children: React.ReactNode;
+  toggler?: React.ReactNode;
+  children?: React.ReactNode;
 };
 
-const SettingBlock = ({ title, desc, children }: Props) => {
+const SettingBlock = ({ toggler, title, desc, children }: Props) => {
   return (
     <div className="text-sm w-full">
-      <p className="text-gray-600 dark:text-gray-100 font-semibold">{title}</p>
-      <p className="flex justify-between w-full text-gray-400 mb-2 text-xs">{desc}</p>
+      <div className="flex justify-between mb-2">
+        <div className="">
+          <p className="text-gray-600 dark:text-gray-100 font-semibold">{title}</p>
+          <p className="flex justify-between w-full text-gray-400 text-xs">{desc}</p>
+        </div>
+        {toggler && <div>{toggler}</div>}
+      </div>
       {children}
     </div>
   );

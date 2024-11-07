@@ -4,13 +4,13 @@ import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 
 import SettingBlock from "@/components/SettingBlock";
-import StyledRadio from "@/components/styled/Radio";
 import {
   useGetSystemCommonQuery,
   useUpdateSystemCommonMutation
 } from "../../../app/services/server";
 import { useAppSelector } from "../../../app/store";
 import { shallowEqual } from "react-redux";
+import Toggle from "@/components/styled/Toggle";
 
 // type Props = {}
 
@@ -34,14 +34,11 @@ const Index = () => {
   };
   // if (!loadSuccess) return null;
   return (
-    <SettingBlock title={t("title")} desc={t("desc")}>
-      <StyledRadio
-        options={[t("enable"), t("disable")]}
-        values={["true", "false"]}
-        value={`${currStatus}`}
-        onChange={handleToggle}
-      />
-    </SettingBlock>
+    <SettingBlock
+      title={t("title")}
+      desc={t("desc")}
+      toggler={<Toggle onClick={handleToggle} checked={currStatus} />}
+    ></SettingBlock>
   );
 };
 

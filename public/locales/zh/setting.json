@@ -58,6 +58,17 @@
       "everyone": "每个人",
       "invite": "邀请链接"
     },
+    "server_msg_notify": {
+      "title": "邮件通知新消息",
+      "desc": "用户可以自定义是否通过邮件通知新消息，前提：SMTP 已配置并开启",
+      "enable": "开启",
+      "disable": "关闭",
+      "delay_5_min": "每隔五分钟",
+      "delay_15_min": "每隔 15 分钟",
+      "delay_1_hour": "每隔一小时",
+      "delay_3_hour": "每隔三小时",
+      "delay_12_hour": "每隔 12 小时"
+    },
     "admin_create_group": {
       "title": "只允许管理员创建频道",
       "desc": "如果开启，只有管理员才能创建频道",

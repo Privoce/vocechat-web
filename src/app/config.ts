@@ -185,6 +185,28 @@ export const getInviteLinkTimesList = () => [
     value: 100
   }
 ];
+export const getEmailNotifyDelayList = () => [
+  {
+    label: i18n.t("setting:overview.server_msg_notify.delay_5_min"),
+    value: 5 * 60
+  },
+  {
+    label: i18n.t("setting:overview.server_msg_notify.delay_15_min"),
+    value: 15 * 60
+  },
+  {
+    label: i18n.t("setting:overview.server_msg_notify.delay_1_hour"),
+    value: 60 * 60
+  },
+  {
+    label: i18n.t("setting:overview.server_msg_notify.delay_3_hour"),
+    value: 3 * 60 * 60
+  },
+  {
+    label: i18n.t("setting:overview.server_msg_notify.delay_12_hour"),
+    value: 12 * 60 * 60
+  }
+];
 export const KEY_ADMIN_SEE_CHANNEL_MEMBERS = `only_admin_can_see_channel_members`;
 export const KEY_MSG_URL_PREVIEW = `enable_msg_url_preview`;
 export default BASE_URL;

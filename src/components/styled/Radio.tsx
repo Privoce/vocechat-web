@@ -1,6 +1,8 @@
+import { cn } from "@/utils";
 import { FC, useId, useState } from "react";
 
 type Props = {
+  disabled?: boolean;
   options: string[];
   values: (string | number)[];
   defaultValue?: string | number;
@@ -12,6 +14,7 @@ const VALUE_NOT_SET = "";
 const VALUES_NOT_SET: string[] = [];
 
 const Radio: FC<Props> = ({
+  disabled = false,
   options,
   values = VALUES_NOT_SET,
   value = VALUE_NOT_SET,
@@ -25,8 +28,9 @@ const Radio: FC<Props> = ({
   return (
     <form className="w-full flex flex-col gap-2">
       {options.map((item, index) => (
-        <div className="relative bg-transparent" key={index}>
+        <div className={cn("relative bg-transparent", disabled && "grayscale-[0.8]")} key={index}>
           <input
+            disabled={disabled}
             className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer peer z-50"
             type="radio"
             checked={(values !== VALUES_NOT_SET ? values.indexOf(_value) : _value) === index}

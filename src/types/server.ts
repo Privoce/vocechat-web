@@ -16,6 +16,8 @@ export interface SystemCommon {
   max_file_expiry_mode?: MessageExpireMode;
   only_admin_can_create_group: boolean;
   ext_setting: null | string;
+  msg_smtp_notify_enable: boolean;
+  msg_smtp_notify_delay_seconds: number;
 }
 export interface GithubAuthConfig {
   client_id?: string;

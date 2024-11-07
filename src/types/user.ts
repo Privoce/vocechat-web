@@ -19,6 +19,7 @@ export interface User {
   is_bot?: boolean;
   log_id?: number;
   widget_id?: string;
+  msg_smtp_notify_enable?: boolean;
 }
 export type ContactAction = "add" | "remove" | "block" | "unblock";
 export type ContactStatus = "added" | "blocked" | "";
