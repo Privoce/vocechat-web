@@ -287,6 +287,7 @@
     "default_value": "Default Value",
     "remark": "Remarks",
     "custom_style_tip": "if you want customize the widget position more precisely, use the widget element ID in your HTML or CSS file, like this",
+    "css_code_tip": "You can also customize CSS code, which will be loaded into the widget as a CSS file",
     "param_id": "Widget ID (server version>=v0.3.12)",
     "param_host": "Assign the user chatting with visitor(User ID)",
     "param_title": "chat popup title",

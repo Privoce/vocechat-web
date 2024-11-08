@@ -287,6 +287,7 @@
     "default_value": "默认值",
     "remark": "备注",
     "custom_style_tip": "如果你想更精确控制挂件的样式，可以借助 widget 元素的 ID，自行写 CSS 样式，加到自己的 html 或者 css 文件中，如下所示：",
+    "css_code_tip": "也可以自定义 CSS 代码，会以 css 文件方式加载到挂件内",
     "param_id": "挂件 ID，可选设置 (服务器版本不低于 v0.3.12)",
     "param_host": "指定和谁聊天 (用户 ID)",
     "param_title": "聊天弹窗顶部标题",
