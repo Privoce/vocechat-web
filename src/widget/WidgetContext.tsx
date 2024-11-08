@@ -1,6 +1,10 @@
 import { createContext, ReactNode, useContext } from "react";
 
-import { useGetLoginConfigQuery, useGetServerQuery } from "../app/services/server";
+import {
+  useGetLoginConfigQuery,
+  useGetServerQuery,
+  useGetServerVersionQuery
+} from "../app/services/server";
 import { useAppSelector } from "../app/store";
 import { getContrastColor, isInIframe } from "../utils";
 import { shallowEqual } from "react-redux";
@@ -29,10 +33,12 @@ const WidgetContext = createContext({
   inviteOnly: false,
   title,
   logo,
-  welcome
+  welcome,
+  serverVersion: ""
 });
 
 function WidgetProvider({ children }: { children: ReactNode }) {
+  const { data = "" } = useGetServerVersionQuery();
   const { isLoading: loadingServerData } = useGetServerQuery();
   const { isLoading: loadingConfig, data: loginConfig } = useGetLoginConfigQuery();
   const serverData = useAppSelector((store) => store.server, shallowEqual);
@@ -53,7 +59,8 @@ function WidgetProvider({ children }: { children: ReactNode }) {
         from,
         inviteOnly: loginConfig?.who_can_sign_up == "InvitationOnly",
         title: title ? title : serverData?.name,
-        logo: logo ? logo : serverData.logo
+        logo: logo ? logo : serverData.logo,
+        serverVersion: data
       }}
     >
       {children}

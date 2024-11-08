@@ -390,6 +390,19 @@ export const serverApi = createApi({
         method: "DELETE"
       })
     }),
+    getWidgetExtCSS: builder.query<string, void>({
+      query: () => ({
+        url: "/resource/widget-extra.css",
+        responseHandler: "text"
+      })
+    }),
+    updateWidgetExtCSS: builder.mutation<boolean, string>({
+      query: (css) => ({
+        url: "/resource/widget-extra.css",
+        method: "PUT",
+        body: { data: css }
+      })
+    }),
     getBotRelatedChannels: builder.query<Channel[], { api_key: string; public_only?: boolean }>({
       query: ({ api_key, public_only = false }) => ({
         url: public_only ? `/bot?public_only=${public_only}` : `/bot`,
@@ -424,7 +437,10 @@ export const serverApi = createApi({
 });
 
 export const {
+  useGetWidgetExtCSSQuery,
+  useUpdateWidgetExtCSSMutation,
   useLazyGetServerVersionQuery,
+  useGetServerVersionQuery,
   useGetGithubAuthConfigQuery,
   useUpdateGithubAuthConfigMutation,
   useGetGoogleAuthConfigQuery,

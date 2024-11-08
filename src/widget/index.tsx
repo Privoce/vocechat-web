@@ -4,6 +4,7 @@ import Icon from "./Icon";
 import Popup from "./Popup";
 import useCache from "./useCache";
 import { useWidget } from "./WidgetContext";
+import ExtCssCode from "./ExtCssCode";
 
 type Props = {
   hostId: number;
@@ -33,11 +34,22 @@ function Widget({ hostId }: Props) {
   }, [visible, embed]);
 
   if (!rehydrated) return null;
-  if (!embed) return <Popup handleClose={toggleVisible} hostId={hostId} />;
-  return visible ? (
-    <Popup handleClose={toggleVisible} hostId={hostId} />
-  ) : (
-    <Icon handleClick={toggleVisible} />
+  if (!embed)
+    return (
+      <>
+        <ExtCssCode />
+        <Popup handleClose={toggleVisible} hostId={hostId} />
+      </>
+    );
+  return (
+    <>
+      <ExtCssCode />
+      {visible ? (
+        <Popup handleClose={toggleVisible} hostId={hostId} />
+      ) : (
+        <Icon handleClick={toggleVisible} />
+      )}
+    </>
   );
 }
 

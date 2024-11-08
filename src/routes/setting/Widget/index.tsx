@@ -11,6 +11,8 @@ import Input from "@/components/styled/Input";
 import useCopy from "@/hooks/useCopy";
 import { shallowEqual } from "react-redux";
 import ConfigDetails from "./ConfigDetails";
+import ExtCSS from "./ExtCSS";
+import ServerVersionChecker from "@/components/ServerVersionChecker";
 
 export default function Widget() {
   const loginUid = useAppSelector((store) => store.authData.user?.uid, shallowEqual);
@@ -44,6 +46,12 @@ export default function Widget() {
   }
 </style>`}
       </SyntaxHighlighter>
+      <ServerVersionChecker version="0.4.0">
+        <div className="flex flex-col gap-2">
+          <div className="text-sm dark:text-white">{t("css_code_tip")}:</div>
+          <ExtCSS />
+        </div>
+      </ServerVersionChecker>
       <div className="font-semibold dark:text-white mt-5 mb-2">{t("config")}:</div>
       <div className="w-full md:w-[700px] border border-solid border-gray-300 dark:border-gray-400 rounded overflow-auto md:overflow-hidden">
         {/* 配置说明 */}
