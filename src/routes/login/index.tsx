@@ -138,18 +138,18 @@ export default function LoginPage() {
             onClick={handleBack}
           />
         )}
-        <div className="flex-center flex-col pb-6">
+        <div className="flex-center flex-col pb-6 w-full">
           <img
             src={logo || `${BASE_URL}/resource/organization/logo?t=${Date.now()}`}
             alt="logo"
             className="w-14 h-14 mb-3 md:mb-7 rounded-full"
           />
-          <h2 className="font-semibold text-2xl text-gray-800 dark:text-white">
+          <h2 className="font-semibold text-center text-balance text-2xl max-w-[420px] text-gray-800 dark:text-white">
             {t("login.title", { name: serverName })}
           </h2>
         </div>
         <form
-          className="flex flex-col gap-5 w-80 md:min-w-[360px]"
+          className="flex flex-col gap-5 md:min-w-[360px] w-full"
           autoComplete="false"
           onSubmit={handleLogin}
         >

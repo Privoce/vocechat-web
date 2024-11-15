@@ -148,13 +148,13 @@ export default function Register() {
           alt="logo"
           className="w-14 h-14 md:mb-7 rounded-full"
         />
-        <h2 className="font-semibold text-2xl text-gray-800 dark:text-white">
+        <h2 className="font-semibold text-center text-balance text-2xl text-gray-800 dark:text-white">
           {t("reg.title", { name: serverName })}
         </h2>
       </div>
 
       <form
-        className="flex flex-col gap-5 w-80 md:min-w-[360px]"
+        className="flex flex-col gap-5 md:min-w-[360px] w-full"
         onSubmit={handleReg}
         autoSave={"false"}
         autoComplete={"true"}
