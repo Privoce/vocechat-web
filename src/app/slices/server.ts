@@ -27,7 +27,9 @@ const initialState: StoredServer = {
   only_admin_can_create_group: false,
   chat_layout_mode: "Left",
   loginConfig: null,
-  ext_setting: null
+  ext_setting: null,
+  msg_smtp_notify_delay_seconds: 0,
+  msg_smtp_notify_enable: false
 };
 
 const serverSlice = createSlice({
@@ -54,7 +56,8 @@ const serverSlice = createSlice({
         chat_layout_mode = "Left",
         only_admin_can_create_group = false,
         loginConfig = state.loginConfig || null,
-        ext_setting = null
+        ext_setting = null,
+        ...rest
       } = action.payload || {};
       return {
         version: state.version || version,
@@ -69,7 +72,8 @@ const serverSlice = createSlice({
         only_admin_can_create_group,
         chat_layout_mode,
         loginConfig,
-        ext_setting
+        ext_setting,
+        ...rest
       };
     },
     updateInfo(state, action: PayloadAction<Partial<StoredServer>>) {
