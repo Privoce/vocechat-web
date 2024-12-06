@@ -111,6 +111,7 @@ export const tokenHeader = "X-API-Key";
 export const KEY_SERVER_VERSION = "VC_SERVER_VERSION"; //
 export const FILE_SLICE_SIZE = 1000 * 1000; //
 export const FILE_IMAGE_SIZE = 1000 * 10000 * 8; //10mb
+export const KEY_SET_EMAIL_MSG_TIP = "SET_EMAIL_MSG_TIP";
 export const KEY_MOBILE_APP_TIP = "MOBILE_APP_TIP";
 export const KEY_LOGIN_USER = "VOCECHAT_LOGIN_USER";
 export const KEY_TOKEN = "VOCECHAT_TOKEN";
