@@ -297,7 +297,7 @@ function ReduxRoutes() {
     <Provider store={store}>
       <Meta />
       <PageRoutes />
-      <ServerVersionChecker empty version="0.4.0">
+      <ServerVersionChecker empty version="0.3.0">
         <SetEmailMsgTip />
       </ServerVersionChecker>
     </Provider>
