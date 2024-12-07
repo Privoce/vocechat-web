@@ -50,6 +50,7 @@
     "install": "Install",
     "download_origin": "Download original",
     "close": "Close",
+    "upgrade": "Upgrade",
     "view_pwd": "View Password",
     "change_pwd": "Update Password"
   },
@@ -57,6 +58,7 @@
     "uploading": "Uploading"
   },
   "tip": {
+    "email_msg_tip": "Your region has blocked notifications, upgrade to Pro to use email notification.",
     "update": "Update Successfully!",
     "delete": "Delete Successfully!",
     "reg": "Register Successfully!",
