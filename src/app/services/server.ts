@@ -67,11 +67,11 @@ export const serverApi = createApi({
     }),
     getIfInChina: builder.query<boolean, void>({
       query: () => ({
-        url: `https://ipapi.co/json`
+        url: `https://cf-props.ihacker.dev`
       }),
       transformResponse: (resp: IPData) => {
         if (!("error" in resp)) {
-          return resp.country_code.toUpperCase() == "CN";
+          return resp.country.toUpperCase() == "CN";
         }
         return false;
       }
