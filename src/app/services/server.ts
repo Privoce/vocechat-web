@@ -67,11 +67,11 @@ export const serverApi = createApi({
     }),
     getIfInChina: builder.query<boolean, void>({
       query: () => ({
-        url: `http://ip-api.com/json/`
+        url: `https://ipapi.co/json`
       }),
       transformResponse: (resp: IPData) => {
-        if (resp.status == "success") {
-          return resp.countryCode.toUpperCase() == "CN";
+        if (!("error" in resp)) {
+          return resp.country_code.toUpperCase() == "CN";
         }
         return false;
       }

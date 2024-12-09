@@ -15,4 +15,4 @@ export type Price = {
   type: PriceType;
   sub_dur?: PriceSubscriptionDuration;
 };
-export type IPData = { status: string; query: string; country: string; countryCode: string };
+export type IPData = { error?: boolean; country: string; country_code: string };
