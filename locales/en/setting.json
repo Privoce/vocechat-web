@@ -244,7 +244,7 @@
     "client_email": "Client Email"
   },
   "smtp": {
-    "desc": "For new message Email notification (advanced feature, upgrade to VoceChat Pro) and new sign-up email verification, we use SMTP. ",
+    "desc": "For new message Email notification (advanced feature, upgrade to <0>VoceChat Pro</0>) and new sign-up email verification, we use SMTP. ",
     "sub_desc": "Please set up your SMTP below.",
     "enable": "Enable",
     "host": "Host",
