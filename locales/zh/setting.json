@@ -232,6 +232,8 @@
     "clear_desc": "该频道内消息将在客户端和服务端彻底删除"
   },
   "firebase": {
+    "desc": "消息通知需要使用 Google Firebase 作为默认方法。",
+    "sub_desc": "我们提供了官方配置。请确保您的服务器和设备可以访问 Google FCM。",
     "disable": "禁用",
     "use_official": "使用官方配置",
     "custom": "自定义",
@@ -242,6 +244,8 @@
     "client_email": "客户端邮箱"
   },
   "smtp": {
+    "desc": "对于视频和音频通话，我们使用 Agora API。",
+    "sub_desc": "每个 Agora 项目每月可享受 10,000 分钟的免费 API 使用时间。请自行创建一个项目。按照以下说明正确配置您的 Agora。",
     "enable": "开启",
     "host": "主机",
     "port": "端口",
@@ -252,6 +256,8 @@
     "send_test_email": "发送测试邮件"
   },
   "agora": {
+    "desc": "对于新消息电子邮件通知（高级功能，升级到 VoceChat Pro）和新注册电子邮件验证，我们使用 SMTP。",
+    "sub_desc": "请在下方设置您的 SMTP。",
     "enable": "开启",
     "how_to": "如何配置 Agora？"
   },

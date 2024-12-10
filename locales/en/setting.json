@@ -232,6 +232,8 @@
     "clear_desc": "This will remove all the messages data stored on both the server and client side."
   },
   "firebase": {
+    "desc": "Message notification requires Google Firebase as the default method.",
+    "sub_desc": "We have provided an official configuration. Make sure google FCM is accessible from your server and device.",
     "disable": "Disable",
     "use_official": "Use Official Configuration",
     "custom": "Custom",
@@ -242,6 +244,8 @@
     "client_email": "Client Email"
   },
   "smtp": {
+    "desc": "For new message Email notification (advanced feature, upgrade to VoceChat Pro) and new sign-up email verification, we use SMTP. ",
+    "sub_desc": "Please set up your SMTP below.",
     "enable": "Enable",
     "host": "Host",
     "port": "Port",
@@ -252,6 +256,8 @@
     "send_test_email": "Send Test Email"
   },
   "agora": {
+    "desc": "For video and audio calls, we use Agora API. ",
+    "sub_desc": "Each Agora project will enjoy 10,000 mins free API usages per month. Please create a project by yourself. Follow the instruction below to configure your Agora correctly.",
     "enable": "Enable",
     "how_to": "How to setup Agora?"
   },
