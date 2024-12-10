@@ -14,16 +14,8 @@ import NameEdit from "./NameEdit";
 import WebhookEdit from "./WebhookEdit";
 import WebhookModal from "./WebhookModal";
 import { shallowEqual } from "react-redux";
+import { ConfigTip } from "@/components/ConfigTip";
 
-type TipProps = { title: string; desc: string };
-const Tip = ({ title, desc }: TipProps) => {
-  return (
-    <div className="flex flex-col text-sm">
-      <h2 className="font-semibold dark:text-white">{title}</h2>
-      <p className="text-gray-400 text-xs">{desc}</p>
-    </div>
-  );
-};
 const tdClass =
   "p-6 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100 align-top";
 type WebhookParams = { webhook?: string; uid: number };
@@ -65,8 +57,8 @@ export default function BotConfig() {
     <>
       <div className="flex flex-col justify-start items-start gap-4">
         <div className="flex flex-col gap-4 max-w-[634px] mb-4">
-          <Tip title={t("bot_tip_title")} desc={t("bot_tip_desc")} />
-          <Tip title={t("webhook_tip_title")} desc={t("webhook_tip_desc")} />
+          <ConfigTip title={t("bot_tip_title")} desc={t("bot_tip_desc")} />
+          <ConfigTip title={t("webhook_tip_title")} desc={t("webhook_tip_desc")} />
         </div>
         <div className="flex flex-col gap-1">
           <h2 className="font-semibold flex gap-4 items-center dark:text-white">

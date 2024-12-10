@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 
 import { useSendTestEmailMutation } from "@/app/services/server";
 import { SMTPConfig } from "@/types/server";
@@ -11,6 +11,8 @@ import Label from "@/components/styled/Label";
 import Toggle from "@/components/styled/Toggle";
 import useConfig from "@/hooks/useConfig";
 import HowToTip from "./HowToTip";
+import { ConfigTip } from "@/components/ConfigTip";
+import { Link } from "./Tooltip";
 
 export default function ConfigSMTP() {
   const { t } = useTranslation("setting", { keyPrefix: "smtp" });
@@ -55,6 +57,14 @@ export default function ConfigSMTP() {
   const { host, port, from, username, password, enabled = false } = values as SMTPConfig;
   return (
     <div className="setting-container max-md:w-full">
+      <ConfigTip
+        title={
+          <Trans ns="setting" i18nKey={"smtp.desc"}>
+            <Link newTab={false} to={"/#/setting/license"} />
+          </Trans>
+        }
+        desc={t("sub_desc")}
+      />
       <div className="inputs">
         <div className="input row">
           <Label className="flex items-center gap-2">

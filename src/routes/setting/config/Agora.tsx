@@ -8,6 +8,7 @@ import Label from "@/components/styled/Label";
 import Toggle from "@/components/styled/Toggle";
 import useConfig from "@/hooks/useConfig";
 import HowToTip from "./HowToTip";
+import { ConfigTip } from "@/components/ConfigTip";
 
 export default function ConfigAgora() {
   const { t } = useTranslation("setting", { keyPrefix: "agora" });
@@ -42,6 +43,7 @@ export default function ConfigAgora() {
   const _url = url || "https://api.agora.io";
   return (
     <div className="setting-container">
+      <ConfigTip title={t("desc")} desc={t("sub_desc")} />
       <div className="inputs">
         <div className="input row">
           <Label className="flex items-center gap-2">

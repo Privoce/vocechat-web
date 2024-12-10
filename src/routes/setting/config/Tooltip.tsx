@@ -7,9 +7,13 @@ import { Trans } from "react-i18next";
 
 import IconQuestion from "@/assets/icons/question.svg";
 
-const Link = ({ to, children }: PropsWithChildren<{ to: string }>) => {
+export const Link = ({
+  to,
+  newTab = true,
+  children
+}: PropsWithChildren<{ to: string; newTab?: boolean }>) => {
   return (
-    <a href={to} className="text-primary-500" target="_blank" rel="noreferrer">
+    <a href={to} className="text-primary-500" target={newTab ? "_blank" : "_self"} rel="noreferrer">
       {children}
     </a>
   );

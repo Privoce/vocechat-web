@@ -8,6 +8,7 @@ import Label from "@/components/styled/Label";
 import StyledRadio from "@/components/styled/Radio";
 import Textarea from "@/components/styled/Textarea";
 import useConfig from "@/hooks/useConfig";
+import { ConfigTip } from "@/components/ConfigTip";
 
 interface IOptions {
   disable: string;
@@ -72,6 +73,7 @@ export default function ConfigFirebase() {
   const { token_url, project_id, private_key, client_email } = values as FirebaseConfig;
   return (
     <div className="setting-container max-md:w-full max-md:h-auto">
+      <ConfigTip title={t("firebase.desc")} desc={t("firebase.sub_desc")} />
       <StyledRadio
         options={Object.values(Options)}
         values={Object.keys(Options)}
