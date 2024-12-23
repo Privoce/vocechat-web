@@ -42,6 +42,10 @@ const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
   prepareHeaders: (headers, { endpoint }) => {
     const { token } = getLocalAuthData();
+    if ("crypto" in window) {
+      const uuid = window.crypto.randomUUID();
+      headers.set("request_uuid", uuid);
+    }
     // const { token } = (getState() as RootState).authData;
     if (token && !whiteList.includes(endpoint)) {
       headers.set(tokenHeader, token);
