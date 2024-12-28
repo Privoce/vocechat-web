@@ -16,7 +16,6 @@ import InvitePrivate from "./invitePrivate";
 import LazyIt from "./lazy";
 import InviteInMobile from "./reg/InviteInMobile";
 import usePrefetchData from "@/hooks/usePrefetchData";
-import SetEmailMsgTip from "@/components/SetEmailMsgTip";
 import ServerVersionChecker from "@/components/ServerVersionChecker";
 
 const RegBasePage = lazy(() => import("./reg"));
@@ -297,9 +296,6 @@ function ReduxRoutes() {
     <Provider store={store}>
       <Meta />
       <PageRoutes />
-      <ServerVersionChecker empty version="2.0.0">
-        <SetEmailMsgTip />
-      </ServerVersionChecker>
     </Provider>
   );
 }

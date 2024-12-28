@@ -32,7 +32,6 @@ const whiteList = [
 ];
 const whiteList401 = ["getAgoraVoicingList", "getAgoraChannels"];
 const errorWhiteList = [
-  "getIfInChina",
   "preCheckFileFromUrl",
   "getFavoriteDetails",
   "getOGInfo",
