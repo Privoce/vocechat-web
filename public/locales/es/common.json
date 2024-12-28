@@ -49,12 +49,16 @@
     "reload": "Recargar",
     "install": "Instalar",
     "download_origin": "Descargar original",
-    "close": "Cerrar"
+    "close": "Cerrar",
+    "upgrade": "Actualizar",
+    "view_pwd": "Ver contraseña",
+    "change_pwd": "Actualizar contraseña"
   },
   "status": {
     "uploading": "Subiendo"
   },
   "tip": {
+    "email_msg_tip": "Tu región ha bloqueado las notificaciones, actualiza a Pro para usar notificaciones por email.",
     "update": "¡Actualización exitosa!",
     "delete": "¡Eliminación exitosa!",
     "reg": "¡Registro exitoso!",
