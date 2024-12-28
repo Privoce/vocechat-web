@@ -1,16 +1,16 @@
 {
-"pin": "Fijar",
-"pin_desc": "¿Quieres fijar este mensaje en",
-"pinned_msg": "Mensaje Fijado",
-"pin_empty_tip": "Este canal aún no tiene ningún mensaje fijado.",
-"fav": "Favorito",
-"fav_msg": "Mensaje Guardado",
-"fav_empty_tip": "Este canal aún no tiene ningún mensaje guardado.",
-"channel_members": "Miembros del Canal",
-"add_channel_members": "Agregar miembros",
-"welcome_channel": "Bienvenido a {{name}}",
-"welcome_desc": "Este es el inicio del canal #{{name}}.",
-"edit_channel": "Editar Canal"
+  "pin": "Fijar",
+  "pin_desc": "¿Quieres fijar este mensaje en",
+  "pinned_msg": "Mensaje Fijado",
+  "pin_empty_tip": "Este canal aún no tiene ningún mensaje fijado.",
+  "fav": "Favorito",
+  "fav_msg": "Mensaje Guardado",
+  "fav_empty_tip": "Este canal aún no tiene ningún mensaje guardado.",
+  "channel_members": "Miembros del Canal",
+  "add_channel_members": "Agregar miembros",
+  "welcome_channel": "Bienvenido a {{name}}",
+  "welcome_desc": "Este es el inicio del canal #{{name}}.",
+  "edit_channel": "Editar Canal"
 
   "channel_name": "Nombre del Canal",
   "private_channel": "Canal Privado",
@@ -19,7 +19,6 @@
   "create_private_channel_desc": "Este es un canal privado, solo miembros seleccionados podrán unirse.",
   "search_user_placeholder": "Escribe el nombre de usuario para buscar",
   "welcome_msg": "Bienvenido al canal {{name}}"
-
 
   "invite_title": "Agregar amigos a {{name}}",
   "invite_by_email": "Invitar por Correo Electrónico",
@@ -30,7 +29,7 @@
   "invite_link_edit": "Editar enlace de invitación",
   "invite_link_setting_tip": "El enlace de invitación expira en {{expire}}, máximo de usos: {{times}}",
   "generate_new_link": "Generar Nuevo Enlace"
- 
+
   "send_to": "Enviar a",
   "edited": "editado",
   "license_tip": "¡Tu licencia ha alcanzado el límite! ¡Actualiza la licencia o contacta al administrador!",
@@ -65,5 +64,5 @@
   "contact_tip": "Este usuario no está en tus contactos",
   "contact_block_tip": "Este usuario ha sido bloqueado por ti",
   "file_expired": "Archivo Expirado"
-
+  "only_owner_can_send": "Sólo el propietario del canal puede enviar mensajes.!"
 }
