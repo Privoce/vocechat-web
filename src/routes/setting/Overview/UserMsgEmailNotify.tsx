@@ -7,14 +7,11 @@ import toast from "react-hot-toast";
 import { shallowEqual } from "react-redux";
 import ServerVersionChecker from "@/components/ServerVersionChecker";
 import Toggle from "@/components/styled/Toggle";
-import useConfig from "@/hooks/useConfig";
-import { SMTPConfig } from "@/types/server";
 import { useUpdateInfoMutation } from "@/app/services/user";
 
 type Props = {};
 const UserMsgEmailNotify = ({}: Props) => {
   const [updateInfo, { isSuccess }] = useUpdateInfoMutation();
-  const { values } = useConfig("smtp");
   const { t } = useTranslation("setting");
   const { t: ct } = useTranslation();
   const { refetch } = useGetSystemCommonQuery();
@@ -33,13 +30,6 @@ const UserMsgEmailNotify = ({}: Props) => {
     }
   }, [isSuccess]);
   const toggleEnable = () => {
-    if (!msgNotify) {
-      // 检查下 SMTP 开关
-      if (!(values as SMTPConfig).enabled) {
-        toast.error("Enable SMTP first!");
-        return;
-      }
-    }
     updateInfo({ msg_smtp_notify_enable: !msgNotify });
   };
   if (!ServerMsgNotify) return null;
