@@ -3,7 +3,7 @@ import { fetchBaseQuery } from "@reduxjs/toolkit/query";
 import dayjs from "dayjs";
 
 import { getLocalAuthData } from "@/utils";
-import BASE_URL, { tokenHeader } from "../config";
+import BASE_URL, { tokenHeader, IS_OFFICIAL_DEMO } from "../config";
 import { resetAuthData, updateToken } from "../slices/auth.data";
 
 const whiteList = [
@@ -41,7 +41,7 @@ const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
   prepareHeaders: (headers, { endpoint }) => {
     const { token } = getLocalAuthData();
-    if ("crypto" in window) {
+    if (IS_OFFICIAL_DEMO && "crypto" in window) {
       const uuid = window.crypto.randomUUID();
       headers.set("request_uuid", uuid);
     }
