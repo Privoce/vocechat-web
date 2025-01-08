@@ -37,6 +37,7 @@
   wrapper.width = closeWidth;
   wrapper.height = closeHeight;
   wrapper.frameborder = 0;
+  wrapper.referrerPolicy = "unsafe-url";
   w.addEventListener(
     "message",
     (event) => {
