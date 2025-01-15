@@ -5,7 +5,7 @@ import SettingBlock from "@/components/SettingBlock";
 import StyledRadio from "@/components/styled/Radio";
 
 // type Props = {}
-type LanguageType = "en" | "zh" | "jp" | "tr" | "pt" | "es" | "fr";
+type LanguageType = "en" | "zh" | "jp" | "tr" | "pt" | "es" | "fr" | "ru";
 const LangMap: Record<LanguageType, string> = {
   en: "English",
   zh: "中文",
@@ -13,7 +13,8 @@ const LangMap: Record<LanguageType, string> = {
   jp: "日本語",
   pt: "Portuguese",
   fr: "Français",
-  es: "Español"
+  es: "Español",
+  ru: "Русский"
 };
 const Index = () => {
   const { t, i18n } = useTranslation("setting");
