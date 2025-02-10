@@ -4,7 +4,6 @@ import clsx from "clsx";
 import { useAppSelector } from "@/app/store";
 import useExpiredResMap from "@/hooks/useExpiredResMap";
 import { formatBytes, fromNowTime, getFileIcon } from "@/utils";
-import IconDownload from "@/assets/icons/download.svg";
 import {
   AudioPreview,
   CodePreview,
@@ -95,6 +94,8 @@ const FileBox: FC<Props> = ({
           setFetchError(true);
         }
       } catch (e) {
+        console.warn(e);
+        
         setFetchError(true);
       }
     };

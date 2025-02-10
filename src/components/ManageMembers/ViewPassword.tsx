@@ -10,7 +10,7 @@ type Props = {
 };
 
 const ViewPassword = ({ uid, onClose }: Props) => {
-  const { isLoading, data } = useGetUserByAdminQuery(uid ?? 0, { skip: !uid });
+  const {  data } = useGetUserByAdminQuery(uid ?? 0, { skip: !uid });
   console.log({ data });
 
   if (!uid) return null;

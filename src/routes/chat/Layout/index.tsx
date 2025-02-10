@@ -1,4 +1,4 @@
-import { FC, ReactElement, useEffect, useRef } from "react";
+import { FC, ReactElement, useEffect } from "react";
 import { useDrop } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
 import { toast } from "react-hot-toast";

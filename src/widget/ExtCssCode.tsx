@@ -1,7 +1,7 @@
 import BASE_URL from "@/app/config";
 import { useAppSelector } from "@/app/store";
 import { compareVersion } from "@/utils";
-import React, { useEffect } from "react";
+import  { useEffect } from "react";
 
 type Props = {};
 

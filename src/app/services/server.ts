@@ -33,7 +33,6 @@ import { updateCallInfo, upsertVoiceList } from "../slices/voice";
 import { RootState } from "../store";
 import baseQuery from "./base.query";
 import { GetFilesDTO, VoceChatFile } from "@/types/resource";
-import { IPData } from "@/types/common";
 
 export const serverApi = createApi({
   reducerPath: "serverApi",

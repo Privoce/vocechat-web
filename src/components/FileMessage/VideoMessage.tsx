@@ -2,7 +2,6 @@ import { SyntheticEvent, useState } from "react";
 import { Orbit } from "@uiball/loaders";
 import clsx from "clsx";
 
-import IconDownload from "@/assets/icons/download.svg";
 import IconVideo from "@/assets/icons/file.video.svg";
 import { formatBytes } from "../../utils";
 import ExpiredMessage from "./ExpiredMessage";

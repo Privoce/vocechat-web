@@ -3,7 +3,6 @@
 import { useTranslation } from "react-i18next";
 
 import SettingBlock from "@/components/SettingBlock";
-import StyledRadio from "@/components/styled/Radio";
 import { useAppSelector } from "../../../app/store";
 import { shallowEqual, useDispatch } from "react-redux";
 import { updateMsgSoundSetting } from "@/app/slices/ui";

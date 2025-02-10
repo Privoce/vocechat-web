@@ -5,15 +5,15 @@ const prices: Price[] = [
   {
     type: "payment",
     limit: 999999,
-    pid: "price_1MbF30GGoUDRyc3jwOg30dVQ"
+    pid: "price_1MbF30GGoUDRyc3jwOg30dVQ",
   },
   {
-    type: "booking"
-  }
+    type: "booking",
+  },
 ];
 const official_dev = `https://dev.voce.chat`;
 const local_dev = `https://dev.voce.chat`;
-// const local_dev = `http://localhost:3881`;
+// const local_dev = `http://localhost:3412`;
 const dev_origin = process.env.REACT_APP_OFFICIAL_DEMO ? official_dev : local_dev;
 
 // const local_dev = `https://im.ttt.td`;
@@ -56,7 +56,7 @@ export const getLicensePriceList = () => {
           title: "Test VoceChat Enterprise",
           limit: 99999,
           pid: "price_1LkQGpGGoUDRyc3jGTh3GYHw",
-          desc: "test price"
+          desc: "test price",
         },
         {
           title: "VoceChat Pro",
@@ -65,8 +65,8 @@ export const getLicensePriceList = () => {
           pid: "price_1MMNNCGGoUDRyc3jSIGIsb3C",
           desc: "test subscription price",
           type: "subscription",
-          sub_dur: "year" //day month year
-        }
+          sub_dur: "year", //day month year
+        },
       ]
     : ps;
 };
@@ -84,14 +84,14 @@ export const ContentTypes = {
   audio: "vocechat/audio",
   archive: "vocechat/archive",
   formData: "multipart/form-data",
-  json: "application/json"
+  json: "application/json",
 };
 export const MessageTypes = {
   text: "text/plain",
   markdown: "text/markdown",
   audio: "vocechat/audio",
   file: "vocechat/file",
-  archive: "vocechat/archive"
+  archive: "vocechat/archive",
 };
 export const firebaseConfig = {
   apiKey: "AIzaSyCc3VuCJZgzQLIH2wrYdQzsUOc1DuZiIOA",
@@ -100,11 +100,11 @@ export const firebaseConfig = {
   storageBucket: "vocechatdev.appspot.com",
   messagingSenderId: "526613312184",
   appId: "1:526613312184:web:d13c92582baf470d487a4d",
-  measurementId: "G-82RQ3YSCP7"
+  measurementId: "G-82RQ3YSCP7",
 };
 export const ChatPrefixes = {
   channel: "#",
-  dm: "@"
+  dm: "@",
 };
 export const vapidKey = `BOmzyZhw-DcIGYQ77mzQUVqLlcvn0bm_76P_kc7rpwRxzXNbui-JP8iPyEQYfyoxyJeq43Ud4IiIsJSMNHNujn0`;
 export const tokenHeader = "X-API-Key";
@@ -129,84 +129,84 @@ export const Emojis = ["👍", "❤️", "😄", "👀", "👎", "🎉", "🙁",
 export const getInviteLinkExpireList = () => [
   {
     label: i18n.t("auth:invite_expire.min30"),
-    value: 30 * 60
+    value: 30 * 60,
   },
   {
     label: i18n.t("auth:invite_expire.h1"),
-    value: 60 * 60
+    value: 60 * 60,
   },
   {
     label: i18n.t("auth:invite_expire.h6"),
-    value: 6 * 60 * 60
+    value: 6 * 60 * 60,
   },
   {
     label: i18n.t("auth:invite_expire.h12"),
-    value: 12 * 60 * 60
+    value: 12 * 60 * 60,
   },
   {
     label: i18n.t("auth:invite_expire.d1"),
-    value: 24 * 60 * 60
+    value: 24 * 60 * 60,
   },
   {
     label: i18n.t("auth:invite_expire.d7"),
-    value: 7 * 24 * 60 * 60
+    value: 7 * 24 * 60 * 60,
   },
   {
     label: i18n.t("auth:invite_expire.d30"),
-    value: 30 * 24 * 60 * 60
-  }
+    value: 30 * 24 * 60 * 60,
+  },
 ];
 export const getInviteLinkTimesList = () => [
   {
     label: i18n.t("auth:invite_times.no_limit"),
-    value: 10000000
+    value: 10000000,
   },
   {
     label: i18n.t("auth:invite_times.time1"),
-    value: 1
+    value: 1,
   },
   {
     label: i18n.t("auth:invite_times.times5"),
-    value: 5
+    value: 5,
   },
   {
     label: i18n.t("auth:invite_times.times10"),
-    value: 10
+    value: 10,
   },
   {
     label: i18n.t("auth:invite_times.times25"),
-    value: 25
+    value: 25,
   },
   {
     label: i18n.t("auth:invite_times.times50"),
-    value: 50
+    value: 50,
   },
   {
     label: i18n.t("auth:invite_times.times100"),
-    value: 100
-  }
+    value: 100,
+  },
 ];
 export const getEmailNotifyDelayList = () => [
   {
     label: i18n.t("setting:overview.server_msg_notify.delay_5_min"),
-    value: 5 * 60
+    value: 5 * 60,
   },
   {
     label: i18n.t("setting:overview.server_msg_notify.delay_15_min"),
-    value: 15 * 60
+    value: 15 * 60,
   },
   {
     label: i18n.t("setting:overview.server_msg_notify.delay_1_hour"),
-    value: 60 * 60
+    value: 60 * 60,
   },
   {
     label: i18n.t("setting:overview.server_msg_notify.delay_3_hour"),
-    value: 3 * 60 * 60
+    value: 3 * 60 * 60,
   },
   {
     label: i18n.t("setting:overview.server_msg_notify.delay_12_hour"),
-    value: 12 * 60 * 60
-  }
+    value: 12 * 60 * 60,
+  },
 ];
 export const KEY_ADMIN_SEE_CHANNEL_MEMBERS = `only_admin_can_see_channel_members`;
 export const KEY_MSG_URL_PREVIEW = `enable_msg_url_preview`;

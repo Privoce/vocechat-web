@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+ 
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import MetaMaskOnboarding from "@metamask/onboarding";
@@ -82,6 +82,8 @@ export default function MetamaskLoginButton({
         });
         setAccounts(tmps);
       } catch (error) {
+        console.error(error);
+        
         // toast.error(error.message);
         window.ethereum.request({
           method: "wallet_requestPermissions",

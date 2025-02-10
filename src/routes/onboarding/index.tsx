@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
 import { useWizard, Wizard } from "react-use-wizard";
 import clsx from "clsx";
@@ -53,9 +52,7 @@ export default function OnboardingPage() {
   const [serverName, setServerName] = useState("");
   return (
     <>
-      <Helmet>
         <title>{t("onboarding.title") || ""}</title>
-      </Helmet>
       <div className="h-screen bg-neutral-100 dark:bg-neutral-900 overflow-y-auto">
         <Wizard header={<Navigator />}>
           <WelcomePage />
