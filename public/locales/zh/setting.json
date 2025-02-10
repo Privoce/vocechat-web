@@ -33,7 +33,7 @@
     "id": "频道 ID",
     "name": "频道名",
     "topic": "频道主题",
-    "topic_placeholder": "让别人知道这个频道是用来做啥的",
+    "topic_placeholder": "让别人知道这个频道是用来做啥的（支持 markdown）",
     "visibility": "可见性",
     "public": "公开",
     "private": "私密",
@@ -82,6 +82,12 @@
     "admin_see_group_members": {
       "title": "只有管理员能看到群成员",
       "desc": "如果开启，只有管理员能看到群成员，更好地保护隐私",
+      "enable": "开启",
+      "disable": "关闭"
+    },
+    "admin_only_can_invite": {
+      "title": "只有管理员可以邀请新用户",
+      "desc": "如果开启，只有管理员才能邀请新用户",
       "enable": "开启",
       "disable": "关闭"
     },

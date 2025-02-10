@@ -16,9 +16,10 @@ import { isDarkMode } from "../utils";
 import ImagePreview from "./ImagePreview";
 
 interface IProps {
+  cleanMode?: boolean;
   content: string;
 }
-const MarkdownRender: FC<IProps> = ({ content }) => {
+const MarkdownRender: FC<IProps> = ({ content, cleanMode = false }) => {
   const mdContainer = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     if (mdContainer.current) {
@@ -28,7 +29,8 @@ const MarkdownRender: FC<IProps> = ({ content }) => {
       });
     }
   }, [mdContainer]);
-
+  if (cleanMode)
+    return <Viewer initialValue={content} theme={isDarkMode() ? "dark" : "light"}></Viewer>;
   return (
     <>
       <ImagePreview container={mdContainer.current} context="markdown" />

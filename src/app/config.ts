@@ -208,6 +208,7 @@ export const getEmailNotifyDelayList = () => [
     value: 12 * 60 * 60,
   },
 ];
+export const KEY_ADMIN_ONLY_INVITE = `admin_only_can_invite`;
 export const KEY_ADMIN_SEE_CHANNEL_MEMBERS = `only_admin_can_see_channel_members`;
 export const KEY_MSG_URL_PREVIEW = `enable_msg_url_preview`;
 export default BASE_URL;

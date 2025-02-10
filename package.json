@@ -42,6 +42,7 @@
     "i18next-http-backend": "^3.0.2",
     "linkify-plugin-mention": "^4.2.0",
     "linkify-react": "^4.2.0",
+    "linkify-string": "^4.2.0",
     "linkifyjs": "^4.2.0",
     "localforage": "^1.10.0",
     "localforage-setitems": "^1.4.0",

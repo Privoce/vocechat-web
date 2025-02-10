@@ -18,6 +18,7 @@ import ServerMsgNotify from "./ServerMsgEmailNotify";
 import GuestMode from "./GuestMode";
 import WhoCanSignUpSetting from "./WhoCanSignUpSetting";
 import UserMsgEmailNotify from "./UserMsgEmailNotify";
+import WhoCanInviteUsers from "./WhoCanInviteUsers";
 
 export default function Overview() {
   const { t } = useTranslation("setting");
@@ -42,6 +43,7 @@ export default function Overview() {
           {/* 只有 admin 能创建群组 */}
 
           <EnableURLPreviewInMsg />
+          <WhoCanInviteUsers />
           <OnlyAdminCanSeeChannelMembers />
           {/* 访客模式 */}
           <GuestMode />

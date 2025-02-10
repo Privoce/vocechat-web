@@ -32,7 +32,7 @@
     "delete_desc": "Are you sure want to delete this channel?",
     "name": "Channel Name",
     "topic": "Channel Topic",
-    "topic_placeholder": "Let everyone know how to use this channel.",
+    "topic_placeholder": "Let everyone know how to use this channel.(markdown supported)",
     "visibility": "Channel Visibility",
     "public": "Public",
     "private": "Private"
