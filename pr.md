@@ -26,3 +26,5 @@ Feature Requests for VoceChat:
 
 9. Welcome Text on Login page
    provide a textfield with markdown format typo feature to instruct, onboard or welcome new users directly on the login screen on web, ios- app or android-app login screen.
+
+接入：https://docs.scarf.sh/
