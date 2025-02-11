@@ -1,0 +1,26 @@
+diff --git a/dist/index.es.js b/dist/index.es.js
+index d5ca985073ca19280ce54d4601f805bc4c1dc18d..ee464b41188c0904f1c3b34e4b5cc63b7c2aeabb 100644
+--- a/dist/index.es.js
++++ b/dist/index.es.js
+@@ -886,7 +886,7 @@ var ZeroWidthString = props => {
+   if (isMarkPlaceholder) {
+     attributes['data-slate-mark-placeholder'] = true;
+   }
+-  return /*#__PURE__*/React.createElement("span", _objectSpread$3({}, attributes), !(IS_ANDROID || IS_IOS) || !isLineBreak ? '\uFEFF' : null, isLineBreak ? /*#__PURE__*/React.createElement("br", null) : null);
++  return /*#__PURE__*/React.createElement("span", _objectSpread$3({}, attributes), !IS_ANDROID  || !isLineBreak ? '\uFEFF' : null, isLineBreak ? /*#__PURE__*/React.createElement("br", null) : null);
+ };
+ 
+ function ownKeys$2(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+diff --git a/dist/index.js b/dist/index.js
+index c06e1433f3adcf64d3b29dbb4d60fda7c0397e0c..172010fab7acbfc24c8781c86e39264a7055e3ea 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -1062,7 +1062,7 @@ var ZeroWidthString = function ZeroWidthString(props) {
+   if (isMarkPlaceholder) {
+     attributes['data-slate-mark-placeholder'] = true;
+   }
+-  return /*#__PURE__*/React.createElement("span", _objectSpread$3({}, attributes), !(slateDom.IS_ANDROID || slateDom.IS_IOS) || !isLineBreak ? "\uFEFF" : null, isLineBreak ? /*#__PURE__*/React.createElement("br", null) : null);
++  return /*#__PURE__*/React.createElement("span", _objectSpread$3({}, attributes), !slateDom.IS_ANDROID || !isLineBreak ? "\uFEFF" : null, isLineBreak ? /*#__PURE__*/React.createElement("br", null) : null);
+ };
+ 
+ function ownKeys$2(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }

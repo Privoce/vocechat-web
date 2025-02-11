@@ -1,8 +1,8 @@
-diff --git a/node_modules/@toast-ui/editor/dist/esm/index.js b/node_modules/@toast-ui/editor/dist/esm/index.js
-index 1c1ea71..abcf356 100644
---- a/node_modules/@toast-ui/editor/dist/esm/index.js
-+++ b/node_modules/@toast-ui/editor/dist/esm/index.js
-@@ -15124,7 +15124,7 @@ function registerTagWhitelistIfPossible(tagName) {
+diff --git a/dist/esm/index.js b/dist/esm/index.js
+index d966ba81c2e5d17b395a3d0d1e0bca88537274ed..9c4e05375ef33bdf77359679227fa5fbccabbed8 100644
+--- a/dist/esm/index.js
++++ b/dist/esm/index.js
+@@ -15115,7 +15115,7 @@ function registerTagWhitelistIfPossible(tagName) {
      }
  }
  function sanitizeHTML(html, options) {
@@ -11,10 +11,10 @@ index 1c1ea71..abcf356 100644
              'input',
              'script',
              'textarea',
-diff --git a/node_modules/@toast-ui/editor/dist/esm/indexViewer.js b/node_modules/@toast-ui/editor/dist/esm/indexViewer.js
-index c9a7af9..dc478d5 100644
---- a/node_modules/@toast-ui/editor/dist/esm/indexViewer.js
-+++ b/node_modules/@toast-ui/editor/dist/esm/indexViewer.js
+diff --git a/dist/esm/indexViewer.js b/dist/esm/indexViewer.js
+index 01bb8afd62d4a7383699332693cd29641775a90e..dc3a4a424a8a153451764ecfa822818c6427ec6f 100644
+--- a/dist/esm/indexViewer.js
++++ b/dist/esm/indexViewer.js
 @@ -11539,7 +11539,7 @@ function registerTagWhitelistIfPossible(tagName) {
      }
  }
@@ -24,11 +24,11 @@ index c9a7af9..dc478d5 100644
              'input',
              'script',
              'textarea',
-diff --git a/node_modules/@toast-ui/editor/dist/toastui-editor-viewer.js b/node_modules/@toast-ui/editor/dist/toastui-editor-viewer.js
-index a7071f8..3b70f9e 100644
---- a/node_modules/@toast-ui/editor/dist/toastui-editor-viewer.js
-+++ b/node_modules/@toast-ui/editor/dist/toastui-editor-viewer.js
-@@ -12848,7 +12848,7 @@ function htmlSanitizer_registerTagWhitelistIfPossible(tagName) {
+diff --git a/dist/toastui-editor-viewer.js b/dist/toastui-editor-viewer.js
+index 8dac9c7f0ead1a0c2366c297f6b71c84bebafef5..e808a3779bf4778c7235afe2a1b62783a248bebb 100644
+--- a/dist/toastui-editor-viewer.js
++++ b/dist/toastui-editor-viewer.js
+@@ -12839,7 +12839,7 @@ function htmlSanitizer_registerTagWhitelistIfPossible(tagName) {
      }
  }
  function sanitizeHTML(html, options) {
@@ -37,11 +37,11 @@ index a7071f8..3b70f9e 100644
              'input',
              'script',
              'textarea',
-diff --git a/node_modules/@toast-ui/editor/dist/toastui-editor.js b/node_modules/@toast-ui/editor/dist/toastui-editor.js
-index af9b32a..b8ea81d 100644
---- a/node_modules/@toast-ui/editor/dist/toastui-editor.js
-+++ b/node_modules/@toast-ui/editor/dist/toastui-editor.js
-@@ -16379,7 +16379,7 @@ function registerTagWhitelistIfPossible(tagName) {
+diff --git a/dist/toastui-editor.js b/dist/toastui-editor.js
+index dd572b1daead0aa3742426b40d631f66629ce064..9189512d40d067917ab22c860ec72dacb6b32956 100644
+--- a/dist/toastui-editor.js
++++ b/dist/toastui-editor.js
+@@ -16370,7 +16370,7 @@ function registerTagWhitelistIfPossible(tagName) {
      }
  }
  function sanitizeHTML(html, options) {

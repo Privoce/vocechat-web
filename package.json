@@ -1,6 +1,6 @@
 {
   "name": "vocechat-web",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "homepage": "https://voce.chat",
   "dependencies": {
     "@metamask/onboarding": "^1.0.1",
@@ -92,8 +92,7 @@
     "start": "REACT_APP_BUILD_TIME=$(date +%s) node scripts/start.js",
     "build": "rm -rf build && REACT_APP_BUILD_TIME=$(date +%s) GENERATE_SOURCEMAP=false node scripts/build.js",
     "build:release": "rm -rf build && REACT_APP_BUILD_TIME=$(date +%s) REACT_APP_RELEASE=true GENERATE_SOURCEMAP=false node scripts/build.js",
-    "deploy:demo": "REACT_APP_OFFICIAL_DEMO=true pnpm build && gh-pages -d build",
-    "postinstall": "patch-package"
+    "deploy:demo": "REACT_APP_OFFICIAL_DEMO=true pnpm build && gh-pages -d build"
   },
   "browserslist": {
     "production": [
@@ -129,13 +128,17 @@
     "eslint": "^9.20.0",
     "gh-pages": "^6.3.0",
     "md5-file": "^5.0.0",
-    "patch-package": "^8.0.0",
     "postcss": "^8.5.1",
     "postcss-loader": "^8.1.1",
-    "postinstall-postinstall": "^2.1.0",
     "tailwindcss": "^3.4.14",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.23.0",
     "webpack-bundle-analyzer": "^4.10.2"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "slate-react": "patches/slate-react.patch",
+      "@toast-ui/editor": "patches/@toast-ui__editor.patch"
+    }
   }
 }
