@@ -22,7 +22,6 @@ const Radio: FC<Props> = ({
   onChange = undefined
 }) => {
   const id = useId();
-
   const [fallbackValue, setFallbackValue] = useState(defaultValue);
   const _value = value !== VALUE_NOT_SET ? value : fallbackValue;
   return (

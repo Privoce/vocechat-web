@@ -59,7 +59,7 @@ const uiSlice = createSlice({
         ...rest
       } = action.payload;
       window.MSG_SOUND = msgSound;
-      return { ...state, msgSound, ...rest };
+      return { ...state, msgSound,fileListView, ...rest };
     },
     setReady(state, action: PayloadAction<boolean>) {
       state.ready = action.payload;

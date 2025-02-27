@@ -19,7 +19,6 @@ import VoiceChat from "../VoiceChat";
 import Dashboard from "../VoiceChat/Dashboard";
 import Members from "./Members";
 import PinList from "./PinList";
-import { getJSONField } from "@/utils";
 import { KEY_ADMIN_SEE_CHANNEL_MEMBERS } from "@/app/config";
 import useServerExtSetting from "@/hooks/useServerExtSetting";
 

@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import StyledRadio from "../../../components/styled/Radio";
 type Props = {};
 
-const WhoCanSignUpSetting = (props: Props) => {
+const WhoCanSignUpSetting = ({}: Props) => {
   const { t } = useTranslation("setting");
   const { values: loginConfig, updateConfig: updateLoginConfig } = useConfig("login");
   const handleUpdateWhoCanSignUp = (value: WhoCanSignUp) => {

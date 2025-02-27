@@ -9,10 +9,12 @@ if (!isSupported) {
         let place = ratio <= 0 && centerIfNeeded ? "center" : "nearest";
         el.scrollIntoView({
           block: place,
-          inline: place
+          inline: place,
         });
       }
       this.disconnect();
     }).observe(this);
   };
 }
+// hasown API
+"hasOwn" in Object || (Object.hasOwn = Object.call.bind(Object.hasOwnProperty));

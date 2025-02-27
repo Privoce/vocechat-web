@@ -7,7 +7,6 @@
     "strings": true
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "prettier.prettierPath": "./node_modules/prettier/index.cjs",
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
@@ -69,5 +68,6 @@
   },
   "[svg]": {
     "editor.defaultFormatter": "jock.svg"
-  }
+  },
+  "i18n-ally.localesPaths": ["public/locales"]
 }

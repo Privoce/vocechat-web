@@ -33,7 +33,6 @@ import { updateCallInfo, upsertVoiceList } from "../slices/voice";
 import { RootState } from "../store";
 import baseQuery from "./base.query";
 import { GetFilesDTO, VoceChatFile } from "@/types/resource";
-import { IPData } from "@/types/common";
 
 export const serverApi = createApi({
   reducerPath: "serverApi",
@@ -64,29 +63,6 @@ export const serverApi = createApi({
         method: "POST",
         responseHandler: "text"
       })
-    }),
-    getIfInChina: builder.query<boolean, void>({
-      query: () => ({
-        url: `https://cf-props.ihacker.dev`
-      }),
-      transformResponse: (resp: IPData) => {
-        if (!("error" in resp)) {
-          return resp.country.toUpperCase() == "CN";
-        }
-        return false;
-      }
-      // async onQueryStarted(data, { dispatch, queryFulfilled }) {
-      //   try {
-      //     const {data:{status}} = await queryFulfilled;
-      //     if(status=="success"){
-
-      //     }
-      //     localStorage.setItem(KEY_SERVER_VERSION, resp.data);
-      //     dispatch(updateInfo({ version: resp.data }));
-      //   } catch {
-      //     console.error("get server version error");
-      //   }
-      // }
     }),
     getServerVersion: builder.query<string, void>({
       query: () => ({
@@ -508,6 +484,5 @@ export const {
   useLazyGetAgoraUsersByChannelQuery,
   useLazyClearAllFilesQuery,
   useLazyClearAllMessagesQuery,
-  useLazyGetFilesQuery,
-  useGetIfInChinaQuery
+  useLazyGetFilesQuery
 } = serverApi;

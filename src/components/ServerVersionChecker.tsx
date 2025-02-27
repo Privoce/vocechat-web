@@ -32,7 +32,7 @@ const ServerVersionChecker = ({ empty = false, version, children }: Props) => {
         <span className="text-gray-400 text-sm">{t("server_update.update_tip")}</span>
         <a
           className="text-blue-500 underline"
-          href="https://doc.voce.chat/install/install-by-docker#update-vocechat-docker"
+          href="https://doc.voce.chat/install/docker"
           target="_blank"
           rel="noopener noreferrer"
         >

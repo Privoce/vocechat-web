@@ -15,6 +15,7 @@ export interface SystemCommon {
   chat_layout_mode?: ChatLayout;
   max_file_expiry_mode?: MessageExpireMode;
   only_admin_can_create_group: boolean;
+  who_can_invite_users: boolean;
   ext_setting: null | string;
   msg_smtp_notify_enable: boolean;
   msg_smtp_notify_delay_seconds: number;

@@ -11,27 +11,6 @@ import View from "./View";
 import { useLazyGetFilesQuery } from "@/app/services/server";
 import { shallowEqual } from "react-redux";
 
-const checkFilter = (data, filter, channelMessage) => {
-  let selected = true;
-  const { mid, from_uid, properties } = data;
-  const { name: nameFilter, from: fromFilter, channel: channelFilter } = filter;
-  const name = properties ? properties.name : "";
-  if (fromFilter && fromFilter != from_uid) {
-    selected = false;
-  }
-  if (channelFilter && channelMessage[channelFilter].findIndex((id) => id == mid) == -1) {
-    selected = false;
-  }
-  if (nameFilter) {
-    let str = ["", ...nameFilter.toLowerCase(), ""].join(".*");
-    let reg = new RegExp(str);
-    if (!reg.test(name)) {
-      selected = false;
-    }
-  }
-  return selected;
-};
-
 function Files() {
   const [getFiles, { data }] = useLazyGetFilesQuery();
   const listContainerRef = useRef<HTMLDivElement>();

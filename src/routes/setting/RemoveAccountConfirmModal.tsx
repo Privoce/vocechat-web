@@ -20,6 +20,8 @@ const RemoveConfirmModal: FC<Props> = ({ closeModal }) => {
     try {
       await removeCurrentAccount();
     } catch (error) {
+      console.error(error);
+      
       toast.error("Remove Account Failed!");
     }
   };

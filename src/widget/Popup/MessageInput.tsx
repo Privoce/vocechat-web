@@ -1,4 +1,4 @@
-import { ChangeEvent, memo, useEffect, useRef, useState } from "react";
+import { ChangeEvent, memo,  useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import clsx from "clsx";
 
@@ -17,7 +17,7 @@ type Props = {
 let isComposing = false;
 const MessageInput = (props: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const { uploadFile, isUploading, isSuccess: uploadSuccess } = useUploadFile();
+  const { uploadFile, isUploading } = useUploadFile();
   const { t } = useTranslation("widget");
   const { color } = useWidget();
   const { from, to } = props;

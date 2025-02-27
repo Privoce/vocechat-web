@@ -14,7 +14,7 @@ export type VoiceMessageProps = {
   url: string;
   secure_url: string;
 };
-// 全局存储Voice信息
+// 全局存储 Voice 信息
 const VoiceMap: { [key: string]: WaveSurfer | null } = {};
 const VoiceMessage = ({ file_path }: { file_path: string }) => {
   const containerRef = useRef(null);
@@ -56,6 +56,8 @@ const VoiceMessage = ({ file_path }: { file_path: string }) => {
       });
       VoiceMap[file_path] = wave;
     } catch (error) {
+      console.error(error);
+      
       setStatus("error");
     }
   };

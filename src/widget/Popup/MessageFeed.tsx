@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/indent */
 import { memo, useEffect, useRef, useState } from "react";
-
 import { useAppSelector } from "../../app/store";
 import Message from "./Message";
 import { shallowEqual } from "react-redux";
@@ -26,6 +24,10 @@ const MessageFeed = ({ hostId }: Props) => {
       // 自己发送的消息
       if (lastIsMyself && lastMsg.sending) {
         container.scrollTop = container.scrollHeight;
+
+
+        
+
       }
       // 在可视区域附近
       if (deltaHeight <= triggerScrollHeight) {

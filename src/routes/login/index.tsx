@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+ 
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";

@@ -18,7 +18,9 @@ const useServerExtSetting = (config?: { successTip?: boolean; key?: string }) =>
   let setting = {};
   try {
     setting = JSON.parse(jsonSetting);
-  } catch (error) {}
+  } catch (error) {
+    console.warn(error);
+  }
   const defaultValueMap = {
     string: "",
     boolean: false

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import clsx from "clsx";
 
-import IconDownload from "@/assets/icons/download.svg";
 import IconAudio from "@/assets/icons/file.audio.svg";
 import { formatBytes } from "../../utils";
 import ExpiredMessage from "./ExpiredMessage";

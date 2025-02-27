@@ -33,7 +33,7 @@
     "id": "Channel ID",
     "name": "Channel Name",
     "topic": "Channel Topic",
-    "topic_placeholder": "Let everyone know how to use this channel.",
+    "topic_placeholder": "Let everyone know how to use this channel.(markdown supported)",
     "visibility": "Channel Visibility",
     "public": "Public",
     "private": "Private",
@@ -83,6 +83,12 @@
     "admin_see_group_members": {
       "title": "Only Admins Can See Group Members",
       "desc": "If enabled, only admins can see group members.",
+      "enable": "Enable",
+      "disable": "Disable"
+    },
+    "admin_only_can_invite": {
+      "title": "Only Admins Can Invite Users",
+      "desc": "If enabled, only admins can invite new members.",
       "enable": "Enable",
       "disable": "Disable"
     },

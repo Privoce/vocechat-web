@@ -26,7 +26,6 @@ const PinMessageModal: FC<Props> = ({ closeModal, mid = 0, gid = 0 }) => {
       closeModal();
       toast.success(t("tip.pin"));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess]);
 
   if (!mid) return null;

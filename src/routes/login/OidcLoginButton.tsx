@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+ 
 import { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
 

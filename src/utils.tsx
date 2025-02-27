@@ -390,13 +390,8 @@ export const compareVersion = (
   return 0;
 };
 
-/*!
- * Get the contrasting color for any hex color
- * (c) 2021 Chris Ferdinandi, MIT License, https://gomakethings.com
- * Derived from work by Brian Suda, https://24ways.org/2010/calculating-color-contrast/
- * @param  {String} A hexcolor value
- * @return {String} The contrasting color (black or white)
- */
+
+// Get the contrasting color for any hex color
 export const getContrastColor = (hexcolor: string) => {
   if (!hexcolor) return "";
   // If a leading # is provided, remove it
@@ -479,16 +474,6 @@ export const transformInviteLink = (link: string) => {
 
 export const reloadCurrentPage = () => {
   if (isElectronContext()) {
-    // // 改变 theme color 然后 electron reload（约定）
-    // const metaThemeColor = document.querySelector("meta[name=theme-color]");
-    // if (metaThemeColor) {
-    //   metaThemeColor.setAttribute("content", "#123456");
-    // } else {
-    //   const meta = document.createElement("meta");
-    //   meta.name = "theme-color";
-    //   meta.content = "#123456";
-    //   document.head.appendChild(meta);
-    // }
     // reload 两次 electron webview bug?
     setTimeout(() => {
       location.reload();
@@ -511,7 +496,8 @@ export const getJSONField = (json: string | null, field: string) => {
   try {
     const obj = json ? JSON.parse(json) : {};
     return obj[field];
-  } catch (error) {
+  } catch (err) {
+    console.warn(err);
     return undefined;
   }
 };
@@ -521,6 +507,8 @@ export const upsertJSON = (json: string | null, obj: object) => {
     const result = Object.assign({}, jsonObj, obj);
     return JSON.stringify(result);
   } catch (error) {
+    console.error(error);
+    
     return JSON.stringify(obj);
   }
 };
