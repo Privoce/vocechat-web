@@ -11,14 +11,12 @@ const prices: Price[] = [
     type: "booking",
   },
 ];
-const official_dev = `https://dev.voce.chat`;
-const local_dev = `https://dev.voce.chat`;
-// const local_dev = `http://localhost:3412`;
-const dev_origin = process.env.REACT_APP_OFFICIAL_DEMO ? official_dev : local_dev;
 
-// const local_dev = `https://im.ttt.td`;
+const official_dev = `https://dev.voce.chat`;
+const local_dev = process.env.REACT_APP_VOCECHAT_ORIGIN_URL;
+const dev_origin = process.env.REACT_APP_OFFICIAL_DEMO ? official_dev : local_dev;
 export const BASE_ORIGIN = process.env.REACT_APP_RELEASE ? `${location.origin}` : dev_origin;
-export const IS_OFFICIAL_DEMO = BASE_ORIGIN === official_dev;
+export const IS_OFFICIAL_DEMO = process.env.REACT_APP_OFFICIAL_DEMO;
 
 const BASE_URL = `${BASE_ORIGIN}/api`;
 export const getLicensePriceList = () => {
