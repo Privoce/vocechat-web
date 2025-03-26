@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import clsx from "clsx";
 
 import useExpiredResMap from "@/hooks/useExpiredResMap";
@@ -7,6 +7,9 @@ import IconImage from "@/assets/icons/file.image.svg";
 import IconUnknown from "@/assets/icons/file.unknown.svg";
 import IconVideo from "@/assets/icons/file.video.svg";
 import IconInfo from "@/assets/icons/info.svg";
+import { useLocation } from "react-router-dom";
+import useRemoveLocalMessage from "../../hooks/useRemoveLocalMessage";
+import { ChatContext } from "../../types/common";
 
 type Props = {
   type?: "file" | "audio" | "image" | "video";
@@ -16,25 +19,33 @@ const InfoMap = {
   file: {
     title: "File not Found",
     desc: "File expired or deleted",
-    icon: <IconUnknown className="w-9 shrink-0 h-auto grayscale" />
+    icon: <IconUnknown className="w-9 shrink-0 h-auto grayscale" />,
   },
   audio: {
     title: "Audio not Found",
     desc: "Audio expired or deleted",
-    icon: <IconAudio className="w-9 shrink-0 h-auto grayscale" />
+    icon: <IconAudio className="w-9 shrink-0 h-auto grayscale" />,
   },
   image: {
     title: "Image not Found",
     desc: "Image expired or deleted",
-    icon: <IconImage className="w-9 shrink-0 h-auto grayscale" />
+    icon: <IconImage className="w-9 shrink-0 h-auto grayscale" />,
   },
   video: {
     title: "Video not Found",
     desc: "Video expired or deleted",
-    icon: <IconVideo className="w-9 shrink-0 h-auto grayscale" />
-  }
+    icon: <IconVideo className="w-9 shrink-0 h-auto grayscale" />,
+  },
 };
 const ExpiredMessage = ({ type = "file", url = "" }: Props) => {
+  const { pathname } = useLocation();
+  console.log("pppp", pathname);
+  const [context = "channel", id = 0] = pathname.split("/").slice(-2);
+  const removeLocalMessage = useRemoveLocalMessage({
+    context: context as ChatContext,
+    id: +id,
+  });
+  const msgRef = useRef<HTMLDivElement | null>(null);
   const { setExpired } = useExpiredResMap();
   const { title, desc, icon } = InfoMap[type];
   useEffect(() => {
@@ -42,9 +53,19 @@ const ExpiredMessage = ({ type = "file", url = "" }: Props) => {
       setExpired(url);
     }
   }, [url]);
+  useEffect(() => {
+    const msgEle = msgRef.current;
+    if (!msgEle) return;
+    const mid = msgEle.closest("[data-msg-mid]")?.getAttribute("data-msg-mid") ?? "";
+    if (mid.length == 13) {
+      // 本地消息
+      removeLocalMessage(+mid);
+    }
+  }, [removeLocalMessage]);
 
   return (
     <div
+      ref={msgRef}
       className={clsx(
         `bg-stone-100 dark:bg-stone-900 border box-border md:w-96 rounded-md border-gray-300 dark:border-gray-500`
       )}
