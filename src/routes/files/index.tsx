@@ -6,7 +6,7 @@ import BASE_URL from "@/app/config";
 import { useAppSelector } from "@/app/store";
 import FileBox from "@/components/FileBox";
 import Filter from "./Filter";
-import Search from "./Search";
+// import Search from "./Search";
 import View from "./View";
 import { useLazyGetFilesQuery } from "@/app/services/server";
 import { shallowEqual } from "react-redux";
@@ -35,7 +35,7 @@ function Files() {
         return !!v;
       })
     );
-    getFiles(_f);
+    getFiles({ ..._f, page_size: 1000 });
   }, [filter]);
   if (!data) return null;
   // return null;
@@ -45,7 +45,7 @@ function Files() {
   console.log({ view });
   return (
     <div className="h-screen md:overflow-y-scroll flex flex-col items-start my-5 mr-6 pb-8 rounded-2xl bg-white dark:bg-gray-700">
-      <Search value={filter.name} updateSearchValue={handleUpdateSearch} />
+      {/* <Search value={filter.name} updateSearchValue={handleUpdateSearch} /> */}
       <div className="flex justify-between w-full px-4 py-5">
         <Filter filter={filter} updateFilter={updateFilter} />
         <View view={view} />
