@@ -10,7 +10,7 @@ import {
   DocPreview,
   ImagePreview,
   PdfPreview,
-  VideoPreview
+  VideoPreview,
 } from "./preview";
 import { shallowEqual } from "react-redux";
 import DownloadArea from "../FileMessage/DownloadArea";
@@ -31,7 +31,7 @@ const renderPreview = (data: Data) => {
     video: /^video/gi,
     code: /(json|javascript|java|rb|c|php|xml|css|html)$/gi,
     doc: /^text/gi,
-    pdf: /\/pdf$/gi
+    pdf: /\/pdf$/gi,
   };
   const _arr = name.split(".");
   const _type = file_type || _arr[_arr.length - 1];
@@ -79,7 +79,7 @@ const FileBox: FC<Props> = ({
   size,
   created_at,
   from_uid,
-  content
+  content,
 }) => {
   const [fetchError, setFetchError] = useState(false);
   const { isExpired, setExpired } = useExpiredResMap();
@@ -95,7 +95,7 @@ const FileBox: FC<Props> = ({
         }
       } catch (e) {
         console.warn(e);
-        
+
         setFetchError(true);
       }
     };
@@ -118,7 +118,7 @@ const FileBox: FC<Props> = ({
     <div
       className={clsx(
         `rounded-md border border-solid border-gray-300 dark:border-gray-500 bg-gray-100 dark:bg-gray-900`,
-        flex ? "w-full" : "w-72 md:w-[370px]",
+        flex ? "w-full max-w-3xl" : "w-72 md:w-[370px]",
         withPreview ? "relative overflow-hidden h-[281px]" : "h-[66px] ",
         file_type.startsWith("audio") && "h-[125px]"
       )}

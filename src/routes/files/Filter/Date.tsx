@@ -3,30 +3,29 @@ import { FC } from "react";
 import CheckSign from "@/assets/icons/check.sign.svg";
 
 export const Dates = {
-  today: {
-    title: "Today",
-    duration: 2222
+  Day1: {
+    title: "Last 24 Hours",
   },
-  in7d: {
-    title: "Last 7 Days"
+  Day7: {
+    title: "Last 7 Days",
   },
-  in30d: {
-    title: "Last 30 Days"
+  Day30: {
+    title: "Last 30 Days",
   },
-  in3m: {
-    title: "Last 3 months"
+  Day90: {
+    title: "Last 3 months",
   },
-  in12m: {
-    title: "Last 12 months"
-  }
+  Day180: {
+    title: "Last 6 months",
+  },
 };
 type Props = {
   select: number;
-  updateFilter: (param: { date?: string }) => void;
+  updateFilter: (param: { creation_time_type?: string }) => void;
 };
 const DateFilter: FC<Props> = ({ select = "", updateFilter }) => {
   const handleClick = (dur?: string) => {
-    updateFilter({ date: dur });
+    updateFilter({ creation_time_type: dur });
   };
 
   return (

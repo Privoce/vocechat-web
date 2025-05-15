@@ -23,13 +23,13 @@ export default function MyAccount() {
     name: {
       label: t("username"),
       title: t("change_name"),
-      intro: t("change_name_desc")
+      intro: t("change_name_desc"),
     },
     email: {
       label: t("email"),
       title: t("change_email"),
-      intro: t("change_email_desc")
-    }
+      intro: t("change_email_desc"),
+    },
   };
 
   const loginUser = useAppSelector(
@@ -71,6 +71,12 @@ export default function MyAccount() {
           </div>
           <div className="w-full flex items-start justify-between mb-6">
             <div className="flex flex-col text-gray-500 dark:text-gray-50">
+              <span className="text-xs uppercase  font-semibold">{t("email")}</span>
+              <span className="text-sm">{email}</span>
+            </div>
+          </div>
+          <div className="w-full flex items-start justify-between mb-6">
+            <div className="flex flex-col text-gray-500 dark:text-gray-50">
               <span className="text-xs uppercase  font-semibold">{t("username")}</span>
               <span className="text-sm ">
                 {name} <span className="text-gray-600 dark:text-gray-400"> #{uid}</span>
@@ -80,15 +86,7 @@ export default function MyAccount() {
               {ct("action.edit")}
             </Button>
           </div>
-          <div className="w-full flex items-start justify-between mb-6">
-            <div className="flex flex-col text-gray-500 dark:text-gray-50">
-              <span className="text-xs uppercase  font-semibold">{t("email")}</span>
-              <span className="text-sm">{email}</span>
-            </div>
-            <Button data-edit="email" onClick={handleBasicEdit}>
-              {ct("action.edit")}
-            </Button>
-          </div>
+
           <div className="w-full flex items-start justify-between mb-6">
             <div className="flex flex-col text-gray-500 dark:text-gray-50">
               <span className="text-xs uppercase  font-semibold">{t("password")}</span>

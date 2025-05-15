@@ -6,17 +6,17 @@ import CheckSign from "@/assets/icons/check.sign.svg";
 
 type Props = {
   select: number;
-  updateFilter: (param: { channel?: number }) => void;
+  updateFilter: (param: { gid?: number }) => void;
 };
 const Channel: FC<Props> = ({ select = 0, updateFilter }) => {
   const { channels } = useFilteredChannels();
   const handleClick = (gid?: number) => {
-    updateFilter({ channel: gid });
+    updateFilter({ gid });
   };
 
   return (
     <div className="rounded-lg p-1 pt-0 bg-white dark:bg-gray-800 overflow-auto max-h-[400px] flex flex-col items-start relative drop-shadow">
-      <ul className="w-full flex flex-col gap-4 p-2">
+      <ul className="w-full min-w-48 flex flex-col gap-4 p-2">
         <li
           className="relative cursor-pointer flex items-center gap-2"
           onClick={handleClick.bind(null, undefined)}

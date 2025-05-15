@@ -7,12 +7,12 @@ import Search from "../Search";
 
 type Props = {
   select: number;
-  updateFilter: (param: { from?: number }) => void;
+  updateFilter: (param: { uid?: number }) => void;
 };
 const From: FC<Props> = ({ select = "", updateFilter }) => {
   const { input, updateInput, users } = useFilteredUsers();
   const handleClick = (uid?: number) => {
-    updateFilter({ from: uid });
+    updateFilter({ uid });
   };
 
   return (

@@ -2,50 +2,40 @@ import { FC } from "react";
 
 import CheckSign from "@/assets/icons/check.sign.svg";
 import IconAudio from "@/assets/icons/file.audio.svg";
-import IconCode from "@/assets/icons/file.code.svg";
 import IconDoc from "@/assets/icons/file.doc.svg";
 import IconImage from "@/assets/icons/file.image.svg";
 import IconPdf from "@/assets/icons/file.pdf.svg";
-import IconUnknown from "@/assets/icons/file.unknown.svg";
 import IconVideo from "@/assets/icons/file.video.svg";
 
 export const FileTypes = {
-  doc: {
+  Doc: {
     title: "Documents",
-    icon: <IconDoc className="w-4 h-auto" />
+    icon: <IconDoc className="w-4 h-auto" />,
   },
-  pdf: {
+  PDF: {
     title: "PDFs",
-    icon: <IconPdf className="w-4 h-auto" />
+    icon: <IconPdf className="w-4 h-auto" />,
   },
-  image: {
+  Image: {
     title: "Images",
-    icon: <IconImage className="w-4 h-auto" />
+    icon: <IconImage className="w-4 h-auto" />,
   },
-  audio: {
+  Audio: {
     title: "Audio",
-    icon: <IconAudio className="w-4 h-auto" />
+    icon: <IconAudio className="w-4 h-auto" />,
   },
-  video: {
+  Video: {
     title: "Videos",
-    icon: <IconVideo className="w-4 h-auto" />
+    icon: <IconVideo className="w-4 h-auto" />,
   },
-  code: {
-    title: "Code Snippets",
-    icon: <IconCode className="w-4 h-auto" />
-  },
-  unknown: {
-    title: "Unknown Files",
-    icon: <IconUnknown className="w-4 h-auto" />
-  }
 };
 type Props = {
-  select: number;
-  updateFilter: (param: { type?: string }) => void;
+  select: string;
+  updateFilter: (param: { file_type?: string }) => void;
 };
 const Type: FC<Props> = ({ select = "", updateFilter }) => {
-  const handleClick = (type?: string) => {
-    updateFilter({ type });
+  const handleClick = (file_type?: string) => {
+    updateFilter({ file_type });
   };
 
   return (
@@ -53,7 +43,7 @@ const Type: FC<Props> = ({ select = "", updateFilter }) => {
       <ul className="w-full flex flex-col gap-4">
         <li
           className="relative cursor-pointer flex items-center gap-4 text-gray-500 dark:text-gray-300 font-semibold text-sm"
-          onClick={handleClick.bind(null, undefined)}
+          onClick={handleClick.bind(null, "")}
         >
           Any Type
           {!select && <CheckSign className="absolute right-0 top-1/2 -translate-y-1/2" />}

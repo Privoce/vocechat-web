@@ -12,7 +12,7 @@ import { useLazyGetFilesQuery } from "@/app/services/server";
 import { shallowEqual } from "react-redux";
 
 function Files() {
-  const [getFiles, { data }] = useLazyGetFilesQuery();
+  const [getFiles, { data, isLoading }] = useLazyGetFilesQuery();
   const listContainerRef = useRef<HTMLDivElement>();
   const [filter, setFilter] = useState({});
   const view = useAppSelector((store) => store.ui.fileListView, shallowEqual);
@@ -29,14 +29,22 @@ function Files() {
     });
   };
   useEffect(() => {
-    getFiles();
-  }, []);
+    // 过滤掉空值
+    const _f = Object.fromEntries(
+      Object.entries(filter).filter(([k, v]) => {
+        return !!v;
+      })
+    );
+    getFiles(_f);
+  }, [filter]);
   if (!data) return null;
   // return null;
-  const nonExpiredFiles = data.filter((item) => !item.expired);
+  const nonExpiredFiles = [
+    ...data.filter((item) => !item.expired).sort((a, b) => b.created_at - a.created_at),
+  ];
   console.log({ view });
   return (
-    <div className="h-screen md:overflow-y-scroll flex flex-col items-start my-2 mr-6 rounded-2xl bg-white dark:bg-gray-700">
+    <div className="h-screen md:overflow-y-scroll flex flex-col items-start my-5 mr-6 pb-8 rounded-2xl bg-white dark:bg-gray-700">
       <Search value={filter.name} updateSearchValue={handleUpdateSearch} />
       <div className="flex justify-between w-full px-4 py-5">
         <Filter filter={filter} updateFilter={updateFilter} />
@@ -44,13 +52,10 @@ function Files() {
       </div>
       <div
         className={clsx(
-          `h-full w-full px-4 overflow-y-scroll no-scrollbar`,
-          view == "item" && "flex gap-2 flex-col",
-          view == "grid" && "col-count-2 md:col-count-3 lg:col-count-5"
+          `h-full w-fit px-4 overflow-y-scroll no-scrollbar gap-4`,
+          view == "item" && "flex flex-col",
+          view == "grid" && "grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"
         )}
-        style={{
-          columnGap: "5px"
-        }}
         ref={listContainerRef}
       >
         {nonExpiredFiles.map((file) => {

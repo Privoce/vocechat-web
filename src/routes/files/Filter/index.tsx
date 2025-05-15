@@ -4,11 +4,11 @@ import Tippy from "@tippyjs/react";
 import clsx from "clsx";
 
 import { useAppSelector } from "@/app/store";
-import Avatar from "@/components/Avatar";
+// import Avatar from "@/components/Avatar";
 import ArrowDown from "@/assets/icons/arrow.down.svg";
 import FilterChannel from "./Channel";
 import FilterDate, { Dates } from "./Date";
-import FilterFrom from "./From";
+// import FilterFrom from "./From";
 import FilterType, { FileTypes } from "./Type";
 import { shallowEqual } from "react-redux";
 
@@ -23,13 +23,15 @@ const getClass = (selected: boolean) => {
 export default function Filter({ filter, updateFilter }) {
   const { t } = useTranslation("file");
   const [filtersVisible, setFiltersVisible] = useState({
-    channel: false,
-    date: false,
-    from: false,
-    type: false
+    gid: false,
+    creation_time_type: false,
+    uid: false,
+    file_type: false,
   });
 
   const toggleFilterVisible = (obj: any) => {
+    console.log({ obj });
+
     setFiltersVisible((prev) => {
       return { ...prev, ...obj };
     });
@@ -39,82 +41,89 @@ export default function Filter({ filter, updateFilter }) {
     updateFilter(data);
     let _key = Object.keys(data)[0];
     let tmp = {
-      [_key]: false
+      [_key]: false,
     };
     toggleFilterVisible(tmp);
   };
   const userMap = useAppSelector((store) => store.users.byId, shallowEqual);
   const channelMap = useAppSelector((store) => store.channels.byId, shallowEqual);
 
-  const { from, channel, type, date } = filter;
+  const { uid, gid, file_type, creation_time_type } = filter;
   const {
-    channel: channelVisible,
-    date: dateVisible,
-    type: typeVisible,
-    from: fromVisible
+    gid: channelVisible,
+    creation_time_type: dateVisible,
+    file_type: typeVisible,
+    uid: fromVisible,
   } = filtersVisible;
 
   return (
-    <div className="flex items-center gap-2">
-      <Tippy
+    <div className="flex items-center gap-3">
+      {/* <Tippy
         interactive
-        onClickOutside={toggleFilterVisible.bind(null, { from: false })}
+        onClickOutside={toggleFilterVisible.bind(null, { uid: false })}
         visible={fromVisible}
         placement="bottom-start"
-        content={<FilterFrom select={filter.from} updateFilter={handleUpdateFilter} />}
+        content={<FilterFrom select={filter.uid} updateFilter={handleUpdateFilter} />}
       >
-        <div className={getClass(from)} onClick={toggleFilterVisible.bind(null, { from: true })}>
-          {from && (
+        <div className={getClass(uid)} onClick={toggleFilterVisible.bind(null, { uid: true })}>
+          {uid && (
             <Avatar
               width={16}
               height={16}
               className="rounded-full w-4 h-4"
-              name={userMap[from].name}
-              src={userMap[from].avatar}
+              name={userMap[uid].name}
+              src={userMap[uid].avatar}
             />
           )}
           <span className="txt">
-            {t("from")} {from && userMap[from].name}
+            {t("from")} {uid && userMap[uid].name}
           </span>
           <ArrowDown className="dark:stroke-gray-100" />
         </div>
-      </Tippy>
+      </Tippy> */}
       <Tippy
         interactive
-        onClickOutside={toggleFilterVisible.bind(null, { channel: false })}
+        onClickOutside={toggleFilterVisible.bind(null, { gid: false })}
         visible={channelVisible}
         placement="bottom-start"
-        content={<FilterChannel select={filter.channel} updateFilter={handleUpdateFilter} />}
+        content={<FilterChannel select={filter.gid} updateFilter={handleUpdateFilter} />}
       >
-        <div
-          className={getClass(channel)}
-          onClick={toggleFilterVisible.bind(null, { channel: true })}
-        >
-          <span className="txt">{channel ? `In ${channelMap[channel].name}` : t("channel")}</span>
+        <div className={getClass(gid)} onClick={toggleFilterVisible.bind(null, { gid: true })}>
+          <span className="txt">{gid ? `In ${channelMap[gid].name}` : t("channel")}</span>
           <ArrowDown className="dark:stroke-gray-100" />
         </div>
       </Tippy>
       <Tippy
         interactive
-        onClickOutside={toggleFilterVisible.bind(null, { type: false })}
+        onClickOutside={toggleFilterVisible.bind(null, { file_type: false })}
         visible={typeVisible}
         placement="bottom-start"
-        content={<FilterType select={filter.type} updateFilter={handleUpdateFilter} />}
+        content={<FilterType select={filter.file_type} updateFilter={handleUpdateFilter} />}
       >
-        <div className={getClass(type)} onClick={toggleFilterVisible.bind(null, { type: true })}>
-          <span className="txt">{type ? FileTypes[type].title : t("type")}</span>
+        <div
+          className={getClass(file_type)}
+          onClick={toggleFilterVisible.bind(null, { file_type: true })}
+        >
+          <span className="txt">{file_type ? FileTypes[file_type].title : t("type")}</span>
           <ArrowDown className="dark:stroke-gray-100" />
         </div>
       </Tippy>
       <Tippy
         interactive
-        onClickOutside={toggleFilterVisible.bind(null, { date: false })}
+        onClickOutside={toggleFilterVisible.bind(null, { creation_time_type: false })}
         visible={dateVisible}
         placement="bottom-start"
-        content={<FilterDate select={filter.date} updateFilter={handleUpdateFilter} />}
+        content={
+          <FilterDate select={filter.creation_time_type} updateFilter={handleUpdateFilter} />
+        }
       >
-        <div className={getClass(date)} onClick={toggleFilterVisible.bind(null, { date: true })}>
-          <span className="txt">{date ? Dates[date].title : t("date")}</span>
+        <div
+          className={getClass(creation_time_type)}
+          onClick={toggleFilterVisible.bind(null, { creation_time_type: true })}
+        >
+          <span className="txt">
+            {creation_time_type ? Dates[creation_time_type].title : t("date")}
+          </span>
           <ArrowDown className="dark:stroke-gray-100" />
         </div>
       </Tippy>
