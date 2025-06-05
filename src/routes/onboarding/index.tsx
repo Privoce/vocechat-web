@@ -10,6 +10,7 @@ import InviteLink from "./steps/invite-link";
 import ServerName from "./steps/server-name";
 import WelcomePage from "./steps/welcome-page";
 import WhoCanSignUp from "./steps/who-can-sign-up";
+import SelectLanguage from "../../components/Language";
 
 const Navigator = () => {
   const { activeStep, goToStep } = useWizard();
@@ -52,7 +53,7 @@ export default function OnboardingPage() {
   const [serverName, setServerName] = useState("");
   return (
     <>
-        <title>{t("onboarding.title") || ""}</title>
+      <title>{t("onboarding.title") || ""}</title>
       <div className="h-screen bg-neutral-100 dark:bg-neutral-900 overflow-y-auto">
         <Wizard header={<Navigator />}>
           <WelcomePage />
@@ -64,6 +65,7 @@ export default function OnboardingPage() {
           <DonePage serverName={serverName} />
         </Wizard>
       </div>
+      <SelectLanguage />
     </>
   );
 }

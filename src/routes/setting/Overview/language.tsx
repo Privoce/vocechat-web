@@ -5,8 +5,8 @@ import SettingBlock from "@/components/SettingBlock";
 import StyledRadio from "@/components/styled/Radio";
 
 // type Props = {}
-type LanguageType = "en" | "zh" | "jp" | "tr" | "pt" | "es" | "fr" | "ru";
-const LangMap: Record<LanguageType, string> = {
+export type LanguageType = "en" | "zh" | "jp" | "tr" | "pt" | "es" | "fr" | "ru";
+export const LangMap: Record<LanguageType, string> = {
   en: "English",
   zh: "中文",
   tr: "Türkçe",
@@ -14,15 +14,24 @@ const LangMap: Record<LanguageType, string> = {
   pt: "Portuguese",
   fr: "Français",
   es: "Español",
-  ru: "Русский"
+  ru: "Русский",
 };
-const Index = () => {
+const LanguageList = ({
+  context = "overview",
+  callback,
+}: {
+  context?: "overview" | "aside";
+  callback?: (_v: string) => void;
+}) => {
   const { t, i18n } = useTranslation("setting");
   const handleGuestToggle = (v: LanguageType) => {
     i18n.changeLanguage(v);
   };
   return (
-    <SettingBlock title={t("overview.lang.title")} desc={t("overview.lang.desc")}>
+    <SettingBlock
+      title={context == "overview" ? t("overview.lang.title") : ""}
+      desc={t("overview.lang.desc")}
+    >
       <StyledRadio
         options={Object.values(LangMap)}
         values={Object.keys(LangMap)}
@@ -30,10 +39,11 @@ const Index = () => {
         onChange={(v) => {
           const _v = v as LanguageType;
           handleGuestToggle(_v);
+          callback?.(LangMap[_v]);
         }}
       />
     </SettingBlock>
   );
 };
 
-export default Index;
+export default LanguageList;

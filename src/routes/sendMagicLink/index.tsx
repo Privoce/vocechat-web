@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { useSendLoginMagicLinkMutation } from "@/app/services/auth";
 import SentTip from "./SentTip";
+import SelectLanguage from "../../components/Language";
 
 export default function SendMagicLinkPage() {
   const { email = "" } = useParams();
@@ -46,14 +47,17 @@ export default function SendMagicLinkPage() {
   };
 
   return (
-    <div className="flex-center h-screen dark:bg-gray-800">
-      <div className="py-8 px-10 shadow-md rounded-xl bg-white dark:bg-gray-700">
-        {isSuccess ? (
-          <SentTip email={email} handleBack={handlePwdPath} />
-        ) : isLoading ? (
-          <div className="">Sending...</div>
-        ) : null}
+    <>
+      <SelectLanguage />
+      <div className="flex-center h-screen dark:bg-gray-800">
+        <div className="py-8 px-10 shadow-md rounded-xl bg-white dark:bg-gray-700">
+          {isSuccess ? (
+            <SentTip email={email} handleBack={handlePwdPath} />
+          ) : isLoading ? (
+            <div className="">Sending...</div>
+          ) : null}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

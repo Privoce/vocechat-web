@@ -8,6 +8,7 @@ type Props = {
 };
 
 const SettingBlock = ({ toggler, title, desc, children }: Props) => {
+  if (!title) return <div className="min-w-56">{children}</div>;
   return (
     <div className="text-sm w-full">
       <div className="flex justify-between mb-2">

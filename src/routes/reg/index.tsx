@@ -3,6 +3,7 @@ import { Outlet, useOutletContext, useSearchParams } from "react-router-dom";
 
 import { useCheckMagicTokenValidMutation } from "@/app/services/auth";
 import ExpiredTip from "./ExpiredTip";
+import SelectLanguage from "../../components/Language";
 
 type ContextType = { token: string };
 export default function RegContainer() {
@@ -23,19 +24,22 @@ export default function RegContainer() {
   }, [tokenIsValid, magic_token]);
   if (checkingToken) return <div className="dark:text-gray-100">Checking Magic Link...</div>;
   return (
-    <div className="flex-center h-screen overflow-x-hidden overflow-y-auto dark:bg-gray-700">
-      <div className="py-8 px-10 shadow-md rounded-xl max-h-[95vh] overflow-y-auto overflow-x-hidden">
-        {magic_token ? (
-          tokenIsValid ? (
-            <Outlet context={{ token }} />
+    <>
+      <div className="flex-center h-screen overflow-x-hidden overflow-y-auto dark:bg-gray-700">
+        <div className="py-8 px-10 shadow-md rounded-xl max-h-[95vh] overflow-y-auto overflow-x-hidden">
+          {magic_token ? (
+            tokenIsValid ? (
+              <Outlet context={{ token }} />
+            ) : (
+              <ExpiredTip />
+            )
           ) : (
-            <ExpiredTip />
-          )
-        ) : (
-          <Outlet context={{ token }} />
-        )}
+            <Outlet context={{ token }} />
+          )}
+        </div>
       </div>
-    </div>
+      <SelectLanguage />
+    </>
   );
 }
 

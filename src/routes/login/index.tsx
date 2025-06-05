@@ -1,4 +1,3 @@
- 
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
@@ -17,10 +16,11 @@ import MagicLinkLogin from "./MagicLinkLogin";
 import SignUpLink from "./SignUpLink";
 import SocialLoginButtons from "./SocialLoginButtons";
 import { shallowEqual } from "react-redux";
+import SelectLanguage from "../../components/Language";
 
 const defaultInput = {
   email: "",
-  password: ""
+  password: "",
 };
 export default function LoginPage() {
   const { name: serverName, logo } = useAppSelector((store) => store.server, shallowEqual);
@@ -44,7 +44,7 @@ export default function LoginPage() {
       login({
         code,
         state,
-        type: "oidc"
+        type: "oidc",
       });
     }
     // magic link
@@ -54,7 +54,7 @@ export default function LoginPage() {
         // login
         login({
           magic_token,
-          type: "magiclink"
+          type: "magiclink",
         });
       } else {
         // reg with magic link and set name only
@@ -104,7 +104,7 @@ export default function LoginPage() {
     }
     login({
       ...input,
-      type: "password"
+      type: "password",
     });
   };
 
@@ -199,6 +199,7 @@ export default function LoginPage() {
         </div>
         {whoCanSignUp === "EveryOne" && <SignUpLink />}
       </div>
+      <SelectLanguage />
     </div>
   );
 }
