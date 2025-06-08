@@ -37,6 +37,14 @@
     "visibility": "Visibilidad del Canal",
     "public": "Público",
     "private": "Privado"
+    "enable": "habilitar",
+    "disable": "Inhabilitar",
+    "allow": "Permitir",
+    "disallow": "Rechazar",
+    "add_friend": "Agregar amigo",
+    "dm_to_member": "DM a Usuarios",
+    "show_email": "Mostrar Email",
+    "only_owner": "Sólo el propietario y el administrador pueden enviar mensajes"
   },
   "dm": {
     "delete": "Eliminar Usuario",
@@ -53,11 +61,42 @@
       "everyone": "Todos",
       "invite": "Solo Enlace de Invitación"
     },
+    "user_msg_notify": {
+      "title": "Notificación de mensajes nuevos por email",
+      "desc": "Puedes controlar los mensajes nuevos si los envías por email."
+    },
+    "server_msg_notify": {
+      "title": "Notificación de mensajes nuevos por email (servidor)",
+      "desc": "Los usuarios pueden controlar los mensajes nuevos si se envían por email, SMTP habilitado primero.",
+      "delay_5_min": "Cada 5 mins",
+      "delay_15_min": "Cada 15 mins",
+      "delay_1_hour": "Cada 1 hora",
+      "delay_3_hour": "Cada 3 horas",
+      "delay_12_hour": "Cada 12 horas"
+    },
+    "admin_create_group": {
+      "title": "Solo los administradores pueden crear grupo",
+      "desc": "Si está habilitado, solo los administradores pueden crear grupos.",
+      "enable": "Habilitar",
+      "disable": "Inhabilitar"
+    },
+    "admin_see_group_members": {
+      "title": "Sólo los administradores pueden ver a los usuarios del grupo",
+      "desc": "Si está habilitado, solo los administradores pueden ver a los usuarios del grupo..",
+      "enable": "Habilitar",
+      "disable": "Inhabilitar"
+    },
+    "enable_msg_url_preview": {
+      "title": "Habilitar la vista previa de URL en el mensaje",
+      "desc": "Si está habilitado, la URL en el mensaje mostrará el contenido de vista previa.",
+      "enable": "Habilitar",
+      "disable": "Inhabilitar"
+    },
     "guest_mode": {
       "title": "Modo Invitado",
       "desc": "Si está habilitado, los visitantes verán los canales públicos de este servidor.",
       "enable": "Habilitar",
-      "disable": "Desactivado"
+      "disable": "Inhabilitar"
     },
     "url": {
       "title": "Actualizar URL Frontend",
@@ -73,6 +112,12 @@
       "auto": "Automático",
       "dark": "Oscuro",
       "light": "Claro"
+    },
+    "message_sound": {
+      "title": "Sonido del mensaje",
+      "desc": "Reproducir sonido al recibir un mensaje nuevo.",
+      "enable": "Habilitar",
+      "disable": "Inhabilitar"
     },
     "online_status": {
       "title": "Estado en Línea",
@@ -187,7 +232,9 @@
     "clear_desc": "Esto eliminará todos los datos de mensajes almacenados tanto en el servidor como en el lado del cliente."
   },
   "firebase": {
-    "disable": "Desactivar",
+    "desc": "La notificación de mensajes requiere Google Firebase como método predeterminado.",
+    "sub_desc": "Hemos proporcionado una configuración oficial. Asegúrese de que Google FCM sea accesible desde su servidor y dispositivo.",
+    "disable": "Inhabilitar",
     "use_official": "Usar Configuración Oficial",
     "custom": "Personalizado",
     "enable": "Habilitar",
@@ -197,6 +244,8 @@
     "client_email": "Correo Electrónico del Cliente"
   },
   "smtp": {
+    "desc": "Para la notificación de mensajes nuevos por correo electrónico (función avanzada, actualización a <0>VoceChat Pro</0>) y la verificación de email de nuevo registro, utilizamos SMTP. ",
+    "sub_desc": "Please set up your SMTP below.",
     "enable": "Habilitar",
     "host": "Host",
     "port": "Puerto",
@@ -207,6 +256,8 @@
     "send_test_email": "Enviar Correo Electrónico de Prueba"
   },
   "agora": {
+    "desc": "Para llamadas de video y audio, utilizamos Agora API. ",
+    "sub_desc": "Cada proyecto de Agora disfrutará de 10 000 minutos de uso gratuito de la API por mes. Cree un proyecto usted mismo. Siga las instrucciones a continuación para configurar su Agora correctamente.",
     "enable": "Habilitar",
     "how_to": "¿Cómo configurar Agora?"
   },
@@ -242,6 +293,7 @@
     "default_value": "Valor Predeterminado",
     "remark": "Notas",
     "custom_style_tip": "si deseas personalizar la posición del widget de manera más precisa, usa el ID del elemento del widget en tu archivo HTML o CSS, como este",
+    "css_code_tip": "También puedes personalizar el código CSS, que se cargará en el widget como un archivo CSS.",
     "param_id": "ID del Widget (versión del servidor >= v0.3.12)",
     "param_host": "Asigna el usuario que está chateando con el visitante (ID de Usuario)",
     "param_title": "chat popup title",
