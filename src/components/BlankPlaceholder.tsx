@@ -13,6 +13,8 @@ import ChannelModal from "./ChannelModal";
 import InviteModal from "./InviteModal";
 import UsersModal from "./UsersModal";
 import { shallowEqual } from "react-redux";
+import { KEY_ADMIN_ONLY_INVITE } from "../app/config";
+import useServerExtSetting from "../hooks/useServerExtSetting";
 
 interface Props {
   type?: "chat" | "user";
@@ -20,9 +22,11 @@ interface Props {
 const classes = {
   box: "w-[220px] md:w-[200px] h-[100px] md:h-[200px] cursor-pointer bg-gray-50 dark:bg-gray-800 rounded-3xl flex-center flex-col gap-4",
   boxIcon: "w-7 h-7 md:w-10 md:h-10",
-  boxTip: "px-5 text-xs md:text-sm text-slate-600 dark:text-gray-100 font-bold text-center"
+  boxTip: "px-5 text-xs md:text-sm text-slate-600 dark:text-gray-100 font-bold text-center",
 };
 const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
+  const { getExtSetting } = useServerExtSetting();
+  const onlyAdminCanInvite = getExtSetting(KEY_ADMIN_ONLY_INVITE);
   const { t } = useTranslation("welcome");
   const server = useAppSelector((store) => store.server, shallowEqual);
   const isAdmin = useAppSelector((store) => store.authData.user?.is_admin, shallowEqual);
@@ -64,8 +68,8 @@ const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
                         </a>
                       </>
                     );
-                  }
-                }
+                  },
+                },
               }}
             >
               {server.description ? server.description : t("desc")}
@@ -81,10 +85,12 @@ const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 grid-rows-2 gap-2 md:gap-6 m-auto">
-          <button className={classes.box} onClick={toggleInviteModalVisible}>
-            <IconInvite className={classes.boxIcon} />
-            <div className={classes.boxTip}>{t("invite")}</div>
-          </button>
+          {(isAdmin || !onlyAdminCanInvite) && (
+            <button className={classes.box} onClick={toggleInviteModalVisible}>
+              <IconInvite className={classes.boxIcon} />
+              <div className={classes.boxTip}>{t("invite")}</div>
+            </button>
+          )}
           <button onClick={chatHandler} className={classes.box}>
             <IconChat className={classes.boxIcon} />
             <div className={classes.boxTip}>{chatTip}</div>
