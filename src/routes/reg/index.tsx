@@ -4,6 +4,7 @@ import { Outlet, useOutletContext, useSearchParams } from "react-router-dom";
 import { useCheckMagicTokenValidMutation } from "@/app/services/auth";
 import ExpiredTip from "./ExpiredTip";
 import SelectLanguage from "../../components/Language";
+import Downloads from "../../components/downloads";
 
 type ContextType = { token: string };
 export default function RegContainer() {
@@ -36,6 +37,7 @@ export default function RegContainer() {
           ) : (
             <Outlet context={{ token }} />
           )}
+          <Downloads />
         </div>
       </div>
       <SelectLanguage />

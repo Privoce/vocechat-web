@@ -17,6 +17,7 @@ import SignUpLink from "./SignUpLink";
 import SocialLoginButtons from "./SocialLoginButtons";
 import { shallowEqual } from "react-redux";
 import SelectLanguage from "../../components/Language";
+import Downloads from "../../components/downloads";
 
 const defaultInput = {
   email: "",
@@ -198,6 +199,7 @@ export default function LoginPage() {
           {!hideSocials && <SocialLoginButtons />}
         </div>
         {whoCanSignUp === "EveryOne" && <SignUpLink />}
+        <Downloads />
       </div>
       <SelectLanguage />
     </div>
