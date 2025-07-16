@@ -11,7 +11,8 @@ import {
   UserCreateDTO,
   UserDTO,
   UserForAdmin,
-  UserForAdminDTO
+  UserForAdminDTO,
+  UserRemarkDTO,
 } from "@/types/user";
 import BASE_URL, { ContentTypes } from "../config";
 import { updateAutoDeleteSetting, updateMute } from "../slices/footprint";
@@ -36,7 +37,7 @@ export const userApi = createApi({
             avatar:
               user.avatar_updated_at == 0
                 ? ""
-                : `${BASE_URL}/resource/avatar?uid=${user.uid}&t=${user.avatar_updated_at}`
+                : `${BASE_URL}/resource/avatar?uid=${user.uid}&t=${user.avatar_updated_at}`,
           };
         });
       },
@@ -44,7 +45,7 @@ export const userApi = createApi({
         try {
           const { data: users } = await queryFulfilled;
           const {
-            authData: { user: loginUser }
+            authData: { user: loginUser },
           } = getState() as RootState;
           dispatch(
             fillUsers(
@@ -52,7 +53,7 @@ export const userApi = createApi({
                 const status = loginUser?.uid == u.uid ? "added" : "";
                 return {
                   ...u,
-                  status
+                  status,
                 };
               })
             )
@@ -60,7 +61,7 @@ export const userApi = createApi({
         } catch {
           console.log("get user list error");
         }
-      }
+      },
     }),
     getContacts: builder.query<ContactResponse[], void>({
       query: () => ({ url: `/user/contacts` }),
@@ -72,59 +73,66 @@ export const userApi = createApi({
             const status = c.contact_info.status;
             return {
               uid,
-              status
+              status,
             };
           });
           dispatch(updateStatus(payloads));
         } catch {
           console.log("get contact list error");
         }
-      }
+      },
     }),
     deleteUser: builder.query<void, number>({
-      query: (uid) => ({ url: `/admin/user/${uid}`, method: "DELETE" })
+      query: (uid) => ({ url: `/admin/user/${uid}`, method: "DELETE" }),
     }),
     createUser: builder.mutation<UserForAdmin, UserCreateDTO>({
       query: (data) => ({
         url: `/admin/user`,
         body: data,
-        method: "POST"
-      })
+        method: "POST",
+      }),
     }),
     searchUser: builder.mutation<User, { search_type: "id" | "email" | "name"; keyword: string }>({
       query: (input) => ({
         url: `/user/search`,
         body: input,
-        method: "POST"
-      })
+        method: "POST",
+      }),
     }),
     pinChat: builder.mutation<void, { uid: number } | { gid: number }>({
       query: (data) => ({
         url: `/user/pin_chat`,
         method: "POST",
-        body: { target: data }
-      })
+        body: { target: data },
+      }),
     }),
     unpinChat: builder.mutation<void, { uid: number } | { gid: number }>({
       query: (data) => ({
         url: `/user/unpin_chat`,
         method: "POST",
-        body: { target: data }
-      })
+        body: { target: data },
+      }),
     }),
     updateUser: builder.mutation<UserForAdmin, UserForAdminDTO>({
       query: ({ id, ...rest }) => ({
         url: `/admin/user/${id}`,
         body: rest,
-        method: "PUT"
-      })
+        method: "PUT",
+      }),
+    }),
+    updateRemark: builder.mutation<void, UserRemarkDTO>({
+      query: (data) => ({
+        url: `/user/contact_remark`,
+        body: data,
+        method: "PUT",
+      }),
     }),
 
     updateAutoDeleteMsg: builder.mutation<void, AutoDeleteMsgDTO>({
       query: (data) => ({
         url: `/user/burn-after-reading`,
         body: data,
-        method: "POST"
+        method: "POST",
       }),
       async onQueryStarted(data, { dispatch, queryFulfilled }) {
         try {
@@ -140,21 +148,21 @@ export const userApi = createApi({
         } catch {
           console.log("update auto delete message setting error");
         }
-      }
+      },
     }),
 
     updateContactStatus: builder.mutation<void, { action: ContactAction; target_uid: number }>({
       query: (payload) => ({
         url: `/user/update_contact_status`,
         method: "POST",
-        body: payload
+        body: payload,
       }),
       async onQueryStarted(data, { dispatch, queryFulfilled }) {
         const map = {
           add: "added",
           block: "blocked",
           remove: "",
-          unblock: ""
+          unblock: "",
         };
         try {
           await queryFulfilled;
@@ -163,13 +171,13 @@ export const userApi = createApi({
         } catch (error) {
           console.log("update mute failed", error);
         }
-      }
+      },
     }),
     updateMuteSetting: builder.mutation<void, MuteDTO>({
       query: (data) => ({
         url: `/user/mute`,
         method: "POST",
-        body: data
+        body: data,
       }),
       async onQueryStarted(data, { dispatch, queryFulfilled }) {
         try {
@@ -178,51 +186,51 @@ export const userApi = createApi({
         } catch (error) {
           console.log("update mute failed", error);
         }
-      }
+      },
     }),
     updateAvatar: builder.mutation<void, File>({
       query: (data) => ({
         headers: {
-          "content-type": "image/png"
+          "content-type": "image/png",
         },
         url: `/user/avatar`,
         method: "POST",
-        body: data
-      })
+        body: data,
+      }),
     }),
     updateAvatarByAdmin: builder.mutation<void, { uid: number; file: File }>({
       query: ({ uid, file }) => ({
         headers: {
-          "content-type": "image/png"
+          "content-type": "image/png",
         },
         url: `/admin/user/${uid}/avatar`,
         method: "POST",
-        body: file
-      })
+        body: file,
+      }),
     }),
     getUserByAdmin: builder.query<UserForAdmin, number>({
-      query: (uid) => ({ url: `/admin/user/${uid}` })
+      query: (uid) => ({ url: `/admin/user/${uid}` }),
     }),
     // bot operations
     createBotAPIKey: builder.mutation<void, { uid: number; name: string }>({
       query: ({ uid, name }) => ({
         url: `/admin/user/bot-api-key/${uid}`,
         method: "POST",
-        body: { name }
-      })
+        body: { name },
+      }),
     }),
     getBotAPIKeys: builder.query<BotAPIKey[], number>({
-      query: (uid) => ({ url: `/admin/user/bot-api-key/${uid}` })
+      query: (uid) => ({ url: `/admin/user/bot-api-key/${uid}` }),
     }),
     deleteBotAPIKey: builder.query<void, { uid: number; kid: number }>({
-      query: ({ uid, kid }) => ({ url: `/admin/user/bot-api-key/${uid}/${kid}`, method: "DELETE" })
+      query: ({ uid, kid }) => ({ url: `/admin/user/bot-api-key/${uid}/${kid}`, method: "DELETE" }),
     }),
     // bot operations end
     updateInfo: builder.mutation<User, UserDTO>({
       query: (data) => ({
         url: `/user`,
         method: "PUT",
-        body: data
+        body: data,
       }),
       async onQueryStarted(params, { dispatch, queryFulfilled }) {
         try {
@@ -231,7 +239,7 @@ export const userApi = createApi({
         } catch (error) {
           console.log("update login user failed", error);
         }
-      }
+      },
     }),
     sendMsg: builder.mutation<
       number,
@@ -240,21 +248,22 @@ export const userApi = createApi({
       query: ({ id, content, type = "text", properties = "" }) => ({
         headers: {
           "content-type": ContentTypes[type],
-          "X-Properties": properties ? encodeBase64(JSON.stringify(properties)) : ""
+          "X-Properties": properties ? encodeBase64(JSON.stringify(properties)) : "",
         },
         url: `/user/${id}/send`,
         method: "POST",
-        body: type == "file" ? JSON.stringify(content) : content
+        body: type == "file" ? JSON.stringify(content) : content,
       }),
       async onQueryStarted(param1, param2) {
         // @ts-ignore
         await onMessageSendStarted.call(this, param1, param2, "user");
-      }
-    })
-  })
+      },
+    }),
+  }),
 });
 
 export const {
+  useUpdateRemarkMutation,
   useLazyGetUsersQuery,
   useGetUserByAdminQuery,
   useUpdateAvatarByAdminMutation,
@@ -273,5 +282,5 @@ export const {
   useSearchUserMutation,
   useUpdateContactStatusMutation,
   usePinChatMutation,
-  useUnpinChatMutation
+  useUnpinChatMutation,
 } = userApi;

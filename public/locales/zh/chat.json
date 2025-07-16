@@ -63,5 +63,8 @@
   "contact_tip": "该用户不在您的联系人列表中",
   "contact_block_tip": "该用户已被你屏蔽",
   "file_expired": "文件已过期",
-  "only_owner_can_send": "只有频道创建者才能发消息！"
+  "only_owner_can_send": "只有频道创建者才能发消息！",
+
+  "remark": "备注",
+  "remark_placeholder": "备注该用户"
 }

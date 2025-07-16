@@ -11,7 +11,7 @@ import {
   fillChannels,
   removeChannel,
   updateChannel,
-  updatePinMessage
+  updatePinMessage,
 } from "@/app/slices/channels";
 import {
   removePinChats,
@@ -20,14 +20,15 @@ import {
   updateMute,
   updateReadChannels,
   updateReadUsers,
+  updateRemarkByUid,
   updateUsersVersion,
-  upsertPinChats
+  upsertPinChats,
 } from "@/app/slices/footprint";
 import { resetMessage } from "@/app/slices/message";
 import {
   clearChannelMessage,
   removeChannelSession,
-  resetChannelMsg
+  resetChannelMsg,
 } from "@/app/slices/message.channel";
 import { resetFileMessage } from "@/app/slices/message.file";
 import { resetReactionMessage } from "@/app/slices/message.reaction";
@@ -41,7 +42,7 @@ import {
   ServerEvent,
   UserSettingsChangedEvent,
   UserSettingsEvent,
-  UsersStateEvent
+  UsersStateEvent,
 } from "@/types/sse";
 import { getLocalAuthData, isElectronContext } from "@/utils";
 import chatMessageHandler from "./chat.handler";
@@ -123,7 +124,7 @@ export default function useStreaming() {
       users_version?: string;
     } = {
       limit: "500",
-      "api-key": _token
+      "api-key": _token,
     };
     // 如果 afterMid 是 0，则不传该参数
     if (window.AFTER_MID) {
@@ -168,6 +169,11 @@ export default function useStreaming() {
         case "heartbeat":
           keepAlive();
           break;
+        case "user_remark": {
+          const { contact_uid, remark } = data;
+          dispatch(updateRemarkByUid({ uid: contact_uid, remark }));
+          break;
+        }
         case "message_cleared": {
           dispatch(resetFootprint());
           dispatch(resetChannelMsg());
@@ -192,7 +198,7 @@ export default function useStreaming() {
           const transformed = {
             name: organization_name,
             description: organization_description,
-            ...tmp
+            ...tmp,
           };
           const purified = omitBy(transformed, isNull);
           dispatch(updateInfo(purified));
@@ -409,7 +415,7 @@ export default function useStreaming() {
             ready,
             loginUid,
             readUsers,
-            readChannels
+            readChannels,
           });
           break;
         }
@@ -493,6 +499,6 @@ export default function useStreaming() {
 
   return {
     startStreaming,
-    stopStreaming
+    stopStreaming,
   };
 }

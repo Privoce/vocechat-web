@@ -12,6 +12,7 @@ import Profile from "../Profile";
 import ContextMenu from "./ContextMenu";
 import { shallowEqual } from "react-redux";
 import { cn } from "@/utils";
+import NameWithRemark from "../NameWithRemark";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   uid: number;
@@ -111,7 +112,7 @@ const User: FC<Props> = ({
           </div>
           {!compact && (
             <span className={nameClass} title={curr?.name}>
-              {curr?.name}
+              <NameWithRemark uid={uid} name={curr?.name || ""} />
             </span>
           )}
           {!compact && curr.is_admin && !curr.is_bot && <IconAdmin />}
@@ -155,7 +156,7 @@ const User: FC<Props> = ({
           </div>
           {!compact && (
             <span className={nameClass} title={curr?.name}>
-              {curr?.name}
+              <NameWithRemark uid={uid} name={curr?.name || ""} />
             </span>
           )}
           {!compact && curr.is_admin && !curr.is_bot && <IconAdmin />}

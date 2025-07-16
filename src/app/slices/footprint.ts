@@ -10,7 +10,7 @@ import {
   AutoDeleteSettingForChannels,
   AutoDeleteSettingForUsers,
   PinChat,
-  PinChatTarget
+  PinChatTarget,
 } from "@/types/sse";
 import { resetAuthData } from "./auth.data";
 
@@ -31,6 +31,7 @@ export interface State {
   channelAsides: { [cid: number]: ChannelAside };
   dmAsides: { [uid: number]: DMAside };
   pinChats: PinChat[];
+  remarkMap: Record<number, string>;
 }
 
 const initialState: State = {
@@ -47,7 +48,8 @@ const initialState: State = {
   autoDeleteMsgChannels: [],
   channelAsides: {},
   dmAsides: {},
-  pinChats: []
+  pinChats: [],
+  remarkMap: {},
 };
 
 const footprintSlice = createSlice({
@@ -72,7 +74,8 @@ const footprintSlice = createSlice({
         autoDeleteMsgChannels = [],
         channelAsides = {},
         dmAsides = {},
-        pinChats = []
+        pinChats = [],
+        remarkMap = {},
       } = action.payload;
       // 初始化全局变量
       window.USERS_VERSION = usersVersion;
@@ -91,7 +94,8 @@ const footprintSlice = createSlice({
         autoDeleteMsgChannels,
         channelAsides,
         dmAsides,
-        pinChats
+        pinChats,
+        remarkMap,
       };
     },
     updateUsersVersion(state, action: PayloadAction<number>) {
@@ -100,7 +104,7 @@ const footprintSlice = createSlice({
     },
     updateAfterMid(state, action: PayloadAction<number>) {
       const newMid = action.payload;
-      // 如果新mid小于已有的afterMid,则不必更新
+      // 如果新 mid 小于已有的 afterMid，则不必更新
       if (state.afterMid < newMid) {
         state.afterMid = action.payload;
         window.AFTER_MID = action.payload;
@@ -220,6 +224,10 @@ const footprintSlice = createSlice({
         state.readUsers[uid] = mid;
       });
     },
+    updateRemarkByUid(state, action: PayloadAction<{ uid: number; remark: string }>) {
+      const { uid, remark } = action.payload;
+      state.remarkMap[uid] = remark;
+    },
     updateReadChannels(state, action: PayloadAction<{ gid: number; mid: number }[] | undefined>) {
       const reads = action.payload || [];
       if (reads.length == 0) return;
@@ -234,11 +242,11 @@ const footprintSlice = createSlice({
     updateDMVisibleAside(state, action: PayloadAction<{ id: number; aside: DMAside }>) {
       const { id, aside } = action.payload;
       state.dmAsides[id] = aside;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(resetAuthData, (state) => {
-      // 如果有aside是voice的，就把它关掉
+      // 如果有 aside 是 voice 的，就把它关掉
       Object.keys(state.channelAsides).forEach((channel_id: string) => {
         if (state.channelAsides[+channel_id] === "voice") {
           state.channelAsides[+channel_id] = null;
@@ -250,7 +258,7 @@ const footprintSlice = createSlice({
         }
       });
     });
-  }
+  },
 });
 
 export const {
@@ -267,7 +275,8 @@ export const {
   updateChannelVisibleAside,
   updateDMVisibleAside,
   upsertPinChats,
-  removePinChats
+  removePinChats,
+  updateRemarkByUid,
 } = footprintSlice.actions;
 
 export default footprintSlice.reducer;

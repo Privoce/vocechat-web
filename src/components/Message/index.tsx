@@ -20,6 +20,7 @@ import renderContent from "./renderContent";
 import Reply from "./Reply";
 import useInView from "./useInView";
 import { shallowEqual } from "react-redux";
+import NameWithRemark from "../NameWithRemark";
 
 interface IProps {
   readOnly?: boolean;
@@ -35,7 +36,7 @@ const Message: FC<IProps> = ({
   mid,
   context = "dm",
   updateReadIndex,
-  read = true
+  read = true,
 }) => {
   const { visible: contextMenuVisible, handleContextMenuEvent, hideContextMenu } = useContextMenu();
   const inViewRef = useInView<HTMLDivElement>();
@@ -80,7 +81,7 @@ const Message: FC<IProps> = ({
     edited,
     properties,
     expires_in = 0,
-    failed = false
+    failed = false,
   } = message;
 
   const reactions = reactionMessageData[mid];
@@ -159,7 +160,13 @@ const Message: FC<IProps> = ({
           <div
             className={clsx(`flex items-center gap-2 font-semibold`, isSelf && "flex-row-reverse")}
           >
-            <span className="text-primary-500 text-sm">{currUser?.name || "Deleted User"}</span>
+            <span className="text-primary-500 text-sm">
+              {currUser?.name ? (
+                <NameWithRemark uid={currUser.uid} showName={false} name={currUser.name} />
+              ) : (
+                "Deleted User"
+              )}
+            </span>
             {currUser?.is_admin && <IconAdmin />}
             <Tooltip
               delay={200}
@@ -201,7 +208,7 @@ const Message: FC<IProps> = ({
                 content,
                 thumbnail,
                 download,
-                edited
+                edited,
               })
             )}
           </div>

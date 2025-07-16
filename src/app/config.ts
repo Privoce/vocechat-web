@@ -12,7 +12,7 @@ const prices: Price[] = [
   },
 ];
 const official_dev = `https://dev.voce.chat`;
-const local_dev = `https://dev.voce.chat`;
+const local_dev = `http://localhost:3000`;
 // const local_dev = `http://chat.jcdl369.top:3009`;
 const dev_origin = process.env.REACT_APP_OFFICIAL_DEMO ? official_dev : local_dev;
 

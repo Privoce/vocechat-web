@@ -13,6 +13,7 @@ import IconMore from "@/assets/icons/more.svg";
 import Avatar from "../Avatar";
 import ContextMenu, { Item } from "../ContextMenu";
 import { shallowEqual } from "react-redux";
+import Remark from "./remark";
 
 interface Props {
   uid: number;
@@ -35,7 +36,7 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
     removeUser,
     isAdmin,
     canUpdateRole,
-    updateRole
+    updateRole,
   } = useUserOperation({ uid, cid });
   const data = useAppSelector((store) => store.users.byId[uid], shallowEqual);
   if (!data) return null;
@@ -43,7 +44,7 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
   const {
     name,
     email,
-    avatar
+    avatar,
     // introduction = "This guy has nothing to introduce",
   } = data;
   const isCard = type == "card";
@@ -64,6 +65,7 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
         src={avatar}
         name={name}
       />
+      <Remark uid={uid} />
       <h2 className="text-lg select-text font-bold text-gray-900 dark:text-white">
         {name} {canDM && <span className="font-normal text-gray-500">#{uid}</span>}
       </h2>
@@ -101,11 +103,11 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
                     agoraEnabled &&
                       type == "card" && {
                         title: t("call"),
-                        handler: startCall
+                        handler: startCall,
                       },
                     canCopyEmail && {
                       title: t("copy_email"),
-                      handler: copyEmail
+                      handler: copyEmail,
                     },
                     canUpdateRole && {
                       title: t("roles"),
@@ -114,25 +116,25 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
                         {
                           title: t("set_normal"),
                           checked: !isAdmin,
-                          handler: updateRole
+                          handler: updateRole,
                         },
                         {
                           title: t("set_admin"),
                           checked: isAdmin,
-                          handler: updateRole
-                        }
-                      ]
+                          handler: updateRole,
+                        },
+                      ],
                     },
                     canRemoveFromChannel && {
                       title: t("remove_from_channel"),
                       danger: true,
-                      handler: removeFromChannel
+                      handler: removeFromChannel,
                     },
                     canRemoveFromServer && {
                       title: t("remove"),
                       handler: removeUser,
-                      danger: true
-                    }
+                      danger: true,
+                    },
                   ].filter(Boolean) as Item[]
                 }
               />

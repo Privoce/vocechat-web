@@ -18,6 +18,7 @@ import User from "../User";
 import { shallowEqual } from "react-redux";
 // import ViewPassword from "./ViewPassword";
 import UpdatePassword from "./UpdatePassword";
+import NameWithRemark from "../NameWithRemark";
 
 interface Props {
   cid?: number;
@@ -38,9 +39,9 @@ const MemberList: FC<Props> = ({ cid }) => {
     canCopyEmail,
     removeFromChannel,
     removeUser,
-    showEmailInChannel
+    showEmailInChannel,
   } = useUserOperation({
-    cid
+    cid,
   });
   const [updateUser, { isSuccess: updateSuccess }] = useUpdateUserMutation();
 
@@ -53,7 +54,7 @@ const MemberList: FC<Props> = ({ cid }) => {
   const handleToggleRole = ({
     ignore = false,
     uid,
-    isAdmin = true
+    isAdmin = true,
   }: {
     ignore: boolean;
     uid: number;
@@ -95,7 +96,7 @@ const MemberList: FC<Props> = ({ cid }) => {
                   <User compact uid={uid} interactive={false} />
                   <div className="flex flex-col">
                     <span className="font-bold text-sm text-gray-600 dark:text-white flex items-center gap-1">
-                      {name} {owner && <IconOwner />}
+                      <NameWithRemark name={name} uid={uid} /> {owner && <IconOwner />}
                     </span>
                     {showEmailInChannel && (
                       <span className="hidden md:block text-xs text-gray-500 dark:text-slate-50">
@@ -117,7 +118,7 @@ const MemberList: FC<Props> = ({ cid }) => {
                             onClick={handleToggleRole.bind(null, {
                               ignore: is_admin,
                               uid,
-                              isAdmin: true
+                              isAdmin: true,
                             })}
                           >
                             {t("admin")}
@@ -128,7 +129,7 @@ const MemberList: FC<Props> = ({ cid }) => {
                             onClick={handleToggleRole.bind(null, {
                               ignore: !is_admin,
                               uid,
-                              isAdmin: false
+                              isAdmin: false,
                             })}
                           >
                             {t("user")}

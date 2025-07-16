@@ -57,6 +57,10 @@ export interface UserForAdmin extends User {
   status: UserStatus;
   online_devices: UserDevice[];
 }
+export interface UserRemarkDTO {
+  contact_uid: number;
+  remark: string;
+}
 export interface UserForAdminDTO extends Partial<UserForAdmin> {
   id?: number;
 }

@@ -195,6 +195,12 @@ interface GroupChangedEvent {
   avatar_updated_at: number;
 }
 
+interface UserRemark {
+  type: "user_remark";
+  contact_uid: number;
+  remark: string;
+}
+
 interface PinnedMessageUpdatedEvent {
   type: "pinned_message_updated";
   gid: number;
@@ -248,4 +254,5 @@ export type ServerEvent =
   | GroupClearEvent
   | UserCallEvent
   | ServerConfigChangedEvent
-  | MessageClearedEvent;
+  | MessageClearedEvent
+  | UserRemark;

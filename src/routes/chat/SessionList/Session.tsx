@@ -18,6 +18,7 @@ import IconVoicing from "@/assets/icons/voicing.svg";
 import getUnreadCount, { renderPreviewMessage } from "../utils";
 import ContextMenu from "./ContextMenu";
 import { shallowEqual } from "react-redux";
+import NameWithRemark from "../../../components/NameWithRemark";
 
 interface IProps {
   type?: ChatContext;
@@ -33,7 +34,7 @@ const Session: FC<IProps> = ({
   id,
   mid,
   setDeleteChannelId,
-  setInviteChannelId
+  setInviteChannelId,
 }) => {
   const navPath = type == "dm" ? `/chat/dm/${id}` : `/chat/channel/${id}`;
   // const { pathname } = useLocation();
@@ -56,8 +57,8 @@ const Session: FC<IProps> = ({
         }
       },
       collect: (monitor) => ({
-        isActive: monitor.canDrop() && monitor.isOver()
-      })
+        isActive: monitor.canDrop() && monitor.isOver(),
+      }),
     }),
     [type, id]
   );
@@ -108,7 +109,7 @@ const Session: FC<IProps> = ({
     mids,
     readIndex,
     messageData,
-    loginUid
+    loginUid,
   });
   const isVoicing =
     type == "channel"
@@ -167,7 +168,7 @@ const Session: FC<IProps> = ({
                     !previewMsg.created_at && "max-w-[190px]"
                   )}
                 >
-                  {name}
+                  {type == "dm" ? <NameWithRemark uid={id} showName={false} name={name} /> : name}
                 </i>
                 {!is_public && <IconLock className="dark:fill-gray-400" />}
               </span>
