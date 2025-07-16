@@ -1,4 +1,4 @@
-import { FC, ReactElement } from "react";
+import { FC, ReactElement, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { shallowEqual, useDispatch } from "react-redux";
 import { useLocation, useMatch, useNavigate } from "react-router-dom";
@@ -8,13 +8,15 @@ import { useReadMessageMutation } from "@/app/services/message";
 import {
   usePinChatMutation,
   useUnpinChatMutation,
-  useUpdateMuteSettingMutation
+  useUpdateMuteSettingMutation,
 } from "@/app/services/user";
 import { removeUserSession } from "@/app/slices/message.user";
 import { useAppSelector } from "@/app/store";
 import { ChatContext } from "@/types/common";
 import ContextMenu, { Item } from "@/components/ContextMenu";
 import useUserOperation from "@/hooks/useUserOperation";
+import Modal from "../../../components/Modal";
+import NicknameModal from "../../../components/NicknameModal";
 
 type Props = {
   context: ChatContext;
@@ -36,12 +38,14 @@ const SessionContextMenu: FC<Props> = ({
   hide,
   deleteChannel,
   setInviteChannelId,
-  children
+  children,
 }) => {
+  const [remarkVisible, setRemarkVisible] = useState(false);
+  const { t: tChat } = useTranslation("chat");
   const { t } = useTranslation();
   const { canCopyEmail, copyEmail, canDeleteChannel, canInviteChannel } = useUserOperation({
     uid: context == "dm" ? id : undefined,
-    cid: context == "channel" ? id : undefined
+    cid: context == "channel" ? id : undefined,
   });
   const [muteChannel] = useUpdateMuteSettingMutation();
   const [pinChat] = usePinChatMutation();
@@ -97,67 +101,74 @@ const SessionContextMenu: FC<Props> = ({
       ? [
           {
             title: pinTxt,
-            handler: handlePinChat
+            handler: handlePinChat,
           },
           {
             title: t("action.mark_read"),
-            handler: handleReadAll
+            handler: handleReadAll,
+          },
+          {
+            title: tChat("remark"),
+            handler: setRemarkVisible.bind(null, true),
           },
           {
             title: t("setting"),
-            handler: handleDMSetting
+            handler: handleDMSetting,
           },
           canCopyEmail && {
             title: t("action.copy_email"),
-            handler: copyEmail
+            handler: copyEmail,
           },
           {
             title: t("action.hide_session"),
             danger: true,
-            handler: handleRemoveSession
-          }
+            handler: handleRemoveSession,
+          },
         ]
       : [
           {
             title: pinTxt,
-            handler: handlePinChat
+            handler: handlePinChat,
           },
           {
             title: t("setting"),
             underline: true,
-            handler: handleChannelSetting
+            handler: handleChannelSetting,
           },
           {
             title: t("action.mark_read"),
             // underline: true
-            handler: handleReadAll
+            handler: handleReadAll,
           },
           {
             title: channelMuted ? t("action.unmute") : t("action.mute"),
-            handler: handleChannelMute
+            handler: handleChannelMute,
           },
           canInviteChannel && {
             title: t("action.invite_people"),
-            handler: setInviteChannelId.bind(null, id)
+            handler: setInviteChannelId.bind(null, id),
           },
           canDeleteChannel && {
             title: t("action.delete_channel"),
             danger: true,
-            handler: deleteChannel.bind(null, id)
-          }
+            handler: deleteChannel.bind(null, id),
+          },
         ];
   return (
-    <Tippy
-      interactive
-      placement="right-start"
-      popperOptions={{ strategy: "fixed" }}
-      followCursor={"initial"}
-      visible={visible}
-      onClickOutside={hide}
-      content={<ContextMenu hideMenu={hide} items={items.filter(Boolean) as Item[]} />}
-    >
-      {children}
-    </Tippy>
+    <>
+      <NicknameModal uid={id} visible={remarkVisible} updateVisible={setRemarkVisible} />
+      <Tippy
+        interactive
+        placement="right-start"
+        popperOptions={{ strategy: "fixed" }}
+        followCursor={"initial"}
+        visible={visible}
+        onClickOutside={hide}
+        content={<ContextMenu hideMenu={hide} items={items.filter(Boolean) as Item[]} />}
+      >
+        {children}
+      </Tippy>
+    </>
   );
 };
 export default SessionContextMenu;

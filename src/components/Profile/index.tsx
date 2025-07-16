@@ -1,4 +1,4 @@
-import { FC, memo } from "react";
+import { FC, memo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 import Tippy from "@tippyjs/react";
@@ -14,6 +14,7 @@ import Avatar from "../Avatar";
 import ContextMenu, { Item } from "../ContextMenu";
 import { shallowEqual } from "react-redux";
 import Remark from "./remark";
+import NicknameModal from "../NicknameModal";
 
 interface Props {
   uid: number;
@@ -22,8 +23,10 @@ interface Props {
 }
 
 const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
+  const [remarkVisible, setRemarkVisible] = useState(false);
   const { data: agoraEnabled } = useGetAgoraStatusQuery();
   const { t } = useTranslation("member");
+  const { t: chatTrans } = useTranslation("chat");
   const { t: ct } = useTranslation();
   const {
     canDM,
@@ -57,97 +60,107 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
   );
 
   return (
-    <div className={containerClass}>
-      <Avatar
-        width={80}
-        height={80}
-        className="rounded-full w-20 h-20 object-cover"
-        src={avatar}
-        name={name}
-      />
-      <Remark uid={uid} />
-      <h2 className="text-lg select-text font-bold text-gray-900 dark:text-white">
-        {name} {canDM && <span className="font-normal text-gray-500">#{uid}</span>}
-      </h2>
-      {canCopyEmail && (
-        <span className="text-sm text-gray-400 dark:text-gray-200 select-text">{email}</span>
-      )}
-      {/* <p className="intro">{introduction}</p> */}
-      {canDM && (
-        <ul
-          className={clsx("mt-6 flex flex-col md:flex-row items-center gap-2", isCard && "pb-0.5")}
-        >
-          <NavLink to={`/chat/dm/${uid}`}>
-            <li className={`${iconClass} icon chat`}>
-              <IconMessage />
-              <span>{t("send_msg")}</span>
-            </li>
-          </NavLink>
-          {agoraEnabled && type == "embed" && (
-            <li role="button" onClick={startCall} className={`${iconClass} icon chat`}>
-              <IconCall className="fill-primary-400" />
-              <span>{t("call")}</span>
-            </li>
-          )}
-          <Tippy
-            disabled={!hasMore}
-            interactive
-            popperOptions={{ strategy: "fixed" }}
-            placement="right"
-            trigger="click"
-            hideOnClick={true}
-            content={
-              <ContextMenu
-                items={
-                  [
-                    agoraEnabled &&
-                      type == "card" && {
-                        title: t("call"),
-                        handler: startCall,
-                      },
-                    canCopyEmail && {
-                      title: t("copy_email"),
-                      handler: copyEmail,
-                    },
-                    canUpdateRole && {
-                      title: t("roles"),
-                      handler: updateRole,
-                      subs: [
-                        {
-                          title: t("set_normal"),
-                          checked: !isAdmin,
-                          handler: updateRole,
-                        },
-                        {
-                          title: t("set_admin"),
-                          checked: isAdmin,
-                          handler: updateRole,
-                        },
-                      ],
-                    },
-                    canRemoveFromChannel && {
-                      title: t("remove_from_channel"),
-                      danger: true,
-                      handler: removeFromChannel,
-                    },
-                    canRemoveFromServer && {
-                      title: t("remove"),
-                      handler: removeUser,
-                      danger: true,
-                    },
-                  ].filter(Boolean) as Item[]
-                }
-              />
-            }
+    <>
+      <NicknameModal uid={uid} visible={remarkVisible} updateVisible={setRemarkVisible} />
+      <div className={containerClass}>
+        <Avatar
+          width={80}
+          height={80}
+          className="rounded-full w-20 h-20 object-cover"
+          src={avatar}
+          name={name}
+        />
+        <Remark uid={uid} />
+        <h2 className="text-lg select-text font-bold text-gray-900 dark:text-white">
+          {name} {canDM && <span className="font-normal text-gray-500">#{uid}</span>}
+        </h2>
+        {canCopyEmail && (
+          <span className="text-sm text-gray-400 dark:text-gray-200 select-text">{email}</span>
+        )}
+        {/* <p className="intro">{introduction}</p> */}
+        {canDM && (
+          <ul
+            className={clsx(
+              "mt-6 flex flex-col md:flex-row items-center gap-2",
+              isCard && "pb-0.5"
+            )}
           >
-            <li className={`${iconClass} icon ${hasMore ? "" : "text-gray-500"}`}>
-              <IconMore className={hasMore ? "fill-primary-500" : ""} />
-              <span>{ct("more")}</span>
-            </li>
-          </Tippy>
-        </ul>
-      )}
-    </div>
+            <NavLink to={`/chat/dm/${uid}`}>
+              <li className={`${iconClass} icon chat`}>
+                <IconMessage />
+                <span>{t("send_msg")}</span>
+              </li>
+            </NavLink>
+            {agoraEnabled && type == "embed" && (
+              <li role="button" onClick={startCall} className={`${iconClass} icon chat`}>
+                <IconCall className="fill-primary-400" />
+                <span>{t("call")}</span>
+              </li>
+            )}
+            <Tippy
+              disabled={!hasMore}
+              interactive
+              popperOptions={{ strategy: "fixed" }}
+              placement="right"
+              trigger="click"
+              hideOnClick={true}
+              content={
+                <ContextMenu
+                  items={
+                    [
+                      {
+                        title: chatTrans("remark"),
+                        handler: setRemarkVisible.bind(null, true),
+                      },
+                      agoraEnabled &&
+                        type == "card" && {
+                          title: t("call"),
+                          handler: startCall,
+                        },
+                      canCopyEmail && {
+                        title: t("copy_email"),
+                        handler: copyEmail,
+                      },
+                      canUpdateRole && {
+                        title: t("roles"),
+                        handler: updateRole,
+                        subs: [
+                          {
+                            title: t("set_normal"),
+                            checked: !isAdmin,
+                            handler: updateRole,
+                          },
+                          {
+                            title: t("set_admin"),
+                            checked: isAdmin,
+                            handler: updateRole,
+                          },
+                        ],
+                      },
+                      canRemoveFromChannel && {
+                        title: t("remove_from_channel"),
+                        danger: true,
+                        handler: removeFromChannel,
+                      },
+                      canRemoveFromServer && {
+                        title: t("remove"),
+                        handler: removeUser,
+                        danger: true,
+                      },
+                    ].filter(Boolean) as Item[]
+                  }
+                />
+              }
+            >
+              <li className={`${iconClass} icon ${hasMore ? "" : "text-gray-500"}`}>
+                <IconMore className={hasMore ? "fill-primary-500" : ""} />
+                <span>{ct("more")}</span>
+              </li>
+            </Tippy>
+          </ul>
+        )}
+      </div>
+    </>
   );
 };
 
