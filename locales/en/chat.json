@@ -66,6 +66,8 @@
   "file_expired": "File Expired",
   "only_owner_can_send": "only Channel owner can send message!",
 
-  "remark": "remark",
-  "remark_placeholder": "remark this user"
+  "remark": "add friend nickname",
+  "remark_clear": "reset friend nickname",
+  "remark_intro": "Find a friend faster with a personal nickname. It will only be visible to you in your direct messages.",
+  "remark_placeholder": "Set Nickname"
 }

@@ -66,5 +66,7 @@
   "only_owner_can_send": "只有频道创建者才能发消息！",
 
   "remark": "备注",
+  "remark_clear": "重置备注",
+  "remark_intro": "给联系人备注，方便日后查找，备注仅您可见",
   "remark_placeholder": "备注该用户"
 }
