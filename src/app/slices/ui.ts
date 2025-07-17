@@ -41,8 +41,8 @@ const initialState: UIState = {
   // todo: typo
   rememberedNavs: {
     chat: null,
-    user: null
-  }
+    user: null,
+  },
 };
 
 const uiSlice = createSlice({
@@ -54,12 +54,12 @@ const uiSlice = createSlice({
         SSEStatus,
         ready,
         online,
-        msgSound = false,
+        msgSound = true,
         fileListView = "item",
         ...rest
       } = action.payload;
       window.MSG_SOUND = msgSound;
-      return { ...state, msgSound,fileListView, ...rest };
+      return { ...state, msgSound, fileListView, ...rest };
     },
     setReady(state, action: PayloadAction<boolean>) {
       state.ready = action.payload;
@@ -188,8 +188,8 @@ const uiSlice = createSlice({
           break;
       }
       state.selectMessages[`${context}_${id}`] = currData;
-    }
-  }
+    },
+  },
 });
 
 export const {
@@ -205,7 +205,7 @@ export const {
   updateDraftMarkdown,
   updateDraftMixedText,
   updateRememberedNavs,
-  updateMsgSoundSetting
+  updateMsgSoundSetting,
 } = uiSlice.actions;
 
 export default uiSlice.reducer;
