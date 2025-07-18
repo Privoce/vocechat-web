@@ -28,14 +28,14 @@ const whiteList = [
   "getBotRelatedChannels",
   "sendMessageByBot",
   "getAgoraVoicingList",
-  "preCheckFileFromUrl"
+  "preCheckFileFromUrl",
 ];
 const whiteList401 = ["getAgoraVoicingList", "getAgoraChannels"];
 const errorWhiteList = [
   "preCheckFileFromUrl",
   "getFavoriteDetails",
   "getOGInfo",
-  "getArchiveMessage"
+  "getArchiveMessage",
 ];
 const whiteList404 = [
   "login",
@@ -43,7 +43,7 @@ const whiteList404 = [
   "preCheckFileFromUrl",
   "deleteMessage",
   "deleteMessages",
-  "getWidgetExtCSS"
+  "getWidgetExtCSS",
 ];
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
@@ -58,7 +58,7 @@ const baseQuery = fetchBaseQuery({
       headers.set(tokenHeader, token);
     }
     return headers;
-  }
+  },
 });
 
 let waitingForRenew: null | any = null;
@@ -79,8 +79,8 @@ const baseQueryWithTokenCheck = async (args: any, api: any, extraOptions: any) =
         method: "POST",
         body: {
           token,
-          refresh_token: refreshToken
-        }
+          refresh_token: refreshToken,
+        },
       },
       api,
       extraOptions
@@ -122,7 +122,7 @@ const baseQueryWithTokenCheck = async (args: any, api: any, extraOptions: any) =
         break;
       case 403:
         {
-          const whiteList403 = ["sendMsg"];
+          const whiteList403 = ["sendMsg", "login"];
           if (!whiteList403.includes(api.endpoint)) {
             toast.error("Request Not Allowed");
           }

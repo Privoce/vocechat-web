@@ -72,6 +72,9 @@ export default function LoginPage() {
         case 404:
           toast.error("Username or Password incorrect");
           break;
+        case 403:
+          toast.error("Login method does not supported");
+          break;
         case 410:
           toast.error(
             "No associated account found, please contact user admin for an invitation link to join."
