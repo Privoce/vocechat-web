@@ -140,7 +140,7 @@ function build(previousFileSizes) {
 
         messages = formatWebpackMessages({
           errors: [errMessage],
-          warnings: []
+          warnings: [],
         });
       } else {
         messages = formatWebpackMessages(
@@ -178,7 +178,7 @@ function build(previousFileSizes) {
       const resolveArgs = {
         stats,
         previousFileSizes,
-        warnings: messages.warnings
+        warnings: messages.warnings,
       };
 
       return resolve(resolveArgs);
@@ -187,8 +187,13 @@ function build(previousFileSizes) {
 }
 
 function copyPublicFolder() {
+  const ignoreFiles = ["widget_demo.html", "CNAME", "email.tpl.html", "robots.txt"];
   fs.copySync(paths.appPublic, paths.appBuild, {
     dereference: true,
-    filter: (file) => file !== paths.appHtml
+    filter: (file) => {
+      const [fileName] = file.split("/").slice(-1);
+      const filters = file !== paths.appHtml && !ignoreFiles.includes(fileName);
+      return filters;
+    },
   });
 }

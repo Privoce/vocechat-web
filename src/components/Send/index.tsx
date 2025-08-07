@@ -26,7 +26,7 @@ import { PlateEditor } from "@udecode/plate-common";
 
 const Modes = {
   text: "text",
-  markdown: "markdown"
+  markdown: "markdown",
 };
 interface IProps {
   context?: ChatContext;
@@ -35,20 +35,20 @@ interface IProps {
 const Send: FC<IProps> = ({
   // 发给谁，或者是 channel，或者是 user
   context = "channel",
-  id
+  id,
 }) => {
   const editorRef = useRef<PlateEditor | null>(null);
 
   const { t } = useTranslation("chat");
   const { unblockThisContact, blocked, isChannelOwner } = useUserOperation({
     uid: context == "dm" ? id : undefined,
-    cid: context == "channel" ? id : undefined
+    cid: context == "channel" ? id : undefined,
   });
   const { resetStageFiles } = useUploadFile({ context, id });
   const { getDraft, getUpdateDraft } = useDraft({ context, id });
   const [msg, setMsg] = useState<MessageWithMentions>({
     text: "",
-    mentions: []
+    mentions: [],
   });
   const [markdownEditor, setMarkdownEditor] = useState(null);
   const [markdownFullscreen, setMarkdownFullscreen] = useState(false);
@@ -95,7 +95,7 @@ const Send: FC<IProps> = ({
         type: "text",
         content: text,
         from_uid,
-        properties
+        properties,
       });
     }
     // send files
@@ -112,10 +112,10 @@ const Send: FC<IProps> = ({
             content_type: type,
             name,
             size,
-            local_id: ts
+            local_id: ts,
           },
           from_uid,
-          sending: true
+          sending: true,
         };
         addLocalFileMessage(tmpMsg);
       });
@@ -129,7 +129,7 @@ const Send: FC<IProps> = ({
       type: "markdown",
       content,
       from_uid,
-      properties: { local_id: +new Date() }
+      properties: { local_id: +new Date() },
     });
   };
   const toggleMode = () => {
@@ -213,7 +213,7 @@ const Send: FC<IProps> = ({
             <MarkdownEditor
               updateDraft={getUpdateDraft("markdown")}
               initialValue={getDraft("markdown")}
-              height={markdownFullscreen ? `calc(100vh - 168px)` : `30vh`}
+              height={markdownFullscreen ? `calc(100dvh - 168px)` : `30vh`}
               placeholder={placeholder}
               setEditorInstance={setMarkdownEditor}
               sendMarkdown={sendMarkdown}

@@ -1,0 +1,95 @@
+{
+  "chat": "Chat",
+  "members": "Mitglieder",
+  "favs": "Gespeichert",
+  "files": "Dateien",
+  "setting": "Einstellungen",
+  "more": "Mehr",
+  "action": {
+    "login": "Anmelden",
+    "re_login": "Neu anmelden",
+    "logout": "Abmelden",
+    "change_avatar": "Ändern",
+    "cancel": "Abbrechen",
+    "dismiss": "Verwerfen",
+    "search": "Suchen",
+    "search_user": "Nach Namen suchen",
+    "new_channel": "Neuer Kanal",
+    "new_private_channel": "Neuer privater Kanal",
+    "new_msg": "Neue Nachricht",
+    "invite_people": "Personen einladen",
+    "search_people": "Personen suchen",
+    "create": "Erstellen",
+    "open": "Öffnen",
+    "update": "Aktualisieren",
+    "upload": "Hochladen",
+    "done": "Fertig",
+    "add": "Hinzufügen",
+    "yes": "Ja",
+    "delete_channel": "Kanal löschen",
+    "remove": "Entfernen",
+    "remove_user": "Benutzer entfernen",
+    "edit": "Bearbeiten",
+    "edit_msg": "Nachricht bearbeiten",
+    "add_reaction": "Reaktion hinzufügen",
+    "add_to_fav": "Zu Favoriten hinzufügen",
+    "select": "Auswählen",
+    "forward": "Weiterleiten",
+    "reply": "Antworten",
+    "pin": "Anheften",
+    "unpin": "Lösen",
+    "send": "Senden",
+    "send_msg": "Nachricht",
+    "copy": "Kopieren",
+    "copy_email": "E-Mail kopieren",
+    "mute": "Stummschalten",
+    "unmute": "Stummschaltung aufheben",
+    "mark_read": "Als gelesen markieren",
+    "hide_session": "Sitzung ausblenden",
+    "reload": "Neu laden",
+    "install": "Installieren",
+    "download_origin": "Original herunterladen",
+    "close": "Schließen",
+    "upgrade": "Upgrade",
+    "view_pwd": "Passwort anzeigen",
+    "change_pwd": "Passwort ändern"
+  },
+  "status": {
+    "uploading": "Wird hochgeladen"
+  },
+  "tip": {
+    "email_msg_tip": "E-Mail-Benachrichtigungen sind in deiner Region blockiert. Upgrade auf Pro für diese Funktion.",
+    "update": "Erfolgreich aktualisiert!",
+    "delete": "Erfolgreich gelöscht!",
+    "reg": "Erfolgreich registriert!",
+    "login": "Anmeldung erfolgreich!",
+    "logout": "Abmeldung erfolgreich!",
+    "pin": "Nachricht erfolgreich angeheftet!",
+    "pwa_install_title": "Web-App auf Desktop installieren?",
+    "pwa_install_desc": "Zum Desktop hinzufügen für schnellen Zugriff."
+  },
+  "new_version": "<0>Neue Version</0> verfügbar",
+  "mobile_app": "Entdecke unsere <0>Mobile App</0>",
+  "price": {
+    "pro": {
+      "title": "VoceChat Pro",
+      "desc": "",
+      "price": "$49"
+    },
+    "supreme": {
+      "title": "VoceChat SDK-Anpassung",
+      "desc": "",
+      "price": ""
+    }
+  },
+  "server_update": {
+    "version_needed": "Diese Funktion benötigt Server-Version: <0>{{version}}</0> 🚨",
+    "current_version": "Aktuelle Version: <0>{{version}}</0>",
+    "update_tip": "Bitte Server upgraden!",
+    "howto": "Anleitung zum Update"
+  },
+  "inactive": {
+    "title": "Nur ein aktiver Tab für VoceChat erlaubt",
+    "desc": "Lade diese Seite neu oder schließe sie"
+  }
+}

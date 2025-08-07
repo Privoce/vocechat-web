@@ -33,7 +33,7 @@ const Index = ({ handleClose, hostId }: Props) => {
         "flex flex-col bg-white dark:bg-gray-700 rounded-md overflow-hidden",
         embed
           ? "w-full h-full"
-          : `w-full h-full md:max-w-lg md:h-[calc(100vh_-_20px)] m-auto md:my-2 md:shadow-lg rounded-none md:rounded-md`
+          : `w-full h-full md:max-w-lg md:h-[calc(100dvh_-_20px)] m-auto md:my-2 md:shadow-lg rounded-none md:rounded-md`
       )}
     >
       <Header handleClose={handleClose} />
