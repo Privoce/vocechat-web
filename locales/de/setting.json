@@ -1,0 +1,334 @@
+{
+  "title": "Einstellungen",
+  "save_change": "Änderungen speichern",
+  "reset": "Zurücksetzen",
+  "save_tip": "Du hast ungespeicherte Änderungen!",
+  "nav": {
+    "general": "Allgemein",
+    "overview": "Übersicht",
+    "members": "Mitglieder",
+    "data_management": "Datenverwaltung",
+    "auto_delete_msg": "Nachrichten automatisch löschen",
+    "user": "Benutzer",
+    "my_account": "Mein Konto",
+    "config": "Konfiguration",
+    "bot": "Bot & Webhook",
+    "firebase": "Firebase",
+    "agora": "Agora",
+    "smtp": "SMTP",
+    "login_method": "Anmeldemethoden",
+    "third_app": "Anmeldung über Drittanbieter",
+    "widget": "Widget",
+    "license": "Lizenz",
+    "about": "Über",
+    "api_doc": "API-Dokumentation",
+    "version": "Version"
+  },
+  "channel": {
+    "leave": "Kanal verlassen",
+    "leave_desc": "Bist du sicher, dass du diesen Kanal verlassen möchtest?",
+    "transfer_desc": "Du musst deine Kanalbesitzerschaft übertragen, bevor du den Kanal verlässt.",
+    "delete": "Kanal löschen",
+    "delete_desc": "Bist du sicher, dass du diesen Kanal löschen möchtest?",
+    "id": "Kanal-ID",
+    "name": "Kanalname",
+    "topic": "Kanalthema",
+    "topic_placeholder": "Informiere alle über die Nutzung dieses Kanals. (Markdown unterstützt)",
+    "visibility": "Kanalsichtbarkeit",
+    "public": "Öffentlich",
+    "private": "Privat",
+    "enable": "Aktivieren",
+    "disable": "Deaktivieren",
+    "allow": "Erlauben",
+    "disallow": "Verbieten",
+    "add_friend": "Freund hinzufügen",
+    "dm_to_member": "DM an Mitglied",
+    "show_email": "E-Mail anzeigen",
+    "only_owner": "Nur Besitzer und Admin können Nachrichten senden"
+  },
+  "dm": {
+    "delete": "Benutzer löschen",
+    "delete_desc": "Bist du sicher, dass du diesen Benutzer löschen möchtest?"
+  },
+  "overview": {
+    "title_feat": "Funktionen",
+    "name": "Servername",
+    "desc": "Serverbeschreibung",
+    "upload_desc": "Mindestgröße 128x128, empfohlene Größe mindestens 512x512. Maximale Größe 5 MB.",
+    "sign_up": {
+      "title": "Standardregistrierung",
+      "desc": "Wer kann sich auf diesem Server registrieren.",
+      "everyone": "Jeder",
+      "invite": "Nur mit Einladungslink"
+    },
+    "user_msg_notify": {
+      "title": "Neue Nachrichtenbenachrichtigung per E-Mail",
+      "desc": "Steuere, ob neue Nachrichten per E-Mail gesendet werden."
+    },
+    "server_msg_notify": {
+      "title": "Neue Nachrichtenbenachrichtigung per E-Mail (Server)",
+      "desc": "Benutzer können steuern, ob neue Nachrichten per E-Mail gesendet werden. SMTP muss zuerst aktiviert sein.",
+      "delay_5_min": "Alle 5 Minuten",
+      "delay_15_min": "Alle 15 Minuten",
+      "delay_1_hour": "Jede Stunde",
+      "delay_3_hour": "Alle 3 Stunden",
+      "delay_12_hour": "Alle 12 Stunden"
+    },
+    "admin_create_group": {
+      "title": "Nur Admins können Gruppen erstellen",
+      "desc": "Wenn aktiviert, können nur Admins Gruppen erstellen.",
+      "enable": "Aktivieren",
+      "disable": "Deaktivieren"
+    },
+    "admin_see_group_members": {
+      "title": "Nur Admins können Gruppenmitglieder sehen",
+      "desc": "Wenn aktiviert, können nur Admins Gruppenmitglieder sehen.",
+      "enable": "Aktivieren",
+      "disable": "Deaktivieren"
+    },
+    "admin_only_can_invite": {
+      "title": "Nur Admins können Benutzer einladen",
+      "desc": "Wenn aktiviert, können nur Admins neue Mitglieder einladen.",
+      "enable": "Aktivieren",
+      "disable": "Deaktivieren"
+    },
+    "enable_msg_url_preview": {
+      "title": "URL-Vorschau in Nachrichten aktivieren",
+      "desc": "Wenn aktiviert, werden URLs in Nachrichten eine Vorschau anzeigen.",
+      "enable": "Aktivieren",
+      "disable": "Deaktivieren"
+    },
+    "guest_mode": {
+      "title": "Gastmodus",
+      "desc": "Wenn aktiviert, sehen Besucher öffentliche Kanäle auf diesem Server.",
+      "enable": "Aktivieren",
+      "disable": "Deaktivieren"
+    },
+    "url": {
+      "title": "Frontend-URL aktualisieren",
+      "desc": "Frontend-URL aktualisieren"
+    },
+    "lang": {
+      "title": "Sprachen",
+      "desc": "Systemsprache festlegen"
+    },
+    "theme": {
+      "title": "Design",
+      "desc": "Wähle dein Design",
+      "auto": "Automatisch",
+      "dark": "Dunkel",
+      "light": "Hell"
+    },
+    "message_sound": {
+      "title": "Nachrichtenton",
+      "desc": "Ton bei Erhalt neuer Nachrichten abspielen.",
+      "enable": "Aktivieren",
+      "disable": "Deaktivieren"
+    },
+    "online_status": {
+      "title": "Online-Status",
+      "desc": "Wenn aktiviert, sehen Mitglieder den Online/Offline-Status anderer.",
+      "enable": "Aktivieren",
+      "disable": "Deaktivieren"
+    },
+    "chat_layout": {
+      "title": "Chat-Layout",
+      "desc": "Anzeigeseite für deine eigenen Nachrichten",
+      "left": "Links",
+      "self_right": "Rechts"
+    },
+    "contact_verify": {
+      "title": "Kontaktüberprüfung",
+      "desc": "Standardmäßig können sich alle Servermitglieder sehen. Um Kontaktverwaltung zu ermöglichen, aktiviere diese Funktion (Admins sind standardmäßig in der Kontaktliste).",
+      "enable": "Aktivieren",
+      "disable": "Deaktivieren"
+    }
+  },
+  "data": {
+    "clear_files": {
+      "title": "Datei- und Bilddaten",
+      "desc": "Klicke unten, um alle Dateien und Bilder dieses Servers zu löschen.",
+      "btn": "Dateidaten löschen"
+    },
+    "clear_msgs": {
+      "title": "Alle Nachrichtendaten",
+      "desc": "Klicke unten, um alle Chatdaten (Texte und Dateien) dieses Servers zu löschen.",
+      "btn": "Chatdaten löschen"
+    },
+    "auto_delete_file": {
+      "title": "Dateien automatisch löschen",
+      "desc": "Ablaufzeit für Dateien auf diesem Server festlegen.",
+      "confirm_desc": "Alle Dateien älter als die eingestellte Zeit werden gelöscht.",
+      "off": "Aus",
+      "day1": "1 Tag",
+      "day7": "7 Tage",
+      "day30": "30 Tage",
+      "day90": "90 Tage",
+      "day180": "180 Tage"
+    }
+  },
+  "license": {
+    "signed": "Signiert",
+    "domain": "Domänen",
+    "user_limit": "Benutzerlimit",
+    "expire": "Läuft ab am",
+    "create": "Erstellt am",
+    "value": "Lizenzwert",
+    "renew": "Lizenz verlängern",
+    "update": "Manuell aktualisieren",
+    "update_placeholder": "Neuen Lizenzwert eingeben",
+    "renew_select": "Preis auswählen",
+    "tip": {
+      "title": "Chance auf kostenloses Lizenz-Upgrade!",
+      "user_test": "Kostenloses Upgrade durch 25-minütigen Benutzertest",
+      "contact": "Termin buchen: "
+    },
+    "payment_success": "Zahlung erfolgreich!",
+    "back_home": "Zurück zur Startseite",
+    "tip_renewing": "Lizenz wird verlängert – Fenster nicht schließen!",
+    "tip_renewed": "Lizenz erfolgreich verlängert!",
+    "tip_renew_error": "Ungültige Stripe-Sitzungs-ID",
+    "tip_domain": "Die Lizenz ist an eine Domain (ohne Port) gebunden. Bitte bestätigen oder aktualisieren:",
+    "tip_port": "Domain ohne Port eingeben.",
+    "tip_confirm": "Zahlung starten"
+  },
+  "bot": {
+    "add_api_key": "API-Schlüssel hinzufügen",
+    "no_api_key": "Noch kein API-Schlüssel",
+    "bot_tip_title": "Bots können Nachrichten an Kanäle senden.",
+    "bot_tip_desc": "Hinweis: API-Schlüssel werden nach Generierung nicht erneut angezeigt. Neue Schlüssel können über „API-Schlüssel hinzufügen“ generiert werden (vorherige Schlüssel bleiben gültig).",
+    "webhook_tip_title": "Webhooks empfangen Nachrichten aus einem Kanal und benötigen eine von dir bereitgestellte URL.",
+    "webhook_tip_desc": "Gib eine Webhook-URL an, die 200 zurückgibt.",
+    "manage": "Verwalten",
+    "how_to_use": "Anleitung",
+    "manage_desc": "Bots können jederzeit gelöscht werden. Der Bot-Benutzer wird sofort entfernt und alle APIs ungültig.",
+    "create_title": "Bot erstellen",
+    "create_desc": "Benenne deinen Bot. Optional: Webhook-URL für Datenempfang hinzufügen.",
+    "create_key_title": "Bot-API-Schlüssel erstellen",
+    "create_key_desc": "API-Schlüssel zur Authentifizierung erstellen",
+    "create_key_warning": "Kopiere den Schlüssel jetzt! Du wirst ihn später nicht mehr sehen können.",
+    "key_copy_and_close": "Kopieren und schließen",
+    "delete_title": "Bot löschen",
+    "delete_desc": "Bist du sicher, dass du den Bot löschen möchtest?",
+    "delete_key_title": "Bot-API-Schlüssel löschen",
+    "delete_key_desc": "Bist du sicher, dass du diesen Schlüssel löschen möchtest?",
+    "webhook_title": "Webhook-URL aktualisieren",
+    "webhook_desc": "Gültige URL eingeben",
+    "col_avatar": "Avatar",
+    "col_name": "Bot-Name",
+    "col_api_key": "API-Schlüssel (Eingehend)",
+    "col_webhook": "Webhook-URL (Ausgehend)",
+    "col_opt": "Aktionen",
+    "col_key_name": "Name",
+    "col_key_value": "Schlüssel",
+    "col_key_create_time": "Erstellt am",
+    "col_key_last_used": "Zuletzt verwendet"
+  },
+  "auto_delete_msg": {
+    "title": "Eigene Nachrichten nach Zeitraum löschen",
+    "desc": "Löscht Nachrichten auf Server- und Client-Seite.",
+    "off": "Aus",
+    "5_min": "5 Minuten",
+    "10_min": "10 Minuten",
+    "1_hour": "1 Stunde",
+    "1_day": "1 Tag",
+    "1_week": "1 Woche",
+    "clear": "Alle Kanalnachrichten löschen",
+    "clear_title": "Alle Nachrichten in diesem Kanal löschen.",
+    "clear_desc": "Löscht alle Nachrichten auf Server- und Client-Seite."
+  },
+  "firebase": {
+    "desc": "Benachrichtigungen erfordern Google Firebase als Standardmethode.",
+    "sub_desc": "Offizielle Konfiguration bereitgestellt. Stelle sicher, dass FCM von deinem Server/ Gerät erreichbar ist.",
+    "disable": "Deaktivieren",
+    "use_official": "Offizielle Konfiguration nutzen",
+    "custom": "Benutzerdefiniert",
+    "enable": "Aktivieren",
+    "token_url": "Token-URL",
+    "project_id": "Projekt-ID",
+    "private_key": "Privater Schlüssel",
+    "client_email": "Client-E-Mail"
+  },
+  "smtp": {
+    "desc": "Für E-Mail-Benachrichtigungen (Pro-Funktion) und Anmeldungsbestätigungen wird SMTP benötigt.",
+    "sub_desc": "SMTP-Einstellungen konfigurieren:",
+    "enable": "Aktivieren",
+    "host": "Host",
+    "port": "Port",
+    "from": "Absender",
+    "username": "Benutzername",
+    "password": "Passwort",
+    "how_to": "SMTP einrichten?",
+    "send_test_email": "Test-E-Mail senden"
+  },
+  "agora": {
+    "desc": "Für Video-/Sprachanrufe nutzen wir Agora.",
+    "sub_desc": "Jedes Agora-Projekt bietet 10.000 kostenlose Minuten/Monat. Erstelle ein Projekt und folge der Anleitung.",
+    "enable": "Aktivieren",
+    "how_to": "Agora einrichten?"
+  },
+  "third_app": {
+    "key": "API-Sicherheitsschlüssel",
+    "update": "Geheimnis aktualisieren",
+    "update_tip": "API-Geheimnis wirklich aktualisieren? Vorheriges Geheimnis wird ungültig.",
+    "key_tip": "Sicherheitsschlüssel für verschlüsselte Kommunikation zwischen Server und Drittanbieter-App.",
+    "how_to": "Anleitung"
+  },
+  "login": {
+    "password": "Passwort",
+    "password_desc": "Anmeldung mit Passwort erlauben.",
+    "magic_link": "Magic Link",
+    "magic_link_desc": "Anmeldung mit Magic Link erlauben.",
+    "google": "Google",
+    "google_desc": "Anmeldung mit Google erlauben.",
+    "github": "GitHub",
+    "github_desc": "Anmeldung mit GitHub erlauben.",
+    "metamask": "Metamask",
+    "metamask_desc": "Anmeldung mit Metamask erlauben.",
+    "oidc": "OIDC",
+    "oidc_desc": "Anmeldung mit OIDC erlauben.",
+    "oidc_custom": "Benutzerdefiniert",
+    "more_details": "Details? Siehe <0>Dokumentation</0>."
+  },
+  "widget": {
+    "tip": "Erweitere VoceChat mit dem Widget-SDK!",
+    "code": "Codebeispiel",
+    "code_comment": "Diesen Code in deine HTML-Datei einfügen",
+    "config": "Konfigurationsbeschreibung",
+    "param_key": "Parameter",
+    "default_value": "Standardwert",
+    "remark": "Hinweise",
+    "custom_style_tip": "Für präzise Positionierung: Nutze die Widget-ID in deinem HTML/CSS:",
+    "css_code_tip": "Eigenes CSS wird als Datei geladen",
+    "param_id": "Widget-ID (Server ≥ v0.3.12)",
+    "param_host": "Benutzer-ID für Chat-Partner",
+    "param_title": "Chat-Popup-Titel",
+    "param_logo": "Logo-URL des Popups",
+    "param_auto_reg": "true: Automatische Registrierung, false: Manuelle Eingabe erforderlich",
+    "param_login_token": "Login-Token für externe Nutzersysteme (siehe Dokumentation). Standard: leer lassen!",
+    "param_theme_color": "Widget-Farbe",
+    "param_close_width": "Breite (geschlossen)",
+    "param_close_height": "Höhe (geschlossen)",
+    "param_open_width": "Breite (geöffnet)",
+    "param_open_height": "Höhe (geöffnet)",
+    "param_welcome": "Benutzerdefinierte Willkommensnachricht",
+    "param_position": "Position: links/rechts",
+    "share_link": "Teile den Widget-Link für direkte Chats",
+    "widget_faq": "„Alle dürfen beitreten“ zuerst aktivieren"
+  },
+  "version": {
+    "client_version": "Client-Version",
+    "server_version": "Server-Version",
+    "build_time": "Build-Zeitstempel",
+    "sync": "Auf neueste Webclient-Version synchronisieren"
+  },
+  "api_doc": {
+    "desc": "Detaillierte API-Dokumentation zum Erstellen eigener Chat-Tools.",
+    "access": "URL:",
+    "use_method": "Anwendung:",
+    "step_1": "Schritt 1: Eigene Server-URL eintragen",
+    "step_2": "Schritt 2: Login-Token eingeben",
+    "step_2_desc": "Token per X-API-Key-Header abrufen oder unten kopieren:",
+    "last": "Jede API hat einen „Testen“-Button zur Debugging."
+  }
+}
