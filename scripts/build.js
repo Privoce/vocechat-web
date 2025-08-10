@@ -187,13 +187,20 @@ function build(previousFileSizes) {
 }
 
 function copyPublicFolder() {
-  const ignoreFiles = ["widget_demo.html", "CNAME", "email.tpl.html", "robots.txt"];
   fs.copySync(paths.appPublic, paths.appBuild, {
     dereference: true,
-    filter: (file) => {
-      const [fileName] = file.split("/").slice(-1);
-      const filters = file !== paths.appHtml && !ignoreFiles.includes(fileName);
-      return filters;
-    },
+    filter: (file) => file !== paths.appHtml,
   });
 }
+
+// function copyPublicFolder() {
+//   const ignoreFiles = ["widget_demo.html", "CNAME", "email.tpl.html", "robots.txt"];
+//   fs.copySync(paths.appPublic, paths.appBuild, {
+//     dereference: true,
+//     filter: (file) => {
+//       const [fileName] = file.split("/").slice(-1);
+//       const filters = file !== paths.appHtml && !ignoreFiles.includes(fileName);
+//       return filters;
+//     },
+//   });
+// }
