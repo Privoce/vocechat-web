@@ -14,13 +14,13 @@ export const onMessageSendStarted = async (
     type = "text",
     from_uid,
     reply_mid = null,
-    properties = { local_id: +new Date(), content_type: "" }
+    properties = { local_id: +new Date(), content_type: "" },
   },
   { dispatch, queryFulfilled },
   from = "channel"
 ) => {
-  // 忽略 archive 类型的消息
-  if (type == "archive") return;
+  // 忽略 archive 类型的消息 以及没有 from_uid
+  if (type == "archive" || !from_uid) return;
   // id: who send to ,from_uid: who sent
   // console.log("handlers data", content, type, properties, ignoreLocal, id);
   const isMedia = properties.content_type
@@ -35,7 +35,7 @@ export const onMessageSendStarted = async (
     properties,
     from_uid,
     reply_mid,
-    sending: true
+    sending: true,
   };
   const addContextMessage = from == "channel" ? addChannelMsg : addUserMsg;
   const removeContextMessage = from == "channel" ? removeChannelMsg : removeUserMsg;
