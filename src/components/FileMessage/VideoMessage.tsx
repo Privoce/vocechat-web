@@ -81,7 +81,8 @@ const VideoMessage = ({ url, name, size, download }: Props) => {
         controls={canPlay}
         className="absolute left-0 top-0 w-full h-full object-contain z-10"
       >
-        <source src={url} type="video/mp4"></source>
+        {/* iOS cover hack */}
+        <source src={`${url}#t=0.001`} type="video/mp4"></source>
       </video>
     </div>
   );
