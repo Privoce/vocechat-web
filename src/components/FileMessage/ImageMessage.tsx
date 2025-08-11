@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { LineWobble, Ping } from "@uiball/loaders";
 
-import { getDefaultSize, isMobile } from "@/utils";
+import { cn, getDefaultSize, isMobile } from "@/utils";
 import ExpiredMessage from "./ExpiredMessage";
 
 type Props = {
@@ -19,13 +19,13 @@ const ImageMessage: FC<Props> = ({
   thumbnail,
   download,
   content,
-  properties
+  properties,
 }) => {
   const url = thumbnail || content;
   const [status, setStatus] = useState<"loading" | "error" | "loaded">("loading");
   const { width = 0, height = 0 } = getDefaultSize(properties, {
     min: 200,
-    max: isMobile() ? 300 : 480
+    max: isMobile() ? 300 : 480,
   });
   useEffect(() => {
     const img = new Image();
@@ -38,12 +38,13 @@ const ImageMessage: FC<Props> = ({
     img.src = url;
   }, [url]);
   if (status == "error") return <ExpiredMessage type="image" url={url} />;
+  const noSize = !properties?.width;
   return (
     <div
       className={`relative overflow-hidden`}
       style={{
         width: width ? `${width}px` : "",
-        height: height ? `${height}px` : ""
+        height: height ? `${height}px` : "",
       }}
     >
       {uploading && (
@@ -58,11 +59,10 @@ const ImageMessage: FC<Props> = ({
         </div>
       ) : (
         <img
-          className="h-auto w-full cursor-zoom-in object-cover preview"
-          // style={{
-          //   width: width ? `${width}px` : "",
-          //   height: height ? `${height}px` : ""
-          // }}
+          className={cn(
+            "h-auto w-full cursor-zoom-in object-cover preview",
+            noSize && "w-auto h-full"
+          )}
           data-meta={JSON.stringify(properties)}
           data-origin={content}
           data-download={download}
