@@ -15,8 +15,11 @@ export default async function handler({ operation, data = {}, payload }: Params)
     case "addMessage":
     case "updateMessage":
       {
-        const { mid } = payload;
-        await table?.setItem(mid + "", data[mid]);
+        const { mid, properties } = payload;
+        if (mid != properties?.local_id) {
+          // 不要存本地消息
+          await table?.setItem(mid + "", data[mid]);
+        }
       }
       break;
     case "removeMessage":
