@@ -15,22 +15,22 @@ type Props = {
 const GithubCallback: FC<Props> = ({ code, from = "webapp" }) => {
   const { t } = useTranslation("auth");
   const { t: ct } = useTranslation();
-  //拿本地存的magic token
+  //拿本地存的 magic token
   const magic_token = localStorage.getItem(KEY_LOCAL_MAGIC_TOKEN);
   const [login, { isLoading, isSuccess, error }] = useLoginMutation();
   useEffect(() => {
-    if (code) {
+    if (code && !isLoading) {
       login({
         magic_token,
         code,
-        type: "github"
+        type: "github",
       });
     }
-  }, [code]);
+  }, [code, isLoading]);
   useEffect(() => {
     if (isSuccess) {
       toast.success(ct("tip.login"));
-      // 通知widget
+      // 通知 widget
       if (from == "widget") {
         localStorage.setItem("widget", `${new Date().getTime()}`);
       }

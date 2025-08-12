@@ -36,7 +36,6 @@ const Version: FC<Props> = () => {
       </li>
       <li>
         <Button disabled={syncing} onClick={handleSync}>
-          {" "}
           {syncing ? <Ring size={18} color="#fff" /> : t("sync")}
         </Button>
       </li>

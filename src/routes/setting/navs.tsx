@@ -20,7 +20,7 @@ import { shallowEqual } from "react-redux";
 const dataManagementNav = {
   name: "data_management",
   component: <DataManagement />,
-  admin: true
+  admin: true,
 };
 const navs = [
   {
@@ -28,18 +28,18 @@ const navs = [
     items: [
       {
         name: "overview",
-        component: <Overview />
+        component: <Overview />,
       },
       {
         name: "my_account",
-        component: <MyAccount />
+        component: <MyAccount />,
       },
       {
         name: "members",
         component: <ManageMembers />,
-        admin: true
-      }
-    ]
+        admin: true,
+      },
+    ],
   },
   {
     name: "config",
@@ -47,52 +47,53 @@ const navs = [
       {
         name: "bot",
         component: <BotConfig />,
-        admin: true
+        admin: true,
       },
       {
         name: "firebase",
-        component: <ConfigFirebase />
+        component: <ConfigFirebase />,
       },
       {
         name: "agora",
-        component: <ConfigAgora />
+        component: <ConfigAgora />,
       },
       {
         name: "smtp",
-        component: <ConfigSMTP />
+        component: <ConfigSMTP />,
       },
       {
         name: "login_method",
-        component: <Logins />
+        component: <Logins />,
       },
       {
         name: "third_app",
-        component: <APIConfig />
+        component: <APIConfig />,
       },
       {
         name: "widget",
-        component: <Widget />
+        component: <Widget />,
       },
       {
         name: "license",
-        component: <License />
-      }
+        component: <License />,
+      },
     ],
-    admin: true
+    admin: true,
   },
   {
     name: "about",
     items: [
       {
         name: "api_doc",
-        component: <APIDocument />
+        component: <APIDocument />,
+        admin: true,
       },
       {
         name: "version",
-        component: <Version />
-      }
-    ]
-  }
+        component: <Version />,
+      },
+    ],
+  },
 ];
 
 const useNavs = () => {
@@ -112,7 +113,7 @@ const useNavs = () => {
             items: items.filter((item) => {
               return !item.admin;
             }),
-            ...rest
+            ...rest,
           };
         });
   if (
@@ -134,10 +135,10 @@ const useNavs = () => {
           name,
           // @ts-ignore
           title: t(`nav.${name}`),
-          ...rest
+          ...rest,
         };
       }),
-      ...rest
+      ...rest,
     };
   });
   return transformedNavs.filter((nav) => {
@@ -145,12 +146,12 @@ const useNavs = () => {
       return true;
     } else {
       // about 特殊处理下
-      if (nav.name == "about") {
-        // 有付费，但是普通用户，则不显示about
-        return !upgraded;
-      } else {
-        return !nav.admin;
-      }
+      // if (nav.name == "about") {
+      //   // 有付费，但是普通用户，则不显示 about
+      //   return !upgraded;
+      // } else {
+      return !nav.admin;
+      // }
     }
   });
 };
