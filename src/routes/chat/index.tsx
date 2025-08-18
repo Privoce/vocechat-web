@@ -1,4 +1,4 @@
-import { memo, useState } from "react";
+import { memo, useMemo, useState } from "react";
 import { useMatch, useParams } from "react-router-dom";
 import clsx from "clsx";
 
@@ -17,6 +17,7 @@ import RTCWidget from "./RTCWidget";
 import SessionList from "./SessionList";
 import VoiceFullscreen from "./VoiceFullscreen";
 import { shallowEqual } from "react-redux";
+import GlbModelRender from "@/components/Message/GlbModelRender";
 
 function ChatPage() {
   const isHomePath = useMatch(`/`);
@@ -52,7 +53,7 @@ function ChatPage() {
           mid: 0,
           unread: 0,
           id: +user_id,
-          type: "dm" as const
+          type: "dm" as const,
         }
       : undefined;
   // console.log("temp uid", tmpUid);

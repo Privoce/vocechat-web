@@ -40,7 +40,7 @@ const Layout: FC<Props> = ({
   voice = null,
   dropFiles = [],
   context = "channel",
-  to
+  to,
 }) => {
   // const { t } = useTranslation('chat');
   const { reachLimit } = useLicense();
@@ -59,7 +59,7 @@ const Layout: FC<Props> = ({
         // console.log("iii", inputMode);
         if (inputMode !== "text") {
           toast("DnD not allowed in this input mode", {
-            icon: <IconWarning className="w-5 h-5" />
+            icon: <IconWarning className="w-5 h-5" />,
           });
           return;
         }
@@ -73,8 +73,8 @@ const Layout: FC<Props> = ({
         }
       },
       collect: (monitor) => ({
-        isActive: monitor.canDrop() && monitor.isOver()
-      })
+        isActive: monitor.canDrop() && monitor.isOver(),
+      }),
     }),
     [context, to, inputMode]
   );

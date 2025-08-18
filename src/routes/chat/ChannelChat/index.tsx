@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import { shallowEqual, useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Tippy from "@tippyjs/react";
-
 import { updateChannelVisibleAside } from "@/app/slices/footprint";
 import { updateRememberedNavs } from "@/app/slices/ui";
 import { useAppSelector } from "@/app/store";
@@ -21,6 +20,7 @@ import Members from "./Members";
 import PinList from "./PinList";
 import { KEY_ADMIN_SEE_CHANNEL_MEMBERS } from "@/app/config";
 import useServerExtSetting from "@/hooks/useServerExtSetting";
+import GlbModelRender from "@/components/Message/GlbModelRender";
 
 type Props = {
   cid?: number;
@@ -53,7 +53,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
     dispatch(
       updateChannelVisibleAside({
         id: cid,
-        aside: visibleAside !== "members" ? "members" : null
+        aside: visibleAside !== "members" ? "members" : null,
       })
     );
   };
@@ -132,15 +132,17 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
         </header>
       }
       users={
-        canViewMembers ? (
-          <Members
-            uids={memberIds}
-            addVisible={addVisible}
-            cid={cid}
-            ownerId={owner}
-            membersVisible={visibleAside == "members"}
-          />
-        ) : null
+        <>
+          {canViewMembers ? (
+            <Members
+              uids={memberIds}
+              addVisible={addVisible}
+              cid={cid}
+              ownerId={owner}
+              membersVisible={visibleAside == "members"}
+            />
+          ) : null}
+        </>
       }
       voice={<Dashboard visible={visibleAside == "voice"} id={cid} context="channel" />}
     />

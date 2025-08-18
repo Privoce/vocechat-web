@@ -22,6 +22,7 @@ const ImageMessage: FC<Props> = ({
   properties,
 }) => {
   const url = thumbnail || content;
+  console.warn(url);
   const [status, setStatus] = useState<"loading" | "error" | "loaded">("loading");
   const { width = 0, height = 0 } = getDefaultSize(properties, {
     min: 200,

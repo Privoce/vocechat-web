@@ -31,7 +31,7 @@ const VoiceChat = ({ id, context = "channel" }: Props) => {
   const toggleDashboard = () => {
     const data = {
       id,
-      aside: visibleAside == "voice" ? null : ("voice" as const)
+      aside: visibleAside == "voice" ? null : ("voice" as const),
     };
     dispatch(context == "channel" ? updateChannelVisibleAside(data) : updateDMVisibleAside(data));
   };
@@ -43,7 +43,7 @@ const VoiceChat = ({ id, context = "channel" }: Props) => {
     joinVoice();
     const data = {
       id,
-      aside: "voice" as const
+      aside: "voice" as const,
     };
     dispatch(context == "channel" ? updateChannelVisibleAside(data) : updateDMVisibleAside(data));
     // 实时显示calling box

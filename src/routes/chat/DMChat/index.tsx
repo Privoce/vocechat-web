@@ -11,6 +11,7 @@ import FavList from "../FavList";
 import Layout from "../Layout";
 import VoiceChat from "../VoiceChat";
 import { shallowEqual } from "react-redux";
+import GlbModelRender from "@/components/Message/GlbModelRender";
 
 type Props = {
   uid: number;
@@ -56,6 +57,7 @@ const DMChat: FC<Props> = ({ uid = 0, dropFiles }) => {
           <User interactive={false} uid={currUser.uid} enableNavToSetting={true} />
         </header>
       }
+      users={<GlbModelRender></GlbModelRender>}
     />
   );
 };

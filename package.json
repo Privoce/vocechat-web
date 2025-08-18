@@ -3,6 +3,7 @@
   "version": "0.9.19",
   "homepage": "https://voce.chat",
   "dependencies": {
+    "@google/model-viewer": "^4.1.0",
     "@metamask/onboarding": "^1.0.1",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.6.1",
     "@radix-ui/react-popover": "^1.1.14",
@@ -76,6 +77,7 @@
     "style-loader": "^4.0.0",
     "tailwind-merge": "2.5.4",
     "terser-webpack-plugin": "^5.3.14",
+    "three": "^0.179.1",
     "tippy.js": "^6.3.7",
     "wavesurfer.js": "^7.10.1",
     "webpack": "^5.101.0",
