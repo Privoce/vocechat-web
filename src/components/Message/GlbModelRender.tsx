@@ -33,7 +33,7 @@ export const GlbModelRender: FC<Props> = ({ src }) => {
         <model-viewer
           style={{ width: "100%", height: "calc(100% - 32px)" }}
           alt="STP/GLB"
-          src={`${BASE_URL}/resource/file?file_path=/models/glb/${src}`}
+          src={`${BASE_URL}/resource/file?file_path=models/glb/${src}`}
           ar
           shadow-intensity="1"
           camera-controls
