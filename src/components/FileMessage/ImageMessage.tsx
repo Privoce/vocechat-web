@@ -38,6 +38,7 @@ const ImageMessage: FC<Props> = ({
     };
     img.src = url;
   }, [url]);
+  console.warn(url);
   if (status == "error") return <ExpiredMessage type="image" url={url} />;
   const noSize = !properties?.width;
   return (

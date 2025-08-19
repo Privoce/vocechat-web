@@ -57,7 +57,6 @@ const DMChat: FC<Props> = ({ uid = 0, dropFiles }) => {
           <User interactive={false} uid={currUser.uid} enableNavToSetting={true} />
         </header>
       }
-      users={<GlbModelRender></GlbModelRender>}
     />
   );
 };

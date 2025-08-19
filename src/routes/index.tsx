@@ -35,6 +35,7 @@ const FilesPage = lazy(() => import("./files"));
 const GuestLogin = lazy(() => import("./guest"));
 const ChatPage = lazy(() => import("./chat"));
 const HomePage = lazy(() => import("./home"));
+const ComparePage = lazy(() => import("./compare"));
 
 let toastId: string;
 const PageRoutes = () => {
@@ -56,6 +57,14 @@ const PageRoutes = () => {
   return (
     <HashRouter>
       <Routes>
+        <Route
+          path="/compare"
+          element={
+            <LazyIt>
+              <ComparePage />
+            </LazyIt>
+          }
+        />
         <Route
           path="/guest_login"
           element={
