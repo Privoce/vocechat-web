@@ -30,7 +30,7 @@ export default function ComparePage() {
       }}
     >
       <img
-        src={`${BASE_URL}/resource/file?file_path=models/imgs/${modelSrc}`}
+        src={`${BASE_URL}/resource/file?file_path=models/imgs/${modelSrc}/${modelSrc}_page_001`}
         alt=""
         style={{
           height: "auto",
