@@ -17,7 +17,7 @@ import SignUpLink from "./SignUpLink";
 import SocialLoginButtons from "./SocialLoginButtons";
 import { shallowEqual } from "react-redux";
 import SelectLanguage from "../../components/Language";
-import Downloads from "../../components/downloads";
+import Downloads from "../../components/Downloads";
 
 const defaultInput = {
   email: "",
