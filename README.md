@@ -1,3 +1,5 @@
+[中文](./README_zh-CN.md) | English
+
 # Web Client of VoceChat
 
 <center>
@@ -46,9 +48,9 @@ For more server hosting instructions, see our documentation: https://doc.voce.ch
 
 - `git clone https://github.com/Privoce/vocechat-web vocechat-web`
 
-- `cd vocechat-web & yarn install`
+- `cd vocechat-web & pnpm install`
 
-- `yarn start`
+- `pnpm start`
 
 - Open `localhost:3009`
 
