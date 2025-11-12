@@ -1,154 +1,243 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import { shallowEqual, useDispatch } from "react-redux";
-import { Virtuoso, VirtuosoHandle } from "react-virtuoso";
-import { useDebounce } from "rooks";
-
-import { useLazyLoadMoreMessagesQuery, useReadMessageMutation } from "@/app/services/message";
-import { updateHistoryMark } from "@/app/slices/footprint";
+import React, { FC, useEffect, useRef, useState } from "react";
+import Tippy from "@tippyjs/react";
+import clsx from "clsx";
+import dayjs from "dayjs";
+import IconAdmin from "@/assets/icons/owner.svg";
 import { useAppSelector } from "@/app/store";
 import { ChatContext } from "@/types/common";
-import { renderMessageFragment } from "../../utils";
-import NewMessageBottomTip from "../NewMessageBottomTip";
-import CustomHeader from "./CustomHeader";
-import CustomList from "./CustomList";
+import useContextMenu from "@/hooks/useContextMenu";
+import usePinMessage from "@/hooks/usePinMessage";
+import IconInfo from "@/assets/icons/info.svg";
+import Avatar from "../Avatar";
+import Profile from "../Profile";
+import Tooltip from "../Tooltip";
+import Commands from "./Commands";
+import ContextMenu from "./ContextMenu";
+import EditMessage from "./EditMessage";
+import ExpireTimer from "./ExpireTimer";
+import Reaction from "./Reaction";
+import renderContent from "./renderContent";
+import Reply from "./Reply";
+import useInView from "./useInView";
+import { shallowEqual } from "react-redux";
+import NameWithRemark from "../NameWithRemark";
 
-type Props = {
-  context: ChatContext;
-  id: number;
-};
-// const firstMsgIndex = 10000;
-// let prevMids: number[] = [];
-const VirtualMessageFeed = ({ context, id }: Props) => {
-  const dispatch = useDispatch();
-  // const { t } = useTranslation("chat");
-  // const [firstItemIndex, setFirstItemIndex] = useState(firstMsgIndex);
-  const [atBottom, setAtBottom] = useState(false);
-  const [loadMoreMessage, { isLoading: loadingMore, isSuccess, data: historyData }] =
-    useLazyLoadMoreMessagesQuery();
-  const vList = useRef<VirtuosoHandle | null>(null);
-  const [updateReadIndex] = useReadMessageMutation();
-  const updateReadDebounced = useDebounce(updateReadIndex, 300);
-  const historyMid = useAppSelector(
-    (store) =>
-      context == "dm"
-        ? store.footprint.historyUsers[id] ?? ""
-        : store.footprint.historyChannels[id] ?? "",
+interface IProps {
+  readOnly?: boolean;
+  contextId: number;
+  context?: ChatContext;
+  read?: boolean;
+  mid: number;
+  updateReadIndex?: (param: any) => void;
+}
+const Message: FC<IProps> = ({
+  readOnly = false,
+  contextId,
+  mid,
+  context = "dm",
+  updateReadIndex,
+  read = true,
+}) => {
+  const { visible: contextMenuVisible, handleContextMenuEvent, hideContextMenu } = useContextMenu();
+  const inViewRef = useInView<HTMLDivElement>();
+  const [edit, setEdit] = useState(false);
+  const avatarRef = useRef(null);
+  const { getPinInfo } = usePinMessage(context == "channel" ? contextId : 0);
+  const message = useAppSelector((store) => store.message[mid], shallowEqual);
+  const enableRightLayout = useAppSelector(
+    (store) => store.server.chat_layout_mode == "SelfRight",
     shallowEqual
   );
-  const mids = useAppSelector(
-    (store) =>
-      context == "dm" ? store.userMessage.byId[id] ?? [] : store.channelMessage[id] ?? [],
-    shallowEqual
-  );
-  const selects = useAppSelector(
-    (store) => store.ui.selectMessages[`${context}_${id}`],
-    shallowEqual
-  );
-  const messageData = useAppSelector((store) => store.message || {}, shallowEqual);
   const loginUid = useAppSelector((store) => store.authData.user?.uid, shallowEqual);
-  const readChannels = useAppSelector((store) => store.footprint.readChannels, shallowEqual);
-  const readUsers = useAppSelector((store) => store.footprint.readUsers, shallowEqual);
+  const usersData = useAppSelector((store) => store.users.byId, shallowEqual);
+  const reactionMessageData = useAppSelector((store) => store.reactionMessage, shallowEqual);
+
+  const toggleEditMessage = () => {
+    setEdit((prev) => !prev);
+  };
 
   useEffect(() => {
-    if (isSuccess && historyData) {
-      if (historyData.length == 0) {
-        // 到顶了
-        dispatch(updateHistoryMark({ type: context, id, mid: "reached" }));
-      } else {
-        // 记录最新的 mid
-        const [{ mid }] = historyData;
-        dispatch(updateHistoryMark({ type: context, id, mid: `${mid}` }));
+    if (!read) {
+      // 标记已读
+      const data =
+        context == "dm"
+          ? { users: [{ uid: +contextId, mid }] }
+          : { groups: [{ gid: +contextId, mid }] };
+      if (updateReadIndex) {
+        updateReadIndex(data);
       }
     }
-  }, [isSuccess, historyData, mids, context, id]);
-  // useEffect(() => {
-  //     console.log("diff mids", prevMids, mids);
-  //     const newCount = mids.length - prevMids.length;
-  //     setFirstItemIndex((prev) => prev - newCount);
-  // }, [mids]);
+  }, [mid, read]);
+  if (!message) return <div className="w-full h-[1px] invisible"></div>;
+  const {
+    reply_mid,
+    from_uid: fromUid,
+    created_at: time,
+    sending = false,
+    content,
+    thumbnail,
+    download,
+    content_type = "text/plain",
+    edited,
+    properties,
+    expires_in = 0,
+    failed = false,
+  } = message;
 
-  // 加载更多
-  const handleTopStateChange = (isTop: boolean) => {
-    console.log("reach top ", isTop);
-    if (isTop) {
-      if (historyMid === "reached") return;
-      let lastMid = mids.slice(0, 1)[0];
-      if (historyMid) {
-        lastMid = +historyMid;
-      }
-      // prevMids = mids;
-      loadMoreMessage({ context, id, mid: lastMid });
-    }
-  };
-  // 自动跟随
-  const handleFollowOutput = (isAtBottom: boolean) => {
-    const [lastMid] = mids ? mids.slice(-1) : [0];
-    const ts = new Date().getTime();
-    // tricky
-    const isSentByMyself = ts - lastMid < 1000;
-    if (isAtBottom || isSentByMyself) {
-      return isAtBottom ? "smooth" : true;
-    } else {
-      return false;
-    }
-  };
-  // 滚动到底部
-  const handleScrollBottom = useCallback(() => {
-    const vl = vList!.current;
-    if (vl) {
-      vl.scrollToIndex(mids.length - 1);
-    }
-  }, [mids]);
-  const handleBottomStateChange = (bottom: boolean) => {
-    setAtBottom(bottom);
-  };
-  const readIndex = context == "channel" ? readChannels[id] : readUsers[id];
+  const reactions = reactionMessageData[mid];
+  const currUser = usersData[fromUid || 0];
+  // if (!message) return null;
+  let timePrefix = null;
+  const dayjsTime = dayjs(time);
+  timePrefix = dayjsTime.isToday() ? "Today" : dayjsTime.isYesterday() ? "Yesterday" : null;
+
+  const pinInfo = getPinInfo(mid);
+  // return null;
+  const _key = properties?.local_id || mid;
+  const showExpire = (expires_in ?? 0) > 0;
+  const isSelf = fromUid == loginUid && enableRightLayout;
   return (
-    <>
-      <Virtuoso
-        // logLevel={LogLevel.DEBUG}
-        overscan={50}
-        context={{ loadingMore, id, isChannel: context == "channel" }}
-        id={`VOCECHAT_FEED_${context}_${id}`}
-        className="px-1 md:px-4 py-4.5 overflow-x-hidden overflow-y-scroll"
-        ref={vList}
-        components={{
-          List: CustomList,
-          Header: CustomHeader
-        }}
-        // firstItemIndex={firstItemIndex}
-        initialTopMostItemIndex={mids.length - 1}
-        // startReached={handleLoadMore}
-        data={mids}
-        atTopThreshold={context == "channel" ? 160 : 0}
-        atTopStateChange={handleTopStateChange}
-        atBottomStateChange={handleBottomStateChange}
-        atBottomThreshold={400}
-        followOutput={handleFollowOutput}
-        itemContent={(idx, mid) => {
-          // 计算出真正的 index
-          // const idx = index - firstItemIndex;
-          const curr = messageData[mid];
-          if (!curr) return <div className="w-full h-[1px] invisible"></div>;
-          const isFirst = idx == 0;
-          const prev = isFirst ? null : messageData[mids[idx - 1]];
-          const read = curr?.from_uid == loginUid || mid <= readIndex;
-          return renderMessageFragment({
-            selectMode: !!selects,
-            updateReadIndex: updateReadDebounced,
-            read,
-            prev,
-            curr,
-            contextId: id,
-            context
-          });
-        }}
-      />
-      {!atBottom && (
-        <NewMessageBottomTip context={context} id={id} scrollToBottom={handleScrollBottom} />
+    <div
+      key={_key}
+      onContextMenu={readOnly ? undefined : handleContextMenuEvent}
+      data-msg-mid={mid}
+      ref={inViewRef}
+      className={clsx(
+        `group w-full relative flex items-start gap-2 md:gap-4 p-1 md:p-2 my-2 rounded-lg md:dark:hover:bg-gray-800 md:hover:bg-gray-100`,
+        readOnly && "hover:bg-transparent",
+        showExpire && "bg-red-200 dark:bg-red-200/40",
+        pinInfo && "bg-cyan-50 dark:bg-cyan-800 !pt-7",
+        isSelf && "flex-row-reverse"
       )}
-    </>
+    >
+      <Tippy
+        key={_key}
+        popperOptions={{ strategy: "fixed" }}
+        disabled={readOnly}
+        interactive
+        placement="right"
+        trigger="click"
+        content={<Profile uid={fromUid || 0} type="card" cid={context == "dm" ? 0 : contextId} />}
+      >
+        <div className="cursor-pointer w-10 h-10 shrink-0" data-uid={fromUid} ref={avatarRef}>
+          <Avatar
+            className="w-10 h-10 rounded-full object-cover"
+            width={40}
+            height={40}
+            src={currUser?.avatar}
+            name={currUser?.name}
+          />
+        </div>
+      </Tippy>
+      <ContextMenu
+        editMessage={toggleEditMessage}
+        context={context}
+        contextId={contextId}
+        mid={mid}
+        visible={contextMenuVisible && !failed}
+        hide={hideContextMenu}
+      >
+        <div
+          className={clsx(
+            "w-full flex flex-col gap-2",
+            pinInfo && "relative",
+            isSelf && "items-end"
+          )}
+          data-pin-tip={`pinned by ${
+            pinInfo?.created_by ? usersData[pinInfo.created_by]?.name : ""
+          }`}
+        >
+          {pinInfo && (
+            <span
+              className={clsx(
+                "absolute -top-1 -translate-y-full text-xs text-gray-400",
+                isSelf ? "right-0" : "left-0"
+              )}
+            >
+              {`pinned by ${pinInfo.created_by ? usersData[pinInfo.created_by]?.name : ""}`}
+            </span>
+          )}
+          <div
+            className={clsx(`flex items-center gap-2 font-semibold`, isSelf && "flex-row-reverse")}
+          >
+            <span className="text-primary-500 text-sm">
+              {currUser?.name ? (
+                <NameWithRemark uid={currUser.uid} showName={false} name={currUser.name} />
+              ) : (
+                "Deleted User"
+              )}
+            </span>
+            {currUser?.is_admin && <IconAdmin />}
+            <Tooltip
+              delay={200}
+              disabled={!timePrefix || readOnly}
+              placement="top"
+              tip={dayjsTime.format("YYYY-MM-DD h:mm:ss A")}
+            >
+              <time className="text-gray-400 text-xs">
+                {timePrefix
+                  ? `${timePrefix} ${dayjsTime.format("h:mm A")}`
+                  : dayjsTime.format("YYYY-MM-DD h:mm:ss A")}
+              </time>
+            </Tooltip>
+            {failed && (
+              <span className="text-red-500 text-xs flex items-center gap-1">
+                <IconInfo className="stroke-red-600 w-4 h-4" /> Send Failed
+              </span>
+            )}
+          </div>
+          <div
+            className={clsx(
+              `vc-msg select-text text-gray-800 text-sm wb whitespace-pre-wrap dark:!text-white pr-6 md:pr-0`,
+              sending && "opacity-90"
+            )}
+          >
+            {reply_mid && (
+              <Reply key={reply_mid} mid={reply_mid} context={context} to={contextId} />
+            )}
+            {edit ? (
+              <EditMessage mid={mid} cancelEdit={toggleEditMessage} />
+            ) : (
+              renderContent({
+                context,
+                to: contextId,
+                from_uid: fromUid,
+                created_at: time,
+                content_type,
+                properties,
+                content,
+                thumbnail,
+                download,
+                edited,
+              })
+            )}
+          </div>
+          {reactions && <Reaction mid={mid} reactions={reactions} readOnly={readOnly} />}
+        </div>
+      </ContextMenu>
+
+      {showExpire && (
+        <ExpireTimer
+          enableRightLayout={isSelf}
+          mid={message.mid}
+          context={context}
+          contextId={contextId}
+          expiresIn={expires_in ?? 0}
+          createAt={time ?? 0}
+        />
+      )}
+      {!edit && !failed && !readOnly && (
+        <Commands
+          isSelf={isSelf}
+          context={context}
+          contextId={contextId}
+          mid={mid}
+          toggleEditMessage={toggleEditMessage}
+        />
+      )}
+    </div>
   );
 };
-
-export default VirtualMessageFeed;
+export default React.memo(Message, (prevs, nexts) => {
+  return prevs.mid == nexts.mid;
+});

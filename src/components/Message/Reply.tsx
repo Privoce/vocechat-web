@@ -1,8 +1,9 @@
-import React, { FC, MouseEvent } from "react";
+import React, { FC, MouseEvent, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import clsx from "clsx";
 
 import { ContentTypes } from "@/app/config";
+import { ChatContainerContext } from "@/routes/chat/Layout/VirtualMessageFeed/ChatContainerContext";
 import { MessagePayload } from "@/app/slices/message";
 import { useAppSelector } from "@/app/store";
 import { ChatContext } from "@/types/common";
@@ -60,13 +61,10 @@ const renderContent = (data: MessagePayload, context: ChatContext, to: number) =
         // const { size, name, file_type } = properties;
         res = (
           <ForwardedMessage
-            properties={properties}
             context={context}
             to={to}
             from_uid={from_uid}
-            created_at={created_at}
             id={content as string}
-            thumbnail={thumbnail}
           />
         );
       }
@@ -84,10 +82,15 @@ interface ReplyProps {
   context: ChatContext;
   to?: number;
 }
-
 const Reply: FC<ReplyProps> = ({ mid, interactive = true, context, to = 0 }) => {
   const { t } = useTranslation("chat");
+  const vList = useContext(ChatContainerContext);
   const users = useAppSelector((store) => store.users.byId, shallowEqual);
+  const mids = useAppSelector(
+    (store) =>
+      context == "dm" ? store.userMessage.byId[to] ?? [] : store.channelMessage[to] ?? [],
+    shallowEqual
+  );
   const data = useAppSelector((store) => store.message[mid], shallowEqual);
   const handleClick = (evt: MouseEvent<HTMLDivElement>) => {
     const { mid } = evt.currentTarget.dataset;
@@ -102,9 +105,19 @@ const Reply: FC<ReplyProps> = ({ mid, interactive = true, context, to = 0 }) => 
         msgEle.classList.remove(_class1);
         msgEle.classList.remove(_class2);
       }, 3000);
+    } else {
+      const index = mids.findIndex((_mid) => _mid == +mid!);
+      if (index > -1) {
+        vList?.current?.scrollToIndex({
+          index,
+          align: "center",
+          behavior: "smooth",
+        });
+      }
     }
   };
   const defaultClass = `w-fit flex items-start flex-col md:flex-row p-2 bg-gray-100 dark:bg-gray-900 rounded-lg gap-2 mb-1`;
+  if (!data)
   if (!data)
     return (
       <div key={mid} data-mid={mid} className={clsx(defaultClass, "italic")}>
