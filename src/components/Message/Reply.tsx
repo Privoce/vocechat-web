@@ -1,9 +1,11 @@
 import React, { FC, MouseEvent } from "react";
 import { useTranslation } from "react-i18next";
+import { shallowEqual, useDispatch } from "react-redux";
 import clsx from "clsx";
 
 import { ContentTypes } from "@/app/config";
 import { MessagePayload } from "@/app/slices/message";
+import { setJumpToMessage } from "@/app/slices/ui";
 import { useAppSelector } from "@/app/store";
 import { ChatContext } from "@/types/common";
 import { getFileIcon, isImage } from "@/utils";
@@ -11,7 +13,6 @@ import Avatar from "../Avatar";
 import LinkifyText from "../LinkifyText";
 import MarkdownRender from "../MarkdownRender";
 import ForwardedMessage from "./ForwardedMessage";
-import { shallowEqual } from "react-redux";
 
 const renderContent = (data: MessagePayload, context: ChatContext, to: number) => {
   const { content_type, content, thumbnail, properties, created_at, from_uid = 0 } = data;
@@ -60,13 +61,10 @@ const renderContent = (data: MessagePayload, context: ChatContext, to: number) =
         // const { size, name, file_type } = properties;
         res = (
           <ForwardedMessage
-            properties={properties}
             context={context}
             to={to}
             from_uid={from_uid}
-            created_at={created_at}
             id={content as string}
-            thumbnail={thumbnail}
           />
         );
       }
@@ -87,21 +85,13 @@ interface ReplyProps {
 
 const Reply: FC<ReplyProps> = ({ mid, interactive = true, context, to = 0 }) => {
   const { t } = useTranslation("chat");
+  const dispatch = useDispatch();
   const users = useAppSelector((store) => store.users.byId, shallowEqual);
   const data = useAppSelector((store) => store.message[mid], shallowEqual);
   const handleClick = (evt: MouseEvent<HTMLDivElement>) => {
     const { mid } = evt.currentTarget.dataset;
-    const msgEle = document.querySelector<HTMLDivElement>(`[data-msg-mid='${mid}']`);
-    if (msgEle) {
-      const _class1 = `md:dark:bg-gray-800`;
-      const _class2 = `md:bg-gray-100`;
-      msgEle.classList.add(_class1);
-      msgEle.classList.add(_class2);
-      msgEle.scrollIntoView({ behavior: "smooth", block: "center" });
-      setTimeout(() => {
-        msgEle.classList.remove(_class1);
-        msgEle.classList.remove(_class2);
-      }, 3000);
+    if (mid) {
+      dispatch(setJumpToMessage({ context, id: to, mid: +mid }));
     }
   };
   const defaultClass = `w-fit flex items-start flex-col md:flex-row p-2 bg-gray-100 dark:bg-gray-900 rounded-lg gap-2 mb-1`;

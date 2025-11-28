@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { UploadFileData } from "@/hooks/useUploadFile";
+import { ChatContext } from "@/types/common";
 
 export type ListView = "item" | "grid";
 export type SSEStatus = "connecting" | "connected" | "disconnected" | "reconnecting";
@@ -24,6 +25,7 @@ export interface UIState {
     chat: null | string;
     user: null | string;
   };
+  jumpToMessage: { context: ChatContext; id: number; mid: number } | null;
 }
 
 const initialState: UIState = {
@@ -43,6 +45,7 @@ const initialState: UIState = {
     chat: null,
     user: null,
   },
+  jumpToMessage: null,
 };
 
 const uiSlice = createSlice({
@@ -189,6 +192,12 @@ const uiSlice = createSlice({
       }
       state.selectMessages[`${context}_${id}`] = currData;
     },
+    setJumpToMessage(state, action: PayloadAction<{ context: ChatContext; id: number; mid: number }>) {
+      state.jumpToMessage = action.payload;
+    },
+    clearJumpToMessage(state) {
+      state.jumpToMessage = null;
+    },
   },
 });
 
@@ -206,6 +215,8 @@ export const {
   updateDraftMixedText,
   updateRememberedNavs,
   updateMsgSoundSetting,
+  setJumpToMessage,
+  clearJumpToMessage,
 } = uiSlice.actions;
 
 export default uiSlice.reducer;
