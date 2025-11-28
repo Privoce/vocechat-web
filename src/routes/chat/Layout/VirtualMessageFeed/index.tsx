@@ -72,7 +72,7 @@ const VirtualMessageFeed = ({ context, id }: Props) => {
       });
       isInitialRender.current = false;
     }
-  }, [visibleMids.length]);
+  }, [id, context, visibleMids.length]);
 
   const prevAllMidsLength = useRef(allMids.length);
   useEffect(() => {
