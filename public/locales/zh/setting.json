@@ -22,7 +22,8 @@
     "about": "关于",
     "api_doc": "API 文档",
     "version": "版本信息",
-    "feedback": "反馈"
+    "feedback": "反馈",
+    "video": "音视频"
   },
   "channel": {
     "leave": "离开",
@@ -266,6 +267,13 @@
     "sub_desc": "每个 Agora 项目每月可享受 10,000 分钟的免费 API 使用时间。请自行创建一个项目。按照以下说明正确配置您的 Agora。",
     "enable": "开启",
     "how_to": "如何配置 Agora？"
+  },
+  "vocespace": {
+    "title": "Vocespace",
+    "desc": "使用私有部署的Vocespace",
+    "sub_desc": "每个Vocespace账户将享受免费无限制通话时长、5人并发及4K分辨率服务。无需创建账户。按照以下说明正确配置您的Vocespace。",
+    "enable": "启用",
+    "how_to": "如何设置Vocespace？"
   },
   "third_app": {
     "key": "API 安全密钥",

@@ -41,6 +41,14 @@ export interface AgoraConfig {
   customer_id: string;
   customer_secret: string;
 }
+
+export interface VocespaceConfig {
+  enabled: boolean;
+  password: string;
+  url: string;
+  license: string;
+}
+
 export interface AgoraVoicingListResponse {
   success: boolean;
   data: {

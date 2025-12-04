@@ -16,6 +16,7 @@ import MyAccount from "./MyAccount";
 import Overview from "./Overview";
 import Widget from "./Widget";
 import { shallowEqual } from "react-redux";
+import { ConfigVocespace } from "./config/Vocespace";
 
 const dataManagementNav = {
   name: "data_management",
@@ -54,7 +55,7 @@ const navs = [
         component: <ConfigFirebase />,
       },
       {
-        name: "agora",
+        name: "video",
         component: <ConfigAgora />,
       },
       {

@@ -18,7 +18,8 @@ import {
   Server,
   SMTPConfig,
   SystemCommon,
-  TestEmailDTO
+  TestEmailDTO,
+  VocespaceConfig,
 } from "@/types/server";
 import { User } from "@/types/user";
 import { compareVersion, encodeBase64 } from "@/utils";
@@ -26,7 +27,7 @@ import BASE_URL, {
   ContentTypes,
   IS_OFFICIAL_DEMO,
   KEY_SERVER_VERSION,
-  PAYMENT_URL_PREFIX
+  PAYMENT_URL_PREFIX,
 } from "../config";
 import { updateInfo } from "../slices/server";
 import { updateCallInfo, upsertVoiceList } from "../slices/voice";
@@ -48,29 +49,29 @@ export const serverApi = createApi({
         } catch {
           console.error("get server info error");
         }
-      }
+      },
     }),
     getThirdPartySecret: builder.query<string, void>({
       query: () => ({
         url: `/admin/system/third_party_secret`,
-        responseHandler: "text"
+        responseHandler: "text",
       }),
-      keepUnusedDataFor: 0
+      keepUnusedDataFor: 0,
     }),
     updateThirdPartySecret: builder.mutation<string, void>({
       query: () => ({
         url: `/admin/system/third_party_secret`,
         method: "POST",
-        responseHandler: "text"
-      })
+        responseHandler: "text",
+      }),
     }),
     getServerVersion: builder.query<string, void>({
       query: () => ({
         headers: {
-          accept: "text/plain"
+          accept: "text/plain",
         },
         url: `/admin/system/version`,
-        responseHandler: "text"
+        responseHandler: "text",
       }),
       async onQueryStarted(data, { dispatch, queryFulfilled }) {
         try {
@@ -80,60 +81,63 @@ export const serverApi = createApi({
         } catch {
           console.error("get server version error");
         }
-      }
+      },
     }),
     getFirebaseConfig: builder.query<FirebaseConfig, void>({
-      query: () => ({ url: `/admin/fcm/config` })
+      query: () => ({ url: `/admin/fcm/config` }),
     }),
     getGoogleAuthConfig: builder.query<GoogleAuthConfig, void>({
-      query: () => ({ url: `/admin/google_auth/config` })
+      query: () => ({ url: `/admin/google_auth/config` }),
     }),
     updateGoogleAuthConfig: builder.mutation<void, GoogleAuthConfig>({
       query: (data) => ({
         url: `/admin/google_auth/config`,
         method: "POST",
-        body: data
-      })
+        body: data,
+      }),
     }),
     getGithubAuthConfig: builder.query<GithubAuthConfig, void>({
-      query: () => ({ url: `/admin/github_auth/config` })
+      query: () => ({ url: `/admin/github_auth/config` }),
     }),
     updateGithubAuthConfig: builder.mutation<void, GithubAuthConfig>({
       query: (data) => ({
         url: `/admin/github_auth/config`,
         method: "POST",
-        body: data
-      })
+        body: data,
+      }),
     }),
     sendTestEmail: builder.mutation<void, TestEmailDTO>({
       query: (data) => ({
         url: `/admin/system/send_mail`,
         method: "POST",
-        body: data
-      })
+        body: data,
+      }),
     }),
     updateFirebaseConfig: builder.mutation<void, FirebaseConfig>({
       query: (data) => ({
         url: `/admin/fcm/config`,
         method: "POST",
-        body: data
-      })
+        body: data,
+      }),
+    }),
+    getVocespaceConfig: builder.query<VocespaceConfig, void>({
+      query: () => ({ url: `/admin/vocespace/config` }),
     }),
     getAgoraConfig: builder.query<AgoraConfig, void>({
-      query: () => ({ url: `/admin/agora/config` })
+      query: () => ({ url: `/admin/agora/config` }),
     }),
     getAgoraChannels: builder.query<
       AgoraVoicingListResponse,
       { page_no: number; page_size: number }
     >({
       query: (param = { page_no: 0, page_size: 100 }) => ({
-        url: `/admin/agora/channel/${param.page_no}/${param.page_size}`
+        url: `/admin/agora/channel/${param.page_no}/${param.page_size}`,
       }),
       async onQueryStarted(data, { dispatch, queryFulfilled, getState }) {
         try {
           const {
             voice: { callingFrom },
-            authData
+            authData,
           } = getState() as RootState;
           const { data: resp } = await queryFulfilled;
           const { success } = resp;
@@ -146,7 +150,7 @@ export const serverApi = createApi({
                 id: +id,
                 context,
                 memberCount: count,
-                channelName: data.channel_name
+                channelName: data.channel_name,
               };
             });
             dispatch(upsertVoiceList(arr));
@@ -162,7 +166,7 @@ export const serverApi = createApi({
         } catch {
           console.error("get voice list error");
         }
-      }
+      },
     }),
     getAgoraUsersByChannel: builder.query<number[], string>({
       query: (channel_name) => ({ url: `/admin/agora/channel/user/${channel_name}/false` }),
@@ -171,24 +175,31 @@ export const serverApi = createApi({
           return resp.data.users ?? [];
         }
         return [];
-      }
+      },
     }),
     updateAgoraConfig: builder.mutation<void, AgoraConfig>({
       query: (data) => ({
         url: `/admin/agora/config`,
         method: "POST",
-        body: data
-      })
+        body: data,
+      }),
+    }),
+    updateVocespaceConfig: builder.mutation<void, VocespaceConfig>({
+      query: (data) => ({
+        url: `/admin/vocespace/config`,
+        method: "POST",
+        body: data,
+      }),
     }),
     getAgoraStatus: builder.query<boolean, void>({
-      query: () => ({ url: `/admin/agora/enabled` })
+      query: () => ({ url: `/admin/agora/enabled` }),
     }),
     generateAgoraToken: builder.mutation<AgoraTokenResponse, { uid: number } | { gid: number }>({
       query: (data) => ({
         url: `/admin/agora/token`,
         method: "POST",
-        body: data
-      })
+        body: data,
+      }),
     }),
     getSystemCommon: builder.query<SystemCommon, void>({
       query: () => ({ url: `/admin/system/common` }),
@@ -206,13 +217,13 @@ export const serverApi = createApi({
         } catch {
           console.error("get server common error");
         }
-      }
+      },
     }),
     updateSystemCommon: builder.mutation<void, Partial<SystemCommon>>({
       query: (data) => ({
         url: `/admin/system/common`,
         method: "PUT",
-        body: data
+        body: data,
       }),
       async onQueryStarted(data, { dispatch, queryFulfilled }) {
         try {
@@ -221,20 +232,20 @@ export const serverApi = createApi({
         } catch {
           console.error("update server common error");
         }
-      }
+      },
     }),
     getSMTPConfig: builder.query<SMTPConfig, void>({
-      query: () => ({ url: `/admin/smtp/config` })
+      query: () => ({ url: `/admin/smtp/config` }),
     }),
     getSMTPStatus: builder.query<boolean, void>({
-      query: () => ({ url: `/admin/smtp/enabled` })
+      query: () => ({ url: `/admin/smtp/enabled` }),
     }),
     updateSMTPConfig: builder.mutation<void, SMTPConfig>({
       query: (data) => ({
         url: `/admin/smtp/config`,
         method: "POST",
-        body: data
-      })
+        body: data,
+      }),
     }),
     getLoginConfig: builder.query<LoginConfig, void>({
       query: () => ({ url: `/admin/login/config` }),
@@ -248,43 +259,43 @@ export const serverApi = createApi({
         } catch {
           console.error("get login config error");
         }
-      }
+      },
     }),
     getFiles: builder.query<VoceChatFile[], GetFilesDTO>({
       query: (params) => ({
         url: `/admin/system/files?${new URLSearchParams(
           params as Record<string, string>
-        ).toString()}`
-      })
+        ).toString()}`,
+      }),
     }),
     updateLoginConfig: builder.mutation<void, Partial<LoginConfig>>({
       query: (data) => ({
         url: `/admin/login/config`,
         method: "POST",
-        body: data
-      })
+        body: data,
+      }),
     }),
     updateLogo: builder.mutation<void, File>({
       query: (data) => ({
         headers: {
-          "content-type": "image/png"
+          "content-type": "image/png",
         },
         url: `/admin/system/organization/logo`,
         method: "POST",
-        body: data
+        body: data,
       }),
       async onQueryStarted(data, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
           dispatch(
             updateInfo({
-              logo: `${BASE_URL}/resource/organization/logo?t=${+new Date()}`
+              logo: `${BASE_URL}/resource/organization/logo?t=${+new Date()}`,
             })
           );
         } catch {
           console.error("update server logo error");
         }
-      }
+      },
     }),
     updateServer: builder.mutation<void, Partial<Server>>({
       query: (data) => ({
@@ -293,7 +304,7 @@ export const serverApi = createApi({
           compareVersion(localStorage.getItem(KEY_SERVER_VERSION) ?? "", "0.3.8") > 0
             ? "PUT"
             : "POST",
-        body: data
+        body: data,
       }),
       async onQueryStarted(data, { dispatch, queryFulfilled, getState }) {
         const rootStore = getState() as RootState;
@@ -304,34 +315,34 @@ export const serverApi = createApi({
         } catch {
           dispatch(updateInfo({ name: prevName, description: prevDesc }));
         }
-      }
+      },
     }),
     createAdmin: builder.mutation<User, CreateAdminDTO>({
       query: (data) => ({
         url: "/admin/system/create_admin",
         method: "POST",
-        body: data
-      })
+        body: data,
+      }),
     }),
     getFrontendUrl: builder.query<string, void>({
       query: () => ({
         url: `/admin/system/frontend_url`,
-        responseHandler: "text"
-      })
+        responseHandler: "text",
+      }),
     }),
     updateFrontendUrl: builder.mutation<void, string>({
       query: (url) => ({
         url: `/admin/system/update_frontend_url`,
         method: "POST",
         headers: {
-          "content-type": "text/plain"
+          "content-type": "text/plain",
         },
-        body: url
-      })
+        body: url,
+      }),
     }),
     getLicense: builder.query<LicenseResponse, void>({
       query: () => ({
-        url: `/license`
+        url: `/license`,
       }),
       async onQueryStarted(data, { dispatch, queryFulfilled, getState }) {
         // vocechat 官方 demo 则忽略
@@ -340,7 +351,7 @@ export const serverApi = createApi({
         const { upgraded: prevValue } = rootStore.server;
         try {
           const {
-            data: { user_limit }
+            data: { user_limit },
           } = await queryFulfilled;
           const currValue = user_limit > 20;
           if (prevValue !== currValue) {
@@ -349,67 +360,67 @@ export const serverApi = createApi({
         } catch {
           console.error("get license failed ");
         }
-      }
+      },
     }),
 
     getLicensePaymentUrl: builder.mutation<RenewLicenseResponse, RenewLicense>({
       query: (data) => ({
         url: `${PAYMENT_URL_PREFIX}/vocechat/payment/create`,
         method: "POST",
-        body: data
-      })
+        body: data,
+      }),
     }),
     getGeneratedLicense: builder.query<{ license: string }, string>({
       query: (session_id) => ({
-        url: `${PAYMENT_URL_PREFIX}/vocechat/licenses/${session_id}`
-      })
+        url: `${PAYMENT_URL_PREFIX}/vocechat/licenses/${session_id}`,
+      }),
     }),
     checkLicense: builder.mutation<LicenseResponse, string>({
       query: (license) => ({
         url: "/license/check",
         method: "POST",
-        body: { license }
-      })
+        body: { license },
+      }),
     }),
     upsertLicense: builder.mutation<boolean, string>({
       query: (license) => ({
         url: "/license",
         method: "PUT",
-        body: { license }
-      })
+        body: { license },
+      }),
     }),
     clearAllMessages: builder.query<void, void>({
       query: () => ({
         url: "/admin/system/message/clear",
-        method: "DELETE"
-      })
+        method: "DELETE",
+      }),
     }),
     clearAllFiles: builder.query<void, void>({
       query: () => ({
         url: "/resource/file/delete",
-        method: "DELETE"
-      })
+        method: "DELETE",
+      }),
     }),
     getWidgetExtCSS: builder.query<string, void>({
       query: () => ({
         url: "/resource/widget-extra.css",
-        responseHandler: "text"
-      })
+        responseHandler: "text",
+      }),
     }),
     updateWidgetExtCSS: builder.mutation<boolean, string>({
       query: (css) => ({
         url: "/resource/widget-extra.css",
         method: "PUT",
-        body: { data: css }
-      })
+        body: { data: css },
+      }),
     }),
     getBotRelatedChannels: builder.query<Channel[], { api_key: string; public_only?: boolean }>({
       query: ({ api_key, public_only = false }) => ({
         url: public_only ? `/bot?public_only=${public_only}` : `/bot`,
         headers: {
-          "x-api-key": api_key
-        }
-      })
+          "x-api-key": api_key,
+        },
+      }),
     }),
     sendMessageByBot: builder.mutation<
       number,
@@ -426,14 +437,14 @@ export const serverApi = createApi({
         headers: {
           "x-api-key": api_key,
           "content-type": ContentTypes[type],
-          "X-Properties": properties ? encodeBase64(JSON.stringify(properties)) : ""
+          "X-Properties": properties ? encodeBase64(JSON.stringify(properties)) : "",
         },
         url: cid ? `/bot/send_to_group/${cid}` : `/bot/send_to_user/${uid}`,
         method: "POST",
-        body: content
-      })
-    })
-  })
+        body: content,
+      }),
+    }),
+  }),
 });
 
 export const {
@@ -484,5 +495,8 @@ export const {
   useLazyGetAgoraUsersByChannelQuery,
   useLazyClearAllFilesQuery,
   useLazyClearAllMessagesQuery,
-  useLazyGetFilesQuery
+  useLazyGetFilesQuery,
+  useGetVocespaceConfigQuery,
+  useLazyGetVocespaceConfigQuery,
+  useUpdateVocespaceConfigMutation,
 } = serverApi;
