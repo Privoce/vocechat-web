@@ -22,7 +22,8 @@
     "about": "关于",
     "api_doc": "API 文档",
     "version": "版本信息",
-    "feedback": "反馈"
+    "feedback": "反馈",
+    "video": "音视频"
   },
   "channel": {
     "leave": "离开",
@@ -266,6 +267,21 @@
     "sub_desc": "每个 Agora 项目每月可享受 10,000 分钟的免费 API 使用时间。请自行创建一个项目。按照以下说明正确配置您的 Agora。",
     "enable": "开启",
     "how_to": "如何配置 Agora？"
+  },
+  "vocespace": {
+    "title": "Vocespace",
+    "desc": "使用私有部署的Vocespace(自动部署)",
+    "sub_desc": "每个Vocespace账户将享受免费无限制通话时长、5人并发及4K分辨率服务。无需创建账户。按照以下说明正确配置您的Vocespace。",
+    "prerequisite": [
+      "预备条件",
+      "Docker环境",
+      "端口 80, 443, 7880, 7881, 3008, 3000 已开放",
+      "解析到本机IP的域名（中国大陆用户，如阿里云和腾讯云，需备案）",
+      "企业定制或需要帮助，请联系 han@privoce.com 或添加微信：Privoce"
+    ],
+    "domain_desc": "自定义域名需要是解析到本机IP的域名 (中国大陆用户，如阿里云和腾讯云，需备案)",
+    "enable": "启用",
+    "how_to": "启用后，请设置域名并保存，其余步骤会自动化完成"
   },
   "third_app": {
     "key": "API 安全密钥",

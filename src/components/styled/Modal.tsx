@@ -1,5 +1,6 @@
 import { FC, ReactNode } from "react";
 import clsx from "clsx";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   title?: string;
@@ -16,8 +17,10 @@ const StyledModal: FC<Props> = ({
   description = "",
   buttons,
   children,
-  className
+  className,
 }) => {
+  const { t } = useTranslation("setting", { keyPrefix: "vocespace" });
+
   return (
     <div
       className={clsx(
@@ -34,6 +37,7 @@ const StyledModal: FC<Props> = ({
       )}
       {children}
       {buttons && <div className="pt-4 w-full flex justify-end gap-4 items-center">{buttons}</div>}
+      <div className="text-sm text-gray-400 dark:text-gray-100 mt-3">{t("prerequisite.4")}</div>
     </div>
   );
 };
