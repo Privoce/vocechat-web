@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 
 import { useUpdateAvatarMutation } from "@/app/services/user";
+import { useGetLoginConfigQuery } from "@/app/services/server";
 import { useAppSelector } from "@/app/store";
 import AvatarUploader from "@/components/AvatarUploader";
 import Button from "@/components/styled/Button";
@@ -20,6 +21,7 @@ export default function MyAccount() {
   const [editModal, setEditModal] = useState<EditField>("");
   const [removeConfirmVisible, setRemoveConfirmVisible] = useState(false);
   const [uploadAvatar, { isSuccess: uploadSuccess }] = useUpdateAvatarMutation();
+  const { data: loginConfig } = useGetLoginConfigQuery();
   const EditModalInfo = {
     name: {
       label: t("username"),
@@ -97,9 +99,11 @@ export default function MyAccount() {
           </div>
         </div>
         
-        <div className="w-full md:w-[512px] md:p-6 md:bg-gray-100 md:dark:bg-gray-800 md:rounded-2xl">
-          <PasskeyManagement />
-        </div>
+        {loginConfig?.passkey && (
+          <div className="w-full md:w-[512px] md:p-6 md:bg-gray-100 md:dark:bg-gray-800 md:rounded-2xl">
+            <PasskeyManagement />
+          </div>
+        )}
 
         {/* uid 1 是初始账户，不能删 */}
         {uid != 1 && (

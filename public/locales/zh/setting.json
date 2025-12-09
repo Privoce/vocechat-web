@@ -285,6 +285,8 @@
     "github_desc": "允许用户使用 GitHub 登录",
     "metamask": "Metamask",
     "metamask_desc": "允许用户使用 Metamask 登录",
+    "passkey": "通行密钥",
+    "passkey_desc": "允许用户使用通行密钥登录",
     "oidc": "OIDC",
     "oidc_desc": "允许用户使用 OIDC 登录",
     "oidc_custom": "自定义",

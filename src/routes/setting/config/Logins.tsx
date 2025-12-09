@@ -59,7 +59,7 @@ export default function Logins() {
     }
   };
   const handleToggle = (
-    val: Partial<Pick<LoginConfig, "github" | "google" | "password" | "magic_link" | "metamask">>
+    val: Partial<Pick<LoginConfig, "github" | "google" | "password" | "magic_link" | "metamask" | "passkey">>
   ) => {
     setValues((prev) => {
       if (!prev) return prev;
@@ -67,7 +67,7 @@ export default function Logins() {
     });
   };
   if (!values) return null;
-  const { google, magic_link, github, metamask, password, oidc = [] } = values as LoginConfig;
+  const { google, magic_link, github, metamask, password, passkey, oidc = [] } = values as LoginConfig;
   const valuesChanged = clientIdChanged || changed || githubChanged;
 
   return (
@@ -167,6 +167,20 @@ export default function Logins() {
             <Toggle
               onClick={handleToggle.bind(null, { metamask: !metamask })}
               checked={metamask}
+            ></Toggle>
+          </div>
+        </div>
+        <div className="input">
+          <div className="row">
+            <div className="title">
+              <div className="txt">
+                <Label>{t("passkey")}</Label>
+              </div>
+              <span className="desc dark:!text-gray-400">{t("passkey_desc")}</span>
+            </div>
+            <Toggle
+              onClick={handleToggle.bind(null, { passkey: !passkey })}
+              checked={passkey}
             ></Toggle>
           </div>
         </div>

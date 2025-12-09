@@ -97,6 +97,7 @@ export interface LoginConfig {
   oidc: OIDCSetting[];
   metamask: boolean;
   third_party: boolean;
+  passkey?: boolean;
 }
 export interface LicenseResponse {
   domains: string[];

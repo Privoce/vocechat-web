@@ -285,6 +285,8 @@
     "github_desc": "Allows members login with GitHub.",
     "metamask": "Metamask",
     "metamask_desc": "Allows members login with Metamask.",
+    "passkey": "Passkey",
+    "passkey_desc": "Allows members login with Passkey.",
     "oidc": "OIDC",
     "oidc_desc": "Allows members login with OIDC.",
     "oidc_custom": "Custom",

@@ -159,7 +159,7 @@ export default function LoginPage() {
   const { email, password } = input;
   if (!loginConfigSuccess) return null;
 
-  const { magic_link, who_can_sign_up: whoCanSignUp } = loginConfig;
+  const { magic_link, who_can_sign_up: whoCanSignUp, passkey } = loginConfig;
 
   const enableMagicLink = enableSMTP && magic_link;
   const hideSocials = (enableMagicLink && emailInputted) || whoCanSignUp == "InvitationOnly";
@@ -232,13 +232,15 @@ export default function LoginPage() {
         </form>
         <Divider content="OR" />
         <div className="socials flex flex-col gap-3">
-          <Button 
-            onClick={handlePasskeyLogin} 
-            disabled={isPasskeyLoading || isLoading}
-            className="w-full"
-          >
-            {isPasskeyLoading ? t("login.passkey_authenticating") : t("login.passkey")}
-          </Button>
+          {passkey && (
+            <Button 
+              onClick={handlePasskeyLogin} 
+              disabled={isPasskeyLoading || isLoading}
+              className="w-full"
+            >
+              {isPasskeyLoading ? t("login.passkey_authenticating") : t("login.passkey")}
+            </Button>
+          )}
           {emailInputted && <MagicLinkLogin email={input.email} />}
           {!hideSocials && <SocialLoginButtons />}
         </div>
