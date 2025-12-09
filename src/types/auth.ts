@@ -129,6 +129,7 @@ export interface PasskeyLoginFinishRequest {
 export interface UserPasskey {
   id: number;
   credential_id: string;
+  name: string;
   created_at: string;
   last_used_at?: string;
 }
