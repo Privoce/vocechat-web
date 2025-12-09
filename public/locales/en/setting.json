@@ -290,6 +290,24 @@
     "oidc_custom": "Custom",
     "more_details": "Need more detail? See our <0>doc</0>."
   },
+  "passkey": {
+    "title": "Passkeys",
+    "desc": "Manage your passkeys for passwordless login",
+    "add": "Add Passkey",
+    "adding": "Registering...",
+    "delete": "Delete",
+    "delete_confirm": "Are you sure you want to delete this passkey?",
+    "no_passkeys": "No passkeys registered yet",
+    "created": "Created",
+    "last_used": "Last used",
+    "success_add": "Passkey registered successfully",
+    "success_delete": "Passkey deleted successfully",
+    "error_add": "Failed to register passkey",
+    "error_delete": "Failed to delete passkey",
+    "error_not_supported": "Your browser doesn't support Passkey",
+    "error_cancelled": "User cancelled or timeout",
+    "error_exists": "Passkey already exists"
+  },
   "widget": {
     "tip": "Extending VoceChat by embedding the vocechat widget SDK!",
     "code": "Code Example",

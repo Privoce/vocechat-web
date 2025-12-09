@@ -142,6 +142,11 @@
     "patchedDependencies": {
       "slate-react": "patches/slate-react.patch",
       "@toast-ui/editor": "patches/@toast-ui__editor.patch"
-    }
+    },
+    "ignoredBuiltDependencies": [
+      "@firebase/util",
+      "core-js-pure",
+      "protobufjs"
+    ]
   }
 }

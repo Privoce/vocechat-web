@@ -9,6 +9,7 @@ import Button from "@/components/styled/Button";
 import ProfileBasicEditModal from "./ProfileBasicEditModal";
 import RemoveAccountConfirmModal from "./RemoveAccountConfirmModal";
 import UpdatePasswordModal from "./UpdatePasswordModal";
+import PasskeyManagement from "./PasskeyManagement";
 import { shallowEqual } from "react-redux";
 
 type EditField = "name" | "email" | "";
@@ -95,6 +96,11 @@ export default function MyAccount() {
             <Button onClick={togglePasswordModal}>{ct("action.edit")}</Button>
           </div>
         </div>
+        
+        <div className="w-full md:w-[512px] md:p-6 md:bg-gray-100 md:dark:bg-gray-800 md:rounded-2xl">
+          <PasskeyManagement />
+        </div>
+
         {/* uid 1 是初始账户，不能删 */}
         {uid != 1 && (
           <Button className="danger" onClick={toggleRemoveAccountModalVisible}>
