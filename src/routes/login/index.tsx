@@ -129,7 +129,7 @@ export default function LoginPage() {
 
   const handlePasskeyLogin = async () => {
     if (!isWebAuthnSupported()) {
-      toast.error("Your browser doesn't support Passkey");
+      toast.error(t("login.passkey_error_not_supported"));
       return;
     }
 
@@ -144,11 +144,11 @@ export default function LoginPage() {
       toast.success(ct("tip.login"));
     } catch (error: any) {
       if (error.name === 'NotAllowedError') {
-        toast.error("User cancelled or timeout");
+        toast.error(t("login.passkey_error_cancelled"));
       } else if (error.status === 404) {
-        toast.error("No passkey found for this account");
+        toast.error(t("login.passkey_error_no_passkey"));
       } else {
-        toast.error("Failed to login with passkey");
+        toast.error(t("login.passkey_error_failed"));
       }
       console.error("Passkey login error:", error);
     } finally {
@@ -237,7 +237,7 @@ export default function LoginPage() {
             disabled={isPasskeyLoading || isLoading}
             className="w-full"
           >
-            {isPasskeyLoading ? "Authenticating..." : "Sign in with Passkey"}
+            {isPasskeyLoading ? t("login.passkey_authenticating") : t("login.passkey")}
           </Button>
           {emailInputted && <MagicLinkLogin email={input.email} />}
           {!hideSocials && <SocialLoginButtons />}
