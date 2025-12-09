@@ -306,7 +306,8 @@
     "error_delete": "Failed to delete passkey",
     "error_not_supported": "Your browser doesn't support Passkey",
     "error_cancelled": "User cancelled or timeout",
-    "error_exists": "Passkey already exists"
+    "error_exists": "Passkey already exists",
+    "enter_name": "Enter a name for this passkey"
   },
   "widget": {
     "tip": "Extending VoceChat by embedding the vocechat widget SDK!",

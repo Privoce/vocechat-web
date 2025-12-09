@@ -9,12 +9,17 @@ import {
 } from "@/app/services/auth";
 import { startPasskeyRegistration, isWebAuthnSupported } from "@/passkey";
 import Button from "@/components/styled/Button";
+import Input from "@/components/styled/Input";
+import Modal from "@/components/Modal";
+import StyledModal from "@/components/styled/Modal";
 import { useAppSelector } from "@/app/store";
 
 export default function PasskeyManagement() {
   const { t } = useTranslation("setting");
   const { t: ct } = useTranslation();
   const [isRegistering, setIsRegistering] = useState(false);
+  const [passkeyName, setPasskeyName] = useState("");
+  const [showModal, setShowModal] = useState(false);
   
   const { data: passkeys, refetch } = useGetUserPasskeysQuery();
   const [registerStart] = usePasskeyRegisterStartMutation();
@@ -33,7 +38,13 @@ export default function PasskeyManagement() {
       return;
     }
 
+    if (!passkeyName.trim()) {
+      toast.error(t("passkey.enter_name") || "Please enter a name for this passkey");
+      return;
+    }
+
     setIsRegistering(true);
+    setShowModal(false);
     try {
       const { challenge_id, options } = await registerStart({ name: user.name }).unwrap();
       
@@ -42,10 +53,11 @@ export default function PasskeyManagement() {
       await registerFinish({ 
         challenge_id, 
         attestation: credential,
-        name: user.name 
+        name: passkeyName.trim()
       }).unwrap();
       
       toast.success(t("passkey.success_add"));
+      setPasskeyName("");
       refetch();
     } catch (error: any) {
       if (error.name === 'NotAllowedError') {
@@ -85,7 +97,7 @@ export default function PasskeyManagement() {
             {t("passkey.desc")}
           </p>
         </div>
-        <Button onClick={handleAddPasskey} disabled={isRegistering}>
+        <Button onClick={() => setShowModal(true)} disabled={isRegistering}>
           {isRegistering ? t("passkey.adding") : t("passkey.add")}
         </Button>
       </div>
@@ -99,7 +111,7 @@ export default function PasskeyManagement() {
             >
               <div className="flex flex-col">
                 <span className="text-sm font-medium text-gray-800 dark:text-white">
-                  Passkey #{passkey.id}
+                  {passkey.name}
                 </span>
                 <span className="text-xs text-gray-500 dark:text-gray-400">
                   {t("passkey.created")}: {new Date(passkey.created_at).toLocaleDateString()}
@@ -122,6 +134,32 @@ export default function PasskeyManagement() {
           </div>
         )}
       </div>
+
+      {showModal && (
+        <Modal id="modal-modal">
+          <StyledModal
+            title={t("passkey.add")}
+            description={t("passkey.enter_name") || "Enter a name for this passkey"}
+            buttons={
+              <>
+                <Button className="cancel" onClick={() => { setShowModal(false); setPasskeyName(""); }}>
+                  {ct("action.cancel")}
+                </Button>
+                <Button onClick={handleAddPasskey} disabled={isRegistering}>
+                  {isRegistering ? t("passkey.adding") : ct("action.done")}
+                </Button>
+              </>
+            }
+          >
+            <Input
+              autoFocus
+              placeholder={t("passkey.enter_name") || "Passkey name"}
+              value={passkeyName}
+              onChange={(e) => setPasskeyName(e.target.value)}
+            />
+          </StyledModal>
+        </Modal>
+      )}
     </div>
   );
 }

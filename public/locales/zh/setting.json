@@ -306,7 +306,8 @@
     "error_delete": "通行密钥删除失败",
     "error_not_supported": "您的浏览器不支持通行密钥",
     "error_cancelled": "用户取消或超时",
-    "error_exists": "通行密钥已存在"
+    "error_exists": "通行密钥已存在",
+    "enter_name": "请输入通行密钥名称"
   },
   "widget": {
     "tip": "将挂件 SDK 内嵌到网页，实现 VoceChat 扩展！",
