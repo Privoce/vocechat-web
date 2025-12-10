@@ -272,6 +272,13 @@
     "title": "Vocespace",
     "desc": "使用私有部署的Vocespace",
     "sub_desc": "每个Vocespace账户将享受免费无限制通话时长、5人并发及4K分辨率服务。无需创建账户。按照以下说明正确配置您的Vocespace。",
+    "prerequisite": [
+      "Docker环境",
+      "端口 80, 443, 7880, 7881, 3008, 3000 已开放",
+      "域名已注册（针对中国大陆用户，如阿里云和腾讯云）",
+      "企业定制或需要帮助，请联系 han@privoce.com 或添加微信：Privoce"
+    ],
+    "local": "本地访问http://your.ip:3008",
     "enable": "启用",
     "how_to": "如何设置Vocespace？"
   },

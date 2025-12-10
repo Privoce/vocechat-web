@@ -16,6 +16,8 @@ type Props = {
   context?: ChatContext;
   id: number;
 };
+// TODO: 通过API获取是否Vocespace已经部署完成，如果部署成功则点击事件需要向当前频道发送一个发言请求
+// 包含Vocespace会议室URL即可
 const isIframe = isInIframe();
 const VoiceChat = ({ id, context = "channel" }: Props) => {
   const { joinVoice, joined, joining = false, joinedAtThisContext } = useVoice({ id, context });
@@ -31,7 +33,7 @@ const VoiceChat = ({ id, context = "channel" }: Props) => {
   const toggleDashboard = () => {
     const data = {
       id,
-      aside: visibleAside == "voice" ? null : ("voice" as const)
+      aside: visibleAside == "voice" ? null : ("voice" as const),
     };
     dispatch(context == "channel" ? updateChannelVisibleAside(data) : updateDMVisibleAside(data));
   };
@@ -43,7 +45,7 @@ const VoiceChat = ({ id, context = "channel" }: Props) => {
     joinVoice();
     const data = {
       id,
-      aside: "voice" as const
+      aside: "voice" as const,
     };
     dispatch(context == "channel" ? updateChannelVisibleAside(data) : updateDMVisibleAside(data));
     // 实时显示calling box

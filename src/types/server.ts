@@ -47,6 +47,7 @@ export interface VocespaceConfig {
   password: string;
   url: string;
   license: string;
+  state: "in_progress" | "success" | "failed" | "undeployed" | "";
 }
 
 export interface AgoraVoicingListResponse {

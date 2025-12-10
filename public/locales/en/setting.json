@@ -270,6 +270,12 @@
   },
   "vocespace": {
     "desc": "For video and audio calls, we use Vocespace",
+    "prerequisite": [
+      "Docker environment",
+      "Ports 80,  443, 7880, 7881, 3008, 3000 are open",
+      "The domain has been registered (for users in mainland China, such as Alibaba Cloud and Tencent Cloud)",
+      "For enterprises customization or need help, please contact han@privoce.com or add WeChat: Privoce"
+    ],
     "sub_desc": "Each Vocespace account will enjoy no limit minutes, 5 person concurrent and 4k resolution for free. No account creation required. Follow the instruction below to configure your Vocespace correctly.",
     "enable": "Enable",
     "how_to": "How to setup Vocespace?"

@@ -148,5 +148,6 @@ export default function useConfig(config: keyof ConfigMap = "smtp") {
     values,
     setValues,
     toggleEnable,
+    refetch,
   };
 }
