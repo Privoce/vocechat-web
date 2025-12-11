@@ -74,7 +74,7 @@ docker run -d --restart=always \
   <img src="https://contrib.rocks/image?repo=privoce/vocechat-web" />
 </a>
 
-讨论合作: han@privoce.com or https://bridger.chat/han
+讨论合作: han@privoce.com
   
 Telegram group: https://t.me/opencfdchannel VoceChat: https://voce.chat
   
