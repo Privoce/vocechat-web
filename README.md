@@ -72,7 +72,7 @@ For more server hosting instructions, see our documentation: https://doc.voce.ch
   <img src="https://contrib.rocks/image?repo=privoce/vocechat-web" />
 </a>
 
-Discuss collaboration: han@privoce.com or https://bridger.chat/han
+Discuss collaboration: han@privoce.com
   
 Telegram group: https://t.me/opencfdchannel VoceChat: https://voce.chat
   
