@@ -18,7 +18,24 @@
     "license": "ライセンス",
     "about": "このアプリについて",
     "api_doc": "API ドキュメント",
-    "version": "Version"
+    "version": "Version",
+    "video": "ビデオ"
+  },
+  "vocespace": {
+    "title": "Vocespace",
+    "desc": "Vocespace をプライベートに導入（自動導入）",
+    "sub_desc": "Vocespace アカウントごとに、通話時間無制限、同時接続ユーザー5名、4K解像度のサービスを無料でご利用いただけます。アカウント作成は不要です。Vocespace を適切に設定するには、以下の手順に従ってください。",
+    "prerequisite": [
+      "前提条件",
+      "Docker 環境",
+      "ポート 80、443、7880、7881、3008、3000 が開いている",
+      "ローカル IP アドレスに解決されるドメイン名（Alibaba Cloud や Tencent Cloud など、中国本土のユーザーの場合は ICP 申請が必要です）",
+      "エンタープライズカスタマイズやサポートについては、han@privoce.com までお問い合わせいただくか、WeChat: Privoce を追加してください"
+    ],
+
+    "domain_desc": "カスタムドメイン名はローカル IP アドレスに解決される必要があります（Alibaba Cloud や Tencent Cloud など、中国本土のユーザーの場合は ICP 申請が必要です）",
+    "enable": "有効にする",
+    "how_to": "有効にした後、ドメイン名を設定して保存してください。残りの手順は自動的に完了します。"
   },
   "channel": {
     "leave": "チャンネルを離れる",

@@ -22,7 +22,23 @@
     "license": "Licence",
     "about": "À Propos",
     "api_doc": "Documentation API",
-    "version": "Version"
+    "version": "Version",
+    "video": "Vidéo"
+  },
+  "vocespace": {
+    "title": "Vocespace",
+    "desc": "Vocespace déployé en mode privé (déploiement automatique)",
+    "sub_desc": "Chaque compte Vocespace bénéficie d'appels illimités gratuits, de 5 utilisateurs simultanés et d'une résolution 4K. Aucune création de compte n'est requise. Suivez les instructions ci-dessous pour configurer correctement votre Vocespace.",
+    "prerequisite": [
+      "Prérequis",
+      "Environnement Docker",
+      "Les ports 80, 443, 7880, 7881, 3008 et 3000 sont ouverts",
+      "Nom de domaine pointant vers l'adresse IP locale (pour les utilisateurs de Chine continentale, tels qu'Alibaba Cloud et Tencent Cloud, un enregistrement ICP est requis)",
+      "Pour toute personnalisation ou assistance en entreprise, veuillez contacter han@privoce.com ou ajouter Privoce sur WeChat"
+    ],
+    "domain_desc": "Les noms de domaine personnalisés doivent pointer vers l'adresse IP locale (pour les utilisateurs de Chine continentale, tels qu'Alibaba Cloud et Tencent Cloud, un enregistrement ICP est requis)",
+    "enable": "Activer",
+    "how_to": "Après l'activation, veuillez définir le nom de domaine et enregistrer. Les étapes suivantes seront effectuées automatiquement."
   },
   "channel": {
     "leave": "Quitter le Canal",

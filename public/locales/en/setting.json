@@ -23,7 +23,8 @@
     "license": "License",
     "about": "About",
     "api_doc": "API Documentation",
-    "version": "Version"
+    "version": "Version",
+    "video": "Video"
   },
   "channel": {
     "leave": "Leave Channel",
@@ -269,16 +270,19 @@
     "how_to": "How to setup Agora?"
   },
   "vocespace": {
-    "desc": "For video and audio calls, we use Vocespace",
+    "title": "Vocespace",
+    "desc": "Use self-hosted Vocespace (Automated Deployment)",
     "prerequisite": [
+      "Prerequisites",
       "Docker environment",
       "Ports 80,  443, 7880, 7881, 3008, 3000 are open",
-      "The domain has been registered (for users in mainland China, such as Alibaba Cloud and Tencent Cloud)",
+      "The domain has been registered",
       "For enterprises customization or need help, please contact han@privoce.com or add WeChat: Privoce"
     ],
     "sub_desc": "Each Vocespace account will enjoy no limit minutes, 5 person concurrent and 4k resolution for free. No account creation required. Follow the instruction below to configure your Vocespace correctly.",
+    "domain_desc": "This domain needs to have a DNS A record pointing to the current server IP you are hosting VoceChat.",
     "enable": "Enable",
-    "how_to": "How to setup Vocespace?"
+    "how_to": "After enabling, please set a custom domain then click save, and the system will automatically enable VoceSpace."
   },
   "third_app": {
     "key": "API Secure Key",

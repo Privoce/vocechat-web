@@ -23,7 +23,23 @@
     "api_doc": "API Documentation",
     "version": "Sürüm",
     "faq": "SSS",
-    "feedback": "Geri Bildirim"
+    "feedback": "Geri Bildirim",
+    "video": "Video"
+  },
+  "vocespace": {
+    "title": "Vocespace",
+    "desc": "Vocespace özel olarak dağıtıldı (otomatik dağıtım)",
+    "sub_desc": "Her Vocespace hesabı ücretsiz sınırsız arama süresi, 5 eş zamanlı kullanıcı ve 4K çözünürlük hizmetinden yararlanacaktır. Hesap oluşturma gerekmez. Vocespace'inizi doğru şekilde yapılandırmak için aşağıdaki talimatları izleyin.",
+    "prerequisite": [
+      "Önkoşullar",
+      "Docker ortamı",
+      "80, 443, 7880, 7881, 3008, 3000 portları açık olmalı",
+      "Yerel IP adresine çözümlenen alan adı (Alibaba Cloud ve Tencent Cloud gibi Çin anakarasındaki kullanıcılar için ICP dosyalama gereklidir)",
+      "Kurumsal özelleştirme veya yardım için lütfen han@privoce.com ile iletişime geçin veya WeChat: Privoce ekleyin"
+    ],
+    "domain_desc": "Özel alan adları yerel IP adresine çözümlenmelidir (Alibaba Cloud ve Tencent Cloud gibi Çin anakarasındaki kullanıcılar için ICP dosyalama gereklidir)",
+    "enable": "Etkinleştir",
+    "how_to": "Etkinleştirdikten sonra lütfen alan adını ayarlayın ve kaydedin. Kalan adımlar otomatik olarak tamamlanacaktır."
   },
   "channel": {
     "leave": "Kanalı Terket",

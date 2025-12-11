@@ -62,29 +62,42 @@ export function ConfigVocespace() {
   return (
     <div className="setting-container">
       <ConfigTip title={t("desc")} desc={`${t("sub_desc")}`} />
-      <ol
-        className="list-disc list-inside text-sm text-gray-400 mb-4"
-        style={{ fontSize: 12, margin: 0 }}
-      >
-        <li>{t("prerequisite.0")}</li>
-        <li>{t("prerequisite.1")}</li>
-        <li>{t("prerequisite.2")}</li>
-        <li>{t("prerequisite.3")}</li>
-      </ol>
+
       <div className="inputs">
         <div className="input row">
-          <label className="flex items-center gap-2" style={{ color: "#fff" }}>
-            Enable
-            <HowToTip link="https://doc.vocespace.com/zh/doc/guide/overview" text={t("how_to")} />
+          <label style={{ color: "#fff", display: "flex", flexWrap: "wrap" }}>
+            <div style={{ display: "inline", width: "100%" }}>Enable</div>
+            {/* <HowToTip link="https://doc.vocespace.com/zh/doc/guide/overview" text={t("how_to")} /> */}
+            <div
+              className="text-gray-400"
+              style={{
+                fontSize: 12,
+              }}
+            >
+              {t("how_to")}
+            </div>
           </label>
+
           <Toggle onClick={toggleEnable} checked={enabled}></Toggle>
         </div>
+        <div>
+          <div className="list-disc list-inside text-sm" style={{ color: "#fff", fontWeight: 700 }}>
+            {t("prerequisite.0")}
+          </div>
+          <ol
+            className="list-disc list-inside text-sm text-gray-400 mb-4"
+            style={{ fontSize: 12, margin: 0 }}
+          >
+            <li>{t("prerequisite.1")}</li>
+            <li>{t("prerequisite.2")}</li>
+            <li>{t("prerequisite.3")}</li>
+          </ol>
+        </div>
+
         <div className="input">
           <div className="flex flex-col text-sm">
-            <Label htmlFor="url">Vocespace Domain</Label>
-            <p className="text-gray-400 text-xs">
-              Please add a DNS analysis of this domain to the current server IP
-            </p>
+            <Label htmlFor="url">Custom domain for VoceSpace</Label>
+            <p className="text-gray-400 text-xs">{t("domain_desc")}</p>
           </div>
 
           <Input
@@ -93,7 +106,7 @@ export function ConfigVocespace() {
             onChange={handleChange}
             value={url}
             name="url"
-            placeholder="your.domain.com or 127.0.0.1:7880"
+            placeholder="Your Domain Pointing to the Current Server IP"
           />
         </div>
         <div className="input">
@@ -107,7 +120,8 @@ export function ConfigVocespace() {
             placeholder="vocespace"
           />
         </div>
-
+      </div>
+      <div>
         {state ? (
           <div style={{ fontSize: 12 }}>
             {state === "success" && (
@@ -138,8 +152,13 @@ export function ConfigVocespace() {
         ) : (
           <StateDot color="gray" className="text-gray-400" word="Vocespace is not deployed yet." />
         )}
+        <div
+          className="list-disc list-inside text-sm text-gray-400 mb-4"
+          style={{ fontSize: 12, margin: 0, paddingTop: 8 }}
+        >
+          {t("prerequisite.4")}
+        </div>
       </div>
-
       {changed && <SaveTip saveHandler={handleUpdate} resetHandler={reset} />}
       {/* <button onClick={handleUpdate} className="btn">update</button> */}
     </div>
