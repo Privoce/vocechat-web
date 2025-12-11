@@ -19,6 +19,7 @@ import { shallowEqual } from "react-redux";
 import SelectLanguage from "../../components/Language";
 import Downloads from "../../components/Downloads";
 import { startPasskeyLogin, isWebAuthnSupported } from "@/passkey";
+import ServerVersionChecker from "@/components/ServerVersionChecker";
 
 const defaultInput = {
   email: "",
@@ -233,13 +234,15 @@ export default function LoginPage() {
         <Divider content="OR" />
         <div className="socials flex flex-col gap-3">
           {passkey && (
-            <Button 
-              onClick={handlePasskeyLogin} 
-              disabled={isPasskeyLoading || isLoading}
-              className="w-full"
-            >
-              {isPasskeyLoading ? t("login.passkey_authenticating") : t("login.passkey")}
-            </Button>
+            <ServerVersionChecker empty version="0.5.5">
+              <Button 
+                onClick={handlePasskeyLogin} 
+                disabled={isPasskeyLoading || isLoading}
+                className="w-full"
+              >
+                {isPasskeyLoading ? t("login.passkey_authenticating") : t("login.passkey")}
+              </Button>
+            </ServerVersionChecker>
           )}
           {emailInputted && <MagicLinkLogin email={input.email} />}
           {!hideSocials && <SocialLoginButtons />}

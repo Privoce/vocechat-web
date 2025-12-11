@@ -12,6 +12,7 @@ import RemoveAccountConfirmModal from "./RemoveAccountConfirmModal";
 import UpdatePasswordModal from "./UpdatePasswordModal";
 import PasskeyManagement from "./PasskeyManagement";
 import { shallowEqual } from "react-redux";
+import ServerVersionChecker from "@/components/ServerVersionChecker";
 
 type EditField = "name" | "email" | "";
 export default function MyAccount() {
@@ -100,9 +101,11 @@ export default function MyAccount() {
         </div>
         
         {loginConfig?.passkey && (
-          <div className="w-full md:w-[512px] md:p-6 md:bg-gray-100 md:dark:bg-gray-800 md:rounded-2xl">
-            <PasskeyManagement />
-          </div>
+          <ServerVersionChecker empty version="0.5.5">
+            <div className="w-full md:w-[512px] md:p-6 md:bg-gray-100 md:dark:bg-gray-800 md:rounded-2xl">
+              <PasskeyManagement />
+            </div>
+          </ServerVersionChecker>
         )}
 
         {/* uid 1 是初始账户，不能删 */}

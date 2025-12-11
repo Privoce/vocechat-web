@@ -12,6 +12,7 @@ import useGithubAuthConfig from "@/hooks/useGithubAuthConfig";
 import useGoogleAuthConfig from "@/hooks/useGoogleAuthConfig";
 import IssuerList from "./IssuerList";
 import Tooltip from "./Tooltip";
+import ServerVersionChecker from "@/components/ServerVersionChecker";
 
 export default function Logins() {
   const { t } = useTranslation("setting", { keyPrefix: "login" });
@@ -170,20 +171,22 @@ export default function Logins() {
             ></Toggle>
           </div>
         </div>
-        <div className="input">
-          <div className="row">
-            <div className="title">
-              <div className="txt">
-                <Label>{t("passkey")}</Label>
+        <ServerVersionChecker empty version="0.5.5">
+          <div className="input">
+            <div className="row">
+              <div className="title">
+                <div className="txt">
+                  <Label>{t("passkey")}</Label>
+                </div>
+                <span className="desc dark:!text-gray-400">{t("passkey_desc")}</span>
               </div>
-              <span className="desc dark:!text-gray-400">{t("passkey_desc")}</span>
+              <Toggle
+                onClick={handleToggle.bind(null, { passkey: !passkey })}
+                checked={passkey}
+              ></Toggle>
             </div>
-            <Toggle
-              onClick={handleToggle.bind(null, { passkey: !passkey })}
-              checked={passkey}
-            ></Toggle>
           </div>
-        </div>
+        </ServerVersionChecker>
         <div className="input">
           <div className="row">
             <div className="title">
