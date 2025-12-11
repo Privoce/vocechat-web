@@ -11,6 +11,7 @@ import Tooltip from "@/components/Tooltip";
 import { useVoice } from "@/components/Voice";
 import { isInIframe } from "@/utils";
 import IconHeadphone from "@/assets/icons/headphone.svg";
+// import useSendMessage from "@/hooks/useSendMessage";
 
 type Props = {
   context?: ChatContext;
@@ -61,6 +62,21 @@ const VoiceChat = ({ id, context = "channel" }: Props) => {
   const visible = visibleAside == "voice";
   const memberCount = voiceList.find((v) => v.context == context && v.id == id)?.memberCount ?? 0;
   const badgeClass = `absolute -top-2 -right-2 w-4 h-4 rounded-full bg-primary-400 text-white `;
+  // 向当前频道中发送Vocespace链接
+  // const { sendMessage } = useSendMessage({ context, from: loginUid, to: id });
+  // const replying_mid = useAppSelector(
+  //   (store) => store.message.replying[`${context}_${id}`],
+  //   shallowEqual
+  // );
+  // const handleSendVocespaceRequest = async () => {
+  //   await sendMessage({
+  //     reply_mid: replying_mid,
+  //     type: "text",
+  //     content: "Join Vocespace Meeting: https://vocespace.example.com/meeting/12345",
+  //     from_uid: loginUid,
+  //   });
+  // };
+
   return (
     <Tooltip disabled={visible} tip={t("voice")} placement="left">
       <li className={`relative group`}>
