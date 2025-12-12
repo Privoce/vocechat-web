@@ -53,6 +53,11 @@ export type ThirdPartyCredential = {
   key: string;
   type: "thirdparty";
 };
+export type PasskeyCredential = {
+  challenge_id: string;
+  credential: PublicKeyCredentialWithResponse;
+  type: "passkey";
+};
 export type LoginCredential =
   | PasswordCredential
   | OIDCCredential
@@ -60,7 +65,8 @@ export type LoginCredential =
   | GithubCredential
   | GoogleCredential
   | ThirdPartyCredential
-  | MagicLinkCredential;
+  | MagicLinkCredential
+  | PasskeyCredential;
 
 export type CredentialResponse = {
   password: boolean;
@@ -72,4 +78,58 @@ export interface OIDCConfig {
   enable: boolean;
   favicon: string;
   domain: string;
+}
+
+// Passkey types
+export interface PublicKeyCredentialWithResponse {
+  id: string;
+  rawId: string;
+  response: {
+    clientDataJSON: string;
+    attestationObject?: string;
+    authenticatorData?: string;
+    signature?: string;
+    userHandle?: string | null;
+  };
+  type: string;
+}
+
+export interface PasskeyRegisterStartRequest {
+  name: string;
+}
+
+export interface PasskeyRegisterStartResponse {
+  challenge_id: string;
+  options: {
+    publicKey: PublicKeyCredentialCreationOptions;
+  };
+}
+
+export interface PasskeyRegisterFinishRequest {
+  challenge_id: string;
+  credential: PublicKeyCredentialWithResponse;
+  name: string;
+}
+
+export interface PasskeyLoginStartRequest {
+}
+
+export interface PasskeyLoginStartResponse {
+  challenge_id: string;
+  options: {
+    publicKey: PublicKeyCredentialRequestOptions;
+  };
+}
+
+export interface PasskeyLoginFinishRequest {
+  challenge_id: string;
+  authentication: PublicKeyCredentialWithResponse;
+}
+
+export interface UserPasskey {
+  id: number;
+  credential_id: string;
+  name: string;
+  created_at: string;
+  last_used_at?: string;
 }

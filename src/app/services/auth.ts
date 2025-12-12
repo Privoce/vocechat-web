@@ -212,6 +212,87 @@ export const authApi = createApi({
         url: `/user/delete`,
         method: "DELETE"
       })
+    }),
+    // Passkey endpoints
+    passkeyRegisterStart: builder.mutation<
+      import("@/types/auth").PasskeyRegisterStartResponse,
+      import("@/types/auth").PasskeyRegisterStartRequest
+    >({
+      query: (data) => ({
+        url: "token/passkey/register/start",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: data
+      })
+    }),
+    passkeyRegisterFinish: builder.mutation<
+      { success: boolean; message: string },
+      import("@/types/auth").PasskeyRegisterFinishRequest
+    >({
+      query: (data) => ({
+        url: "token/passkey/register/finish",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: data
+      })
+    }),
+    passkeyLoginStart: builder.mutation<
+      import("@/types/auth").PasskeyLoginStartResponse,
+      import("@/types/auth").PasskeyLoginStartRequest
+    >({
+      query: (data) => ({
+        url: "token/passkey/auth/start",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: data
+      })
+    }),
+    passkeyLoginFinish: builder.mutation<AuthData, import("@/types/auth").PasskeyLoginFinishRequest>({
+      query: (data) => ({
+        url: "token/passkey/auth/finish",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: data
+      }),
+      transformResponse: (data: AuthData) => {
+        const { avatar_updated_at } = data.user;
+        return {
+          ...data,
+          avatar:
+            avatar_updated_at == 0
+              ? ""
+              : `${BASE_URL}/resource/avatar?uid=${data.user.uid}&t=${avatar_updated_at}`
+        };
+      },
+      async onQueryStarted(params, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          if (data) {
+            dispatch(setAuthData(data));
+            dispatch(setReady(false));
+            dispatch(updateSSEStatus("disconnected"));
+          }
+        } catch {
+          console.log("passkey login error");
+        }
+      }
+    }),
+    getUserPasskeys: builder.query<import("@/types/auth").UserPasskey[], void>({
+      query: () => ({ url: "token/passkey/list" })
+    }),
+    deletePasskey: builder.mutation<void, string>({
+      query: (credentialId) => ({
+        url: `token/passkey/${encodeURIComponent(credentialId)}`,
+        method: "DELETE"
+      })
     })
   })
 });
@@ -234,5 +315,12 @@ export const {
   useCheckMagicTokenValidMutation,
   useUpdatePasswordMutation,
   useRegisterMutation,
-  useLazyDeleteCurrentAccountQuery
+  useLazyDeleteCurrentAccountQuery,
+  usePasskeyRegisterStartMutation,
+  usePasskeyRegisterFinishMutation,
+  usePasskeyLoginStartMutation,
+  usePasskeyLoginFinishMutation,
+  useGetUserPasskeysQuery,
+  useLazyGetUserPasskeysQuery,
+  useDeletePasskeyMutation
 } = authApi;

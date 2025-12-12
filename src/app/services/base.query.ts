@@ -29,6 +29,8 @@ const whiteList = [
   "sendMessageByBot",
   "getAgoraVoicingList",
   "preCheckFileFromUrl",
+  "passkeyLoginStart",
+  "passkeyLoginFinish",
 ];
 const whiteList401 = ["getAgoraVoicingList", "getAgoraChannels"];
 const errorWhiteList = [
@@ -139,6 +141,11 @@ const baseQueryWithTokenCheck = async (args: any, api: any, extraOptions: any) =
       case 413:
         {
           toast.error("File size too large");
+        }
+        break;
+      case 415:
+        {
+          toast.error("Unsupported Media Type");
         }
         break;
       case 451:
