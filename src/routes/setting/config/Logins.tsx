@@ -12,6 +12,7 @@ import useGithubAuthConfig from "@/hooks/useGithubAuthConfig";
 import useGoogleAuthConfig from "@/hooks/useGoogleAuthConfig";
 import IssuerList from "./IssuerList";
 import Tooltip from "./Tooltip";
+import ServerVersionChecker from "@/components/ServerVersionChecker";
 
 export default function Logins() {
   const { t } = useTranslation("setting", { keyPrefix: "login" });
@@ -59,7 +60,7 @@ export default function Logins() {
     }
   };
   const handleToggle = (
-    val: Partial<Pick<LoginConfig, "github" | "google" | "password" | "magic_link" | "metamask">>
+    val: Partial<Pick<LoginConfig, "github" | "google" | "password" | "magic_link" | "metamask" | "passkey">>
   ) => {
     setValues((prev) => {
       if (!prev) return prev;
@@ -67,7 +68,7 @@ export default function Logins() {
     });
   };
   if (!values) return null;
-  const { google, magic_link, github, metamask, password, oidc = [] } = values as LoginConfig;
+  const { google, magic_link, github, metamask, password, passkey, oidc = [] } = values as LoginConfig;
   const valuesChanged = clientIdChanged || changed || githubChanged;
 
   return (
@@ -170,6 +171,22 @@ export default function Logins() {
             ></Toggle>
           </div>
         </div>
+        <ServerVersionChecker empty version="0.5.5">
+          <div className="input">
+            <div className="row">
+              <div className="title">
+                <div className="txt">
+                  <Label>{t("passkey")}</Label>
+                </div>
+                <span className="desc dark:!text-gray-400">{t("passkey_desc")}</span>
+              </div>
+              <Toggle
+                onClick={handleToggle.bind(null, { passkey: !passkey })}
+                checked={passkey}
+              ></Toggle>
+            </div>
+          </div>
+        </ServerVersionChecker>
         <div className="input">
           <div className="row">
             <div className="title">

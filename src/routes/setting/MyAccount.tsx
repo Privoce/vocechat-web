@@ -3,13 +3,16 @@ import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 
 import { useUpdateAvatarMutation } from "@/app/services/user";
+import { useGetLoginConfigQuery } from "@/app/services/server";
 import { useAppSelector } from "@/app/store";
 import AvatarUploader from "@/components/AvatarUploader";
 import Button from "@/components/styled/Button";
 import ProfileBasicEditModal from "./ProfileBasicEditModal";
 import RemoveAccountConfirmModal from "./RemoveAccountConfirmModal";
 import UpdatePasswordModal from "./UpdatePasswordModal";
+import PasskeyManagement from "./PasskeyManagement";
 import { shallowEqual } from "react-redux";
+import ServerVersionChecker from "@/components/ServerVersionChecker";
 
 type EditField = "name" | "email" | "";
 export default function MyAccount() {
@@ -19,6 +22,7 @@ export default function MyAccount() {
   const [editModal, setEditModal] = useState<EditField>("");
   const [removeConfirmVisible, setRemoveConfirmVisible] = useState(false);
   const [uploadAvatar, { isSuccess: uploadSuccess }] = useUpdateAvatarMutation();
+  const { data: loginConfig } = useGetLoginConfigQuery();
   const EditModalInfo = {
     name: {
       label: t("username"),
@@ -95,6 +99,15 @@ export default function MyAccount() {
             <Button onClick={togglePasswordModal}>{ct("action.edit")}</Button>
           </div>
         </div>
+        
+        {loginConfig?.passkey && (
+          <ServerVersionChecker empty version="0.5.5">
+            <div className="w-full md:w-[512px] md:p-6 md:bg-gray-100 md:dark:bg-gray-800 md:rounded-2xl">
+              <PasskeyManagement />
+            </div>
+          </ServerVersionChecker>
+        )}
+
         {/* uid 1 是初始账户，不能删 */}
         {uid != 1 && (
           <Button className="danger" onClick={toggleRemoveAccountModalVisible}>

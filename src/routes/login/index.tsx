@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 
 import BASE_URL from "@/app/config";
-import { useLoginMutation } from "@/app/services/auth";
+import { useLoginMutation, usePasskeyLoginStartMutation, usePasskeyLoginFinishMutation } from "@/app/services/auth";
 import { useGetLoginConfigQuery, useGetSMTPStatusQuery } from "@/app/services/server";
 import { useAppSelector } from "@/app/store";
 import Divider from "@/components/Divider";
@@ -18,6 +18,8 @@ import SocialLoginButtons from "./SocialLoginButtons";
 import { shallowEqual } from "react-redux";
 import SelectLanguage from "../../components/Language";
 import Downloads from "../../components/Downloads";
+import { startPasskeyLogin, isWebAuthnSupported } from "@/passkey";
+import ServerVersionChecker from "@/components/ServerVersionChecker";
 
 const defaultInput = {
   email: "",
@@ -32,6 +34,9 @@ export default function LoginPage() {
   const { data: loginConfig, isSuccess: loginConfigSuccess } = useGetLoginConfigQuery();
   const [emailInputted, setEmailInputted] = useState(false);
   const [input, setInput] = useState(defaultInput);
+  const [passkeyLoginStart] = usePasskeyLoginStartMutation();
+  const [passkeyLoginFinish] = usePasskeyLoginFinishMutation();
+  const [isPasskeyLoading, setIsPasskeyLoading] = useState(false);
 
   useEffect(() => {
     const query = new URLSearchParams(location.search);
@@ -122,10 +127,40 @@ export default function LoginPage() {
   const handleBack = () => {
     setEmailInputted(false);
   };
+
+  const handlePasskeyLogin = async () => {
+    if (!isWebAuthnSupported()) {
+      toast.error(t("login.passkey_error_not_supported"));
+      return;
+    }
+
+    setIsPasskeyLoading(true);
+    try {
+      const { challenge_id, options } = await passkeyLoginStart({}).unwrap();
+      
+      const credential = await startPasskeyLogin(options);
+      
+      await passkeyLoginFinish({ challenge_id, authentication: credential }).unwrap();
+      
+      toast.success(ct("tip.login"));
+    } catch (error: any) {
+      if (error.name === 'NotAllowedError') {
+        toast.error(t("login.passkey_error_cancelled"));
+      } else if (error.status === 404) {
+        toast.error(t("login.passkey_error_no_passkey"));
+      } else {
+        toast.error(t("login.passkey_error_failed"));
+      }
+      console.error("Passkey login error:", error);
+    } finally {
+      setIsPasskeyLoading(false);
+    }
+  };
+
   const { email, password } = input;
   if (!loginConfigSuccess) return null;
 
-  const { magic_link, who_can_sign_up: whoCanSignUp } = loginConfig;
+  const { magic_link, who_can_sign_up: whoCanSignUp, passkey } = loginConfig;
 
   const enableMagicLink = enableSMTP && magic_link;
   const hideSocials = (enableMagicLink && emailInputted) || whoCanSignUp == "InvitationOnly";
@@ -198,6 +233,17 @@ export default function LoginPage() {
         </form>
         <Divider content="OR" />
         <div className="socials flex flex-col gap-3">
+          {passkey && (
+            <ServerVersionChecker empty version="0.5.5">
+              <Button 
+                onClick={handlePasskeyLogin} 
+                disabled={isPasskeyLoading || isLoading}
+                className="w-full"
+              >
+                {isPasskeyLoading ? t("login.passkey_authenticating") : t("login.passkey")}
+              </Button>
+            </ServerVersionChecker>
+          )}
           {emailInputted && <MagicLinkLogin email={input.email} />}
           {!hideSocials && <SocialLoginButtons />}
         </div>
