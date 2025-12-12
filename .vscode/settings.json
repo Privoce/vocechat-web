@@ -69,5 +69,6 @@
   "[svg]": {
     "editor.defaultFormatter": "jock.svg"
   },
-  "i18n-ally.localesPaths": ["public/locales"]
+  "i18n-ally.localesPaths": ["public/locales"],
+  "i18n-ally.keystyle": "nested"
 }

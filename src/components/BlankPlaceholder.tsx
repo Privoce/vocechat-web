@@ -87,7 +87,7 @@ const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
         </div>
         <div
           style={{
-            width: "632px",
+            width: "432px",
             display: "flex",
             flexWrap: "wrap",
             gap: "16px",
@@ -135,7 +135,7 @@ const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
             </svg>
             <div className={classes.boxTip}>{t("vocespace")}</div>
           </NavLink>
-          {!server.upgraded && (
+          {/* {!server.upgraded && (
             <>
               <a
                 href={"https://voce.chat#download"}
@@ -156,7 +156,25 @@ const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
                 <div className={classes.boxTip}>{t("help")}</div>
               </a>
             </>
-          )}
+          )} */}
+          {/* <a
+            href={"https://voce.chat#download"}
+            target={"_blank"}
+            rel="noreferrer"
+            className={classes.box}
+          >
+            <IconDownload className={classes.boxIcon} />
+            <div className={classes.boxTip}>{t("download")}</div>
+          </a> */}
+          <a
+            href={"https://doc.voce.chat"}
+            target={"_blank"}
+            rel="noreferrer"
+            className={classes.box}
+          >
+            <IconAsk className={classes.boxIcon} />
+            <div className={classes.boxTip}>{t("help")}</div>
+          </a>
         </div>
       </div>
       {createChannelVisible && (
