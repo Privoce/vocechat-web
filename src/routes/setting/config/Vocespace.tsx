@@ -28,6 +28,11 @@ export function ConfigVocespace() {
 
   const handleUpdate = async () => {
     const _values = values as VocespaceConfig;
+    if (_values.url.trim() === "" && _values.enabled) {
+      alert("Custom domain is required when enabling Vocespace.");
+      return;
+    }
+
     // 后端快速返回结果，只要检测环境可以执行就立即返回成功，不然会一直pending等待，导致前端超时
     const { error } = await updateConfig(_values);
     if (error) {
@@ -62,11 +67,10 @@ export function ConfigVocespace() {
   return (
     <div className="setting-container">
       <ConfigTip title={t("desc")} desc={`${t("sub_desc")}`} />
-
       <div className="inputs">
         <div className="input row">
-          <label style={{ color: "#fff", display: "flex", flexWrap: "wrap" }}>
-            <div style={{ display: "inline", width: "100%" }}>Enable</div>
+          <Label style={{ color: "#fff", display: "flex", flexWrap: "wrap" }}>
+            <Label style={{ display: "inline", width: "100%" }}>Enable</Label>
             {/* <HowToTip link="https://doc.vocespace.com/zh/doc/guide/overview" text={t("how_to")} /> */}
             <div
               className="text-gray-400"
@@ -76,14 +80,14 @@ export function ConfigVocespace() {
             >
               {t("how_to")}
             </div>
-          </label>
+          </Label>
 
           <Toggle onClick={toggleEnable} checked={enabled}></Toggle>
         </div>
         <div>
-          <div className="list-disc list-inside text-sm" style={{ color: "#fff", fontWeight: 700 }}>
+          <Label className="list-disc list-inside text-sm" style={{ fontWeight: 700 }}>
             {t("prerequisite.0")}
-          </div>
+          </Label>
           <ol
             className="list-disc list-inside text-sm text-gray-400 mb-4"
             style={{ fontSize: 12, margin: 0 }}
@@ -96,7 +100,16 @@ export function ConfigVocespace() {
 
         <div className="input">
           <div className="flex flex-col text-sm">
-            <Label htmlFor="url">Custom domain for VoceSpace</Label>
+            <Label htmlFor="url" style={{ position: "relative", width: "100%" }}>
+              {url.trim() === "" && enabled && (
+                <span
+                  style={{ color: "red", position: "absolute", top: -4, left: -8, fontSize: 16 }}
+                >
+                  *
+                </span>
+              )}
+              Custom domain for VoceSpace
+            </Label>
             <p className="text-gray-400 text-xs">{t("domain_desc")}</p>
           </div>
 
@@ -117,7 +130,7 @@ export function ConfigVocespace() {
             onChange={handleChange}
             value={password}
             name="password"
-            placeholder="vocespace"
+            placeholder="this is optional field"
           />
         </div>
       </div>

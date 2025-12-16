@@ -110,6 +110,11 @@ const LicensePriceListModal: FC<Props> = ({ closeModal }) => {
   return (
     <Modal id="modal-modal">
       <StyledModal
+        footer={
+          <div className="text-sm text-gray-400 dark:text-gray-100 mt-3">
+            {t("vocespace.prerequisite.4")}
+          </div>
+        }
         // className="!min-w-[480px]"
         title={t("license.renew")}
         description={t("license.renew_select")}

@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { AgoraConfig } from "@/types/server";
@@ -11,10 +11,24 @@ import HowToTip from "./HowToTip";
 import { ConfigTip } from "@/components/ConfigTip";
 import { ConfigVocespace } from "./Vocespace";
 import clsx from "clsx";
+import { shallowEqual } from "react-redux";
+import { useAppSelector } from "@/app/store";
+import { compareVersion } from "@/utils";
 
 export default function ConfigAgora() {
   const { t } = useTranslation("setting", { keyPrefix: "agora" });
   const [isAgora, setIsAgora] = useState(false);
+  const currentVersion = useAppSelector((store) => store.server.version, shallowEqual);
+  const showVoceSpace = useMemo(() => {
+    return compareVersion(currentVersion, "0.5.6") >= 0;
+  }, [currentVersion]);
+  useEffect(() => {
+    if (showVoceSpace) {
+      setIsAgora(false);
+    } else {
+      setIsAgora(true);
+    }
+  }, [showVoceSpace]);
   const { changed, reset, values, setValues, toggleEnable, updateConfig } = useConfig("agora");
   const getClass = (selected: boolean) =>
     clsx(
@@ -52,27 +66,19 @@ export default function ConfigAgora() {
   const _url = url || "https://api.agora.io";
   return (
     <div className="setting-container">
-      <ul
-        className={`hidden md:flex border border-solid dark:border-gray-400 shadow rounded-lg box-border`}
-        style={{ width: "fit-content" }}
-      >
-        <li
-          className={getClass(!isAgora)}
-          data-view={"item"}
-          onClick={() => setIsAgora(false)}
-          style={{ color: "#fff" }}
+      {showVoceSpace && (
+        <ul
+          className={`hidden md:flex border border-solid dark:border-gray-400 shadow rounded-lg box-border`}
+          style={{ width: "fit-content" }}
         >
-          Vocespace
-        </li>
-        <li
-          className={getClass(isAgora)}
-          data-view={"grid"}
-          onClick={() => setIsAgora(true)}
-          style={{ color: "#fff" }}
-        >
-          Agora
-        </li>
-      </ul>
+          <li className={getClass(!isAgora)} data-view={"item"} onClick={() => setIsAgora(false)}>
+            <Label>Vocespace</Label>
+          </li>
+          <li className={getClass(isAgora)} data-view={"grid"} onClick={() => setIsAgora(true)}>
+            <Label>Agora</Label>
+          </li>
+        </ul>
+      )}
 
       {isAgora ? (
         <>

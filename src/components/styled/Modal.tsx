@@ -9,6 +9,7 @@ interface Props {
   children?: ReactNode;
   className?: string;
   compact?: boolean;
+  footer?: ReactNode;
 }
 
 const StyledModal: FC<Props> = ({
@@ -18,9 +19,8 @@ const StyledModal: FC<Props> = ({
   buttons,
   children,
   className,
+  footer,
 }) => {
-  const { t } = useTranslation("setting", { keyPrefix: "vocespace" });
-
   return (
     <div
       className={clsx(
@@ -37,7 +37,7 @@ const StyledModal: FC<Props> = ({
       )}
       {children}
       {buttons && <div className="pt-4 w-full flex justify-end gap-4 items-center">{buttons}</div>}
-      <div className="text-sm text-gray-400 dark:text-gray-100 mt-3">{t("prerequisite.4")}</div>
+      {footer && footer}
     </div>
   );
 };
