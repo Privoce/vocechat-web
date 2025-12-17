@@ -48,4 +48,48 @@ jobs:
             build/web.vocechat.md5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Sync to CNB
+        env:
+          CNB_TOKEN: ${{ secrets.CNB_TOKEN }}
+          TAG_NAME: ${{ github.ref_name }}
+        run: |
+          CNB_API="https://api.cnb.cool"
+          CNB_OWNER="haorwen"
+          CNB_REPO="Privoce/vocechat-web"
+          
+          echo "创建 CNB release..."
+          RELEASE_JSON=$(curl -fsSL -X POST \
+            "$CNB_API/$CNB_OWNER/$CNB_REPO/-/releases" \
+            -H "Authorization: Bearer $CNB_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "{\"tag_name\":\"$TAG_NAME\",\"name\":\"$TAG_NAME\",\"body\":\"\",\"draft\":false,\"make_latest\":\"true\",\"prerelease\":false,\"target_commitish\":\"main\"}")
+          
+          RELEASE_ID=$(echo "$RELEASE_JSON" | jq -r '.id')
+          echo "CNB Release ID: $RELEASE_ID"
+          
+          upload_file() {
+            local file=$1
+            local size=$(stat -c%s "$file")
+            local name=$(basename "$file")
+            
+            echo "上传 $name..."
+            UPLOAD_JSON=$(curl -fsSL -X POST \
+              "$CNB_API/$CNB_OWNER/$CNB_REPO/-/releases/$RELEASE_ID/asset-upload-url" \
+              -H "Authorization: Bearer $CNB_TOKEN" \
+              -H "Content-Type: application/json" \
+              -d "{\"asset_name\":\"$name\",\"size\":$size,\"overwrite\":true}")
+            
+            UPLOAD_URL=$(echo "$UPLOAD_JSON" | jq -r '.upload_url')
+            VERIFY_URL=$(echo "$UPLOAD_JSON" | jq -r '.verify_url')
+            
+            curl -fsSL -X PUT "$UPLOAD_URL" -T "$file"
+            curl -fsSL -X POST "$VERIFY_URL" -H "Authorization: Bearer $CNB_TOKEN"
+            echo "$name 上传完成"
+          }
+          
+          upload_file "web.vocechat.zip"
+          upload_file "build/web.vocechat.md5"
+          
+          echo "同步到 CNB 完成"
 
