@@ -62,6 +62,7 @@ jobs:
           RELEASE_JSON=$(curl -fsSL -X POST \
             "$CNB_API/$CNB_OWNER/$CNB_REPO/-/releases" \
             -H "Authorization: Bearer $CNB_TOKEN" \
+            -H "Accept: application/json" \
             -H "Content-Type: application/json" \
             -d "{\"tag_name\":\"$TAG_NAME\",\"name\":\"$TAG_NAME\",\"body\":\"\",\"draft\":false,\"make_latest\":\"true\",\"prerelease\":false,\"target_commitish\":\"main\"}")
           
@@ -77,6 +78,7 @@ jobs:
             UPLOAD_JSON=$(curl -fsSL -X POST \
               "$CNB_API/$CNB_OWNER/$CNB_REPO/-/releases/$RELEASE_ID/asset-upload-url" \
               -H "Authorization: Bearer $CNB_TOKEN" \
+              -H "Accept: application/json" \
               -H "Content-Type: application/json" \
               -d "{\"asset_name\":\"$name\",\"size\":$size,\"overwrite\":true}")
             
@@ -84,7 +86,7 @@ jobs:
             VERIFY_URL=$(echo "$UPLOAD_JSON" | jq -r '.verify_url')
             
             curl -fsSL -X PUT "$UPLOAD_URL" -T "$file"
-            curl -fsSL -X POST "$VERIFY_URL" -H "Authorization: Bearer $CNB_TOKEN"
+            curl -fsSL -X POST "$VERIFY_URL" -H "Authorization: Bearer $CNB_TOKEN" -H "Accept: application/json"
             echo "$name 上传完成"
           }
           
