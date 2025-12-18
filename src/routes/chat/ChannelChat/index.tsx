@@ -53,7 +53,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
     dispatch(
       updateChannelVisibleAside({
         id: cid,
-        aside: visibleAside !== "members" ? "members" : null
+        aside: visibleAside !== "members" ? "members" : null,
       })
     );
   };

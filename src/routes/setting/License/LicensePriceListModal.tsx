@@ -72,7 +72,7 @@ const LicensePriceListModal: FC<Props> = ({ closeModal }) => {
       user_limit: Number(user_limit),
       expire: type == "subscription" ? getExpireDay(sub_dur) : getExpireDay("year"),
       // 本地，则*通配符
-      domain: host.startsWith("localhost") ? "*" : host
+      domain: host.startsWith("localhost") ? "*" : host,
     };
     console.log(metadata);
     // return;
@@ -82,7 +82,7 @@ const LicensePriceListModal: FC<Props> = ({ closeModal }) => {
       priceId,
       metadata,
       cancel_url: location.href,
-      success_url: `${location.origin}/#/cb/payment_success`
+      success_url: `${location.origin}/#/cb/payment_success`,
     });
     if ("error" in resp) {
       toast.error("Payment link initialized failed!");
@@ -103,13 +103,18 @@ const LicensePriceListModal: FC<Props> = ({ closeModal }) => {
     setPopUpVisible((prev) => !prev);
   };
   const handleTalk = () => {
-    window.open("https://calendly.com/hansu", "_blank");
+    window.open("https://buy.stripe.com/bJeaEX9ex2PUer2aLe6c00O", "_blank");
   };
   const isBooking = selectPrice.includes("booking");
 
   return (
     <Modal id="modal-modal">
       <StyledModal
+        footer={
+          <div className="text-sm text-gray-400 dark:text-gray-100 mt-3">
+            {t("vocespace.prerequisite.4")}
+          </div>
+        }
         // className="!min-w-[480px]"
         title={t("license.renew")}
         description={t("license.renew_select")}
@@ -119,7 +124,12 @@ const LicensePriceListModal: FC<Props> = ({ closeModal }) => {
               {ct("action.cancel")}
             </Button>
             {isBooking ? (
-              <Button onClick={handleTalk}>Booking a meeting!</Button>
+              <Button
+                className="text-sm text-white bg-primary-400 break-keep shadow rounded-lg px-3.5 py-2.5 md:hover:bg-primary-500 active:bg-primary-500 disabled:bg-gray-300"
+                onClick={handleTalk}
+              >
+                {t("license.renew")}
+              </Button>
             ) : (
               <Tippy
                 visible={popUpVisible}
@@ -163,9 +173,6 @@ const LicensePriceListModal: FC<Props> = ({ closeModal }) => {
                   {" "}
                   {t("license.renew")}
                 </button>
-                {/* <Button >
-                {t("license.renew")}
-              </Button> */}
               </Tippy>
             )}
           </>

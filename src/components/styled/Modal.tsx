@@ -1,5 +1,6 @@
 import { FC, ReactNode } from "react";
 import clsx from "clsx";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   title?: string;
@@ -8,6 +9,7 @@ interface Props {
   children?: ReactNode;
   className?: string;
   compact?: boolean;
+  footer?: ReactNode;
 }
 
 const StyledModal: FC<Props> = ({
@@ -16,7 +18,8 @@ const StyledModal: FC<Props> = ({
   description = "",
   buttons,
   children,
-  className
+  className,
+  footer,
 }) => {
   return (
     <div
@@ -34,6 +37,7 @@ const StyledModal: FC<Props> = ({
       )}
       {children}
       {buttons && <div className="pt-4 w-full flex justify-end gap-4 items-center">{buttons}</div>}
+      {footer && footer}
     </div>
   );
 };

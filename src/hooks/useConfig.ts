@@ -8,16 +8,27 @@ import {
   useGetFirebaseConfigQuery,
   useGetLoginConfigQuery,
   useGetSMTPConfigQuery,
+  useGetVocespaceConfigQuery,
   useUpdateAgoraConfigMutation,
   useUpdateFirebaseConfigMutation,
   useUpdateLoginConfigMutation,
-  useUpdateSMTPConfigMutation
+  useUpdateSMTPConfigMutation,
+  useUpdateVocespaceConfigMutation,
 } from "@/app/services/server";
-import { AgoraConfig, FirebaseConfig, LoginConfig, SMTPConfig } from "@/types/server";
+import {
+  AgoraConfig,
+  FirebaseConfig,
+  LoginConfig,
+  SMTPConfig,
+  VocespaceConfig,
+} from "@/types/server";
 
 // config: smtp agora login firebase
-type ConfigType = "smtp" | "agora" | "login" | "firebase";
-type ConfigMap = Record<ConfigType, AgoraConfig | FirebaseConfig | LoginConfig | SMTPConfig>;
+type ConfigType = "smtp" | "agora" | "login" | "firebase" | "vocespace";
+type ConfigMap = Record<
+  ConfigType,
+  AgoraConfig | FirebaseConfig | LoginConfig | SMTPConfig | VocespaceConfig
+>;
 type valuesOf<T> = T[keyof T];
 let originalValue: valuesOf<ConfigMap> | undefined = undefined;
 // type valueOf<T,config as ConfigType> = T[config];
@@ -31,21 +42,29 @@ export default function useConfig(config: keyof ConfigMap = "smtp") {
     useUpdateSMTPConfigMutation();
   const [updateAgoraConfig, { isSuccess: AgoraUpdated, isLoading: AgoraUpdating }] =
     useUpdateAgoraConfigMutation();
+  const [updateVocespaceConfig, { isSuccess: VocespaceUpdated, isLoading: VocespaceUpdating }] =
+    useUpdateVocespaceConfigMutation();
   const [updateFirebaseConfig, { isSuccess: FirebaseUpdated, isLoading: FirebaseUpdating }] =
     useUpdateFirebaseConfigMutation();
   const { refetch: getAgoraConfig, data: agoraConfig } = useGetAgoraConfigQuery(undefined, {
-    skip: config !== "agora"
+    skip: config !== "agora",
   });
+  const { refetch: getVocespaceConfig, data: vocespaceConfig } = useGetVocespaceConfigQuery(
+    undefined,
+    {
+      skip: config !== "vocespace",
+    }
+  );
   const { refetch: getLoginConfig, data: loginConfig } = useGetLoginConfigQuery(undefined, {
-    skip: config !== "login"
+    skip: config !== "login",
   });
   const { refetch: getSMTPConfig, data: smtpConfig } = useGetSMTPConfigQuery(undefined, {
-    skip: config !== "smtp"
+    skip: config !== "smtp",
   });
   const { refetch: getFirebaseConfig, data: firebaseConfig } = useGetFirebaseConfigQuery(
     undefined,
     {
-      skip: config !== "firebase"
+      skip: config !== "firebase",
     }
   );
 
@@ -53,25 +72,29 @@ export default function useConfig(config: keyof ConfigMap = "smtp") {
     login: updateLoginConfig,
     smtp: updateSMTPConfig,
     agora: updateAgoraConfig,
-    firebase: updateFirebaseConfig
+    firebase: updateFirebaseConfig,
+    vocespace: updateVocespaceConfig,
   };
   const requests = {
     smtp: getSMTPConfig,
     agora: getAgoraConfig,
     firebase: getFirebaseConfig,
-    login: getLoginConfig
+    login: getLoginConfig,
+    vocespace: getVocespaceConfig,
   };
   const updates = {
     login: LoginUpdated,
     smtp: SMTPUpdated,
     agora: AgoraUpdated,
-    firebase: FirebaseUpdated
+    firebase: FirebaseUpdated,
+    vocespace: VocespaceUpdated,
   };
   const updatings = {
     login: LoginUpdating,
     smtp: SMTPUpdating,
     agora: AgoraUpdating,
-    firebase: FirebaseUpdating
+    firebase: FirebaseUpdating,
+    vocespace: VocespaceUpdating,
   };
   const updateConfig = updateFns[config];
   const refetch = requests[config];
@@ -98,12 +121,12 @@ export default function useConfig(config: keyof ConfigMap = "smtp") {
     }
   }, [updated]);
   useEffect(() => {
-    const _config = smtpConfig || firebaseConfig || loginConfig || agoraConfig;
+    const _config = smtpConfig || firebaseConfig || loginConfig || agoraConfig || vocespaceConfig;
     if (_config) {
       originalValue = _config;
       setValues(_config);
     }
-  }, [smtpConfig, firebaseConfig, loginConfig, agoraConfig]);
+  }, [smtpConfig, firebaseConfig, loginConfig, agoraConfig, vocespaceConfig]);
   useEffect(() => {
     // 空对象
     if (!values || Object.keys(values).length == 0) return;
@@ -124,6 +147,7 @@ export default function useConfig(config: keyof ConfigMap = "smtp") {
     agoraConfig,
     values,
     setValues,
-    toggleEnable
+    toggleEnable,
+    refetch,
   };
 }
