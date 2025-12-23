@@ -104,7 +104,13 @@ const VoiceChat = ({ id, context = "channel" }: Props) => {
 
   const handleSendVocespaceRequest = async () => {
     if (vocespaceConfig && vocespaceConfig.state && vocespaceConfig.state === "undeployed") {
-      await sendVoceSpaceMsg(`https://vocespace.com/${context}_${id}`);
+      const genUUID = () =>
+        "10000000-1000-4000-8000-100000000000".replace(/[018]/g, (c) =>
+          (+c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (+c / 4)))).toString(16)
+        );
+      await sendVoceSpaceMsg(
+        `https://vocespace.com/${context}_${id}_${encodeURIComponent(genUUID())}`
+      );
     } else if (vocespaceConfig && vocespaceConfig?.enabled && vocespaceConfig.state === "success") {
       let url = vocespaceConfig.url;
       if (url.includes(":7880")) {

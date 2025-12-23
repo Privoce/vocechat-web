@@ -26,9 +26,9 @@
     "video": "Vidéo"
   },
   "vocespace": {
-    "title": "Vocespace",
-    "desc": "Vocespace déployé en mode privé (déploiement automatique)",
-    "sub_desc": "Chaque compte Vocespace bénéficie d'appels illimités gratuits, de 5 utilisateurs simultanés et d'une résolution 4K. Aucune création de compte n'est requise. Suivez les instructions ci-dessous pour configurer correctement votre Vocespace.",
+    "title": "VoceSpace",
+    "desc": "VoceSpace déployé en mode privé (déploiement automatique)",
+    "sub_desc": "Chaque compte VoceSpace bénéficie d'appels illimités gratuits, de 5 utilisateurs simultanés et d'une résolution 4K. Aucune création de compte n'est requise. Suivez les instructions ci-dessous pour configurer correctement votre VoceSpace.",
     "prerequisite": [
       "Prérequis",
       "Environnement Docker",

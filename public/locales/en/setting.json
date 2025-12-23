@@ -270,8 +270,8 @@
     "how_to": "How to setup Agora?"
   },
   "vocespace": {
-    "title": "Vocespace",
-    "desc": "Use self-hosted Vocespace (Automated Deployment)",
+    "title": "VoceSpace",
+    "desc": "Use self-hosted VoceSpace (Automated Deployment)",
     "prerequisite": [
       "Prerequisites",
       "Docker environment",
@@ -279,7 +279,7 @@
       "The domain has been registered",
       "For enterprises customization or need help, please contact han@privoce.com or add WeChat: Privoce"
     ],
-    "sub_desc": "Each Vocespace account will enjoy no limit minutes, 5 person concurrent and 4k resolution for free. No account creation required. Follow the instruction below to configure your Vocespace correctly.",
+    "sub_desc": "Each VoceSpace account will enjoy no limit minutes, 5 person concurrent and 4k resolution for free. No account creation required. Follow the instruction below to configure your VoceSpace correctly.",
     "domain_desc": "This domain needs to have a DNS A record pointing to the current server IP you are hosting VoceChat.",
     "enable": "Enable",
     "how_to": "After enabling, please set a custom domain then click save, and the system will automatically enable VoceSpace."

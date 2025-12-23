@@ -27,9 +27,9 @@
     "video": "Video"
   },
   "vocespace": {
-    "title": "Vocespace",
-    "desc": "Vocespace özel olarak dağıtıldı (otomatik dağıtım)",
-    "sub_desc": "Her Vocespace hesabı ücretsiz sınırsız arama süresi, 5 eş zamanlı kullanıcı ve 4K çözünürlük hizmetinden yararlanacaktır. Hesap oluşturma gerekmez. Vocespace'inizi doğru şekilde yapılandırmak için aşağıdaki talimatları izleyin.",
+    "title": "VoceSpace",
+    "desc": "VoceSpace özel olarak dağıtıldı (otomatik dağıtım)",
+    "sub_desc": "Her VoceSpace hesabı ücretsiz sınırsız arama süresi, 5 eş zamanlı kullanıcı ve 4K çözünürlük hizmetinden yararlanacaktır. Hesap oluşturma gerekmez. VoceSpace'inizi doğru şekilde yapılandırmak için aşağıdaki talimatları izleyin.",
     "prerequisite": [
       "Önkoşullar",
       "Docker ortamı",
