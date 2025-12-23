@@ -26,9 +26,9 @@
     "video": "Video"
   },
   "vocespace": {
-    "title": "Vocespace",
-    "desc": "Vocespace implementado de forma privada (implementación automática)",
-    "sub_desc": "Cada cuenta de Vocespace disfrutará de llamadas ilimitadas gratuitas, 5 usuarios simultáneos y resolución 4K. No es necesario crear una cuenta. Siga las instrucciones a continuación para configurar correctamente su Vocespace.",
+    "title": "VoceSpace",
+    "desc": "VoceSpace implementado de forma privada (implementación automática)",
+    "sub_desc": "Cada cuenta de VoceSpace disfrutará de llamadas ilimitadas gratuitas, 5 usuarios simultáneos y resolución 4K. No es necesario crear una cuenta. Siga las instrucciones a continuación para configurar correctamente su VoceSpace.",
     "prerequisite": [
       "Prerrequisitos",
       "Entorno Docker",

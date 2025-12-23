@@ -72,7 +72,7 @@ export default function ConfigAgora() {
           style={{ width: "fit-content" }}
         >
           <li className={getClass(!isAgora)} data-view={"item"} onClick={() => setIsAgora(false)}>
-            <Label>Vocespace</Label>
+            <Label>VoceSpace</Label>
           </li>
           <li className={getClass(isAgora)} data-view={"grid"} onClick={() => setIsAgora(true)}>
             <Label>Agora</Label>

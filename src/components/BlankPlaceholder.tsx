@@ -54,7 +54,6 @@ const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
     navigate("/setting/license");
   };
   const currentVersion = useAppSelector((store) => store.server.version, shallowEqual);
-  console.warn("currentVersion", currentVersion, compareVersion(currentVersion, "0.5.6"));
   const showVoceSpace = useMemo(
     () => compareVersion(currentVersion, "0.5.6") >= 0,
     [currentVersion]

@@ -8,23 +8,11 @@ import SaveTip from "@/components/SaveTip";
 import useConfig from "@/hooks/useConfig";
 import { VocespaceConfig } from "@/types/server";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
-import { isNull } from "lodash";
 
 export function ConfigVocespace() {
   const { t } = useTranslation("setting", { keyPrefix: "vocespace" });
-  const [fetchData, setFetchData] = useState<VocespaceConfig | null>(null);
-  useEffect(() => {
-    if (!isNull(fetchData?.state) && fetchData?.state !== "in_progress") {
-      // 停止轮询
-      if (interval.current) {
-        clearInterval(interval.current);
-      }
-    }
-  }, [fetchData]);
   const { changed, reset, values, setValues, toggleEnable, updateConfig, refetch } =
     useConfig("vocespace");
-  // 定时器，用来每隔2分钟获取一次最新的配置状态，只要发现有state字段就能知道自动化部署是否成功，没有则继续轮询
-  const interval = useRef<NodeJS.Timeout | null>(null);
 
   const handleUpdate = async () => {
     const _values = values as VocespaceConfig;
@@ -34,22 +22,24 @@ export function ConfigVocespace() {
     }
 
     // 后端快速返回结果，只要检测环境可以执行就立即返回成功，不然会一直pending等待，导致前端超时
-    const { error } = await updateConfig(_values);
-    if (error) {
-      alert(`Auto Deploy Failed: ${error}`);
+    const res = await updateConfig(_values);
+
+    if (res.error) {
+      alert(`Auto Deploy Failed: ${res.error}`);
     } else {
-      // 创建一个轮询定时器，每隔2分钟获取一次最新的配置状态
-      if (interval.current) {
-        clearInterval(interval.current);
+      let { data } = res;
+
+      if ((data as unknown as string) === "deployed") {
+        return;
+      } else {
+        // 生成 sh文件让用户下载
+        const el = document.createElement("a");
+        const file = new Blob([data as unknown as string], { type: "text/plain" });
+        el.href = URL.createObjectURL(file);
+        el.download = "deploy_vocespace.sh";
+        document.body.appendChild(el); // Required for this to work in FireFox
+        el.click();
       }
-      // 先fetch一次，避免等待2分钟的空档期
-      const { data } = await refetch();
-      setFetchData(data as VocespaceConfig);
-      interval.current = setInterval(async () => {
-        console.warn("Fetching Vocespace Config for deployment status...");
-        const { data } = await refetch();
-        setFetchData(data as VocespaceConfig);
-      }, 2 * 60 * 1000);
     }
   };
 
@@ -135,35 +125,30 @@ export function ConfigVocespace() {
         </div>
       </div>
       <div>
-        {state ? (
+        {state && (
           <div style={{ fontSize: 12 }}>
-            {state === "success" && (
+            {state === "success" ? (
               <StateDot
-                color="green"
+                color="#00ff00"
                 className="text-green-400"
-                word="Vocespace deployed successfully."
+                word="VoceSpace deployed successfully."
               />
-            )}
-            {state === "in_progress" && (
-              <StateDot
-                color="yellow"
-                className="text-yellow-400"
-                word="Vocespace deployment in progress..."
-              />
-            )}
-            {state === "failed" && (
-              <StateDot color="red" className="text-red-400" word="Vocespace deployment failed." />
-            )}
-            {state === "undeployed" && (
-              <StateDot
-                color="gray"
-                className="text-gray-400"
-                word="Vocespace is not deployed yet."
-              />
+            ) : (
+              <>
+                <StateDot
+                  color="gray"
+                  className="text-gray-400"
+                  word="VoceSpace is not deployed yet or failed."
+                />
+                {enabled && (
+                  <span className="text-red-500">
+                    please run the deploy_vocespace.sh in your vps or server <br></br>{" "}
+                    <pre>chmod +x deploy_vocespace.sh && sh ./deploy_vocespace.sh</pre>
+                  </span>
+                )}
+              </>
             )}
           </div>
-        ) : (
-          <StateDot color="gray" className="text-gray-400" word="Vocespace is not deployed yet." />
         )}
         <div
           className="list-disc list-inside text-sm text-gray-400 mb-4"

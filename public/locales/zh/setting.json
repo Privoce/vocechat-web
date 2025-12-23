@@ -269,9 +269,9 @@
     "how_to": "如何配置 Agora？"
   },
   "vocespace": {
-    "title": "Vocespace",
-    "desc": "使用私有部署的Vocespace(自动部署)",
-    "sub_desc": "每个Vocespace账户将享受免费无限制通话时长、5人并发及4K分辨率服务。无需创建账户。按照以下说明正确配置您的Vocespace。",
+    "title": "VoceSpace",
+    "desc": "使用私有部署的VoceSpace(自动部署)",
+    "sub_desc": "每个VoceSpace账户将享受免费无限制通话时长、5人并发及4K分辨率服务。无需创建账户。按照以下说明正确配置您的VoceSpace。",
     "prerequisite": [
       "预备条件",
       "Docker环境",

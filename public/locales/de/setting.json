@@ -26,8 +26,8 @@
     "video": "Videoanrufe"
   },
   "vocespace": {
-    "title": "Vocespace",
-    "desc": "Selbstgehosteter Vocespace (Automatisierte Bereitstellung)",
+    "title": "VoceSpace",
+    "desc": "Selbstgehosteter VoceSpace (Automatisierte Bereitstellung)",
     "prerequisite": [
       "Voraussetzungen",
       "Docker-Umgebung",
@@ -35,7 +35,7 @@
       "Die Domain ist registriert",
       "Für Unternehmensanpassungen oder bei Fragen wenden Sie sich bitte an han@privoce.com oder fügen Sie uns auf WeChat hinzu: Privoce"
     ],
-    "sub_desc": "Jedes Vocespace-Konto bietet unbegrenzte Gesprächsminuten, 5 gleichzeitige Teilnehmer und eine kostenlose 4K-Auflösung. Es ist keine Kontoerstellung erforderlich. Befolgen Sie die unten stehenden Anweisungen, um Ihren Vocespace korrekt zu konfigurieren.",
+    "sub_desc": "Jedes VoceSpace-Konto bietet unbegrenzte Gesprächsminuten, 5 gleichzeitige Teilnehmer und eine kostenlose 4K-Auflösung. Es ist keine Kontoerstellung erforderlich. Befolgen Sie die unten stehenden Anweisungen, um Ihren VoceSpace korrekt zu konfigurieren.",
     "domain_desc": "Diese Domain benötigt einen DNS-A-Eintrag, der auf die IP-Adresse des aktuellen Servers verweist, auf dem Sie VoceChat hosten.",
     "enable": "Aktivieren",
     "how_to": "Nach der Aktivierung legen Sie bitte eine benutzerdefinierte Domain fest. Klicken Sie auf „Speichern“, und das System aktiviert VoceSpace automatisch."
