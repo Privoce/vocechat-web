@@ -15,8 +15,6 @@ import { useEffect, useMemo, useState } from "react";
 import useSendMessage from "@/hooks/useSendMessage";
 import { useNavigate } from "react-router-dom";
 import { VocespaceConfig } from "@/types/server";
-import { uniqueId } from "lodash";
-import { randomUUID } from "crypto";
 
 type Props = {
   context?: ChatContext;
