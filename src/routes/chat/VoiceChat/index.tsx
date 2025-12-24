@@ -26,7 +26,7 @@ const VoiceChat = ({ id, context = "channel" }: Props) => {
   const [chatType, setChatType] = useState<"agora" | "vocespace">("vocespace");
   const currentVersion = useAppSelector((store) => store.server.version, shallowEqual);
   const showVoceSpace = useMemo(() => {
-    return compareVersion(currentVersion, "0.5.6") >= 0;
+    return compareVersion(currentVersion, "0.5.8") >= 0;
   }, [currentVersion]);
 
   const { joinVoice, joined, joining = false, joinedAtThisContext } = useVoice({ id, context });
@@ -103,11 +103,12 @@ const VoiceChat = ({ id, context = "channel" }: Props) => {
   };
 
   const handleSendVocespaceRequest = async () => {
+    console.warn("vocespaceConfig", vocespaceConfig);
+    const genUUID = () =>
+      "10000000-1000-4000-8000-100000000000".replace(/[018]/g, (c) =>
+        (+c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (+c / 4)))).toString(16)
+      );
     if (vocespaceConfig && vocespaceConfig.state && vocespaceConfig.state === "undeployed") {
-      const genUUID = () =>
-        "10000000-1000-4000-8000-100000000000".replace(/[018]/g, (c) =>
-          (+c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (+c / 4)))).toString(16)
-        );
       await sendVoceSpaceMsg(
         `https://vocespace.com/${context}_${id}_${encodeURIComponent(genUUID())}`
       );
@@ -120,8 +121,14 @@ const VoiceChat = ({ id, context = "channel" }: Props) => {
       }
       await sendVoceSpaceMsg(url);
     } else {
-      // 跳转到/setting/video
-      navigate("/setting/video");
+      if (!showVoceSpace) {
+        await sendVoceSpaceMsg(
+          `https://vocespace.com/${context}_${id}_${encodeURIComponent(genUUID())}`
+        );
+      } else {
+        // 跳转到/setting/video
+        navigate("/setting/video");
+      }
     }
   };
   const handleOnClick = async () => {
