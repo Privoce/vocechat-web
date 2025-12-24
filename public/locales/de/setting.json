@@ -38,7 +38,8 @@
     "sub_desc": "Jedes VoceSpace-Konto bietet unbegrenzte Gesprächsminuten, 5 gleichzeitige Teilnehmer und eine kostenlose 4K-Auflösung. Es ist keine Kontoerstellung erforderlich. Befolgen Sie die unten stehenden Anweisungen, um Ihren VoceSpace korrekt zu konfigurieren.",
     "domain_desc": "Diese Domain benötigt einen DNS-A-Eintrag, der auf die IP-Adresse des aktuellen Servers verweist, auf dem Sie VoceChat hosten.",
     "enable": "Aktivieren",
-    "how_to": "Nach der Aktivierung legen Sie bitte eine benutzerdefinierte Domain fest. Klicken Sie auf „Speichern“, und das System aktiviert VoceSpace automatisch."
+    "how_to": "Nach der Aktivierung legen Sie bitte eine benutzerdefinierte Domain fest. Klicken Sie auf „Speichern“, und das System aktiviert VoceSpace automatisch.",
+    "old": "Ihre aktuelle Serverversion ist veraltet. Wir haben den offiziellen VoceSpace (vocespace.com) als Standard-Audio-/Videodienst aktiviert. Um Ihre eigene private Installation zu nutzen, aktualisieren Sie bitte vocechat-server auf Version 0.5.8 oder höher."
   },
   "channel": {
     "leave": "Kanal verlassen",

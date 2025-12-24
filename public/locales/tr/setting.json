@@ -39,7 +39,8 @@
     ],
     "domain_desc": "Özel alan adları yerel IP adresine çözümlenmelidir (Alibaba Cloud ve Tencent Cloud gibi Çin anakarasındaki kullanıcılar için ICP dosyalama gereklidir)",
     "enable": "Etkinleştir",
-    "how_to": "Etkinleştirdikten sonra lütfen alan adını ayarlayın ve kaydedin. Kalan adımlar otomatik olarak tamamlanacaktır."
+    "how_to": "Etkinleştirdikten sonra lütfen alan adını ayarlayın ve kaydedin. Kalan adımlar otomatik olarak tamamlanacaktır.",
+    "old": "Mevcut sunucu sürümünüz güncel değil. Resmi VoceSpace (vocespace.com) varsayılan ses/video hizmetiniz olarak etkinleştirildi. Kendi özel dağıtımınızı kullanmak için lütfen vocechat-server'ı v0.5.8 veya daha yüksek bir sürüme güncelleyin."
   },
   "channel": {
     "leave": "Kanalı Terket",

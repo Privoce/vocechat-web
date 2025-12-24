@@ -7,10 +7,27 @@ import Label from "@/components/styled/Label";
 import SaveTip from "@/components/SaveTip";
 import useConfig from "@/hooks/useConfig";
 import { VocespaceConfig } from "@/types/server";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useMemo, useRef, useState } from "react";
+import Radio from "@/components/styled/Radio";
+import { useAppSelector } from "@/app/store";
+import { compareVersion } from "@/utils";
+import { shallowEqual } from "react-redux";
 
 export function ConfigVocespace() {
   const { t } = useTranslation("setting", { keyPrefix: "vocespace" });
+  const currentVersion = useAppSelector((store) => store.server.version, shallowEqual);
+  const showVoceSpace = useMemo(() => {
+    return compareVersion(currentVersion, "0.5.8") >= 0;
+  }, [currentVersion]);
+
+  if (!showVoceSpace) {
+    return (
+      <div className="setting-container" style={{ paddingBottom: 172, height: "fit-content" }}>
+        <Label>{t("old")}</Label>
+      </div>
+    );
+  }
+
   const { changed, reset, values, setValues, toggleEnable, updateConfig, refetch } =
     useConfig("vocespace");
 
@@ -20,7 +37,6 @@ export function ConfigVocespace() {
       alert("Custom domain is required when enabling Vocespace.");
       return;
     }
-
     // 后端快速返回结果，只要检测环境可以执行就立即返回成功，不然会一直pending等待，导致前端超时
     const res = await updateConfig(_values);
 
@@ -52,10 +68,10 @@ export function ConfigVocespace() {
     });
   };
   if (!values) return null;
-  const { url, license, enabled = false, password, state } = values as VocespaceConfig;
+  const { url, license, enabled = false, password, state, server_type } = values as VocespaceConfig;
 
   return (
-    <div className="setting-container">
+    <div className="setting-container" style={{ paddingBottom: 172, height: "fit-content" }}>
       <ConfigTip title={t("desc")} desc={`${t("sub_desc")}`} />
       <div className="inputs">
         <div className="input row">
@@ -85,10 +101,58 @@ export function ConfigVocespace() {
             <li>{t("prerequisite.1")}</li>
             <li>{t("prerequisite.2")}</li>
             <li>{t("prerequisite.3")}</li>
+            <li>
+              NAS deploy video:{" "}
+              <a
+                href="https://vocespace.com/local_deploy/nas.mp4"
+                target="_blank"
+                className="underline"
+              >
+                nas.mp4
+              </a>
+            </li>
+            <li>
+              NAS manual deployment:{" "}
+              <a
+                href="https://vocespace.com/local_deploy/nas_manual.mp4"
+                target="_blank"
+                className="underline"
+              >
+                nas_manual.mp4
+              </a>
+            </li>
+            <li>
+              Vps deploy video:{" "}
+              <a
+                href="https://vocespace.com/local_deploy/vps.mp4"
+                target="_blank"
+                className="underline"
+              >
+                vps.mp4
+              </a>
+            </li>
           </ol>
         </div>
 
         <div className="input">
+          <div className="flex flex-col text-sm">
+            <Label htmlFor="url" style={{ position: "relative", width: "100%" }}>
+              Server Type
+            </Label>
+          </div>
+
+          <Radio
+            options={["nas", "vps", "other"]}
+            values={["nas", "vps", "other"]}
+            value={server_type || "vps"}
+            onChange={(v) => {
+              setValues((prev) => {
+                if (!prev) return prev;
+                return { ...prev, server_type: v as "nas" | "vps" | "other" };
+              });
+            }}
+          />
+
           <div className="flex flex-col text-sm">
             <Label htmlFor="url" style={{ position: "relative", width: "100%" }}>
               {url.trim() === "" && enabled && (
@@ -109,7 +173,7 @@ export function ConfigVocespace() {
             onChange={handleChange}
             value={url}
             name="url"
-            placeholder="Your Domain Pointing to the Current Server IP"
+            placeholder={`video.${window.location.hostname} (Your domain pointing to the current server IP)`}
           />
         </div>
         <div className="input">
@@ -157,7 +221,21 @@ export function ConfigVocespace() {
           {t("prerequisite.4")}
         </div>
       </div>
-      {changed && <SaveTip saveHandler={handleUpdate} resetHandler={reset} />}
+      {changed && (
+        <SaveTip
+          saveHandler={handleUpdate}
+          resetHandler={() => {
+            // empty all input
+            setValues({
+              url: "",
+              license: "",
+              enabled: true,
+              password: "",
+              state,
+            });
+          }}
+        />
+      )}
       {/* <button onClick={handleUpdate} className="btn">update</button> */}
     </div>
   );

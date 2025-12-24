@@ -38,7 +38,8 @@
     ],
     "domain_desc": "Los nombres de dominio personalizados deben resolver a la dirección IP local (para usuarios en China continental, como Alibaba Cloud y Tencent Cloud, se requiere el registro ICP)",
     "enable": "Habilitar",
-    "how_to": "Después de habilitar, configure el nombre de dominio y guarde. Los pasos restantes se completarán automáticamente."
+    "how_to": "Después de habilitar, configure el nombre de dominio y guarde. Los pasos restantes se completarán automáticamente.",
+    "old": "Su versión actual del servidor está desactualizada. Hemos habilitado el VoceSpace oficial (vocespace.com) como su servicio de audio/video predeterminado. Para usar su propia implementación privada, actualice vocechat-server a la versión 0.5.8 o superior."
   },
   "channel": {
     "leave": "Abandonar Canal",
