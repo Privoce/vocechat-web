@@ -19,6 +19,7 @@ import GuestMode from "./GuestMode";
 import WhoCanSignUpSetting from "./WhoCanSignUpSetting";
 import UserMsgEmailNotify from "./UserMsgEmailNotify";
 import WhoCanInviteUsers from "./WhoCanInviteUsers";
+import WebClientAutoUpdate from "./WebClientAutoUpdate";
 
 export default function Overview() {
   const { t } = useTranslation("setting");
@@ -54,6 +55,8 @@ export default function Overview() {
           <ChatLayout />
           {/* 联系人验证模式 */}
           <ContactVerification />
+          {/* 前端自动更新 */}
+          <WebClientAutoUpdate />
         </>
       )}
 
