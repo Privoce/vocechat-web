@@ -33,10 +33,16 @@ export function ConfigVocespace() {
 
   const handleUpdate = async () => {
     const _values = values as VocespaceConfig;
+
     if (_values.url.trim() === "" && _values.enabled) {
       alert("Custom domain is required when enabling Vocespace.");
       return;
     }
+
+    if (!_values.server_type) {
+      _values.server_type = "vps";
+    }
+
     // 后端快速返回结果，只要检测环境可以执行就立即返回成功，不然会一直pending等待，导致前端超时
     const res = await updateConfig(_values);
 
@@ -50,7 +56,11 @@ export function ConfigVocespace() {
       } else {
         // 生成 sh文件让用户下载
         const el = document.createElement("a");
-        const file = new Blob([data as unknown as string], { type: "text/plain" });
+        let shell = (data as unknown as string)
+          .replaceAll("{{", "{")
+          .replaceAll("}}", "}")
+          .replaceAll("{.Names}", "{{.Names}}");
+        const file = new Blob([shell], { type: "text/plain" });
         el.href = URL.createObjectURL(file);
         el.download = "deploy_vocespace.sh";
         document.body.appendChild(el); // Required for this to work in FireFox
@@ -102,33 +112,9 @@ export function ConfigVocespace() {
             <li>{t("prerequisite.2")}</li>
             <li>{t("prerequisite.3")}</li>
             <li>
-              NAS deploy video:{" "}
-              <a
-                href="https://vocespace.com/local_deploy/nas.mp4"
-                target="_blank"
-                className="underline"
-              >
-                nas.mp4
-              </a>
-            </li>
-            <li>
-              NAS manual deployment:{" "}
-              <a
-                href="https://vocespace.com/local_deploy/nas_manual.mp4"
-                target="_blank"
-                className="underline"
-              >
-                nas_manual.mp4
-              </a>
-            </li>
-            <li>
-              Vps deploy video:{" "}
-              <a
-                href="https://vocespace.com/local_deploy/vps.mp4"
-                target="_blank"
-                className="underline"
-              >
-                vps.mp4
+              VoceSpace Doc:{" "}
+              <a href="https://doc.vocespace.com/" target="_blank" className="underline">
+                doc.vocespace.com
               </a>
             </li>
           </ol>
@@ -140,9 +126,30 @@ export function ConfigVocespace() {
               Server Type
             </Label>
           </div>
+          <div>
+            <a
+              style={{ fontSize: 12 }}
+              className="mb-2 block text-gray-400 underline"
+              href={`https://vocespace.com/local_deploy/${
+                server_type === "nas" ? "nas.mp4" : "vps.mp4"
+              }`}
+              target="_blank"
+            >
+              {`https://vocespace.com/local_deploy/${
+                server_type === "nas" ? "nas.mp4" : "vps.mp4"
+              }`}
+            </a>
+            <video
+              src={`https://vocespace.com/local_deploy/${
+                server_type === "nas" ? "nas.mp4" : "vps.mp4"
+              }`}
+              controls
+              style={{ width: "100%", borderRadius: 8, backgroundColor: "#ddd" }}
+            ></video>
+          </div>
 
           <Radio
-            options={["nas", "vps", "other"]}
+            options={["NAS", "VPS", "Other"]}
             values={["nas", "vps", "other"]}
             value={server_type || "vps"}
             onChange={(v) => {
@@ -184,7 +191,7 @@ export function ConfigVocespace() {
             onChange={handleChange}
             value={password}
             name="password"
-            placeholder="this is optional field"
+            placeholder="This is optional field"
           />
         </div>
       </div>
