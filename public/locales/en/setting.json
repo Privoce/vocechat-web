@@ -144,6 +144,12 @@
       "desc": "By default all server members can see each other. If you want server members to add and manage their own contacts, please enable the contact feature (admin will be in the contacts list by default).",
       "enable": "Enable",
       "disable": "Disable"
+    },
+    "webclient_auto_update": {
+      "title": "Web Client Auto Update",
+      "desc": "If enabled, the web client will automatically update to the latest version. ⚠️ This feature is designed for advanced users only. Disabling it may prevent you from receiving the latest bug fixes and feature updates.",
+      "enable": "Enable",
+      "disable": "Disable"
     }
   },
   "data": {
