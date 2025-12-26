@@ -32,6 +32,7 @@ const VoiceChat = ({ id, context = "channel" }: Props) => {
   const { joinVoice, joined, joining = false, joinedAtThisContext } = useVoice({ id, context });
   const dispatch = useDispatch();
   const loginUid = useAppSelector((store) => store.authData.user?.uid ?? 0, shallowEqual);
+  const isAdmin = useAppSelector((store) => store.authData.user?.is_admin ?? false, shallowEqual);
   const visibleAside = useAppSelector(
     (store) => (context == "channel" ? "voice" : null),
     shallowEqual
@@ -103,7 +104,6 @@ const VoiceChat = ({ id, context = "channel" }: Props) => {
   };
 
   const handleSendVocespaceRequest = async () => {
-    console.warn("vocespaceConfig", vocespaceConfig);
     const genUUID = () =>
       "10000000-1000-4000-8000-100000000000".replace(/[018]/g, (c) =>
         (+c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (+c / 4)))).toString(16)
@@ -126,8 +126,14 @@ const VoiceChat = ({ id, context = "channel" }: Props) => {
           `https://vocespace.com/${context}_${id}_${encodeURIComponent(genUUID())}`
         );
       } else {
-        // 跳转到/setting/video
-        navigate("/setting/video");
+        if (isAdmin) {
+          // 跳转到/setting/video
+          navigate("/setting/video");
+        } else {
+          await sendVoceSpaceMsg(
+            `https://vocespace.com/${context}_${id}_${encodeURIComponent(genUUID())}`
+          );
+        }
       }
     }
   };
