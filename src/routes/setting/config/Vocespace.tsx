@@ -231,16 +231,7 @@ export function ConfigVocespace() {
       {changed && (
         <SaveTip
           saveHandler={handleUpdate}
-          resetHandler={() => {
-            // empty all input
-            setValues({
-              url: "",
-              license: "",
-              enabled: true,
-              password: "",
-              state,
-            });
-          }}
+          resetHandler={reset}
         />
       )}
       {/* <button onClick={handleUpdate} className="btn">update</button> */}

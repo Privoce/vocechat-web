@@ -101,7 +101,7 @@ export default function useConfig(config: keyof ConfigMap = "smtp") {
   const updated = updates[config];
   const updating = updatings[config];
   const reset = () => {
-    setValues(undefined);
+    setValues(originalValue ? { ...originalValue } : undefined);
   };
 
   const toggleEnable = () => {
