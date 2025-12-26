@@ -8,6 +8,8 @@
   "fav_empty_tip": "该频道暂无收藏消息",
   "channel_members": "频道成员",
   "add_channel_members": "新增成员",
+  "announcement": "公告",
+  "channel_announcements": "频道公告",
   "welcome_channel": "欢迎来到 {{name}} 频道",
   "welcome_desc": "这是频道 #{{name}} 的开始。",
   "edit_channel": "编辑频道",

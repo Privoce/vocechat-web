@@ -233,6 +233,36 @@ interface MessageClearedEvent {
   latest_deleted_mid: number;
 }
 
+interface GroupAnnouncementCreatedEvent {
+  type: "group_announcement_created";
+  gid: number;
+  announcement: {
+    id: number;
+    gid: number;
+    content: string;
+    created_by: number;
+    created_at: string;
+  };
+}
+
+interface GroupAnnouncementUpdatedEvent {
+  type: "group_announcement_updated";
+  gid: number;
+  announcement: {
+    id: number;
+    gid: number;
+    content: string;
+    created_by: number;
+    created_at: string;
+  };
+}
+
+interface GroupAnnouncementDeletedEvent {
+  type: "group_announcement_deleted";
+  gid: number;
+  id: number;
+}
+
 export type ServerEvent =
   | ReadyEvent
   | UsersSnapshotEvent
@@ -255,4 +285,7 @@ export type ServerEvent =
   | UserCallEvent
   | ServerConfigChangedEvent
   | MessageClearedEvent
-  | UserRemark;
+  | UserRemark
+  | GroupAnnouncementCreatedEvent
+  | GroupAnnouncementUpdatedEvent
+  | GroupAnnouncementDeletedEvent;

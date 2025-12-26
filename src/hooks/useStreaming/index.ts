@@ -5,6 +5,7 @@ import { isNull, omitBy } from "lodash";
 
 import BASE_URL from "@/app/config";
 import { useRenewMutation } from "@/app/services/auth";
+import { serverApi } from "@/app/services/server";
 import { resetAuthData, updateLoginUser, updateRoleChanged } from "@/app/slices/auth.data";
 import {
   addChannel,
@@ -417,6 +418,15 @@ export default function useStreaming() {
             readUsers,
             readChannels,
           });
+          break;
+        }
+        case "group_announcement_created":
+        case "group_announcement_updated":
+        case "group_announcement_deleted": {
+          const { gid } = data;
+          dispatch(
+            serverApi.util.invalidateTags([{ type: "GroupAnnouncements", id: gid }])
+          );
           break;
         }
         default:

@@ -6,6 +6,7 @@
   "nav": {
     "general": "General",
     "overview": "Overview",
+    "announcement": "Announcement",
     "members": "Members",
     "data_management": "Data Management",
     "auto_delete_msg": "Auto-delete Messages",
@@ -46,7 +47,9 @@
     "add_friend": "Add friend",
     "dm_to_member": "DM to Member",
     "show_email": "Show Email",
-    "only_owner": "Only Owner and Admin Can Send Message"
+    "only_owner": "Only Owner and Admin Can Send Message",
+    "announcement_placeholder": "Enter announcement content...",
+    "no_announcements": "No announcements yet"
   },
   "dm": {
     "delete": "Delete User",
