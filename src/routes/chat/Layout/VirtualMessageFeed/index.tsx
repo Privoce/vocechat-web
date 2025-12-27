@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, forwardRef, useImperativeHandle } from "react";
 import { shallowEqual, useDispatch } from "react-redux";
 import { Virtuoso, VirtuosoHandle } from "react-virtuoso";
 import { useDebounce } from "rooks";
@@ -16,9 +16,14 @@ type Props = {
   context: ChatContext;
   id: number;
 };
+
+export interface VirtualMessageFeedHandle {
+  scrollToMessage: (mid: number) => void;
+}
+
 // const firstMsgIndex = 10000;
 // let prevMids: number[] = [];
-const VirtualMessageFeed = ({ context, id }: Props) => {
+const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ context, id }, ref) => {
   const dispatch = useDispatch();
   // const { t } = useTranslation("chat");
   // const [firstItemIndex, setFirstItemIndex] = useState(firstMsgIndex);
@@ -102,6 +107,16 @@ const VirtualMessageFeed = ({ context, id }: Props) => {
   const handleBottomStateChange = (bottom: boolean) => {
     setAtBottom(bottom);
   };
+  
+  useImperativeHandle(ref, () => ({
+    scrollToMessage: (mid: number) => {
+      const index = mids.findIndex((m) => m === mid);
+      if (index !== -1 && vList.current) {
+        vList.current.scrollToIndex({ index, align: "center", behavior: "smooth" });
+      }
+    }
+  }));
+  
   const readIndex = context == "channel" ? readChannels[id] : readUsers[id];
   return (
     <>
@@ -149,6 +164,8 @@ const VirtualMessageFeed = ({ context, id }: Props) => {
       )}
     </>
   );
-};
+});
+
+VirtualMessageFeed.displayName = "VirtualMessageFeed";
 
 export default VirtualMessageFeed;
