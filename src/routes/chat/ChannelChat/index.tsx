@@ -1,4 +1,4 @@
-import { memo, useEffect } from "react";
+import { memo, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { shallowEqual, useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -10,11 +10,13 @@ import { useAppSelector } from "@/app/store";
 import ChannelIcon from "@/components/ChannelIcon";
 import GoBackNav from "@/components/GoBackNav";
 import Tooltip from "@/components/Tooltip";
+import MessageSearch from "@/components/MessageSearch";
 import IconFav from "@/assets/icons/bookmark.svg";
 import IconPeople from "@/assets/icons/people.svg";
 import IconPin from "@/assets/icons/pin.svg";
 import FavList from "../FavList";
 import Layout from "../Layout";
+import { VirtualMessageFeedHandle } from "../Layout/VirtualMessageFeed";
 import VoiceChat from "../VoiceChat";
 import Dashboard from "../VoiceChat/Dashboard";
 import Members from "./Members";
@@ -32,6 +34,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const feedRef = useRef<VirtualMessageFeedHandle>(null);
   const loginUser = useAppSelector((store) => store.authData.user, shallowEqual);
   const visibleAside = useAppSelector((store) => store.footprint.channelAsides[cid], shallowEqual);
   const userIds = useAppSelector((store) => store.users.ids, shallowEqual);
@@ -58,6 +61,10 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
     );
   };
 
+  const handleLocate = (mid: number) => {
+    feedRef.current?.scrollToMessage(mid);
+  };
+
   if (!data) return null;
   const { name, description, is_public, members = [], owner } = data;
   const memberIds = is_public ? userIds : members.slice(0).sort((n) => (n == owner ? -1 : 0));
@@ -71,6 +78,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
       to={cid}
       context="channel"
       dropFiles={dropFiles}
+      feedRef={feedRef}
       aside={
         <ul className="flex flex-col gap-6">
           <Tooltip tip={t("pin")} placement="left">
@@ -129,6 +137,7 @@ function ChannelChat({ cid = 0, dropFiles = [] }: Props) {
             </Link>
             <span className="ml-2 text-gray-500 hidden md:block">{description}</span>
           </div>
+          <MessageSearch context="channel" id={cid} onLocate={handleLocate} />
         </header>
       }
       users={

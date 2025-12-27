@@ -1,4 +1,4 @@
-import { FC, ReactElement, useEffect } from "react";
+import { FC, ReactElement, useEffect, useRef } from "react";
 import { useDrop } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
 import { toast } from "react-hot-toast";
@@ -17,7 +17,7 @@ import DnDTip from "./DnDTip";
 import LicenseUpgradeTip from "./LicenseOutdatedTip";
 import LoginTip from "./LoginTip";
 import Operations from "./Operations";
-import VirtualMessageFeed from "./VirtualMessageFeed";
+import VirtualMessageFeed, { VirtualMessageFeedHandle } from "./VirtualMessageFeed";
 import { platform } from "@/utils";
 import { shallowEqual } from "react-redux";
 
@@ -30,12 +30,14 @@ interface Props {
   dropFiles?: File[];
   context: ChatContext;
   to: number;
+  feedRef?: React.RefObject<VirtualMessageFeedHandle>;
 }
 
 const Layout: FC<Props> = ({
   readonly = false,
   header,
   aside = null,
+  feedRef,
   users = null,
   voice = null,
   dropFiles = [],
@@ -101,7 +103,7 @@ const Layout: FC<Props> = ({
               {context == "dm" && <DMVoice uid={to} />}
               {context == "dm" && <AddContactTip uid={to} />}
               {/* 消息流 */}
-              <VirtualMessageFeed key={`${context}_${to}`} context={context} id={to} />
+              <VirtualMessageFeed ref={feedRef} key={`${context}_${to}`} context={context} id={to} />
               {/* 发送框 */}
               <div className={`px-2 py-0 md:p-4 ${selects ? "selecting" : ""}`}>
                 {readonly ? (
