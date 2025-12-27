@@ -1,6 +1,6 @@
 {
   "name": "vocechat-web",
-  "version": "0.9.40",
+  "version": "0.9.41",
   "homepage": "https://voce.chat",
   "dependencies": {
     "@metamask/onboarding": "^1.0.1",
