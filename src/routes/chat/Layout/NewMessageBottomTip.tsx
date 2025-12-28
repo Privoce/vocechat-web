@@ -1,6 +1,6 @@
-// import { useState, useEffect } from 'react';
 import { useTranslation } from "react-i18next";
 import clsx from "clsx";
+import DoubleDown from "./double-down.svg";
 
 import { useAppSelector } from "../../../app/store";
 import { ChatContext } from "../../../types/common";
@@ -13,7 +13,7 @@ type Props = {
   id: number;
   scrollToBottom?: () => void;
 };
-// linear-gradient(135deg,_#3C8CE7_0%,_#00EAFF_100%)
+
 const NewMessageBottomTip = ({ context, id, scrollToBottom }: Props) => {
   const { t } = useTranslation("chat");
   const readIndex = useAppSelector(
@@ -31,21 +31,28 @@ const NewMessageBottomTip = ({ context, id, scrollToBottom }: Props) => {
     mids,
     readIndex,
     messageData,
-    loginUid
+    loginUid,
   });
-  console.log("unreads", unreads);
+
+  const style =
+    unreads > 0
+      ? { background: "linear-gradient(135deg, #3C8CE7 0%, #00EAFF 100%)" }
+      : { background: "rgba(156, 163, 175, 0.5)" };
 
   return (
     <aside
       className={clsx(
-        `z-[999] absolute bottom-20 right-4
-                                justify-between text-xs
-                                rounded-full py-1 px-3 text-white
-                                bg-gradient-to-tl from-[#3C8CE7] to-[#00EAFF]`,
-        unreads > 0 ? "flex" : "hidden"
+        "z-[999] absolute bottom-20 right-4 justify-center text-xs rounded-full text-white flex items-center cursor-pointer",
+        unreads > 0 ? "py-1 px-3" : "w-8 h-8"
       )}
+      style={style}
+      onClick={scrollToBottom}
     >
-      <button onClick={scrollToBottom}>{t("new_msg", { num: unreads })}</button>
+      {unreads > 0 ? (
+        <span>{t("new_msg", { num: unreads })}</span>
+      ) : (
+        <DoubleDown />
+      )}
     </aside>
   );
 };
