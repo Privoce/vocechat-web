@@ -14,6 +14,7 @@ import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin
 
 import { isDarkMode } from "../utils";
 import ImagePreview from "./ImagePreview";
+import katexPlugin from "./MarkdownRender/katexPlugin";
 
 interface IProps {
   cleanMode?: boolean;
@@ -37,7 +38,7 @@ const MarkdownRender: FC<IProps> = ({ content, cleanMode = false }) => {
       <div ref={mdContainer} id="MARKDOWN_CONTAINER">
         <Viewer
           initialValue={content}
-          plugins={[codeSyntaxHighlight]}
+          plugins={[codeSyntaxHighlight, katexPlugin]}
           theme={isDarkMode() ? "dark" : "light"}
         ></Viewer>
       </div>
