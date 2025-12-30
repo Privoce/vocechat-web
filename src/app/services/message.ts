@@ -1,4 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
+import { batch } from "react-redux";
 
 import { ChatContext } from "@/types/common";
 import { ChatMessage, ContentTypeKey, UploadFileResponse } from "@/types/message";
@@ -224,9 +225,23 @@ export const messageApi = createApi({
         const { data: messages } = await queryFulfilled;
         const fromHistory = true;
         if (messages?.length) {
-          messages.forEach((msg) => {
-            handleChatMessage(msg, dispatch, getState() as RootState, fromHistory);
-          });
+          // 分批处理消息，避免阻塞主线程
+          const batchSize = 20;
+          const processBatch = (startIndex: number) => {
+            const endIndex = Math.min(startIndex + batchSize, messages.length);
+            batch(() => {
+              for (let i = startIndex; i < endIndex; i++) {
+                handleChatMessage(messages[i], dispatch, getState() as RootState, fromHistory);
+              }
+            });
+            
+            if (endIndex < messages.length) {
+              // 使用 setTimeout 让出主线程，继续处理下一批
+              setTimeout(() => processBatch(endIndex), 0);
+            }
+          };
+          
+          processBatch(0);
         }
       }
     }),
