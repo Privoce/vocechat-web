@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState, forwardRef, useImperativeHandle } from "react";
+import { useCallback, useEffect, useRef, useState, forwardRef, useImperativeHandle, useMemo } from "react";
 import { shallowEqual, useDispatch } from "react-redux";
 import { Virtuoso, VirtuosoHandle } from "react-virtuoso";
 import { useDebounce } from "rooks";
@@ -28,6 +28,8 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
   // const { t } = useTranslation("chat");
   // const [firstItemIndex, setFirstItemIndex] = useState(firstMsgIndex);
   const [atBottom, setAtBottom] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(100);
+  const isInitializing = useRef(false);
   const [loadMoreMessage, { isLoading: loadingMore, isSuccess, data: historyData }] =
     useLazyLoadMoreMessagesQuery();
   const vList = useRef<VirtuosoHandle | null>(null);
@@ -40,19 +42,32 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
         : store.footprint.historyChannels[id] ?? "",
     shallowEqual
   );
-  const mids = useAppSelector(
+  const allMids = useAppSelector(
     (store) =>
       context == "dm" ? store.userMessage.byId[id] ?? [] : store.channelMessage[id] ?? [],
     shallowEqual
   );
+  
+  const mids = useMemo(() => {
+    if (allMids.length <= visibleCount) return allMids;
+    return allMids.slice(-visibleCount);
+  }, [allMids, visibleCount]);
   const selects = useAppSelector(
     (store) => store.ui.selectMessages[`${context}_${id}`],
     shallowEqual
   );
-  const messageData = useAppSelector((store) => store.message || {}, shallowEqual);
   const loginUid = useAppSelector((store) => store.authData.user?.uid, shallowEqual);
+  const messageData = useAppSelector((store) => store.message, shallowEqual);
   const readChannels = useAppSelector((store) => store.footprint.readChannels, shallowEqual);
   const readUsers = useAppSelector((store) => store.footprint.readUsers, shallowEqual);
+
+  useEffect(() => {
+    isInitializing.current = true;
+    setVisibleCount(100);
+    setTimeout(() => {
+      isInitializing.current = false;
+    }, 500);
+  }, [id]);
 
   useEffect(() => {
     if (isSuccess && historyData) {
@@ -75,14 +90,17 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
   // 加载更多
   const handleTopStateChange = (isTop: boolean) => {
     console.log("reach top ", isTop);
-    if (isTop) {
-      if (historyMid === "reached") return;
-      let lastMid = mids.slice(0, 1)[0];
-      if (historyMid) {
-        lastMid = +historyMid;
+    if (isTop && !isInitializing.current) {
+      if (allMids.length > visibleCount) {
+        setVisibleCount(prev => Math.min(prev + 100, allMids.length));
+      } else {
+        if (historyMid === "reached") return;
+        let lastMid = allMids.slice(0, 1)[0];
+        if (historyMid) {
+          lastMid = +historyMid;
+        }
+        loadMoreMessage({ context, id, mid: lastMid });
       }
-      // prevMids = mids;
-      loadMoreMessage({ context, id, mid: lastMid });
     }
   };
   // 自动跟随
@@ -101,9 +119,9 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
   const handleScrollBottom = useCallback(() => {
     const vl = vList!.current;
     if (vl) {
-      vl.scrollToIndex(mids.length - 1);
+      vl.scrollToIndex(allMids.length - 1);
     }
-  }, [mids]);
+  }, [allMids]);
   const handleBottomStateChange = (bottom: boolean) => {
     setAtBottom(bottom);
   };
@@ -113,16 +131,44 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
       const index = mids.findIndex((m) => m === mid);
       if (index !== -1 && vList.current) {
         vList.current.scrollToIndex({ index, align: "center", behavior: "smooth" });
+      } else if (allMids.includes(mid)) {
+        setVisibleCount(allMids.length);
+        setTimeout(() => {
+          const idx = allMids.findIndex((m) => m === mid);
+          if (idx !== -1 && vList.current) {
+            vList.current.scrollToIndex({ index: idx, align: "center", behavior: "smooth" });
+          }
+        }, 100);
       }
     }
   }));
   
   const readIndex = context == "channel" ? readChannels[id] : readUsers[id];
+  
+  // 缓存itemContent函数，避免每次都创建新函数
+  const itemContent = useCallback((idx: number, mid: number) => {
+    const curr = messageData[mid];
+    if (!curr) return <div className="w-full h-[1px] invisible"></div>;
+    const isFirst = idx == 0;
+    const prev = isFirst ? null : messageData[mids[idx - 1]];
+    const read = curr?.from_uid == loginUid || mid <= readIndex;
+    return renderMessageFragment({
+      selectMode: !!selects,
+      updateReadIndex: updateReadDebounced,
+      read,
+      prev,
+      curr,
+      contextId: id,
+      context
+    });
+  }, [messageData, mids, loginUid, readIndex, selects, updateReadDebounced, id, context]);
+  
   return (
     <>
       <Virtuoso
         // logLevel={LogLevel.DEBUG}
         overscan={50}
+        increaseViewportBy={{ top: 0, bottom: 400 }}
         context={{ loadingMore, id, isChannel: context == "channel" }}
         id={`VOCECHAT_FEED_${context}_${id}`}
         className="px-1 md:px-4 py-4.5 overflow-x-hidden overflow-y-scroll"
@@ -133,6 +179,7 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
         }}
         // firstItemIndex={firstItemIndex}
         initialTopMostItemIndex={mids.length - 1}
+        alignToBottom
         // startReached={handleLoadMore}
         data={mids}
         atTopThreshold={context == "channel" ? 160 : 0}
@@ -140,24 +187,7 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
         atBottomStateChange={handleBottomStateChange}
         atBottomThreshold={400}
         followOutput={handleFollowOutput}
-        itemContent={(idx, mid) => {
-          // 计算出真正的 index
-          // const idx = index - firstItemIndex;
-          const curr = messageData[mid];
-          if (!curr) return <div className="w-full h-[1px] invisible"></div>;
-          const isFirst = idx == 0;
-          const prev = isFirst ? null : messageData[mids[idx - 1]];
-          const read = curr?.from_uid == loginUid || mid <= readIndex;
-          return renderMessageFragment({
-            selectMode: !!selects,
-            updateReadIndex: updateReadDebounced,
-            read,
-            prev,
-            curr,
-            contextId: id,
-            context
-          });
-        }}
+        itemContent={itemContent}
       />
       {!atBottom && (
         <NewMessageBottomTip context={context} id={id} scrollToBottom={handleScrollBottom} />

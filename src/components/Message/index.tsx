@@ -49,8 +49,10 @@ const Message: FC<IProps> = ({
     shallowEqual
   );
   const loginUid = useAppSelector((store) => store.authData.user?.uid, shallowEqual);
-  const usersData = useAppSelector((store) => store.users.byId, shallowEqual);
-  const reactionMessageData = useAppSelector((store) => store.reactionMessage, shallowEqual);
+  // 只订阅当前消息发送者的用户信息，而不是整个usersData
+  const currUser = useAppSelector((store) => store.users.byId[message?.from_uid || 0], shallowEqual);
+  // 只订阅当前消息的reaction，而不是整个reactionMessageData
+  const reactions = useAppSelector((store) => store.reactionMessage[mid], shallowEqual);
 
   const toggleEditMessage = () => {
     setEdit((prev) => !prev);
@@ -84,14 +86,18 @@ const Message: FC<IProps> = ({
     failed = false,
   } = message;
 
-  const reactions = reactionMessageData[mid];
-  const currUser = usersData[fromUid || 0];
+  // 获取pinInfo中需要的用户信息
+  const pinInfo = getPinInfo(mid);
+  const pinCreatorName = useAppSelector((store) => 
+    pinInfo?.created_by ? store.users.byId[pinInfo.created_by]?.name : undefined, 
+    shallowEqual
+  );
+  
   // if (!message) return null;
   let timePrefix = null;
   const dayjsTime = dayjs(time);
   timePrefix = dayjsTime.isToday() ? "Today" : dayjsTime.isYesterday() ? "Yesterday" : null;
 
-  const pinInfo = getPinInfo(mid);
   // return null;
   const _key = properties?.local_id || mid;
   const showExpire = (expires_in ?? 0) > 0;
@@ -143,9 +149,7 @@ const Message: FC<IProps> = ({
             pinInfo && "relative",
             isSelf && "items-end"
           )}
-          data-pin-tip={`pinned by ${
-            pinInfo?.created_by ? usersData[pinInfo.created_by]?.name : ""
-          }`}
+          data-pin-tip={`pinned by ${pinCreatorName || ""}`}
         >
           {pinInfo && (
             <span
@@ -154,7 +158,7 @@ const Message: FC<IProps> = ({
                 isSelf ? "right-0" : "left-0"
               )}
             >
-              {`pinned by ${pinInfo.created_by ? usersData[pinInfo.created_by]?.name : ""}`}
+              {`pinned by ${pinCreatorName || ""}`}
             </span>
           )}
           <div
