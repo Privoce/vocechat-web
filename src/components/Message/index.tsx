@@ -53,6 +53,12 @@ const Message: FC<IProps> = ({
   const currUser = useAppSelector((store) => store.users.byId[message?.from_uid || 0], shallowEqual);
   // 只订阅当前消息的reaction，而不是整个reactionMessageData
   const reactions = useAppSelector((store) => store.reactionMessage[mid], shallowEqual);
+  // 获取pinInfo中需要的用户信息
+  const pinInfo = getPinInfo(mid);
+  const pinCreatorName = useAppSelector((store) => 
+    pinInfo?.created_by ? store.users.byId[pinInfo.created_by]?.name : undefined, 
+    shallowEqual
+  );
 
   const toggleEditMessage = () => {
     setEdit((prev) => !prev);
@@ -85,13 +91,6 @@ const Message: FC<IProps> = ({
     expires_in = 0,
     failed = false,
   } = message;
-
-  // 获取pinInfo中需要的用户信息
-  const pinInfo = getPinInfo(mid);
-  const pinCreatorName = useAppSelector((store) => 
-    pinInfo?.created_by ? store.users.byId[pinInfo.created_by]?.name : undefined, 
-    shallowEqual
-  );
   
   // if (!message) return null;
   let timePrefix = null;

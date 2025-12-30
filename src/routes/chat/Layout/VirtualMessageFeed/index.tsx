@@ -70,6 +70,58 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
   }, [id]);
 
   useEffect(() => {
+    const feedId = `VOCECHAT_FEED_${context}_${id}`;
+    const feedEle = document.getElementById(feedId);
+    
+    const handleScrollToMessage = (evt: CustomEvent) => {
+      const { mid } = evt.detail;
+      const index = mids.findIndex((m) => m === mid);
+      if (index !== -1 && vList.current) {
+        vList.current.scrollToIndex({ index, align: "center", behavior: "smooth" });
+        setTimeout(() => {
+          const msgEle = document.querySelector<HTMLDivElement>(`[data-msg-mid='${mid}']`);
+          if (msgEle) {
+            const _class1 = `md:dark:bg-gray-800`;
+            const _class2 = `md:bg-gray-100`;
+            msgEle.classList.add(_class1);
+            msgEle.classList.add(_class2);
+            setTimeout(() => {
+              msgEle.classList.remove(_class1);
+              msgEle.classList.remove(_class2);
+            }, 3000);
+          }
+        }, 500);
+      } else if (allMids.includes(mid)) {
+        setVisibleCount(allMids.length);
+        setTimeout(() => {
+          const idx = allMids.findIndex((m) => m === mid);
+          if (idx !== -1 && vList.current) {
+            vList.current.scrollToIndex({ index: idx, align: "center", behavior: "smooth" });
+            setTimeout(() => {
+              const msgEle = document.querySelector<HTMLDivElement>(`[data-msg-mid='${mid}']`);
+              if (msgEle) {
+                const _class1 = `md:dark:bg-gray-800`;
+                const _class2 = `md:bg-gray-100`;
+                msgEle.classList.add(_class1);
+                msgEle.classList.add(_class2);
+                setTimeout(() => {
+                  msgEle.classList.remove(_class1);
+                  msgEle.classList.remove(_class2);
+                }, 3000);
+              }
+            }, 500);
+          }
+        }, 100);
+      }
+    };
+    
+    feedEle?.addEventListener('scrollToMessage', handleScrollToMessage as EventListener);
+    return () => {
+      feedEle?.removeEventListener('scrollToMessage', handleScrollToMessage as EventListener);
+    };
+  }, [context, id, mids, allMids]);
+
+  useEffect(() => {
     if (isSuccess && historyData) {
       if (historyData.length == 0) {
         // 到顶了
