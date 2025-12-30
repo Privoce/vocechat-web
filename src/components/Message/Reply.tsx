@@ -102,6 +102,13 @@ const Reply: FC<ReplyProps> = ({ mid, interactive = true, context, to = 0 }) => 
         msgEle.classList.remove(_class1);
         msgEle.classList.remove(_class2);
       }, 3000);
+    } else {
+      // 消息不在DOM中，触发自定义事件让虚拟列表滚动
+      const feedId = `VOCECHAT_FEED_${context}_${to}`;
+      const feedEle = document.getElementById(feedId);
+      if (feedEle) {
+        feedEle.dispatchEvent(new CustomEvent('scrollToMessage', { detail: { mid: Number(mid) } }));
+      }
     }
   };
   const defaultClass = `w-fit flex items-start flex-col md:flex-row p-2 bg-gray-100 dark:bg-gray-900 rounded-lg gap-2 mb-1`;
