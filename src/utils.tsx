@@ -101,7 +101,7 @@ export const isElementVisible = (el: Element | null) => {
   );
 };
 export function getDefaultSize(
-  size?: { width: number; height: number },
+  size?: { width?: number; height?: number },
   limit?: { min: number; max: number }
 ) {
   if (!size) return { width: 0, height: 0 };
