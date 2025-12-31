@@ -10,7 +10,7 @@ type Props = {
   thumbnail: string;
   download: string;
   content: string;
-  properties: { width: number; height: number };
+  properties: { width?: number; height?: number; name?: string; content_type?: string; size?: number };
 };
 
 const ImageMessage: FC<Props> = ({

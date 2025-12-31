@@ -4,20 +4,25 @@ import ImagePreviewModal, { PreviewImageData } from "./ImagePreviewModal";
 
 type Props = {
   context?: "chat" | "markdown";
+  container?: HTMLElement | null;
 };
 
-const ImagePreview = ({ context = "chat" }: Props) => {
+const ImagePreview = ({ context = "chat", container: containerProp }: Props) => {
   const [previewImage, setPreviewImage] = useState<PreviewImageData | null>(null);
   const closePreviewModal = () => {
     setPreviewImage(null);
   };
   useEffect(() => {
-    const container = document.querySelector("#CHAT_WRAPPER") as HTMLDivElement;
+    const container = containerProp || (document.querySelector("#CHAT_WRAPPER") as HTMLDivElement);
     if (!container) return;
     const chatHandler = (evt: MouseEvent) => {
       const target = evt.target as HTMLImageElement;
+      // 检查灯箱是否已经打开，如果是则忽略所有点击
+      if (document.querySelector(".yarl__root")) return;
       const isMsg = !!target.closest(".vc-msg");
-      if (isMsg && target && target.nodeName == "IMG" && target.classList.contains("preview")) {
+      // 排除 markdown 容器内的图片，避免重复处理
+      const isInMarkdown = !!target.closest("#MARKDOWN_CONTAINER");
+      if (isMsg && target && target.nodeName == "IMG" && target.classList.contains("preview") && !isInMarkdown) {
         // console.log("click chat", target);
         evt.stopPropagation();
         const thumbnail = target.src;
@@ -29,9 +34,13 @@ const ImagePreview = ({ context = "chat" }: Props) => {
     };
     const markdownHandler = (evt: MouseEvent) => {
       const target = evt.target as HTMLImageElement;
+      // 检查灯箱是否已经打开，如果是则忽略所有点击
+      if (document.querySelector(".yarl__root")) return;
       const isMsg = !!target.closest(".vc-msg");
+      // 只处理 markdown 容器内的图片
+      const isInMarkdown = !!target.closest("#MARKDOWN_CONTAINER");
       // 图片 并且没被 a 标签包裹
-      if (isMsg && target && target.nodeName == "IMG" && target.parentElement?.tagName !== "A") {
+      if (isMsg && target && target.nodeName == "IMG" && target.parentElement?.tagName !== "A" && isInMarkdown) {
         // console.log("click markdown", target);
         evt.stopPropagation();
         const urlObj = new URL(target.src);
@@ -55,7 +64,7 @@ const ImagePreview = ({ context = "chat" }: Props) => {
     return () => {
       container.removeEventListener("click", handler, true);
     };
-  }, [context]);
+  }, [context, containerProp]);
   return previewImage ? (
     <ImagePreviewModal download={true} data={previewImage} closeModal={closePreviewModal} />
   ) : null;
