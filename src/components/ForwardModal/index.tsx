@@ -24,9 +24,10 @@ const ForwardModal: FC<IProps> = ({ mids, closeModal }) => {
   const { t } = useTranslation();
   const [appendText, setAppendText] = useState("");
   const { sendMessages } = useSendMessage();
-  const { forwardMessage, forwarding } = useForwardMessage();
+  const { forwardMessage, forwardMessageOneByOne, forwarding } = useForwardMessage();
   const [selectedMembers, setSelectedMembers] = useState<number[]>([]);
   const [selectedChannels, setSelectedChannels] = useState<number[]>([]);
+  const [forwardOneByOne, setForwardOneByOne] = useState(false);
   const {
     channels,
     // input: channelInput,
@@ -44,11 +45,19 @@ const ForwardModal: FC<IProps> = ({ mids, closeModal }) => {
     setAppendText(evt.target.value);
   };
   const handleForward = async () => {
-    await forwardMessage({
-      mids: mids.map((mid) => +mid),
-      users: selectedMembers,
-      channels: selectedChannels
-    });
+    if (forwardOneByOne) {
+      await forwardMessageOneByOne({
+        mids: mids.map((mid) => +mid),
+        users: selectedMembers,
+        channels: selectedChannels
+      });
+    } else {
+      await forwardMessage({
+        mids: mids.map((mid) => +mid),
+        users: selectedMembers,
+        channels: selectedChannels
+      });
+    }
     if (appendText.trim()) {
       await sendMessages({
         content: appendText,
@@ -154,6 +163,15 @@ const ForwardModal: FC<IProps> = ({ mids, closeModal }) => {
               <Reply key={mid} mid={mid} interactive={false} />
             ))}
           </div>
+          <label className="flex items-center gap-2 mb-2 text-sm text-gray-700 dark:text-gray-300 cursor-pointer">
+            <StyledCheckbox
+              checked={forwardOneByOne}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setForwardOneByOne(e.target.checked)}
+              name="forwardType"
+              id="forwardType"
+            />
+            <span>逐条转发</span>
+          </label>
           <Input
             className="mb-8"
             placeholder="Leave a message"
