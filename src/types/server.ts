@@ -49,6 +49,12 @@ export interface VocespaceConfig {
   license: string;
   state: "success" | "undeployed" | "";
   server_type?: "nas" | "vps" | "other";
+  /**
+   * use additional_domains
+   * - key: domain
+   * - value: is deployed
+   */
+  additional_domains?: Map<string, boolean>;
 }
 
 export interface AgoraVoicingListResponse {
