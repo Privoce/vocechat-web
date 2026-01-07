@@ -191,6 +191,12 @@ export const serverApi = createApi({
         body: data,
       }),
     }),
+    healthCheckVocespace: builder.mutation<boolean, { url: string }>({
+      query: (data) => ({
+        url: `/admin/vocespace/health/${encodeURIComponent(data.url)}`,
+        method: "GET",
+      }),
+    }),
     getAgoraStatus: builder.query<boolean, void>({
       query: () => ({ url: `/admin/agora/enabled` }),
     }),
@@ -499,4 +505,5 @@ export const {
   useGetVocespaceConfigQuery,
   useLazyGetVocespaceConfigQuery,
   useUpdateVocespaceConfigMutation,
+  useHealthCheckVocespaceMutation,
 } = serverApi;

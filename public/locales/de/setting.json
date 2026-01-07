@@ -26,6 +26,10 @@
     "video": "Videoanrufe"
   },
   "vocespace": {
+    "add": "Hinzufügen",
+    "check": "Überprüfen",
+    "checked": "Bestanden",
+    "failed": "Fehlgeschlagen",
     "title": "VoceSpace",
     "desc": "Selbstgehosteter VoceSpace (Automatisierte Bereitstellung)",
     "prerequisite": [

@@ -113,9 +113,20 @@ const VoiceChat = ({ id, context = "channel" }: Props) => {
         `https://vocespace.com/${context}_${id}_${encodeURIComponent(genUUID())}`
       );
     } else if (vocespaceConfig && vocespaceConfig?.enabled && vocespaceConfig.state === "success") {
-      let url = vocespaceConfig.url;
+      // 优先使用 additional_domains 中健康检查通过的域名
+      let domain = vocespaceConfig.url;
+      if (vocespaceConfig.additional_domains && vocespaceConfig.additional_domains instanceof Map) {
+        const healthyDomain = Array.from(vocespaceConfig.additional_domains.entries()).find(
+          ([_, isHealthy]) => isHealthy
+        );
+        if (healthyDomain) {
+          domain = healthyDomain[0];
+        }
+      }
+
+      let url = domain;
       if (url.includes(":7880")) {
-        url = `http://${url.replace(":7880", ":3008")}/${context}_${id}`;
+        url = `https://${url.replace(":7880", ":3008")}/${context}_${id}`;
       } else {
         url = `https://${url}/${context}_${id}`;
       }

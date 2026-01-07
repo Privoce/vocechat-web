@@ -26,6 +26,10 @@
     "video": "Video"
   },
   "vocespace": {
+    "add": "Agregar",
+    "check": "Comprobar",
+    "checked": "Aprobado",
+    "failed": "Fallido",
     "title": "VoceSpace",
     "desc": "VoceSpace implementado de forma privada (implementación automática)",
     "sub_desc": "Cada cuenta de VoceSpace disfrutará de llamadas ilimitadas gratuitas, 5 usuarios simultáneos y resolución 4K. No es necesario crear una cuenta. Siga las instrucciones a continuación para configurar correctamente su VoceSpace.",
