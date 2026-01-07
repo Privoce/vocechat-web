@@ -22,6 +22,10 @@
     "video": "ビデオ"
   },
   "vocespace": {
+    "add": "追加",
+    "check": "確認",
+    "checked": "合格",
+    "failed": "失敗",
     "title": "VoceSpace",
     "desc": "VoceSpace をプライベートに導入（自動導入）",
     "sub_desc": "VoceSpace アカウントごとに、通話時間無制限、同時接続ユーザー5名、4K解像度のサービスを無料でご利用いただけます。アカウント作成は不要です。VoceSpace を適切に設定するには、以下の手順に従ってください。",

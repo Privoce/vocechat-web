@@ -276,6 +276,10 @@
     "how_to": "How to setup Agora?"
   },
   "vocespace": {
+    "add": "Add",
+    "check": "Check",
+    "checked": "Pass",
+    "failed": "Failed",
     "title": "VoceSpace",
     "desc": "Use self-hosted VoceSpace (Automated Deployment)",
     "prerequisite": [
