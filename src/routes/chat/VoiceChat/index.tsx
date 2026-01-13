@@ -48,12 +48,17 @@ const VoiceChat = ({ id, context = "channel" }: Props) => {
     if (!showVoceSpace) {
       setChatType("agora");
     } else {
-      if (conf) {
+      if (conf && conf.enabled) {
         setVoceSpaceConfig(conf);
         setChatType("vocespace");
+      } else if (conf && !conf.enabled) {
+        setVoceSpaceConfig(conf);
+        setChatType("agora");
+      } else {
+        setChatType("agora");
       }
     }
-  }, [showVoceSpace]);
+  }, [showVoceSpace, enabled, conf]);
 
   const toggleDashboard = () => {
     const data = {
