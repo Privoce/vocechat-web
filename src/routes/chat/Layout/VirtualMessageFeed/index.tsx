@@ -11,6 +11,8 @@ import { renderMessageFragment } from "../../utils";
 import NewMessageBottomTip from "../NewMessageBottomTip";
 import CustomHeader from "./CustomHeader";
 import CustomList from "./CustomList";
+import { makeSelectVisibleMessages } from "@/app/selectors/message";
+import { updateSelectMessages } from "@/app/slices/ui";
 
 type Props = {
   context: ChatContext;
@@ -28,12 +30,21 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
   // const { t } = useTranslation("chat");
   // const [firstItemIndex, setFirstItemIndex] = useState(firstMsgIndex);
   const [atBottom, setAtBottom] = useState(false);
-  const [visibleCount, setVisibleCount] = useState(100);
+  // Reduce initial visible count for better performance on low-end devices
+  const [visibleCount, setVisibleCount] = useState(50);
   const [loadMoreMessage, { isLoading: loadingMore, isSuccess, data: historyData }] =
     useLazyLoadMoreMessagesQuery();
   const vList = useRef<VirtuosoHandle | null>(null);
   const [updateReadIndex] = useReadMessageMutation();
-  const updateReadDebounced = useDebounce(updateReadIndex, 300);
+  // Increase debounce time for better performance on low-end devices
+  const updateReadDebounced = useDebounce(updateReadIndex, 500);
+  // Store debounced function in ref to avoid recreating itemContent
+  const updateReadDebouncedRef = useRef(updateReadDebounced);
+  updateReadDebouncedRef.current = updateReadDebounced;
+
+  // Create memoized selector instance for this component
+  const selectVisibleMessages = useMemo(() => makeSelectVisibleMessages(), []);
+
   const historyMid = useAppSelector(
     (store) =>
       context == "dm"
@@ -46,42 +57,61 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
       context == "dm" ? store.userMessage.byId[id] ?? [] : store.channelMessage[id] ?? [],
     shallowEqual
   );
-  
+
+  // Stabilize mids array reference - only create new array if content actually changed
   const mids = useMemo(() => {
     if (allMids.length <= visibleCount) return allMids;
     return allMids.slice(-visibleCount);
   }, [allMids, visibleCount]);
+
+  // Use ref to track previous mids for comparison
+  const prevMidsRef = useRef<number[]>([]);
+  const stableMids = useMemo(() => {
+    // Check if mids actually changed
+    if (prevMidsRef.current.length === mids.length) {
+      let same = true;
+      for (let i = 0; i < mids.length; i++) {
+        if (prevMidsRef.current[i] !== mids[i]) {
+          same = false;
+          break;
+        }
+      }
+      if (same) return prevMidsRef.current;
+    }
+    prevMidsRef.current = mids;
+    return mids;
+  }, [mids]);
   const selects = useAppSelector(
     (store) => store.ui.selectMessages[`${context}_${id}`],
     shallowEqual
   );
   const loginUid = useAppSelector((store) => store.authData.user?.uid, shallowEqual);
-  // Only subscribe to visible messages instead of entire message store
-  const messageData = useAppSelector((store) => {
-    const data: Record<number, any> = {};
-    mids.forEach(mid => {
-      if (store.message[mid]) {
-        data[mid] = store.message[mid];
-      }
-    });
-    return data;
-  }, shallowEqual);
+
+  // Create stable toggleSelect function
+  const toggleSelect = useCallback((mid: number, selected: boolean) => {
+    const operation = selected ? "remove" : "add";
+    dispatch(updateSelectMessages({ context, id, operation, data: mid }));
+  }, [context, id, dispatch]);
+
+  // Use memoized selector to get message data - this will only recompute when the specific messages change
+  const messageData = useAppSelector((store) => selectVisibleMessages(store, stableMids));
+
   const readChannels = useAppSelector((store) => store.footprint.readChannels, shallowEqual);
   const readUsers = useAppSelector((store) => store.footprint.readUsers, shallowEqual);
 
   useEffect(() => {
     // Reset visible count when switching chats
-    setVisibleCount(100);
+    setVisibleCount(50);
     setAtBottom(false);
   }, [id]);
 
   useEffect(() => {
     const feedId = `VOCECHAT_FEED_${context}_${id}`;
     const feedEle = document.getElementById(feedId);
-    
+
     const handleScrollToMessage = (evt: CustomEvent) => {
       const { mid } = evt.detail;
-      const index = mids.findIndex((m) => m === mid);
+      const index = stableMids.findIndex((m) => m === mid);
       if (index !== -1 && vList.current) {
         vList.current.scrollToIndex({ index, align: "center", behavior: "smooth" });
         setTimeout(() => {
@@ -120,12 +150,12 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
         }, 100);
       }
     };
-    
+
     feedEle?.addEventListener('scrollToMessage', handleScrollToMessage as EventListener);
     return () => {
       feedEle?.removeEventListener('scrollToMessage', handleScrollToMessage as EventListener);
     };
-  }, [context, id, mids, allMids]);
+  }, [context, id, stableMids, allMids]);
 
   useEffect(() => {
     if (isSuccess && historyData) {
@@ -138,7 +168,7 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
         dispatch(updateHistoryMark({ type: context, id, mid: `${mid}` }));
       }
     }
-  }, [isSuccess, historyData, mids, context, id]);
+  }, [isSuccess, historyData, stableMids, context, id]);
   // useEffect(() => {
   //     console.log("diff mids", prevMids, mids);
   //     const newCount = mids.length - prevMids.length;
@@ -150,7 +180,8 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
     console.log("reach top ", isTop);
     if (isTop) {
       if (allMids.length > visibleCount) {
-        setVisibleCount(prev => Math.min(prev + 100, allMids.length));
+        // Load 50 messages at a time for better performance
+        setVisibleCount(prev => Math.min(prev + 50, allMids.length));
       } else {
         if (historyMid === "reached") return;
         let lastMid = allMids.slice(0, 1)[0];
@@ -163,7 +194,7 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
   };
   // 自动跟随
   const handleFollowOutput = (isAtBottom: boolean) => {
-    const [lastMid] = mids ? mids.slice(-1) : [0];
+    const [lastMid] = stableMids ? stableMids.slice(-1) : [0];
     const ts = new Date().getTime();
     // tricky
     const isSentByMyself = ts - lastMid < 1000;
@@ -186,7 +217,7 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
   
   useImperativeHandle(ref, () => ({
     scrollToMessage: (mid: number) => {
-      const index = mids.findIndex((m) => m === mid);
+      const index = stableMids.findIndex((m) => m === mid);
       if (index !== -1 && vList.current) {
         vList.current.scrollToIndex({ index, align: "center", behavior: "smooth" });
       } else if (allMids.includes(mid)) {
@@ -202,31 +233,54 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
   }));
   
   const readIndex = context == "channel" ? readChannels[id] : readUsers[id];
-  
-  // 缓存itemContent函数，避免每次都创建新函数
+
+  // Store frequently changing values in refs to avoid recreating itemContent
+  const messageDataRef = useRef(messageData);
+  const midsRef = useRef(stableMids);
+  const readIndexRef = useRef(readIndex);
+  const loginUidRef = useRef(loginUid);
+  const selectsRef = useRef(selects);
+  const toggleSelectRef = useRef(toggleSelect);
+
+  messageDataRef.current = messageData;
+  midsRef.current = stableMids;
+  readIndexRef.current = readIndex;
+  loginUidRef.current = loginUid;
+  selectsRef.current = selects;
+  toggleSelectRef.current = toggleSelect;
+
+  // Stable itemContent function - only recreate when context or id changes
   const itemContent = useCallback((idx: number, mid: number) => {
-    const curr = messageData[mid];
+    const curr = messageDataRef.current[mid];
     if (!curr) return <div className="w-full h-[1px] invisible"></div>;
     const isFirst = idx == 0;
-    const prev = isFirst ? null : messageData[mids[idx - 1]];
-    const read = curr?.from_uid == loginUid || mid <= readIndex;
+    const prev = isFirst ? null : messageDataRef.current[midsRef.current[idx - 1]];
+    // Optimize read calculation: once a message is read, it stays read
+    // This prevents unnecessary re-renders when readIndex updates
+    const read = curr?.from_uid == loginUidRef.current || mid <= readIndexRef.current;
+    const selected = !!(selectsRef.current && selectsRef.current.find((s: number) => s == mid));
+    const handleToggleSelect = () => toggleSelectRef.current(mid, selected);
     return renderMessageFragment({
-      selectMode: !!selects,
-      updateReadIndex: updateReadDebounced,
+      selectMode: !!selectsRef.current,
+      updateReadIndex: updateReadDebouncedRef.current,
       read,
       prev,
       curr,
       contextId: id,
-      context
+      context,
+      selected,
+      toggleSelect: handleToggleSelect
     });
-  }, [messageData, mids, loginUid, readIndex, selects, updateReadDebounced, id, context]);
+  }, [id, context]);
   
   return (
     <>
       <Virtuoso
         // logLevel={LogLevel.DEBUG}
-        overscan={50}
-        increaseViewportBy={{ top: 0, bottom: 400 }}
+        // Reduce overscan for better performance on low-end devices
+        overscan={20}
+        // Reduce viewport extension for better performance
+        increaseViewportBy={{ top: 0, bottom: 200 }}
         context={{ loadingMore, id, isChannel: context == "channel" }}
         id={`VOCECHAT_FEED_${context}_${id}`}
         className="px-1 md:px-4 py-4.5 overflow-x-hidden overflow-y-scroll"
@@ -236,10 +290,10 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
           Header: CustomHeader
         }}
         // firstItemIndex={firstItemIndex}
-        initialTopMostItemIndex={mids.length - 1}
+        initialTopMostItemIndex={stableMids.length - 1}
         alignToBottom
         // startReached={handleLoadMore}
-        data={mids}
+        data={stableMids}
         atTopThreshold={context == "channel" ? 160 : 0}
         atTopStateChange={handleTopStateChange}
         atBottomStateChange={handleBottomStateChange}

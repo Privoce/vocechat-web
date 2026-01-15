@@ -242,5 +242,12 @@ const Message: FC<IProps> = ({
   );
 };
 export default React.memo(Message, (prevs, nexts) => {
-  return prevs.mid == nexts.mid;
+  // More precise memo comparison for better performance
+  return (
+    prevs.mid === nexts.mid &&
+    prevs.readOnly === nexts.readOnly &&
+    prevs.read === nexts.read &&
+    prevs.contextId === nexts.contextId &&
+    prevs.context === nexts.context
+  );
 });

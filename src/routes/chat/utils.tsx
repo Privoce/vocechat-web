@@ -1,4 +1,5 @@
 // import React from "react";
+import React from "react";
 import { shallowEqual, useDispatch } from "react-redux";
 import dayjs from "dayjs";
 
@@ -94,18 +95,7 @@ export const renderPreviewMessage = (message = null) => {
   return res;
 };
 
-const MessageWrapper = ({ selectMode = false, context, id, mid, divider, children, ...rest }) => {
-  const dispatch = useDispatch();
-
-  const selects = useAppSelector(
-    (store) => store.ui.selectMessages[`${context}_${id}`],
-    shallowEqual
-  );
-  const selected = !!(selects && selects.find((s) => s == mid));
-  const toggleSelect = () => {
-    const operation = selected ? "remove" : "add";
-    dispatch(updateSelectMessages({ context, id, operation, data: mid }));
-  };
+const MessageWrapper = React.memo(({ selectMode = false, context, id, mid, divider, selected = false, toggleSelect, children, ...rest }) => {
   return (
     <div className={`group flex flex-col items-start gap-2 relative w-full `} {...rest}>
       {divider}
@@ -125,7 +115,21 @@ const MessageWrapper = ({ selectMode = false, context, id, mid, divider, childre
       )}
     </div>
   );
-};
+}, (prevProps, nextProps) => {
+  // Optimize re-renders by comparing only necessary props
+  // Compare divider by value, not reference
+  const dividerSame = prevProps.divider === nextProps.divider ||
+    (prevProps.divider?.props?.content === nextProps.divider?.props?.content);
+
+  return (
+    prevProps.mid === nextProps.mid &&
+    prevProps.selectMode === nextProps.selectMode &&
+    prevProps.selected === nextProps.selected &&
+    prevProps.context === nextProps.context &&
+    prevProps.id === nextProps.id &&
+    dividerSame
+  );
+});
 type Params = {
   readonly?: boolean;
   selectMode: boolean;
@@ -135,6 +139,8 @@ type Params = {
   curr: object | null;
   contextId: number;
   context: ChatContext;
+  selected?: boolean;
+  toggleSelect?: () => void;
 };
 export const renderMessageFragment = ({
   readonly = false,
@@ -144,7 +150,9 @@ export const renderMessageFragment = ({
   prev,
   curr = null,
   contextId = 0,
-  context = "dm"
+  context = "dm",
+  selected = false,
+  toggleSelect
 }: Params) => {
   if (!curr) return <div className="w-full h-[1px] invisible"></div>;
   let { created_at, mid } = curr;
@@ -169,6 +177,8 @@ export const renderMessageFragment = ({
       id={contextId}
       mid={mid}
       selectMode={selectMode}
+      selected={selected}
+      toggleSelect={toggleSelect}
       divider={divider ? <Divider className="w-full" content={divider}></Divider> : null}
     >
       <Message
