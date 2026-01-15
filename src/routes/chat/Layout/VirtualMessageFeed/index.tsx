@@ -29,7 +29,6 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
   // const [firstItemIndex, setFirstItemIndex] = useState(firstMsgIndex);
   const [atBottom, setAtBottom] = useState(false);
   const [visibleCount, setVisibleCount] = useState(100);
-  const isInitializing = useRef(false);
   const [loadMoreMessage, { isLoading: loadingMore, isSuccess, data: historyData }] =
     useLazyLoadMoreMessagesQuery();
   const vList = useRef<VirtuosoHandle | null>(null);
@@ -57,16 +56,23 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
     shallowEqual
   );
   const loginUid = useAppSelector((store) => store.authData.user?.uid, shallowEqual);
-  const messageData = useAppSelector((store) => store.message, shallowEqual);
+  // Only subscribe to visible messages instead of entire message store
+  const messageData = useAppSelector((store) => {
+    const data: Record<number, any> = {};
+    mids.forEach(mid => {
+      if (store.message[mid]) {
+        data[mid] = store.message[mid];
+      }
+    });
+    return data;
+  }, shallowEqual);
   const readChannels = useAppSelector((store) => store.footprint.readChannels, shallowEqual);
   const readUsers = useAppSelector((store) => store.footprint.readUsers, shallowEqual);
 
   useEffect(() => {
-    isInitializing.current = true;
+    // Reset visible count when switching chats
     setVisibleCount(100);
-    setTimeout(() => {
-      isInitializing.current = false;
-    }, 500);
+    setAtBottom(false);
   }, [id]);
 
   useEffect(() => {
@@ -142,7 +148,7 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
   // 加载更多
   const handleTopStateChange = (isTop: boolean) => {
     console.log("reach top ", isTop);
-    if (isTop && !isInitializing.current) {
+    if (isTop) {
       if (allMids.length > visibleCount) {
         setVisibleCount(prev => Math.min(prev + 100, allMids.length));
       } else {

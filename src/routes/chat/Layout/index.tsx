@@ -103,7 +103,7 @@ const Layout: FC<Props> = ({
               {context == "dm" && <DMVoice uid={to} />}
               {context == "dm" && <AddContactTip uid={to} />}
               {/* 消息流 */}
-              <VirtualMessageFeed ref={feedRef} key={`${context}_${to}`} context={context} id={to} />
+              <VirtualMessageFeed ref={feedRef} context={context} id={to} />
               {/* 发送框 */}
               <div className={`px-2 py-0 md:p-4 ${selects ? "selecting" : ""}`}>
                 {readonly ? (
@@ -112,7 +112,7 @@ const Layout: FC<Props> = ({
                   <LicenseUpgradeTip />
                 ) : (
                   <div className={clsx(`flex justify-center`, selects && "hidden")}>
-                    <Send key={to} id={to} context={context} />
+                    <Send id={to} context={context} />
                   </div>
                 )}
                 {selects && <Operations context={context} id={to} />}
