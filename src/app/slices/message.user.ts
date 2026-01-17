@@ -28,9 +28,18 @@ const userMsgSlice = createSlice({
         const midExisted = state.byId[id].findIndex((id: number) => id == mid) > -1;
         const localMsgExisted = state.byId[id].findIndex((id: number) => id == local_id) > -1;
         if (midExisted || localMsgExisted) return;
-        // 每次入库，都排序
-        const newArr = [...state.byId[id], +mid].sort((a, b) => a - b);
-        state.byId[id] = newArr;
+
+        // Optimize: check if new message should be at the end (most common case)
+        const lastMid = state.byId[id][state.byId[id].length - 1];
+        if (+mid > lastMid) {
+          // New message is newer, just push to end - no need to sort
+          state.byId[id].push(+mid);
+        } else {
+          // Need to insert in sorted position
+          const newArr = [...state.byId[id], +mid].sort((a, b) => a - b);
+          state.byId[id] = newArr;
+        }
+
         // 只要有新消息，就检查下
         if (state.ids.findIndex((uid) => uid == id) == -1) {
           state.ids.push(+id);

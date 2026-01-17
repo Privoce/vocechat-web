@@ -26,9 +26,17 @@ const channelMsgSlice = createSlice({
         const midExisted = state[id]!.findIndex((id) => id == mid) > -1;
         const localMsgExisted = state[id]!.findIndex((id) => id == local_id) > -1;
         if (midExisted || localMsgExisted) return;
-        // 每次入库，都排序
-        const newArr = [...(state[id] as number[]), +mid].sort((a, b) => a - b);
-        state[id] = newArr;
+
+        // Optimize: check if new message should be at the end (most common case)
+        const lastMid = state[id]![state[id]!.length - 1];
+        if (+mid > lastMid) {
+          // New message is newer, just push to end - no need to sort
+          state[id]!.push(+mid);
+        } else {
+          // Need to insert in sorted position
+          const newArr = [...(state[id] as number[]), +mid].sort((a, b) => a - b);
+          state[id] = newArr;
+        }
       } else {
         state[id] = [+mid];
       }

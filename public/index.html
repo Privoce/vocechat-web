@@ -8,6 +8,55 @@
     />
     <meta name="theme-color" content="#527ff1" />
     <meta name="description" content="Your private chat APP" />
+
+    <!-- Suppress ResizeObserver errors - must be first script -->
+    <script>
+      // Suppress benign ResizeObserver errors from virtualized lists
+      // This is a known browser issue and doesn't affect functionality
+      // Reference: https://github.com/WICG/resize-observer/issues/38
+
+      (function() {
+        function isResizeObserverError(message) {
+          return message && (
+            message.includes('ResizeObserver loop') ||
+            message.includes('ResizeObserver loop completed') ||
+            message.includes('ResizeObserver loop limit exceeded')
+          );
+        }
+
+        // Intercept window.onerror
+        const originalOnError = window.onerror;
+        window.onerror = function(message, source, lineno, colno, error) {
+          if (typeof message === 'string' && isResizeObserverError(message)) {
+            return true; // Suppress ResizeObserver errors
+          }
+          if (originalOnError) {
+            return originalOnError.apply(this, arguments);
+          }
+          return false;
+        };
+
+        // Intercept error events (capture phase to catch early)
+        window.addEventListener('error', function(e) {
+          if (e.message && isResizeObserverError(e.message)) {
+            e.stopImmediatePropagation();
+            e.preventDefault();
+            return true;
+          }
+        }, true);
+
+        // Intercept console.error
+        const originalConsoleError = console.error;
+        console.error = function() {
+          const args = Array.from(arguments);
+          if (args.length > 0 && typeof args[0] === 'string' && isResizeObserverError(args[0])) {
+            return; // Suppress
+          }
+          originalConsoleError.apply(console, args);
+        };
+      })();
+    </script>
+
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/apple-touch-icon.png" />
     <!-- splash -->
     <link

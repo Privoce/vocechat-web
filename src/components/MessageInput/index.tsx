@@ -48,6 +48,14 @@ export default function MessageInput({
   const handleSendMessage = () => {
     sendMessage();
   };
+
+  // Reset editor when chat changes without remounting
+  useEffect(() => {
+    if (editorRef.current) {
+      editorRef.current.reset();
+    }
+  }, [id]);
+
   useEffect(() => {
     const text = getMessageFromPlateValues(input as ParagraphInput[]);
     updateMessage(text);
@@ -89,7 +97,6 @@ export default function MessageInput({
         <Plate
           // @ts-ignore
           editorRef={editorRef}
-          key={id}
           id={id}
           onChange={(values) => {
             setInput(values);
@@ -100,7 +107,6 @@ export default function MessageInput({
           <Editor
             sendMessage={handleSendMessage}
             // className="px-2 py-3"
-            autoFocus
             placeholder={placeholder}
           />
           <MentionCombobox items={items} />
