@@ -23,6 +23,8 @@ import Toggle from "@/components/styled/Toggle";
 import { UserNotificationChannel, ChannelType, CreateUserChannelDTO } from "@/types/notification";
 import { getChannelSchema } from "./AdminNotificationChannels/channelSchemas";
 import ServerVersionChecker from "@/components/ServerVersionChecker";
+import { compareVersion } from "@/utils";
+import { useMemo } from "react";
 
 export default function NotificationSettings() {
   const { t } = useTranslation("setting", { keyPrefix: "notification" });
@@ -30,9 +32,19 @@ export default function NotificationSettings() {
   const [creatingType, setCreatingType] = useState<ChannelType | null>(null);
   const [formData, setFormData] = useState<Partial<CreateUserChannelDTO>>({});
 
-  // Fetch data
-  const { data: availableTypes = [], isLoading: typesLoading } = useGetAvailableChannelTypesQuery();
-  const { data: userChannels = [], isLoading: channelsLoading } = useGetUserChannelsQuery();
+  // Check version first
+  const currentVersion = useAppSelector((store) => store.server.version, shallowEqual);
+  const isVersionSupported = useMemo(() => {
+    return currentVersion && compareVersion(currentVersion, "0.5.11") >= 0;
+  }, [currentVersion]);
+
+  // Fetch data only if version is supported
+  const { data: availableTypes = [], isLoading: typesLoading } = useGetAvailableChannelTypesQuery(undefined, {
+    skip: !isVersionSupported,
+  });
+  const { data: userChannels = [], isLoading: channelsLoading } = useGetUserChannelsQuery(undefined, {
+    skip: !isVersionSupported,
+  });
   const channels = useAppSelector((store) => Object.values(store.channels.byId), shallowEqual);
 
   // Mutations

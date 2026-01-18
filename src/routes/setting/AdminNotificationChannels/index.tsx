@@ -1,22 +1,35 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
+import { shallowEqual } from "react-redux";
 
 import {
   useGetEnabledChannelTypesQuery,
   useToggleChannelTypeMutation,
   useDeleteChannelTypeMutation,
 } from "@/app/services/notification";
+import { useAppSelector } from "@/app/store";
 import { ConfigTip } from "@/components/ConfigTip";
 import Button from "@/components/styled/Button";
 import Toggle from "@/components/styled/Toggle";
 import { EnabledChannelType, ChannelType } from "@/types/notification";
 import { channelSchemas } from "./channelSchemas";
 import ServerVersionChecker from "@/components/ServerVersionChecker";
+import { compareVersion } from "@/utils";
 
 export default function AdminNotificationChannels() {
   const { t } = useTranslation("setting", { keyPrefix: "admin_notification_channels" });
-  const { data: channelTypes = [], isLoading } = useGetEnabledChannelTypesQuery();
+
+  // Check version first
+  const currentVersion = useAppSelector((store) => store.server.version, shallowEqual);
+  const isVersionSupported = useMemo(() => {
+    return currentVersion && compareVersion(currentVersion, "0.5.11") >= 0;
+  }, [currentVersion]);
+
+  // Fetch data only if version is supported
+  const { data: channelTypes = [], isLoading } = useGetEnabledChannelTypesQuery(undefined, {
+    skip: !isVersionSupported,
+  });
   const [toggleChannelType] = useToggleChannelTypeMutation();
   const [deleteChannelType] = useDeleteChannelTypeMutation();
 
