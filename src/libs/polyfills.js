@@ -18,3 +18,26 @@ if (!isSupported) {
 }
 // hasown API
 "hasOwn" in Object || (Object.hasOwn = Object.call.bind(Object.hasOwnProperty));
+
+// Array.prototype.at() and String.prototype.at() polyfill
+if (!Array.prototype.at) {
+  Array.prototype.at = function (index) {
+    const len = this.length;
+    const relativeIndex = index >= 0 ? index : len + index;
+    if (relativeIndex < 0 || relativeIndex >= len) {
+      return undefined;
+    }
+    return this[relativeIndex];
+  };
+}
+
+if (!String.prototype.at) {
+  String.prototype.at = function (index) {
+    const len = this.length;
+    const relativeIndex = index >= 0 ? index : len + index;
+    if (relativeIndex < 0 || relativeIndex >= len) {
+      return undefined;
+    }
+    return this[relativeIndex];
+  };
+}
