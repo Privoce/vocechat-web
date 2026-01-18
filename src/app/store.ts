@@ -6,6 +6,7 @@ import listenerMiddleware from "./listener.middleware";
 import { authApi } from "./services/auth";
 import { channelApi } from "./services/channel";
 import { messageApi } from "./services/message";
+import { notificationApi } from "./services/notification";
 import { serverApi } from "./services/server";
 import { userApi } from "./services/user";
 import authDataReducer from "./slices/auth.data";
@@ -44,7 +45,8 @@ const reducer = combineReducers({
   [messageApi.reducerPath]: messageApi.reducer,
   [userApi.reducerPath]: userApi.reducer,
   [channelApi.reducerPath]: channelApi.reducer,
-  [serverApi.reducerPath]: serverApi.reducer
+  [serverApi.reducerPath]: serverApi.reducer,
+  [notificationApi.reducerPath]: notificationApi.reducer
 });
 
 const store = configureStore({
@@ -56,7 +58,8 @@ const store = configureStore({
         userApi.middleware,
         channelApi.middleware,
         serverApi.middleware,
-        messageApi.middleware
+        messageApi.middleware,
+        notificationApi.middleware
       )
       .prepend(listenerMiddleware.middleware)
 });

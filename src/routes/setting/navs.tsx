@@ -13,10 +13,12 @@ import ConfigSMTP from "./config/SMTP";
 import DataManagement from "./DataManagement";
 import License from "./License";
 import MyAccount from "./MyAccount";
+import NotificationSettings from "./NotificationSettings";
 import Overview from "./Overview";
 import Widget from "./Widget";
 import { shallowEqual } from "react-redux";
 import { ConfigVocespace } from "./config/Vocespace";
+import AdminNotificationChannels from "./AdminNotificationChannels";
 
 const dataManagementNav = {
   name: "data_management",
@@ -36,6 +38,10 @@ const navs = [
         component: <MyAccount />,
       },
       {
+        name: "notification",
+        component: <NotificationSettings />,
+      },
+      {
         name: "members",
         component: <ManageMembers />,
         admin: true,
@@ -48,6 +54,11 @@ const navs = [
       {
         name: "bot",
         component: <BotConfig />,
+        admin: true,
+      },
+      {
+        name: "notification_channels",
+        component: <AdminNotificationChannels />,
         admin: true,
       },
       {
