@@ -6,6 +6,7 @@
   "nav": {
     "general": "通用",
     "overview": "概况",
+    "announcement": "公告",
     "members": "成员",
     "data_management": "数据管理",
     "auto_delete_msg": "自动删除消息",
@@ -47,7 +48,10 @@
     "add_friend": "允许加好友",
     "dm_to_member": "允许私聊",
     "show_email": "显示邮箱",
-    "only_owner": "仅创建者和管理员可发消息"
+    "only_owner": "仅创建者和管理员可发消息",
+    "announcement_placeholder": "在此输入公告内容... 支持 Markdown 格式。",
+    "no_announcements": "暂无内容预览",
+    "no_permission": "您没有权限管理公告"
   },
   "overview": {
     "title_feat": "特性开关",

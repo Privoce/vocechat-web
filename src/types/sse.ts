@@ -233,6 +233,20 @@ interface MessageClearedEvent {
   latest_deleted_mid: number;
 }
 
+export interface GroupAnnouncement {
+  gid: number;
+  content: string;
+  created_by: number;
+  created_at: number;
+  updated_at: number;
+}
+
+interface GroupAnnouncementChangedEvent {
+  type: "group_announcement_changed";
+  gid: number;
+  announcement: GroupAnnouncement | null;
+}
+
 export type ServerEvent =
   | ReadyEvent
   | UsersSnapshotEvent
@@ -255,4 +269,5 @@ export type ServerEvent =
   | UserCallEvent
   | ServerConfigChangedEvent
   | MessageClearedEvent
-  | UserRemark;
+  | UserRemark
+  | GroupAnnouncementChangedEvent;

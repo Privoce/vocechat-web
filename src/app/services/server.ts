@@ -34,10 +34,12 @@ import { updateCallInfo, upsertVoiceList } from "../slices/voice";
 import { RootState } from "../store";
 import baseQuery from "./base.query";
 import { GetFilesDTO, VoceChatFile } from "@/types/resource";
+import { GroupAnnouncement } from "@/types/sse";
 
 export const serverApi = createApi({
   reducerPath: "serverApi",
   baseQuery,
+  tagTypes: ["GroupAnnouncements"],
   endpoints: (builder) => ({
     getServer: builder.query<Server, void>({
       query: () => ({ url: `/admin/system/organization` }),
@@ -450,6 +452,30 @@ export const serverApi = createApi({
         body: content,
       }),
     }),
+    getGroupAnnouncement: builder.query<{ announcement: GroupAnnouncement | null }, number>({
+      query: (gid) => ({
+        url: `/group/${gid}/announcement`,
+      }),
+      providesTags: (result, error, gid) => [{ type: "GroupAnnouncements", id: gid }],
+    }),
+    createOrUpdateGroupAnnouncement: builder.mutation<
+      GroupAnnouncement,
+      { gid: number; content: string }
+    >({
+      query: ({ gid, content }) => ({
+        url: `/group/${gid}/announcement`,
+        method: "POST",
+        body: { content },
+      }),
+      invalidatesTags: (result, error, { gid }) => [{ type: "GroupAnnouncements", id: gid }],
+    }),
+    deleteGroupAnnouncement: builder.mutation<void, number>({
+      query: (gid) => ({
+        url: `/group/${gid}/announcement`,
+        method: "DELETE",
+      }),
+      invalidatesTags: (result, error, gid) => [{ type: "GroupAnnouncements", id: gid }],
+    }),
   }),
 });
 
@@ -506,4 +532,7 @@ export const {
   useLazyGetVocespaceConfigQuery,
   useUpdateVocespaceConfigMutation,
   useHealthCheckVocespaceMutation,
+  useGetGroupAnnouncementQuery,
+  useCreateOrUpdateGroupAnnouncementMutation,
+  useDeleteGroupAnnouncementMutation,
 } = serverApi;

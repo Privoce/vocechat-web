@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import ManageMembers from "@/components/ManageMembers";
 import AutoDeleteMessages from "../../components/AutoDeleteMessages";
 import Overview from "./Overview";
+import Announcement from "./Announcement";
 
 export interface NavItem {
   name: string;
@@ -28,6 +29,11 @@ const useNavs = (cid: number): Nav[] => {
           name: "overview",
           title: t("nav.overview"),
           component: <Overview id={cid} />
+        },
+        {
+          name: "announcement",
+          title: t("nav.announcement"),
+          component: <Announcement id={cid} />
         },
         {
           name: "auto_delete_msg",
