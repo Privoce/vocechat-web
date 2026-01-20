@@ -11,6 +11,13 @@
   "welcome_channel": "欢迎来到 {{name}} 频道",
   "welcome_desc": "这是频道 #{{name}} 的开始。",
   "edit_channel": "编辑频道",
+  "announcement": "频道公告",
+  "view_announcement": "查看公告",
+  "edit_announcement": "编辑公告",
+  "created_by": "创建者",
+  "created_at": "创建时间",
+  "updated_at": "最后更新",
+  "dismiss_announcement": "关闭公告",
 
   "channel_name": "频道名称",
   "private_channel": "私密频道",

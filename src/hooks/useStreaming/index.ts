@@ -5,6 +5,7 @@ import { isNull, omitBy } from "lodash";
 
 import BASE_URL from "@/app/config";
 import { useRenewMutation } from "@/app/services/auth";
+import { serverApi } from "@/app/services/server";
 import { resetAuthData, updateLoginUser, updateRoleChanged } from "@/app/slices/auth.data";
 import {
   addChannel,
@@ -409,6 +410,13 @@ export default function useStreaming() {
         case "pinned_message_updated":
           dispatch(updatePinMessage(data));
           break;
+        case "group_announcement_changed": {
+          const { gid } = data;
+          dispatch(
+            serverApi.util.invalidateTags([{ type: "GroupAnnouncements", id: gid }])
+          );
+          break;
+        }
         case "chat": {
           chatMessageHandler(data, dispatch, {
             afterMid: window.AFTER_MID ?? 0,
