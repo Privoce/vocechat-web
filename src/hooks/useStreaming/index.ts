@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import toast from "react-hot-toast";
 import dayjs from "dayjs";
 import { isNull, omitBy } from "lodash";
@@ -71,6 +71,34 @@ export default function useStreaming() {
   const readChannels = useAppSelector((store) => store.footprint.readChannels, shallowEqual);
   const dispatch = useAppDispatch();
   const loginUid = user?.uid || 0;
+
+  // Use refs to store the latest values to avoid stale closure issues
+  const loginUidRef = useRef(loginUid);
+  const readUsersRef = useRef(readUsers);
+  const readChannelsRef = useRef(readChannels);
+  const userRef = useRef(user);
+  const guestRef = useRef(guest);
+
+  // Update refs whenever values change
+  useEffect(() => {
+    loginUidRef.current = loginUid;
+  }, [loginUid]);
+
+  useEffect(() => {
+    readUsersRef.current = readUsers;
+  }, [readUsers]);
+
+  useEffect(() => {
+    readChannelsRef.current = readChannels;
+  }, [readChannels]);
+
+  useEffect(() => {
+    userRef.current = user;
+  }, [user]);
+
+  useEffect(() => {
+    guestRef.current = guest;
+  }, [guest]);
 
   const keepAlive = (timeout?: number) => {
     console.info("debug SSE: start new keepalive");
@@ -227,14 +255,14 @@ export default function useStreaming() {
           // 特殊处理当前登录用户的更新
           logs.forEach((log) => {
             const { uid, action, ...rest } = log;
-            if (uid === loginUid && action === "update") {
+            if (uid === loginUidRef.current && action === "update") {
               const purified = omitBy(rest, isNull);
               dispatch(updateLoginUser(purified));
               if (
-                !guest &&
+                !guestRef.current &&
                 typeof purified.is_admin !== "undefined" &&
                 ready &&
-                user?.is_admin !== purified.is_admin
+                userRef.current?.is_admin !== purified.is_admin
               ) {
                 // ready 之后，登录用户有角色变动
                 dispatch(updateRoleChanged(true));
@@ -393,7 +421,7 @@ export default function useStreaming() {
         }
         case "user_leaved_group": {
           const { gid, uid: uids } = data;
-          if (uids.findIndex((uid) => uid == loginUid) > -1) {
+          if (uids.findIndex((uid) => uid == loginUidRef.current) > -1) {
             dispatch(removeChannel(gid));
           } else {
             dispatch(updateChannel({ operation: "remove_member", gid, members: uids }));
@@ -421,9 +449,9 @@ export default function useStreaming() {
           chatMessageHandler(data, dispatch, {
             afterMid: window.AFTER_MID ?? 0,
             ready,
-            loginUid,
-            readUsers,
-            readChannels,
+            loginUid: loginUidRef.current,
+            readUsers: readUsersRef.current,
+            readChannels: readChannelsRef.current,
           });
           break;
         }
@@ -431,7 +459,7 @@ export default function useStreaming() {
           break;
       }
     };
-  }, [user, guest]);
+  }, [dispatch]);
 
   const stopStreaming = () => {
     // 先清掉定时器
@@ -447,7 +475,7 @@ export default function useStreaming() {
   };
   useEffect(() => {
     const handleNetworkChange = () => {
-      if (!user || guest) return;
+      if (!userRef.current || guestRef.current) return;
       console.info("debug SSE: network changed", navigator.onLine);
       if (navigator.onLine) {
         startStreaming();
@@ -456,7 +484,7 @@ export default function useStreaming() {
       }
     };
     const handleWindowVisibilityChange = () => {
-      if (!user || guest) return;
+      if (!userRef.current || guestRef.current) return;
       // bug in electron webview: https://github.com/electron/electron/issues/28677
       console.info("debug SSE: visibility changed", isTabHidden());
       const tabHidden = isTabHidden();
@@ -503,7 +531,7 @@ export default function useStreaming() {
       window.removeEventListener("offline", handleNetworkChange);
       document.removeEventListener("visibilitychange", handleWindowVisibilityChange);
     };
-  }, [user, guest]);
+  }, [startStreaming]);
 
   return {
     startStreaming,
