@@ -13,8 +13,8 @@ import GithubLoginButton from "../../../components/GithubLoginButton";
 import GoogleLoginButton from "../../../components/GoogleLoginButton";
 import StyledButton from "../../../components/styled/Button";
 import Input from "../../../components/styled/Input";
-import useGithubAuthConfig from "../../../hooks/useGithubAuthConfig";
-import useGoogleAuthConfig from "../../../hooks/useGoogleAuthConfig";
+import useGithubAuthPublicConfig from "../../../hooks/useGithubAuthPublicConfig";
+import useGoogleAuthPublicConfig from "../../../hooks/useGoogleAuthPublicConfig";
 import { useWidget } from "../../WidgetContext";
 import Loading from "@/components/Loading";
 import { WIDGET_USER_PWD } from "@/app/config";
@@ -26,8 +26,8 @@ const Login = () => {
   const { t } = useTranslation("widget");
   const dispatch = useDispatch();
   const { color, fgColor, from, autoReg, token, id } = useWidget();
-  const { clientId } = useGoogleAuthConfig();
-  const { config: githubAuthConfig } = useGithubAuthConfig();
+  const { clientId } = useGoogleAuthPublicConfig();
+  const { clientId: githubClientId } = useGithubAuthPublicConfig();
   const [register, { isLoading, isSuccess, data, error }] = useRegisterMutation();
   const [loginByToken, { isLoading: isLogging, isError: tokenLoginError }] = useLoginMutation();
   //  const [login]= useLoginMutation();
@@ -121,7 +121,7 @@ const Login = () => {
           {hasSocialLogins && <Divider content="OR" />}
           {googleLogin && <GoogleLoginButton clientId={clientId} />}
           {enableGithubLogin && (
-            <GithubLoginButton client_id={githubAuthConfig?.client_id} source="widget" />
+            <GithubLoginButton client_id={githubClientId} source="widget" />
           )}
         </form>
       </div>

@@ -91,6 +91,9 @@ export const serverApi = createApi({
     getGoogleAuthConfig: builder.query<GoogleAuthConfig, void>({
       query: () => ({ url: `/admin/google_auth/config` }),
     }),
+    getGoogleAuthPublicConfig: builder.query<GoogleAuthConfig, void>({
+      query: () => ({ url: `/admin/google_auth/public_config` }),
+    }),
     updateGoogleAuthConfig: builder.mutation<void, GoogleAuthConfig>({
       query: (data) => ({
         url: `/admin/google_auth/config`,
@@ -100,6 +103,9 @@ export const serverApi = createApi({
     }),
     getGithubAuthConfig: builder.query<GithubAuthConfig, void>({
       query: () => ({ url: `/admin/github_auth/config` }),
+    }),
+    getGithubAuthPublicConfig: builder.query<Pick<GithubAuthConfig, 'client_id'>, void>({
+      query: () => ({ url: `/admin/github_auth/public_config` }),
     }),
     updateGithubAuthConfig: builder.mutation<void, GithubAuthConfig>({
       query: (data) => ({
@@ -485,8 +491,10 @@ export const {
   useLazyGetServerVersionQuery,
   useGetServerVersionQuery,
   useGetGithubAuthConfigQuery,
+  useGetGithubAuthPublicConfigQuery,
   useUpdateGithubAuthConfigMutation,
   useGetGoogleAuthConfigQuery,
+  useGetGoogleAuthPublicConfigQuery,
   useUpdateGoogleAuthConfigMutation,
   useGetSMTPStatusQuery,
   useSendTestEmailMutation,

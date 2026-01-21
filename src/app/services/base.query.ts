@@ -14,8 +14,8 @@ const whiteList = [
   "sendRegMagicLink",
   "checkEmail",
   "checkMagicTokenValid",
-  "getGoogleAuthConfig",
-  "getGithubAuthConfig",
+  "getGoogleAuthPublicConfig",
+  "getGithubAuthPublicConfig",
   "getSMTPStatus",
   "getLoginConfig",
   "getServerVersion",
@@ -32,12 +32,21 @@ const whiteList = [
   "passkeyLoginStart",
   "passkeyLoginFinish",
 ];
-const whiteList401 = ["getAgoraVoicingList", "getAgoraChannels"];
+const whiteList401 = [
+  "getAgoraVoicingList",
+  "getAgoraChannels",
+  "getGoogleAuthConfig",
+  "getGithubAuthConfig",
+];
 const errorWhiteList = [
   "preCheckFileFromUrl",
   "getFavoriteDetails",
   "getOGInfo",
   "getArchiveMessage",
+  "getGoogleAuthPublicConfig",
+  "getGithubAuthPublicConfig",
+  "getGoogleAuthConfig",
+  "getGithubAuthConfig",
 ];
 const whiteList404 = [
   "login",
