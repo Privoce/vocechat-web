@@ -3,8 +3,8 @@ name: Bug report
 about: Create a report to help us improve
 title: "[BUG]"
 labels: bug, unconfirmed
-assignees: zerosoul
-
+assignees: haorwen
+type: bug
 ---
 
 **Describe the bug**
