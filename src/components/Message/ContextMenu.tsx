@@ -24,6 +24,7 @@ type Props = {
   hide: () => void;
   editMessage: () => void;
   children: ReactElement;
+  selectedText?: string;
 };
 const MessageContextMenu: FC<Props> = ({
   context,
@@ -32,7 +33,8 @@ const MessageContextMenu: FC<Props> = ({
   visible,
   hide,
   editMessage,
-  children
+  children,
+  selectedText = ""
 }) => {
   const { t } = useTranslation();
   const {
@@ -50,7 +52,7 @@ const MessageContextMenu: FC<Props> = ({
     PinModal,
     ForwardModal,
     DeleteModal
-  } = useMessageOperation({ mid, contextId, context });
+  } = useMessageOperation({ mid, contextId, context, selectedText });
   const dispatch = useDispatch();
   const { setReplying } = useSendMessage({ context, to: contextId });
   const handleSelect = () => {

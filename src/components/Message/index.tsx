@@ -42,6 +42,7 @@ const Message: FC<IProps> = ({
   const inViewRef = useInView<HTMLDivElement>();
   const [edit, setEdit] = useState(false);
   const avatarRef = useRef(null);
+  const selectedTextRef = useRef<string>("");
   const { getPinInfo } = usePinMessage(context == "channel" ? contextId : 0);
   const message = useAppSelector((store) => store.message[mid], shallowEqual);
   const enableRightLayout = useAppSelector(
@@ -104,7 +105,12 @@ const Message: FC<IProps> = ({
   return (
     <div
       key={_key}
-      onContextMenu={readOnly ? undefined : handleContextMenuEvent}
+      onContextMenu={readOnly ? undefined : (evt) => {
+        // 在右键点击时保存选中的文本
+        const selection = window.getSelection();
+        selectedTextRef.current = selection?.toString().trim() || "";
+        handleContextMenuEvent(evt);
+      }}
       data-msg-mid={mid}
       ref={inViewRef}
       className={clsx(
@@ -141,6 +147,7 @@ const Message: FC<IProps> = ({
         mid={mid}
         visible={contextMenuVisible && !failed}
         hide={hideContextMenu}
+        selectedText={selectedTextRef.current}
       >
         <div
           className={clsx(

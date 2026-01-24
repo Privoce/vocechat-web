@@ -15,9 +15,10 @@ interface Params {
   mid: number;
   context: ChatContext;
   contextId: number;
+  selectedText?: string;
 }
 
-export default function useMessageOperation({ mid, context, contextId }: Params) {
+export default function useMessageOperation({ mid, context, contextId, selectedText = "" }: Params) {
   const { copy } = useCopy();
   const message = useAppSelector((store) => store.message[mid], shallowEqual);
   const loginUser = useAppSelector((store) => store.authData.user, shallowEqual);
@@ -46,7 +47,12 @@ export default function useMessageOperation({ mid, context, contextId }: Params)
     setPinModalVisible((prev) => !prev);
   };
   const copyContent = (image = false) => {
-    copy(content, image);
+    // 如果有选中的文本，复制选中的文本；否则复制整条消息
+    if (selectedText && !image) {
+      copy(selectedText, false);
+    } else {
+      copy(content, image);
+    }
   };
   useEffect(() => {
     if (forwardModalVisible && content_type == ContentTypes.archive) {
