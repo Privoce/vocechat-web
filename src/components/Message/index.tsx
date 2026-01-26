@@ -21,6 +21,7 @@ import Reply from "./Reply";
 import useInView from "./useInView";
 import { shallowEqual } from "react-redux";
 import NameWithRemark from "../NameWithRemark";
+import { isMobile } from "@/utils";
 
 interface IProps {
   readOnly?: boolean;
@@ -106,9 +107,11 @@ const Message: FC<IProps> = ({
     <div
       key={_key}
       onContextMenu={readOnly ? undefined : (evt) => {
-        // 在右键点击时保存选中的文本
-        const selection = window.getSelection();
-        selectedTextRef.current = selection?.toString().trim() || "";
+        // 在右键点击时保存选中的文本（手机端禁用该功能，因为长按必定会选中）
+        if (!isMobile()) {
+          const selection = window.getSelection();
+          selectedTextRef.current = selection?.toString().trim() || "";
+        }
         handleContextMenuEvent(evt);
       }}
       data-msg-mid={mid}
