@@ -18,10 +18,10 @@ const autoReg = decodeURIComponent(query.get("autoReg") || "true") == "true";
 const token = decodeURIComponent(query.get("token") || "");
 const color = decodeURIComponent(query.get("themeColor") || "#1fe1f9");
 const from = decodeURIComponent(query.get("from") || "widget.link");
-const iconTitle = decodeURIComponent(query.get("iconTitle") || "Need help?");
-const iconSubtitle = decodeURIComponent(query.get("iconSubtitle") || "Our staff are always ready to help!");
-const iconImage = decodeURIComponent(query.get("iconImage") || "");
-const iconClosable = decodeURIComponent(query.get("iconClosable") || "true") == "true";
+const popupTitle = decodeURIComponent(query.get("popupTitle") || "Need help?");
+const popupSubtitle = decodeURIComponent(query.get("popupSubtitle") || "Our staff are always ready to help!");
+const popupImage = decodeURIComponent(query.get("popupImage") || "");
+const popupClosable = decodeURIComponent(query.get("popupClosable") || "true") == "true";
 const fgColor = getContrastColor(color);
 const embed = isInIframe();
 const WidgetContext = createContext({
@@ -38,10 +38,10 @@ const WidgetContext = createContext({
   title,
   logo,
   welcome,
-  iconTitle,
-  iconSubtitle,
-  iconImage,
-  iconClosable,
+  popupTitle,
+  popupSubtitle,
+  popupImage,
+  popupClosable,
   serverVersion: ""
 });
 
@@ -68,10 +68,10 @@ function WidgetProvider({ children }: { children: ReactNode }) {
         inviteOnly: loginConfig?.who_can_sign_up == "InvitationOnly",
         title: title ? title : serverData?.name,
         logo: logo ? logo : serverData.logo,
-        iconTitle,
-        iconSubtitle,
-        iconImage,
-        iconClosable,
+        popupTitle,
+        popupSubtitle,
+        popupImage,
+        popupClosable,
         serverVersion: data
       }}
     >

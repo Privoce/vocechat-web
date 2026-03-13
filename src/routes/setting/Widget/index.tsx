@@ -33,7 +33,7 @@ export default function Widget() {
       <SyntaxHighlighter id="code" language="html" style={vscDarkPlus} className="rounded">
         {`<!-- ${t(
           "code_comment"
-        )} -->\n<script \n  data-host-id="${loginUid}" \n  data-auto-reg="true" \n  data-login-token="" \n  data-title="" \n  data-logo="" \n  data-theme-color="#1fe1f9" \n  data-close-width="48" \n  data-close-height="48" \n  data-open-width="380" \n  data-open-height="680" \n  data-welcome="Your custom welcome text" \n  data-icon-title="Need help?" \n  data-icon-subtitle="Our staff are always ready to help!" \n  data-icon-image="" \n  data-icon-closable="true" \n  src="${
+        )} -->\n<script \n  data-host-id="${loginUid}" \n  data-auto-reg="true" \n  data-login-token="" \n  data-title="" \n  data-logo="" \n  data-theme-color="#1fe1f9" \n  data-close-width="48" \n  data-close-height="48" \n  data-open-width="380" \n  data-open-height="680" \n  data-welcome="Your custom welcome text" \n  data-popup-title="Need help?" \n  data-popup-subtitle="Our staff are always ready to help!" \n  data-popup-image="" \n  data-popup-closable="true" \n  src="${
           location.origin
         }/widget.js" \n  async \n></script>`}
       </SyntaxHighlighter>

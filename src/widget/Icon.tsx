@@ -10,7 +10,7 @@ type Props = {
 
 const Icon = ({ handleClick }: Props) => {
   const serverLogo = useAppSelector((store) => store.server.logo, shallowEqual);
-  const { iconTitle, iconSubtitle, iconImage, logo: customLogo, iconClosable } = useWidget();
+  const { popupTitle, popupSubtitle, popupImage, logo: customLogo, popupClosable } = useWidget();
   const [tooltipVisible, setTooltipVisible] = useState(true);
 
   // 优先使用自定义 logo，否则使用服务器 logo
@@ -25,7 +25,7 @@ const Icon = ({ handleClick }: Props) => {
         <div className="relative animate-[fadeIn_0.3s_ease-in-out]">
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-4 min-w-[220px] max-w-[300px] border border-gray-200 dark:border-gray-700">
             {/* 关闭按钮 */}
-            {iconClosable && (
+            {popupClosable && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -51,19 +51,19 @@ const Icon = ({ handleClick }: Props) => {
               </button>
             )}
             <div className="flex items-start gap-3">
-              {iconImage && (
+              {popupImage && (
                 <img
-                  src={iconImage}
+                  src={popupImage}
                   alt="icon"
                   className="w-12 h-12 rounded-full flex-shrink-0 object-cover"
                 />
               )}
               <div className="flex-1 min-w-0">
                 <div className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-1">
-                  {iconTitle}
+                  {popupTitle}
                 </div>
                 <div className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
-                  {iconSubtitle}
+                  {popupSubtitle}
                 </div>
               </div>
             </div>

@@ -115,24 +115,24 @@ const ConfigDetails = ({}: Props) => {
             remarks: t("param_welcome")
           },
           {
-            paramKey: "icon-title",
+            paramKey: "popup-title",
             paramDefault: "Need help?",
-            remarks: t("param_icon_title")
+            remarks: t("param_popup_title")
           },
           {
-            paramKey: "icon-subtitle",
+            paramKey: "popup-subtitle",
             paramDefault: "Our staff are always ready to help!",
-            remarks: t("param_icon_subtitle")
+            remarks: t("param_popup_subtitle")
           },
           {
-            paramKey: "icon-image",
+            paramKey: "popup-image",
             paramDefault: "-",
-            remarks: t("param_icon_image")
+            remarks: t("param_popup_image")
           },
           {
-            paramKey: "icon-closable",
+            paramKey: "popup-closable",
             paramDefault: "true",
-            remarks: t("param_icon_closable")
+            remarks: t("param_popup_closable")
           }
         ].map((row) => (
           <Row key={row.paramKey} {...row} />
