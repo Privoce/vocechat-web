@@ -113,6 +113,26 @@ const ConfigDetails = ({}: Props) => {
             paramKey: "welcome",
             paramDefault: wt("welcome"),
             remarks: t("param_welcome")
+          },
+          {
+            paramKey: "icon-title",
+            paramDefault: "Need help?",
+            remarks: t("param_icon_title")
+          },
+          {
+            paramKey: "icon-subtitle",
+            paramDefault: "Our staff are always ready to help!",
+            remarks: t("param_icon_subtitle")
+          },
+          {
+            paramKey: "icon-image",
+            paramDefault: "-",
+            remarks: t("param_icon_image")
+          },
+          {
+            paramKey: "icon-closable",
+            paramDefault: "true",
+            remarks: t("param_icon_closable")
           }
         ].map((row) => (
           <Row key={row.paramKey} {...row} />

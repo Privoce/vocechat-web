@@ -23,6 +23,7 @@ function Widget({ hostId }: Props) {
     }
     setVisible((prev) => !prev);
   };
+
   useEffect(() => {
     if (embed) {
       if (!visible) {
@@ -32,6 +33,20 @@ function Widget({ hostId }: Props) {
       }
     }
   }, [visible, embed]);
+
+  // 监听来自父窗口的消息
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data === "OPEN_FROM_PARENT") {
+        setVisible(true);
+      } else if (event.data === "CLOSE_FROM_PARENT") {
+        setVisible(false);
+      }
+    };
+
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, []);
 
   if (!rehydrated) return null;
   if (!embed)
