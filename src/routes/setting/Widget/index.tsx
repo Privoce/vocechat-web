@@ -33,7 +33,7 @@ export default function Widget() {
       <SyntaxHighlighter id="code" language="html" style={vscDarkPlus} className="rounded">
         {`<!-- ${t(
           "code_comment"
-        )} -->\n<script \n  data-host-id="${loginUid}" \n  data-auto-reg="true" \n  data-login-token="" \n  data-title="" \n  data-logo="" \n  data-theme-color="#1fe1f9" \n  data-close-width="48" \n  data-close-height="48" \n  data-open-width="380" \n  data-open-height="680" \n  data-welcome="Your custom welcome text" \n  src="${
+        )} -->\n<script \n  data-host-id="${loginUid}" \n  data-auto-reg="true" \n  data-login-token="" \n  data-title="" \n  data-logo="" \n  data-theme-color="#1fe1f9" \n  data-close-width="48" \n  data-close-height="48" \n  data-open-width="380" \n  data-open-height="680" \n  data-welcome="Your custom welcome text" \n  data-icon-title="Need help?" \n  data-icon-subtitle="Our staff are always ready to help!" \n  data-icon-image="" \n  data-icon-closable="true" \n  src="${
           location.origin
         }/widget.js" \n  async \n></script>`}
       </SyntaxHighlighter>
@@ -45,6 +45,22 @@ export default function Widget() {
     bottom: 5px /* bottom position */
   }
 </style>`}
+      </SyntaxHighlighter>
+      <div className="text-sm dark:text-white mt-5">{t("open_widget_tip")}:</div>
+      <SyntaxHighlighter id="code" language="html" style={vscDarkPlus} className="rounded">
+        {`<!-- ${t("open_widget_example")} -->
+<button onclick="VoceChatWidget.open()">Contact Support</button>
+
+<!-- ${t("open_widget_example_custom")} -->
+<button
+  onclick="VoceChatWidget.open()"
+  style="background: #1fe1f9; color: white; padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; font-size: 16px;"
+>
+  💬 Chat with us
+</button>
+
+<!-- ${t("open_widget_example_toggle")} -->
+<button onclick="VoceChatWidget.toggle()">Toggle Chat</button>`}
       </SyntaxHighlighter>
       <ServerVersionChecker version="0.4.0">
         <div className="flex flex-col gap-2">

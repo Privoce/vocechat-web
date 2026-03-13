@@ -13,11 +13,21 @@
     title = "",
     logo = "",
     position = "right",
-    welcome = ""
+    welcome = "",
+    iconTitle = "Need help?",
+    iconSubtitle = "Our staff are always ready to help!",
+    iconImage = "",
+    iconClosable = "true"
   } = d.currentScript.dataset;
   const _src = d.currentScript.src;
   const wrapper = d.createElement("iframe");
   wrapper.id = "VOCECHAT_WIDGET";
+
+  // 如果有提示框内容，关闭状态的宽度和高度需要更大
+  const hasTooltip = iconTitle || iconSubtitle;
+  const actualCloseWidth = hasTooltip ? 320 : closeWidth;
+  const actualCloseHeight = hasTooltip ? 120 : closeHeight;
+
   const styles = {
     position: "fixed",
     borderRadius: "8px",
@@ -33,9 +43,9 @@
     new URL(_src).origin
   }/widget.html?id=${id}&host=${hostId}&autoReg=${autoReg}&token=${loginToken}&themeColor=${encodeURIComponent(
     themeColor
-  )}&from=${encodeURIComponent(location.hostname)}&welcome=${encodeURIComponent(welcome)}&title=${encodeURIComponent(title)}&logo=${encodeURIComponent(logo)}`;
-  wrapper.width = closeWidth;
-  wrapper.height = closeHeight;
+  )}&from=${encodeURIComponent(location.hostname)}&welcome=${encodeURIComponent(welcome)}&title=${encodeURIComponent(title)}&logo=${encodeURIComponent(logo)}&iconTitle=${encodeURIComponent(iconTitle)}&iconSubtitle=${encodeURIComponent(iconSubtitle)}&iconImage=${encodeURIComponent(iconImage)}&iconClosable=${iconClosable}`;
+  wrapper.width = actualCloseWidth;
+  wrapper.height = actualCloseHeight;
   wrapper.frameborder = 0;
   wrapper.referrerPolicy = "unsafe-url";
   w.addEventListener(
@@ -48,8 +58,8 @@
           wrapper.setAttribute("height", openHeight);
           break;
         case "CLOSE":
-          wrapper.setAttribute("width", closeWidth);
-          wrapper.setAttribute("height", closeHeight);
+          wrapper.setAttribute("width", actualCloseWidth);
+          wrapper.setAttribute("height", actualCloseHeight);
           break;
         case "RELOAD_WITH_OPEN":
           {
@@ -68,4 +78,26 @@
     false
   );
   d.body.appendChild(wrapper);
+
+  // 暴露全局函数用于打开 widget
+  w.VoceChatWidget = {
+    open: function() {
+      wrapper.setAttribute("width", openWidth);
+      wrapper.setAttribute("height", openHeight);
+      wrapper.contentWindow?.postMessage("OPEN_FROM_PARENT", "*");
+    },
+    close: function() {
+      wrapper.setAttribute("width", actualCloseWidth);
+      wrapper.setAttribute("height", actualCloseHeight);
+      wrapper.contentWindow?.postMessage("CLOSE_FROM_PARENT", "*");
+    },
+    toggle: function() {
+      const currentWidth = wrapper.getAttribute("width");
+      if (currentWidth == actualCloseWidth) {
+        this.open();
+      } else {
+        this.close();
+      }
+    }
+  };
 })(window, document);
