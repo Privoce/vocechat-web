@@ -18,7 +18,7 @@ type Props = {
 };
 
 const Index = ({ handleClose, hostId }: Props) => {
-  const { embed, inviteOnly } = useWidget();
+  const { embed, inviteOnly, openWidth, openHeight } = useWidget();
   // 建立 SSE 连接
   useSSE();
   const loginUser = useAppSelector((store) => store.authData.user, shallowEqual);
@@ -30,11 +30,12 @@ const Index = ({ handleClose, hostId }: Props) => {
   return (
     <aside
       className={clsx(
-        "flex flex-col bg-white dark:bg-gray-700 rounded-md overflow-hidden",
+        "flex flex-col bg-white dark:bg-gray-700 rounded-md overflow-hidden shadow-xl",
         embed
-          ? "w-full h-full"
+          ? ""
           : `w-full h-full md:max-w-lg md:h-[calc(100dvh_-_20px)] m-auto md:my-2 md:shadow-lg rounded-none md:rounded-md`
       )}
+      style={embed ? { width: `${openWidth}px`, height: `${openHeight}px` } : {}}
     >
       <Header handleClose={handleClose} />
       {inviteOnly ? (

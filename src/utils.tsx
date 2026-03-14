@@ -512,7 +512,27 @@ export const upsertJSON = (json: string | null, obj: object) => {
     return JSON.stringify(obj);
   }
 };
-export const isInIframe = () => window.location !== window.parent.location;
+export const isInIframe = () => {
+  // 检查是否在 iframe 中
+  if (window.location !== window.parent.location) return true;
+
+  // 检查是否在 Shadow DOM 中
+  // 尝试从全局 document 查找
+  const rootElement = document.getElementById("root");
+  if (rootElement) {
+    const rootNode = rootElement.getRootNode();
+    if (rootNode instanceof ShadowRoot) return true;
+  }
+
+  // 如果全局 document 中没有找到 #root，可能是在 Shadow DOM 中
+  // 检查是否存在 VOCECHAT_WIDGET_CONTAINER（Shadow DOM 容器）
+  const widgetContainer = document.getElementById("VOCECHAT_WIDGET_CONTAINER");
+  if (widgetContainer && widgetContainer.shadowRoot) {
+    return true;
+  }
+
+  return false;
+};
 export const encodeBase64 = (str = "") => btoa(unescape(encodeURIComponent(str)));
 export const shouldPreviewImage = (type: string) => {
   return type.startsWith("image") && type !== "image/x-sony-arw";
