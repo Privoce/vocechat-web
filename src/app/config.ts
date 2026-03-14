@@ -17,7 +17,20 @@ const local_dev = `http://localhost:3000`;
 const dev_origin = process.env.REACT_APP_OFFICIAL_DEMO ? official_dev : local_dev;
 
 // const local_dev = `https://im.ttt.td`;
-export const BASE_ORIGIN = process.env.REACT_APP_RELEASE ? `${location.origin}` : dev_origin;
+// 在 widget 模式下，使用 widget 脚本所在的 origin
+const getBaseOrigin = () => {
+  if (process.env.REACT_APP_RELEASE) {
+    // 检查是否有 widget origin（Shadow DOM 模式）
+    const widgetOrigin = (window as any).__VOCECHAT_WIDGET_ORIGIN__;
+    if (widgetOrigin) {
+      return widgetOrigin;
+    }
+    return location.origin;
+  }
+  return dev_origin;
+};
+
+export const BASE_ORIGIN = getBaseOrigin();
 export const IS_OFFICIAL_DEMO = BASE_ORIGIN === official_dev;
 
 const BASE_URL = `${BASE_ORIGIN}/api`;

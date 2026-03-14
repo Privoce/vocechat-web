@@ -66,6 +66,14 @@ i18n
     returnNull: false,
     // for backend middleware
     backend: {
+      loadPath: (() => {
+        // 在 Shadow DOM 模式下，使用 widget.js 所在的 origin 来加载翻译文件
+        const widgetOrigin = (window as any).__VOCECHAT_WIDGET_ORIGIN__;
+        if (widgetOrigin) {
+          return `${widgetOrigin}/locales/{{lng}}/{{ns}}.json`;
+        }
+        return '/locales/{{lng}}/{{ns}}.json';
+      })(),
       queryStringParams: { v: pkg.version }
     }
   });
