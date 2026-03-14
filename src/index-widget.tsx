@@ -1,23 +1,5 @@
-// 在 Shadow DOM 模式下，动态设置 webpack 的 publicPath
-// 这样 webpack 运行时加载的动态资源（如代码分割的 chunk）会从正确的源服务器加载
-let widgetOrigin = '';
-if (typeof document !== 'undefined') {
-  const currentScript = document.currentScript as HTMLScriptElement;
-  if (currentScript && currentScript.src) {
-    try {
-      const scriptUrl = new URL(currentScript.src);
-      // 获取脚本所在的目录路径（去掉文件名）
-      const scriptPath = scriptUrl.pathname.substring(0, scriptUrl.pathname.lastIndexOf('/') + 1);
-      // 设置为脚本所在的完整目录路径
-      __webpack_public_path__ = scriptUrl.origin + scriptPath;
-      // 保存 origin 供 i18n 使用
-      widgetOrigin = scriptUrl.origin;
-      (window as any).__VOCECHAT_WIDGET_ORIGIN__ = widgetOrigin;
-    } catch (e) {
-      console.warn('Failed to set webpack public path:', e);
-    }
-  }
-}
+// 必须首先导入初始化文件，设置 webpack publicPath 和 widget origin
+import "./widget-init";
 
 import ReactDOM from "react-dom/client";
 import { Toaster } from "react-hot-toast";

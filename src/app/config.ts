@@ -23,10 +23,13 @@ const getBaseOrigin = () => {
     // 检查是否有 widget origin（Shadow DOM 模式）
     const widgetOrigin = (window as any).__VOCECHAT_WIDGET_ORIGIN__;
     if (widgetOrigin) {
+      console.log('[Config] Using widget origin:', widgetOrigin);
       return widgetOrigin;
     }
+    console.log('[Config] Using location.origin:', location.origin);
     return location.origin;
   }
+  console.log('[Config] Using dev origin:', dev_origin);
   return dev_origin;
 };
 
