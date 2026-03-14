@@ -9,25 +9,53 @@ import store from "./app/store";
 import "./i18n";
 import { isDarkMode } from "./utils";
 
-const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
-const hostId = new URLSearchParams(location.search).get("host") || 1;
-// dark mode
-if (isDarkMode()) {
-  document.documentElement.classList.add("dark");
-} else {
-  document.documentElement.classList.remove("dark");
+// 初始化函数，支持在 shadow DOM 或普通 DOM 中初始化
+function initWidget(rootElement: HTMLElement, searchParams?: string) {
+  const params = new URLSearchParams(searchParams || location.search);
+  const hostId = params.get("host") || 1;
+
+  // dark mode
+  const rootDoc = rootElement.getRootNode() as Document | ShadowRoot;
+  const docElement = rootDoc instanceof ShadowRoot ? rootElement : document.documentElement;
+
+  if (isDarkMode()) {
+    docElement.classList.add("dark");
+  } else {
+    docElement.classList.remove("dark");
+  }
+
+  // 如果是 Shadow DOM，将 shadowRoot 存储到 window 对象供 Widget 组件使用
+  if (rootDoc instanceof ShadowRoot) {
+    (window as any).__VOCECHAT_SHADOW_ROOT__ = rootDoc;
+  }
+
+  const root = ReactDOM.createRoot(rootElement);
+  root.render(
+    hostId ? (
+      <Provider store={store}>
+        <WidgetProvider>
+          <Toaster
+            toastOptions={{
+              className: "dark:!bg-gray-800 dark:!text-gray-50"
+            }}
+          />
+          <Widget hostId={Number(hostId)} />
+        </WidgetProvider>
+      </Provider>
+    ) : null
+  );
 }
-root.render(
-  hostId ? (
-    <Provider store={store}>
-      <WidgetProvider>
-        <Toaster
-          toastOptions={{
-            className: "dark:!bg-gray-800 dark:!text-gray-50"
-          }}
-        />
-        <Widget hostId={Number(hostId)} />
-      </WidgetProvider>
-    </Provider>
-  ) : null
-);
+
+// 暴露初始化函数给 shadow DOM 模式使用
+(window as any).VoceChatWidgetInit = (shadowRoot: ShadowRoot, searchParams: string) => {
+  const rootElement = shadowRoot.getElementById("root");
+  if (rootElement) {
+    initWidget(rootElement, searchParams);
+  }
+};
+
+// 默认初始化（iframe 模式）
+const rootElement = document.getElementById("root");
+if (rootElement) {
+  initWidget(rootElement);
+}

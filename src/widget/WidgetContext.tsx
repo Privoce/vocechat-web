@@ -23,14 +23,21 @@ const popupSubtitle = decodeURIComponent(query.get("popupSubtitle") || "Our staf
 const popupImage = decodeURIComponent(query.get("popupImage") || "");
 const popupClosable = decodeURIComponent(query.get("popupClosable") || "true") == "true";
 const fgColor = getContrastColor(color);
-const embed = isInIframe();
+// 从 URL 参数读取 embed 状态，如果没有则检测是否在 iframe 中
+const embedParam = query.get("embed");
+const embed = embedParam === "true" || (embedParam === null && isInIframe());
+// 读取尺寸参数
+const openWidth = parseInt(query.get("openWidth") || "380");
+const openHeight = parseInt(query.get("openHeight") || "680");
+const closeWidth = parseInt(query.get("closeWidth") || "48");
+const closeHeight = parseInt(query.get("closeHeight") || "48");
 const WidgetContext = createContext({
   id,
   token,
   autoReg,
   color,
   fgColor,
-  // 判断是否是 iframe 上下文
+  // 判断是否是 iframe 或 shadow DOM 上下文
   embed,
   from,
   loading: true,
@@ -42,7 +49,11 @@ const WidgetContext = createContext({
   popupSubtitle,
   popupImage,
   popupClosable,
-  serverVersion: ""
+  serverVersion: "",
+  openWidth,
+  openHeight,
+  closeWidth,
+  closeHeight
 });
 
 function WidgetProvider({ children }: { children: ReactNode }) {
@@ -52,6 +63,7 @@ function WidgetProvider({ children }: { children: ReactNode }) {
   const serverData = useAppSelector((store) => store.server, shallowEqual);
 
   const loading = loadingConfig || loadingServerData;
+
   // if(loading) return
   return (
     <WidgetContext.Provider
@@ -72,7 +84,11 @@ function WidgetProvider({ children }: { children: ReactNode }) {
         popupSubtitle,
         popupImage,
         popupClosable,
-        serverVersion: data
+        serverVersion: data,
+        openWidth,
+        openHeight,
+        closeWidth,
+        closeHeight
       }}
     >
       {children}

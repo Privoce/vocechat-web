@@ -16,13 +16,19 @@ const Icon = ({ handleClick }: Props) => {
   // 优先使用自定义 logo，否则使用服务器 logo
   const logo = customLogo || serverLogo;
 
+  // 检测是否是移动端
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
+  // 是否显示 tooltip（桌面端 + 有内容 + 用户未关闭）
+  const showTooltip = !isMobile && tooltipVisible && (popupTitle || popupSubtitle);
+
   if (!logo) return null;
 
   return (
-    <div className="flex items-center gap-3">
-      {/* 常驻提示框 - 放在左边 */}
-      {tooltipVisible && (
-        <div className="relative animate-[fadeIn_0.3s_ease-in-out]">
+    <div className="relative" style={{ width: '48px', height: '48px' }}>
+      {/* 常驻提示框 - 绝对定位在左边，移动端不显示 */}
+      {showTooltip && (
+        <div className="absolute right-[60px] bottom-0 animate-[fadeIn_0.3s_ease-in-out]">
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-4 min-w-[220px] max-w-[300px] border border-gray-200 dark:border-gray-700">
             {/* 关闭按钮 */}
             {popupClosable && (
@@ -68,13 +74,13 @@ const Icon = ({ handleClick }: Props) => {
               </div>
             </div>
             {/* 小三角指向右边 */}
-            <div className="absolute top-1/2 -right-[6px] -translate-y-1/2 w-3 h-3 bg-white dark:bg-gray-800 border-r border-t border-gray-200 dark:border-gray-700 transform rotate-45"></div>
+            <div className="absolute bottom-3 -right-[6px] w-3 h-3 bg-white dark:bg-gray-800 border-r border-t border-gray-200 dark:border-gray-700 transform rotate-45"></div>
           </div>
         </div>
       )}
 
-      {/* Widget 图标按钮 */}
-      <button className="rounded-full overflow-hidden w-12 h-12 flex-shrink-0" onClick={handleClick}>
+      {/* Widget 图标按钮 - 固定位置 */}
+      <button className="rounded-full overflow-hidden w-12 h-12" onClick={handleClick}>
         <img src={logo} alt="logo" className="w-full h-full rounded-full object-cover" />
       </button>
     </div>
