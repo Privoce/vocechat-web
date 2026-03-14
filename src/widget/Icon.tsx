@@ -10,7 +10,7 @@ type Props = {
 
 const Icon = ({ handleClick }: Props) => {
   const serverLogo = useAppSelector((store) => store.server.logo, shallowEqual);
-  const { popupTitle, popupSubtitle, popupImage, logo: customLogo, popupClosable } = useWidget();
+  const { popupTitle, popupSubtitle, popupImage, logo: customLogo, popupClosable, showPopup } = useWidget();
   const [tooltipVisible, setTooltipVisible] = useState(true);
 
   // 优先使用自定义 logo，否则使用服务器 logo
@@ -19,8 +19,8 @@ const Icon = ({ handleClick }: Props) => {
   // 检测是否是移动端
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
-  // 是否显示 tooltip（桌面端 + 有内容 + 用户未关闭）
-  const showTooltip = !isMobile && tooltipVisible && (popupTitle || popupSubtitle);
+  // 是否显示 tooltip（桌面端 + 有内容 + 用户未关闭 + showPopup 开关打开）
+  const showTooltip = !isMobile && tooltipVisible && (popupTitle || popupSubtitle) && showPopup;
 
   if (!logo) return null;
 

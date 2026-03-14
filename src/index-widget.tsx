@@ -1,3 +1,18 @@
+// 在 Shadow DOM 模式下，动态设置 webpack 的 publicPath
+// 这样 webpack 运行时加载的动态资源（如代码分割的 chunk）会从正确的源服务器加载
+if (typeof document !== 'undefined') {
+  const currentScript = document.currentScript as HTMLScriptElement;
+  if (currentScript && currentScript.src) {
+    try {
+      const scriptUrl = new URL(currentScript.src);
+      // 设置为脚本所在的目录路径
+      __webpack_public_path__ = scriptUrl.origin + '/';
+    } catch (e) {
+      console.warn('Failed to set webpack public path:', e);
+    }
+  }
+}
+
 import ReactDOM from "react-dom/client";
 import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";

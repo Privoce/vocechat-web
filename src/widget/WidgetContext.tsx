@@ -22,6 +22,7 @@ const popupTitle = decodeURIComponent(query.get("popupTitle") || "Need help?");
 const popupSubtitle = decodeURIComponent(query.get("popupSubtitle") || "Our staff are always ready to help!");
 const popupImage = decodeURIComponent(query.get("popupImage") || "");
 const popupClosable = decodeURIComponent(query.get("popupClosable") || "true") == "true";
+const showPopup = decodeURIComponent(query.get("showPopup") || "true") == "true";
 const fgColor = getContrastColor(color);
 // 从 URL 参数读取 embed 状态，如果没有则检测是否在 iframe 中
 const embedParam = query.get("embed");
@@ -49,6 +50,7 @@ const WidgetContext = createContext({
   popupSubtitle,
   popupImage,
   popupClosable,
+  showPopup,
   serverVersion: "",
   openWidth,
   openHeight,
@@ -84,6 +86,7 @@ function WidgetProvider({ children }: { children: ReactNode }) {
         popupSubtitle,
         popupImage,
         popupClosable,
+        showPopup,
         serverVersion: data,
         openWidth,
         openHeight,

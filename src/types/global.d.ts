@@ -33,6 +33,10 @@ interface BeforeInstallPromptEvent extends Event {
 export declare global {
   import { PrecacheEntry } from "workbox-precaching/src/_types";
   import localforage from "localforage";
+
+  // Webpack public path for dynamic imports
+  var __webpack_public_path__: string;
+
   interface Document {
     webkitHidden: boolean;
   }

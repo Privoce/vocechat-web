@@ -18,6 +18,7 @@
     popupSubtitle = "Our staff are always ready to help!",
     popupImage = "",
     popupClosable = "true",
+    showPopup = "true",
     useShadowDom = "true"
   } = d.currentScript.dataset;
   const _src = d.currentScript.src;
@@ -74,6 +75,7 @@
 
         // 加载并执行 widget 脚本
         const script = d.createElement("script");
+        script.type = "text/javascript";
         script.src = `${origin}${manifest.files["widget.js"]}`;
         script.onload = () => {
           // 脚本加载完成后，需要手动初始化 React 应用到 shadow DOM
@@ -91,6 +93,7 @@
             popupSubtitle,
             popupImage,
             popupClosable,
+            showPopup,
             embed: "true",
             closeWidth,
             closeHeight,
@@ -131,7 +134,7 @@
     Object.assign(wrapper.style, baseStyles);
     wrapper.src = `${origin}/widget.html?id=${id}&host=${hostId}&autoReg=${autoReg}&token=${loginToken}&themeColor=${encodeURIComponent(
       themeColor
-    )}&from=${encodeURIComponent(location.hostname)}&welcome=${encodeURIComponent(welcome)}&title=${encodeURIComponent(title)}&logo=${encodeURIComponent(logo)}&popupTitle=${encodeURIComponent(popupTitle)}&popupSubtitle=${encodeURIComponent(popupSubtitle)}&popupImage=${encodeURIComponent(popupImage)}&popupClosable=${popupClosable}`;
+    )}&from=${encodeURIComponent(location.hostname)}&welcome=${encodeURIComponent(welcome)}&title=${encodeURIComponent(title)}&logo=${encodeURIComponent(logo)}&popupTitle=${encodeURIComponent(popupTitle)}&popupSubtitle=${encodeURIComponent(popupSubtitle)}&popupImage=${encodeURIComponent(popupImage)}&popupClosable=${popupClosable}&showPopup=${showPopup}`;
     wrapper.width = actualCloseWidth;
     wrapper.height = actualCloseHeight;
     wrapper.frameborder = 0;
