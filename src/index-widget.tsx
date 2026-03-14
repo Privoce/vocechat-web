@@ -5,8 +5,10 @@ if (typeof document !== 'undefined') {
   if (currentScript && currentScript.src) {
     try {
       const scriptUrl = new URL(currentScript.src);
-      // 设置为脚本所在的目录路径
-      __webpack_public_path__ = scriptUrl.origin + '/';
+      // 获取脚本所在的目录路径（去掉文件名）
+      const scriptPath = scriptUrl.pathname.substring(0, scriptUrl.pathname.lastIndexOf('/') + 1);
+      // 设置为脚本所在的完整目录路径
+      __webpack_public_path__ = scriptUrl.origin + scriptPath;
     } catch (e) {
       console.warn('Failed to set webpack public path:', e);
     }
