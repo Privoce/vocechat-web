@@ -19,7 +19,7 @@
     popupImage = "",
     popupClosable = "true",
     showPopup = "true",
-    useShadowDom = "true"
+    useShadowDom = "false"
   } = d.currentScript.dataset;
   const _src = d.currentScript.src;
   const origin = new URL(_src).origin;
@@ -31,7 +31,6 @@
 
   const baseStyles = {
     position: "fixed",
-    right: "16px",
     [position]: "16px", // [position] = [right] or [left]
     bottom: "16px",
     border: "none",
