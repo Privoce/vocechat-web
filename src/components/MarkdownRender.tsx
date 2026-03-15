@@ -22,6 +22,8 @@ interface IProps {
 }
 const MarkdownRender: FC<IProps> = ({ content, cleanMode = false }) => {
   const mdContainer = useRef<HTMLDivElement | null>(null);
+  const viewerRef = useRef<any>(null);
+
   useEffect(() => {
     if (mdContainer.current) {
       const links = mdContainer.current.querySelectorAll("a");
@@ -30,13 +32,25 @@ const MarkdownRender: FC<IProps> = ({ content, cleanMode = false }) => {
       });
     }
   }, [mdContainer]);
+
+  useEffect(() => {
+    // Update viewer content when content changes
+    if (viewerRef.current) {
+      const instance = viewerRef.current.getInstance();
+      if (instance && instance.setMarkdown) {
+        instance.setMarkdown(content);
+      }
+    }
+  }, [content]);
+
   if (cleanMode)
-    return <Viewer initialValue={content} theme={isDarkMode() ? "dark" : "light"}></Viewer>;
+    return <Viewer key={content} initialValue={content} theme={isDarkMode() ? "dark" : "light"}></Viewer>;
   return (
     <>
       <ImagePreview container={mdContainer.current} context="markdown" />
       <div ref={mdContainer} id="MARKDOWN_CONTAINER">
         <Viewer
+          ref={viewerRef}
           initialValue={content}
           plugins={[codeSyntaxHighlight, katexPlugin]}
           theme={isDarkMode() ? "dark" : "light"}
