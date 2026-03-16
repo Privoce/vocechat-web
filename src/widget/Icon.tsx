@@ -10,14 +10,16 @@ type Props = {
 
 const Icon = ({ handleClick }: Props) => {
   const serverLogo = useAppSelector((store) => store.server.logo, shallowEqual);
-  const { popupTitle, popupSubtitle, popupImage, logo: customLogo, popupClosable, showPopup } = useWidget();
+  const { popupTitle, popupSubtitle, popupImage, logo: customLogo, popupClosable, showPopup, embed, isMobile: isMobileFromContext } = useWidget();
   const [tooltipVisible, setTooltipVisible] = useState(true);
 
   // 优先使用自定义 logo，否则使用服务器 logo
   const logo = customLogo || serverLogo;
 
   // 检测是否是移动端
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  // 在 embed 模式（iframe/shadow DOM）下，使用从父窗口传递的 isMobile 参数
+  // 在非 embed 模式下，直接检测当前窗口宽度
+  const isMobile = embed ? isMobileFromContext : (typeof window !== 'undefined' && window.innerWidth < 768);
 
   // 是否显示 tooltip（桌面端 + 有内容 + 用户未关闭 + showPopup 开关打开）
   const showTooltip = !isMobile && tooltipVisible && (popupTitle || popupSubtitle) && showPopup;

@@ -32,7 +32,7 @@ const Index = ({ handleClose, hostId }: Props) => {
       className={clsx(
         "flex flex-col bg-white dark:bg-gray-700 rounded-md overflow-hidden shadow-xl",
         embed
-          ? ""
+          ? "border border-gray-200 dark:border-gray-600"
           : `w-full h-full md:max-w-lg md:h-[calc(100dvh_-_20px)] m-auto md:my-2 md:shadow-lg rounded-none md:rounded-md`
       )}
       style={embed ? { width: `${openWidth}px`, height: `${openHeight}px` } : {}}

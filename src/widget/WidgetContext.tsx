@@ -32,6 +32,7 @@ const openWidth = parseInt(query.get("openWidth") || "380");
 const openHeight = parseInt(query.get("openHeight") || "680");
 const closeWidth = parseInt(query.get("closeWidth") || "48");
 const closeHeight = parseInt(query.get("closeHeight") || "48");
+const isMobile = query.get("isMobile") === "true";
 const WidgetContext = createContext({
   id,
   token,
@@ -55,7 +56,8 @@ const WidgetContext = createContext({
   openWidth,
   openHeight,
   closeWidth,
-  closeHeight
+  closeHeight,
+  isMobile
 });
 
 function WidgetProvider({ children }: { children: ReactNode }) {
@@ -91,7 +93,8 @@ function WidgetProvider({ children }: { children: ReactNode }) {
         openWidth,
         openHeight,
         closeWidth,
-        closeHeight
+        closeHeight,
+        isMobile
       }}
     >
       {children}
