@@ -21,6 +21,7 @@ type Props = {
 
 export interface VirtualMessageFeedHandle {
   scrollToMessage: (mid: number) => void;
+  notifyFileSending: () => void;
 }
 
 // const firstMsgIndex = 10000;
@@ -32,6 +33,9 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
   const [atBottom, setAtBottom] = useState(false);
   // Reduce initial visible count for better performance on low-end devices
   const [visibleCount, setVisibleCount] = useState(50);
+  // Track when files are being sent to force scroll
+  const shouldScrollForFileRef = useRef(false);
+  const pendingScrollToBottomRef = useRef(false);
   const [loadMoreMessage, { isLoading: loadingMore, isSuccess, data: historyData }] =
     useLazyLoadMoreMessagesQuery();
   const vList = useRef<VirtuosoHandle | null>(null);
@@ -103,6 +107,18 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
     // Reset visible count when switching chats
     setVisibleCount(50);
     setAtBottom(false);
+
+    // Scroll to bottom when switching conversations
+    // Use setTimeout to ensure the new messages are rendered first
+    setTimeout(() => {
+      if (vList.current && stableMids.length > 0) {
+        vList.current.scrollToIndex({
+          index: stableMids.length - 1,
+          align: "end",
+          behavior: "auto"
+        });
+      }
+    }, 0);
   }, [id]);
 
   useEffect(() => {
@@ -194,15 +210,14 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
   };
   // 自动跟随
   const handleFollowOutput = (isAtBottom: boolean) => {
-    const [lastMid] = stableMids ? stableMids.slice(-1) : [0];
-    const ts = new Date().getTime();
-    // tricky
-    const isSentByMyself = ts - lastMid < 1000;
-    if (isAtBottom || isSentByMyself) {
-      return isAtBottom ? "smooth" : true;
-    } else {
-      return false;
+    // Check if this is a file send that should force scroll
+    if (shouldScrollForFileRef.current) {
+      shouldScrollForFileRef.current = false; // Reset flag
+      return "smooth";
     }
+
+    // For all other cases (text messages, received messages), only scroll if at bottom
+    return isAtBottom ? "smooth" : false;
   };
   // 滚动到底部
   const handleScrollBottom = useCallback(() => {
@@ -214,7 +229,24 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
   const handleBottomStateChange = (bottom: boolean) => {
     setAtBottom(bottom);
   };
-  
+
+  const handleTotalListHeightChanged = useCallback((_height: number) => {
+    if (pendingScrollToBottomRef.current) {
+      pendingScrollToBottomRef.current = false;
+      // Use requestAnimationFrame to wait for the layout shift to complete
+      // (UploadFileList unmounting and Send box shrinking)
+      requestAnimationFrame(() => {
+        if (vList.current && stableMids.length > 0) {
+          vList.current.scrollToIndex({
+            index: stableMids.length - 1,
+            align: "end",
+            behavior: "auto"
+          });
+        }
+      });
+    }
+  }, [stableMids.length]);
+
   useImperativeHandle(ref, () => ({
     scrollToMessage: (mid: number) => {
       const index = stableMids.findIndex((m) => m === mid);
@@ -229,6 +261,10 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
           }
         }, 100);
       }
+    },
+    notifyFileSending: () => {
+      shouldScrollForFileRef.current = true;
+      pendingScrollToBottomRef.current = true; // Arm the height-change listener
     }
   }));
   
@@ -299,6 +335,7 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
         atBottomStateChange={handleBottomStateChange}
         atBottomThreshold={400}
         followOutput={handleFollowOutput}
+        totalListHeightChanged={handleTotalListHeightChanged}
         itemContent={itemContent}
       />
       {!atBottom && (

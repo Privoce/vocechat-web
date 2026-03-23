@@ -112,7 +112,7 @@ const Layout: FC<Props> = ({
                   <LicenseUpgradeTip />
                 ) : (
                   <div className={clsx(`flex justify-center`, selects && "hidden")}>
-                    <Send id={to} context={context} />
+                    <Send id={to} context={context} feedRef={feedRef} />
                   </div>
                 )}
                 {selects && <Operations context={context} id={to} />}
