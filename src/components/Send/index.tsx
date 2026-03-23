@@ -23,6 +23,7 @@ import { Emoji } from "@udecode/plate-emoji";
 import { EmojiInputPicker } from "../MessageInput/plate-ui/emoji-input-picker";
 import { MessageWithMentions } from "@/types/message";
 import { PlateEditor } from "@udecode/plate-common";
+import { VirtualMessageFeedHandle } from "@/routes/chat/Layout/VirtualMessageFeed";
 
 const Modes = {
   text: "text",
@@ -31,11 +32,13 @@ const Modes = {
 interface IProps {
   context?: ChatContext;
   id: number;
+  feedRef?: React.RefObject<VirtualMessageFeedHandle>;
 }
 const Send: FC<IProps> = ({
   // 发给谁，或者是 channel，或者是 user
   context = "channel",
   id,
+  feedRef,
 }) => {
   const editorRef = useRef<PlateEditor | null>(null);
 
@@ -100,6 +103,9 @@ const Send: FC<IProps> = ({
     }
     // send files
     if (uploadFiles.length !== 0) {
+      // Notify the feed that files are being sent (should trigger scroll)
+      feedRef?.current?.notifyFileSending();
+
       uploadFiles.forEach((fileInfo) => {
         const ts = +new Date();
         const { url, name, size, type } = fileInfo;
