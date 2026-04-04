@@ -31,11 +31,14 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
   // const { t } = useTranslation("chat");
   // const [firstItemIndex, setFirstItemIndex] = useState(firstMsgIndex);
   const [atBottom, setAtBottom] = useState(false);
+  const atBottomRef = useRef(false);
   // Reduce initial visible count for better performance on low-end devices
   const [visibleCount, setVisibleCount] = useState(50);
   // Track when files are being sent to force scroll
   const shouldScrollForFileRef = useRef(false);
   const pendingScrollToBottomRef = useRef(false);
+  // Freeze the data passed to Virtuoso when not at bottom to prevent scroll jitter
+  const frozenMidsRef = useRef<number[] | null>(null);
   const [loadMoreMessage, { isLoading: loadingMore, isSuccess, data: historyData }] =
     useLazyLoadMoreMessagesQuery();
   const vList = useRef<VirtuosoHandle | null>(null);
@@ -85,6 +88,24 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
     prevMidsRef.current = mids;
     return mids;
   }, [mids]);
+
+  // When not at bottom, freeze the mids passed to Virtuoso so new messages
+  // don't cause scroll compensation jitter. Unfreeze when user scrolls back to bottom.
+  const displayMids = useMemo(() => {
+    if (atBottomRef.current) {
+      // At bottom: always show latest, clear any freeze
+      frozenMidsRef.current = null;
+      return stableMids;
+    }
+    // Not at bottom: freeze on first new-message arrival
+    if (frozenMidsRef.current === null) {
+      frozenMidsRef.current = stableMids;
+    }
+    return frozenMidsRef.current;
+    // atBottom is included to recompute when user scrolls back to bottom
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stableMids, atBottom]);
+
   const selects = useAppSelector(
     (store) => store.ui.selectMessages[`${context}_${id}`],
     shallowEqual
@@ -107,6 +128,8 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
     // Reset visible count when switching chats
     setVisibleCount(50);
     setAtBottom(false);
+    atBottomRef.current = false;
+    frozenMidsRef.current = null;
 
     // Scroll to bottom when switching conversations
     // Use setTimeout to ensure the new messages are rendered first
@@ -127,7 +150,7 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
 
     const handleScrollToMessage = (evt: CustomEvent) => {
       const { mid } = evt.detail;
-      const index = stableMids.findIndex((m) => m === mid);
+      const index = displayMids.findIndex((m) => m === mid);
       if (index !== -1 && vList.current) {
         vList.current.scrollToIndex({ index, align: "center", behavior: "smooth" });
         setTimeout(() => {
@@ -171,7 +194,7 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
     return () => {
       feedEle?.removeEventListener('scrollToMessage', handleScrollToMessage as EventListener);
     };
-  }, [context, id, stableMids, allMids]);
+  }, [context, id, displayMids, allMids]);
 
   useEffect(() => {
     if (isSuccess && historyData) {
@@ -221,12 +244,19 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
   };
   // 滚动到底部
   const handleScrollBottom = useCallback(() => {
+    // Unfreeze so Virtuoso gets the latest messages
+    frozenMidsRef.current = null;
     const vl = vList!.current;
     if (vl) {
       vl.scrollToIndex(allMids.length - 1);
     }
   }, [allMids]);
   const handleBottomStateChange = (bottom: boolean) => {
+    atBottomRef.current = bottom;
+    if (bottom) {
+      // Unfreeze: allow new messages to flow into the list
+      frozenMidsRef.current = null;
+    }
     setAtBottom(bottom);
   };
 
@@ -236,20 +266,20 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
       // Use requestAnimationFrame to wait for the layout shift to complete
       // (UploadFileList unmounting and Send box shrinking)
       requestAnimationFrame(() => {
-        if (vList.current && stableMids.length > 0) {
+        if (vList.current && displayMids.length > 0) {
           vList.current.scrollToIndex({
-            index: stableMids.length - 1,
+            index: displayMids.length - 1,
             align: "end",
             behavior: "auto"
           });
         }
       });
     }
-  }, [stableMids.length]);
+  }, [displayMids.length]);
 
   useImperativeHandle(ref, () => ({
     scrollToMessage: (mid: number) => {
-      const index = stableMids.findIndex((m) => m === mid);
+      const index = displayMids.findIndex((m) => m === mid);
       if (index !== -1 && vList.current) {
         vList.current.scrollToIndex({ index, align: "center", behavior: "smooth" });
       } else if (allMids.includes(mid)) {
@@ -272,14 +302,14 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
 
   // Store frequently changing values in refs to avoid recreating itemContent
   const messageDataRef = useRef(messageData);
-  const midsRef = useRef(stableMids);
+  const midsRef = useRef(displayMids);
   const readIndexRef = useRef(readIndex);
   const loginUidRef = useRef(loginUid);
   const selectsRef = useRef(selects);
   const toggleSelectRef = useRef(toggleSelect);
 
   messageDataRef.current = messageData;
-  midsRef.current = stableMids;
+  midsRef.current = displayMids;
   readIndexRef.current = readIndex;
   loginUidRef.current = loginUid;
   selectsRef.current = selects;
@@ -326,10 +356,10 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
           Header: CustomHeader
         }}
         // firstItemIndex={firstItemIndex}
-        initialTopMostItemIndex={stableMids.length - 1}
+        initialTopMostItemIndex={displayMids.length - 1}
         alignToBottom
         // startReached={handleLoadMore}
-        data={stableMids}
+        data={displayMids}
         atTopThreshold={context == "channel" ? 160 : 0}
         atTopStateChange={handleTopStateChange}
         atBottomStateChange={handleBottomStateChange}
