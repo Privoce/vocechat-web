@@ -1,8 +1,8 @@
-// import Tippy from "@tippyjs/react";
-import { ChangeEvent, FC, FormEvent, useRef, useState } from "react";
+import { ChangeEvent, FC, FormEvent, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import clsx from "clsx";
+import toast from "react-hot-toast";
 
 import BASE_URL from "@/app/config";
 import { useSearchUserMutation, useUpdateContactStatusMutation } from "@/app/services/user";
@@ -21,8 +21,14 @@ type Props = {
 type Type = "id" | "email" | "name";
 
 const SearchUser: FC<Props> = ({ closeModal }) => {
-  const [updateContactStatus, { isLoading: adding }] = useUpdateContactStatusMutation();
+  const [updateContactStatus, { isLoading: adding, error: addContactError }] =
+    useUpdateContactStatusMutation();
   const usersData = useAppSelector((store) => store.users.byId, shallowEqual);
+  const isAdmin = useAppSelector((store) => store.authData.user?.is_admin, shallowEqual);
+  const addFriendEnable = useAppSelector(
+    (store) => store.server.add_friend_enable ?? true,
+    shallowEqual
+  );
   const { t } = useTranslation();
   const navigateTo = useNavigate();
   const inputRef = useRef(null);
@@ -32,7 +38,32 @@ const SearchUser: FC<Props> = ({ closeModal }) => {
     email: "",
     name: ""
   });
-  const [searchUser, { data, isSuccess, isLoading, reset }] = useSearchUserMutation();
+  const [searchUser, { data, isSuccess, isLoading, isError, reset, error: searchError }] =
+    useSearchUserMutation();
+  const isSearchDisabled =
+    !!searchError &&
+    "data" in searchError &&
+    typeof searchError.data === "string" &&
+    (searchError.data as string).includes("disabled by the administrator") &&
+    // text/plain 403 → status='PARSING_ERROR', originalStatus=403
+    // json 403      → status=403
+    (("originalStatus" in searchError && searchError.originalStatus === 403) ||
+      ("status" in searchError && searchError.status === 403));
+  useEffect(() => {
+    if (!isSearchDisabled) return;
+    toast.error(t("search_disabled", { ns: "member" }));
+  }, [isSearchDisabled]);
+  useEffect(() => {
+    if (!addContactError) return;
+    const err = addContactError as any;
+    const httpStatus: number = err?.originalStatus ?? err?.status;
+    const errData: string = typeof err?.data === "string" ? err.data : "";
+    toast.error(
+      httpStatus === 403 && errData.includes("disabled by the administrator")
+        ? t("add_friend_disabled", { ns: "member" })
+        : t("tip.update_failed", { ns: "common", defaultValue: "Operation failed" })
+    );
+  }, [addContactError]);
   const handleInput = (evt: ChangeEvent<HTMLInputElement>) => {
     const tmp = {
       [type]: evt.target.value
@@ -69,7 +100,8 @@ const SearchUser: FC<Props> = ({ closeModal }) => {
   const handleChat = async (directChat: boolean) => {
     if (!data) return;
     if (!directChat) {
-      await updateContactStatus({ target_uid: data.uid, action: "add" });
+      const result = await updateContactStatus({ target_uid: data.uid, action: "add" });
+      if ("error" in result) return; // toast 由上方 useEffect 处理
     }
     closeModal();
     navigateTo(`/chat/dm/${data.uid}`);
@@ -120,7 +152,18 @@ const SearchUser: FC<Props> = ({ closeModal }) => {
           />
         </form>
         <div className="min-h-[280px] flex-center pb-10">
-          {isSuccess ? (
+          {isError ? (
+            <div className="w-full h-full text-center flex flex-col gap-3 items-center">
+              <span className="text-sm text-gray-800 dark:text-gray-200">
+                {isSearchDisabled
+                  ? t("search_disabled", { ns: "member" })
+                  : t("tip.error", { ns: "common", defaultValue: "Something went wrong" })}
+              </span>
+              <StyledButton className="mini" onClick={resetInput}>
+                Ok
+              </StyledButton>
+            </div>
+          ) : isSuccess ? (
             data ? (
               <div className="flex flex-col items-center pt-10">
                 <Avatar
@@ -139,13 +182,13 @@ const SearchUser: FC<Props> = ({ closeModal }) => {
                   <StyledButton className="mini ghost" onClick={handleSendMsg}>
                     {t("send_msg", { ns: "member" })}
                   </StyledButton>
-                  {!inContact && (
+                  {!inContact && (isAdmin || addFriendEnable) && (
                     <StyledButton
                       disabled={adding}
                       onClick={handleChat.bind(null, inContact)}
                       className={clsx("mini", inContact && "ghost")}
                     >
-                      Add to contact
+                      {t("add_to_contact", { ns: "member" })}
                     </StyledButton>
                   )}
                 </div>

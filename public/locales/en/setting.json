@@ -100,6 +100,18 @@
       "enable": "Enable",
       "disable": "Disable"
     },
+    "dm_enable": {
+      "title": "Direct Messaging",
+      "desc": "If disabled, members cannot send direct messages to each other."
+    },
+    "add_friend_enable": {
+      "title": "Add Friend",
+      "desc": "If disabled, members cannot add other users as friends."
+    },
+    "search_user_enable": {
+      "title": "Search Users",
+      "desc": "If disabled, members cannot search for other users."
+    },
     "enable_msg_url_preview": {
       "title": "Enable URL Preview in Message",
       "desc": "If enabled, url in message will show preview content.",

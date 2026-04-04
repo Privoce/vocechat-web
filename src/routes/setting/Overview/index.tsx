@@ -20,6 +20,9 @@ import WhoCanSignUpSetting from "./WhoCanSignUpSetting";
 import UserMsgEmailNotify from "./UserMsgEmailNotify";
 import WhoCanInviteUsers from "./WhoCanInviteUsers";
 import WebClientAutoUpdate from "./WebClientAutoUpdate";
+import DMEnable from "./DMEnable";
+import AddFriendEnable from "./AddFriendEnable";
+import SearchUserEnable from "./SearchUserEnable";
 
 export default function Overview() {
   const { t } = useTranslation("setting");
@@ -45,6 +48,9 @@ export default function Overview() {
 
           <EnableURLPreviewInMsg />
           <WhoCanInviteUsers />
+          <DMEnable />
+          <AddFriendEnable />
+          <SearchUserEnable />
           <OnlyAdminCanSeeChannelMembers />
           {/* 访客模式 */}
           <GuestMode />
