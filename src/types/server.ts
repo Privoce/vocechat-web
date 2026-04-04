@@ -19,6 +19,9 @@ export interface SystemCommon {
   ext_setting: null | string;
   msg_smtp_notify_enable: boolean;
   msg_smtp_notify_delay_seconds: number;
+  dm_enable?: boolean;
+  add_friend_enable?: boolean;
+  search_user_enable?: boolean;
 }
 export interface GithubAuthConfig {
   client_id?: string;

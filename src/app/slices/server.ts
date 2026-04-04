@@ -29,7 +29,10 @@ const initialState: StoredServer = {
   loginConfig: null,
   ext_setting: null,
   msg_smtp_notify_delay_seconds: 0,
-  msg_smtp_notify_enable: false
+  msg_smtp_notify_enable: false,
+  dm_enable: true,
+  add_friend_enable: true,
+  search_user_enable: true
 };
 
 const serverSlice = createSlice({
@@ -57,6 +60,9 @@ const serverSlice = createSlice({
         only_admin_can_create_group = false,
         loginConfig = state.loginConfig || null,
         ext_setting = null,
+        dm_enable = true,
+        add_friend_enable = true,
+        search_user_enable = true,
         ...rest
       } = action.payload || {};
       return {
@@ -73,6 +79,9 @@ const serverSlice = createSlice({
         chat_layout_mode,
         loginConfig,
         ext_setting,
+        dm_enable,
+        add_friend_enable,
+        search_user_enable,
         ...rest
       };
     },

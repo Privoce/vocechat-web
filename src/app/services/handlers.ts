@@ -1,6 +1,7 @@
 import toast from "react-hot-toast";
 import { batch } from "react-redux";
 
+import i18n from "@/i18n";
 import { ContentTypes } from "../config";
 import { addMessage, removeMessage } from "../slices/message";
 import { addChannelMsg, removeChannelMsg } from "../slices/message.channel";
@@ -60,12 +61,18 @@ export const onMessageSendStarted = async (
     }, 300);
     // dispatch(removePendingMessage({ id, mid:ts, type: from }));
   } catch (error) {
-    if (error?.error?.status == 403) {
-      // 403 means blocked
-      toast.error(`Send failed, blocked maybe`);
-      // dispatch(updateMessage({ mid: ts, failed: true }));
+    const httpStatus = error?.error?.originalStatus ?? error?.error?.status;
+    const errData: string =
+      typeof error?.error?.data === "string" ? error.error.data : "";
+    if (httpStatus === 403) {
+      if (errData.includes("disabled by the administrator")) {
+        toast.error(i18n.t("dm_disabled", { ns: "member" }));
+      } else {
+        // 403 means blocked
+        toast.error(i18n.t("send_failed_blocked", { ns: "member", defaultValue: "Send failed, blocked maybe" }));
+      }
     } else {
-      toast.error(`Send Message Failed ${JSON.stringify(error)}`);
+      toast.error(i18n.t("send_failed", { ns: "member", defaultValue: "Send Message Failed" }));
     }
     dispatch(removeContextMessage({ id, mid: ts }));
     dispatch(removeMessage(ts));

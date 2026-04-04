@@ -24,6 +24,11 @@ export default function AddEntriesMenu() {
     (store) => store.server.only_admin_can_create_group,
     shallowEqual
   );
+  const dmEnable = useAppSelector((store) => store.server.dm_enable ?? true, shallowEqual);
+  const searchUserEnable = useAppSelector(
+    (store) => store.server.search_user_enable ?? true,
+    shallowEqual
+  );
   const [isPrivate, setIsPrivate] = useState(false);
   const [inviteModalVisible, setInviteModalVisible] = useState(false);
   const [searchModalVisible, setSearchModalVisible] = useState(false);
@@ -67,6 +72,8 @@ export default function AddEntriesMenu() {
   const iconClass = "w-5 h-5 dark:fill-gray-300";
   const canPrivateGroup = onlyAdminCreateGroup ? isAdmin : true;
   const showInvite = isAdmin || !onlyAdminCanInvite;
+  const showNewMsg = isAdmin || dmEnable;
+  const showSearchPeople = isAdmin || searchUserEnable;
   return (
     <>
       <ul className="flex flex-col rounded-xl drop-shadow p-1 select-none text-gray-500 dark:text-gray-300 bg-white dark:bg-black">
@@ -83,20 +90,24 @@ export default function AddEntriesMenu() {
             {t("action.new_private_channel")}
           </li>
         )}
-        <li className={itemClass} onClick={toggleUsersModalVisible}>
-          <IconMention className={iconClass} />
-          {t("action.new_msg")}
-        </li>
+        {showNewMsg && (
+          <li className={itemClass} onClick={toggleUsersModalVisible}>
+            <IconMention className={iconClass} />
+            {t("action.new_msg")}
+          </li>
+        )}
         {showInvite && (
           <li className={itemClass} onClick={toggleInviteModalVisible}>
             <IconInvite className={iconClass} />
             {t("action.invite_people")}
           </li>
         )}
-        <li className={itemClass} onClick={toggleSearchModalVisible}>
-          <IconSearch className={iconClass} />
-          {t("action.search_people")}
-        </li>
+        {showSearchPeople && (
+          <li className={itemClass} onClick={toggleSearchModalVisible}>
+            <IconSearch className={iconClass} />
+            {t("action.search_people")}
+          </li>
+        )}
       </ul>
       {channelModalVisible && <ChannelModal personal={isPrivate} closeModal={handleCloseModal} />}
       {usersModalVisible && <UsersModal closeModal={toggleUsersModalVisible} />}

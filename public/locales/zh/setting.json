@@ -98,6 +98,18 @@
       "enable": "开启",
       "disable": "关闭"
     },
+    "dm_enable": {
+      "title": "私聊（直接消息）",
+      "desc": "关闭后，普通成员之间无法互发私信"
+    },
+    "add_friend_enable": {
+      "title": "加好友",
+      "desc": "关闭后，普通成员无法将其他用户添加为好友"
+    },
+    "search_user_enable": {
+      "title": "搜索用户",
+      "desc": "关闭后，普通成员无法搜索其他用户"
+    },
     "enable_msg_url_preview": {
       "title": "开启消息网址预览",
       "desc": "如果开启，消息中的网址会显示预览内容",

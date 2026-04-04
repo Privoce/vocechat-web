@@ -29,6 +29,12 @@
   "set_normal": "普通用户",
 
   "search_not_found": "用户不存在，或者不允许搜索",
+  "search_disabled": "管理员已关闭用户搜索功能",
+  "add_to_contact": "加为联系人",
+  "add_friend_disabled": "管理员已关闭加好友功能",
+  "dm_disabled": "管理员已关闭私聊功能",
+  "send_failed_blocked": "发送失败，可能被对方屏蔽",
+  "send_failed": "消息发送失败",
   "search_by_id": "用户ID",
   "search_by_id_ph": "请输入用户ID",
   "search_by_email": "用户邮箱",
