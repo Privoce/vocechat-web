@@ -112,6 +112,7 @@ const MessageContextMenu: FC<Props> = ({
         interactive
         placement="right-start"
         popperOptions={{ strategy: "fixed" }}
+        appendTo={() => document.body}
         onClickOutside={hide}
         key={mid}
         content={<ContextMenu hideMenu={hide} items={items} />}

@@ -131,6 +131,7 @@ const Message: FC<IProps> = ({
         interactive
         placement="right"
         trigger="click"
+        appendTo={() => document.body}
         content={<Profile uid={fromUid || 0} type="card" cid={context == "dm" ? 0 : contextId} />}
       >
         <div className="cursor-pointer w-10 h-10 shrink-0" data-uid={fromUid} ref={avatarRef}>

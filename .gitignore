@@ -11,6 +11,7 @@
 
 # production
 /build
+/data
 /src-tauri/target
 
 # misc

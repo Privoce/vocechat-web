@@ -1,7 +1,5 @@
 import { useTranslation } from "react-i18next";
 import { NavLink, useLocation } from "react-router-dom";
-import { Waveform } from "@uiball/loaders";
-import clsx from "clsx";
 
 import { useAppSelector } from "@/app/store";
 import EditIcon from "@/assets/icons/edit.svg";
@@ -42,23 +40,15 @@ const ChannelHeader = ({ cid }: ChannelHeaderProps) => {
 };
 
 type Props = {
-  context?: {
+  context: {
     id: number;
     isChannel: boolean;
     loadingMore: boolean;
   };
 };
 const CustomHeader = ({ context }: Props) => {
-  if (!context) return null;
-  const { id, isChannel, loadingMore } = context;
-  return (
-    <>
-      {isChannel ? <ChannelHeader cid={id} /> : null}
-      <div className={clsx("mt-2 w-full py-2 ", loadingMore ? "flex-center" : "hidden")}>
-        <Waveform size={18} lineWeight={4} speed={1} color="#ccc" />
-      </div>
-    </>
-  );
+  const { id, isChannel } = context;
+  return isChannel ? <ChannelHeader cid={id} /> : null;
 };
 
 export default CustomHeader;
