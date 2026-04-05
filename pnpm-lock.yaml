@@ -247,6 +247,9 @@ importers:
       tippy.js:
         specifier: ^6.3.7
         version: 6.3.7
+      virtua:
+        specifier: ^0.49.0
+        version: 0.49.0(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       wavesurfer.js:
         specifier: ^7.10.1
         version: 7.10.1
@@ -5931,6 +5934,26 @@ packages:
 
   vfile@6.0.3:
     resolution: {integrity: sha512-KzIbH/9tXat2u30jf+smMwFCsno4wHVdNmzFyL+T/L3UGqqk6JKfVqOFOZEpZSHADH1k40ab6NUIXZq422ov3Q==}
+
+  virtua@0.49.0:
+    resolution: {integrity: sha512-yra9TIPqkVIn+LOjCZO8e6C6UsCiCIHJXt3yfnCP02r2sLpgr6mlispn3SHtWZv2aK2tuZLo6Sp2v6qmSrSVfw==}
+    peerDependencies:
+      react: '>=16.14.0'
+      react-dom: '>=16.14.0'
+      solid-js: '>=1.0'
+      svelte: '>=5.0'
+      vue: '>=3.2'
+    peerDependenciesMeta:
+      react:
+        optional: true
+      react-dom:
+        optional: true
+      solid-js:
+        optional: true
+      svelte:
+        optional: true
+      vue:
+        optional: true
 
   void-elements@3.1.0:
     resolution: {integrity: sha512-Dhxzh5HZuiHQhbvTW9AMetFfBHDMYpo23Uo9btPXgdYP+3T5S+p+jgNy7spra+veYhBP2dCSgxR/i2Y02h5/6w==}
@@ -12599,6 +12622,11 @@ snapshots:
     dependencies:
       '@types/unist': 3.0.3
       vfile-message: 4.0.3
+
+  virtua@0.49.0(react-dom@19.1.1(react@19.1.1))(react@19.1.1):
+    optionalDependencies:
+      react: 19.1.1
+      react-dom: 19.1.1(react@19.1.1)
 
   void-elements@3.1.0: {}
 

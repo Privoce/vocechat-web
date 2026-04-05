@@ -1,7 +1,17 @@
-import { useCallback, useEffect, useRef, useState, forwardRef, useImperativeHandle, useMemo } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  forwardRef,
+  useImperativeHandle,
+  useMemo,
+  useLayoutEffect
+} from "react";
 import { shallowEqual, useDispatch } from "react-redux";
-import { Virtuoso, VirtuosoHandle } from "react-virtuoso";
+import { Virtualizer, type VirtualizerHandle } from "virtua";
 import { useDebounce } from "rooks";
+import { Waveform } from "@uiball/loaders";
 
 import { useLazyLoadMoreMessagesQuery, useReadMessageMutation } from "@/app/services/message";
 import { updateHistoryMark } from "@/app/slices/footprint";
@@ -10,7 +20,6 @@ import { ChatContext } from "@/types/common";
 import { renderMessageFragment } from "../../utils";
 import NewMessageBottomTip from "../NewMessageBottomTip";
 import CustomHeader from "./CustomHeader";
-import CustomList from "./CustomList";
 import { makeSelectVisibleMessages } from "@/app/selectors/message";
 import { updateSelectMessages } from "@/app/slices/ui";
 
@@ -24,32 +33,21 @@ export interface VirtualMessageFeedHandle {
   notifyFileSending: () => void;
 }
 
-// const firstMsgIndex = 10000;
-// let prevMids: number[] = [];
 const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ context, id }, ref) => {
   const dispatch = useDispatch();
-  // const { t } = useTranslation("chat");
-  // const [firstItemIndex, setFirstItemIndex] = useState(firstMsgIndex);
-  const [atBottom, setAtBottom] = useState(false);
-  const atBottomRef = useRef(false);
-  // Reduce initial visible count for better performance on low-end devices
+  const [atBottom, setAtBottom] = useState(true);
+  const stickToBottomRef = useRef(true);
   const [visibleCount, setVisibleCount] = useState(50);
-  // Track when files are being sent to force scroll
-  const shouldScrollForFileRef = useRef(false);
-  const pendingScrollToBottomRef = useRef(false);
-  // Freeze the data passed to Virtuoso when not at bottom to prevent scroll jitter
-  const frozenMidsRef = useRef<number[] | null>(null);
+  // Track prepend operations so virtua's shift prop can compensate scroll position
+  const isPrependRef = useRef(false);
   const [loadMoreMessage, { isLoading: loadingMore, isSuccess, data: historyData }] =
     useLazyLoadMoreMessagesQuery();
-  const vList = useRef<VirtuosoHandle | null>(null);
+  const vRef = useRef<VirtualizerHandle | null>(null);
   const [updateReadIndex] = useReadMessageMutation();
-  // Increase debounce time for better performance on low-end devices
   const updateReadDebounced = useDebounce(updateReadIndex, 500);
-  // Store debounced function in ref to avoid recreating itemContent
   const updateReadDebouncedRef = useRef(updateReadDebounced);
   updateReadDebouncedRef.current = updateReadDebounced;
 
-  // Create memoized selector instance for this component
   const selectVisibleMessages = useMemo(() => makeSelectVisibleMessages(), []);
 
   const historyMid = useAppSelector(
@@ -65,16 +63,14 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
     shallowEqual
   );
 
-  // Stabilize mids array reference - only create new array if content actually changed
   const mids = useMemo(() => {
     if (allMids.length <= visibleCount) return allMids;
     return allMids.slice(-visibleCount);
   }, [allMids, visibleCount]);
 
-  // Use ref to track previous mids for comparison
   const prevMidsRef = useRef<number[]>([]);
+  const prevMidsLenRef = useRef(0);
   const stableMids = useMemo(() => {
-    // Check if mids actually changed
     if (prevMidsRef.current.length === mids.length) {
       let same = true;
       for (let i = 0; i < mids.length; i++) {
@@ -89,22 +85,19 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
     return mids;
   }, [mids]);
 
-  // When not at bottom, freeze the mids passed to Virtuoso so new messages
-  // don't cause scroll compensation jitter. Unfreeze when user scrolls back to bottom.
-  const displayMids = useMemo(() => {
-    if (atBottomRef.current) {
-      // At bottom: always show latest, clear any freeze
-      frozenMidsRef.current = null;
-      return stableMids;
+  // Detect whether the data change is a prepend (items added at start)
+  // or an append (items added at end). When not at bottom and new messages
+  // arrive, allMids grows but slice(-visibleCount) slides the window,
+  // removing items from the start. We need to grow visibleCount to prevent this.
+  useEffect(() => {
+    if (!stickToBottomRef.current && allMids.length > prevMidsLenRef.current) {
+      // New messages arrived while scrolled up — grow visibleCount so the
+      // slice window doesn't slide and remove items from the top
+      const growth = allMids.length - prevMidsLenRef.current;
+      setVisibleCount((prev) => prev + growth);
     }
-    // Not at bottom: freeze on first new-message arrival
-    if (frozenMidsRef.current === null) {
-      frozenMidsRef.current = stableMids;
-    }
-    return frozenMidsRef.current;
-    // atBottom is included to recompute when user scrolls back to bottom
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stableMids, atBottom]);
+    prevMidsLenRef.current = allMids.length;
+  }, [allMids.length]);
 
   const selects = useAppSelector(
     (store) => store.ui.selectMessages[`${context}_${id}`],
@@ -112,47 +105,68 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
   );
   const loginUid = useAppSelector((store) => store.authData.user?.uid, shallowEqual);
 
-  // Create stable toggleSelect function
-  const toggleSelect = useCallback((mid: number, selected: boolean) => {
-    const operation = selected ? "remove" : "add";
-    dispatch(updateSelectMessages({ context, id, operation, data: mid }));
-  }, [context, id, dispatch]);
+  const toggleSelect = useCallback(
+    (mid: number, selected: boolean) => {
+      const operation = selected ? "remove" : "add";
+      dispatch(updateSelectMessages({ context, id, operation, data: mid }));
+    },
+    [context, id, dispatch]
+  );
 
-  // Use memoized selector to get message data - this will only recompute when the specific messages change
   const messageData = useAppSelector((store) => selectVisibleMessages(store, stableMids));
 
   const readChannels = useAppSelector((store) => store.footprint.readChannels, shallowEqual);
   const readUsers = useAppSelector((store) => store.footprint.readUsers, shallowEqual);
 
-  useEffect(() => {
-    // Reset visible count when switching chats
-    setVisibleCount(50);
-    setAtBottom(false);
-    atBottomRef.current = false;
-    frozenMidsRef.current = null;
+  // Count extra virtual items before messages (header, loading spinner)
+  const extraItemCount = (context === "channel" ? 1 : 0) + (loadingMore ? 1 : 0);
+  const extraItemCountRef = useRef(extraItemCount);
+  extraItemCountRef.current = extraItemCount;
 
-    // Scroll to bottom when switching conversations
-    // Use setTimeout to ensure the new messages are rendered first
-    setTimeout(() => {
-      if (vList.current && stableMids.length > 0) {
-        vList.current.scrollToIndex({
-          index: stableMids.length - 1,
-          align: "end",
-          behavior: "auto"
-        });
-      }
-    }, 0);
+  const scrollToBottom = useCallback(() => {
+    if (vRef.current) {
+      vRef.current.scrollTo(vRef.current.scrollSize);
+    }
+  }, []);
+
+  // Scroll to bottom when sticking and new messages arrive
+  useEffect(() => {
+    if (stickToBottomRef.current && stableMids.length > 0) {
+      scrollToBottom();
+    }
+  }, [stableMids, scrollToBottom]);
+
+  // Reset on conversation switch
+  useEffect(() => {
+    setVisibleCount(50);
+    stickToBottomRef.current = true;
+    setAtBottom(true);
+    isPrependRef.current = false;
   }, [id]);
 
+  // Scroll to bottom after conversation switch (after render)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      scrollToBottom();
+    }, 0);
+    return () => clearTimeout(timer);
+  }, [id, scrollToBottom]);
+
+  // Reset isPrepend after layout
+  useLayoutEffect(() => {
+    isPrependRef.current = false;
+  });
+
+  // Handle scrollToMessage custom event
   useEffect(() => {
     const feedId = `VOCECHAT_FEED_${context}_${id}`;
     const feedEle = document.getElementById(feedId);
 
     const handleScrollToMessage = (evt: CustomEvent) => {
       const { mid } = evt.detail;
-      const index = displayMids.findIndex((m) => m === mid);
-      if (index !== -1 && vList.current) {
-        vList.current.scrollToIndex({ index, align: "center", behavior: "smooth" });
+      const index = stableMids.findIndex((m) => m === mid);
+      if (index !== -1 && vRef.current) {
+        vRef.current.scrollToIndex(extraItemCountRef.current + index, { align: "center", smooth: true });
         setTimeout(() => {
           const msgEle = document.querySelector<HTMLDivElement>(`[data-msg-mid='${mid}']`);
           if (msgEle) {
@@ -170,8 +184,8 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
         setVisibleCount(allMids.length);
         setTimeout(() => {
           const idx = allMids.findIndex((m) => m === mid);
-          if (idx !== -1 && vList.current) {
-            vList.current.scrollToIndex({ index: idx, align: "center", behavior: "smooth" });
+          if (idx !== -1 && vRef.current) {
+            vRef.current.scrollToIndex(extraItemCountRef.current + idx, { align: "center", smooth: true });
             setTimeout(() => {
               const msgEle = document.querySelector<HTMLDivElement>(`[data-msg-mid='${mid}']`);
               if (msgEle) {
@@ -190,184 +204,150 @@ const VirtualMessageFeed = forwardRef<VirtualMessageFeedHandle, Props>(({ contex
       }
     };
 
-    feedEle?.addEventListener('scrollToMessage', handleScrollToMessage as EventListener);
+    feedEle?.addEventListener("scrollToMessage", handleScrollToMessage as EventListener);
     return () => {
-      feedEle?.removeEventListener('scrollToMessage', handleScrollToMessage as EventListener);
+      feedEle?.removeEventListener("scrollToMessage", handleScrollToMessage as EventListener);
     };
-  }, [context, id, displayMids, allMids]);
+  }, [context, id, stableMids, allMids]);
 
   useEffect(() => {
     if (isSuccess && historyData) {
       if (historyData.length == 0) {
-        // 到顶了
         dispatch(updateHistoryMark({ type: context, id, mid: "reached" }));
       } else {
-        // 记录最新的 mid
         const [{ mid }] = historyData;
         dispatch(updateHistoryMark({ type: context, id, mid: `${mid}` }));
       }
     }
   }, [isSuccess, historyData, stableMids, context, id]);
-  // useEffect(() => {
-  //     console.log("diff mids", prevMids, mids);
-  //     const newCount = mids.length - prevMids.length;
-  //     setFirstItemIndex((prev) => prev - newCount);
-  // }, [mids]);
 
-  // 加载更多
-  const handleTopStateChange = (isTop: boolean) => {
-    console.log("reach top ", isTop);
-    if (isTop) {
+  // onScroll: detect atBottom state
+  const handleScroll = useCallback((offset: number) => {
+    if (!vRef.current) return;
+    const handle = vRef.current;
+    const isAtBottom = offset - handle.scrollSize + handle.viewportSize >= -50;
+    stickToBottomRef.current = isAtBottom;
+    setAtBottom(isAtBottom);
+
+    // Load more when near top
+    if (offset < 100) {
       if (allMids.length > visibleCount) {
-        // Load 50 messages at a time for better performance
-        setVisibleCount(prev => Math.min(prev + 50, allMids.length));
+        isPrependRef.current = true;
+        setVisibleCount((prev) => Math.min(prev + 50, allMids.length));
       } else {
         if (historyMid === "reached") return;
         let lastMid = allMids.slice(0, 1)[0];
         if (historyMid) {
           lastMid = +historyMid;
         }
+        isPrependRef.current = true;
         loadMoreMessage({ context, id, mid: lastMid });
       }
     }
-  };
-  // 自动跟随
-  const handleFollowOutput = (isAtBottom: boolean) => {
-    // Check if this is a file send that should force scroll
-    if (shouldScrollForFileRef.current) {
-      shouldScrollForFileRef.current = false; // Reset flag
-      return "smooth";
-    }
+  }, [allMids, visibleCount, historyMid, context, id, loadMoreMessage]);
 
-    // For all other cases (text messages, received messages), only scroll if at bottom
-    return isAtBottom ? "smooth" : false;
-  };
-  // 滚动到底部
   const handleScrollBottom = useCallback(() => {
-    // Unfreeze so Virtuoso gets the latest messages
-    frozenMidsRef.current = null;
-    const vl = vList!.current;
-    if (vl) {
-      vl.scrollToIndex(allMids.length - 1);
-    }
-  }, [allMids]);
-  const handleBottomStateChange = (bottom: boolean) => {
-    atBottomRef.current = bottom;
-    if (bottom) {
-      // Unfreeze: allow new messages to flow into the list
-      frozenMidsRef.current = null;
-    }
-    setAtBottom(bottom);
-  };
-
-  const handleTotalListHeightChanged = useCallback((_height: number) => {
-    if (pendingScrollToBottomRef.current) {
-      pendingScrollToBottomRef.current = false;
-      // Use requestAnimationFrame to wait for the layout shift to complete
-      // (UploadFileList unmounting and Send box shrinking)
-      requestAnimationFrame(() => {
-        if (vList.current && displayMids.length > 0) {
-          vList.current.scrollToIndex({
-            index: displayMids.length - 1,
-            align: "end",
-            behavior: "auto"
-          });
-        }
-      });
-    }
-  }, [displayMids.length]);
+    stickToBottomRef.current = true;
+    scrollToBottom();
+  }, [scrollToBottom]);
 
   useImperativeHandle(ref, () => ({
     scrollToMessage: (mid: number) => {
-      const index = displayMids.findIndex((m) => m === mid);
-      if (index !== -1 && vList.current) {
-        vList.current.scrollToIndex({ index, align: "center", behavior: "smooth" });
+      const index = stableMids.findIndex((m) => m === mid);
+      if (index !== -1 && vRef.current) {
+        vRef.current.scrollToIndex(extraItemCountRef.current + index, { align: "center", smooth: true });
       } else if (allMids.includes(mid)) {
         setVisibleCount(allMids.length);
         setTimeout(() => {
           const idx = allMids.findIndex((m) => m === mid);
-          if (idx !== -1 && vList.current) {
-            vList.current.scrollToIndex({ index: idx, align: "center", behavior: "smooth" });
+          if (idx !== -1 && vRef.current) {
+            vRef.current.scrollToIndex(extraItemCountRef.current + idx, { align: "center", smooth: true });
           }
         }, 100);
       }
     },
     notifyFileSending: () => {
-      shouldScrollForFileRef.current = true;
-      pendingScrollToBottomRef.current = true; // Arm the height-change listener
+      stickToBottomRef.current = true;
+      requestAnimationFrame(() => {
+        scrollToBottom();
+      });
     }
   }));
-  
+
   const readIndex = context == "channel" ? readChannels[id] : readUsers[id];
 
-  // Store frequently changing values in refs to avoid recreating itemContent
+  // Store frequently changing values in refs to avoid recreating render function
   const messageDataRef = useRef(messageData);
-  const midsRef = useRef(displayMids);
+  const midsRef = useRef(stableMids);
   const readIndexRef = useRef(readIndex);
   const loginUidRef = useRef(loginUid);
   const selectsRef = useRef(selects);
   const toggleSelectRef = useRef(toggleSelect);
 
   messageDataRef.current = messageData;
-  midsRef.current = displayMids;
+  midsRef.current = stableMids;
   readIndexRef.current = readIndex;
   loginUidRef.current = loginUid;
   selectsRef.current = selects;
   toggleSelectRef.current = toggleSelect;
 
-  // Stable itemContent function - only recreate when context or id changes
-  const itemContent = useCallback((idx: number, mid: number) => {
-    const curr = messageDataRef.current[mid];
-    if (!curr) return <div className="w-full h-[1px] invisible"></div>;
-    const isFirst = idx == 0;
-    const prev = isFirst ? null : messageDataRef.current[midsRef.current[idx - 1]];
-    // Optimize read calculation: once a message is read, it stays read
-    // This prevents unnecessary re-renders when readIndex updates
-    const read = curr?.from_uid == loginUidRef.current || mid <= readIndexRef.current;
-    const selected = !!(selectsRef.current && selectsRef.current.find((s: number) => s == mid));
-    const handleToggleSelect = () => toggleSelectRef.current(mid, selected);
-    return renderMessageFragment({
-      selectMode: !!selectsRef.current,
-      updateReadIndex: updateReadDebouncedRef.current,
-      read,
-      prev,
-      curr,
-      contextId: id,
-      context,
-      selected,
-      toggleSelect: handleToggleSelect
-    });
-  }, [id, context]);
-  
+  const renderItem = useCallback(
+    (mid: number, idx: number) => {
+      const curr = messageDataRef.current[mid];
+      if (!curr) return <div key={mid} className="w-full h-[1px] invisible"></div>;
+      const isFirst = idx == 0;
+      const prev = isFirst ? null : messageDataRef.current[midsRef.current[idx - 1]];
+      const read = curr?.from_uid == loginUidRef.current || mid <= readIndexRef.current;
+      const selected = !!(
+        selectsRef.current && selectsRef.current.find((s: number) => s == mid)
+      );
+      const handleToggleSelect = () => toggleSelectRef.current(mid, selected);
+      return (
+        <div key={mid}>
+          {renderMessageFragment({
+            selectMode: !!selectsRef.current,
+            updateReadIndex: updateReadDebouncedRef.current,
+            read,
+            prev,
+            curr,
+            contextId: id,
+            context,
+            selected,
+            toggleSelect: handleToggleSelect
+          })}
+        </div>
+      );
+    },
+    [id, context]
+  );
+
   return (
     <>
-      <Virtuoso
-        // logLevel={LogLevel.DEBUG}
-        // Reduce overscan for better performance on low-end devices
-        overscan={20}
-        // Reduce viewport extension for better performance
-        increaseViewportBy={{ top: 0, bottom: 200 }}
-        context={{ loadingMore, id, isChannel: context == "channel" }}
+      <div
         id={`VOCECHAT_FEED_${context}_${id}`}
-        className="px-1 md:px-4 py-4.5 overflow-x-hidden overflow-y-scroll"
-        ref={vList}
-        components={{
-          List: CustomList,
-          Header: CustomHeader
-        }}
-        // firstItemIndex={firstItemIndex}
-        initialTopMostItemIndex={displayMids.length - 1}
-        alignToBottom
-        // startReached={handleLoadMore}
-        data={displayMids}
-        atTopThreshold={context == "channel" ? 160 : 0}
-        atTopStateChange={handleTopStateChange}
-        atBottomStateChange={handleBottomStateChange}
-        atBottomThreshold={400}
-        followOutput={handleFollowOutput}
-        totalListHeightChanged={handleTotalListHeightChanged}
-        itemContent={itemContent}
-      />
+        className="px-1 md:px-4 py-4.5 overflow-x-hidden overflow-y-scroll flex-1"
+      >
+        <Virtualizer
+          ref={vRef}
+          shift={isPrependRef.current}
+          onScroll={handleScroll}
+        >
+          {/* Channel header as first virtual item */}
+          {context === "channel" && (
+            <div key="__header__">
+              <CustomHeader
+                context={{ loadingMore, id, isChannel: true }}
+              />
+            </div>
+          )}
+          {loadingMore && (
+            <div key="__loading__" className="w-full py-2 flex-center">
+              <Waveform size={18} lineWeight={4} speed={1} color="#ccc" />
+            </div>
+          )}
+          {stableMids.map((mid, idx) => renderItem(mid, idx))}
+        </Virtualizer>
+      </div>
       {!atBottom && (
         <NewMessageBottomTip context={context} id={id} scrollToBottom={handleScrollBottom} />
       )}
