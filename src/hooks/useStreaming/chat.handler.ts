@@ -99,8 +99,8 @@ const handler = (
         }
         // }
       });
-      // 推给 PC 端
-      {
+      // 推给 PC 端（自己发的不推送）
+      if (!self) {
         const state = store.getState();
         const sender = state.users.byId[from_uid]?.name ?? "";
         const channel =
