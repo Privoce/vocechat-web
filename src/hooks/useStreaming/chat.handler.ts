@@ -7,9 +7,11 @@ import { addChannelMsg, removeChannelMsg } from "@/app/slices/message.channel";
 import { addFileMessage, removeFileMessage } from "@/app/slices/message.file";
 import { toggleReactionMessage } from "@/app/slices/message.reaction";
 import { addUserMsg, removeUserMsg } from "@/app/slices/message.user";
-import { AppDispatch } from "@/app/store";
+import store, { AppDispatch } from "@/app/store";
 import { ChatEvent } from "@/types/sse";
 import { playMessageSound } from "@/utils";
+
+const truncate = (str: string, max = 100) => (str.length > max ? str.slice(0, max) + "…" : str);
 
 type CurrentState = {
   afterMid: number;
@@ -98,7 +100,22 @@ const handler = (
         // }
       });
       // 推给 PC 端
-      console.info("{{NEW_MSG}}");
+      {
+        const state = store.getState();
+        const sender = state.users.byId[from_uid]?.name ?? "";
+        const channel =
+          to === "channel"
+            ? state.channels.byId[id]?.name ?? ""
+            : state.users.byId[id]?.name ?? "";
+        const text =
+          content_type === ContentTypes.file
+            ? "[文件]"
+            : truncate(content, 100);
+        console.info(
+          "{{NEW_MSG}}" +
+            JSON.stringify({ channel, sender, content: text })
+        );
+      }
       break;
     }
     case "reply":
