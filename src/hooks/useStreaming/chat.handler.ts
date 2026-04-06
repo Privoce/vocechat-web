@@ -141,6 +141,23 @@ const handler = (
           );
           // }
         });
+        // 推给 PC 端（自己发的不推送）
+        if (!self) {
+          const state = store.getState();
+          const sender = state.users.byId[from_uid]?.name ?? "";
+          const channel =
+            to === "channel"
+              ? state.channels.byId[id]?.name ?? ""
+              : state.users.byId[id]?.name ?? "";
+          const text =
+            content_type === ContentTypes.file
+              ? "[文件]"
+              : truncate(content, 100);
+          console.info(
+            "{{NEW_MSG}}" +
+              JSON.stringify({ channel, sender, content: text })
+          );
+        }
       }
       break;
     case "reaction":
