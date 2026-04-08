@@ -105,12 +105,13 @@ const Session: FC<IProps> = ({
   if (!data) return null;
   const previewMsg = messageData[mid] || {};
   const { name, icon, is_public } = data;
-  const { unreads = 0 } = getUnreadCount({
+  const { unreads = 0, mentions = [] } = getUnreadCount({
     mids,
     readIndex,
     messageData,
     loginUid,
   });
+  const hasMention = mentions.length > 0;
   const isVoicing =
     type == "channel"
       ? voiceList.some((item) => {
@@ -181,14 +182,26 @@ const Session: FC<IProps> = ({
                 {renderPreviewMessage(previewMsg)}
               </span>
               {unreads > 0 && !isCurrentPath ? (
-                <strong
-                  className={clsx(
-                    `text-white px-1.5 py-[3px] font-bold text-[10px] leading-[10px] rounded-[10px]`,
-                    muted ? "bg-black/10 dark:bg-gray-500" : "bg-primary-400"
+                <span className="flex items-center gap-0.5">
+                  {hasMention && (
+                    <strong
+                      className={clsx(
+                        `text-white px-1 py-[3px] font-bold text-[10px] leading-[10px] rounded-[10px]`,
+                        muted ? "bg-black/10 dark:bg-gray-500" : "bg-primary-400"
+                      )}
+                    >
+                      @
+                    </strong>
                   )}
-                >
-                  {unreads > 99 ? "99+" : unreads}
-                </strong>
+                  <strong
+                    className={clsx(
+                      `text-white px-1.5 py-[3px] font-bold text-[10px] leading-[10px] rounded-[10px]`,
+                      muted ? "bg-black/10 dark:bg-gray-500" : "bg-primary-400"
+                    )}
+                  >
+                    {unreads > 99 ? "99+" : unreads}
+                  </strong>
+                </span>
               ) : (
                 muted && <IconMute className="w-3 h-3 fill-black/10 dark:fill-gray-500" />
               )}
