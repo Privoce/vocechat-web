@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink, useLocation, useMatch } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import clsx from "clsx";
 
 import ChatIcon from "@/assets/icons/chat.svg";
@@ -11,6 +12,7 @@ import { shallowEqual } from "react-redux";
 // type Props = {}
 
 const MobileNavs = () => {
+  const { t } = useTranslation("common");
   const isHomePath = useMatch(`/`);
   const { pathname } = useLocation();
   const isChatHomePath = useMatch(`/chat`);
@@ -45,7 +47,7 @@ const MobileNavs = () => {
               <div className="flex flex-col gap-1 items-center">
                 <ChatIcon className={!active ? "fill-gray-500" : "fill-primary-500"} />
                 <span className={clsx("text-xs", !active ? "text-gray-500" : "text-primary-500")}>
-                  Chats
+                  {t("chat")}
                 </span>
               </div>
             );
@@ -59,7 +61,7 @@ const MobileNavs = () => {
               <div className="flex flex-col gap-1 items-center">
                 <UserIcon className={!active ? "fill-gray-500" : "fill-primary-500"} />
                 <span className={clsx("text-xs", !active ? "text-gray-500" : "text-primary-500")}>
-                  Contacts
+                  {t("members")}
                 </span>
               </div>
             );
@@ -75,7 +77,7 @@ const MobileNavs = () => {
                   className={clsx("w-6 h-6", !active ? "fill-gray-500" : "fill-primary-500")}
                 />
                 <span className={clsx("text-xs", !active ? "text-gray-500" : "text-primary-500")}>
-                  Settings
+                  {t("setting")}
                 </span>
               </div>
             );
