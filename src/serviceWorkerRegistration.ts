@@ -62,6 +62,15 @@ function registerValidSW(swUrl: string, config: Config) {
   navigator.serviceWorker
     .register(swUrl)
     .then((registration) => {
+      // If a waiting SW already exists (e.g. user previously dismissed the toast),
+      // re-trigger onUpdate so the toast appears again on refresh.
+      if (registration.waiting && navigator.serviceWorker.controller) {
+        if (config && config.onUpdate) {
+          config.onUpdate(registration);
+        }
+        return;
+      }
+
       registration.onupdatefound = () => {
         const installingWorker = registration.installing;
         if (installingWorker == null) {
@@ -96,6 +105,10 @@ function registerValidSW(swUrl: string, config: Config) {
           }
         };
       };
+
+      // Force an update check on every page load/refresh,
+      // so new versions are discovered immediately.
+      registration.update().catch(() => {});
     })
     .catch((error) => {
       console.error("Error during service worker registration:", error);
