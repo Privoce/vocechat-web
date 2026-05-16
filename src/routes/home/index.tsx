@@ -13,6 +13,8 @@ import Tooltip from "@/components/Tooltip";
 import UnreadTabTip from "@/components/UnreadTabTip";
 import Voice from "@/components/Voice";
 import usePreload from "@/hooks/usePreload";
+import useVirtualKeyboard from "@/hooks/useVirtualKeyboard";
+import { isIOS } from "@/utils";
 import FavIcon from "@/assets/icons/bookmark.svg";
 import ChatIcon from "@/assets/icons/chat.svg";
 import FolderIcon from "@/assets/icons/folder.svg";
@@ -23,6 +25,7 @@ import User from "./User";
 import StreamStatus from "@/components/StreamStatus";
 
 function HomePage() {
+  useVirtualKeyboard();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const isHomePath = useMatch(`/`);
@@ -66,7 +69,9 @@ function HomePage() {
       <Manifest />
       {!guest && <Notification />}
       <div
-        className={`vocechat-container flex w-screen h-screen bg-neutral-100 dark:bg-neutral-900`}
+        className={`vocechat-container flex w-screen ${
+          isIOS() ? "h-screen" : "h-[var(--vh-visible,100vh)]"
+        } bg-neutral-100 dark:bg-neutral-900`}
       >
         {!guest && (
           <div

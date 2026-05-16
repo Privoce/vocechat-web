@@ -8,6 +8,8 @@ import ChannelModal from "@/components/ChannelModal";
 import ErrorCatcher from "@/components/ErrorCatcher";
 import Server from "@/components/Server";
 import UsersModal from "@/components/UsersModal";
+import useVirtualKeyboard from "@/hooks/useVirtualKeyboard";
+import { isIOS } from "@/utils";
 import ChannelChat from "./ChannelChat";
 import DMChat from "./DMChat";
 import GuestBlankPlaceholder from "./GuestBlankPlaceholder";
@@ -19,6 +21,7 @@ import VoiceFullscreen from "./VoiceFullscreen";
 import { shallowEqual } from "react-redux";
 
 function ChatPage() {
+  useVirtualKeyboard();
   const isHomePath = useMatch(`/`);
   const isChatHomePath = useMatch(`/chat`);
   const [sessionListVisible, setSessionListVisible] = useState(false);
@@ -65,6 +68,8 @@ function ChatPage() {
   const contextId = (+channel_id || callingTo) ?? 0;
   console.log("fffff", channel_id, user_id, aside, channelChatVisible);
 
+  const mobileHeight = isIOS() ? "h-screen" : "h-[var(--vh-visible,100vh)]";
+
   return (
     <ErrorCatcher>
       {channelModalVisible && (
@@ -73,7 +78,7 @@ function ChatPage() {
       {usersModalVisible && <UsersModal closeModal={toggleUsersModalVisible} />}
       <div
         className={clsx(
-          `flex h-screen md:h-full md:pt-2 md:pb-2.5 md:pr-1`,
+          `flex ${mobileHeight} md:h-full md:pt-2 md:pb-2.5 md:pr-1`,
           isGuest ? "guest-container md:px-1" : "md:pr-12"
         )}
       >
@@ -85,7 +90,7 @@ function ChatPage() {
         )}
         <div
           className={clsx(
-            "left-container flex-col md:rounded-l-2xl w-full h-screen md:h-full md:max-w-[250px] md:min-w-[268px] shadow-[rgb(0_0_0_/_10%)_-1px_0px_0px_inset] bg-white dark:!bg-gray-800",
+            `left-container flex-col md:rounded-l-2xl w-full ${mobileHeight} md:h-full md:max-w-[250px] md:min-w-[268px] shadow-[rgb(0_0_0_/_10%)_-1px_0px_0px_inset] bg-white dark:!bg-gray-800`,
             isMainPath ? "flex" : "hidden md:flex"
           )}
         >
