@@ -144,3 +144,9 @@ export interface RenewLicenseResponse {
 export interface CreateAdminDTO extends Pick<User, "email" | "name" | "gender"> {
   password: string;
 }
+
+export interface CloudflaredStatus {
+  status: "idle" | "downloading" | "starting" | "running" | "error";
+  url: string | null;
+  error: string | null;
+}

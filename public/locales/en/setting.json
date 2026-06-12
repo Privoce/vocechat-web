@@ -27,7 +27,8 @@
     "api_doc": "API Documentation",
     "version": "Version",
     "video": "Video",
-    "notification": "Notifications"
+    "notification": "Notifications",
+    "cloudflared": "Cloudflare Tunnel"
   },
   "channel": {
     "leave": "Leave Channel",
@@ -461,5 +462,22 @@
     "update_error": "Failed to update channel type",
     "delete_success": "Channel type deleted successfully",
     "delete_error": "Failed to delete channel type"
+  },
+  "cloudflared": {
+    "title": "Cloudflare Tunnel",
+    "desc": "Expose this server to the public internet via a temporary trycloudflare.com tunnel — no Cloudflare account required.",
+    "start": "Start Tunnel",
+    "stop": "Stop Tunnel",
+    "stopping": "Stopping...",
+    "copy": "Copy",
+    "url_copied": "URL copied to clipboard",
+    "downloading_binary": "Downloading cloudflared binary...",
+    "status": {
+      "idle": "Idle",
+      "downloading": "Downloading",
+      "starting": "Starting",
+      "running": "Running",
+      "error": "Error"
+    }
   }
 }

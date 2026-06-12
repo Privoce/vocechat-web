@@ -6,6 +6,7 @@ import Version from "@/components/Version";
 import APIConfig from "./APIConfig";
 import APIDocument from "./APIDocument";
 import BotConfig from "./BotConfig";
+import Cloudflared from "./Cloudflared";
 import ConfigAgora from "./config/Agora";
 import ConfigFirebase from "./config/Firebase";
 import Logins from "./config/Logins";
@@ -54,6 +55,11 @@ const navs = [
       {
         name: "bot",
         component: <BotConfig />,
+        admin: true,
+      },
+      {
+        name: "cloudflared",
+        component: <Cloudflared />,
         admin: true,
       },
       {

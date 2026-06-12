@@ -7,6 +7,7 @@ import {
   AgoraConfig,
   AgoraTokenResponse,
   AgoraVoicingListResponse,
+  CloudflaredStatus,
   CreateAdminDTO,
   FirebaseConfig,
   GithubAuthConfig,
@@ -482,6 +483,16 @@ export const serverApi = createApi({
       }),
       invalidatesTags: (result, error, gid) => [{ type: "GroupAnnouncements", id: gid }],
     }),
+    getCloudflaredStatus: builder.query<CloudflaredStatus, void>({
+      query: () => ({ url: `/admin/cloudflared/status` }),
+    }),
+    stopCloudflared: builder.mutation<string, void>({
+      query: () => ({
+        url: `/admin/cloudflared/stop`,
+        method: "POST",
+        responseHandler: "text",
+      }),
+    }),
   }),
 });
 
@@ -543,4 +554,6 @@ export const {
   useGetGroupAnnouncementQuery,
   useCreateOrUpdateGroupAnnouncementMutation,
   useDeleteGroupAnnouncementMutation,
+  useLazyGetCloudflaredStatusQuery,
+  useStopCloudflaredMutation,
 } = serverApi;

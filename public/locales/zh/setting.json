@@ -26,7 +26,8 @@
     "version": "版本信息",
     "feedback": "反馈",
     "video": "音视频",
-    "notification": "通知设置"
+    "notification": "通知设置",
+    "cloudflared": "Cloudflare 隧道"
   },
   "channel": {
     "leave": "离开",
@@ -58,7 +59,6 @@
     "name": "服务器名",
     "desc": "服务器描述",
     "upload_desc": "图片最小 128x128，我们推荐上传 512x512 大小的图片，最大不要超过 5M。",
-
     "sign_up": {
       "title": "注册设置",
       "desc": "允许什么方式注册",
@@ -201,7 +201,6 @@
     "renew": "升级证书",
     "update": "手动更新",
     "update_placeholder": "请输入新的证书内容",
-
     "renew_select": "请选择价格套餐",
     "tip": {
       "title": "一个获取免费升级的机会！",
@@ -460,5 +459,22 @@
     "update_error": "渠道类型更新失败",
     "delete_success": "渠道类型删除成功",
     "delete_error": "渠道类型删除失败"
+  },
+  "cloudflared": {
+    "title": "Cloudflare 隧道",
+    "desc": "通过临时 trycloudflare.com 隧道将此服务器暴露到公网，无需 Cloudflare 账号。",
+    "start": "启动隧道",
+    "stop": "停止隧道",
+    "stopping": "停止中...",
+    "copy": "复制",
+    "url_copied": "链接已复制到剪贴板",
+    "downloading_binary": "正在下载 cloudflared 二进制文件...",
+    "status": {
+      "idle": "空闲",
+      "downloading": "下载中",
+      "starting": "启动中",
+      "running": "运行中",
+      "error": "错误"
+    }
   }
 }
