@@ -170,7 +170,7 @@ const ForwardModal: FC<IProps> = ({ mids, closeModal }) => {
               name="forwardType"
               id="forwardType"
             />
-            <span>逐条转发</span>
+            <span>{t("forward_one_by_one")}</span>
           </label>
           <Input
             className="mb-8"
