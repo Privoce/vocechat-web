@@ -1,12 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
+import { shallowEqual } from "react-redux";
 
 import { BASE_ORIGIN, tokenHeader } from "@/app/config";
 import { useLazyGetCloudflaredStatusQuery, useStopCloudflaredMutation } from "@/app/services/server";
 import ServerVersionChecker from "@/components/ServerVersionChecker";
 import Button from "@/components/styled/Button";
-import { getLocalAuthData } from "@/utils";
+import { getLocalAuthData, compareVersion } from "@/utils";
+import { useAppSelector } from "@/app/store";
+
+const TUNNEL_MIN_VERSION = "0.5.19";
 
 type TunnelStatus = "idle" | "downloading" | "starting" | "running" | "error";
 
@@ -19,6 +23,8 @@ interface SseEvent {
 
 export default function Cloudflared() {
   const { t } = useTranslation("setting", { keyPrefix: "cloudflared" });
+  const currentVersion = useAppSelector((store) => store.server.version, shallowEqual);
+  const versionOk = !!currentVersion && compareVersion(currentVersion, TUNNEL_MIN_VERSION) >= 0;
   const [status, setStatus] = useState<TunnelStatus>("idle");
   const [tunnelUrl, setTunnelUrl] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -31,6 +37,7 @@ export default function Cloudflared() {
   const [stopCloudflared, { isLoading: isStopping }] = useStopCloudflaredMutation();
 
   useEffect(() => {
+    if (!versionOk) return;
     getStatus().then((res) => {
       if (res.data) {
         setStatus(res.data.status);
@@ -38,7 +45,7 @@ export default function Cloudflared() {
         setErrorMsg(res.data.error);
       }
     });
-  }, []);
+  }, [versionOk]);
 
   const addLog = (msg: string) =>
     setLogs((prev) => [...prev.slice(-29), msg]);

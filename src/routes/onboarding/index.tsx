@@ -13,6 +13,11 @@ import WelcomePage from "./steps/welcome-page";
 import WhoCanSignUp from "./steps/who-can-sign-up";
 import SelectLanguage from "../../components/Language";
 import { useGetAutoTunnelInfoQuery } from "@/app/services/server";
+import { useAppSelector } from "@/app/store";
+import { compareVersion } from "@/utils";
+import { shallowEqual } from "react-redux";
+
+const TUNNEL_MIN_VERSION = "0.5.19";
 
 const Navigator = ({ showTunnelStep }: { showTunnelStep: boolean }) => {
   const { activeStep, goToStep } = useWizard();
@@ -54,8 +59,10 @@ const Navigator = ({ showTunnelStep }: { showTunnelStep: boolean }) => {
 export default function OnboardingPage() {
   const { t } = useTranslation("welcome");
   const [serverName, setServerName] = useState("");
-  const { data: autoInfo } = useGetAutoTunnelInfoQuery();
-  const showTunnelStep = autoInfo ? !autoInfo.auto_cftunnel : false;
+  const currentVersion = useAppSelector((store) => store.server.version, shallowEqual);
+  const versionOk = !!currentVersion && compareVersion(currentVersion, TUNNEL_MIN_VERSION) >= 0;
+  const { data: autoInfo } = useGetAutoTunnelInfoQuery(undefined, { skip: !versionOk });
+  const showTunnelStep = versionOk && (autoInfo ? !autoInfo.auto_cftunnel : false);
 
   return (
     <>

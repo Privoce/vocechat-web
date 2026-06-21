@@ -1,14 +1,21 @@
 import { Trans, useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { shallowEqual } from "react-redux";
 
 import StyledButton from "@/components/styled/Button";
 import PlayIcon from "@/assets/icons/play.svg?url";
 import { useGetAutoTunnelInfoQuery } from "@/app/services/server";
+import { useAppSelector } from "@/app/store";
+import { compareVersion } from "@/utils";
+
+const TUNNEL_MIN_VERSION = "0.5.19";
 
 export default function DonePage({ serverName }: { serverName: string }) {
   const { t } = useTranslation("welcome", { keyPrefix: "onboarding" });
   const navigate = useNavigate();
-  const { data: autoInfo } = useGetAutoTunnelInfoQuery();
+  const currentVersion = useAppSelector((store) => store.server.version, shallowEqual);
+  const versionOk = !!currentVersion && compareVersion(currentVersion, TUNNEL_MIN_VERSION) >= 0;
+  const { data: autoInfo } = useGetAutoTunnelInfoQuery(undefined, { skip: !versionOk });
 
   const tunnelUrl =
     autoInfo?.tunnel_status.status === "running" ? autoInfo.tunnel_status.url : null;
