@@ -162,7 +162,7 @@ export default function Cloudflared() {
   const isActive = status === "running" || status === "downloading" || status === "starting";
 
   return (
-    <ServerVersionChecker version="0.5.18">
+    <ServerVersionChecker version="0.5.19">
       <div className="setting-container max-md:w-full flex flex-col gap-6">
         <div>
           <h3 className="text-lg font-bold text-gray-800 dark:text-white">{t("title")}</h3>

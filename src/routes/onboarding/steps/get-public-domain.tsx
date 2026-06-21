@@ -1,10 +1,14 @@
 import { useEffect, useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { useWizard } from "react-use-wizard";
+import { shallowEqual } from "react-redux";
 
 import StyledButton from "@/components/styled/Button";
 import { BASE_ORIGIN, tokenHeader } from "@/app/config";
-import { getLocalAuthData } from "@/utils";
+import { getLocalAuthData, compareVersion } from "@/utils";
+import { useAppSelector } from "@/app/store";
+
+const REQUIRED_VERSION = "0.5.19";
 
 type Phase = "prompt" | "starting" | "done" | "error";
 
@@ -19,7 +23,9 @@ interface SseEvent {
 
 export default function GetPublicDomain() {
   const { t } = useTranslation("welcome", { keyPrefix: "onboarding" });
+  const { t: tCommon } = useTranslation();
   const { nextStep } = useWizard();
+  const currentVersion = useAppSelector((store) => store.server.version, shallowEqual);
 
   const [phase, setPhase] = useState<Phase>("prompt");
   const [logs, setLogs] = useState<string[]>([]);
@@ -117,6 +123,37 @@ export default function GetPublicDomain() {
       }
     }
   };
+
+  if (currentVersion && compareVersion(currentVersion, REQUIRED_VERSION) < 0) {
+    return (
+      <div className="flex-center flex-col h-full text-center gap-6 dark:text-gray-100 px-4">
+        <div className="flex flex-col gap-2 items-center border border-solid border-orange-500 p-4 rounded-lg max-w-sm">
+          <span className="text-gray-600 dark:text-gray-300 text-sm">
+            <Trans i18nKey={"server_update.version_needed"}>
+              <strong className="font-bold">{{ version: REQUIRED_VERSION }}</strong>
+            </Trans>
+          </span>
+          <span className="text-gray-600 dark:text-gray-300 text-sm">
+            <Trans i18nKey={"server_update.current_version"}>
+              <strong className="font-bold">{{ version: currentVersion }}</strong>
+            </Trans>
+          </span>
+          <span className="text-gray-400 text-sm">{tCommon("server_update.update_tip")}</span>
+          <a
+            className="text-blue-500 underline text-sm"
+            href="https://doc.voce.chat/install/docker"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {tCommon("server_update.howto")} 📖
+          </a>
+        </div>
+        <StyledButton className="w-24 h-11 ghost" onClick={nextStep}>
+          {t("tunnel_opt_in_skip")}
+        </StyledButton>
+      </div>
+    );
+  }
 
   if (phase === "prompt") {
     return (
