@@ -64,8 +64,10 @@ export default function OnboardingPage() {
   const { data: autoInfo, isLoading: autoInfoLoading } = useGetAutoTunnelInfoQuery(undefined, { skip: !versionOk });
   const showTunnelStep = versionOk && !!autoInfo && !autoInfo.auto_cftunnel;
 
-  // Wait for autoInfo before rendering Wizard so step count is stable from mount
-  if (versionOk && autoInfoLoading) return null;
+  // Wait until we know whether to show the tunnel step before mounting Wizard
+  // so step count is stable from mount
+  const ready = currentVersion && (!versionOk || autoInfo !== undefined);
+  if (!ready) return null;
 
   return (
     <>
