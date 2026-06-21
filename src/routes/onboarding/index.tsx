@@ -61,8 +61,11 @@ export default function OnboardingPage() {
   const [serverName, setServerName] = useState("");
   const currentVersion = useAppSelector((store) => store.server.version, shallowEqual);
   const versionOk = !!currentVersion && compareVersion(currentVersion, TUNNEL_MIN_VERSION) >= 0;
-  const { data: autoInfo } = useGetAutoTunnelInfoQuery(undefined, { skip: !versionOk });
-  const showTunnelStep = versionOk && (autoInfo ? !autoInfo.auto_cftunnel : false);
+  const { data: autoInfo, isLoading: autoInfoLoading } = useGetAutoTunnelInfoQuery(undefined, { skip: !versionOk });
+  const showTunnelStep = versionOk && !!autoInfo && !autoInfo.auto_cftunnel;
+
+  // Wait for autoInfo before rendering Wizard so step count is stable from mount
+  if (versionOk && autoInfoLoading) return null;
 
   return (
     <>
