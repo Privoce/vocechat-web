@@ -55,7 +55,7 @@ export default function GetPublicDomain() {
       setCountdown(remaining);
       if (remaining <= 0) {
         clearInterval(countRef.current!);
-        window.location.href = url;
+        nextStep();
       }
     }, 1000);
   }
