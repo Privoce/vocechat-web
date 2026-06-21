@@ -29,20 +29,7 @@ export default function GetPublicDomain() {
   const currentVersion = useAppSelector((store) => store.server.version, shallowEqual);
   const { data: autoInfo } = useGetAutoTunnelInfoQuery();
 
-  // If already on the tunnel domain, skip this step
-  useEffect(() => {
-    const tunnelUrl = autoInfo?.tunnel_status?.url;
-    if (tunnelUrl) {
-      try {
-        const tunnelOrigin = new URL(tunnelUrl).origin;
-        if (location.origin === tunnelOrigin) {
-          nextStep();
-        }
-      } catch {
-        // ignore malformed URL
-      }
-    }
-  }, [autoInfo]);
+  const isLocalhost = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(location.origin);
 
   const [phase, setPhase] = useState<Phase>("prompt");
   const [logs, setLogs] = useState<string[]>([]);
@@ -65,6 +52,7 @@ export default function GetPublicDomain() {
   function startCountdown(url: string) {
     setTunnelUrl(url);
     setPhase("done");
+    if (!isLocalhost) return;
     let remaining = COUNTDOWN_SECONDS;
     setCountdown(remaining);
     countRef.current = setInterval(() => {
@@ -211,9 +199,25 @@ export default function GetPublicDomain() {
         <span className="font-mono text-sm break-all text-green-600 dark:text-green-400">
           {tunnelUrl}
         </span>
-        <span className="text-lg font-semibold">
-          {t("tunnel_redirect_countdown", { seconds: countdown })}
-        </span>
+        {isLocalhost ? (
+          <span className="text-lg font-semibold">
+            {t("tunnel_redirect_countdown", { seconds: countdown })}
+          </span>
+        ) : (
+          <div className="flex flex-col items-center gap-3">
+            <a
+              href={tunnelUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500 underline text-sm"
+            >
+              {tunnelUrl}
+            </a>
+            <StyledButton className="w-32 h-11" onClick={nextStep}>
+              {t("tunnel_opt_in_skip")}
+            </StyledButton>
+          </div>
+        )}
       </div>
     );
   }
