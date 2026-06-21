@@ -7,6 +7,7 @@ import StyledButton from "@/components/styled/Button";
 import { BASE_ORIGIN, tokenHeader } from "@/app/config";
 import { getLocalAuthData, compareVersion } from "@/utils";
 import { useAppSelector } from "@/app/store";
+import { useGetAutoTunnelInfoQuery } from "@/app/services/server";
 
 const REQUIRED_VERSION = "0.5.19";
 
@@ -26,6 +27,22 @@ export default function GetPublicDomain() {
   const { t: tCommon } = useTranslation();
   const { nextStep } = useWizard();
   const currentVersion = useAppSelector((store) => store.server.version, shallowEqual);
+  const { data: autoInfo } = useGetAutoTunnelInfoQuery();
+
+  // If already on the tunnel domain, skip this step
+  useEffect(() => {
+    const tunnelUrl = autoInfo?.tunnel_status?.url;
+    if (tunnelUrl) {
+      try {
+        const tunnelOrigin = new URL(tunnelUrl).origin;
+        if (location.origin === tunnelOrigin) {
+          nextStep();
+        }
+      } catch {
+        // ignore malformed URL
+      }
+    }
+  }, [autoInfo]);
 
   const [phase, setPhase] = useState<Phase>("prompt");
   const [logs, setLogs] = useState<string[]>([]);
@@ -55,7 +72,7 @@ export default function GetPublicDomain() {
       setCountdown(remaining);
       if (remaining <= 0) {
         clearInterval(countRef.current!);
-        nextStep();
+        window.location.href = url;
       }
     }, 1000);
   }
