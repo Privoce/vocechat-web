@@ -31,12 +31,14 @@ const whiteList = [
   "preCheckFileFromUrl",
   "passkeyLoginStart",
   "passkeyLoginFinish",
+  "getAutoTunnelInfo",
 ];
 const whiteList401 = [
   "getAgoraVoicingList",
   "getAgoraChannels",
   "getGoogleAuthConfig",
   "getGithubAuthConfig",
+  "getAutoTunnelInfo",
 ];
 const errorWhiteList = [
   "preCheckFileFromUrl",

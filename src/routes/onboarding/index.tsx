@@ -3,17 +3,20 @@ import { useTranslation } from "react-i18next";
 import { useWizard, Wizard } from "react-use-wizard";
 import clsx from "clsx";
 
-import steps from "./steps";
+import { buildSteps } from "./steps";
 import AdminAccount from "./steps/admin-account";
 import DonePage from "./steps/done-page";
+import GetPublicDomain from "./steps/get-public-domain";
 import InviteLink from "./steps/invite-link";
 import ServerName from "./steps/server-name";
 import WelcomePage from "./steps/welcome-page";
 import WhoCanSignUp from "./steps/who-can-sign-up";
 import SelectLanguage from "../../components/Language";
+import { useGetAutoTunnelInfoQuery } from "@/app/services/server";
 
-const Navigator = () => {
+const Navigator = ({ showTunnelStep }: { showTunnelStep: boolean }) => {
   const { activeStep, goToStep } = useWizard();
+  const steps = buildSteps(showTunnelStep);
   const canJumpTo = steps[activeStep]?.canJumpTo || [];
   console.log("active step", activeStep);
 
@@ -51,17 +54,21 @@ const Navigator = () => {
 export default function OnboardingPage() {
   const { t } = useTranslation("welcome");
   const [serverName, setServerName] = useState("");
+  const { data: autoInfo } = useGetAutoTunnelInfoQuery();
+  const showTunnelStep = autoInfo ? !autoInfo.auto_cftunnel : false;
+
   return (
     <>
       <title>{t("onboarding.title") || ""}</title>
       <div className="h-screen bg-neutral-100 dark:bg-neutral-900 overflow-y-auto">
-        <Wizard header={<Navigator />}>
+        <Wizard header={<Navigator showTunnelStep={showTunnelStep} />}>
           <WelcomePage />
           <ServerName serverName={serverName} setServerName={setServerName} />
           <AdminAccount serverName={serverName} />
           <WhoCanSignUp />
           {/* lazy call invite link API  */}
           <InviteLink />
+          {showTunnelStep && <GetPublicDomain />}
           <DonePage serverName={serverName} />
         </Wizard>
       </div>

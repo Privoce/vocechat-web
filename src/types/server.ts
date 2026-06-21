@@ -150,3 +150,8 @@ export interface CloudflaredStatus {
   url: string | null;
   error: string | null;
 }
+
+export interface AutoTunnelInfo {
+  auto_cftunnel: boolean;
+  tunnel_status: CloudflaredStatus;
+}

@@ -7,6 +7,7 @@ import {
   AgoraConfig,
   AgoraTokenResponse,
   AgoraVoicingListResponse,
+  AutoTunnelInfo,
   CloudflaredStatus,
   CreateAdminDTO,
   FirebaseConfig,
@@ -493,6 +494,9 @@ export const serverApi = createApi({
         responseHandler: "text",
       }),
     }),
+    getAutoTunnelInfo: builder.query<AutoTunnelInfo, void>({
+      query: () => ({ url: `/admin/cloudflared/auto_info` }),
+    }),
   }),
 });
 
@@ -556,4 +560,6 @@ export const {
   useDeleteGroupAnnouncementMutation,
   useLazyGetCloudflaredStatusQuery,
   useStopCloudflaredMutation,
+  useGetAutoTunnelInfoQuery,
+  useLazyGetAutoTunnelInfoQuery,
 } = serverApi;

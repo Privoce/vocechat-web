@@ -36,6 +36,16 @@
     "admin_account": "管理员账号",
     "who_sign_up": "注册权限",
     "invites": "邀请",
-    "update_domain_tip": "链接域名有问题？可在此更新设置："
+    "update_domain_tip": "链接域名有问题？可在此更新设置：",
+    "tunnel_initializing": "正在初始化 Tunnel 服务...",
+    "tunnel_dns_warning": "正在等待 DNS 传播，如果访问失败请尝试清除 DNS 缓存后再试",
+    "tunnel_redirect_countdown": "{{seconds}} 秒后重定向到公网地址...",
+    "tunnel_domain_assigned": "已为您分配了一个临时的公网域名",
+    "tunnel_opt_in_title": "获取自动分配的公网域名？",
+    "tunnel_opt_in_yes": "是",
+    "tunnel_opt_in_skip": "跳过",
+    "tunnel_progress": "正在启动 Tunnel...",
+    "tunnel_error": "Tunnel 出错",
+    "tunnel_get_domain": "获取公网域名"
   }
 }

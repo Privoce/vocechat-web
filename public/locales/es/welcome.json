@@ -36,6 +36,16 @@
     "admin_account": "Cuenta de Administrador",
     "who_sign_up": "Quién Puede Registrarse",
     "invites": "Invitaciones",
-    "update_domain_tip": "¿Enlace de dominio incorrecto? Actualízalo aquí:"
+    "update_domain_tip": "¿Enlace de dominio incorrecto? Actualízalo aquí:",
+    "tunnel_initializing": "Initializing Tunnel service...",
+    "tunnel_dns_warning": "Waiting for DNS propagation. If access fails, try clearing your DNS cache and retrying.",
+    "tunnel_redirect_countdown": "Redirecting to public address in {{seconds}}s...",
+    "tunnel_domain_assigned": "A temporary public domain has been assigned to you",
+    "tunnel_opt_in_title": "Get an automatically assigned public domain?",
+    "tunnel_opt_in_yes": "Yes",
+    "tunnel_opt_in_skip": "Skip",
+    "tunnel_progress": "Starting tunnel...",
+    "tunnel_error": "Tunnel error",
+    "tunnel_get_domain": "Get Public Domain"
   }
 }
