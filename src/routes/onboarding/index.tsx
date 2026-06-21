@@ -12,7 +12,7 @@ import ServerName from "./steps/server-name";
 import WelcomePage from "./steps/welcome-page";
 import WhoCanSignUp from "./steps/who-can-sign-up";
 import SelectLanguage from "../../components/Language";
-import { useGetAutoTunnelInfoQuery } from "@/app/services/server";
+import { useGetAutoTunnelInfoQuery, useGetServerVersionQuery } from "@/app/services/server";
 import { useAppSelector } from "@/app/store";
 import { compareVersion } from "@/utils";
 import { shallowEqual } from "react-redux";
@@ -59,14 +59,15 @@ const Navigator = ({ showTunnelStep }: { showTunnelStep: boolean }) => {
 export default function OnboardingPage() {
   const { t } = useTranslation("welcome");
   const [serverName, setServerName] = useState("");
+  const { isLoading: versionLoading } = useGetServerVersionQuery();
   const currentVersion = useAppSelector((store) => store.server.version, shallowEqual);
   const versionOk = !!currentVersion && compareVersion(currentVersion, TUNNEL_MIN_VERSION) >= 0;
-  const { data: autoInfo, isLoading: autoInfoLoading } = useGetAutoTunnelInfoQuery(undefined, { skip: !versionOk });
+  const { data: autoInfo } = useGetAutoTunnelInfoQuery(undefined, { skip: !versionOk });
   const showTunnelStep = versionOk && !!autoInfo && !autoInfo.auto_cftunnel;
 
   // Wait until we know whether to show the tunnel step before mounting Wizard
   // so step count is stable from mount
-  const ready = currentVersion && (!versionOk || autoInfo !== undefined);
+  const ready = !versionLoading && (!versionOk || autoInfo !== undefined);
   if (!ready) return null;
 
   return (
