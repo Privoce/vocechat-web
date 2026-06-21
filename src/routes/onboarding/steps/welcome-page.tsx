@@ -98,8 +98,11 @@ export default function WelcomePage() {
     };
   }, [phase]);
 
+  const isLocalhost = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(location.origin);
+
   function startDnsCountdown(url: string) {
     setPhase("dns_wait");
+    if (!isLocalhost) return;
     setCountdown(COUNTDOWN_SECONDS);
     let remaining = COUNTDOWN_SECONDS;
     countRef.current = setInterval(() => {
@@ -171,9 +174,27 @@ export default function WelcomePage() {
         <p className="text-sm text-gray-500 dark:text-gray-400">
           {t("tunnel_dns_warning")}
         </p>
-        <span className="text-lg font-semibold">
-          {t("tunnel_redirect_countdown", { seconds: countdown })}
-        </span>
+        {isLocalhost ? (
+          <span className="text-lg font-semibold">
+            {t("tunnel_redirect_countdown", { seconds: countdown })}
+          </span>
+        ) : (
+          <div className="flex flex-col items-center gap-3">
+            {tunnelUrl && (
+              <a
+                href={tunnelUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500 underline text-sm"
+              >
+                {tunnelUrl}
+              </a>
+            )}
+            <StyledButton className="w-32 h-11" onClick={nextStep}>
+              {t("tunnel_opt_in_skip")}
+            </StyledButton>
+          </div>
+        )}
       </div>
     );
   }
