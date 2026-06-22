@@ -165,11 +165,18 @@ export default function WelcomePage() {
   if (phase === "dns_wait" || phase === "redirecting") {
     return (
       <div className="flex-center flex-col h-full text-center gap-6 dark:text-gray-100 px-4 md:max-w-md m-auto">
-        <div className="w-10 h-10 border-4 border-green-400 border-t-transparent rounded-full animate-spin" />
+        {isLocalhost && (
+          <div className="w-10 h-10 border-4 border-green-400 border-t-transparent rounded-full animate-spin" />
+        )}
         {tunnelUrl && (
-          <span className="font-mono text-sm break-all text-green-600 dark:text-green-400">
+          <a
+            href={tunnelUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-mono text-sm break-all text-green-600 dark:text-green-400 underline"
+          >
             {tunnelUrl}
-          </span>
+          </a>
         )}
         <p className="text-sm text-gray-500 dark:text-gray-400">
           {t("tunnel_dns_warning")}
@@ -179,21 +186,9 @@ export default function WelcomePage() {
             {t("tunnel_redirect_countdown", { seconds: countdown })}
           </span>
         ) : (
-          <div className="flex flex-col items-center gap-3">
-            {tunnelUrl && (
-              <a
-                href={tunnelUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-500 underline text-sm"
-              >
-                {tunnelUrl}
-              </a>
-            )}
-            <StyledButton className="w-32 h-11" onClick={nextStep}>
-              {t("tunnel_opt_in_skip")}
-            </StyledButton>
-          </div>
+          <StyledButton className="w-32 h-11" onClick={nextStep}>
+            {t("tunnel_opt_in_skip")}
+          </StyledButton>
         )}
       </div>
     );
