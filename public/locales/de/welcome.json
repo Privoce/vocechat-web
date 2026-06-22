@@ -40,7 +40,7 @@
     "tunnel_initializing": "Initializing Tunnel service...",
     "tunnel_dns_warning": "Waiting for DNS propagation. If access fails, try clearing your DNS cache and retrying.",
     "tunnel_redirect_countdown": "Redirecting to public address in {{seconds}}s...",
-    "tunnel_domain_assigned": "A temporary public domain has been assigned to you",
+    "tunnel_domain_assigned": "A public domain has been assigned to you",
     "tunnel_opt_in_title": "Get an automatically assigned public domain?",
     "tunnel_opt_in_yes": "Yes",
     "tunnel_opt_in_skip": "Next",

@@ -40,7 +40,7 @@
     "tunnel_initializing": "正在初始化 Tunnel 服务...",
     "tunnel_dns_warning": "正在等待 DNS 传播，如果访问失败请尝试清除 DNS 缓存后再试",
     "tunnel_redirect_countdown": "{{seconds}} 秒后重定向到公网地址...",
-    "tunnel_domain_assigned": "已为您分配了一个临时的公网域名",
+    "tunnel_domain_assigned": "已为您分配了一个公网域名",
     "tunnel_opt_in_title": "获取自动分配的公网域名？",
     "tunnel_opt_in_yes": "是",
     "tunnel_opt_in_skip": "下一步",
