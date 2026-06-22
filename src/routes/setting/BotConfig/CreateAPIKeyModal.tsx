@@ -84,7 +84,7 @@ const CreateAPIKeyModal = ({ closeModal, uid }: Props) => {
               <label htmlFor={"name"} className="text-sm text-gray-500">
                 Name
               </label>
-              <Input name={"name"} required placeholder="Please input API Key name"></Input>
+              <Input name={"name"} required defaultValue="My first key" placeholder="Please input API Key name"></Input>
             </div>
           </form>
         )}
