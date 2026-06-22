@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Tippy from "@tippyjs/react";
 
 import { useAppSelector } from "@/app/store";
@@ -13,7 +13,6 @@ type Props = {
 };
 export default function Server({ readonly = false }: Props) {
   const { t } = useTranslation();
-  const { pathname } = useLocation();
   const { name, description, logo } = useAppSelector((store) => store.server, shallowEqual);
   const userCount = useAppSelector((store) => store.users.ids.length, shallowEqual);
   // console.log("server info", server);
@@ -42,7 +41,7 @@ export default function Server({ readonly = false }: Props) {
 
   return (
     <div className="relative flex items-center justify-between gap-2 px-4 py-2">
-      <NavLink to={`/setting/overview?f=${pathname}`}>
+      <NavLink to={`/`}>
         <div className="flex items-center gap-2">
           <div className="w-8 h-8">
             <img
