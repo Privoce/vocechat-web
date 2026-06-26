@@ -57,6 +57,7 @@ const whiteList404 = [
   "deleteMessage",
   "deleteMessages",
   "getWidgetExtCSS",
+  "getPageHtml",
 ];
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,

@@ -497,6 +497,33 @@ export const serverApi = createApi({
     getAutoTunnelInfo: builder.query<AutoTunnelInfo, void>({
       query: () => ({ url: `/admin/cloudflared/auto_info` }),
     }),
+    getPageApiKey: builder.query<{ key: string }, void>({
+      query: () => ({ url: `/page/apikey` }),
+      keepUnusedDataFor: 0,
+    }),
+    generatePageApiKey: builder.mutation<{ key: string }, void>({
+      query: () => ({ url: `/page/apikey`, method: "POST" }),
+    }),
+    getPageHtml: builder.query<string, "landing" | "after_signin">({
+      query: (page) => ({
+        url: `/page/${page}`,
+        responseHandler: "text",
+      }),
+    }),
+    uploadPageHtml: builder.mutation<void, { page: "landing" | "after_signin"; html: string }>({
+      query: ({ page, html }) => ({
+        url: `/page/${page}`,
+        method: "PUT",
+        headers: { "content-type": "text/plain" },
+        body: html,
+      }),
+    }),
+    resetPageHtml: builder.mutation<void, "landing" | "after_signin">({
+      query: (page) => ({
+        url: `/page/${page}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
@@ -562,4 +589,10 @@ export const {
   useStopCloudflaredMutation,
   useGetAutoTunnelInfoQuery,
   useLazyGetAutoTunnelInfoQuery,
+  useGetPageApiKeyQuery,
+  useGeneratePageApiKeyMutation,
+  useGetPageHtmlQuery,
+  useLazyGetPageHtmlQuery,
+  useUploadPageHtmlMutation,
+  useResetPageHtmlMutation,
 } = serverApi;
