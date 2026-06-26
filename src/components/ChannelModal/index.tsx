@@ -21,6 +21,15 @@ import { shallowEqual } from "react-redux";
 
 const GUEST_WARNING_DISMISSED_KEY = "vocechat_public_channel_guest_warning_dismissed";
 
+const semverGte = (version: string, min: string): boolean => {
+  const parse = (v: string) => v.split(".").map(Number);
+  const [va, vb, vc] = parse(version);
+  const [ma, mb, mc] = parse(min);
+  if (va !== ma) return va > ma;
+  if (vb !== mb) return vb > mb;
+  return vc >= mc;
+};
+
 interface GuestModeWarningProps {
   onDisableGuest: () => void;
   onSwitchPrivate: () => void;
@@ -68,6 +77,7 @@ const ChannelModal: FC<Props> = ({ personal = false, closeModal }) => {
   const [sendMessage] = useSendChannelMsgMutation();
   const channelData = useAppSelector((store) => store.channels.byId, shallowEqual);
   const loginUser = useAppSelector((store) => store.authData.user, shallowEqual);
+  const serverVersion = useAppSelector((store) => store.server.version);
   const [data, setData] = useState<CreateChannelDTO>({
     name: "",
     description: "",
@@ -106,7 +116,8 @@ const ChannelModal: FC<Props> = ({ personal = false, closeModal }) => {
     }
     const guestEnabled = (loginConfig as LoginConfig | undefined)?.guest ?? false;
     const warningDismissed = localStorage.getItem(GUEST_WARNING_DISMISSED_KEY) === "1";
-    if (data.is_public && loginUser?.is_admin && guestEnabled && !warningDismissed) {
+    const versionSupported = serverVersion ? semverGte(serverVersion, "0.5.22") : false;
+    if (data.is_public && loginUser?.is_admin && guestEnabled && !warningDismissed && versionSupported) {
       setShowGuestWarning(true);
       return;
     }
