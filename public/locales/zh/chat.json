@@ -75,5 +75,13 @@
   "remark": "备注",
   "remark_clear": "重置备注",
   "remark_intro": "给联系人备注，方便日后查找，备注仅您可见",
-  "remark_placeholder": "备注该用户"
+  "remark_placeholder": "备注该用户",
+
+  "guest_mode_warning": {
+    "title": "访客模式已开启",
+    "desc": "未登录的访客可以看到公共频道的消息流。您可以前往关闭访客模式，或改为创建私有频道。",
+    "disable_guest": "关闭访客模式",
+    "switch_private": "改为私有频道",
+    "dont_remind": "不再提醒"
+  }
 }

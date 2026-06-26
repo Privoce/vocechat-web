@@ -6,8 +6,10 @@ import i18n from "@/i18n";
 import clsx from "clsx";
 
 import { useCreateChannelMutation, useSendChannelMsgMutation } from "@/app/services/channel";
+import { useGetLoginConfigQuery, useUpdateLoginConfigMutation } from "@/app/services/server";
 import { useAppSelector } from "@/app/store";
 import { CreateChannelDTO } from "@/types/channel";
+import { LoginConfig } from "@/types/server";
 import useFilteredUsers from "@/hooks/useFilteredUsers";
 import ChannelIcon from "../ChannelIcon";
 import Modal from "../Modal";
@@ -16,6 +18,44 @@ import StyledCheckbox from "../styled/Checkbox";
 import StyledToggle from "../styled/Toggle";
 import User from "../User";
 import { shallowEqual } from "react-redux";
+
+const GUEST_WARNING_DISMISSED_KEY = "vocechat_public_channel_guest_warning_dismissed";
+
+interface GuestModeWarningProps {
+  onDisableGuest: () => void;
+  onSwitchPrivate: () => void;
+  onDismiss: () => void;
+}
+
+const GuestModeWarning: FC<GuestModeWarningProps> = ({ onDisableGuest, onSwitchPrivate, onDismiss }) => {
+  const { t } = useTranslation("chat");
+  return (
+    <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/40 rounded-lg">
+      <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-sm w-full mx-4 shadow-xl">
+        <h4 className="font-semibold text-gray-700 dark:text-white text-base mb-2">
+          {t("guest_mode_warning.title")}
+        </h4>
+        <p className="text-sm text-gray-500 dark:text-gray-300 mb-5">
+          {t("guest_mode_warning.desc")}
+        </p>
+        <div className="flex flex-col gap-2">
+          <Button onClick={onDisableGuest} className="text-sm w-full justify-center">
+            {t("guest_mode_warning.disable_guest")}
+          </Button>
+          <Button onClick={onSwitchPrivate} className="text-sm w-full justify-center cancel">
+            {t("guest_mode_warning.switch_private")}
+          </Button>
+          <button
+            onClick={onDismiss}
+            className="text-xs text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 mt-1 text-center"
+          >
+            {t("guest_mode_warning.dont_remind")}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 interface Props {
   personal?: boolean;
@@ -34,6 +74,10 @@ const ChannelModal: FC<Props> = ({ personal = false, closeModal }) => {
     members: loginUser?.uid ? [loginUser.uid] : [],
     is_public: !personal
   });
+  const [showGuestWarning, setShowGuestWarning] = useState(false);
+
+  const { data: loginConfig } = useGetLoginConfigQuery();
+  const [updateLoginConfig] = useUpdateLoginConfigMutation();
 
   const { users, input, updateInput } = useFilteredUsers();
   const [createChannel, { isSuccess, isError, isLoading, data: newChannel }] =
@@ -45,17 +89,42 @@ const ChannelModal: FC<Props> = ({ personal = false, closeModal }) => {
       return { ...prev, is_public: !is_public };
     });
   };
+
+  const doCreate = (channelData: CreateChannelDTO) => {
+    const payload = { ...channelData };
+    if (payload.is_public) {
+      delete payload.members;
+    }
+    createChannel(payload);
+  };
+
   const handleCreate = () => {
     // todo: add field validation (maxLength, text format, trim)
     if (!data.name) {
       toast("please input channel name");
       return;
     }
-    if (data.is_public) {
-      // 公共频道 不必有 members
-      delete data.members;
+    const guestEnabled = (loginConfig as LoginConfig | undefined)?.guest ?? false;
+    const warningDismissed = localStorage.getItem(GUEST_WARNING_DISMISSED_KEY) === "1";
+    if (data.is_public && loginUser?.is_admin && guestEnabled && !warningDismissed) {
+      setShowGuestWarning(true);
+      return;
     }
-    createChannel(data);
+    doCreate(data);
+  };
+
+  const handleWarningDisableGuest = () => {
+    if (loginConfig) {
+      updateLoginConfig({ ...(loginConfig as LoginConfig), guest: false });
+    }
+    setShowGuestWarning(false);
+    doCreate(data);
+  };
+
+  const handleWarningDismiss = () => {
+    localStorage.setItem(GUEST_WARNING_DISMISSED_KEY, "1");
+    setShowGuestWarning(false);
+    doCreate(data);
   };
 
   // todo: delete the following code and use common error handler instead
@@ -101,7 +170,17 @@ const ChannelModal: FC<Props> = ({ personal = false, closeModal }) => {
   const loginUid = loginUser.uid;
   return (
     <Modal>
-      <div className="flex flex-col md:flex-row max-h-screen md:max-h-[402px] bg-white dark:bg-gray-800 drop-shadow rounded-lg">
+      <div className="relative flex flex-col md:flex-row max-h-screen md:max-h-[402px] bg-white dark:bg-gray-800 drop-shadow rounded-lg">
+        {showGuestWarning && (
+          <GuestModeWarning
+            onDisableGuest={handleWarningDisableGuest}
+            onSwitchPrivate={() => {
+              setShowGuestWarning(false);
+              setData((prev) => ({ ...prev, is_public: false }));
+            }}
+            onDismiss={handleWarningDismiss}
+          />
+        )}
         {!is_public && (
           <div className="md:w-[260px] md:shadow-[inset_-1px_0px_0px_rgba(0,_0,_0,_0.1)]">
             <div className="sticky top-0 z-[99] rounded-tl-lg shadow-[0px_1px_0px_rgba(0,_0,_0,_0.1)] p-2 w-[calc(100%_-_1px)]">

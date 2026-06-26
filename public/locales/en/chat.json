@@ -76,5 +76,13 @@
   "remark": "Add friend nickname",
   "remark_clear": "Reset friend nickname",
   "remark_intro": "Find a friend faster with a personal nickname. It will only be visible to you in your direct messages.",
-  "remark_placeholder": "Set Nickname"
+  "remark_placeholder": "Set Nickname",
+
+  "guest_mode_warning": {
+    "title": "Guest Mode is Enabled",
+    "desc": "Unauthenticated visitors can see messages in public channels. You may disable guest mode or switch to a private channel instead.",
+    "disable_guest": "Disable Guest Mode",
+    "switch_private": "Switch to Private Channel",
+    "dont_remind": "Don't remind me again"
+  }
 }
