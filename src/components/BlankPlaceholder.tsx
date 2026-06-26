@@ -40,6 +40,7 @@ const legacyClasses = {
 
 const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
   const { t } = useTranslation("welcome");
+  const { t: te } = useTranslation("welcome", { keyPrefix: "page_editor" });
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const { getExtSetting } = useServerExtSetting();
   const onlyAdminCanInvite = getExtSetting(KEY_ADMIN_ONLY_INVITE);
@@ -217,7 +218,7 @@ Please start asking me questions now and wait for my detailed response.
 
   const iframeSrc = `${BASE_ORIGIN}/api/page/${previewPage}${cacheBust ? `?t=${cacheBust}` : ""}`;
   const htmlLines = (htmlPreview ?? "").split("\n");
-  const pageLabel = previewPage === "after_signin" ? "已登录用户" : "未登录用户";
+  const pageLabel = previewPage === "after_signin" ? te("signed_in_users") : te("not_signed_in_users");
 
   if (!useIframe) {
     const chatTip = type === "chat" ? t("start_by_channel") : t("start_by_dm");
@@ -337,7 +338,7 @@ Please start asking me questions now and wait for my detailed response.
           >
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 shrink-0">
-              <h2 className="text-lg font-semibold text-gray-700 dark:text-gray-50">页面管理</h2>
+              <h2 className="text-lg font-semibold text-gray-700 dark:text-gray-50">{te("title")}</h2>
               <CloseIcon
                 className="cursor-pointer dark:fill-white"
                 onClick={() => setEditorModalVisible(false)}
@@ -348,7 +349,7 @@ Please start asking me questions now and wait for my detailed response.
             <div className="flex flex-1 overflow-hidden">
               {/* Left sidebar */}
               <div className="w-28 shrink-0 border-r border-gray-200 dark:border-gray-700 p-3 flex flex-col gap-1">
-                <p className="text-xs text-gray-400 dark:text-gray-500 mb-2 px-1">状态选择</p>
+                <p className="text-xs text-gray-400 dark:text-gray-500 mb-2 px-1">{te("status_select")}</p>
                 <button
                   className={`w-full text-left px-3 py-2 rounded-md text-sm transition-colors ${
                     previewPage === "after_signin"
@@ -357,7 +358,7 @@ Please start asking me questions now and wait for my detailed response.
                   }`}
                   onClick={() => setPreviewPage("after_signin")}
                 >
-                  已登录
+                  {te("signed_in")}
                 </button>
                 <button
                   className={`w-full text-left px-3 py-2 rounded-md text-sm transition-colors ${
@@ -367,7 +368,7 @@ Please start asking me questions now and wait for my detailed response.
                   }`}
                   onClick={() => setPreviewPage("landing")}
                 >
-                  未登录
+                  {te("not_signed_in")}
                 </button>
               </div>
 
@@ -375,7 +376,7 @@ Please start asking me questions now and wait for my detailed response.
               <div className="flex-1 flex flex-col overflow-hidden p-4 gap-4">
                 {/* Status label */}
                 <p className="text-sm text-gray-500 dark:text-gray-400 shrink-0">
-                  当前管理状态：
+                  {te("current_state")}
                   <span className="font-semibold text-gray-900 dark:text-white">
                     【 {pageLabel} 】
                   </span>
@@ -390,7 +391,7 @@ Please start asking me questions now and wait for my detailed response.
                       className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-primary-400 text-white text-sm hover:bg-primary-500 active:bg-primary-500 transition-colors whitespace-nowrap"
                     >
                       <DownloadIcon className="w-4 h-4 shrink-0 fill-white" />
-                      下载当前页面HTML
+                      {te("download_html")}
                     </button>
                     <button
                       onClick={handleUpload}
@@ -403,7 +404,7 @@ Please start asking me questions now and wait for my detailed response.
                           <path d="M16.5303 11.7204L16.4462 11.6478C16.1526 11.4299 15.7359 11.4541 15.4697 11.7204L12.7503 14.4397L12.75 7.75003L12.7432 7.64826C12.6935 7.28218 12.3797 7.00003 12 7.00003L11.8982 7.00688C11.5322 7.05654 11.25 7.37033 11.25 7.75003L11.2503 14.4417L8.52961 11.7198L8.4455 11.6472C8.15193 11.4293 7.73527 11.4534 7.46895 11.7196C7.176 12.0124 7.17591 12.4873 7.46875 12.7803L11.4687 16.7818L11.5529 16.8544C11.8465 17.0724 12.2632 17.0482 12.5295 16.7819L16.5303 12.7811L16.6029 12.6969C16.8208 12.4033 16.7966 11.9867 16.5303 11.7204Z" />
                         </g>
                       </svg>
-                      {uploading ? "上传中…" : "上传自定义 HTML 页面"}
+                      {uploading ? te("uploading") : te("upload_html")}
                     </button>
                     <button
                       onClick={handleReset}
@@ -414,14 +415,14 @@ Please start asking me questions now and wait for my detailed response.
                         <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
                         <path d="M3 3v5h5" />
                       </svg>
-                      {resetting ? "恢复中…" : "恢复默认"}
+                      {resetting ? te("resetting") : te("reset")}
                     </button>
                   </div>
 
                   {/* AI tip */}
                   <div className="flex-1 border border-dashed border-gray-300 dark:border-gray-400 rounded-lg p-3 flex flex-col justify-between gap-2">
                     <p className="text-xs text-gray-500 dark:text-gray-400">
-                      想要使用 agent tool 自动完成首页编写？
+                      {te("ai_tip")}
                     </p>
                     <button
                       onClick={handleCopyPrompt}
@@ -431,7 +432,7 @@ Please start asking me questions now and wait for my detailed response.
                         ? <CheckIcon className="w-3.5 h-3.5 shrink-0 fill-white" />
                         : <CopyIcon className="w-3.5 h-3.5 shrink-0 fill-white" />
                       }
-                      {copied ? "已复制！" : "一键复制提示词"}
+                      {copied ? te("copied") : te("copy_prompt")}
                     </button>
                   </div>
                 </div>
@@ -439,11 +440,11 @@ Please start asking me questions now and wait for my detailed response.
                 {/* HTML preview */}
                 <div className="flex flex-col gap-1.5 overflow-hidden flex-1 min-h-0">
                   <p className="text-sm font-semibold text-gray-700 dark:text-gray-50 shrink-0">
-                    【 当前生效 HTML 代码预览 】
+                    【 {te("html_preview")} 】
                   </p>
                   <div className="flex-1 overflow-auto bg-gray-100 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
                     {htmlPreview === null ? (
-                      <div className="p-4 text-xs text-gray-400">加载中…</div>
+                      <div className="p-4 text-xs text-gray-400">{te("loading")}</div>
                     ) : htmlLines.map((line, i) => (
                       <div key={i} className="flex hover:bg-gray-200 dark:hover:bg-gray-700">
                         <span className="w-9 shrink-0 text-right pr-2.5 py-0.5 text-gray-400 dark:text-gray-500 select-none border-r border-gray-200 dark:border-gray-700 text-xs font-mono leading-5">
