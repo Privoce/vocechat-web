@@ -79,10 +79,10 @@
   "remark_placeholder": "Set Nickname",
 
   "guest_mode_warning": {
-    "title": "Guest Mode is Enabled",
-    "desc": "Unauthenticated visitors can see messages in public channels. You may disable guest mode or switch to a private channel instead.",
+    "title": "This Channel Will Be Visible to Guests",
+    "desc": "If you continue, guest users may be able to see messages in this public channel.",
+    "confirm": "Confirm",
     "disable_guest": "Disable Guest Mode",
-    "switch_private": "Switch to Private Channel",
-    "dont_remind": "Don't remind me again"
+    "switch_private": "Switch to Private Channel"
   }
 }

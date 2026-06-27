@@ -48,17 +48,17 @@ const GuestModeWarning: FC<GuestModeWarningProps> = ({ onDisableGuest, onSwitchP
           {t("guest_mode_warning.desc")}
         </p>
         <div className="flex flex-col gap-2">
-          <Button onClick={onDisableGuest} className="text-sm w-full justify-center">
-            {t("guest_mode_warning.disable_guest")}
+          <Button onClick={onDismiss} className="text-sm w-full justify-center">
+            {t("guest_mode_warning.confirm")}
           </Button>
           <Button onClick={onSwitchPrivate} className="text-sm w-full justify-center cancel">
             {t("guest_mode_warning.switch_private")}
           </Button>
           <button
-            onClick={onDismiss}
+            onClick={onDisableGuest}
             className="text-xs text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 mt-1 text-center"
           >
-            {t("guest_mode_warning.dont_remind")}
+            {t("guest_mode_warning.disable_guest")}
           </button>
         </div>
       </div>

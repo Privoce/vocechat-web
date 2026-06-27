@@ -78,10 +78,10 @@
   "remark_placeholder": "备注该用户",
 
   "guest_mode_warning": {
-    "title": "访客模式已开启",
-    "desc": "未登录的访客可以看到公共频道的消息流。您可以前往关闭访客模式，或改为创建私有频道。",
+    "title": "该频道将对访客可见",
+    "desc": "继续创建后，访客用户可能会看到该公共频道中的消息。",
+    "confirm": "确认创建",
     "disable_guest": "关闭访客模式",
-    "switch_private": "改为私有频道",
-    "dont_remind": "不再提醒"
+    "switch_private": "改为私有频道"
   }
 }
