@@ -7,7 +7,6 @@ import { buildSteps } from "./steps";
 import AdminAccount from "./steps/admin-account";
 import DonePage from "./steps/done-page";
 import GetPublicDomain from "./steps/get-public-domain";
-import InviteLink from "./steps/invite-link";
 import ServerName from "./steps/server-name";
 import WelcomePage from "./steps/welcome-page";
 import WhoCanSignUp from "./steps/who-can-sign-up";
@@ -79,8 +78,6 @@ export default function OnboardingPage() {
           <ServerName serverName={serverName} setServerName={setServerName} />
           <AdminAccount serverName={serverName} />
           <WhoCanSignUp />
-          {/* lazy call invite link API  */}
-          <InviteLink />
           {showTunnelStep && <GetPublicDomain />}
           <DonePage serverName={serverName} />
         </Wizard>

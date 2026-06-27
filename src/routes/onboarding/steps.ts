@@ -25,18 +25,13 @@ export function buildSteps(showTunnelStep: boolean): Step[] {
       name: "whoCanSignUp",
       label: t("welcome:onboarding.who_sign_up")
     },
-    {
-      name: "inviteLink",
-      label: t("welcome:onboarding.invites"),
-      canJumpTo: ["whoCanSignUp"]
-    },
   ];
 
   if (showTunnelStep) {
     base.push({
       name: "getPublicDomain",
       label: t("welcome:onboarding.tunnel_get_domain"),
-      canJumpTo: ["whoCanSignUp", "inviteLink"]
+      canJumpTo: ["whoCanSignUp"]
     });
   }
 
@@ -44,8 +39,8 @@ export function buildSteps(showTunnelStep: boolean): Step[] {
     name: "donePage",
     label: t("welcome:onboarding.done"),
     canJumpTo: showTunnelStep
-      ? ["whoCanSignUp", "inviteLink", "getPublicDomain"]
-      : ["whoCanSignUp", "inviteLink"]
+      ? ["whoCanSignUp", "getPublicDomain"]
+      : ["whoCanSignUp"]
   });
 
   return base;
