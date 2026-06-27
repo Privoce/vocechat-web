@@ -170,67 +170,98 @@ const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
   const handleCopyPrompt = async () => {
     try {
       const { key } = await generatePageApiKey().unwrap();
+
+      const isAfterSignin = previewPage === "after_signin";
+      const curlTarget = isAfterSignin
+        ? `${BASE_ORIGIN}/api/page/after_signin`
+        : `${BASE_ORIGIN}/api/page/landing`;
+      const previewUrl = curlTarget;
+      const fileName = isAfterSignin ? "after-signin.html" : "landing.html";
+
+      const pageContext = isAfterSignin
+        ? `## 🎯 Target Page: After Sign-In Page
+This page is shown to **already logged-in users** as their home screen inside the chat app. It serves as a welcome/dashboard page. Focus on:
+- A warm, personalized welcome feel (the user is already authenticated)
+- Quick-action shortcuts (start a chat, explore channels, etc.)
+- Community highlights or announcements
+- Do NOT include login/register CTAs — the user is already signed in`
+        : `## 🎯 Target Page: Landing Page (Public)
+This page is shown to **visitors who are not yet logged in**. It is the first impression of this chat community. Focus on:
+- A compelling hero section that explains the product's value
+- Clear call-to-action (sign up / log in)
+- Features or social proof section
+- A footer with basic links`;
+
       const prompt = `# Role
-You are a front-end development expert and UI/UX designer. Your task is to help write a high-performance, modern, single-file landing page.
+You are a front-end development expert and UI/UX designer. Your task is to help design and build a high-performance, modern, single-file HTML page for a self-hosted chat platform called VoceChat.
 
-# ⚙️ Deployment Context & API Spec
-Please note that you will deploy the generated HTML code to the server via the following APIs on an as-needed basis (only upload to the specific endpoint(s) selected by the user):
-
-- **Target Option A: Landing Page**
-  \`\`\`bash
-  curl -X PUT ${BASE_ORIGIN}/api/page/landing \\
-    -H "X-Page-Api-Key: ${key}" \\
-    -H "Content-Type: text/plain" \\
-    --data-binary @landing.html
-  \`\`\`
-
-- **Target Option B: After Sign-In Page**
-  \`\`\`bash
-  curl -X PUT ${BASE_ORIGIN}/api/page/after_signin \\
-    -H "X-Page-Api-Key: ${key}" \\
-    -H "Content-Type: text/plain" \\
-    --data-binary @landing.html
-  \`\`\`
-
-- **Retrieve Pages for Verification**: 
-  - GET \`${BASE_ORIGIN}/api/page/landing\`
-  - GET \`${BASE_ORIGIN}/api/page/after_signin\`
+${pageContext}
 
 ---
 
-# 🔄 Interaction Workflow & Rules
+# 🎨 Design Style Guide (Must Follow)
+The existing VoceChat UI uses the following design language. Your generated page **must visually match** this style so it integrates seamlessly:
 
-### Step 1: Preview Notification, Target Selection & Requirements Gathering
-Before writing or deploying any code, you must:
-1. **Inform the user** that they can preview the live pages at:
-   - \`${BASE_ORIGIN}/api/page/landing\`
-   - \`${BASE_ORIGIN}/api/page/after_signin\`
-2. **Ask the user which page(s) they want to target** (e.g., the Landing page, the After Sign-In page, or both).
-3. **Ask 4-5 key questions** to understand their business requirements and design preferences. Use the language of the user's response for subsequent interactions. Do not generate code in this step.
+- **Primary color**: \`#22CCEE\` (cyan/teal). Use for buttons, active states, highlights, and accents.
+- **Background**: white (\`#FFFFFF\`) as default page background; light gray (\`#F9FAFB\` / \`#F3F4F6\`) for section or card backgrounds.
+- **Text colors**:
+  - Headings: \`#111827\` (near-black)
+  - Body: \`#374151\` (dark gray)
+  - Secondary / muted: \`#6B7280\` (gray-500)
+- **Border color**: \`#E5E7EB\` (light) or \`#D1D5DB\` (medium)
+- **Border radius**: 12px for cards/containers, 8px for buttons and inputs, 6px for tags/badges
+- **Shadows**: Subtle — equivalent to Tailwind \`shadow-md\` (soft, no heavy drop shadows)
+- **Typography**: System sans-serif stack; headings use \`font-weight: 600\` (semibold); body uses \`font-weight: 400\`
+- **Spacing**: Generous — 32px padding inside cards, 16–24px between sections
+- **Overall feel**: Clean, modern, minimal, professional. Avoid dark/neon/overdone gradients.
 
-### Step 2: First-time Generation & Specific Deployment
-Once the user answers your questions and specifies the target page(s):
-1. Generate the complete, self-contained HTML code.
-2. Provide the code clearly so that the upstream tool can extract and deploy it **only** to the user's selected API endpoint(s).
+---
 
-### Step 3: Subsequent Iterations & Revisions
-For any interactions after the first-time generation:
-- **Ask the user which page they want to modify** before making updates, if it is not already clear.
-- **If the user requests specific modifications**: Update the base code directly and upload the updated version **only to the target endpoint specified by the user**.
-- **If the user does NOT request modifications (e.g., starts a new topic, asks for a completely different design, or starts over)**: Write a brand new page from scratch. Do not reference, copy, or adapt the previous code or layout, and deploy it to the newly requested target endpoint.
+# ⚙️ Deployment API
+Deploy the generated HTML to the server with this command:
+
+\`\`\`bash
+curl -X PUT ${curlTarget} \\
+  -H "X-Page-Api-Key: ${key}" \\
+  -H "Content-Type: text/plain" \\
+  --data-binary @${fileName}
+\`\`\`
+
+**Preview URL** (to verify after deploying): \`${previewUrl}\`
+
+---
+
+# 🔄 Interaction Workflow
+
+### Step 1: Requirements Gathering
+Before writing any code:
+1. **Inform the user** that the live preview is at: \`${previewUrl}\`
+2. **Ask 4–5 targeted questions** about their brand, tone, content, and any specific requirements. Use the language of the user's response for all subsequent interactions. Do not generate code yet.
+
+### Step 2: First Generation & Deployment
+Once the user answers:
+1. Generate the complete, self-contained HTML.
+2. Deploy it to the API endpoint above.
+
+### Step 3: Revisions
+- For requested changes: apply them directly and redeploy to the same endpoint.
+- For a completely new design or unrelated topic: start from scratch, do not reuse previous code.
 
 ---
 
 # 🛠️ Technical Specifications
-When generating the HTML code, you must adhere to the following requirements:
-1. **Single-file self-contained**: All HTML structure, CSS styles (must use Tailwind CSS CDN), and JavaScript logic must be written in a single \`landing.html\` file.
-2. **No local dependencies**: No local relative path resources are allowed. Images must use royalty-free, high-definition image links from Unsplash or similar sources. Icons must import CDN resources from FontAwesome or Lucide.
-3. **Responsive design**: Ensure proper adaptation for both Mobile and Desktop viewports.
-4. **Complete output**: Provide the complete code. Placeholders such as \`<!-- remaining code here -->\` are not allowed.
+1. **Single-file self-contained**: All HTML, CSS (use Tailwind CSS via CDN), and JavaScript in one file.
+2. **No local dependencies**: Use Unsplash for images, FontAwesome or Lucide CDN for icons.
+3. **Responsive**: Works on both Mobile and Desktop.
+4. **One-pager by default — no vertical scrolling**: The page must fit within the viewport (\`height: 100vh\`, \`overflow: hidden\`). Do NOT add scroll unless the user explicitly asks for it. Design all content to fit within a single screen.
+5. **Complete output**: No truncation or placeholders like \`<!-- remaining code here -->\`.
+
+---
 
 # Next Step
-Please start by notifying me about the preview URLs, ask me which page(s) I want to work on, ask your initial questions, and wait for my response.
+Inform me of the preview URL, then ask your clarifying questions and wait for my answers before writing any code.
 `;
+
       await navigator.clipboard.writeText(prompt);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
