@@ -17,9 +17,14 @@ const isIOS = () =>
  * `-webkit-fill-available`, so we skip it there to avoid the container
  * being over-shrunk when the keyboard opens.
  */
+const isInIframe = () => window.location !== window.parent.location;
+
 export default function useVirtualKeyboard() {
   useEffect(() => {
-    if (isIOS()) return;
+    // In an iframe, visualViewport.height reflects the intersection of the
+    // iframe with the parent's viewport, not the iframe's own height.
+    // 100vh already equals the iframe's own height, so skip setting --vh-visible.
+    if (isIOS() || isInIframe()) return;
 
     const vv = window.visualViewport;
 
