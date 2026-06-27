@@ -4,7 +4,7 @@ import { Channel, ChannelDTO, CreateChannelDTO } from "@/types/channel";
 import { ContentTypeKey } from "@/types/message";
 import { encodeBase64, transformInviteLink } from "@/utils";
 import BASE_URL, { ContentTypes } from "../config";
-import { removeChannel, updateChannel } from "../slices/channels";
+import { addChannel, removeChannel, updateChannel } from "../slices/channels";
 import { removeMessage } from "../slices/message";
 import { removeChannelSession } from "../slices/message.channel";
 import { removeReactionMessage } from "../slices/message.reaction";
@@ -42,7 +42,39 @@ export const channelApi = createApi({
           url: "/group",
           method: "POST",
           body: data
-        })
+        }),
+        async onQueryStarted(arg, { dispatch, queryFulfilled, getState }) {
+          try {
+            const { data } = await queryFulfilled;
+            const gid = typeof data === "object" ? data.gid : data;
+            if (!gid) return;
+            const state = getState() as RootState;
+            if (state.channels.byId[gid]) return;
+            const loginUid = state.authData.user?.uid ?? 0;
+            const members = arg.is_public
+              ? []
+              : Array.from(new Set([...(arg.members ?? []), loginUid].filter(Boolean)));
+            dispatch(
+              addChannel({
+                gid,
+                owner: loginUid,
+                name: arg.name,
+                description: arg.description ?? "",
+                members,
+                is_public: arg.is_public,
+                avatar_updated_at: 0,
+                pinned_messages: [],
+                show_email: false,
+                dm_to_member: false,
+                add_friend: false,
+                only_owner_can_send_msg: false,
+                ext_setting: null
+              })
+            );
+          } catch {
+            console.error("create channel failed");
+          }
+        }
       }
     ),
     changeChannelType: builder.mutation<
