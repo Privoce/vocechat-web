@@ -91,7 +91,7 @@ function ChatPage() {
         <div
           className={clsx(
             `left-container flex-col md:rounded-l-2xl w-full ${mobileHeight} md:h-full md:max-w-[250px] md:min-w-[268px] shadow-[rgb(0_0_0_/_10%)_-1px_0px_0px_inset] bg-white dark:!bg-gray-800`,
-            isMainPath ? "flex" : "hidden md:flex"
+            isChatHomePath ? "flex" : "hidden md:flex"
           )}
         >
           <Server readonly={isGuest} />
@@ -102,7 +102,7 @@ function ChatPage() {
           className={clsx(
             `right-container md:rounded-r-2xl w-full bg-white dark:!bg-gray-700`,
             placeholderVisible && "h-full flex-center",
-            isMainPath && "hidden md:flex"
+            isChatHomePath && "hidden md:flex"
           )}
         >
           {voiceFullscreenVisible && <VoiceFullscreen id={contextId} context={context} />}
