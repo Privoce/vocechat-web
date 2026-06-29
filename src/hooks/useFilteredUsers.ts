@@ -32,7 +32,7 @@ export default function useFilteredUsers() {
         )
       );
     }
-  }, [input, users.length]);
+  }, [input, users.length, users.map((u) => u.uid + u.status).join()]);
 
   const updateInput = (val: string) => {
     setInput(val);
