@@ -14,7 +14,6 @@ type Props = {
 export default function Server({ readonly = false }: Props) {
   const { t } = useTranslation();
   const { name, description, logo } = useAppSelector((store) => store.server, shallowEqual);
-  const userCount = useAppSelector((store) => store.users.ids.length, shallowEqual);
   // console.log("server info", server);
   if (readonly)
     return (
@@ -27,14 +26,9 @@ export default function Server({ readonly = false }: Props) {
               src={logo}
             />
           </div>
-          <div className="flex flex-col gap-1">
-            <h3 className="text-sm text-gray-600 dark:text-gray-100" title={description}>
-              {name}
-            </h3>
-            <span className="text-xs text-gray-500">
-              {userCount} {t("members")}
-            </span>
-          </div>
+          <h3 className="text-base font-semibold text-gray-600 dark:text-gray-100" title={description}>
+            {name}
+          </h3>
         </div>
       </NavLink>
     );
@@ -50,14 +44,9 @@ export default function Server({ readonly = false }: Props) {
               src={logo}
             />
           </div>
-          <div className="flex flex-col gap-1">
-            <h3 className="text-sm text-gray-600 font-bold dark:text-gray-100" title={description}>
-              {name}
-            </h3>
-            <span className="text-xs text-gray-500">
-              {userCount} {t("members")}
-            </span>
-          </div>
+          <h3 className="text-base font-bold text-gray-600 dark:text-gray-100" title={description}>
+            {name}
+          </h3>
         </div>
       </NavLink>
 
