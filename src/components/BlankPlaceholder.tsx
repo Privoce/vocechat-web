@@ -190,7 +190,32 @@ This page is shown to **visitors who are not yet logged in**. It is the first im
 - A compelling hero section that explains the product's value
 - Clear call-to-action (sign up / log in)
 - Features or social proof section
-- A footer with basic links`;
+- A footer with basic links
+
+## 🔗 Auth URLs (Use These Exactly)
+- **Login URL**: \`${window.location.origin}/#/login\`
+- **Register URL**: \`${window.location.origin}/#/register\`
+
+## 🖼️ iframe-Aware Navigation (Critical)
+All login/register buttons **must** use this redirect helper instead of plain \`<a href>\` or \`window.location.href\`:
+
+\`\`\`js
+function redirectTo(url) {
+  try {
+    if (window.self !== window.top) {
+      // Page is embedded in an iframe — redirect the parent frame
+      window.parent.location.href = url;
+    } else {
+      window.location.href = url;
+    }
+  } catch (e) {
+    // Cross-origin parent: assume iframe, redirect parent
+    window.parent.location.href = url;
+  }
+}
+\`\`\`
+
+Use \`onclick="redirectTo('${window.location.origin}/#/login')"\` for login buttons and \`onclick="redirectTo('${window.location.origin}/#/register')"\` for register buttons.`;
 
       const prompt = `# Role
 You are a front-end development expert and UI/UX designer. Your task is to help design and build a high-performance, modern, single-file HTML page for a self-hosted chat platform called VoceChat.
