@@ -16,7 +16,7 @@ import {
 } from "@/types/user";
 import BASE_URL, { ContentTypes } from "../config";
 import { updateAutoDeleteSetting, updateMute } from "../slices/footprint";
-import { fillUsers, updateContactStatus as updateStatus } from "../slices/users";
+import { addUsers, fillUsers, updateContactStatus as updateStatus } from "../slices/users";
 import { RootState } from "../store";
 // import toast from "react-hot-toast";
 import baseQuery from "./base.query";
@@ -65,17 +65,31 @@ export const userApi = createApi({
     }),
     getContacts: builder.query<ContactResponse[], void>({
       query: () => ({ url: `/user/contacts` }),
-      async onQueryStarted(data, { dispatch, queryFulfilled }) {
+      async onQueryStarted(data, { dispatch, queryFulfilled, getState }) {
         try {
-          const { data: users } = await queryFulfilled;
-          const payloads = users.map((c) => {
-            const uid = c.target_uid;
-            const status = c.contact_info.status;
-            return {
-              uid,
-              status,
-            };
-          });
+          const { data: contacts } = await queryFulfilled;
+
+          // Fill user data for any contact whose user entry is missing from the store
+          // (e.g. /user endpoint may not return all users to non-admin users)
+          const missingUsers = contacts
+            .filter((c) => !(getState() as RootState).users.byId[c.target_uid])
+            .map((c) => ({
+              ...c.target_info,
+              avatar:
+                c.target_info.avatar_updated_at === 0
+                  ? ""
+                  : `${BASE_URL}/resource/avatar?uid=${c.target_uid}&t=${c.target_info.avatar_updated_at}`,
+              status: c.contact_info.status,
+            }));
+
+          if (missingUsers.length > 0) {
+            dispatch(addUsers(missingUsers));
+          }
+
+          const payloads = contacts.map((c) => ({
+            uid: c.target_uid,
+            status: c.contact_info.status,
+          }));
           dispatch(updateStatus(payloads));
         } catch {
           console.log("get contact list error");

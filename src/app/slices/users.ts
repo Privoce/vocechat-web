@@ -100,6 +100,17 @@ const usersSlice = createSlice({
         }
       });
     },
+    // Merge users into store without overwriting existing entries
+    addUsers(state, action: PayloadAction<StoredUser[]>) {
+      const users = action.payload || [];
+      users.forEach((user) => {
+        const { uid } = user;
+        if (!state.byId[uid]) {
+          state.byId[uid] = user;
+          state.ids.push(uid);
+        }
+      });
+    },
     updateContactStatus(
       state,
       action: PayloadAction<
@@ -116,6 +127,6 @@ const usersSlice = createSlice({
   }
 });
 
-export const { updateContactStatus, resetUsers, fillUsers, updateUsersByLogs, updateUsersStatus } =
+export const { updateContactStatus, resetUsers, fillUsers, updateUsersByLogs, updateUsersStatus, addUsers } =
   usersSlice.actions;
 export default usersSlice.reducer;

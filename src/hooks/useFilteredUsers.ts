@@ -16,7 +16,7 @@ export default function useFilteredUsers() {
   );
   const [filteredUsers, setFilteredUsers] = useState<StoredUser[]>([]);
   const useContactList = enableContact && !isAdmin;
-  const users = useContactList ? originUsers.filter((u) => u.status == "added") : originUsers;
+  const users = useContactList ? originUsers.filter((u) => u.status == "added" || u.is_admin) : originUsers;
   useEffect(() => {
     if (!input) {
       setFilteredUsers(sortUsersByRole(users));
