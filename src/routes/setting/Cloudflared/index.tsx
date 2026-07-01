@@ -9,6 +9,7 @@ import ServerVersionChecker from "@/components/ServerVersionChecker";
 import Button from "@/components/styled/Button";
 import { getLocalAuthData, compareVersion } from "@/utils";
 import { useAppSelector } from "@/app/store";
+import { trackUmamiEvent } from "@/utils/umami";
 
 const TUNNEL_MIN_VERSION = "0.5.19";
 
@@ -80,6 +81,7 @@ export default function Cloudflared() {
 
   const startTunnel = async () => {
     if (streaming) return;
+    trackUmamiEvent("create_tunnel");
     setStreaming(true);
     setStatus("starting");
     setLogs([]);

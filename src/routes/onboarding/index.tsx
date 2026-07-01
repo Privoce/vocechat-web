@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useWizard, Wizard } from "react-use-wizard";
 import clsx from "clsx";
@@ -14,6 +14,7 @@ import SelectLanguage from "../../components/Language";
 import { useGetAutoTunnelInfoQuery, useGetServerVersionQuery } from "@/app/services/server";
 import { useAppSelector } from "@/app/store";
 import { compareVersion } from "@/utils";
+import { trackUmamiEvent } from "@/utils/umami";
 import { shallowEqual } from "react-redux";
 
 const TUNNEL_MIN_VERSION = "0.5.19";
@@ -58,6 +59,12 @@ const Navigator = ({ showTunnelStep }: { showTunnelStep: boolean }) => {
 export default function OnboardingPage() {
   const { t } = useTranslation("welcome");
   const [serverName, setServerName] = useState("");
+
+  // Load Umami and fire "installed" once when the onboarding page mounts.
+  // forceLoad=true so the script is fetched here and only here.
+  useEffect(() => {
+    trackUmamiEvent("installed");
+  }, []);
   const { isLoading: versionLoading } = useGetServerVersionQuery();
   const currentVersion = useAppSelector((store) => store.server.version, shallowEqual);
   const versionOk = !!currentVersion && compareVersion(currentVersion, TUNNEL_MIN_VERSION) >= 0;

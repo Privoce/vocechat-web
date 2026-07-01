@@ -8,6 +8,7 @@ import { BASE_ORIGIN, tokenHeader } from "@/app/config";
 import { getLocalAuthData, compareVersion } from "@/utils";
 import { useAppSelector } from "@/app/store";
 import { useGetAutoTunnelInfoQuery } from "@/app/services/server";
+import { trackUmamiEvent } from "@/utils/umami";
 
 const REQUIRED_VERSION = "0.5.19";
 
@@ -66,6 +67,7 @@ export default function GetPublicDomain() {
   }
 
   const handleYes = async () => {
+    trackUmamiEvent("create_tunnel");
     setPhase("starting");
     setLogs([]);
     setErrorMsg(null);
