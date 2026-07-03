@@ -40,7 +40,7 @@ function HomePage() {
     shallowEqual
   );
   // preload basic data
-  const { success } = usePreload();
+  const { success, error } = usePreload();
   useEffect(() => {
     if (isChatHomePath) {
       dispatch(updateRememberedNavs({ key: "chat", path: "/chat" }));
@@ -49,7 +49,7 @@ function HomePage() {
 
   console.info("preload success", success);
   if (!success) {
-    return <Loading reload={true} fullscreen={true} context="home-route" />;
+    return <Loading reload={true} fullscreen={true} error={error} context="home-route" />;
   }
   const isSettingPage = pathname.startsWith("/setting");
   const isChattingPage = isHomePath || pathname.startsWith("/chat");

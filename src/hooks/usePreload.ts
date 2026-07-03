@@ -46,7 +46,12 @@ export default function usePreload() {
 
   const [
     getServerVersion,
-    { data: serverVersion, isSuccess: serverVersionSuccess, isLoading: loadingServerVersion }
+    {
+      data: serverVersion,
+      isSuccess: serverVersionSuccess,
+      isLoading: loadingServerVersion,
+      isError: serverVersionError
+    }
   ] = useLazyGetServerVersionQuery();
   const [getSystemCommon] = useLazyGetSystemCommonQuery();
   useEffect(() => {
@@ -96,7 +101,7 @@ export default function usePreload() {
   return {
     loading:
       usersLoading || favoritesLoading || !rehydrated || loadingLicense || loadingServerVersion,
-    error: usersError && favoritesError,
+    error: usersError || favoritesError || serverVersionError,
     success: usersSuccess && favoritesSuccess && serverVersionSuccess,
     data: {
       users: enableContacts ? contacts : users,

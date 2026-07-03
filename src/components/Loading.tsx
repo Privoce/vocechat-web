@@ -11,12 +11,14 @@ interface Props {
   fullscreen?: boolean;
   context?: string;
   transparent?: boolean;
+  error?: boolean;
 }
 
 const Loading: FC<Props> = ({
   transparent = false,
   reload = false,
   fullscreen = false,
+  error = false,
   context = ""
 }) => {
   const [reloadVisible, setReloadVisible] = useState(false);
@@ -48,6 +50,12 @@ const Loading: FC<Props> = ({
   }, []);
 
   useEffect(() => {
+    if (error) {
+      setReloadVisible(true);
+    }
+  }, [error]);
+
+  useEffect(() => {
     let inter = 0;
     if (reload) {
       inter = window.setTimeout(() => {
@@ -64,11 +72,16 @@ const Loading: FC<Props> = ({
       data-ctx={context}
       className={clsx(
         "w-full h-full flex-center flex-col gap-4 ",
-        transparent ? "bg-transparent" : "dark:bg-gray-800/80",
+        transparent ? "bg-transparent" : fullscreen ? "bg-white dark:bg-gray-800" : "dark:bg-gray-800/80",
         fullscreen ? "w-screen h-screen" : ""
       )}
     >
       <Ring size={40} lineWeight={5} speed={2} color="black" />
+      {fullscreen && (
+        <span className="text-sm text-gray-500 dark:text-gray-400">
+          {error ? "Failed to load. Please reload." : "Loading..."}
+        </span>
+      )}
       <Button
         className={clsx(`danger`, reloadVisible ? "visible" : "invisible")}
         onClick={handleReload}

@@ -33,9 +33,12 @@ const useRehydrate = () => {
       return;
     }
     const tables = Object.keys(window.CACHE);
-    await Promise.all(
-      tables.map((_key) => {
-        return window.CACHE[_key]?.iterate((data: any, key) => {
+    try {
+      // iOS Safari(尤其 standalone)下 IndexedDB 可能永久挂起,超时后放弃本地缓存,直接走网络
+      await Promise.race([
+        Promise.all(
+          tables.map((_key) => {
+            return window.CACHE[_key]?.iterate((data: any, key) => {
           // console.log("iterated", key);
           switch (_key) {
             case "channels":
@@ -76,22 +79,30 @@ const useRehydrate = () => {
             default:
               break;
           }
-        });
-      })
-    );
-    dispatch(fillUsers(rehydrateData.users));
-    dispatch(fillServer(rehydrateData.server));
-    dispatch(fillChannels(rehydrateData.channels));
-    // file message
-    dispatch(fillFileMessage(rehydrateData.fileMessage.list));
-    dispatch(fillChannelMsg(rehydrateData.channelMessage));
-    dispatch(fillUserMsg(rehydrateData.userMessage));
-    dispatch(fillMessage(rehydrateData.message));
-    dispatch(fillFootprint(rehydrateData.footprint));
-    dispatch(fillUI(rehydrateData.ui));
-    dispatch(fillReactionMessage(rehydrateData.reactionMessage));
-
-    setIterated(true);
+            });
+          })
+        ),
+        new Promise((_, reject) => {
+          setTimeout(() => reject(new Error("rehydrate timeout")), 8 * 1000);
+        })
+      ]);
+      dispatch(fillUsers(rehydrateData.users));
+      dispatch(fillServer(rehydrateData.server));
+      dispatch(fillChannels(rehydrateData.channels));
+      // file message
+      dispatch(fillFileMessage(rehydrateData.fileMessage.list));
+      dispatch(fillChannelMsg(rehydrateData.channelMessage));
+      dispatch(fillUserMsg(rehydrateData.userMessage));
+      dispatch(fillMessage(rehydrateData.message));
+      dispatch(fillFootprint(rehydrateData.footprint));
+      dispatch(fillUI(rehydrateData.ui));
+      dispatch(fillReactionMessage(rehydrateData.reactionMessage));
+    } catch (err) {
+      // 超时/读取失败:不 dispatch 半成品数据(iterate 回调可能仍在后台写 rehydrateData),改走网络
+      console.error("rehydrate from local cache failed", err);
+    } finally {
+      setIterated(true);
+    }
   };
   return { rehydrate, rehydrated: iterated };
 };
