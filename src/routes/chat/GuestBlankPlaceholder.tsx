@@ -103,12 +103,14 @@ const GuestBlankPlaceholder = () => {
           marginSize={2}
         />
       </div>
-      <iframe
-        ref={iframeRef}
-        src={`${BASE_ORIGIN}/api/page/landing`}
-        className="w-full h-full border-0"
-        title="Landing Page"
-      />
+      <div className="absolute inset-0">
+        <iframe
+          ref={iframeRef}
+          src={`${BASE_ORIGIN}/api/page/landing`}
+          className="w-full h-full border-0"
+          title="Landing Page"
+        />
+      </div>
     </>
   );
 };
