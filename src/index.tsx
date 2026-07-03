@@ -8,6 +8,7 @@ import "./assets/index.css";
 import "./libs/DayjsSetting";
 import "./libs/TippySetting";
 
+import ErrorCatcher from "./components/ErrorCatcher";
 import MobileAppTip from "./components/MobileAppTip";
 import NewVersion from "./components/NewVersion";
 import ReduxRoutes from "./routes";
@@ -33,7 +34,9 @@ root.render(
       }}
     />
     <DndProvider backend={HTML5Backend}>
-      <ReduxRoutes />
+      <ErrorCatcher>
+        <ReduxRoutes />
+      </ErrorCatcher>
     </DndProvider>
     <MobileAppTip />
   </Suspense>

@@ -28,9 +28,18 @@ const Loading: FC<Props> = ({
   useEffect(() => {
     let inter = 0;
     if (window.AUTO_RELOAD) {
-      inter = window.setTimeout(() => {
-        location.reload();
-      }, 5000);
+      const AUTO_RELOAD_KEY = "auto_reload_count";
+      const count = Number(sessionStorage.getItem(AUTO_RELOAD_KEY) || "0");
+      if (count < 3) {
+        sessionStorage.setItem(AUTO_RELOAD_KEY, String(count + 1));
+        inter = window.setTimeout(() => {
+          location.reload();
+        }, 5000);
+      } else {
+        setReloadVisible(true);
+      }
+    } else {
+      sessionStorage.removeItem("auto_reload_count");
     }
     return () => {
       window.AUTO_RELOAD = false;
