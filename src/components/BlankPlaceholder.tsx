@@ -386,7 +386,7 @@ Inform me of the preview URL, then ask your clarifying questions and wait for my
 
   return (
     <>
-      <div className="relative w-full h-full self-stretch">
+      <div className="absolute inset-0">
         <iframe
           ref={iframeRef}
           src={iframeSrc}

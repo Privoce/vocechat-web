@@ -100,7 +100,7 @@ function ChatPage() {
         </div>
         <div
           className={clsx(
-            `right-container md:rounded-r-2xl w-full bg-white dark:!bg-gray-700`,
+            `right-container relative md:rounded-r-2xl w-full bg-white dark:!bg-gray-700`,
             placeholderVisible && "h-full flex-center",
             isChatHomePath && "hidden md:flex"
           )}
