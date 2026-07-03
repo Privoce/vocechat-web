@@ -9,7 +9,7 @@
 
 import { clientsClaim } from "workbox-core";
 import { ExpirationPlugin } from "workbox-expiration";
-import { createHandlerBoundToURL, precacheAndRoute } from "workbox-precaching";
+import { precacheAndRoute } from "workbox-precaching";
 import { registerRoute } from "workbox-routing";
 import { StaleWhileRevalidate } from "workbox-strategies";
 
@@ -21,38 +21,13 @@ clientsClaim();
 // even if you decide not to use precaching. See https://cra.link/PWA
 precacheAndRoute(self.__WB_MANIFEST);
 
-// Set up App Shell-style routing, so that all navigation requests
-// are fulfilled with your index.html shell. Learn more at
-// https://developers.google.com/web/fundamentals/architecture/app-shell
-const fileExtensionRegexp = new RegExp("/[^/?]+\\.[^/]+$");
-registerRoute(
-  // Return false to exempt requests from being fulfilled by index.html.
-  ({ request, url }) => {
-    // If this isn't a navigation, skip.
-    if (request.mode !== "navigate") {
-      return false;
-    }
-    const urlPath = url.pathname;
-    // 忽略api开头的path 本地语言文件 挂件地址 以及版本号  /_开头的path
-    if (
-      urlPath.startsWith("/_") ||
-      urlPath.startsWith("/VERSION") ||
-      urlPath.startsWith("/api") ||
-      urlPath.startsWith("/locales/") ||
-      urlPath.startsWith("/widget")
-    ) {
-      return false;
-    }
-    // If this looks like a URL for a resource, because it contains // a file extension, skip.
-
-    if (urlPath.match(fileExtensionRegexp)) {
-      return false;
-    } // Return true to signal that we want to use the handler.
-
-    return true;
-  },
-  createHandlerBoundToURL(process.env.PUBLIC_URL + "/index.html")
-);
+// Navigation requests are intentionally NOT intercepted by the service worker.
+// iOS WebKit aggressively kills the SW process when backgrounded; since
+// clientsClaim() hands the SW every navigation, a cold-started SW on iOS
+// stalls the navigation response and produces a first-load white screen
+// (no Navigation Preload support on Safari to race against it). Letting
+// navigations go straight to the network avoids that stall entirely, at
+// the cost of requiring network connectivity for the app shell.
 
 // An example runtime caching route for requests that aren't handled by the
 // precache, in this case same-origin .png requests like those from in public/

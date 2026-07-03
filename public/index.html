@@ -203,7 +203,27 @@
 
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div id="root">
+      <div
+        id="root-loading"
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          height: 100vh;
+          height: 100dvh;
+        "
+      >
+        <img
+          src="%PUBLIC_URL%/android-chrome-192x192.png"
+          width="64"
+          height="64"
+          alt=""
+          style="opacity: 0.6"
+        />
+      </div>
+    </div>
     <div id="root-modal"></div>
     <div id="modal-modal"></div>
     <!--
