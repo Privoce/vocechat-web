@@ -82,6 +82,9 @@ const Loading: FC<Props> = ({
           {error ? "Failed to load. Please reload." : "Loading..."}
         </span>
       )}
+      {fullscreen && (
+        <span className="text-xs text-gray-400 dark:text-gray-500">v{process.env.VERSION}</span>
+      )}
       <Button
         className={clsx(`danger`, reloadVisible ? "visible" : "invisible")}
         onClick={handleReload}

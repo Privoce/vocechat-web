@@ -19,6 +19,9 @@ import "./libs/polyfills";
 
 import { isDarkMode, reloadCurrentPage } from "./utils";
 
+console.info(
+  `vocechat-web v${process.env.VERSION} (build time ${process.env.REACT_APP_BUILD_TIME})`
+);
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 // dark mode
 if (isDarkMode()) {
