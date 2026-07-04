@@ -7,6 +7,27 @@
   "download": "下载移动端APP",
   "help": "还有问题？访问我们的帮助中心",
   "sign_in_tip": "请登录后发消息",
+  "vocespace": " VoceSpace 视频通话",
+  "license": "VoceChat 升级证书",
+  "page_editor": {
+    "title": "页面管理",
+    "status_select": "状态选择",
+    "signed_in": "已登录",
+    "not_signed_in": "未登录",
+    "signed_in_users": "已登录用户",
+    "not_signed_in_users": "未登录用户",
+    "current_state": "当前管理状态：",
+    "download_html": "下载当前页面HTML",
+    "upload_html": "上传自定义 HTML 页面",
+    "uploading": "上传中…",
+    "reset": "恢复默认",
+    "resetting": "恢复中…",
+    "ai_tip": "想要使用 agent tool 自动完成首页编写？",
+    "copy_prompt": "一键复制提示词",
+    "copied": "已复制！",
+    "html_preview": "当前生效 HTML 代码预览",
+    "loading": "加载中…"
+  },
   "onboarding": {
     "title": "VoceChat初始化",
     "welcome": "欢迎来到你的VoceChat！",
@@ -34,6 +55,16 @@
     "admin_account": "管理员账号",
     "who_sign_up": "注册权限",
     "invites": "邀请",
-    "update_domain_tip": "链接域名有问题？可在此更新设置："
+    "update_domain_tip": "链接域名有问题？可在此更新设置：",
+    "tunnel_initializing": "正在初始化 Tunnel 服务...",
+    "tunnel_dns_warning": "正在等待 DNS 传播，如果访问失败请尝试清除 DNS 缓存后再试",
+    "tunnel_redirect_countdown": "{{seconds}} 秒后重定向到公网地址...",
+    "tunnel_domain_assigned": "已为您分配了一个公网域名",
+    "tunnel_opt_in_title": "获取自动分配的公网域名？",
+    "tunnel_opt_in_yes": "是",
+    "tunnel_opt_in_skip": "下一步",
+    "tunnel_progress": "正在启动 Tunnel...",
+    "tunnel_error": "Tunnel 出错",
+    "tunnel_get_domain": "获取公网域名"
   }
 }

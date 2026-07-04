@@ -6,6 +6,7 @@
   "nav": {
     "general": "General",
     "overview": "Overview",
+    "announcement": "Announcement",
     "members": "Members",
     "data_management": "Data Management",
     "auto_delete_msg": "Auto-delete Messages",
@@ -13,8 +14,10 @@
     "my_account": "My Account",
     "config": "Configuration",
     "bot": "Bot & Webhook",
+    "notification_channels": "Notification Channels",
     "firebase": "Firebase",
     "agora": "Agora",
+    "vocespace": "Video",
     "smtp": "SMTP",
     "login_method": "Login Methods",
     "third_app": "Third-party Login",
@@ -22,7 +25,10 @@
     "license": "License",
     "about": "About",
     "api_doc": "API Documentation",
-    "version": "Version"
+    "version": "Version",
+    "video": "Video",
+    "notification": "Notifications",
+    "cloudflared": "Cloudflare Tunnel"
   },
   "channel": {
     "leave": "Leave Channel",
@@ -44,7 +50,10 @@
     "add_friend": "Add friend",
     "dm_to_member": "DM to Member",
     "show_email": "Show Email",
-    "only_owner": "Only Owner and Admin Can Send Message"
+    "only_owner": "Only Owner and Admin Can Send Message",
+    "announcement_placeholder": "Write your announcement here... Markdown is supported.",
+    "no_announcements": "No content to preview",
+    "no_permission": "You don't have permission to manage announcements"
   },
   "dm": {
     "delete": "Delete User",
@@ -91,6 +100,18 @@
       "desc": "If enabled, only admins can invite new members.",
       "enable": "Enable",
       "disable": "Disable"
+    },
+    "dm_enable": {
+      "title": "Direct Messaging",
+      "desc": "If disabled, members cannot send direct messages to each other."
+    },
+    "add_friend_enable": {
+      "title": "Add Friend",
+      "desc": "If disabled, members cannot add other users as friends."
+    },
+    "search_user_enable": {
+      "title": "Search Users",
+      "desc": "If disabled, members cannot search for other users."
     },
     "enable_msg_url_preview": {
       "title": "Enable URL Preview in Message",
@@ -140,6 +161,12 @@
     "contact_verify": {
       "title": "Contact Verification",
       "desc": "By default all server members can see each other. If you want server members to add and manage their own contacts, please enable the contact feature (admin will be in the contacts list by default).",
+      "enable": "Enable",
+      "disable": "Disable"
+    },
+    "webclient_auto_update": {
+      "title": "Web Client Auto Update",
+      "desc": "If enabled, the web client will automatically update to the latest version. ⚠️ This feature is designed for advanced users only. Disabling it may prevent you from receiving the latest bug fixes and feature updates.",
       "enable": "Enable",
       "disable": "Disable"
     }
@@ -267,6 +294,26 @@
     "enable": "Enable",
     "how_to": "How to setup Agora?"
   },
+  "vocespace": {
+    "add": "Add",
+    "check": "Check",
+    "checked": "Pass",
+    "failed": "Failed",
+    "title": "VoceSpace",
+    "desc": "Use self-hosted VoceSpace (Automated Deployment)",
+    "prerequisite": [
+      "Prerequisites",
+      "Docker environment",
+      "Ports 80,  443, 7880, 7881, 3008, 3000 are open",
+      "The domain has been registered",
+      "For enterprises customization or need help, please contact han@privoce.com or add WeChat: Privoce"
+    ],
+    "sub_desc": "Each VoceSpace account will enjoy no limit minutes, 5 person concurrent and 4k resolution for free. No account creation required. Follow the instruction below to configure your VoceSpace correctly.",
+    "domain_desc": "This domain needs to have a DNS A record pointing to the current server IP you are hosting VoceChat.",
+    "enable": "Enable",
+    "how_to": "After enabling, please set a custom domain then click save, and the system will automatically enable VoceSpace.",
+    "old": "Your current server version is outdated. We have enabled the official VoceSpace (vocespace.com) as your default audio/video service. To use your own private deployment, please update vocechat-server to v0.5.8 or higher."
+  },
   "third_app": {
     "key": "API Secure Key",
     "update": "Update Secret",
@@ -285,10 +332,31 @@
     "github_desc": "Allows members login with GitHub.",
     "metamask": "Metamask",
     "metamask_desc": "Allows members login with Metamask.",
+    "passkey": "Passkey",
+    "passkey_desc": "Allows members login with Passkey.",
     "oidc": "OIDC",
     "oidc_desc": "Allows members login with OIDC.",
     "oidc_custom": "Custom",
     "more_details": "Need more detail? See our <0>doc</0>."
+  },
+  "passkey": {
+    "title": "Passkeys",
+    "desc": "Manage your passkeys for passwordless login",
+    "add": "Add Passkey",
+    "adding": "Registering...",
+    "delete": "Delete",
+    "delete_confirm": "Are you sure you want to delete this passkey?",
+    "no_passkeys": "No passkeys registered yet",
+    "created": "Created",
+    "last_used": "Last used",
+    "success_add": "Passkey registered successfully",
+    "success_delete": "Passkey deleted successfully",
+    "error_add": "Failed to register passkey",
+    "error_delete": "Failed to delete passkey",
+    "error_not_supported": "Your browser doesn't support Passkey",
+    "error_cancelled": "User cancelled or timeout",
+    "error_exists": "Passkey already exists",
+    "enter_name": "Enter a name for this passkey"
   },
   "widget": {
     "tip": "Extending VoceChat by embedding the vocechat widget SDK!",
@@ -299,6 +367,10 @@
     "default_value": "Default Value",
     "remark": "Remarks",
     "custom_style_tip": "if you want customize the widget position more precisely, use the widget element ID in your HTML or CSS file, like this",
+    "open_widget_tip": "You can use JavaScript to control the widget programmatically",
+    "open_widget_example": "Open widget with a button",
+    "open_widget_example_custom": "Custom styled button",
+    "open_widget_example_toggle": "Toggle widget open/close",
     "css_code_tip": "You can also customize CSS code, which will be loaded into the widget as a CSS file",
     "param_id": "Widget ID (server version>=v0.3.12)",
     "param_host": "Assign the user chatting with visitor(User ID)",
@@ -313,6 +385,10 @@
     "param_open_height": "The height while widget opened",
     "param_welcome": "Custom welcome message",
     "param_position": "Widget position: left/right",
+    "param_popup_title": "Popup tooltip title displayed next to the closed widget icon",
+    "param_popup_subtitle": "Popup tooltip subtitle displayed next to the closed widget icon",
+    "param_popup_image": "Popup tooltip image URL displayed next to the closed widget icon (optional)",
+    "param_popup_closable": "Whether the popup tooltip can be closed (true/false)",
     "share_link": "Share the widget link so that people can chat with you directly",
     "widget_faq": "Enable Let Everyone Join First"
   },
@@ -330,5 +406,78 @@
     "step_2": "Step Two: Input the login token",
     "step_2_desc": "You can get the token by access X-API-Key http header or just copy the text below:",
     "last": "Every API has a 'Try it Out' button, and you can debug the API with it"
+  },
+  "notification": {
+    "desc": "Configure your notification channels",
+    "loading": "Loading...",
+    "no_channels": "No notification channel types available. Please contact your administrator.",
+    "status": "Status",
+    "enabled": "Enabled",
+    "disabled": "Disabled",
+    "my_channels": "My Notification Channels",
+    "available_types": "Available Channel Types",
+    "create_channel": "Create Channel",
+    "edit_channel": "Edit Channel",
+    "channel_name": "Channel Name",
+    "channel_config": "Channel Configuration",
+    "enable_notifications": "Enable notifications",
+    "trigger_conditions": "Trigger conditions",
+    "trigger_on_all_messages": "Receive all messages",
+    "trigger_on_mentions": "Notify when mentioned",
+    "skip_when_online": "Skip notifications when online",
+    "select_groups": "Select groups",
+    "save": "Save",
+    "saving": "Saving...",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "test": "Test",
+    "delete": "Delete",
+    "save_success": "Channel saved successfully",
+    "save_error": "Failed to save channel",
+    "create_success": "Channel created successfully",
+    "create_error": "Failed to create channel",
+    "delete_success": "Channel deleted successfully",
+    "delete_error": "Failed to delete channel",
+    "test_success": "Test notification sent successfully",
+    "test_error": "Failed to send test notification"
+  },
+  "admin_notification_channels": {
+    "desc": "Enable notification channel types for users",
+    "enabled_types": "Enabled Channel Types",
+    "available_types": "Available Channel Types",
+    "enable_type": "Enable",
+    "channel_type": "Channel Type",
+    "channel_status": "Status",
+    "enabled": "Enabled",
+    "disabled": "Disabled",
+    "actions": "Actions",
+    "delete_channel": "Delete",
+    "delete_title": "Delete Channel Type",
+    "delete_desc": "Are you sure you want to remove this channel type? Users will no longer be able to create new channels of this type.",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "create_success": "Channel type enabled successfully",
+    "create_error": "Failed to enable channel type",
+    "update_success": "Channel type updated successfully",
+    "update_error": "Failed to update channel type",
+    "delete_success": "Channel type deleted successfully",
+    "delete_error": "Failed to delete channel type"
+  },
+  "cloudflared": {
+    "title": "Cloudflare Tunnel",
+    "desc": "Expose this server to the public internet via a temporary trycloudflare.com tunnel — no Cloudflare account required.",
+    "start": "Start Tunnel",
+    "stop": "Stop Tunnel",
+    "stopping": "Stopping...",
+    "copy": "Copy",
+    "url_copied": "URL copied to clipboard",
+    "downloading_binary": "Downloading cloudflared binary...",
+    "status": {
+      "idle": "Idle",
+      "downloading": "Downloading",
+      "starting": "Starting",
+      "running": "Running",
+      "error": "Error"
+    }
   }
 }

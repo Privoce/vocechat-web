@@ -1,4 +1,5 @@
 {
+  "home": "Início",
   "chat": "Chat",
   "members": "Members",
   "favs": "Saved Items",
@@ -73,7 +74,7 @@
       "price": "$49"
     },
     "supreme": {
-      "title": "VoceChat SDK Customization and Integration",
+      "title": "VoceSpace Private Deployment Video [499$]",
       "desc": "",
       "price": ""
     }

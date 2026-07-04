@@ -1,4 +1,5 @@
 {
+  "home": "Ana Sayfa",
   "chat": "Sohbet",
   "members": "Üeyler",
   "favs": "Kaydedilmiş Öğeler",
@@ -71,7 +72,7 @@
       "price": "$49"
     },
     "supreme": {
-      "title": "VoceChat SDK Customization and Integration",
+      "title": "VoceSpace Özel Dağıtım Videosu [499$]",
       "desc": "",
       "price": ""
     }

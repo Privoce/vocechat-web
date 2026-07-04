@@ -7,6 +7,27 @@
   "download": "Download Mobile apps",
   "help": "Tem perguntas? Visite nossa central de ajuda",
   "sign_in_tip": "Faça login para enviar mensagem",
+  "vocespace": "Chamada de vídeo VoceSpace",
+  "license": "VoceChat Licença de Atualização",
+  "page_editor": {
+    "title": "Page Management",
+    "status_select": "Select State",
+    "signed_in": "Signed In",
+    "not_signed_in": "Visitors",
+    "signed_in_users": "Signed-in Users",
+    "not_signed_in_users": "Visitors",
+    "current_state": "Current State:",
+    "download_html": "Download Page HTML",
+    "upload_html": "Upload Custom HTML Page",
+    "uploading": "Uploading…",
+    "reset": "Reset to Default",
+    "resetting": "Resetting…",
+    "ai_tip": "Want to use an AI agent to automatically write your homepage?",
+    "copy_prompt": "Copy Prompt",
+    "copied": "Copied!",
+    "html_preview": "Current Active HTML Preview",
+    "loading": "Loading…"
+  },
   "onboarding": {
     "title": "Configuração do VoceChat",
     "welcome": "Bem-vindo ao seu VoceChat!",
@@ -34,6 +55,16 @@
     "admin_account": "Conta de administrador",
     "who_sign_up": "Quem pode se inscrever",
     "invites": "Convites",
-    "update_domain_tip": "Domínio de link incorreto? Atualize-o aqui:"
+    "update_domain_tip": "Domínio de link incorreto? Atualize-o aqui:",
+    "tunnel_initializing": "Initializing Tunnel service...",
+    "tunnel_dns_warning": "Waiting for DNS propagation. If access fails, try clearing your DNS cache and retrying.",
+    "tunnel_redirect_countdown": "Redirecting to public address in {{seconds}}s...",
+    "tunnel_domain_assigned": "A public domain has been assigned to you",
+    "tunnel_opt_in_title": "Get an automatically assigned public domain?",
+    "tunnel_opt_in_yes": "Yes",
+    "tunnel_opt_in_skip": "Next",
+    "tunnel_progress": "Starting tunnel...",
+    "tunnel_error": "Tunnel error",
+    "tunnel_get_domain": "Get Public Domain"
   }
 }

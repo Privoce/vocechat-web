@@ -6,12 +6,14 @@
   "nav": {
     "general": "通用",
     "overview": "概况",
+    "announcement": "公告",
     "members": "成员",
     "data_management": "数据管理",
     "auto_delete_msg": "自动删除消息",
     "my_account": "我的账号",
     "config": "配置",
     "bot": "机器人&Webhook",
+    "notification_channels": "通知渠道",
     "firebase": "Firebase",
     "agora": "Agora",
     "smtp": "SMTP",
@@ -22,7 +24,10 @@
     "about": "关于",
     "api_doc": "API 文档",
     "version": "版本信息",
-    "feedback": "反馈"
+    "feedback": "反馈",
+    "video": "音视频",
+    "notification": "通知设置",
+    "cloudflared": "Cloudflare 隧道"
   },
   "channel": {
     "leave": "离开",
@@ -44,14 +49,16 @@
     "add_friend": "允许加好友",
     "dm_to_member": "允许私聊",
     "show_email": "显示邮箱",
-    "only_owner": "仅创建者和管理员可发消息"
+    "only_owner": "仅创建者和管理员可发消息",
+    "announcement_placeholder": "在此输入公告内容... 支持 Markdown 格式。",
+    "no_announcements": "暂无内容预览",
+    "no_permission": "您没有权限管理公告"
   },
   "overview": {
     "title_feat": "特性开关",
     "name": "服务器名",
     "desc": "服务器描述",
     "upload_desc": "图片最小 128x128，我们推荐上传 512x512 大小的图片，最大不要超过 5M。",
-
     "sign_up": {
       "title": "注册设置",
       "desc": "允许什么方式注册",
@@ -90,6 +97,18 @@
       "desc": "如果开启，只有管理员才能邀请新用户",
       "enable": "开启",
       "disable": "关闭"
+    },
+    "dm_enable": {
+      "title": "私聊（直接消息）",
+      "desc": "关闭后，普通成员之间无法互发私信"
+    },
+    "add_friend_enable": {
+      "title": "加好友",
+      "desc": "关闭后，普通成员无法将其他用户添加为好友"
+    },
+    "search_user_enable": {
+      "title": "搜索用户",
+      "desc": "关闭后，普通成员无法搜索其他用户"
     },
     "enable_msg_url_preview": {
       "title": "开启消息网址预览",
@@ -141,6 +160,12 @@
       "desc": "关闭：服务器内的所有成员能够互相看见；开启：通过搜索添加好友（管理员默认是所有人好友）",
       "enable": "开启",
       "disable": "关闭"
+    },
+    "webclient_auto_update": {
+      "title": "前端自动更新",
+      "desc": "开启后，网页客户端将自动更新到最新版本。⚠️ 此功能仅为高级用户设计，关闭后可能无法接收到最新的 bug 修复、web 功能更新等",
+      "enable": "开启",
+      "disable": "关闭"
     }
   },
   "data": {
@@ -176,7 +201,6 @@
     "renew": "升级证书",
     "update": "手动更新",
     "update_placeholder": "请输入新的证书内容",
-
     "renew_select": "请选择价格套餐",
     "tip": {
       "title": "一个获取免费升级的机会！",
@@ -267,6 +291,26 @@
     "enable": "开启",
     "how_to": "如何配置 Agora？"
   },
+  "vocespace": {
+    "add": "增加",
+    "check": "检测",
+    "checked": "通过",
+    "failed": "检测失败",
+    "title": "VoceSpace",
+    "desc": "使用私有部署的VoceSpace(自动部署)",
+    "sub_desc": "每个VoceSpace账户将享受免费无限制通话时长、5人并发及4K分辨率服务。无需创建账户。按照以下说明正确配置您的VoceSpace。",
+    "prerequisite": [
+      "预备条件",
+      "Docker环境",
+      "端口 80, 443, 7880, 7881, 3008, 3000 已开放",
+      "解析到本机IP的域名（中国大陆用户，如阿里云和腾讯云，需备案）",
+      "企业定制或需要帮助，请联系 han@privoce.com 或添加微信：Privoce"
+    ],
+    "domain_desc": "自定义域名需要是解析到本机IP的域名 (中国大陆用户，如阿里云和腾讯云，需备案)",
+    "enable": "启用",
+    "how_to": "启用后，请设置域名并保存，其余步骤会自动化完成",
+    "old": "您当前的服务器版本过旧，已开启官方部署的VoceSpace地址（vocespace.com）作为默认音视频服务，如果依然需要私有部署，请更新vocechat-server到0.5.8以上版本再尝试。"
+  },
   "third_app": {
     "key": "API 安全密钥",
     "update": "更新安全密钥",
@@ -285,10 +329,31 @@
     "github_desc": "允许用户使用 GitHub 登录",
     "metamask": "Metamask",
     "metamask_desc": "允许用户使用 Metamask 登录",
+    "passkey": "通行密钥",
+    "passkey_desc": "允许用户使用通行密钥登录",
     "oidc": "OIDC",
     "oidc_desc": "允许用户使用 OIDC 登录",
     "oidc_custom": "自定义",
     "more_details": "更多详情，移步 <0> 参考文档 </0> ."
+  },
+  "passkey": {
+    "title": "通行密钥",
+    "desc": "管理您的通行密钥以实现无密码登录",
+    "add": "添加通行密钥",
+    "adding": "注册中...",
+    "delete": "删除",
+    "delete_confirm": "确定要删除此通行密钥吗？",
+    "no_passkeys": "尚未注册通行密钥",
+    "created": "创建时间",
+    "last_used": "上次使用",
+    "success_add": "通行密钥注册成功",
+    "success_delete": "通行密钥删除成功",
+    "error_add": "通行密钥注册失败",
+    "error_delete": "通行密钥删除失败",
+    "error_not_supported": "您的浏览器不支持通行密钥",
+    "error_cancelled": "用户取消或超时",
+    "error_exists": "通行密钥已存在",
+    "enter_name": "请输入通行密钥名称"
   },
   "widget": {
     "tip": "将挂件 SDK 内嵌到网页，实现 VoceChat 扩展！",
@@ -299,6 +364,10 @@
     "default_value": "默认值",
     "remark": "备注",
     "custom_style_tip": "如果你想更精确控制挂件的样式，可以借助 widget 元素的 ID，自行写 CSS 样式，加到自己的 html 或者 css 文件中，如下所示：",
+    "open_widget_tip": "你可以使用 JavaScript 来控制挂件的打开和关闭",
+    "open_widget_example": "使用按钮打开挂件",
+    "open_widget_example_custom": "自定义样式的按钮",
+    "open_widget_example_toggle": "切换挂件开关",
     "css_code_tip": "也可以自定义 CSS 代码，会以 css 文件方式加载到挂件内",
     "param_id": "挂件 ID，可选设置 (服务器版本不低于 v0.3.12)",
     "param_host": "指定和谁聊天 (用户 ID)",
@@ -313,6 +382,10 @@
     "param_open_height": "挂件打开态的高度",
     "param_welcome": "自定义欢迎语",
     "param_position": "设置挂件位置，居左 (left) 或居右 (right)",
+    "param_popup_title": "关闭状态悬浮提示框标题",
+    "param_popup_subtitle": "关闭状态悬浮提示框副标题",
+    "param_popup_image": "关闭状态悬浮提示框图片地址",
+    "param_popup_closable": "提示框是否可关闭 (true/false)",
     "share_link": "分享此链接，别人可以通过该地址直接与你对话",
     "widget_faq": "允许公开注册"
   },
@@ -330,5 +403,78 @@
     "step_2": "第二步：填入已登录的 Token",
     "step_2_desc": "Token 值本质是 JWT 中的 Token，所以有时长限制，如在使用时过期，请重新获取。获取方式可通过请求头 X-API-Key 拿到，或直接 Copy👇",
     "last": "最后：每个 API 都有 Try it Out 选项，可以由此调试该 API"
+  },
+  "notification": {
+    "desc": "配置您的通知渠道",
+    "loading": "加载中...",
+    "no_channels": "暂无可用的通知渠道类型。请联系管理员。",
+    "status": "状态",
+    "enabled": "已启用",
+    "disabled": "已禁用",
+    "my_channels": "我的通知渠道",
+    "available_types": "可用渠道类型",
+    "create_channel": "创建渠道",
+    "edit_channel": "编辑渠道",
+    "channel_name": "渠道名称",
+    "channel_config": "渠道配置",
+    "enable_notifications": "启用通知",
+    "trigger_conditions": "触发条件",
+    "trigger_on_all_messages": "接收所有消息",
+    "trigger_on_mentions": "被提及时通知",
+    "skip_when_online": "在线时跳过通知",
+    "select_groups": "选择群组",
+    "save": "保存",
+    "saving": "保存中...",
+    "cancel": "取消",
+    "edit": "编辑",
+    "test": "测试",
+    "delete": "删除",
+    "save_success": "渠道保存成功",
+    "save_error": "渠道保存失败",
+    "create_success": "渠道创建成功",
+    "create_error": "渠道创建失败",
+    "delete_success": "渠道删除成功",
+    "delete_error": "渠道删除失败",
+    "test_success": "测试通知发送成功",
+    "test_error": "测试通知发送失败"
+  },
+  "admin_notification_channels": {
+    "desc": "为用户启用通知渠道类型",
+    "enabled_types": "已启用的渠道类型",
+    "available_types": "可用渠道类型",
+    "enable_type": "启用",
+    "channel_type": "渠道类型",
+    "channel_status": "状态",
+    "enabled": "已启用",
+    "disabled": "已禁用",
+    "actions": "操作",
+    "delete_channel": "删除",
+    "delete_title": "删除渠道类型",
+    "delete_desc": "确定要删除此渠道类型吗？用户将无法再创建此类型的新渠道。",
+    "cancel": "取消",
+    "delete": "删除",
+    "create_success": "渠道类型启用成功",
+    "create_error": "渠道类型启用失败",
+    "update_success": "渠道类型更新成功",
+    "update_error": "渠道类型更新失败",
+    "delete_success": "渠道类型删除成功",
+    "delete_error": "渠道类型删除失败"
+  },
+  "cloudflared": {
+    "title": "Cloudflare 隧道",
+    "desc": "通过临时 trycloudflare.com 隧道将此服务器暴露到公网，无需 Cloudflare 账号。",
+    "start": "启动隧道",
+    "stop": "停止隧道",
+    "stopping": "停止中...",
+    "copy": "复制",
+    "url_copied": "链接已复制到剪贴板",
+    "downloading_binary": "正在下载 cloudflared 二进制文件...",
+    "status": {
+      "idle": "空闲",
+      "downloading": "下载中",
+      "starting": "启动中",
+      "running": "运行中",
+      "error": "错误"
+    }
   }
 }

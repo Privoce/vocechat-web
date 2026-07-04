@@ -30,6 +30,12 @@
   "set_normal": "User",
 
   "search_not_found": "Not found, or this user is not allowed to be searched.",
+  "search_disabled": "User search has been disabled by the administrator.",
+  "add_to_contact": "Add to contact",
+  "add_friend_disabled": "Adding friends has been disabled by the administrator.",
+  "dm_disabled": "Direct messaging has been disabled by the administrator.",
+  "send_failed_blocked": "Send failed, blocked maybe",
+  "send_failed": "Send message failed",
   "search_by_id": "Search by ID",
   "search_by_id_ph": "Input user ID",
   "search_by_email": "Search by email",

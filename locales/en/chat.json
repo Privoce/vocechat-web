@@ -2,15 +2,22 @@
   "pin": "Pin",
   "pin_desc": "Do you want to pin this message to",
   "pinned_msg": "Pinned Message",
-  "pin_empty_tip": "This channel doesn’t have any pinned message yet.",
+  "pin_empty_tip": "This channel doesn't have any pinned message yet.",
   "fav": "Favorite",
   "fav_msg": "Saved Message",
-  "fav_empty_tip": "This channel doesn’t have any saved message yet.",
+  "fav_empty_tip": "This channel doesn't have any saved message yet.",
   "channel_members": "Channel Members",
   "add_channel_members": "Add members",
   "welcome_channel": "Welcome to {{name}}",
   "welcome_desc": "This is the start of the #{{name}} channel.",
   "edit_channel": "Edit Channel",
+  "announcement": "Announcement",
+  "view_announcement": "View Announcement",
+  "edit_announcement": "Edit Announcement",
+  "created_by": "Created by",
+  "created_at": "Created",
+  "updated_at": "Last updated",
+  "dismiss_announcement": "Dismiss announcement",
 
   "channel_name": "Channel Name",
   "private_channel": "Private Channel",
@@ -69,5 +76,13 @@
   "remark": "Add friend nickname",
   "remark_clear": "Reset friend nickname",
   "remark_intro": "Find a friend faster with a personal nickname. It will only be visible to you in your direct messages.",
-  "remark_placeholder": "Set Nickname"
+  "remark_placeholder": "Set Nickname",
+
+  "guest_mode_warning": {
+    "title": "This Channel Will Be Visible to Guests",
+    "desc": "If you continue, guest users may be able to see messages in this public channel.",
+    "confirm": "Confirm",
+    "disable_guest": "Disable Guest Mode",
+    "switch_private": "Switch to Private Channel"
+  }
 }
