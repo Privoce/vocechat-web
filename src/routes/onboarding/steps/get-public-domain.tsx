@@ -41,6 +41,7 @@ export default function GetPublicDomain() {
   const countRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
+    trackUmamiEvent("onboarding_finished");
     return () => {
       abortRef.current?.abort();
       if (countRef.current) clearInterval(countRef.current);

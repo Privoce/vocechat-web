@@ -11,6 +11,7 @@ import { compareVersion } from "../utils";
 import { useLazyGetPageHtmlQuery, useUploadPageHtmlMutation, useResetPageHtmlMutation, useGeneratePageApiKeyMutation } from "@/app/services/server";
 import useServerExtSetting from "../hooks/useServerExtSetting";
 import useLicense from "@/hooks/useLicense";
+import { trackUmamiEvent } from "@/utils/umami";
 import ChannelModal from "./ChannelModal";
 import InviteModal from "./InviteModal";
 import UsersModal from "./UsersModal";
@@ -396,7 +397,10 @@ Inform me of the preview URL, then ask your clarifying questions and wait for my
         {isAdmin && (
           <div className="absolute top-3 right-3 z-10">
             <button
-              onClick={() => setEditorModalVisible(true)}
+              onClick={() => {
+                trackUmamiEvent("edit_landing_page");
+                setEditorModalVisible(true);
+              }}
               className="opacity-30 hover:opacity-80 transition-opacity p-1 rounded"
               title="Edit page"
             >
