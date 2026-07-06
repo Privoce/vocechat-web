@@ -147,7 +147,7 @@ function HomePage() {
           <Outlet />
         </div>
       </div>
-      {!guest && <MobileNavs />}
+      <MobileNavs />
     </>
   );
 }

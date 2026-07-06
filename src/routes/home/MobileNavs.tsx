@@ -22,6 +22,7 @@ const MobileNavs = () => {
   const isChatHomePath = useMatch(`/chat`);
   const isDMChat = useMatch(`/chat/dm/:user_id`);
   const isChannelChat = useMatch(`/chat/channel/:channel_id`);
+  const guest = useAppSelector((store) => store.authData.guest, shallowEqual);
   const { chat: chatPath, user: userPath } = useAppSelector(
     (store) => store.ui.rememberedNavs,
     shallowEqual
@@ -70,36 +71,40 @@ const MobileNavs = () => {
           }}
         </NavLink>
       </li>
-      <li>
-        <NavLink className={() => `${linkClass}`} to={userNav}>
-          {({ isActive: active }) => {
-            return (
-              <div className="flex flex-col gap-1 items-center">
-                <UserIcon className={!active ? "fill-gray-500" : "fill-primary-500"} />
-                <span className={clsx("text-xs", !active ? "text-gray-500" : "text-primary-500")}>
-                  {t("members")}
-                </span>
-              </div>
-            );
-          }}
-        </NavLink>
-      </li>
-      <li>
-        <NavLink className={() => `${linkClass}`} to={"/setting"}>
-          {({ isActive: active }) => {
-            return (
-              <div className="flex flex-col gap-1 items-center">
-                <SettingIcon
-                  className={clsx("w-6 h-6", !active ? "fill-gray-500" : "fill-primary-500")}
-                />
-                <span className={clsx("text-xs", !active ? "text-gray-500" : "text-primary-500")}>
-                  {t("setting")}
-                </span>
-              </div>
-            );
-          }}
-        </NavLink>
-      </li>
+      {!guest && (
+        <li>
+          <NavLink className={() => `${linkClass}`} to={userNav}>
+            {({ isActive: active }) => {
+              return (
+                <div className="flex flex-col gap-1 items-center">
+                  <UserIcon className={!active ? "fill-gray-500" : "fill-primary-500"} />
+                  <span className={clsx("text-xs", !active ? "text-gray-500" : "text-primary-500")}>
+                    {t("members")}
+                  </span>
+                </div>
+              );
+            }}
+          </NavLink>
+        </li>
+      )}
+      {!guest && (
+        <li>
+          <NavLink className={() => `${linkClass}`} to={"/setting"}>
+            {({ isActive: active }) => {
+              return (
+                <div className="flex flex-col gap-1 items-center">
+                  <SettingIcon
+                    className={clsx("w-6 h-6", !active ? "fill-gray-500" : "fill-primary-500")}
+                  />
+                  <span className={clsx("text-xs", !active ? "text-gray-500" : "text-primary-500")}>
+                    {t("setting")}
+                  </span>
+                </div>
+              );
+            }}
+          </NavLink>
+        </li>
+      )}
     </ul>
   );
 };
