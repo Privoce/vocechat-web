@@ -401,10 +401,10 @@ Inform me of the preview URL, then ask your clarifying questions and wait for my
                 trackUmamiEvent("edit_landing_page");
                 setEditorModalVisible(true);
               }}
-              className="opacity-30 hover:opacity-80 transition-opacity p-1 rounded"
+              className="opacity-60 hover:opacity-100 transition-opacity p-1.5 rounded-full bg-white/90 dark:bg-gray-800/90 shadow"
               title="Edit page"
             >
-              <EditIcon className="w-5 h-5 dark:fill-white" />
+              <EditIcon className="w-5 h-5 fill-gray-500 dark:fill-gray-100" />
             </button>
           </div>
         )}
