@@ -5,6 +5,8 @@ import { User } from "./user";
 export interface Server extends SystemCommon {
   name: string;
   description: string;
+  // unique server id (uuid), absent on old server versions
+  server_id?: string | null;
 }
 export type ChatLayout = "SelfRight" | "Left";
 export type MessageExpireMode = "Off" | "Day1" | "Day7" | "Day30" | "Day90" | "Day180";

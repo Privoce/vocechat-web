@@ -25,6 +25,7 @@ import {
 } from "@/types/server";
 import { User } from "@/types/user";
 import { compareVersion, encodeBase64 } from "@/utils";
+import { checkServerIdentity } from "@/utils/serverIdentity";
 import BASE_URL, {
   ContentTypes,
   IS_OFFICIAL_DEMO,
@@ -48,6 +49,8 @@ export const serverApi = createApi({
       async onQueryStarted(data, { dispatch, queryFulfilled }) {
         try {
           const { data: server } = await queryFulfilled;
+          // detect server replacement by its unique id: clears local data and reloads
+          checkServerIdentity(server.server_id);
           const logo = `${BASE_URL}/resource/organization/logo?t=${+new Date()}`;
           dispatch(updateInfo({ ...server, logo }));
         } catch {

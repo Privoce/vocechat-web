@@ -139,6 +139,7 @@ export const KEY_DEVICE_TOKEN = "VOCECHAT_DEVICE_TOKEN";
 export const KEY_USERS_VERSION = "VOCECHAT_USERS_VERSION";
 export const KEY_AFTER_MID = "VOCECHAT_AFTER_MID";
 export const KEY_PWA_INSTALLED = "VOCECHAT_PWA_INSTALLED";
+export const KEY_SERVER_ID = "VOCECHAT_SERVER_ID";
 export const KEY_LOCAL_MAGIC_TOKEN = "VOCECHAT_LOCAL_MAGIC_TOKEN";
 export const KEY_LOCAL_TRY_PATH = "VOCECHAT_TRY_PATH";
 export const Emojis = ["👍", "❤️", "😄", "👀", "👎", "🎉", "🙁", "🚀"];
