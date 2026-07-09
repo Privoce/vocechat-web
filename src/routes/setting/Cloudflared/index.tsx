@@ -81,7 +81,7 @@ export default function Cloudflared() {
 
   const startTunnel = async () => {
     if (streaming) return;
-    trackUmamiEvent("create_tunnel");
+    trackUmamiEvent("create_tunnel_settings");
     setStreaming(true);
     setStatus("starting");
     setLogs([]);

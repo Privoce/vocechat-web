@@ -68,7 +68,7 @@ export default function GetPublicDomain() {
   }
 
   const handleYes = async () => {
-    trackUmamiEvent("create_tunnel");
+    trackUmamiEvent("create_tunnel_onboarding");
     setPhase("starting");
     setLogs([]);
     setErrorMsg(null);

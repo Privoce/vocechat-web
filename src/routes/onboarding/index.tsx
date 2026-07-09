@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useWizard, Wizard } from "react-use-wizard";
 import clsx from "clsx";
@@ -60,8 +60,6 @@ export default function OnboardingPage() {
   const { t } = useTranslation("welcome");
   const [serverName, setServerName] = useState("");
 
-  // Load Umami and fire "installed" once when the onboarding page mounts.
-  // forceLoad=true so the script is fetched here and only here.
   useEffect(() => {
     trackUmamiEvent("installed");
   }, []);
@@ -74,13 +72,34 @@ export default function OnboardingPage() {
   // Wait until we know whether to show the tunnel step before mounting Wizard
   // so step count is stable from mount
   const ready = !versionLoading && (!versionOk || autoInfo !== undefined);
+
+  const stepNames = useMemo(() => buildSteps(showTunnelStep).map((step) => step.name), [showTunnelStep]);
+
+  const handleStepChange = useCallback(
+    (index: number) => {
+      const step = stepNames[index];
+      if (step) trackUmamiEvent("onboarding_step_view", { step });
+    },
+    [stepNames]
+  );
+
+  // Wizard's onStepChange only fires on navigation, not for the initial step,
+  // so track the first step explicitly once the wizard is ready to mount.
+  const trackedInitialStep = useRef(false);
+  useEffect(() => {
+    if (ready && !trackedInitialStep.current) {
+      trackedInitialStep.current = true;
+      trackUmamiEvent("onboarding_step_view", { step: stepNames[0] });
+    }
+  }, [ready, stepNames]);
+
   if (!ready) return null;
 
   return (
     <>
       <title>{t("onboarding.title") || ""}</title>
       <div className="h-screen bg-neutral-100 dark:bg-neutral-900 overflow-y-auto">
-        <Wizard header={<Navigator showTunnelStep={showTunnelStep} />}>
+        <Wizard header={<Navigator showTunnelStep={showTunnelStep} />} onStepChange={handleStepChange}>
           <WelcomePage />
           <ServerName serverName={serverName} setServerName={setServerName} />
           <AdminAccount serverName={serverName} />
