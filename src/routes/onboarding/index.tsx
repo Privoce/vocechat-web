@@ -73,14 +73,14 @@ export default function OnboardingPage() {
   // so step count is stable from mount
   const ready = !versionLoading && (!versionOk || autoInfo !== undefined);
 
-  const stepNames = useMemo(() => buildSteps(showTunnelStep).map((step) => step.name), [showTunnelStep]);
+  const stepEvents = useMemo(() => buildSteps(showTunnelStep).map((step) => step.umamiEvent), [showTunnelStep]);
 
   const handleStepChange = useCallback(
     (index: number) => {
-      const step = stepNames[index];
-      if (step) trackUmamiEvent("onboarding_step_view", { step });
+      const event = stepEvents[index];
+      if (event) trackUmamiEvent(event);
     },
-    [stepNames]
+    [stepEvents]
   );
 
   // Wizard's onStepChange only fires on navigation, not for the initial step,
@@ -89,9 +89,9 @@ export default function OnboardingPage() {
   useEffect(() => {
     if (ready && !trackedInitialStep.current) {
       trackedInitialStep.current = true;
-      trackUmamiEvent("onboarding_step_view", { step: stepNames[0] });
+      trackUmamiEvent(stepEvents[0]);
     }
-  }, [ready, stepNames]);
+  }, [ready, stepEvents]);
 
   if (!ready) return null;
 
