@@ -1,5 +1,5 @@
 // import React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { shallowEqual } from "react-redux";
 import { useAppSelector } from "../app/store";
 import { useWidget } from "./WidgetContext";
@@ -23,6 +23,15 @@ const Icon = ({ handleClick }: Props) => {
 
   // 是否显示 tooltip（桌面端 + 有内容 + 用户未关闭 + showPopup 开关打开）
   const showTooltip = !isMobile && tooltipVisible && (popupTitle || popupSubtitle) && showPopup;
+
+  // iframe 模式下，tooltip 隐藏时通知父页面收缩 iframe，
+  // 否则 iframe 的透明区域会遮挡宿主页面的点击
+  useEffect(() => {
+    if (!embed) return;
+    const isShadowDOM = document.documentElement.getRootNode() instanceof ShadowRoot;
+    if (isShadowDOM || window.parent === window) return;
+    window.parent.postMessage(showTooltip ? "TOOLTIP_SHOWN" : "TOOLTIP_HIDDEN", "*");
+  }, [embed, showTooltip]);
 
   if (!logo) return null;
 
