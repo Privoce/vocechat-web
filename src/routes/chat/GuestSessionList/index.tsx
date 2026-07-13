@@ -1,6 +1,8 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 
+import { PUBLIC_BOT_MIN_VERSION } from "@/app/config";
 import { useAppSelector } from "@/app/store";
+import { compareVersion } from "@/utils";
 import LoginTip from "../Layout/LoginTip";
 import Session from "./Session";
 import { shallowEqual } from "react-redux";
@@ -20,11 +22,18 @@ const SessionList: FC<Props> = () => {
   const channelIDs = useAppSelector((store) => store.channels.ids, shallowEqual);
   const channelMessage = useAppSelector((store) => store.channelMessage, shallowEqual);
   const userMessage = useAppSelector((store) => store.userMessage.byId, shallowEqual);
+  const currentVersion = useAppSelector((store) => store.server.version, shallowEqual);
+  const supportsPublicBot = useMemo(
+    () => !!currentVersion && compareVersion(currentVersion, PUBLIC_BOT_MIN_VERSION) >= 0,
+    [currentVersion]
+  );
   const publicBotIds = useAppSelector(
     (store) =>
-      Object.values(store.users.byId)
-        .filter((u) => !!u.is_bot && !!u.is_public)
-        .map((u) => u.uid),
+      supportsPublicBot
+        ? Object.values(store.users.byId)
+            .filter((u) => !!u.is_bot && !!u.is_public)
+            .map((u) => u.uid)
+        : [],
     shallowEqual
   );
 

@@ -1,10 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import dayjs from "dayjs";
 import initCache, { useRehydrate } from "@/app/cache";
+import { PUBLIC_BOT_MIN_VERSION } from "@/app/config";
 import { useLazyGetFavoritesQuery, useLazyLoadMoreMessagesQuery } from "@/app/services/message";
 import { useLazyGetServerVersionQuery, useLazyGetSystemCommonQuery } from "@/app/services/server";
 import { useLazyGetContactsQuery, useLazyGetUsersQuery } from "@/app/services/user";
 import { useAppSelector } from "@/app/store";
+import { compareVersion } from "@/utils";
 import useLicense from "./useLicense";
 import useStreaming from "./useStreaming";
 import { shallowEqual } from "react-redux";
@@ -26,11 +28,18 @@ export default function usePreload() {
     shallowEqual
   );
   const channelIds = useAppSelector((store) => store.channels.ids, shallowEqual);
+  const currentVersion = useAppSelector((store) => store.server.version, shallowEqual);
+  const supportsPublicBot = useMemo(
+    () => !!currentVersion && compareVersion(currentVersion, PUBLIC_BOT_MIN_VERSION) >= 0,
+    [currentVersion]
+  );
   const publicBotIds = useAppSelector(
     (store) =>
-      Object.values(store.users.byId)
-        .filter((u) => !!u.is_bot && !!u.is_public)
-        .map((u) => u.uid),
+      supportsPublicBot
+        ? Object.values(store.users.byId)
+            .filter((u) => !!u.is_bot && !!u.is_public)
+            .map((u) => u.uid)
+        : [],
     shallowEqual
   );
   const token = useAppSelector((store) => store.authData.token, shallowEqual);

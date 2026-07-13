@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 
+import { PUBLIC_BOT_MIN_VERSION } from "@/app/config";
 import { useUpdateAvatarByAdminMutation } from "@/app/services/user";
 import { useAppSelector } from "@/app/store";
 import AvatarUploader from "@/components/AvatarUploader";
 import Button from "@/components/styled/Button";
 import IconDelete from "@/assets/icons/delete.svg";
+import { compareVersion } from "@/utils";
 import BotAPIKeys from "./BotAPIKeys";
 import CreateModal from "./CreateModal";
 import DeleteModal from "./DeleteModal";
@@ -30,6 +32,11 @@ export default function BotConfig() {
   const bots = useAppSelector(
     (store) => Object.values(store.users.byId).filter((u) => !!u.is_bot),
     shallowEqual
+  );
+  const currentVersion = useAppSelector((store) => store.server.version, shallowEqual);
+  const supportsPublicBot = useMemo(
+    () => !!currentVersion && compareVersion(currentVersion, PUBLIC_BOT_MIN_VERSION) >= 0,
+    [currentVersion]
   );
   const { t } = useTranslation("setting", { keyPrefix: "bot" });
   const { t: ct } = useTranslation();
@@ -84,7 +91,7 @@ export default function BotConfig() {
                   t("col_name"),
                   t("col_api_key"),
                   t("col_webhook"),
-                  t("col_public"),
+                  ...(supportsPublicBot ? [t("col_public")] : []),
                   t("col_opt")
                 ].map((title) => (
                   <th
@@ -124,9 +131,11 @@ export default function BotConfig() {
                     <td className={tdClass}>
                       <WebhookEdit uid={uid} />
                     </td>
-                    <td className={tdClass}>
-                      <PublicToggle uid={uid} />
-                    </td>
+                    {supportsPublicBot && (
+                      <td className={tdClass}>
+                        <PublicToggle uid={uid} />
+                      </td>
+                    )}
                     <td className={tdClass}>
                       <button
                         type="button"
