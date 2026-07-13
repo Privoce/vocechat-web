@@ -92,7 +92,7 @@ export const PAYMENT_URL_PREFIX =
     : `http://localhost:4000`;
 export const CACHE_VERSION = `0.4.3`;
 export const WIDGET_USER_PWD = `123123`;
-export const GuestRoutes = ["/", "/chat", "/chat/channel/:channel_id"];
+export const GuestRoutes = ["/", "/chat", "/chat/channel/:channel_id", "/chat/dm/:user_id"];
 export const ContentTypes = {
   text: "text/plain",
   markdown: "text/markdown",

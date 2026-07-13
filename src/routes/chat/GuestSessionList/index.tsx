@@ -9,6 +9,7 @@ export interface ChatSession {
   key: string;
   id: number;
   mid?: number;
+  type: "channel" | "dm";
 }
 type Props = Record<string, never>;
 const SessionList: FC<Props> = () => {
@@ -19,30 +20,48 @@ const SessionList: FC<Props> = () => {
   const channelIDs = useAppSelector((store) => store.channels.ids, shallowEqual);
   const channelMessage = useAppSelector((store) => store.channelMessage, shallowEqual);
   const userMessage = useAppSelector((store) => store.userMessage.byId, shallowEqual);
+  const publicBotIds = useAppSelector(
+    (store) =>
+      Object.values(store.users.byId)
+        .filter((u) => !!u.is_bot && !!u.is_public)
+        .map((u) => u.uid),
+    shallowEqual
+  );
 
   useEffect(() => {
     const cSessions = channelIDs.map((id) => {
       const mids = channelMessage[id];
       if (!mids || mids.length == 0) {
-        return { key: `channel_${id}`, unreads: 0, id, type: "channel" };
+        return { key: `channel_${id}`, id, type: "channel" };
       }
       const mid = [...mids].sort((a, b) => +a - +b).pop();
       return { key: `channel_${id}`, id, mid, type: "channel" };
     });
-    const tmps = [...(cSessions as ChatSession[])].sort((a, b) => {
-      const { mid: aMid = 0 } = a;
-      const { mid: bMid = 0 } = b;
-      return bMid - aMid;
+    // 公开 bot：即使没有任何对话消息也要在会话列表可见
+    const botSessions = publicBotIds.map((id) => {
+      const mids = userMessage[id];
+      if (!mids || mids.length == 0) {
+        return { key: `user_${id}`, id, type: "dm" };
+      }
+      const mid = [...mids].sort((a, b) => +a - +b).pop();
+      return { key: `user_${id}`, id, mid, type: "dm" };
     });
+    const tmps = [...(cSessions as ChatSession[]), ...(botSessions as ChatSession[])].sort(
+      (a, b) => {
+        const { mid: aMid = 0 } = a;
+        const { mid: bMid = 0 } = b;
+        return bMid - aMid;
+      }
+    );
     setSessions(tmps);
-  }, [channelIDs, channelMessage, readChannels, readUsers, loginUid, userMessage]);
+  }, [channelIDs, channelMessage, readChannels, readUsers, loginUid, userMessage, publicBotIds]);
 
   return (
     <>
       <ul className="flex-1 flex flex-col gap-0.5 p-2 overflow-auto">
         {sessions.map((s) => {
-          const { key, id, mid = 0 } = s;
-          return <Session key={key} id={id} mid={mid} />;
+          const { key, id, mid = 0, type } = s;
+          return <Session key={key} id={id} mid={mid} type={type} />;
         })}
       </ul>
       <LoginTip placement="session" />

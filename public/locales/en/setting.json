@@ -245,6 +245,8 @@
     "col_name": "Bot Name",
     "col_api_key": "API Key (Inbound Messages)",
     "col_webhook": "Endpoint Webhook URL (Outbound)",
+    "col_public": "Public",
+    "public_guest_off_tip": "Guest mode is off. Guests can't see this bot yet.",
     "col_opt": "Operations",
     "col_key_name": "Name",
     "col_key_value": "Key",

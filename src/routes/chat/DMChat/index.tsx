@@ -22,6 +22,7 @@ const DMChat: FC<Props> = ({ uid = 0, dropFiles }) => {
   const navigate = useNavigate();
   const feedRef = useRef<VirtualMessageFeedHandle>(null);
   const currUser = useAppSelector((store) => store.users.byId[uid], shallowEqual);
+  const isGuest = useAppSelector((store) => store.authData.guest, shallowEqual);
   
   useEffect(() => {
     if (!currUser) {
@@ -42,23 +43,25 @@ const DMChat: FC<Props> = ({ uid = 0, dropFiles }) => {
       dropFiles={dropFiles}
       feedRef={feedRef}
       aside={
-        <ul className="flex flex-col gap-6">
-          <VoiceChat context={`dm`} id={uid} />
-          <Tooltip tip="Saved Items" placement="left">
-            <Tippy
-              placement="left-start"
-              popperOptions={{ strategy: "fixed" }}
-              offset={[0, 180]}
-              interactive
-              trigger="click"
-              content={<FavList uid={uid} />}
-            >
-              <li className={`relative cursor-pointer fav`}>
-                <FavIcon className="fill-gray-500" />
-              </li>
-            </Tippy>
-          </Tooltip>
-        </ul>
+        isGuest ? null : (
+          <ul className="flex flex-col gap-6">
+            <VoiceChat context={`dm`} id={uid} />
+            <Tooltip tip="Saved Items" placement="left">
+              <Tippy
+                placement="left-start"
+                popperOptions={{ strategy: "fixed" }}
+                offset={[0, 180]}
+                interactive
+                trigger="click"
+                content={<FavList uid={uid} />}
+              >
+                <li className={`relative cursor-pointer fav`}>
+                  <FavIcon className="fill-gray-500" />
+                </li>
+              </Tippy>
+            </Tooltip>
+          </ul>
+        )
       }
       header={
         <header className="box-border px-5 py-1 flex items-center justify-center md:justify-between shadow-[inset_0_-1px_0_rgb(0_0_0_/_10%)]">

@@ -17,6 +17,7 @@ export interface User {
   create_by: string;
   webhook_url?: string;
   is_bot?: boolean;
+  is_public?: boolean;
   log_id?: number;
   widget_id?: string;
   msg_smtp_notify_enable?: boolean;
@@ -73,7 +74,7 @@ export interface UserDTO
 export interface UserCreateDTO
   extends Pick<
     User,
-    "name" | "gender" | "language" | "email" | "webhook_url" | "is_bot" | "is_admin"
+    "name" | "gender" | "language" | "email" | "webhook_url" | "is_bot" | "is_public" | "is_admin"
   > {
   password: string;
 }

@@ -11,6 +11,7 @@ import BotAPIKeys from "./BotAPIKeys";
 import CreateModal from "./CreateModal";
 import DeleteModal from "./DeleteModal";
 import NameEdit from "./NameEdit";
+import PublicToggle from "./PublicToggle";
 import WebhookEdit from "./WebhookEdit";
 import WebhookModal from "./WebhookModal";
 import { shallowEqual } from "react-redux";
@@ -83,6 +84,7 @@ export default function BotConfig() {
                   t("col_name"),
                   t("col_api_key"),
                   t("col_webhook"),
+                  t("col_public"),
                   t("col_opt")
                 ].map((title) => (
                   <th
@@ -121,6 +123,9 @@ export default function BotConfig() {
                     </td>
                     <td className={tdClass}>
                       <WebhookEdit uid={uid} />
+                    </td>
+                    <td className={tdClass}>
+                      <PublicToggle uid={uid} />
                     </td>
                     <td className={tdClass}>
                       <button

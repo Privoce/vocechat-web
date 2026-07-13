@@ -10,6 +10,7 @@ import useStreaming from "./useStreaming";
 import { shallowEqual } from "react-redux";
 
 let preloadChannelMsgs = false;
+let preloadBotMsgs = false;
 export default function usePreload() {
   const { isLoading: loadingLicense } = useLicense(false);
   const [preloadChannelMessages] = useLazyLoadMoreMessagesQuery();
@@ -25,6 +26,13 @@ export default function usePreload() {
     shallowEqual
   );
   const channelIds = useAppSelector((store) => store.channels.ids, shallowEqual);
+  const publicBotIds = useAppSelector(
+    (store) =>
+      Object.values(store.users.byId)
+        .filter((u) => !!u.is_bot && !!u.is_public)
+        .map((u) => u.uid),
+    shallowEqual
+  );
   const token = useAppSelector((store) => store.authData.token, shallowEqual);
   const isGuest = useAppSelector((store) => store.authData.guest, shallowEqual);
   const channelMessageData = useAppSelector((store) => store.channelMessage, shallowEqual);
@@ -74,6 +82,17 @@ export default function usePreload() {
       preloadChannelMsgs = true;
     }
   }, [channelIds, channelMessageData, isGuest]);
+  // 在 guest 的时候 预取公开 bot 的私聊历史
+  useEffect(() => {
+    if (isGuest && publicBotIds.length > 0 && !preloadBotMsgs) {
+      publicBotIds.forEach((id) => {
+        if (id) {
+          preloadChannelMessages({ context: "dm", id, limit: 50 });
+        }
+      });
+      preloadBotMsgs = true;
+    }
+  }, [publicBotIds, isGuest]);
   useEffect(() => {
     if (rehydrated && serverVersion) {
       getUsers().then(() => {
