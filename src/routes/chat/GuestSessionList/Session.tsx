@@ -5,6 +5,7 @@ import clsx from "clsx";
 
 import { useAppSelector } from "@/app/store";
 import Avatar from "@/components/Avatar";
+import IconBot from "@/assets/icons/bot.svg";
 import { fromNowTime } from "@/utils";
 import { renderPreviewMessage } from "../../chat/utils";
 import { shallowEqual } from "react-redux";
@@ -20,6 +21,7 @@ const Session: FC<IProps> = ({ id, mid, type = "channel" }) => {
     icon: string;
     mid: number;
     uid?: number;
+    isBot?: boolean;
   }>();
   const messageData = useAppSelector((store) => store.message, shallowEqual);
   const userData = useAppSelector((store) => store.users.byId, shallowEqual);
@@ -29,8 +31,8 @@ const Session: FC<IProps> = ({ id, mid, type = "channel" }) => {
     if (type == "dm") {
       const tmp = userData[id];
       if (!tmp) return;
-      const { name, avatar = "" } = tmp;
-      setData({ name, icon: avatar, mid, uid: id });
+      const { name, avatar = "", is_bot } = tmp;
+      setData({ name, icon: avatar, mid, uid: id, isBot: is_bot });
     } else {
       const tmp = channelData[id];
       if (!tmp) return;
@@ -41,7 +43,7 @@ const Session: FC<IProps> = ({ id, mid, type = "channel" }) => {
   }, [id, mid, type, userData, channelData]);
   if (!data) return null;
   const previewMsg = messageData[mid] || {};
-  const { name, icon } = data;
+  const { name, icon, isBot } = data;
   const isDM = type == "dm";
 
   return (
@@ -55,7 +57,7 @@ const Session: FC<IProps> = ({ id, mid, type = "channel" }) => {
         }
         to={isDM ? `/chat/dm/${id}` : `/chat/channel/${id}`}
       >
-        <div className="flex shrink-0 aspect-square">
+        <div className="flex shrink-0 aspect-square relative">
           <Avatar
             width={40}
             height={40}
@@ -64,6 +66,11 @@ const Session: FC<IProps> = ({ id, mid, type = "channel" }) => {
             name={name}
             src={icon}
           />
+          {isBot && (
+            <div className="absolute -bottom-[2.5px] -right-[2.5px] border-content rounded-full border-[1px] border-white dark:border-gray-300">
+              <IconBot className="w-3 h-3" />
+            </div>
+          )}
         </div>
         <div className="w-full flex flex-col justify-between">
           <div className="flex items-center justify-between">

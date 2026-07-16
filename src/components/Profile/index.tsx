@@ -10,6 +10,7 @@ import useUserOperation from "@/hooks/useUserOperation";
 import IconCall from "@/assets/icons/call.svg";
 import IconMessage from "@/assets/icons/message.svg";
 import IconMore from "@/assets/icons/more.svg";
+import IconBot from "@/assets/icons/bot.svg";
 import Avatar from "../Avatar";
 import ContextMenu, { Item } from "../ContextMenu";
 import { shallowEqual } from "react-redux";
@@ -48,6 +49,7 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
     name,
     email,
     avatar,
+    is_bot,
     // introduction = "This guy has nothing to introduce",
   } = data;
   const isCard = type == "card";
@@ -63,13 +65,20 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
     <>
       <NicknameModal uid={uid} visible={remarkVisible} updateVisible={setRemarkVisible} />
       <div className={containerClass}>
-        <Avatar
-          width={80}
-          height={80}
-          className="rounded-full w-20 h-20 object-cover"
-          src={avatar}
-          name={name}
-        />
+        <div className="relative w-20 h-20">
+          <Avatar
+            width={80}
+            height={80}
+            className="rounded-full w-20 h-20 object-cover"
+            src={avatar}
+            name={name}
+          />
+          {is_bot && (
+            <div className="absolute bottom-0 right-0 border-content rounded-full border-[1px] border-white dark:border-gray-300">
+              <IconBot className="w-5 h-5" />
+            </div>
+          )}
+        </div>
         <Remark uid={uid} />
         <h2 className="text-lg select-text font-bold text-gray-900 dark:text-white">
           {name} {canDM && <span className="font-normal text-gray-500">#{uid}</span>}

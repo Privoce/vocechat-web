@@ -3,6 +3,7 @@ import Tippy from "@tippyjs/react";
 import clsx from "clsx";
 import dayjs from "dayjs";
 import IconAdmin from "@/assets/icons/owner.svg";
+import IconBot from "@/assets/icons/bot.svg";
 import { useAppSelector } from "@/app/store";
 import { ChatContext } from "@/types/common";
 import useContextMenu from "@/hooks/useContextMenu";
@@ -134,7 +135,11 @@ const Message: FC<IProps> = ({
         appendTo={() => document.body}
         content={<Profile uid={fromUid || 0} type="card" cid={context == "dm" ? 0 : contextId} />}
       >
-        <div className="cursor-pointer w-10 h-10 shrink-0" data-uid={fromUid} ref={avatarRef}>
+        <div
+          className="cursor-pointer w-10 h-10 shrink-0 relative"
+          data-uid={fromUid}
+          ref={avatarRef}
+        >
           <Avatar
             className="w-10 h-10 rounded-full object-cover"
             width={40}
@@ -142,6 +147,11 @@ const Message: FC<IProps> = ({
             src={currUser?.avatar}
             name={currUser?.name}
           />
+          {currUser?.is_bot && (
+            <div className="absolute -bottom-[2.5px] -right-[2.5px] border-content rounded-full border-[1px] border-white dark:border-gray-300">
+              <IconBot className="w-3 h-3" />
+            </div>
+          )}
         </div>
       </Tippy>
       <ContextMenu
