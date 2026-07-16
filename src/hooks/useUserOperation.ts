@@ -153,7 +153,7 @@ const useUserOperation = ({ uid, cid }: IProps) => {
   const canUpdatePassword: boolean = !!loginUser?.is_admin && loginUid != uid && uid !== 1;
   return {
     showEmailInChannel: show_email,
-    isChannelOwner: loginUser?.uid == channel?.owner || (channel?.is_public && loginUserIsAdmin),
+    isChannelOwner: loginUser?.uid == channel?.owner || loginUserIsAdmin,
     isAdmin: !!user?.is_admin,
     updateRole,
     updatePassword,
