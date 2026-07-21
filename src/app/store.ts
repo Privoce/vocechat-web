@@ -3,6 +3,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 
 import listenerMiddleware from "./listener.middleware";
+import { adminBotChatApi } from "./services/adminBotChat";
 import { authApi } from "./services/auth";
 import { channelApi } from "./services/channel";
 import { messageApi } from "./services/message";
@@ -46,7 +47,8 @@ const reducer = combineReducers({
   [userApi.reducerPath]: userApi.reducer,
   [channelApi.reducerPath]: channelApi.reducer,
   [serverApi.reducerPath]: serverApi.reducer,
-  [notificationApi.reducerPath]: notificationApi.reducer
+  [notificationApi.reducerPath]: notificationApi.reducer,
+  [adminBotChatApi.reducerPath]: adminBotChatApi.reducer
 });
 
 const store = configureStore({
@@ -59,7 +61,8 @@ const store = configureStore({
         channelApi.middleware,
         serverApi.middleware,
         messageApi.middleware,
-        notificationApi.middleware
+        notificationApi.middleware,
+        adminBotChatApi.middleware
       )
       .prepend(listenerMiddleware.middleware)
 });

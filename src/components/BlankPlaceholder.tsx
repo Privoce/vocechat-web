@@ -60,10 +60,11 @@ const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
   const [previewPage, setPreviewPage] = useState<PageType>("after_signin");
   const [cacheBust, setCacheBust] = useState(0);
   const [htmlPreview, setHtmlPreview] = useState<string | null>(null);
+  const [editorValue, setEditorValue] = useState("");
   const [copied, setCopied] = useState(false);
 
   const [fetchPageHtml] = useLazyGetPageHtmlQuery();
-  const [uploadPageHtml, { isLoading: uploading }] = useUploadPageHtmlMutation();
+  const [uploadPageHtml, { isLoading: saving }] = useUploadPageHtmlMutation();
   const [resetPageHtml, { isLoading: resetting }] = useResetPageHtmlMutation();
   const [generatePageApiKey] = useGeneratePageApiKeyMutation();
 
@@ -123,8 +124,10 @@ const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
     setHtmlPreview(null);
     fetchPageHtml(previewPage).unwrap().then((html) => {
       setHtmlPreview(html);
+      setEditorValue(html);
     }).catch(() => {
       setHtmlPreview("");
+      setEditorValue("");
     });
   }, [editorModalVisible, previewPage]);
 
@@ -148,9 +151,17 @@ const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
     setCacheBust(Date.now());
     fetchPageHtml(previewPage).unwrap().then((html) => {
       setHtmlPreview(html);
+      setEditorValue(html);
     }).catch(() => {
       setHtmlPreview("");
+      setEditorValue("");
     });
+  };
+
+  const handleSave = async () => {
+    await uploadPageHtml({ page: previewPage, html: editorValue });
+    setCacheBust(Date.now());
+    setHtmlPreview(editorValue);
   };
 
   const handleUpload = () => {
@@ -164,6 +175,7 @@ const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
       await uploadPageHtml({ page: previewPage, html });
       setCacheBust(Date.now());
       setHtmlPreview(html);
+      setEditorValue(html);
     };
     input.click();
   };
@@ -297,7 +309,6 @@ Inform me of the preview URL, then ask your clarifying questions and wait for my
   };
 
   const iframeSrc = `${BASE_ORIGIN}/api/page/${previewPage}${cacheBust ? `?t=${cacheBust}` : ""}`;
-  const htmlLines = (htmlPreview ?? "").split("\n");
   const pageLabel = previewPage === "after_signin" ? te("signed_in_users") : te("not_signed_in_users");
 
   if (!useIframe) {
@@ -416,7 +427,7 @@ Inform me of the preview URL, then ask your clarifying questions and wait for my
           onClick={() => setEditorModalVisible(false)}
         >
           <div
-            className="flex flex-col w-[780px] max-w-[95vw] max-h-[85vh] bg-white dark:bg-gray-900 rounded-lg drop-shadow overflow-hidden"
+            className="flex flex-col w-[1280px] max-w-[95vw] h-[90vh] bg-white dark:bg-gray-900 rounded-lg drop-shadow overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
@@ -470,16 +481,24 @@ Inform me of the preview URL, then ask your clarifying questions and wait for my
                   {/* File actions */}
                   <div className="flex flex-col gap-2">
                     <button
-                      onClick={handleDownload}
-                      className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-primary-400 text-white text-sm hover:bg-primary-500 active:bg-primary-500 transition-colors whitespace-nowrap"
+                      onClick={handleSave}
+                      disabled={saving || editorValue === htmlPreview}
+                      className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-primary-400 text-white text-sm hover:bg-primary-500 active:bg-primary-500 transition-colors whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      <DownloadIcon className="w-4 h-4 shrink-0 fill-white" />
+                      <CheckIcon className="w-4 h-4 shrink-0 fill-white" />
+                      {saving ? te("saving") : te("save")}
+                    </button>
+                    <button
+                      onClick={handleDownload}
+                      className="flex items-center gap-2 px-3.5 py-2 rounded-lg border border-solid border-gray-300 dark:border-gray-500 bg-transparent text-sm text-gray-700 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors whitespace-nowrap"
+                    >
+                      <DownloadIcon className="w-4 h-4 shrink-0 fill-gray-700 dark:fill-white" />
                       {te("download_html")}
                     </button>
                     <button
                       onClick={handleUpload}
-                      disabled={uploading}
-                      className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-primary-400 text-white text-sm hover:bg-primary-500 active:bg-primary-500 transition-colors whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
+                      disabled={saving}
+                      className="flex items-center gap-2 px-3.5 py-2 rounded-lg border border-solid border-gray-300 dark:border-gray-500 bg-transparent text-sm text-gray-700 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path fillRule="evenodd" clipRule="evenodd" d="M6.25 3C4.45507 3 3 4.45507 3 6.25V17.75C3 19.5449 4.45507 21 6.25 21H17.75C19.5449 21 21 19.5449 21 17.75V6.25C21 4.45507 19.5449 3 17.75 3H6.25ZM4.5 6.25C4.5 5.2835 5.2835 4.5 6.25 4.5H17.75C18.7165 4.5 19.5 5.2835 19.5 6.25V17.75C19.5 18.7165 18.7165 19.5 17.75 19.5H6.25C5.2835 19.5 4.5 18.7168 4.5 17.75V6.25Z" />
@@ -487,7 +506,7 @@ Inform me of the preview URL, then ask your clarifying questions and wait for my
                           <path d="M16.5303 11.7204L16.4462 11.6478C16.1526 11.4299 15.7359 11.4541 15.4697 11.7204L12.7503 14.4397L12.75 7.75003L12.7432 7.64826C12.6935 7.28218 12.3797 7.00003 12 7.00003L11.8982 7.00688C11.5322 7.05654 11.25 7.37033 11.25 7.75003L11.2503 14.4417L8.52961 11.7198L8.4455 11.6472C8.15193 11.4293 7.73527 11.4534 7.46895 11.7196C7.176 12.0124 7.17591 12.4873 7.46875 12.7803L11.4687 16.7818L11.5529 16.8544C11.8465 17.0724 12.2632 17.0482 12.5295 16.7819L16.5303 12.7811L16.6029 12.6969C16.8208 12.4033 16.7966 11.9867 16.5303 11.7204Z" />
                         </g>
                       </svg>
-                      {uploading ? te("uploading") : te("upload_html")}
+                      {te("upload_html")}
                     </button>
                     <button
                       onClick={handleReset}
@@ -520,24 +539,35 @@ Inform me of the preview URL, then ask your clarifying questions and wait for my
                   </div>
                 </div>
 
-                {/* HTML preview */}
-                <div className="flex flex-col gap-1.5 overflow-hidden flex-1 min-h-0">
-                  <p className="text-sm font-semibold text-gray-700 dark:text-gray-50 shrink-0">
-                    【 {te("html_preview")} 】
-                  </p>
-                  <div className="flex-1 overflow-auto bg-gray-100 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+                {/* Code editor + live preview */}
+                <div className="flex gap-4 overflow-hidden flex-1 min-h-0">
+                  <div className="flex flex-col gap-1.5 overflow-hidden flex-1 min-h-0 min-w-0">
+                    <p className="text-sm font-semibold text-gray-700 dark:text-gray-50 shrink-0">
+                      【 {te("html_preview")} 】
+                    </p>
                     {htmlPreview === null ? (
-                      <div className="p-4 text-xs text-gray-400">{te("loading")}</div>
-                    ) : htmlLines.map((line, i) => (
-                      <div key={i} className="flex hover:bg-gray-200 dark:hover:bg-gray-700">
-                        <span className="w-9 shrink-0 text-right pr-2.5 py-0.5 text-gray-400 dark:text-gray-500 select-none border-r border-gray-200 dark:border-gray-700 text-xs font-mono leading-5">
-                          {i + 1}
-                        </span>
-                        <span className="pl-3 py-0.5 text-gray-700 dark:text-gray-300 whitespace-pre text-xs font-mono leading-5">
-                          {line}
-                        </span>
+                      <div className="flex-1 flex items-center justify-center bg-gray-100 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 text-xs text-gray-400">
+                        {te("loading")}
                       </div>
-                    ))}
+                    ) : (
+                      <textarea
+                        value={editorValue}
+                        onChange={(e) => setEditorValue(e.target.value)}
+                        spellCheck={false}
+                        className="flex-1 resize-none bg-gray-100 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-3 text-gray-700 dark:text-gray-300 text-xs font-mono leading-5 outline-none focus:border-primary-400"
+                      />
+                    )}
+                  </div>
+                  <div className="flex flex-col gap-1.5 overflow-hidden flex-1 min-h-0 min-w-0">
+                    <p className="text-sm font-semibold text-gray-700 dark:text-gray-50 shrink-0">
+                      【 {te("live_preview")} 】
+                    </p>
+                    <iframe
+                      srcDoc={editorValue}
+                      sandbox="allow-scripts allow-same-origin"
+                      title="html-editor-preview"
+                      className="flex-1 bg-white rounded-lg border border-gray-200 dark:border-gray-700"
+                    />
                   </div>
                 </div>
               </div>

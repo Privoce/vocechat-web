@@ -16,6 +16,7 @@ import usePreload from "@/hooks/usePreload";
 import useVirtualKeyboard from "@/hooks/useVirtualKeyboard";
 import { isIOS } from "@/utils";
 import FavIcon from "@/assets/icons/bookmark.svg";
+import BotIcon from "@/assets/icons/bot.nav.svg";
 import ChatIcon from "@/assets/icons/chat.svg";
 import FolderIcon from "@/assets/icons/folder.svg";
 import UserIcon from "@/assets/icons/user.svg";
@@ -95,6 +96,22 @@ function HomePage() {
                   );
                 }}
               </NavLink>
+              {isAdmin && (
+                <NavLink
+                  className={({ isActive }) =>
+                    `${linkClass} ${isActive ? "bg-primary-400 md:hover:bg-primary-400" : ""}`
+                  }
+                  to={"/admin-bot-chat"}
+                >
+                  {({ isActive }) => {
+                    return (
+                      <Tooltip tip={t("bot_chat_viewer")}>
+                        <BotIcon className={isActive ? "fill-white" : ""} />
+                      </Tooltip>
+                    );
+                  }}
+                </NavLink>
+              )}
               <NavLink
                 className={({ isActive }) =>
                   `${linkClass} ${isActive ? "bg-primary-400 md:hover:bg-primary-400" : ""}`

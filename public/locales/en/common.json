@@ -6,6 +6,15 @@
   "files": "Files",
   "setting": "Settings",
   "more": "More",
+  "bot_chat_viewer": "Bot Conversations",
+  "bot_chat": {
+    "select_a_bot": "Select a bot to view its conversations",
+    "select_a_conversation": "Select a conversation to view messages",
+    "no_bots": "No bots found",
+    "no_conversations": "This bot has no conversations yet",
+    "read_only_admin_view": "You are viewing this conversation as an admin — messages cannot be sent here.",
+    "load_more": "Load more"
+  },
   "action": {
     "login": "Sign In",
     "re_login": "Logout",

@@ -94,6 +94,7 @@ export const CACHE_VERSION = `0.4.3`;
 export const WIDGET_USER_PWD = `123123`;
 export const GuestRoutes = ["/", "/chat", "/chat/channel/:channel_id", "/chat/dm/:user_id"];
 export const PUBLIC_BOT_MIN_VERSION = "0.5.29";
+export const ADMIN_BOT_CHAT_VIEWER_MIN_VERSION = "0.5.31";
 export const ContentTypes = {
   text: "text/plain",
   markdown: "text/markdown",

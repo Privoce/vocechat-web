@@ -32,6 +32,7 @@ const SettingDMPage = lazy(() => import("./settingDM"));
 const SettingPage = lazy(() => import("./setting"));
 const ResourceManagement = lazy(() => import("./resources"));
 const FilesPage = lazy(() => import("./files"));
+const AdminBotChatPage = lazy(() => import("./adminBotChat"));
 const GuestLogin = lazy(() => import("./guest"));
 const ChatPage = lazy(() => import("./chat"));
 const HomePage = lazy(() => import("./home"));
@@ -283,6 +284,32 @@ const PageRoutes = () => {
               </LazyIt>
             }
           ></Route>
+          <Route path="admin-bot-chat">
+            <Route
+              index
+              element={
+                <LazyIt key="admin-bot-chat">
+                  <AdminBotChatPage />
+                </LazyIt>
+              }
+            />
+            <Route
+              path=":bot_uid"
+              element={
+                <LazyIt key="admin-bot-chat:bot">
+                  <AdminBotChatPage />
+                </LazyIt>
+              }
+            />
+            <Route
+              path=":bot_uid/:kind/:target_id"
+              element={
+                <LazyIt key="admin-bot-chat:conversation">
+                  <AdminBotChatPage />
+                </LazyIt>
+              }
+            />
+          </Route>
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
