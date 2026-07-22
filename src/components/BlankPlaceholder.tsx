@@ -15,6 +15,7 @@ import { trackUmamiEvent } from "@/utils/umami";
 import ChannelModal from "./ChannelModal";
 import InviteModal from "./InviteModal";
 import UsersModal from "./UsersModal";
+import SaveTip from "./SaveTip";
 import EditIcon from "@/assets/icons/edit.svg";
 import IconChat from "@/assets/icons/placeholder.chat.svg";
 import IconDownload from "@/assets/icons/placeholder.download.svg";
@@ -162,6 +163,10 @@ const BlankPlaceholder: FC<Props> = ({ type = "chat" }) => {
     await uploadPageHtml({ page: previewPage, html: editorValue });
     setCacheBust(Date.now());
     setHtmlPreview(editorValue);
+  };
+
+  const handleDiscardEdit = () => {
+    setEditorValue(htmlPreview ?? "");
   };
 
   const handleUpload = () => {
@@ -481,14 +486,6 @@ Inform me of the preview URL, then ask your clarifying questions and wait for my
                   {/* File actions */}
                   <div className="flex flex-col gap-2">
                     <button
-                      onClick={handleSave}
-                      disabled={saving || editorValue === htmlPreview}
-                      className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-primary-400 text-white text-sm hover:bg-primary-500 active:bg-primary-500 transition-colors whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      <CheckIcon className="w-4 h-4 shrink-0 fill-white" />
-                      {saving ? te("saving") : te("save")}
-                    </button>
-                    <button
                       onClick={handleDownload}
                       className="flex items-center gap-2 px-3.5 py-2 rounded-lg border border-solid border-gray-300 dark:border-gray-500 bg-transparent text-sm text-gray-700 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors whitespace-nowrap"
                     >
@@ -572,6 +569,10 @@ Inform me of the preview URL, then ask your clarifying questions and wait for my
                 </div>
               </div>
             </div>
+
+            {htmlPreview !== null && editorValue !== htmlPreview && (
+              <SaveTip saveHandler={handleSave} resetHandler={handleDiscardEdit} />
+            )}
           </div>
         </div>
       )}

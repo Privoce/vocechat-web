@@ -14,8 +14,8 @@ const SaveTip: FC<Props> = ({ saveHandler, resetHandler }) => {
   // const btnClass=clsx("")
   return (
     <div
-      className="z-[999] w-full max-w-lg p-2 fixed bottom-4 md:bottom-16
-    flex flex-col md:flex-row items-center justify-between font-semibold text-gray-700 border 
+      className="z-[999] w-full max-w-lg p-2 fixed left-1/2 -translate-x-1/2 bottom-4 md:bottom-16
+    flex flex-col md:flex-row items-center justify-between font-semibold text-gray-700 border
     border-solid border-gray-200 dark:border-gray-400 bg-white dark:bg-gray-600 shadow-2xl dark:shadow-primary-400/50 rounded-full"
     >
       <span className="p-2 text-sm dark:text-gray-200">{t("save_tip")}</span>

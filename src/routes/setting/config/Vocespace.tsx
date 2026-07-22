@@ -287,7 +287,7 @@ export function ConfigVocespace() {
               onChange={handleChange}
               value={url}
               name="url"
-              placeholder={`video.${window.location.hostname} (Your domain pointing to the current server IP)`}
+              placeholder={`https://video.${window.location.hostname} or http://1.2.3.4:8080`}
             />
 
             <Button
@@ -312,7 +312,7 @@ export function ConfigVocespace() {
                   onChange={(evt) => handleChangeDomains(evt, index)}
                   value={domain}
                   // name="url"
-                  placeholder={`video.${window.location.hostname} (Your domain pointing to the current server IP)`}
+                  placeholder={`https://video.${window.location.hostname} or http://1.2.3.4:8080`}
                 />
                 <Button
                   style={{ height: 38, backgroundColor: checked ? "#00ff00dd" : undefined }}
