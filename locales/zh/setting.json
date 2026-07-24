@@ -242,6 +242,8 @@
     "col_name": "名称",
     "col_api_key": "密钥（用于向本 Server 传送信息）",
     "col_webhook": "Webhook 接收地址（用于接收本 Server 推送的信息）",
+    "col_public": "公开",
+    "public_guest_off_tip": "访客模式未开启，访客暂时看不到该机器人。",
     "col_opt": "操作",
     "col_key_name": "名称",
     "col_key_value": "值",

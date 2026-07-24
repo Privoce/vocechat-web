@@ -25,9 +25,13 @@
   const origin = new URL(_src).origin;
 
   // 如果有提示框内容，关闭状态的宽度和高度需要更大
-  const hasTooltip = popupTitle || popupSubtitle;
+  const hasTooltip = showPopup === "true" && (popupTitle || popupSubtitle);
   const actualCloseWidth = hasTooltip ? 320 : closeWidth;
   const actualCloseHeight = hasTooltip ? 120 : closeHeight;
+  // 提示框关闭后只剩图标：图标 48 + widget.html 内 #root 的 16px 内边距 * 2
+  // iframe 透明区域无法点击穿透，所以必须把 iframe 收缩到刚好包住可见内容
+  const iconOnlyWidth = Number(closeWidth) + 32;
+  const iconOnlyHeight = Number(closeHeight) + 32;
 
   const baseStyles = {
     position: "fixed",
@@ -144,18 +148,40 @@
     wrapper.frameborder = 0;
     wrapper.referrerPolicy = "unsafe-url";
 
+    // 跟踪状态：聊天窗是否展开、提示框是否被隐藏（用户关闭或移动端不显示）
+    let isOpen = false;
+    let tooltipHidden = false;
+
+    const applyClosedSize = () => {
+      const width = tooltipHidden ? iconOnlyWidth : actualCloseWidth;
+      const height = tooltipHidden ? iconOnlyHeight : actualCloseHeight;
+      wrapper.setAttribute("width", width);
+      wrapper.setAttribute("height", height);
+    };
+
     w.addEventListener(
       "message",
       (event) => {
+        if (event.source !== wrapper.contentWindow) return;
         const { data: CMD } = event;
         switch (CMD) {
           case "OPEN":
+            isOpen = true;
             wrapper.setAttribute("width", openWidth);
             wrapper.setAttribute("height", openHeight);
             break;
           case "CLOSE":
-            wrapper.setAttribute("width", actualCloseWidth);
-            wrapper.setAttribute("height", actualCloseHeight);
+            isOpen = false;
+            applyClosedSize();
+            break;
+          // 提示框隐藏后收缩 iframe，避免透明区域遮挡页面点击
+          case "TOOLTIP_HIDDEN":
+            tooltipHidden = true;
+            if (!isOpen) applyClosedSize();
+            break;
+          case "TOOLTIP_SHOWN":
+            tooltipHidden = false;
+            if (!isOpen) applyClosedSize();
             break;
           case "RELOAD_WITH_OPEN":
             {
@@ -163,6 +189,7 @@
               url.searchParams.append("open", new Date().getTime());
               console.log("new src", url.href);
               wrapper.src = url.href;
+              isOpen = true;
               wrapper.setAttribute("width", openWidth);
               wrapper.setAttribute("height", openHeight);
             }
@@ -178,21 +205,21 @@
     // 暴露全局函数用于打开 widget
     w.VoceChatWidget = {
       open: function() {
+        isOpen = true;
         wrapper.setAttribute("width", openWidth);
         wrapper.setAttribute("height", openHeight);
         wrapper.contentWindow?.postMessage("OPEN_FROM_PARENT", "*");
       },
       close: function() {
-        wrapper.setAttribute("width", actualCloseWidth);
-        wrapper.setAttribute("height", actualCloseHeight);
+        isOpen = false;
+        applyClosedSize();
         wrapper.contentWindow?.postMessage("CLOSE_FROM_PARENT", "*");
       },
       toggle: function() {
-        const currentWidth = wrapper.getAttribute("width");
-        if (currentWidth == actualCloseWidth) {
-          this.open();
-        } else {
+        if (isOpen) {
           this.close();
+        } else {
+          this.open();
         }
       }
     };

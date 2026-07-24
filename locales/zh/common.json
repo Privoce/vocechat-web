@@ -6,6 +6,15 @@
   "files": "文件",
   "setting": "设置",
   "more": "更多",
+  "bot_chat_viewer": "机器人对话",
+  "bot_chat": {
+    "select_a_bot": "选择一个机器人以查看其对话",
+    "select_a_conversation": "选择一个会话以查看消息",
+    "no_bots": "暂无机器人",
+    "no_conversations": "该机器人暂无会话记录",
+    "read_only_admin_view": "你正以管理员身份查看该会话，此处无法发送消息。",
+    "load_more": "加载更多"
+  },
   "action": {
     "login": "登录",
     "re_login": "重新登录",
