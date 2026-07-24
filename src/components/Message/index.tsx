@@ -52,6 +52,7 @@ const Message: FC<IProps> = ({
     shallowEqual
   );
   const loginUid = useAppSelector((store) => store.authData.user?.uid, shallowEqual);
+  const isGuest = useAppSelector((store) => store.authData.guest, shallowEqual);
   // 只订阅当前消息发送者的用户信息，而不是整个usersData
   const currUser = useAppSelector((store) => store.users.byId[message?.from_uid || 0], shallowEqual);
   // 只订阅当前消息的reaction，而不是整个reactionMessageData
@@ -104,6 +105,8 @@ const Message: FC<IProps> = ({
   const _key = properties?.local_id || mid;
   const showExpire = (expires_in ?? 0) > 0;
   const isSelf = fromUid == loginUid && enableRightLayout;
+  // guest 用户自己的消息不会出现在 users store 中，避免误显示为 Deleted User
+  const displayName = currUser?.name || (isSelf && isGuest ? "Guest User" : undefined);
   return (
     <div
       key={_key}
@@ -145,7 +148,7 @@ const Message: FC<IProps> = ({
             width={40}
             height={40}
             src={currUser?.avatar}
-            name={currUser?.name}
+            name={displayName}
           />
           {currUser?.is_bot && (
             <div className="absolute -bottom-[2.5px] -right-[2.5px] border-content rounded-full border-[1px] border-white dark:border-gray-300">
@@ -187,6 +190,8 @@ const Message: FC<IProps> = ({
             <span className="text-primary-500 text-sm">
               {currUser?.name ? (
                 <NameWithRemark uid={currUser.uid} showName={false} name={currUser.name} />
+              ) : isSelf && isGuest ? (
+                "Guest User"
               ) : (
                 "Deleted User"
               )}

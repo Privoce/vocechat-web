@@ -26,6 +26,7 @@ const AddContactTip = (props: Props) => {
     (store) => store.server.add_friend_enable ?? true,
     shallowEqual
   );
+  const isGuest = useAppSelector((store) => store.authData.guest, shallowEqual);
   const targetUser = useAppSelector((store) => store.users.byId[props.uid], shallowEqual);
 
   useEffect(() => {
@@ -46,6 +47,7 @@ const AddContactTip = (props: Props) => {
   const itemClass = `cursor-pointer flex flex-col items-center gap-1 rounded-lg w-32 text-primary-400 bg-gray-50 dark:bg-gray-800 text-sm pt-3.5 pb-3`;
   if (!targetUser || !enableContact) return null;
   if (targetUser.status == "added") return null;
+  if (isGuest && targetUser.is_bot && targetUser.is_public) return null;
   const blocked = targetUser.status == "blocked";
   return (
     <div className="py-4 px-10 flex flex-col items-center gap-3 bg-slate-100 dark:bg-slate-600">
