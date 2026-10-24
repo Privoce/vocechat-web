@@ -16,7 +16,7 @@ import {
 } from "@/types/user";
 import BASE_URL, { ContentTypes } from "../config";
 import { updateAutoDeleteSetting, updateMute } from "../slices/footprint";
-import { addUsers, fillUsers, updateContactStatus as updateStatus } from "../slices/users";
+import { addUsers, fillUsers, updateUserEmails, updateContactStatus as updateStatus } from "../slices/users";
 import { RootState } from "../store";
 // import toast from "react-hot-toast";
 import baseQuery from "./base.query";
@@ -28,6 +28,20 @@ export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery,
   endpoints: (builder) => ({
+    refreshUserEmails: builder.query<User[], void>({
+      query: () => ({ url: `/user` }),
+      async onQueryStarted(_, { dispatch, queryFulfilled, getState }) {
+        try {
+          const { data: users } = await queryFulfilled;
+          dispatch(updateUserEmails(users));
+          const uid = (getState() as RootState).authData.user?.uid;
+          const currentUser = users.find((user) => user.uid === uid);
+          if (currentUser) dispatch(updateLoginUser({ email: currentUser.email }));
+        } catch {
+          console.error("refresh user emails error");
+        }
+      }
+    }),
     getUsers: builder.query<User[], void>({
       query: () => ({ url: `/user` }),
       transformResponse: (data: User[]) => {

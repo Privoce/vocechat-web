@@ -48,6 +48,8 @@ const useUserOperation = ({ uid, cid }: IProps) => {
     shallowEqual
   );
   const loginUser = useAppSelector((store) => store.authData.user, shallowEqual);
+  const hideUserEmail = useAppSelector((store) => store.server.hide_user_email ?? false);
+  const emailVisible = !hideUserEmail || !!loginUser?.is_admin;
   const isPro = useAppSelector((store) => store.server.upgraded, shallowEqual);
   const { show_email = true, dm_to_member = true } = channel ?? {};
   useEffect(() => {
@@ -87,7 +89,8 @@ const useUserOperation = ({ uid, cid }: IProps) => {
     }
   };
 
-  const copyEmail = (email: string) => {
+  const copyEmail = (email: string | null) => {
+    if (!emailVisible) return;
     const isString = typeof email == "string";
     const finalEmail = isString ? email || user?.email : user?.email;
     copy(finalEmail || "");
@@ -152,7 +155,7 @@ const useUserOperation = ({ uid, cid }: IProps) => {
   const canViewPassword: boolean = !!loginUser?.is_admin && isPro;
   const canUpdatePassword: boolean = !!loginUser?.is_admin && loginUid != uid && uid !== 1;
   return {
-    showEmailInChannel: show_email,
+    showEmailInChannel: show_email && emailVisible,
     isChannelOwner: loginUser?.uid == channel?.owner || loginUserIsAdmin,
     isAdmin: !!user?.is_admin,
     updateRole,
@@ -171,7 +174,7 @@ const useUserOperation = ({ uid, cid }: IProps) => {
     startChat,
     removeFromChannel: handleRemoveFromChannel,
     canRemoveFromChannel,
-    canCopyEmail: !!user?.email && show_email,
+    canCopyEmail: !!user?.email && show_email && emailVisible,
     copyEmail,
     canDM: dm_to_member,
     startCall,

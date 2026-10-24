@@ -23,6 +23,7 @@ import WebClientAutoUpdate from "./WebClientAutoUpdate";
 import DMEnable from "./DMEnable";
 import AddFriendEnable from "./AddFriendEnable";
 import SearchUserEnable from "./SearchUserEnable";
+import HideUserEmail from "./HideUserEmail";
 
 export default function Overview() {
   const { t } = useTranslation("setting");
@@ -51,6 +52,7 @@ export default function Overview() {
           <DMEnable />
           <AddFriendEnable />
           <SearchUserEnable />
+          <HideUserEmail />
           <OnlyAdminCanSeeChannelMembers />
           {/* 访客模式 */}
           <GuestMode />

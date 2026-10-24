@@ -36,7 +36,12 @@ import { resetReactionMessage } from "@/app/slices/message.reaction";
 import { removeUserSession, resetUserMsg } from "@/app/slices/message.user";
 import { updateInfo } from "@/app/slices/server";
 import { setReady, updateSSEStatus } from "@/app/slices/ui";
-import { updateContactStatus, updateUsersByLogs, updateUsersStatus } from "@/app/slices/users";
+import {
+  updateContactStatus,
+  updateUserEmails,
+  updateUsersByLogs,
+  updateUsersStatus
+} from "@/app/slices/users";
 import { updateCallInfo } from "@/app/slices/voice";
 import { useAppDispatch, useAppSelector } from "@/app/store";
 import {
@@ -228,6 +233,8 @@ export default function useStreaming() {
             name: organization_name,
             description: organization_description,
             ...tmp,
+            // The initial event from an older server has no email privacy field.
+            ...(!ready ? { hide_user_email: tmp.hide_user_email ?? false } : {}),
           };
           const purified = omitBy(transformed, isNull);
           dispatch(updateInfo(purified));
@@ -245,7 +252,10 @@ export default function useStreaming() {
         }
 
         case "users_snapshot": {
-          const { version } = data;
+          const { version, users } = data;
+          dispatch(updateUserEmails(users));
+          const currentUser = users.find(({ uid }) => uid === loginUidRef.current);
+          if (currentUser) dispatch(updateLoginUser({ email: currentUser.email }));
           dispatch(updateUsersVersion(version));
           break;
         }

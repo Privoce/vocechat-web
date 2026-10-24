@@ -39,6 +39,16 @@ const usersSlice = createSlice({
         })
       );
     },
+    clearUserEmails(state) {
+      Object.values(state.byId).forEach((user) => {
+        user.email = null;
+      });
+    },
+    updateUserEmails(state, action: PayloadAction<Pick<StoredUser, "uid" | "email">[]>) {
+      action.payload.forEach(({ uid, email }) => {
+        if (state.byId[uid]) state.byId[uid]!.email = email;
+      });
+    },
     removeUser(state, action: PayloadAction<number>) {
       const uid = action.payload;
       state.ids = state.ids.filter((i) => i != uid);
@@ -127,6 +137,14 @@ const usersSlice = createSlice({
   }
 });
 
-export const { updateContactStatus, resetUsers, fillUsers, updateUsersByLogs, updateUsersStatus, addUsers } =
-  usersSlice.actions;
+export const {
+  clearUserEmails,
+  updateUserEmails,
+  updateContactStatus,
+  resetUsers,
+  fillUsers,
+  updateUsersByLogs,
+  updateUsersStatus,
+  addUsers
+} = usersSlice.actions;
 export default usersSlice.reducer;

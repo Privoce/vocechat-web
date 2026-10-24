@@ -54,7 +54,7 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
   } = data;
   const isCard = type == "card";
   const canRemoveFromServer = !isCard && canRemove;
-  const hasMore = email || canRemoveFromChannel || canRemoveFromServer;
+  const hasMore = canCopyEmail || canRemoveFromChannel || canRemoveFromServer;
   const iconClass = `cursor-pointer flex flex-col items-center gap-1 rounded-lg w-32 text-primary-400 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 text-sm pt-3.5 pb-3`;
   const containerClass = clsx(
     `flex-center flex-col gap-1 z-[99] mt-20 select-none`,
@@ -81,7 +81,7 @@ const Profile: FC<Props> = ({ uid, type = "embed", cid }) => {
         </div>
         <Remark uid={uid} />
         <h2 className="text-lg select-text font-bold text-gray-900 dark:text-white">
-          {name} {canDM && <span className="font-normal text-gray-500">#{uid}</span>}
+          {name} <span className="font-normal text-gray-500">#{uid}</span>
         </h2>
         {canCopyEmail && (
           <span className="text-sm text-gray-400 dark:text-gray-200 select-text">{email}</span>

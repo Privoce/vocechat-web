@@ -41,6 +41,10 @@ export default function MyAccount() {
     shallowEqual
   );
 
+  const hideEmail = useAppSelector(
+    (store) => !!store.server.hide_user_email && !store.authData.user?.is_admin
+  );
+
   useEffect(() => {
     if (uploadSuccess) {
       toast.success(ct("tip.update"));
@@ -73,12 +77,14 @@ export default function MyAccount() {
           <div className="mt-2 mb-16 font-bold text-lg text-gray-800 dark:text-white">
             {name} <span className="font-normal text-gray-500">#{uid}</span>
           </div>
-          <div className="w-full flex items-start justify-between mb-6">
-            <div className="flex flex-col text-gray-500 dark:text-gray-50">
-              <span className="text-xs uppercase  font-semibold">{t("email")}</span>
-              <span className="text-sm">{email}</span>
+          {!hideEmail && email && (
+            <div className="w-full flex items-start justify-between mb-6">
+              <div className="flex flex-col text-gray-500 dark:text-gray-50">
+                <span className="text-xs uppercase  font-semibold">{t("email")}</span>
+                <span className="text-sm">{email}</span>
+              </div>
             </div>
-          </div>
+          )}
           <div className="w-full flex items-start justify-between mb-6">
             <div className="flex flex-col text-gray-500 dark:text-gray-50">
               <span className="text-xs uppercase  font-semibold">{t("username")}</span>

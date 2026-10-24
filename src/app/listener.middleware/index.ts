@@ -1,5 +1,8 @@
 import { createListenerMiddleware } from "@reduxjs/toolkit";
 
+import { userApi } from "../services/user";
+import { clearUserEmails } from "../slices/users";
+import { updateLoginUser } from "../slices/auth.data";
 import { RootState } from "../store";
 import archiveMessageHandler from "./handler.archive.msg";
 import channelMsgHandler from "./handler.channel.msg";
@@ -39,7 +42,7 @@ listenerMiddleware.startListening({
     const { type = "" } = action;
     const [prefix] = type.split("/");
     // console.log("operation", type);
-    return operations.includes(prefix);
+    return operations.includes(prefix) || prefix === "authData";
     // console.log("listener predicate", action, currentState, previousState);
     // return true;
   },
@@ -47,8 +50,35 @@ listenerMiddleware.startListening({
     const { type = "", payload } = action;
     const [prefix, operation]: [keyof RootState | "__rtkq", string] = type.split("/");
     // console.log("effect opt", action);
+    let currentState = listenerApi.getState() as RootState;
+    if (
+      prefix === "server" &&
+      operation === "updateInfo" &&
+      (listenerApi.getOriginalState() as RootState).server.hide_user_email &&
+      !currentState.server.hide_user_email &&
+      currentState.authData.user &&
+      !currentState.authData.user?.is_admin
+    ) {
+      // A reconnect may have no user logs; fetch emails without replacing contact state.
+      listenerApi.dispatch(userApi.endpoints.refreshUserEmails.initiate(undefined, {
+        subscribe: false,
+        forceRefetch: true
+      }));
+    }
+    if (
+      ["server", "users", "authData"].includes(prefix) &&
+      currentState.server.hide_user_email &&
+      !currentState.authData.user?.is_admin
+    ) {
+      if (Object.values(currentState.users.byId).some((user) => user.email != null)) {
+        listenerApi.dispatch(clearUserEmails());
+      }
+      if (currentState.authData.user?.email != null) {
+        listenerApi.dispatch(updateLoginUser({ email: null }));
+      }
+      currentState = listenerApi.getState() as RootState;
+    }
     if (!window.CACHE && prefix !== "__rtkq") return;
-    const currentState = listenerApi.getState() as RootState;
     const state = prefix == "__rtkq" ? null : currentState[prefix];
     switch (prefix) {
       case "__rtkq":

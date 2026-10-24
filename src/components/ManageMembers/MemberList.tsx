@@ -36,7 +36,6 @@ const MemberList: FC<Props> = ({ cid }) => {
     // canViewPassword,
     canUpdatePassword,
     copyEmail,
-    canCopyEmail,
     removeFromChannel,
     removeUser,
     showEmailInChannel,
@@ -79,6 +78,7 @@ const MemberList: FC<Props> = ({ cid }) => {
             const currUser = userMap[uid];
             if (!currUser) return null;
             const { name, email, is_admin } = currUser;
+            const canCopyEmail = showEmailInChannel && !!email;
             const owner = channel && channel.owner == uid;
             const switchRoleVisible = loginUser?.is_admin && loginUser.uid !== uid && uid !== 1;
             let dotsVisible = loginUser?.is_admin;
@@ -98,10 +98,12 @@ const MemberList: FC<Props> = ({ cid }) => {
                     <span className="font-bold text-sm text-gray-600 dark:text-white flex items-center gap-1">
                       <NameWithRemark name={name} uid={uid} /> {owner && <IconOwner />}
                     </span>
-                    {showEmailInChannel && (
+                    {showEmailInChannel && email ? (
                       <span className="hidden md:block text-xs text-gray-500 dark:text-slate-50">
                         {email}
                       </span>
+                    ) : (
+                      <span className="text-xs text-gray-500 dark:text-slate-50">#{uid}</span>
                     )}
                   </div>
                 </div>

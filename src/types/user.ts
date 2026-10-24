@@ -8,7 +8,7 @@ export interface AutoDeleteMsgDTO {
 }
 export interface User {
   uid: number;
-  email: string;
+  email: string | null;
   name: string;
   gender: Gender;
   language?: string;

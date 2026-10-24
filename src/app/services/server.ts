@@ -232,7 +232,11 @@ export const serverApi = createApi({
       async onQueryStarted(data, { dispatch, queryFulfilled }) {
         try {
           const resp = await queryFulfilled;
-          dispatch(updateInfo(resp.data));
+          dispatch(updateInfo({
+            ...resp.data,
+            // Older servers omit this field. Clear any cached setting from a newer server.
+            hide_user_email: resp.data.hide_user_email ?? false
+          }));
         } catch {
           console.error("get server common error");
         }

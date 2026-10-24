@@ -109,6 +109,10 @@
       "title": "Add Friend",
       "desc": "If disabled, members cannot add other users as friends."
     },
+    "hide_user_email": {
+      "title": "Hide user emails",
+      "desc": "Hide all email addresses from members, including their own. Only names and IDs are shown. Administrators can still view emails. Disabled by default."
+    },
     "search_user_enable": {
       "title": "Search Users",
       "desc": "If disabled, members cannot search for other users."

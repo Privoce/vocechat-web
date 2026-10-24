@@ -24,6 +24,7 @@ export interface SystemCommon {
   dm_enable?: boolean;
   add_friend_enable?: boolean;
   search_user_enable?: boolean;
+  hide_user_email?: boolean;
 }
 export interface GithubAuthConfig {
   client_id?: string;

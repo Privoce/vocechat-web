@@ -32,6 +32,7 @@ const initialState: StoredServer = {
   msg_smtp_notify_enable: false,
   dm_enable: true,
   add_friend_enable: true,
+  hide_user_email: false,
   search_user_enable: true
 };
 
@@ -63,6 +64,7 @@ const serverSlice = createSlice({
         dm_enable = true,
         add_friend_enable = true,
         search_user_enable = true,
+        hide_user_email = false,
         ...rest
       } = action.payload || {};
       return {
@@ -82,6 +84,7 @@ const serverSlice = createSlice({
         dm_enable,
         add_friend_enable,
         search_user_enable,
+        hide_user_email,
         ...rest
       };
     },

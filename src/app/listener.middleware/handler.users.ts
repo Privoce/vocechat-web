@@ -10,11 +10,13 @@ export default async function handler({ operation, data, payload }) {
     return;
   }
   switch (operation) {
+    case "clearUserEmails":
+    case "updateUserEmails":
     case "fillUsers":
       {
-        const users = payload as User[];
-        const arr = users.map(({ uid, ...rest }) => {
-          return { key: uid + "", value: rest };
+        const users = Object.values(data.byId) as User[];
+        const arr = users.map((user) => {
+          return { key: user.uid + "", value: user };
         });
         await table.setItems(arr);
       }
