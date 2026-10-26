@@ -1,4 +1,5 @@
 import { FC, useCallback, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import clsx from "clsx";
 import dayjs from "dayjs";
@@ -8,6 +9,7 @@ import { removeMessage } from "../../app/slices/message";
 import { removeChannelMsg } from "../../app/slices/message.channel";
 import { removeUserMsg } from "../../app/slices/message.user";
 import { ChatContext } from "../../types/common";
+import Tooltip from "../Tooltip";
 
 type Props = {
   context: ChatContext;
@@ -26,6 +28,7 @@ const ExpireTimer: FC<Props> = ({
   context,
   contextId
 }) => {
+  const { t } = useTranslation("setting");
   const [countdown, setCountdown] = useState<number | undefined>();
   const dispatch = useDispatch();
   const clearMsgFromClient = useCallback(() => {
@@ -82,15 +85,25 @@ const ExpireTimer: FC<Props> = ({
     .toString()
     .padStart(2, "0")}`;
   return (
-    <div
-      className={clsx(
-        "absolute bottom-1 text-xs text-gray-400 flex items-center gap-1 font-mono",
-        enableRightLayout ? "left-2" : "right-2"
-      )}
+    <Tooltip
+      tip={formatted_countdown}
+      placement="top"
+      trigger="mouseenter focus click"
+      disabled={false}
+      appendTo={() => document.body}
+      offset={[0, 8]}
     >
-      <IconTimer className="w-4 h-4 stroke-slate-400" />
-      {formatted_countdown}
-    </div>
+      <button
+        type="button"
+        aria-label={t("nav.auto_delete_msg")}
+        className={clsx(
+          "absolute bottom-0 flex h-6 w-6 items-center justify-center rounded bg-transparent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500",
+          enableRightLayout ? "left-1" : "right-1"
+        )}
+      >
+        <IconTimer className="w-4 h-4 stroke-slate-400" aria-hidden="true" />
+      </button>
+    </Tooltip>
   );
 };
 
