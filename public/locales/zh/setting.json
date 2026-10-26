@@ -255,6 +255,14 @@
     "col_key_last_used": "上次使用时间"
   },
   "auto_delete_msg": {
+    "checking_support": "正在检测服务端是否支持…",
+    "1_month": "1 个月（30 天）",
+    "whole_channel": "整个频道",
+    "channel_title": "删除频道内所有人发送的消息",
+    "channel_desc": "自动删除所有成员在设置后发送的新消息。",
+    "policy_desc": "频道规则对所有人生效；个人设置可让自己的消息更早删除。已有消息保留原来的到期时间。",
+    "unsupported": "服务端不支持该选项，请升级服务端。",
+    "save_failed": "保存失败",
     "title": "删除我发送的消息",
     "desc": "消息将在客户端和服务端彻底删除",
     "off": "关闭",

@@ -188,6 +188,7 @@ interface ServerConfigChangedEvent extends SystemCommon {
 
 interface GroupChangedEvent {
   type: "group_changed";
+  auto_delete_after?: number;
   gid: number;
   name: string;
   description: string;

@@ -23,7 +23,15 @@ export const channelApi = createApi({
       query: () => ({ url: `/group` })
     }),
     getChannel: builder.query<Channel, number>({
-      query: (id) => ({ url: `/group/${id}` })
+      query: (id) => ({ url: `/group/${id}` }),
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(addChannel(data));
+        } catch {
+          console.error("get channel failed");
+        }
+      }
     }),
     leaveChannel: builder.query<void, number>({
       query: (id) => ({ url: `/group/${id}/leave` }),
@@ -104,11 +112,14 @@ export const channelApi = createApi({
         method: "PUT",
         body: data
       }),
-      async onQueryStarted({ id, name, description }, { dispatch, queryFulfilled }) {
+      async onQueryStarted({ id, name, description, auto_delete_after }, { dispatch, queryFulfilled }) {
         // id: who send to ,from_uid: who sent
         dispatch(updateChannel({ gid: id, name, description }));
         try {
           await queryFulfilled;
+          if (auto_delete_after !== undefined) {
+            dispatch(updateChannel({ gid: id, auto_delete_after }));
+          }
         } catch {
           console.error("channel update failed");
         }

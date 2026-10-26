@@ -196,6 +196,14 @@
     "col_key_last_used": "Last Used"
   },
   "auto_delete_msg": {
+    "checking_support": "Verificando suporte do servidor…",
+    "1_month": "1 mês (30 dias)",
+    "whole_channel": "Canal inteiro",
+    "channel_title": "Excluir as mensagens de todos no canal",
+    "channel_desc": "Excluir automaticamente as novas mensagens de todos após o tempo selecionado.",
+    "policy_desc": "O limite do canal vale para todos. A configuração pessoal pode excluir suas mensagens antes. Mensagens existentes mantêm o prazo original.",
+    "unsupported": "O servidor não suporta esta opção. Atualize o servidor.",
+    "save_failed": "Falha ao salvar",
     "title": "Delete messages sent by myself after certain time period. ",
     "desc": "This will remove the messages data stored on both the server and client side.",
     "off": "Off",

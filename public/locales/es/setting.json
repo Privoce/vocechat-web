@@ -197,6 +197,14 @@
     "col_key_last_used": "Último Uso"
   },
   "auto_delete_msg": {
+    "checking_support": "Comprobando compatibilidad del servidor…",
+    "1_month": "1 mes (30 días)",
+    "whole_channel": "Todo el canal",
+    "channel_title": "Eliminar los mensajes de todos en el canal",
+    "channel_desc": "Eliminar automáticamente los mensajes nuevos de todos tras el tiempo seleccionado.",
+    "policy_desc": "El límite del canal se aplica a todos. La configuración personal puede eliminar tus mensajes antes. Los mensajes existentes conservan su vencimiento.",
+    "unsupported": "El servidor no admite esta opción. Actualiza el servidor.",
+    "save_failed": "Error al guardar",
     "title": "Eliminar mensajes enviados por mí después de cierto período de tiempo.",
     "desc": "Esto eliminará los datos de mensajes almacenados tanto en el servidor como en el lado del cliente.",
     "off": "Desactivado",

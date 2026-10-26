@@ -26,6 +26,7 @@ export interface State {
   readChannels: { [cid: number]: number };
   muteUsers: { [uid: number]: { expired_at?: number } | undefined };
   muteChannels: { [cid: number]: { expired_at?: number } | undefined };
+  autoDeleteSupported?: { users: boolean; groups: boolean } | null;
   autoDeleteMsgUsers: AutoDeleteMsgForUser[];
   autoDeleteMsgChannels: AutoDeleteMsgForGroup[];
   channelAsides: { [cid: number]: ChannelAside };
@@ -44,6 +45,7 @@ const initialState: State = {
   readChannels: {},
   muteUsers: {},
   muteChannels: {},
+  autoDeleteSupported: null,
   autoDeleteMsgUsers: [],
   autoDeleteMsgChannels: [],
   channelAsides: {},
@@ -90,6 +92,7 @@ const footprintSlice = createSlice({
         readChannels,
         muteUsers,
         muteChannels,
+        autoDeleteSupported: state.autoDeleteSupported,
         autoDeleteMsgUsers,
         autoDeleteMsgChannels,
         channelAsides,
@@ -109,6 +112,9 @@ const footprintSlice = createSlice({
         state.afterMid = action.payload;
         window.AFTER_MID = action.payload;
       }
+    },
+    updateAutoDeleteSupport(state, action: PayloadAction<{ users: boolean; groups: boolean }>) {
+      state.autoDeleteSupported = action.payload;
     },
     updateAutoDeleteSetting(state, action: PayloadAction<AutoDeleteMessageSettingDTO>) {
       const payload = action.payload;
@@ -246,6 +252,7 @@ const footprintSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(resetAuthData, (state) => {
+      state.autoDeleteSupported = null;
       // 如果有 aside 是 voice 的，就把它关掉
       Object.keys(state.channelAsides).forEach((channel_id: string) => {
         if (state.channelAsides[+channel_id] === "voice") {
@@ -270,6 +277,7 @@ export const {
   updateReadUsers,
   updateMute,
   updateAutoDeleteSetting,
+  updateAutoDeleteSupport,
   updateHistoryMark,
   upsertOG,
   updateChannelVisibleAside,

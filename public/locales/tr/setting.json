@@ -155,6 +155,14 @@
     "col_key_last_used": "Son Kullanım Tarihi"
   },
   "auto_delete_msg": {
+    "checking_support": "Sunucu desteği kontrol ediliyor…",
+    "1_month": "1 ay (30 gün)",
+    "whole_channel": "Tüm kanal",
+    "channel_title": "Kanaldaki herkesin mesajlarını sil",
+    "channel_desc": "Herkesin yeni mesajlarını seçilen süre sonunda otomatik sil.",
+    "policy_desc": "Kanal süresi herkes için geçerlidir. Kişisel ayarlar mesajlarınızı daha erken silebilir. Mevcut mesajların süresi değişmez.",
+    "unsupported": "Sunucu bu seçeneği desteklemiyor. Sunucuyu güncelleyin.",
+    "save_failed": "Kaydedilemedi",
     "title": "Belirli bir süre sonra tarafımdan gönderilen iletileri silin. ",
     "desc": "Bu, hem sunucu hem de istemci tarafında depolanan ileti verilerini kaldıracaktır.",
     "off": "Kapalı",

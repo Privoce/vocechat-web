@@ -258,6 +258,14 @@
     "col_key_last_used": "Last Used"
   },
   "auto_delete_msg": {
+    "checking_support": "Checking server support…",
+    "1_month": "1 month (30 days)",
+    "whole_channel": "Entire channel",
+    "channel_title": "Delete messages from everyone in this channel",
+    "channel_desc": "Automatically delete new messages from every sender after the selected time.",
+    "policy_desc": "The channel limit applies to everyone. Personal settings can delete your messages sooner. Existing messages keep their original expiry.",
+    "unsupported": "The server does not support this option. Upgrade the server to enable it.",
+    "save_failed": "Failed to save",
     "title": "Delete messages sent by myself after certain time period. ",
     "desc": "This will remove the messages data stored on both the server and client side.",
     "off": "Off",

@@ -203,6 +203,14 @@
     "col_key_last_used": "Dernière Utilisation"
   },
   "auto_delete_msg": {
+    "checking_support": "Vérification de la compatibilité du serveur…",
+    "1_month": "1 mois (30 jours)",
+    "whole_channel": "Tout le canal",
+    "channel_title": "Supprimer les messages de tous les membres",
+    "channel_desc": "Supprimer les nouveaux messages de tous après le délai choisi.",
+    "policy_desc": "La limite du canal s’applique à tous. Le réglage personnel peut supprimer vos messages plus tôt. Les messages existants conservent leur échéance.",
+    "unsupported": "Le serveur ne prend pas en charge cette option. Mettez le serveur à jour.",
+    "save_failed": "Échec de l’enregistrement",
     "title": "Supprimer les messages envoyés par moi-même après une certaine période.",
     "desc": "Cela supprimera les données de messages stockées à la fois sur le serveur et du côté client.",
     "off": "Désactivé",

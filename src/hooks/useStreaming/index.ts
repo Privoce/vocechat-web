@@ -18,6 +18,7 @@ import {
   removePinChats,
   resetFootprint,
   updateAutoDeleteSetting,
+  updateAutoDeleteSupport,
   updateMute,
   updateReadChannels,
   updateReadUsers,
@@ -287,6 +288,12 @@ export default function useStreaming() {
         }
         case "user_settings":
         case "user_settings_changed": {
+          if (data.type === "user_settings") {
+            dispatch(updateAutoDeleteSupport({
+              users: Array.isArray(data.burn_after_reading_users),
+              groups: Array.isArray(data.burn_after_reading_groups)
+            }));
+          }
           Object.keys(data).forEach((key) => {
             switch (key) {
               case "read_index_groups":

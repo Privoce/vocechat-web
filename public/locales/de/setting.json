@@ -248,6 +248,14 @@
     "col_key_last_used": "Zuletzt verwendet"
   },
   "auto_delete_msg": {
+    "checking_support": "Serverunterstützung wird geprüft…",
+    "1_month": "1 Monat (30 Tage)",
+    "whole_channel": "Gesamter Kanal",
+    "channel_title": "Nachrichten aller Kanalmitglieder löschen",
+    "channel_desc": "Neue Nachrichten aller Absender nach der gewählten Zeit automatisch löschen.",
+    "policy_desc": "Das Kanallimit gilt für alle. Persönliche Einstellungen können eigene Nachrichten früher löschen. Bestehende Nachrichten behalten ihre Ablaufzeit.",
+    "unsupported": "Der Server unterstützt diese Option nicht. Bitte aktualisieren Sie den Server.",
+    "save_failed": "Speichern fehlgeschlagen",
     "title": "Eigene Nachrichten nach Zeitraum löschen",
     "desc": "Löscht Nachrichten auf Server- und Client-Seite.",
     "off": "Aus",

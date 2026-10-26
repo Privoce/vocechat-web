@@ -28,6 +28,8 @@ export interface Channel {
   is_public: boolean;
   avatar_updated_at: number;
   pinned_messages: PinnedMessage[];
+  // Absent on servers that do not support channel-wide auto-delete.
+  auto_delete_after?: number;
   // ext switches
   show_email: boolean;
   dm_to_member: boolean;
@@ -55,12 +57,14 @@ export interface ChannelDTO
       | "only_owner_can_send_msg"
       | "dm_to_member"
       | "ext_setting"
+      | "auto_delete_after"
     >
   > {
   id: number;
 }
 
 export interface UpdateChannelDTO {
+  auto_delete_after?: number;
   operation?: "add_member" | "remove_member";
   members?: number[];
   gid: number; // todo check
