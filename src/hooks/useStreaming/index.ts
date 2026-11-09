@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef } from "react";
 import toast from "react-hot-toast";
+import i18n from "@/i18n";
 import dayjs from "dayjs";
 import { isNull, omitBy } from "lodash";
 
@@ -177,7 +178,7 @@ export default function useStreaming() {
       dispatch(updateSSEStatus("connected"));
       ready = false;
     };
-    SSE.onerror = (err) => {
+    SSE.onerror = async (err) => {
       // 断网了 或者 页面隐藏了
       if (!navigator.onLine || isTabHidden()) {
         stopStreaming();
@@ -191,10 +192,17 @@ export default function useStreaming() {
       stopStreaming();
       // return;
       // }
-      // 重连
-      setTimeout(() => {
-        startStreaming();
-      }, 2000);
+      // EventSource does not expose the HTTP status. Revalidate before
+      // reconnecting so an offline device notices a revoked, unexpired token.
+      const auth = getLocalAuthData();
+      if (!auth.token || !auth.refreshToken) return;
+      await renewToken({ token: auth.token, refresh_token: auth.refreshToken });
+      // A rejected renewal clears auth in the shared API handler.
+      if (getLocalAuthData().token) {
+        setTimeout(() => {
+          startStreaming();
+        }, 2000);
+      }
     };
     SSE.onmessage = (evt) => {
       // console.log("sse msg");
@@ -404,16 +412,22 @@ export default function useStreaming() {
           break;
         case "kick":
           {
+            // A kick ends the session for every reason, including reasons
+            // introduced by newer servers. Stop reconnects before clearing auth.
+            stopStreaming();
+            dispatch(resetAuthData());
             switch (data.reason) {
               case "login_from_other_device":
-                dispatch(resetAuthData());
-                toast("kicked from the other device");
+                toast("kicked from the other device", { id: "session-ended" });
                 break;
               case "delete_user":
-                dispatch(resetAuthData());
-                toast("Your account has been deleted");
+                toast("Your account has been deleted", { id: "session-ended" });
+                break;
+              case "password_changed":
+                toast(i18n.t("logout.password_changed", { ns: "auth" }), { id: "session-ended" });
                 break;
               default:
+                toast(i18n.t("logout.session_ended", { ns: "auth" }), { id: "session-ended" });
                 break;
             }
           }

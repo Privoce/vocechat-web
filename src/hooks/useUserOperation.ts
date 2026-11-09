@@ -121,9 +121,9 @@ const useUserOperation = ({ uid, cid }: IProps) => {
       updateUser({ id: uid, is_admin: !user?.is_admin });
     }
   };
-  const updatePassword = (password: string) => {
+  const updatePassword = async (password: string) => {
     if (uid) {
-      updateUser({ id: uid, password });
+      await updateUser({ id: uid, password }).unwrap();
     }
   };
   const removeFromContact = () => {

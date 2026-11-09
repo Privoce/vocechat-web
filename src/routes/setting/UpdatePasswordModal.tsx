@@ -1,4 +1,6 @@
 import { ChangeEvent, FC, useEffect, useState } from "react";
+import { useAppDispatch } from "@/app/store";
+import { resetAuthData } from "@/app/slices/auth.data";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 
@@ -20,7 +22,8 @@ interface BaseForm {
 
 const ProfileBasicEditModal: FC<Props> = ({ closeModal }) => {
   const { t } = useTranslation("member");
-  const { t: ct } = useTranslation();
+  const { t: at } = useTranslation("auth");
+  const dispatch = useAppDispatch();
   const { data } = useGetCredentialsQuery();
   const [input, setInput] = useState<BaseForm>({
     current: "",
@@ -47,9 +50,10 @@ const ProfileBasicEditModal: FC<Props> = ({ closeModal }) => {
   };
   useEffect(() => {
     if (isSuccess) {
-      // todo
-      toast.success(ct("tip.update"));
+      // Also end this session when its event connection is unavailable.
+      toast(at("logout.password_changed"), { id: "session-ended" });
       closeModal();
+      dispatch(resetAuthData());
     }
   }, [isSuccess]);
   const { current, newPassword, confirmPassword } = input;
